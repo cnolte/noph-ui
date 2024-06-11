@@ -1,6 +1,12 @@
 {
 	"name": "noph-ui",
-	"version": "0.1.10",
+	"version": "0.1.11",
+	"license": "MIT",
+	"homepage": "https://ui.noph.de",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cnolte/noph-ui"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -31,7 +37,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.44.1",
-		"@sveltejs/adapter-static": "^3.0.1",
+		"@sveltejs/adapter-vercel": "^5.3.1",
 		"@sveltejs/kit": "^2.5.10",
 		"@sveltejs/package": "^2.3.1",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
