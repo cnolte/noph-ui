@@ -1,15 +1,16 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte'
+	import { slide } from 'svelte/transition'
 
 	let {
-		id,
-		backdrop = false,
+		backdrop = true,
+		onClose = () => {},
 		width,
 		anchor,
 		children
 	}: {
-		id: string
 		backdrop?: boolean
+		onClose?: () => void
 		children: Snippet
 		width?: number
 		anchor: HTMLElement
@@ -19,6 +20,7 @@
 	let anchorRect = $state(anchor.getBoundingClientRect())
 	let clientWidth: number = $state(0)
 	let clientHeight: number = $state(0)
+	let wrapperHeight: number = $state(0)
 	let screenHeight = $state(window.innerHeight)
 	let screenWidth = $state(window.innerWidth)
 
@@ -52,17 +54,44 @@
 		screenWidth = window.innerWidth
 		anchorRect = anchor.getBoundingClientRect()
 	}
+
+	const clickOutside = (element: Node, callbackFunction: (event: Event) => void) => {
+		const onClick = (event: MouseEvent) => {
+			if (element && !event.defaultPrevented) {
+				callbackFunction(event)
+			}
+		}
+		document.addEventListener('click', onClick, {
+			capture: true,
+			passive: true
+		})
+
+		return {
+			update(newCallbackFunction: VoidFunction) {
+				callbackFunction = newCallbackFunction
+			},
+			destroy() {
+				document.removeEventListener('click', onClick)
+			}
+		}
+	}
 </script>
 
 <svelte:window onresize={resizeWindow} />
 
+{#if backdrop}
+	<div class="backdrop"></div>
+{/if}
+
 <div
-	popover="auto"
-	{id}
+	bind:clientHeight={wrapperHeight}
+	class="menu"
 	style="max-height:{maxHeight}px;{topOrBottom}:{anchorRect.height +
 		2}px;right:{calculateRightPos}px;"
+	transition:slide={{ duration: 200 }}
+	use:clickOutside={onClose}
 >
-	<div class="menu-content" bind:clientWidth bind:clientHeight>
+	<div class="menu-inner" bind:clientWidth bind:clientHeight>
 		<ul style={withStyle}>
 			{@render children()}
 		</ul>
@@ -70,26 +99,24 @@
 </div>
 
 <style>
-	.menu-content {
+	.backdrop {
+		height: 100vh;
+		inset: 0px;
+		position: fixed;
+		z-index: 20;
+	}
+	.menu-inner {
 		padding-top: 1rem;
 		padding-bottom: 1rem;
-	}
-
-	[popover] {
-		border-radius: 1rem;
 		background-color: var(--cn-paper-background-color);
+	}
+	.menu {
+		position: absolute;
+		z-index: 40;
+		overflow: auto;
+		border-radius: 1rem;
 		box-shadow:
 			0 0px 10px -3px rgb(0 0 0 / 0.2),
 			0 4px 6px -4px rgb(0 0 0 / 0.3);
-		transition-property: transform;
-		transition-timing-function: ease-in;
-		transition:
-			transform 0.3s,
-			overlay 0.3s allow-discrete,
-			display 0.3s allow-discrete;
-		transform: translateY(100%);
-	}
-	:popover-open {
-		transform: translateY(0);
 	}
 </style>

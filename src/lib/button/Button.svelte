@@ -17,7 +17,8 @@
 		start,
 		end,
 		style,
-		fullWidth = false
+		fullWidth = false,
+		...attributes
 	}: {
 		href?: string
 		target?: string
@@ -67,6 +68,7 @@
 		</a>
 	{:else}
 		<button
+			{...attributes}
 			{popovertarget}
 			{popovertargetaction}
 			{type}
