@@ -1,6 +1,4 @@
-<div class="text-center">
-	<div class="loader"></div>
-</div>
+<div class="loader"></div>
 
 <style>
 	.loader {
