@@ -1,9 +1,10 @@
 <div class="text-center">
-	<div class="loader inline-block"></div>
+	<div class="loader"></div>
 </div>
 
 <style>
 	.loader {
+		display: inline-block;
 		width: 50px;
 		padding: 8px;
 		aspect-ratio: 1;
