@@ -4,7 +4,7 @@
 	.loader {
 		display: inline-block;
 		width: 50px;
-		padding: 8px;
+		padding: 5px;
 		aspect-ratio: 1;
 		border-radius: 50%;
 		background: var(--cn-color-primary);
