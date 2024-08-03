@@ -28,7 +28,7 @@
 	{#if href}
 		<a
 			{href}
-			class="bt-hover icon-button-container block overflow-hidden rounded-full {size} {className}"
+			class="bt-hover icon-button-container {size} {className}"
 			{onclick}
 			aria-label={title}
 		>
@@ -36,7 +36,7 @@
 		</a>
 	{:else}
 		<button
-			class="bt-hover icon-button-container relative block overflow-hidden rounded-full {size} {className}"
+			class="bt-hover icon-button-container {size} {className}"
 			{popovertarget}
 			{popovertargetaction}
 			{onclick}
@@ -59,5 +59,8 @@
 		--cn-ripple-hover-color: var(--cn-color-primary, rgb(5, 125, 187));
 		--cn-ripple-pressed-color: var(--cn-color-primary, rgb(5, 125, 187));
 		color: var(--cn-text-color, rgb(23, 23, 23));
+		display: block;
+		overflow: hidden;
+		border-radius: 9999px;
 	}
 </style>
