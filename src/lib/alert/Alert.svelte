@@ -5,7 +5,7 @@
 
 	let {
 		children,
-		severity
+		severity,
 	}: {
 		children: Snippet
 		severity: 'error' | 'success'

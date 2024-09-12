@@ -10,7 +10,7 @@
 		popovertargetaction = 'toggle',
 		onclick,
 		children,
-		className = ''
+		className = '',
 	}: {
 		href?: string
 		disabled?: boolean

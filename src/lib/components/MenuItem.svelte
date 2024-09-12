@@ -6,7 +6,7 @@
 		selected = false,
 		children,
 		icon,
-		onclick
+		onclick,
 	}: {
 		href?: string
 		selected?: boolean

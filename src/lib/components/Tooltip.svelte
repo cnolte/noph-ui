@@ -4,7 +4,7 @@
 
 	let {
 		children,
-		title
+		title,
 	}: {
 		children: Snippet
 		title: Snippet

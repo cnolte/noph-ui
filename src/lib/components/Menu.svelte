@@ -7,7 +7,7 @@
 		onClose = () => {},
 		width,
 		anchor,
-		children
+		children,
 	}: {
 		backdrop?: boolean
 		onClose?: () => void
@@ -29,13 +29,13 @@
 	let maxHeight = $derived(
 		(anchorRect.top > screenHeight - anchorRect.bottom
 			? anchorRect.top
-			: screenHeight - anchorRect.bottom) - distanceToBorder
+			: screenHeight - anchorRect.bottom) - distanceToBorder,
 	)
 	let topOrBottom = $derived(
 		anchorRect.top > screenHeight - anchorRect.bottom &&
 			clientHeight > screenHeight - anchorRect.bottom
 			? 'bottom'
-			: 'top'
+			: 'top',
 	)
 
 	let calculateRightPos = $derived.by(() => {
@@ -63,7 +63,7 @@
 		}
 		document.addEventListener('click', onClick, {
 			capture: true,
-			passive: true
+			passive: true,
 		})
 
 		return {
@@ -72,7 +72,7 @@
 			},
 			destroy() {
 				document.removeEventListener('click', onClick)
-			}
+			},
 		}
 	}
 </script>

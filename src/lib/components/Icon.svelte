@@ -4,7 +4,7 @@
 	let {
 		size = 'medium',
 		disabled = false,
-		children
+		children,
 	}: {
 		size?: 'medium' | 'small' | 'large'
 		disabled?: boolean
