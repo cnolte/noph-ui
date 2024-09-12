@@ -53,17 +53,23 @@
 {/snippet}
 
 <div
-	class="relative border-solid overflow-hidden flex rounded-full border {disabled
+	class="relative flex overflow-hidden rounded-full border border-solid {disabled
 		? `${variant}-disabled`
-		: `enabled ${variant} ${variant}-${color}`} {size}"
+		: `cursor-pointer ${variant} ${variant}-${color}`} {size}"
 	style={fullWidth ? '' : 'width: fit-content;'}
 >
 	{#if disabled}
-		<div class="button gap-1">
+		<div class="flex h-10 flex-1 items-center gap-1 fill-current px-5 text-start">
 			{@render content()}
 		</div>
 	{:else if href}
-		<a {onclick} {style} class="bt-hover button gap-1" {href} {target}>
+		<a
+			{onclick}
+			{style}
+			class="bt-hover flex h-10 flex-1 items-center gap-1 fill-current px-5 text-start"
+			{href}
+			{target}
+		>
 			{@render content()}
 		</a>
 	{:else}
@@ -76,7 +82,7 @@
 			{formaction}
 			{onclick}
 			{style}
-			class="bt-hover button gap-1"
+			class="bt-hover flex h-10 flex-1 items-center gap-1 fill-current px-5 text-start"
 		>
 			{@render content()}
 		</button>
@@ -177,17 +183,5 @@
 	.large {
 		font-size: 1.125rem;
 		line-height: 1.75rem;
-	}
-	.enabled {
-		cursor: pointer;
-	}
-	.button {
-		fill: currentColor;
-		flex: 1;
-		display: flex;
-		height: 2.5rem;
-		padding: 0 1.25rem;
-		align-items: center;
-		text-align: start;
 	}
 </style>

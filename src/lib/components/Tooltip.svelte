@@ -45,7 +45,7 @@
 		onmouseleave={() => {
 			visible = false
 		}}
-		class="tooltip"
+		class="relative inline-block"
 	>
 		{@render children()}
 		{#if visible}
@@ -68,10 +68,6 @@
 {/if}
 
 <style>
-	.tooltip {
-		position: relative;
-		display: inline-block;
-	}
 	.tooltiptext {
 		width: max-content;
 		position: absolute;
