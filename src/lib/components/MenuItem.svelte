@@ -38,14 +38,14 @@
 <style>
 	@media (hover: hover) {
 		.bt-hover:hover {
-			background-color: color-mix(in srgb, var(--cn-ripple-hover-color) 10%, transparent);
+			background-color: color-mix(in srgb, var(--np-ripple-hover-color) 10%, transparent);
 		}
 	}
 	.selected {
-		background-color: var(--cn-selected-button-background-color);
+		background-color: var(--np-selected-button-background-color);
 	}
 	li {
-		--cn-ripple-hover-color: var(--cn-color-primary, rgb(5, 125, 187));
+		--np-ripple-hover-color: var(--np-color-primary, rgb(5, 125, 187));
 		position: relative;
 	}
 	.action {

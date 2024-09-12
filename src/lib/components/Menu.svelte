@@ -108,7 +108,7 @@
 	.menu-inner {
 		padding-top: 1rem;
 		padding-bottom: 1rem;
-		background-color: var(--cn-paper-background-color);
+		background-color: var(--np-paper-background-color);
 	}
 	.menu {
 		position: absolute;

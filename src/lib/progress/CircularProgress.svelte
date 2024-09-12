@@ -7,7 +7,7 @@
 		padding: 5px;
 		aspect-ratio: 1;
 		border-radius: 50%;
-		background: var(--cn-color-primary);
+		background: var(--np-color-primary);
 		--_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
 		-webkit-mask: var(--_m);
 		mask: var(--_m);

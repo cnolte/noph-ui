@@ -78,9 +78,9 @@
 		z-index: 1;
 		padding: 0.25rem 0.5rem;
 		font-size: 0.75rem;
-		box-shadow: var(--cn-shadow);
+		box-shadow: var(--np-shadow);
 		border-radius: 0.375rem;
-		color: var(--cn-background-color, rgb(255, 255, 255));
-		background-color: var(--cn-text-color-secondary, rgb(82 82 82));
+		color: var(--np-background-color, rgb(255, 255, 255));
+		background-color: var(--np-text-color-secondary, rgb(82 82 82));
 	}
 </style>

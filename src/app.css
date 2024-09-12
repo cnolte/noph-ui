@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--np-background-color: rgb(255, 255, 255);
+	--np-paper-background-color: rgb(242, 246, 250);
+	--np-text-color: rgb(23, 23, 23);
+	--np-text-color-secondary: rgb(82 82 82);
+	--np-color-primary: rgb(5, 125, 187);
+	--np-color-success: rgb(2, 183, 139);
+	--np-color-error: rgb(228, 56, 52);
+	--np-divider-color: rgb(229, 229, 232);
+	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
+	--np-selected-button-background-color: rgb(202, 240, 248);
+
+	--np-color-disabled: rgba(var(--np-text-color-secondary), 0.4);
+	--np-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+	--np-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.6), 0 0px 0px -1px rgb(0 0 0 / 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--np-background-color: rgb(15, 15, 17);
+		--np-paper-background-color: rgb(40, 40, 43);
+		--np-text-color: rgb(255, 255, 255);
+		--np-text-color-secondary: rgb(212 212 212);
+		--np-color-primary: rgb(125, 211, 252);
+		--np-color-success: rgb(84, 230, 193);
+		--np-color-error: rgb(247, 115, 112);
+		--np-divider-color: rgb(63, 63, 66);
+		--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
+		--np-selected-button-background-color: rgb(75, 115, 124);
+	}
+}
+
+html {
+	color-scheme: dark light;
+}
+
+[data-theme='light'] {
+	color-scheme: light;
+	--np-background-color: rgb(255, 255, 255);
+	--np-paper-background-color: rgb(242, 246, 250);
+	--np-text-color: rgb(1, 1, 1);
+	--np-text-color-secondary: rgb(82 82 82);
+	--np-color-primary: rgb(5, 125, 187);
+	--np-color-success: rgb(2, 183, 139);
+	--np-color-error: rgb(228, 56, 52);
+	--np-divider-color: rgb(229, 229, 232);
+	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
+	--np-selected-button-background-color: rgb(202, 240, 248);
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+	--np-background-color: rgb(15, 15, 17);
+	--np-paper-background-color: rgb(40, 40, 43);
+	--np-text-color: rgb(255, 255, 255);
+	--np-text-color-secondary: rgb(212 212 212);
+	--np-color-primary: rgb(125, 211, 252);
+	--np-color-success: rgb(84, 230, 193);
+	--np-color-error: rgb(247, 115, 112);
+	--np-divider-color: rgb(63, 63, 66);
+	--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
+	--np-selected-button-background-color: rgb(75, 115, 124);
+}

@@ -23,11 +23,11 @@
 
 <style>
 	.success {
-		color: color-mix(in srgb, var(--cn-color-success) 20%, var(--cn-text-color));
-		background-color: color-mix(in srgb, var(--cn-color-success) 40%, var(--cn-background-color));
+		color: color-mix(in srgb, var(--np-color-success) 20%, var(--np-text-color));
+		background-color: color-mix(in srgb, var(--np-color-success) 40%, var(--np-background-color));
 	}
 	.error {
-		color: color-mix(in srgb, var(--cn-color-error) 30%, var(--cn-text-color));
-		background-color: color-mix(in srgb, var(--cn-color-error) 40%, var(--cn-background-color));
+		color: color-mix(in srgb, var(--np-color-error) 30%, var(--np-text-color));
+		background-color: color-mix(in srgb, var(--np-color-error) 40%, var(--np-background-color));
 	}
 </style>

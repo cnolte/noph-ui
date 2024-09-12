@@ -20,7 +20,7 @@
 
 <style>
 	.disabled {
-		color: var(--cn-color-disabled);
+		color: var(--np-color-disabled);
 	}
 	.icon-container {
 		fill: currentColor;

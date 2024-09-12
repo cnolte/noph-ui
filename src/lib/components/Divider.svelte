@@ -4,6 +4,6 @@
 	.horizontal {
 		height: 1px;
 		width: 100%;
-		background-color: var(--cn-divider-color);
+		background-color: var(--np-divider-color);
 	}
 </style>
