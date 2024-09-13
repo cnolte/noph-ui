@@ -4,12 +4,14 @@
 	let {
 		href,
 		selected = false,
+		hreflang,
 		children,
 		icon,
 		onclick,
 	}: {
 		href?: string
 		selected?: boolean
+		hreflang?: string | undefined | null
 		children: Snippet
 		icon?: Snippet
 		onclick?: (event: MouseEvent) => void
@@ -29,7 +31,7 @@
 
 <li class="{selected ? 'selected ' : ''} bt-hover">
 	{#if href}
-		<a class="action" {onclick} {href}>{@render content()}</a>
+		<a class="action" {hreflang} {onclick} {href}>{@render content()}</a>
 	{:else}
 		<button class="action" {onclick}>{@render content()}</button>
 	{/if}
