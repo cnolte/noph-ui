@@ -3,34 +3,35 @@
 @tailwind utilities;
 
 :root {
-	--np-background-color: rgb(255, 255, 255);
-	--np-paper-background-color: rgb(242, 246, 250);
+	--np-background-color: rgb(234, 238, 244);
+	--np-paper-background-color: rgb(246, 250, 254);
 	--np-text-color: rgb(23, 23, 23);
 	--np-text-color-secondary: rgb(82 82 82);
-	--np-color-primary: rgb(5, 125, 187);
+	--np-color-primary: rgb(1, 101, 146);
 	--np-color-success: rgb(2, 183, 139);
 	--np-color-error: rgb(228, 56, 52);
 	--np-divider-color: rgb(229, 229, 232);
 	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
 	--np-selected-button-background-color: rgb(202, 240, 248);
+	--np-color-disabled: rgb(215, 215, 215);
 
-	--np-color-disabled: rgba(var(--np-text-color-secondary), 0.4);
 	--np-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 	--np-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.6), 0 0px 0px -1px rgb(0 0 0 / 0.6);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--np-background-color: rgb(15, 15, 17);
-		--np-paper-background-color: rgb(40, 40, 43);
-		--np-text-color: rgb(255, 255, 255);
+		--np-background-color: #1b2024;
+		--np-paper-background-color: #0f1418;
+		--np-text-color: #dfe3e7;
 		--np-text-color-secondary: rgb(212 212 212);
-		--np-color-primary: rgb(125, 211, 252);
+		--np-color-primary: rgb(131, 207, 255);
 		--np-color-success: rgb(84, 230, 193);
 		--np-color-error: rgb(247, 115, 112);
 		--np-divider-color: rgb(63, 63, 66);
 		--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
 		--np-selected-button-background-color: rgb(75, 115, 124);
+		--np-color-disabled: rgba(223, 227, 232, 0.12);
 	}
 }
 
@@ -40,28 +41,61 @@ html {
 
 [data-theme='light'] {
 	color-scheme: light;
-	--np-background-color: rgb(255, 255, 255);
-	--np-paper-background-color: rgb(242, 246, 250);
+	--np-background-color: rgb(234, 238, 244);
+	--np-paper-background-color: rgb(246, 250, 254);
 	--np-text-color: rgb(1, 1, 1);
 	--np-text-color-secondary: rgb(82 82 82);
-	--np-color-primary: rgb(5, 125, 187);
+	--np-color-primary: rgb(1, 101, 146);
 	--np-color-success: rgb(2, 183, 139);
 	--np-color-error: rgb(228, 56, 52);
 	--np-divider-color: rgb(229, 229, 232);
 	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
 	--np-selected-button-background-color: rgb(202, 240, 248);
+	--np-color-disabled: rgb(215, 215, 215);
 }
 
 [data-theme='dark'] {
 	color-scheme: dark;
-	--np-background-color: rgb(15, 15, 17);
-	--np-paper-background-color: rgb(40, 40, 43);
-	--np-text-color: rgb(255, 255, 255);
+	--np-background-color: #1b2024;
+	--np-paper-background-color: #0f1418;
+	--np-text-color: #dfe3e7;
 	--np-text-color-secondary: rgb(212 212 212);
-	--np-color-primary: rgb(125, 211, 252);
+	--np-color-primary: rgb(131, 207, 255);
 	--np-color-success: rgb(84, 230, 193);
 	--np-color-error: rgb(247, 115, 112);
 	--np-divider-color: rgb(63, 63, 66);
 	--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
 	--np-selected-button-background-color: rgb(75, 115, 124);
+	--np-color-disabled: rgba(223, 227, 232, 0.12);
+}
+
+h1 {
+	font-size: 2rem;
+	line-height: 3rem;
+	font-weight: 500;
+	margin: 0 0 0.5rem 0;
+}
+
+h2 {
+	font-size: 1.75rem;
+	line-height: 2.5rem;
+	font-weight: 400;
+	margin: 1rem 0 0.5rem 0;
+}
+
+h3 {
+	font-size: 1.5rem;
+	line-height: 2rem;
+	font-weight: 400;
+	margin: 1rem 0 0.5rem 0;
+}
+
+.paper {
+	background-color: var(--np-paper-background-color);
+}
+
+body {
+	font-size: 1.125rem;
+	background-color: var(--np-background-color);
+	color: var(--np-text-color);
 }
