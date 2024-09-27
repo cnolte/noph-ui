@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ArrowForwardIcon from '$lib/assets/icons/ArrowForwardIcon.svelte'
 	import CheckIcon from '$lib/assets/icons/CheckIcon.svelte'
 	import ErrorIcon from '$lib/assets/icons/ErrorIcon.svelte'
 	import Button from '$lib/button/Button.svelte'
@@ -54,7 +53,7 @@
 	>
 	<Button variant="outlined">
 		{#snippet end()}
-			<ArrowForwardIcon />
+			<CheckIcon />
 		{/snippet}Next</Button
 	>
 </div>

@@ -49,14 +49,14 @@
 		{...attributes}
 		class="{size} {variant}{attributes.disabled
 			? '-disabled pointer-events-none opacity-70'
-			: ' bt-enabled cursor-pointer'} flex items-center gap-1 rounded-full fill-current px-5 text-center font-medium"
+			: ' bt-enabled cursor-pointer'} flex items-center gap-1 rounded-full fill-current px-5 font-medium"
 	>
 		{@render content()}
 	</button>
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
-		class="{variant} {size} bt-enabled flex items-center gap-1 rounded-full fill-current px-5 text-center font-medium"
+		class="{variant} {size} bt-enabled flex items-center gap-1 rounded-full fill-current px-5 font-medium"
 	>
 		{@render content()}
 	</a>
