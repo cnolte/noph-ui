@@ -55,7 +55,7 @@
 		bind:this={element}
 		class="{size} {variant}{attributes.disabled
 			? '-disabled pointer-events-none opacity-70'
-			: ' bt-enabled cursor-pointer'} relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
+			: ' bt-enabled cursor-pointer'} relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current text-left font-medium {children
 			? 'px-5'
 			: 'px-2'} {attributes.class}"
 	>

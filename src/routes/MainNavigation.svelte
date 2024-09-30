@@ -35,6 +35,20 @@
 	<Button
 		onclick={onclose}
 		style="--np-color-button: var(--np-text-color)"
+		href="/progress"
+		variant="text"
+		size="medium">Progress</Button
+	>
+	<Button
+		onclick={onclose}
+		style="--np-color-button: var(--np-text-color)"
+		href="/ripple"
+		variant="text"
+		size="medium">Ripple</Button
+	>
+	<Button
+		onclick={onclose}
+		style="--np-color-button: var(--np-text-color)"
 		href="/tooltip"
 		variant="text"
 		size="medium">Tooltip</Button

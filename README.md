@@ -13,9 +13,8 @@ npm install noph-ui
 - Alert
 - Button
 - Divider
-- Icon
-- IconButton
 - Menu
 - MenuItem
 - Progress
+- Ripple
 - Tooltip

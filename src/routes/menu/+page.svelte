@@ -1,9 +1,14 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
-	import CheckIcon from '$lib/icons/CheckIcon.svelte'
+	import BreakingNewsIcon from '$lib/icons/BreakingNewsIcon.svelte'
+	import DashboardIcon from '$lib/icons/DashboardIcon.svelte'
+	import DownloadIcon from '$lib/icons/DownloadIcon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import MenuItem from '$lib/menu/MenuItem.svelte'
-	let element = $state<HTMLElement>()
+	let browserMenu = $state<HTMLElement>()
+	let fruitMenu = $state<HTMLElement>()
+	let userMenuLeft = $state<HTMLElement>()
+	let userMenuRight = $state<HTMLElement>()
 </script>
 
 <svelte:head>
@@ -13,33 +18,78 @@
 <h1>Menu</h1>
 
 <h2>Basic Menu</h2>
-<div class="paper flex gap-4 rounded-3xl p-8">
-	<Button variant="filled" popovertarget="menu" bind:element>Menu</Button>
-	{#if element}
-		<Menu anchor={element}>
+<div class="paper flex flex-wrap gap-4 rounded-3xl p-8">
+	<Button variant="filled" popovertarget="lng-menu" bind:element={browserMenu}>Browser</Button>
+	{#if browserMenu}
+		<Menu anchor={browserMenu}>
+			<ul>
+				<MenuItem>Chrome</MenuItem>
+				<MenuItem>Firefox</MenuItem>
+				<MenuItem>Safari</MenuItem>
+			</ul>
+		</Menu>
+	{/if}
+	<Button variant="filled" popovertarget="fruit-menu" bind:element={fruitMenu}
+		>Fruit selected</Button
+	>
+	{#if fruitMenu}
+		<Menu anchor={fruitMenu}>
+			<ul>
+				<MenuItem>Apple</MenuItem>
+				<MenuItem selected>Orange</MenuItem>
+				<MenuItem>Banana</MenuItem>
+				<MenuItem>Mango</MenuItem>
+			</ul>
+		</Menu>
+	{/if}
+</div>
+<h2>Icon Menu</h2>
+<div class="paper flex flex-wrap gap-4 rounded-3xl p-8">
+	<Button variant="filled" popovertarget="user-menu-left" bind:element={userMenuLeft}
+		>Icons left</Button
+	>
+	{#if userMenuLeft}
+		<Menu anchor={userMenuLeft}>
 			<ul>
 				<MenuItem
 					>{#snippet start()}
-						<CheckIcon />
-					{/snippet}Item 1</MenuItem
+						<DashboardIcon />
+					{/snippet}Dashboard</MenuItem
 				>
 				<MenuItem
-					>Item 2{#snippet end()}
-						<CheckIcon />
-					{/snippet}</MenuItem
+					>{#snippet start()}
+						<BreakingNewsIcon />
+					{/snippet}Blog</MenuItem
 				>
-				<MenuItem>Item 3</MenuItem>
-				<MenuItem>Item 4</MenuItem>
-				<MenuItem>Item 5</MenuItem>
-				<MenuItem>Item 6</MenuItem>
-				<MenuItem>Item 7</MenuItem>
-				<MenuItem>Item 8</MenuItem>
-				<MenuItem>Item 9</MenuItem>
-				<MenuItem>Item 10</MenuItem>
-				<MenuItem>Item 11</MenuItem>
-				<MenuItem>Item 12</MenuItem>
-				<MenuItem>Item 13</MenuItem>
-				<MenuItem>Item 14</MenuItem>
+				<MenuItem
+					>{#snippet start()}
+						<DownloadIcon />
+					{/snippet}Downloads</MenuItem
+				>
+			</ul>
+		</Menu>
+	{/if}
+	<Button variant="filled" popovertarget="user-menu-right" bind:element={userMenuRight}
+		>Icons right</Button
+	>
+	{#if userMenuRight}
+		<Menu anchor={userMenuRight}>
+			<ul>
+				<MenuItem
+					>{#snippet end()}
+						<DashboardIcon />
+					{/snippet}Dashboard</MenuItem
+				>
+				<MenuItem
+					>{#snippet end()}
+						<BreakingNewsIcon />
+					{/snippet}Blog</MenuItem
+				>
+				<MenuItem
+					>{#snippet end()}
+						<DownloadIcon />
+					{/snippet}Downloads</MenuItem
+				>
 			</ul>
 		</Menu>
 	{/if}
