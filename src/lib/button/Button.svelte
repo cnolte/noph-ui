@@ -1,18 +1,21 @@
 <script lang="ts">
+	import Ripple from '$lib/ripple/Ripple.svelte'
 	import type { Snippet } from 'svelte'
-	import type { HTMLButtonAttributes, HTMLAnchorAttributes } from 'svelte/elements'
+	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 	interface ButtonProps extends HTMLButtonAttributes {
 		size?: 'small' | 'medium' | 'large'
 		variant?: 'text' | 'filled' | 'outlined'
 		start?: Snippet
 		end?: Snippet
+		element?: HTMLElement
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
 		size?: 'small' | 'medium' | 'large'
 		variant?: 'text' | 'filled' | 'outlined'
 		start?: Snippet
 		end?: Snippet
+		element?: HTMLElement
 	}
 	let {
 		size = 'small',
@@ -20,6 +23,7 @@
 		children,
 		start,
 		end,
+		element = $bindable(),
 		...attributes
 	}: ButtonProps | AnchorProps = $props()
 	function isButton(obj: HTMLAnchorAttributes | HTMLButtonAttributes): obj is HTMLButtonAttributes {
@@ -31,6 +35,7 @@
 </script>
 
 {#snippet content()}
+	<Ripple />
 	{#if start}
 		{@render start()}
 	{/if}
@@ -47,16 +52,22 @@
 {#if isButton(attributes)}
 	<button
 		{...attributes}
+		bind:this={element}
 		class="{size} {variant}{attributes.disabled
 			? '-disabled pointer-events-none opacity-70'
-			: ' bt-enabled cursor-pointer'} flex items-center gap-1 rounded-full fill-current px-5 font-medium"
+			: ' bt-enabled cursor-pointer'} relative flex items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
+			? 'px-5'
+			: 'px-2'} {attributes.class}"
 	>
 		{@render content()}
 	</button>
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
-		class="{variant} {size} bt-enabled flex items-center gap-1 rounded-full fill-current px-5 font-medium"
+		bind:this={element}
+		class="{size} {variant} bt-enabled relative flex items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
+			? 'px-5'
+			: 'px-2'} {attributes.class}"
 	>
 		{@render content()}
 	</a>
@@ -66,6 +77,7 @@
 	.bt-enabled {
 		transition: background-color 0.3s ease;
 		--np-color-button: var(--np-color-primary, rgb(1, 101, 146));
+		--np-ripple-color: var(--np-color-button);
 	}
 	.bt-enabled:focus-visible {
 		outline-style: solid;
@@ -100,6 +112,7 @@
 		transition-duration: 300ms;
 		color: var(--np-background-color, rgb(255, 255, 255));
 		background-color: var(--np-color-button);
+		--np-ripple-color: var(--np-background-color);
 	}
 	.filled:hover {
 		background-color: color-mix(in srgb, var(--np-color-button) 85%, transparent);

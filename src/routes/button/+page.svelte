@@ -1,6 +1,5 @@
 <script lang="ts">
 	import CheckIcon from '$lib/assets/icons/CheckIcon.svelte'
-	import ErrorIcon from '$lib/assets/icons/ErrorIcon.svelte'
 	import Button from '$lib/button/Button.svelte'
 </script>
 
@@ -41,9 +40,19 @@
 </div>
 <h2>Icon</h2>
 <div class="paper flex gap-4 rounded-3xl p-8">
-	<Button>
+	<Button aria-label="Error" variant="text">
 		{#snippet start()}
-			<ErrorIcon />
+			<CheckIcon />
+		{/snippet}</Button
+	>
+	<Button aria-label="Error">
+		{#snippet start()}
+			<CheckIcon />
+		{/snippet}</Button
+	>
+	<Button aria-label="Error" variant="filled">
+		{#snippet start()}
+			<CheckIcon />
 		{/snippet}</Button
 	>
 	<Button>
