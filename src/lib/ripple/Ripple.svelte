@@ -19,7 +19,7 @@
 		element.classList.add('ripple')
 
 		setTimeout(() => {
-			element.classList.remove('ripple')
+			element?.classList.remove('ripple')
 		}, 600)
 	}
 
