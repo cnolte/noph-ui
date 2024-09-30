@@ -49,14 +49,14 @@
 		<button
 			class="{selected
 				? 'selected '
-				: ''} btn relative flex w-full cursor-pointer items-center gap-4 overflow-hidden fill-current px-6 py-3 text-sm font-medium"
+				: ''} btn relative flex w-full cursor-pointer select-none items-center gap-4 overflow-hidden fill-current px-6 py-3 text-sm font-medium"
 			{...attributes}>{@render content()}</button
 		>
 	{:else if isLink(attributes)}
 		<a
 			class="{selected
 				? 'selected '
-				: ''} btn relative flex w-full items-center gap-4 overflow-hidden fill-current px-6 py-3 text-sm font-medium"
+				: ''} btn relative flex w-full select-none items-center gap-4 overflow-hidden fill-current px-6 py-3 text-sm font-medium"
 			{...attributes}>{@render content()}</a
 		>
 	{/if}

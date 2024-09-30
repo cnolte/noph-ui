@@ -35,6 +35,6 @@
 		size="medium">Tooltip</Button
 	>
 </nav>
-<main class="p-8 md:ml-56">
+<main class="p-4 md:ml-56 md:p-8">
 	{@render children()}
 </main>
