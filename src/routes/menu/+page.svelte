@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CheckIcon from '$lib/assets/icons/CheckIcon.svelte'
 	import Button from '$lib/button/Button.svelte'
+	import CheckIcon from '$lib/icons/CheckIcon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import MenuItem from '$lib/menu/MenuItem.svelte'
 	let element = $state<HTMLElement>()

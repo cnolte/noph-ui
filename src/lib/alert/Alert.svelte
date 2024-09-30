@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CheckIcon from '$lib/assets/icons/CheckIcon.svelte'
-	import ErrorIcon from '$lib/assets/icons/ErrorIcon.svelte'
+	import CheckIcon from '$lib/icons/CheckIcon.svelte'
+	import ErrorIcon from '$lib/icons/ErrorIcon.svelte'
 	import type { Snippet } from 'svelte'
 
 	let {

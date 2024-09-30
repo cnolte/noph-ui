@@ -1,7 +1,7 @@
 <script lang="ts">
-	import CloseIcon from '$lib/assets/icons/CloseIcon.svelte'
-	import MenuIcon from '$lib/assets/icons/MenuIcon.svelte'
 	import Button from '$lib/button/Button.svelte'
+	import CloseIcon from '$lib/icons/CloseIcon.svelte'
+	import MenuIcon from '$lib/icons/MenuIcon.svelte'
 	import '../app.css'
 	import MainNavigation from './MainNavigation.svelte'
 
