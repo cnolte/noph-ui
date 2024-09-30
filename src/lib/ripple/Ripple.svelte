@@ -2,25 +2,32 @@
 	// Funktion zum Erstellen des Ripple-Effekts
 
 	let element: HTMLSpanElement
+	let timeoutId = $state(0)
 
-	const createRipple = (event: MouseEvent | TouchEvent): void => {
+	const createRipple = (event: any): void => {
 		const container: HTMLElement = event.currentTarget as HTMLElement
 
-		const isTouchEvent = event instanceof TouchEvent
-		const clientX = isTouchEvent ? event.touches[0].clientX : (event as MouseEvent).clientX
-		const clientY = isTouchEvent ? event.touches[0].clientY : (event as MouseEvent).clientY
-
+		const isMouseEvent = event instanceof MouseEvent
+		const clientX = isMouseEvent ? (event as MouseEvent).clientX : event.touches[0].clientX
+		const clientY = isMouseEvent ? (event as MouseEvent).clientY : event.touches[0].clientY
 		const diameter = Math.max(container.clientWidth, container.clientHeight)
 		const radius = diameter / 2
 		const clientRect = container.getBoundingClientRect()
-		element.style.width = element.style.height = `${diameter}px`
-		element.style.left = `${clientX - clientRect.x - radius}px`
-		element.style.top = `${clientY - clientRect.y - radius}px`
-		element.classList.add('ripple')
+		if (element) {
+			element.style.width = `${diameter}px`
+			element.style.height = `${diameter}px`
+			element.style.left = `${clientX - clientRect.x - radius}px`
+			element.style.top = `${clientY - clientRect.y - radius}px`
+			clearTimeout(timeoutId)
+			element.classList.remove('ripple')
+			void element.offsetWidth
+			element.classList.add('ripple')
 
-		setTimeout(() => {
-			element?.classList.remove('ripple')
-		}, 600)
+			timeoutId = setTimeout(() => {
+				element?.classList.remove('ripple')
+			}, 600)
+			return
+		}
 	}
 
 	$effect(() => {
