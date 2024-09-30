@@ -33,20 +33,24 @@
 		return left
 	})
 	let calculateTopPos = $derived.by(() => {
-		const top = anchorRect.y + anchorRect.height + 2
+		const top = anchorRect.y + window.scrollY + anchorRect.height + 2
 		if (top + clientHeight > screenHeight) {
-			return anchorRect.y - clientHeight - 2
+			return anchorRect.y + window.scrollY - clientHeight - 2
 		}
 		return top
 	})
-	const resizeWindow = () => {
+	const refreshValues = () => {
 		screenHeight = window.innerHeight
 		screenWidth = window.innerWidth
 		anchorRect = anchor.getBoundingClientRect()
 	}
+
+	anchor.addEventListener('click', () => {
+		refreshValues()
+	})
 </script>
 
-<svelte:window onresize={resizeWindow} />
+<svelte:window onresize={refreshValues} />
 
 <div
 	bind:clientWidth
