@@ -60,7 +60,7 @@
 </div>
 
 <style>
-	[popover] {
+	div[popover] {
 		position: absolute;
 		background-color: var(--np-paper-background-color);
 		margin: 0 0;
@@ -74,7 +74,7 @@
 			overlay 0.2s ease-in-out allow-discrete;
 		opacity: 0;
 	}
-	:popover-open {
+	div:popover-open {
 		opacity: 1;
 	}
 	@starting-style {
