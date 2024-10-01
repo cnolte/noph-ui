@@ -41,7 +41,7 @@
 </nav>
 <nav
 	bind:this={popover}
-	class="nav flex flex-col md:hidden"
+	class="nav flex flex-col px-4 py-0 md:hidden"
 	popover="auto"
 	id="mobile-drawer"
 	onbeforetoggle={(event) => {
@@ -67,7 +67,6 @@
 	}
 	.nav[popover] {
 		margin-top: 4rem;
-		padding: 0;
 		width: 100vw;
 		height: calc(100vh - 4rem);
 		transition-property: transform;
