@@ -36,7 +36,7 @@
 	</div>
 </header>
 
-<nav class="fixed hidden h-full w-56 overflow-y-scroll p-2 md:block">
+<nav class="main-nav fixed hidden w-56 overflow-y-scroll p-2 md:block">
 	<MainNavigation />
 </nav>
 <nav
@@ -59,6 +59,9 @@
 </main>
 
 <style>
+	.main-nav {
+		height: calc(100vh - 4rem);
+	}
 	header {
 		background: linear-gradient(0deg, transparent 0, var(--np-background-color) 16px);
 	}

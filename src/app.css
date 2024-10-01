@@ -12,7 +12,7 @@
 	--np-color-error: rgb(228, 56, 52);
 	--np-divider-color: rgb(62, 72, 79);
 	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
-	--np-selected-button-background-color: rgb(202, 240, 248);
+	--np-selected-button-background-color: rgb(223, 227, 231);
 	--np-color-disabled: rgb(215, 215, 215);
 
 	--np-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -33,7 +33,7 @@
 		--np-color-error: rgb(247, 115, 112);
 		--np-divider-color: rgb(62, 72, 79);
 		--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
-		--np-selected-button-background-color: rgb(75, 115, 124);
+		--np-selected-button-background-color: rgb(48, 53, 57);
 		--np-color-disabled: rgba(223, 227, 232, 0.12);
 		--np-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
 			0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -55,7 +55,7 @@ html {
 	--np-color-error: rgb(228, 56, 52);
 	--np-divider-color: rgb(62, 72, 79);
 	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
-	--np-selected-button-background-color: rgb(202, 240, 248);
+	--np-selected-button-background-color: rgb(223, 227, 231);
 	--np-color-disabled: rgb(215, 215, 215);
 }
 
@@ -70,7 +70,7 @@ html {
 	--np-color-error: rgb(247, 115, 112);
 	--np-divider-color: rgb(62, 72, 79);
 	--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
-	--np-selected-button-background-color: rgb(75, 115, 124);
+	--np-selected-button-background-color: rgb(48, 53, 57);
 	--np-color-disabled: rgba(223, 227, 232, 0.12);
 }
 
