@@ -1,8 +1,6 @@
 <script lang="ts">
-	// Funktion zum Erstellen des Ripple-Effekts
-
 	let element: HTMLSpanElement
-	let timeoutId = $state(0)
+	let timeoutId: number | undefined = $state()
 
 	const createRipple = (event: any): void => {
 		const container: HTMLElement = event.currentTarget as HTMLElement
@@ -19,12 +17,12 @@
 			element.style.left = `${clientX - clientRect.x - radius}px`
 			element.style.top = `${clientY - clientRect.y - radius}px`
 			clearTimeout(timeoutId)
-			element.classList.remove('ripple')
+			element.classList.remove('np-ripple')
 			void element.offsetWidth
-			element.classList.add('ripple')
+			element.classList.add('np-ripple')
 
 			timeoutId = setTimeout(() => {
-				element?.classList.remove('ripple')
+				element?.classList.remove('np-ripple')
 			}, 600)
 			return
 		}
@@ -36,15 +34,18 @@
 	})
 </script>
 
-<span class="absolute" bind:this={element}></span>
+<span bind:this={element}></span>
 
 <style>
-	:global(.ripple) {
+	span {
 		border-radius: 50%;
+		position: absolute;
+		pointer-events: none;
+	}
+	:global(.np-ripple) {
 		background: color-mix(in srgb, var(--np-ripple-color) 30%, transparent);
 		transform: scale(0);
 		animation: ripple-animation 600ms linear;
-		pointer-events: none;
 	}
 
 	@keyframes ripple-animation {

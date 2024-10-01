@@ -1,33 +1,36 @@
 <script lang="ts">
-	import CheckIcon from '$lib/icons/CheckIcon.svelte'
-	import ErrorIcon from '$lib/icons/ErrorIcon.svelte'
 	import type { Snippet } from 'svelte'
+	import type { HTMLAttributes } from 'svelte/elements'
 
-	let {
-		children,
-		severity,
-	}: {
-		children: Snippet
-		severity: 'error' | 'success'
-	} = $props()
+	interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+		start?: Snippet
+		end?: Snippet
+	}
+
+	let { children, start, end, ...attributes }: AlertProps = $props()
 </script>
 
-<div class="flex items-center gap-2 rounded-xl fill-current p-4 {severity}">
-	{#if severity === 'success'}
-		<CheckIcon />
-	{:else}
-		<ErrorIcon />
+<div {...attributes} class="alert">
+	{#if start}
+		{@render start()}
 	{/if}
-	<div>{@render children()}</div>
+	{#if children}
+		<div class="flex-1">{@render children()}</div>
+	{/if}
+	{#if end}
+		{@render end()}
+	{/if}
 </div>
 
 <style>
-	.success {
-		color: color-mix(in srgb, var(--np-color-success) 20%, var(--np-text-color));
-		background-color: color-mix(in srgb, var(--np-color-success) 40%, var(--np-background-color));
-	}
-	.error {
-		color: color-mix(in srgb, var(--np-color-error) 30%, var(--np-text-color));
-		background-color: color-mix(in srgb, var(--np-color-error) 40%, var(--np-background-color));
+	.alert {
+		color: var(--np-background-color);
+		background-color: var(--np-alert-color, var(--np-color-primary));
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		border-radius: 0.75rem;
+		fill: currentColor;
+		padding: 1rem;
 	}
 </style>

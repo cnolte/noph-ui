@@ -4,8 +4,9 @@
 	import MenuIcon from '$lib/icons/MenuIcon.svelte'
 	import '../app.css'
 	import MainNavigation from './MainNavigation.svelte'
+	import ThemeButton from './ThemeButton.svelte'
 
-	let { children } = $props()
+	let { data, children } = $props()
 
 	let popoverState = $state('closed')
 	let popover: HTMLElement
@@ -22,6 +23,7 @@
 			<div class="ml-1 hidden text-xl font-semibold sm:block md:text-2xl">Noph UI</div>
 		</a>
 		<div class="flex-grow"></div>
+		<ThemeButton theme={data.theme} />
 		<Button
 			popovertarget="mobile-drawer"
 			variant="text"
@@ -52,7 +54,7 @@
 		}}
 	/>
 </nav>
-<main class="mt-16 p-4 md:ml-56 md:p-8">
+<main class="mt-16 max-w-6xl p-4 md:ml-56 md:p-8">
 	{@render children()}
 </main>
 
