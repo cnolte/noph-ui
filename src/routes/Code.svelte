@@ -12,7 +12,7 @@
 >
 	<Tooltip style="position:absolute;right:0.4rem;top:0.4rem;border-radius:9999px" {title}>
 		<Button
-			title="Copy Code"
+			aria-label="Copy Code"
 			variant="text"
 			style="--np-color-button: var(--np-text-color);"
 			onclick={() => {

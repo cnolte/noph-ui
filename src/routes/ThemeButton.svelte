@@ -30,8 +30,8 @@
 
 <Tooltip style="border-radius:9999px" title={switchThemeTitle}>
 	<Button
-		title={switchThemeTitle}
 		variant="text"
+		aria-label={switchThemeTitle}
 		style="--np-color-button: var(--np-text-color)"
 		onclick={() => {
 			theme = theme === 'light' ? 'dark' : 'light'
