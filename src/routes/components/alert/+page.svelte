@@ -10,7 +10,7 @@
 	<title>Alert - Noph UI</title>
 </svelte:head>
 
-<div class="paper rounded-3xl p-8">
+<div class="paper">
 	<h1>Alert</h1>
 
 	<h2>Basic Alert</h2>

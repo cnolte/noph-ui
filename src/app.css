@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 :root {
-	--np-background-color: rgb(234, 238, 244);
-	--np-paper-background-color: rgb(246, 250, 254);
-	--np-text-color: rgb(23, 23, 23);
+	--np-background-color: rgb(235, 238, 242);
+	--np-paper-background-color: rgb(247, 250, 254);
+	--np-text-color: rgb(24, 28, 31);
 	--np-text-color-secondary: rgb(82 82 82);
-	--np-color-primary: rgb(1, 101, 146);
+	--np-color-primary: rgb(4, 102, 138);
 	--np-color-success: rgb(2, 183, 139);
 	--np-color-error: rgb(228, 56, 52);
-	--np-divider-color: rgb(190, 200, 209);
-	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
+	--np-divider-color: rgb(190, 200, 208);
 	--np-selected-button-background-color: rgb(223, 227, 231);
 	--np-color-disabled: rgb(215, 215, 215);
 
@@ -24,15 +23,14 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--np-background-color: rgb(27, 32, 36);
-		--np-paper-background-color: rgb(44, 54, 63);
-		--np-text-color: rgb(223, 227, 231);
+		--np-background-color: rgb(28, 32, 35);
+		--np-paper-background-color: rgb(15, 20, 23);
+		--np-text-color: rgb(226, 227, 231);
 		--np-text-color-secondary: rgb(212 212 212);
-		--np-color-primary: rgb(131, 207, 255);
+		--np-color-primary: rgb(149, 216, 255);
 		--np-color-success: rgb(84, 230, 193);
 		--np-color-error: rgb(247, 115, 112);
-		--np-divider-color: rgb(62, 72, 80);
-		--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
+		--np-divider-color: rgb(63, 72, 79);
 		--np-selected-button-background-color: rgb(48, 53, 57);
 		--np-color-disabled: rgba(223, 227, 232, 0.12);
 		--np-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
@@ -46,30 +44,28 @@ html {
 
 [data-theme='light'] {
 	color-scheme: light;
-	--np-background-color: rgb(234, 238, 244);
-	--np-paper-background-color: rgb(246, 250, 254);
-	--np-text-color: rgb(1, 1, 1);
+	--np-background-color: rgb(235, 238, 242);
+	--np-paper-background-color: rgb(247, 250, 254);
+	--np-text-color: rgb(24, 28, 31);
 	--np-text-color-secondary: rgb(82 82 82);
-	--np-color-primary: rgb(1, 101, 146);
+	--np-color-primary: rgb(4, 102, 138);
 	--np-color-success: rgb(2, 183, 139);
 	--np-color-error: rgb(228, 56, 52);
-	--np-divider-color: rgb(190, 200, 209);
-	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
+	--np-divider-color: rgb(190, 200, 208);
 	--np-selected-button-background-color: rgb(223, 227, 231);
 	--np-color-disabled: rgb(215, 215, 215);
 }
 
 [data-theme='dark'] {
 	color-scheme: dark;
-	--np-background-color: rgb(27, 32, 36);
-	--np-paper-background-color: rgb(44, 54, 63);
-	--np-text-color: rgb(223, 227, 231);
+	--np-background-color: rgb(28, 32, 35);
+	--np-paper-background-color: rgb(15, 20, 23);
+	--np-text-color: rgb(226, 227, 231);
 	--np-text-color-secondary: rgb(212 212 212);
-	--np-color-primary: rgb(131, 207, 255);
+	--np-color-primary: rgb(149, 216, 255);
 	--np-color-success: rgb(84, 230, 193);
 	--np-color-error: rgb(247, 115, 112);
-	--np-divider-color: rgb(62, 72, 80);
-	--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
+	--np-divider-color: rgb(63, 72, 79);
 	--np-selected-button-background-color: rgb(48, 53, 57);
 	--np-color-disabled: rgba(223, 227, 232, 0.12);
 }
@@ -96,7 +92,14 @@ h3 {
 }
 
 .paper {
+	padding: 1rem;
+	border-radius: 1.5rem;
 	background-color: color-mix(in srgb, var(--np-paper-background-color) 80%, transparent);
+}
+@media (min-width: 768px) {
+	.paper {
+		padding: 2rem;
+	}
 }
 
 .primary {

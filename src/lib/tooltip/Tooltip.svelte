@@ -7,7 +7,7 @@
 		titleElement?: Snippet
 	}
 
-	let { children, titleElement, ...attributes }: TooltipProps = $props()
+	let { children, titleElement, title, ...attributes }: TooltipProps = $props()
 	let visible = $state(false)
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
@@ -63,7 +63,7 @@
 					{#if titleElement}
 						{@render titleElement()}
 					{:else}
-						{attributes.title}
+						{title}
 					{/if}
 				</div>
 			</div>

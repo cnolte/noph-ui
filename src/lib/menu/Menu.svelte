@@ -66,7 +66,7 @@
 <style>
 	div[popover] {
 		position: absolute;
-		background-color: var(--np-paper-background-color);
+		background-color: var(--np-menu-background-color, var(--np-background-color));
 		margin: 0 0;
 		overflow: auto;
 		left: 0;

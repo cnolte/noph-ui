@@ -28,7 +28,7 @@
 	)
 </script>
 
-<Tooltip title={switchThemeTitle}>
+<Tooltip style="border-radius:9999px" title={switchThemeTitle}>
 	<Button
 		title={switchThemeTitle}
 		variant="text"
