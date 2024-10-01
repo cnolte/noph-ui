@@ -97,11 +97,13 @@
 			outline-width: 3px;
 		}
 	}
-	.text:hover {
-		background-color: color-mix(in srgb, var(--np-color-button) 10%, transparent);
-	}
 	.text {
 		color: var(--np-color-button);
+	}
+	@media (hover: hover) {
+		.text:hover {
+			background-color: color-mix(in srgb, var(--np-color-button) 10%, transparent);
+		}
 	}
 	.text-disabled {
 		color: color-mix(in srgb, var(--np-text-color) 60%, transparent);
@@ -114,13 +116,16 @@
 		background-color: var(--np-color-button);
 		--np-ripple-color: var(--np-background-color);
 	}
-	.filled:hover {
-		background-color: color-mix(in srgb, var(--np-color-button) 85%, transparent);
-		box-shadow: var(
-			--np-elevation-1,
-			0 1px 2px 0 rgb(0 0 0 / 0.6),
-			0 0px 0px -1px rgb(0 0 0 / 0.6)
-		);
+
+	@media (hover: hover) {
+		.filled:hover {
+			background-color: color-mix(in srgb, var(--np-color-button) 85%, transparent);
+			box-shadow: var(
+				--np-elevation-1,
+				0 1px 2px 0 rgb(0 0 0 / 0.6),
+				0 0px 0px -1px rgb(0 0 0 / 0.6)
+			);
+		}
 	}
 	.filled:active {
 		box-shadow: none;
@@ -129,13 +134,15 @@
 		color: color-mix(in srgb, var(--np-text-color) 60%, transparent);
 		background-color: var(--np-color-disabled);
 	}
+	@media (hover: hover) {
+		.outlined:hover {
+			background-color: color-mix(in srgb, var(--np-color-button) 10%, transparent);
+		}
+	}
 	.outlined {
 		border: 1px solid;
 		color: var(--np-color-button);
 		border-color: var(--np-color-button);
-	}
-	.outlined:hover {
-		background-color: color-mix(in srgb, var(--np-color-button) 10%, transparent);
 	}
 	.outlined-disabled {
 		border: 1px solid;

@@ -63,8 +63,10 @@
 </li>
 
 <style>
-	.btn:hover {
-		background-color: color-mix(in srgb, var(--np-color-menu-item) 10%, transparent);
+	@media (hover: hover) {
+		.btn:hover {
+			background-color: color-mix(in srgb, var(--np-color-menu-item) 10%, transparent);
+		}
 	}
 	.selected {
 		background-color: var(--np-selected-button-background-color);

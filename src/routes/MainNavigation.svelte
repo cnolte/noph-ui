@@ -7,7 +7,6 @@
 	}: {
 		onclose?: () => void
 	} = $props()
-	$inspect($page.url.pathname)
 </script>
 
 <div class="flex flex-col gap-2">

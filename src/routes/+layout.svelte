@@ -19,7 +19,7 @@
 <header class="fixed left-0 right-0 top-0 z-10 h-20 px-2 md:px-4">
 	<div class=" mt-2 flex items-center gap-2">
 		<a href="/" class="flex items-center gap-3 py-2">
-			<img src="/favicon.svg" alt="Noph UI" width="42" height="42" />
+			<img src="/favicon.svg" alt="Noph Logo" width="42" height="42" />
 			<div class="ml-1 hidden text-xl font-semibold sm:block md:text-2xl">Noph UI</div>
 		</a>
 		<div class="flex-grow"></div>

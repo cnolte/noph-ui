@@ -11,8 +11,7 @@
 
 <h2>Basic Tooltip</h2>
 <div class="paper flex gap-4 rounded-3xl p-8">
-	<Tooltip
-		>{#snippet title()}Tooltip{/snippet}
+	<Tooltip title="The tooltip">
 		<Button variant="outlined">Hover</Button>
 	</Tooltip>
 </div>

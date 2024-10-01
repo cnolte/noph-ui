@@ -10,7 +10,7 @@
 	--np-color-primary: rgb(1, 101, 146);
 	--np-color-success: rgb(2, 183, 139);
 	--np-color-error: rgb(228, 56, 52);
-	--np-divider-color: rgb(62, 72, 79);
+	--np-divider-color: rgb(190, 200, 209);
 	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
 	--np-selected-button-background-color: rgb(223, 227, 231);
 	--np-color-disabled: rgb(215, 215, 215);
@@ -31,7 +31,7 @@
 		--np-color-primary: rgb(131, 207, 255);
 		--np-color-success: rgb(84, 230, 193);
 		--np-color-error: rgb(247, 115, 112);
-		--np-divider-color: rgb(62, 72, 79);
+		--np-divider-color: rgb(62, 72, 80);
 		--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
 		--np-selected-button-background-color: rgb(48, 53, 57);
 		--np-color-disabled: rgba(223, 227, 232, 0.12);
@@ -53,7 +53,7 @@ html {
 	--np-color-primary: rgb(1, 101, 146);
 	--np-color-success: rgb(2, 183, 139);
 	--np-color-error: rgb(228, 56, 52);
-	--np-divider-color: rgb(62, 72, 79);
+	--np-divider-color: rgb(190, 200, 209);
 	--np-button-hover-background-color: rgba(219, 219, 219, 0.4);
 	--np-selected-button-background-color: rgb(223, 227, 231);
 	--np-color-disabled: rgb(215, 215, 215);
@@ -68,7 +68,7 @@ html {
 	--np-color-primary: rgb(131, 207, 255);
 	--np-color-success: rgb(84, 230, 193);
 	--np-color-error: rgb(247, 115, 112);
-	--np-divider-color: rgb(62, 72, 79);
+	--np-divider-color: rgb(62, 72, 80);
 	--np-button-hover-background-color: rgba(75, 115, 124, 0.5);
 	--np-selected-button-background-color: rgb(48, 53, 57);
 	--np-color-disabled: rgba(223, 227, 232, 0.12);
@@ -85,7 +85,7 @@ h2 {
 	font-size: 1.75rem;
 	line-height: 2.5rem;
 	font-weight: 400;
-	margin: 1rem 0 0.5rem 0;
+	margin: 1.5rem 0 1rem 0;
 }
 
 h3 {

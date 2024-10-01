@@ -28,10 +28,7 @@
 	)
 </script>
 
-<Tooltip>
-	{#snippet title()}
-		<div>{switchThemeTitle}</div>
-	{/snippet}
+<Tooltip title={switchThemeTitle}>
 	<Button
 		title={switchThemeTitle}
 		variant="text"

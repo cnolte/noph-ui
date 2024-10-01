@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte'
+	import type { HTMLAttributes } from 'svelte/elements'
 	import { fade, scale } from 'svelte/transition'
 
-	let {
-		children,
-		title,
-	}: {
-		children: Snippet
-		title: Snippet
-	} = $props()
+	interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
+		titleElement?: Snippet
+	}
+
+	let { children, titleElement, ...attributes }: TooltipProps = $props()
 	let visible = $state(false)
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
@@ -33,7 +32,7 @@
 	})
 </script>
 
-{#if children && title}
+{#if children}
 	<div
 		role="tooltip"
 		bind:this={containerEl}
@@ -45,6 +44,7 @@
 		onmouseleave={() => {
 			visible = false
 		}}
+		{...attributes}
 		class="relative inline-block"
 	>
 		{@render children()}
@@ -60,7 +60,11 @@
 						: containerEl.clientHeight + 4}px;right:{calcualteRightPos}px"
 					class="tooltiptext"
 				>
-					{@render title()}
+					{#if titleElement}
+						{@render titleElement()}
+					{:else}
+						{attributes.title}
+					{/if}
 				</div>
 			</div>
 		{/if}
