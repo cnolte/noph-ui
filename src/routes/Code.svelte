@@ -34,6 +34,7 @@
 
 <style>
 	code {
-		font-family: 'Courier New', Courier, monospace;
+		color: var(--np-color-primary);
+		font-size: 0.875rem;
 	}
 </style>
