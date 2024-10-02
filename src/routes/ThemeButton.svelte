@@ -3,7 +3,6 @@
 	import Button from '$lib/button/Button.svelte'
 	import DarkModeIcon from '$lib/icons/DarkModeIcon.svelte'
 	import LightModeIcon from '$lib/icons/LightModeIcon.svelte'
-	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import { onMount } from 'svelte'
 
 	let {
@@ -28,23 +27,21 @@
 	)
 </script>
 
-<Tooltip style="border-radius:9999px" title={switchThemeTitle}>
-	<Button
-		variant="text"
-		aria-label={switchThemeTitle}
-		style="--np-color-button: var(--np-text-color)"
-		onclick={() => {
-			theme = theme === 'light' ? 'dark' : 'light'
-			document.cookie = `theme=${theme}; path=/; SameSite=Lax`
-			document.documentElement.setAttribute('data-theme', theme)
-		}}
-	>
-		{#snippet start()}
-			{#if theme === 'light'}
-				<DarkModeIcon />
-			{:else}
-				<LightModeIcon />
-			{/if}
-		{/snippet}
-	</Button>
-</Tooltip>
+<Button
+	variant="text"
+	title={switchThemeTitle}
+	style="--np-color-button: var(--np-text-color)"
+	onclick={() => {
+		theme = theme === 'light' ? 'dark' : 'light'
+		document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+		document.documentElement.setAttribute('data-theme', theme)
+	}}
+>
+	{#snippet start()}
+		{#if theme === 'light'}
+			<DarkModeIcon />
+		{:else}
+			<LightModeIcon />
+		{/if}
+	{/snippet}
+</Button>

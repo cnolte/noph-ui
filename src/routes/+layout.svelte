@@ -3,6 +3,7 @@
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import MenuIcon from '$lib/icons/MenuIcon.svelte'
 	import '../app.css'
+	import GitHubMark from './GitHubMark.svelte'
 	import MainNavigation from './MainNavigation.svelte'
 	import ThemeButton from './ThemeButton.svelte'
 
@@ -23,6 +24,19 @@
 			<div class="ml-1 hidden text-xl font-semibold sm:block md:text-2xl">Noph UI</div>
 		</a>
 		<div class="flex-grow"></div>
+		<Button
+			variant="text"
+			title="GitHub repository"
+			style="--np-color-button: var(--np-text-color)"
+			href="https://github.com/cnolte/noph-ui"
+			target="_blank"
+		>
+			{#snippet start()}
+				<div class="icon">
+					<GitHubMark />
+				</div>
+			{/snippet}
+		</Button>
 		<ThemeButton theme={data.theme} />
 		<Button
 			popovertarget="mobile-drawer"
@@ -59,6 +73,19 @@
 </main>
 
 <style>
+	:global(.icon) {
+		width: 24px;
+		height: 24px;
+	}
+	:global(.icon svg) {
+		width: 100%;
+		height: 100%;
+	}
+	:global(.icon svg path) {
+		scale: 0.24;
+		fill: var(--np-text-color);
+	}
+
 	.main-nav {
 		height: calc(100vh - 4rem);
 	}
