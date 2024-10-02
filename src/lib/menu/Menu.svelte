@@ -33,9 +33,9 @@
 		return left
 	})
 	let calculateTopPos = $derived.by(() => {
-		const top = anchorRect.y + window.scrollY + anchorRect.height + 2
+		const top = anchorRect.y + anchorRect.height + 2
 		if (top + clientHeight > innerHeight) {
-			return anchorRect.y + window.scrollY - clientHeight - 2
+			return anchorRect.y - clientHeight - 2
 		}
 		return top
 	})

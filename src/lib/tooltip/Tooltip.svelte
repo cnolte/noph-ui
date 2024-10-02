@@ -2,7 +2,7 @@
 	import type { HTMLAttributes } from 'svelte/elements'
 
 	interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-		anchor?: HTMLElement
+		anchor: HTMLElement
 	}
 
 	let { children, anchor, ...attributes }: TooltipProps = $props()
@@ -10,25 +10,23 @@
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
 	let innerWidth = $state(0)
-	let anchorRect: DOMRect | undefined = $state()
+	let anchorRect: DOMRect | undefined = $state(anchor.getBoundingClientRect())
 
 	const distanceToBorder = 8
 	const refreshValues = () => {
 		anchorRect = anchor?.getBoundingClientRect()
 	}
 
-	$effect(refreshValues)
-
 	let calculateLeftPos = $derived.by(() => {
 		if (!anchor || !anchorRect) {
 			return 0
 		}
 		const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-		if (innerWidth < left + clientWidth + distanceToBorder) {
-			return innerWidth - clientWidth - distanceToBorder
-		}
 		if (left < distanceToBorder) {
 			return distanceToBorder
+		}
+		if (innerWidth < left + clientWidth + distanceToBorder) {
+			return innerWidth - clientWidth - distanceToBorder
 		}
 		return anchorRect.left + anchorRect.width / 2 - clientWidth / 2
 	})
@@ -43,12 +41,16 @@
 		}
 		return top
 	})
+	anchor.addEventListener('mouseenter', () => {
+		refreshValues()
+	})
 </script>
 
 <svelte:window bind:innerHeight bind:innerWidth onresize={refreshValues} onscroll={refreshValues} />
 
 <div
 	{...attributes}
+	class="tooltip"
 	style="top:{calculateTopPos}px;left:{calculateLeftPos}px"
 	role="tooltip"
 	bind:clientWidth
@@ -58,7 +60,8 @@
 </div>
 
 <style>
-	[role='tooltip'] {
+	.tooltip {
+		visibility: hidden;
 		width: max-content;
 		position: fixed;
 		background: var(--np-text-color-secondary);
@@ -73,8 +76,11 @@
 			opacity 0.3s ease,
 			scale 0.3s ease;
 	}
-	:global([aria-describedby]:hover + [role='tooltip']) {
-		opacity: 1;
-		scale: 1;
+	@media (hover: hover) {
+		:global([aria-describedby]:hover + [role='tooltip']) {
+			visibility: visible;
+			opacity: 1;
+			scale: 1;
+		}
 	}
 </style>

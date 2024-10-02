@@ -3,7 +3,7 @@
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import Code from '../../Code.svelte'
 
-	let exampleBtn1 = null
+	let exampleBtn1: HTMLDivElement | undefined = $state()
 </script>
 
 <svelte:head>
