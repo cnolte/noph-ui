@@ -1,14 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
-	import BreakingNewsIcon from '$lib/icons/BreakingNewsIcon.svelte'
 	import DashboardIcon from '$lib/icons/DashboardIcon.svelte'
 	import DownloadIcon from '$lib/icons/DownloadIcon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import MenuItem from '$lib/menu/MenuItem.svelte'
+	import Code from '../../Code.svelte'
 	let browserMenu = $state<HTMLElement>()
-	let fruitMenu = $state<HTMLElement>()
-	let userMenuLeft = $state<HTMLElement>()
-	let userMenuRight = $state<HTMLElement>()
 </script>
 
 <svelte:head>
@@ -21,7 +18,7 @@
 	<div
 		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
 	>
-		<Button variant="filled" popovertarget="lng-menu" bind:element={browserMenu}>Browser</Button>
+		<Button bind:element={browserMenu}>Open Menu</Button>
 		{#if browserMenu}
 			<Menu anchor={browserMenu}>
 				<ul>
@@ -31,71 +28,52 @@
 				</ul>
 			</Menu>
 		{/if}
-		<Button variant="filled" popovertarget="fruit-menu" bind:element={fruitMenu}
-			>Fruit selected</Button
-		>
-		{#if fruitMenu}
-			<Menu anchor={fruitMenu}>
-				<ul>
-					<MenuItem>Apple</MenuItem>
-					<MenuItem selected>Orange</MenuItem>
-					<MenuItem>Banana</MenuItem>
-					<MenuItem>Mango</MenuItem>
-				</ul>
-			</Menu>
-		{/if}
 	</div>
-	<h2>Icon Menu</h2>
+	<Code
+		value={`<Button bind:element={browserMenu}>Browser</Button>
+{#if browserMenu}
+	<Menu anchor={browserMenu}>
+		<ul>
+			<MenuItem>Chrome</MenuItem>
+			<MenuItem>Firefox</MenuItem>
+			<MenuItem>Safari</MenuItem>
+		</ul>
+	</Menu>
+{/if}`}
+	/>
+	<h2>Menu items</h2>
 	<div
 		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
 	>
-		<Button variant="filled" popovertarget="user-menu-left" bind:element={userMenuLeft}
-			>Icons left</Button
-		>
-		{#if userMenuLeft}
-			<Menu anchor={userMenuLeft}>
-				<ul>
-					<MenuItem
-						>{#snippet start()}
-							<DashboardIcon />
-						{/snippet}Dashboard</MenuItem
-					>
-					<MenuItem
-						>{#snippet start()}
-							<BreakingNewsIcon />
-						{/snippet}Blog</MenuItem
-					>
-					<MenuItem
-						>{#snippet start()}
-							<DownloadIcon />
-						{/snippet}Downloads</MenuItem
-					>
-				</ul>
-			</Menu>
-		{/if}
-		<Button variant="filled" popovertarget="user-menu-right" bind:element={userMenuRight}
-			>Icons right</Button
-		>
-		{#if userMenuRight}
-			<Menu anchor={userMenuRight}>
-				<ul>
-					<MenuItem
-						>{#snippet end()}
-							<DashboardIcon />
-						{/snippet}Dashboard</MenuItem
-					>
-					<MenuItem
-						>{#snippet end()}
-							<BreakingNewsIcon />
-						{/snippet}Blog</MenuItem
-					>
-					<MenuItem
-						>{#snippet end()}
-							<DownloadIcon />
-						{/snippet}Downloads</MenuItem
-					>
-				</ul>
-			</Menu>
-		{/if}
+		<ul>
+			<MenuItem>Basic</MenuItem>
+			<MenuItem selected>Selected</MenuItem>
+			<MenuItem
+				>{#snippet start()}
+					<DashboardIcon />
+				{/snippet}Icon start</MenuItem
+			>
+			<MenuItem
+				>{#snippet end()}
+					<DownloadIcon />
+				{/snippet}Icon end</MenuItem
+			>
+		</ul>
 	</div>
+	<Code
+		value={`<ul>
+	<MenuItem>Basic</MenuItem>
+	<MenuItem selected>Selected</MenuItem>
+	<MenuItem
+		>{#snippet start()}
+			<DashboardIcon />
+		{/snippet}Icon start</MenuItem
+	>
+	<MenuItem
+		>{#snippet end()}
+			<DownloadIcon />
+		{/snippet}Icon end</MenuItem
+	>
+</ul>`}
+	/>
 </div>

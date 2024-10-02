@@ -1,7 +1,7 @@
 <script lang="ts">
 	let {
 		height = 24,
-		width = 24
+		width = 24,
 	}: {
 		height?: number
 		width?: number

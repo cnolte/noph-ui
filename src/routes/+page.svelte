@@ -1,7 +1,3 @@
-<script lang="ts">
-	import Button from '$lib/button/Button.svelte'
-</script>
-
 <svelte:head>
 	<title>Noph UI</title>
 </svelte:head>

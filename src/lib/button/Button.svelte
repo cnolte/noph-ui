@@ -69,8 +69,8 @@
 {#if isButton(attributes)}
 	<button
 		{...attributes}
-		aria-describedby={title ? tooltipId : undefined}
-		aria-label={title}
+		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
+		aria-label={title || attributes['aria-label']}
 		bind:this={element}
 		class="{size} {variant}{attributes.disabled
 			? '-disabled pointer-events-none opacity-70'

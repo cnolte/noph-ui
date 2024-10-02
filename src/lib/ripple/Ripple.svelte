@@ -2,7 +2,7 @@
 	let element: HTMLSpanElement
 	let timeoutId: number | undefined = $state()
 
-	const createRipple = (event: any): void => {
+	const createRipple = (event: MouseEvent | TouchEvent): void => {
 		const container: HTMLElement = event.currentTarget as HTMLElement
 
 		const isMouseEvent = event instanceof MouseEvent

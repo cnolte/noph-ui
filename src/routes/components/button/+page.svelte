@@ -75,17 +75,17 @@
 	<div
 		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
 	>
-		<Button aria-label="Error" variant="text">
+		<Button aria-label="Check 1" variant="text">
 			{#snippet start()}
 				<CheckIcon />
 			{/snippet}</Button
 		>
-		<Button aria-label="Error">
+		<Button aria-label="Check 2">
 			{#snippet start()}
 				<CheckIcon />
 			{/snippet}</Button
 		>
-		<Button aria-label="Error" variant="filled">
+		<Button aria-label="Check 3" variant="filled">
 			{#snippet start()}
 				<CheckIcon />
 			{/snippet}</Button

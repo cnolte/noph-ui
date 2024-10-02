@@ -50,8 +50,8 @@
 
 <div
 	{...attributes}
-	class="tooltip"
-	style="top:{calculateTopPos}px;left:{calculateLeftPos}px"
+	class="tooltip {attributes.class}"
+	style="top:{calculateTopPos}px;left:{calculateLeftPos}px;{attributes.style}"
 	role="tooltip"
 	bind:clientWidth
 	bind:clientHeight

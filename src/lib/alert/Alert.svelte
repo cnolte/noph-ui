@@ -10,7 +10,7 @@
 	let { children, start, end, ...attributes }: AlertProps = $props()
 </script>
 
-<div {...attributes} class="alert">
+<div {...attributes} class="alert {attributes.class}">
 	{#if start}
 		{@render start()}
 	{/if}

@@ -26,7 +26,7 @@
 			<CopyContentIcon />
 		{/snippet}</Button
 	>
-	<pre class="w-full overflow-y-auto p-3"><code>{value}</code></pre>
+	<pre class="w-full text-wrap py-3 pl-3 pr-10"><code>{value}</code></pre>
 </div>
 
 <style>

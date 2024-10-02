@@ -16,6 +16,9 @@
 	let innerWidth = $state(0)
 	const distanceToBorder = 8
 
+	const id = Math.random().toString(36).substring(7)
+	anchor.setAttribute('popovertarget', id)
+
 	let maxHeight = $derived(
 		(anchorRect.top > innerHeight - anchorRect.bottom
 			? anchorRect.top
@@ -55,7 +58,7 @@
 	bind:clientHeight
 	{...attributes}
 	popover="auto"
-	id={anchor.getAttribute('popovertarget')}
+	{id}
 	style="max-height:{maxHeight}px;top:{calculateTopPos}px;left:{calculateLeftPos}px;"
 >
 	{@render children()}
