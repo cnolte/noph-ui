@@ -21,10 +21,14 @@
 		...attributes
 	}: ButtonProps | AnchorProps = $props()
 
-	function isButton(obj: HTMLAnchorAttributes | HTMLButtonAttributes): obj is HTMLButtonAttributes {
+	const isButton = (
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+	): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
 	}
-	function isLink(obj: HTMLAnchorAttributes | HTMLButtonAttributes): obj is HTMLAnchorAttributes {
+	const isLink = (
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+	): obj is HTMLAnchorAttributes => {
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
 </script>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import type { Snippet } from 'svelte'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
@@ -23,13 +24,29 @@
 		children,
 		start,
 		end,
+		title,
 		element = $bindable(),
 		...attributes
 	}: ButtonProps | AnchorProps = $props()
-	function isButton(obj: HTMLAnchorAttributes | HTMLButtonAttributes): obj is HTMLButtonAttributes {
+
+	const generateUUIDv4 = () => {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+			var r = (Math.random() * 16) | 0,
+				v = c === 'x' ? r : (r & 0x3) | 0x8
+			return v.toString(16)
+		})
+	}
+
+	let tooltipId = $state(title ? generateUUIDv4() : '')
+
+	const isButton = (
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+	): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
 	}
-	function isLink(obj: HTMLAnchorAttributes | HTMLButtonAttributes): obj is HTMLAnchorAttributes {
+	const isLink = (
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+	): obj is HTMLAnchorAttributes => {
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
 </script>
@@ -52,6 +69,8 @@
 {#if isButton(attributes)}
 	<button
 		{...attributes}
+		aria-describedby={title ? tooltipId : undefined}
+		aria-label={title}
 		bind:this={element}
 		class="{size} {variant}{attributes.disabled
 			? '-disabled pointer-events-none opacity-70'
@@ -64,6 +83,8 @@
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
+		aria-describedby={title ? tooltipId : undefined}
+		aria-label={title}
 		bind:this={element}
 		class="{size} {variant} bt-enabled relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
 			? 'px-5'
@@ -71,6 +92,9 @@
 	>
 		{@render content()}
 	</a>
+{/if}
+{#if title}
+	<Tooltip anchor={element} id={tooltipId}>{title}</Tooltip>
 {/if}
 
 <style>

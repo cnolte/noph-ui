@@ -12,36 +12,34 @@
 	let anchorRect = $state(anchor.getBoundingClientRect())
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
-	let screenHeight = $state(window.innerHeight)
-	let screenWidth = $state(window.innerWidth)
+	let innerHeight = $state(0)
+	let innerWidth = $state(0)
 	const distanceToBorder = 8
 
 	let maxHeight = $derived(
-		(anchorRect.top > screenHeight - anchorRect.bottom
+		(anchorRect.top > innerHeight - anchorRect.bottom
 			? anchorRect.top
-			: screenHeight - anchorRect.bottom) - distanceToBorder,
+			: innerHeight - anchorRect.bottom) - distanceToBorder,
 	)
 
 	let calculateLeftPos = $derived.by(() => {
 		const left = anchorRect.x + anchorRect.width / 2 - clientWidth / 2
-		if (left < 0) {
-			return 0
+		if (left < distanceToBorder) {
+			return distanceToBorder
 		}
-		if (left + clientWidth > screenWidth) {
-			return screenWidth - clientWidth
+		if (distanceToBorder + left + clientWidth > innerWidth) {
+			return innerWidth - clientWidth - distanceToBorder
 		}
 		return left
 	})
 	let calculateTopPos = $derived.by(() => {
 		const top = anchorRect.y + window.scrollY + anchorRect.height + 2
-		if (top + clientHeight > screenHeight) {
+		if (top + clientHeight > innerHeight) {
 			return anchorRect.y + window.scrollY - clientHeight - 2
 		}
 		return top
 	})
 	const refreshValues = () => {
-		screenHeight = window.innerHeight
-		screenWidth = window.innerWidth
 		anchorRect = anchor.getBoundingClientRect()
 	}
 
@@ -50,7 +48,7 @@
 	})
 </script>
 
-<svelte:window onresize={refreshValues} />
+<svelte:window bind:innerHeight bind:innerWidth onresize={refreshValues} onscroll={refreshValues} />
 
 <div
 	bind:clientWidth
@@ -65,7 +63,6 @@
 
 <style>
 	div[popover] {
-		position: absolute;
 		background-color: var(--np-menu-background-color, var(--np-background-color));
 		margin: 0 0;
 		overflow: auto;
@@ -74,15 +71,16 @@
 		padding: 1rem 0;
 		box-shadow: var(--np-elevation-2);
 		transition:
-			opacity 0.2s ease-in-out,
-			overlay 0.2s ease-in-out allow-discrete;
+			opacity 0.3s,
+			overlay 0.3s allow-discrete,
+			display 0.3s allow-discrete;
 		opacity: 0;
 	}
 	div:popover-open {
 		opacity: 1;
 	}
 	@starting-style {
-		:popover-open {
+		div[popover] {
 			opacity: 0;
 		}
 	}

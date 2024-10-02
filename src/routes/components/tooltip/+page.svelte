@@ -1,7 +1,9 @@
-<script>
+<script lang="ts">
 	import Button from '$lib/button/Button.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import Code from '../../Code.svelte'
+
+	let exampleBtn1 = null
 </script>
 
 <svelte:head>
@@ -14,13 +16,27 @@
 	<div
 		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
 	>
-		<Tooltip title="The tooltip">
-			<Button variant="outlined">Hover</Button>
-		</Tooltip>
+		<div aria-describedby="example-tooltip-1" bind:this={exampleBtn1}>Hover over this text</div>
+		<Tooltip anchor={exampleBtn1} id="example-tooltip-1">This is a basic tooltip</Tooltip>
 	</div>
 	<Code
-		value={`<Tooltip title="The tooltip">
-	<Button variant="outlined">Hover</Button>
+		value={`<div aria-describedby="tooltip" bind:this={buttonEl}>
+	Hover over this text
+</div>
+<Tooltip anchor={buttonEl} id="tooltip">
+	This is a basic tooltip
 </Tooltip>`}
+	/>
+	<h2>Button with Tooltip</h2>
+	<p>Buttons have built-in support for tooltips. You can simply set the title attribute.</p>
+	<div
+		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	>
+		<Button title="This is a button tooltip">Hover over this button</Button>
+	</div>
+	<Code
+		value={`<Button title="This is a button tooltip">
+	Hover over this button
+</Button>`}
 	/>
 </div>

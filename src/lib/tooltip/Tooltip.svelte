@@ -1,86 +1,80 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte'
 	import type { HTMLAttributes } from 'svelte/elements'
-	import { fade, scale } from 'svelte/transition'
 
 	interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-		titleElement?: Snippet
+		anchor?: HTMLElement
 	}
 
-	let { children, titleElement, title, ...attributes }: TooltipProps = $props()
-	let visible = $state(false)
+	let { children, anchor, ...attributes }: TooltipProps = $props()
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
-	let containerEl = $state<HTMLElement>()
+	let innerHeight = $state(0)
+	let innerWidth = $state(0)
+	let anchorRect: DOMRect | undefined = $state()
 
-	let calcualteRightPos = $derived.by(() => {
-		if (!containerEl) {
+	const distanceToBorder = 8
+	const refreshValues = () => {
+		anchorRect = anchor?.getBoundingClientRect()
+	}
+
+	$effect(refreshValues)
+
+	let calculateLeftPos = $derived.by(() => {
+		if (!anchor || !anchorRect) {
 			return 0
 		}
-		if (containerEl.getBoundingClientRect().left + containerEl.clientWidth < clientWidth) {
-			return (clientWidth - containerEl.clientWidth) * -1
+		const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+		if (innerWidth < left + clientWidth + distanceToBorder) {
+			return innerWidth - clientWidth - distanceToBorder
 		}
+		if (left < distanceToBorder) {
+			return distanceToBorder
+		}
+		return anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+	})
 
-		return window.innerWidth - containerEl.getBoundingClientRect().left - containerEl.clientWidth >
-			clientWidth / 2 || containerEl.clientWidth >= clientWidth
-			? (containerEl.clientWidth - clientWidth) / 2
-			: (window.innerWidth -
-					containerEl.getBoundingClientRect().left -
-					containerEl.clientWidth -
-					8) *
-					-1
+	let calculateTopPos = $derived.by(() => {
+		if (!anchorRect) {
+			return 0
+		}
+		const top = anchorRect.bottom + 2
+		if (top + clientHeight > innerHeight) {
+			return anchorRect.top - clientHeight - 2
+		}
+		return top
 	})
 </script>
 
-{#if children}
-	<div
-		role="tooltip"
-		bind:this={containerEl}
-		onmouseenter={() => {
-			if (window.ontouchstart === undefined) {
-				visible = true
-			}
-		}}
-		onmouseleave={() => {
-			visible = false
-		}}
-		{...attributes}
-		class="relative inline-block"
-	>
-		{@render children()}
-		{#if visible}
-			<div transition:fade={{ duration: 200 }}>
-				<div
-					bind:clientWidth
-					bind:clientHeight
-					transition:scale={{ duration: 200 }}
-					style="top:{window.innerHeight <
-					containerEl.getBoundingClientRect().bottom + clientHeight + 16
-						? -clientHeight - 4
-						: containerEl.clientHeight + 4}px;right:{calcualteRightPos}px"
-					class="tooltiptext"
-				>
-					{#if titleElement}
-						{@render titleElement()}
-					{:else}
-						{title}
-					{/if}
-				</div>
-			</div>
-		{/if}
-	</div>
-{/if}
+<svelte:window bind:innerHeight bind:innerWidth onresize={refreshValues} onscroll={refreshValues} />
+
+<div
+	{...attributes}
+	style="top:{calculateTopPos}px;left:{calculateLeftPos}px"
+	role="tooltip"
+	bind:clientWidth
+	bind:clientHeight
+>
+	{#if children}{@render children()}{/if}
+</div>
 
 <style>
-	.tooltiptext {
+	[role='tooltip'] {
 		width: max-content;
-		position: absolute;
+		position: fixed;
+		background: var(--np-text-color-secondary);
+		color: var(--np-background-color);
+		opacity: 0;
+		scale: 0;
 		z-index: 1;
 		padding: 0.25rem 0.5rem;
-		font-size: 0.75rem;
-		box-shadow: var(--np-shadow);
 		border-radius: 0.375rem;
-		color: var(--np-background-color, rgb(255, 255, 255));
-		background-color: var(--np-text-color-secondary, rgb(82 82 82));
+		font-size: 0.75rem;
+		transition:
+			opacity 0.3s ease,
+			scale 0.3s ease;
+	}
+	:global([aria-describedby]:hover + [role='tooltip']) {
+		opacity: 1;
+		scale: 1;
 	}
 </style>

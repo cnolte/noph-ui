@@ -111,3 +111,7 @@ body {
 	background-color: var(--np-background-color);
 	color: var(--np-text-color);
 }
+
+p {
+	margin: 0 0 1rem 0;
+}
