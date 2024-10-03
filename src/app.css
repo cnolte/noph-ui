@@ -101,7 +101,7 @@ h3 {
 @media (min-width: 768px) {
 	.paper {
 		padding: 2rem;
-		height: calc(100vh - 6rem);
+		height: calc(100dvh - 6rem);
 	}
 }
 
