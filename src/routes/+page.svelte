@@ -13,5 +13,4 @@
 		Svelte 5.
 	</p>
 	<Button size="large" href="/about/quick-start" style="width:fit-content">Get Started</Button>
-	<p class="mt-12 text-2xl font-medium md:text-4xl">Rewriting the future of Svelte UI libraries.</p>
 </div>

@@ -4,7 +4,7 @@
 
 :root {
 	--np-background-color: rgb(235, 238, 242);
-	--np-paper-background-color: rgb(247, 250, 254);
+	--np-paper-background-color: rgb(244, 248, 251);
 	--np-text-color: rgb(24, 28, 31);
 	--np-text-color-secondary: rgb(82 82 82);
 	--np-color-primary: rgb(4, 102, 138);
@@ -12,7 +12,8 @@
 	--np-color-error: rgb(228, 56, 52);
 	--np-divider-color: rgb(190, 200, 208);
 	--np-selected-button-background-color: rgb(223, 227, 231);
-	--np-color-disabled: rgb(215, 215, 215);
+	--np-disabled-color: rgb(144, 146, 148);
+	--np-disabled-background-color: rgb(224, 225, 226);
 	--np-elevation-1: 0 1px 2px 0 rgb(0 0 0 / 0.6), 0 0px 0px -1px rgb(0 0 0 / 0.6);
 	--np-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
 		0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -22,7 +23,7 @@
 @media (prefers-color-scheme: dark) {
 	:root {
 		--np-background-color: rgb(28, 32, 35);
-		--np-paper-background-color: rgb(15, 20, 23);
+		--np-paper-background-color: rgb(18, 22, 25);
 		--np-text-color: rgb(226, 227, 231);
 		--np-text-color-secondary: rgb(212 212 212);
 		--np-color-primary: rgb(149, 216, 255);
@@ -30,7 +31,8 @@
 		--np-color-error: rgb(247, 115, 112);
 		--np-divider-color: rgb(63, 72, 79);
 		--np-selected-button-background-color: rgb(48, 53, 57);
-		--np-color-disabled: rgba(223, 227, 232, 0.12);
+		--np-disabled-color: rgb(114, 115, 118);
+		--np-disabled-background-color: rgb(35, 40, 43);
 	}
 }
 
@@ -41,7 +43,7 @@ html {
 [data-theme='light'] {
 	color-scheme: light;
 	--np-background-color: rgb(235, 238, 242);
-	--np-paper-background-color: rgb(247, 250, 254);
+	--np-paper-background-color: rgb(244, 248, 251);
 	--np-text-color: rgb(24, 28, 31);
 	--np-text-color-secondary: rgb(82 82 82);
 	--np-color-primary: rgb(4, 102, 138);
@@ -49,13 +51,14 @@ html {
 	--np-color-error: rgb(228, 56, 52);
 	--np-divider-color: rgb(190, 200, 208);
 	--np-selected-button-background-color: rgb(223, 227, 231);
-	--np-color-disabled: rgb(215, 215, 215);
+	--np-disabled-color: rgb(144, 146, 148);
+	--np-disabled-background-color: rgb(224, 225, 226);
 }
 
 [data-theme='dark'] {
 	color-scheme: dark;
 	--np-background-color: rgb(28, 32, 35);
-	--np-paper-background-color: rgb(15, 20, 23);
+	--np-paper-background-color: rgb(18, 22, 25);
 	--np-text-color: rgb(226, 227, 231);
 	--np-text-color-secondary: rgb(212 212 212);
 	--np-color-primary: rgb(149, 216, 255);
@@ -63,7 +66,8 @@ html {
 	--np-color-error: rgb(247, 115, 112);
 	--np-divider-color: rgb(63, 72, 79);
 	--np-selected-button-background-color: rgb(48, 53, 57);
-	--np-color-disabled: rgba(223, 227, 232, 0.12);
+	--np-disabled-color: rgb(114, 115, 118);
+	--np-disabled-background-color: rgb(35, 40, 43);
 }
 
 h1 {
@@ -90,11 +94,14 @@ h3 {
 .paper {
 	padding: 1rem;
 	border-radius: 1.5rem;
-	background-color: color-mix(in srgb, var(--np-paper-background-color) 80%, transparent);
+	background-color: var(--np-paper-background-color);
+	height: calc(100vh - 5rem);
+	overflow: scroll;
 }
 @media (min-width: 768px) {
 	.paper {
 		padding: 2rem;
+		height: calc(100vh - 6rem);
 	}
 }
 

@@ -20,11 +20,11 @@
 	/>
 </svelte:head>
 
-<header class="fixed left-0 right-0 top-0 z-10 h-20 px-2 md:px-4">
-	<div class=" mt-2 flex items-center gap-2">
-		<a href="/" class="flex items-center gap-3 py-2">
+<header class="fixed left-0 right-0 top-0 z-10 grid">
+	<div class="flex h-20 items-center gap-2 pl-4 pr-2 md:px-4">
+		<a href="/" class="flex items-center gap-3">
 			<img src="/favicon.svg" alt="Noph Logo" width="42" height="42" />
-			<div class="ml-1 hidden text-xl font-semibold sm:block md:text-2xl">Noph UI</div>
+			<div class="ml-1 text-xl font-semibold md:text-2xl">Noph UI</div>
 		</a>
 		<div class="flex-grow"></div>
 		<Button
@@ -53,7 +53,7 @@
 	</div>
 </header>
 
-<nav class="main-nav fixed hidden w-56 overflow-y-scroll p-2 md:block">
+<nav class="main-nav fixed hidden w-56 overflow-y-scroll px-2 md:block">
 	<MainNavigation />
 </nav>
 <nav
@@ -71,7 +71,7 @@
 		}}
 	/>
 </nav>
-<main class="mt-16 max-w-6xl p-4 md:ml-56 md:p-8">
+<main class="mt-20 max-w-6xl md:ml-56 md:px-8">
 	{@render children()}
 </main>
 
@@ -88,15 +88,14 @@
 		scale: 0.24;
 		fill: var(--np-text-color);
 	}
-
 	.main-nav {
-		height: calc(100vh - 4rem);
+		height: calc(100vh - 5rem);
 	}
 	header {
-		background: linear-gradient(0deg, transparent 0, var(--np-background-color) 16px);
+		background: var(--np-background-color);
 	}
 	.nav[popover] {
-		margin-top: 4rem;
+		margin-top: 5rem;
 		width: 100vw;
 		height: calc(100vh - 4rem);
 		transition-property: transform;

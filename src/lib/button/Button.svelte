@@ -17,6 +17,7 @@
 		start?: Snippet
 		end?: Snippet
 		element?: HTMLElement
+		disabled?: boolean
 	}
 	let {
 		size = 'small',
@@ -26,6 +27,7 @@
 		end,
 		title,
 		element = $bindable(),
+		disabled,
 		...attributes
 	}: ButtonProps | AnchorProps = $props()
 
@@ -72,8 +74,8 @@
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class="{size} {variant}{attributes.disabled
-			? '-disabled pointer-events-none opacity-70'
+		class="{size} {variant}{disabled
+			? '-disabled pointer-events-none'
 			: ' bt-enabled cursor-pointer'} relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current text-left font-medium {children
 			? 'px-5'
 			: 'px-2'} {attributes.class}"
@@ -86,7 +88,9 @@
 		aria-describedby={title ? tooltipId : undefined}
 		aria-label={title}
 		bind:this={element}
-		class="{size} {variant} bt-enabled relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
+		class="{size} {variant}{disabled
+			? '-disabled pointer-events-none'
+			: ' bt-enabled'} relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
 			? 'px-5'
 			: 'px-2'} {attributes.class}"
 	>
@@ -130,7 +134,7 @@
 		}
 	}
 	.text-disabled {
-		color: color-mix(in srgb, var(--np-text-color) 60%, transparent);
+		color: var(--np-disabled-color);
 	}
 	.filled {
 		transition-property: box-shadow background-color;
@@ -143,7 +147,11 @@
 
 	@media (hover: hover) {
 		.filled:hover {
-			background-color: color-mix(in srgb, var(--np-color-button) 85%, transparent);
+			background-color: color-mix(
+				in srgb,
+				var(--np-color-button) 85%,
+				var(--np-paper-background-color)
+			);
 			box-shadow: var(
 				--np-elevation-1,
 				0 1px 2px 0 rgb(0 0 0 / 0.6),
@@ -155,8 +163,8 @@
 		box-shadow: none;
 	}
 	.filled-disabled {
-		color: color-mix(in srgb, var(--np-text-color) 60%, transparent);
-		background-color: var(--np-color-disabled);
+		color: var(--np-disabled-color);
+		background-color: var(--np-disabled-background-color);
 	}
 	@media (hover: hover) {
 		.outlined:hover {
@@ -170,8 +178,8 @@
 	}
 	.outlined-disabled {
 		border: 1px solid;
-		color: color-mix(in srgb, var(--np-text-color) 60%, transparent);
-		border-color: var(--np-color-disabled);
+		color: var(--np-disabled-color);
+		border-color: var(--np-disabled-background-color);
 	}
 	.small {
 		font-size: 0.875rem;
