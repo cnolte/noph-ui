@@ -95,13 +95,10 @@ h3 {
 	padding: 1rem;
 	border-radius: 1.5rem;
 	background-color: var(--np-paper-background-color);
-	height: calc(100dvh - 5rem);
-	overflow: scroll;
 }
 @media (min-width: 768px) {
 	.paper {
 		padding: 2rem;
-		height: calc(100dvh - 6rem);
 	}
 }
 
