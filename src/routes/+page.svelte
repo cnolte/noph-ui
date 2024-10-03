@@ -1,10 +1,16 @@
+<script>
+	import Button from '$lib/button/Button.svelte'
+</script>
+
 <svelte:head>
 	<title>Noph UI</title>
 </svelte:head>
 
-<h1>Noph UI - Under construction</h1>
-
-<p>
-	Noph UI is a component library for Svelte following Material Design 3. Its goal is to reduce the
-	amount of JavaScript by replacing it with CSS and HTML.
-</p>
+<div class="paper">
+	<h1>Noph UI</h1>
+	<p class="text-2xl font-medium md:text-4xl">
+		It brings together Material Design 3, server-side rendering (SSR), lightweight performance and
+		Svelte 5.
+	</p>
+	<Button size="large" href="/about/quick-start" style="width:fit-content">Get Started</Button>
+</div>

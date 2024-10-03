@@ -14,7 +14,10 @@
 </script>
 
 <svelte:head>
-	<meta name="description" content="UI library for Svelte" />
+	<meta
+		name="description"
+		content="Noph UI is a cutting-edge UI library that combines Material Design 3, server-side rendering (SSR), lightweight performance, and Svelte 5. It offers a seamless blend of modern design and efficient performance, setting a new standard for UI development."
+	/>
 </svelte:head>
 
 <header class="fixed left-0 right-0 top-0 z-10 h-20 px-2 md:px-4">
