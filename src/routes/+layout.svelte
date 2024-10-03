@@ -16,7 +16,7 @@
 <svelte:head>
 	<meta
 		name="description"
-		content="Noph UI is a cutting-edge UI library that combines Material Design 3, server-side rendering (SSR), lightweight performance, and Svelte 5. It offers a seamless blend of modern design and efficient performance, setting a new standard for UI development."
+		content="Noph UI is a cutting-edge Svelte UI library that combines Material Design 3, server-side rendering (SSR), lightweight performance, and Svelte 5."
 	/>
 </svelte:head>
 
