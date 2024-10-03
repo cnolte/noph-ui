@@ -89,7 +89,7 @@
 		fill: var(--np-text-color);
 	}
 	.main-nav {
-		height: calc(100vh - 5rem);
+		height: calc(100dvh - 5rem);
 	}
 	header {
 		background: var(--np-background-color);
@@ -97,7 +97,7 @@
 	.nav[popover] {
 		margin-top: 5rem;
 		width: 100vw;
-		height: calc(100vh - 4rem);
+		height: calc(100dvh - 4rem);
 		transition-property: transform;
 		transition-timing-function: ease-in;
 		transition:
