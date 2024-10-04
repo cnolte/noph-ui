@@ -53,7 +53,7 @@
 	</div>
 </header>
 
-<nav class="main-nav fixed hidden w-56 overflow-y-scroll px-2 md:block">
+<nav class="main-nav fixed hidden w-56 overflow-y-auto px-2 md:block">
 	<MainNavigation />
 </nav>
 <nav
@@ -71,7 +71,7 @@
 		}}
 	/>
 </nav>
-<main class="mt-20 max-w-6xl md:ml-56 md:px-8">
+<main class="mt-20 max-w-6xl md:ml-56 md:px-8 md:pb-8">
 	{@render children()}
 </main>
 
