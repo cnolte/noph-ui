@@ -12,25 +12,24 @@
 	<title>Menu - Noph UI</title>
 </svelte:head>
 
-<div class="paper">
-	<h1>Menu</h1>
-	<h2>Basic Menu</h2>
-	<div
-		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
-	>
-		<Button bind:element={browserMenu}>Open Menu</Button>
-		{#if browserMenu}
-			<Menu anchor={browserMenu}>
-				<ul>
-					<MenuItem>Chrome</MenuItem>
-					<MenuItem>Firefox</MenuItem>
-					<MenuItem>Safari</MenuItem>
-				</ul>
-			</Menu>
-		{/if}
-	</div>
-	<Code
-		value={`<Button bind:element={browserMenu}>Browser</Button>
+<h1>Menu</h1>
+<h2>Basic Menu</h2>
+<div
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+>
+	<Button bind:element={browserMenu}>Open Menu</Button>
+	{#if browserMenu}
+		<Menu anchor={browserMenu}>
+			<ul>
+				<MenuItem>Chrome</MenuItem>
+				<MenuItem>Firefox</MenuItem>
+				<MenuItem>Safari</MenuItem>
+			</ul>
+		</Menu>
+	{/if}
+</div>
+<Code
+	value={`<Button bind:element={browserMenu}>Browser</Button>
 {#if browserMenu}
 	<Menu anchor={browserMenu}>
 		<ul>
@@ -40,28 +39,28 @@
 		</ul>
 	</Menu>
 {/if}`}
-	/>
-	<h2>Menu items</h2>
-	<div
-		class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
-	>
-		<ul>
-			<MenuItem>Basic</MenuItem>
-			<MenuItem selected>Selected</MenuItem>
-			<MenuItem
-				>{#snippet start()}
-					<DashboardIcon />
-				{/snippet}Icon start</MenuItem
-			>
-			<MenuItem
-				>{#snippet end()}
-					<DownloadIcon />
-				{/snippet}Icon end</MenuItem
-			>
-		</ul>
-	</div>
-	<Code
-		value={`<ul>
+/>
+<h2>Menu items</h2>
+<div
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+>
+	<ul>
+		<MenuItem>Basic</MenuItem>
+		<MenuItem selected>Selected</MenuItem>
+		<MenuItem
+			>{#snippet start()}
+				<DashboardIcon />
+			{/snippet}Icon start</MenuItem
+		>
+		<MenuItem
+			>{#snippet end()}
+				<DownloadIcon />
+			{/snippet}Icon end</MenuItem
+		>
+	</ul>
+</div>
+<Code
+	value={`<ul>
 	<MenuItem>Basic</MenuItem>
 	<MenuItem selected>Selected</MenuItem>
 	<MenuItem
@@ -75,5 +74,4 @@
 		{/snippet}Icon end</MenuItem
 	>
 </ul>`}
-	/>
-</div>
+/>

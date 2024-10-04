@@ -71,11 +71,44 @@
 		}}
 	/>
 </nav>
-<main class="mt-20 max-w-6xl md:ml-56 md:px-8 md:pb-8">
-	{@render children()}
+<div class="fixed -z-10">
+	<div class="paper"></div>
+</div>
+<main class="mt-20 md:ml-56">
+	<div class="mx-auto max-w-5xl px-6 pb-8 pt-8 md:px-12 md:pb-16">
+		{@render children()}
+	</div>
 </main>
+<div class="bottom-bar"></div>
 
 <style>
+	.bottom-bar {
+		position: fixed;
+		width: 100%;
+		height: 0rem;
+		background-color: var(--np-background-color);
+		bottom: 0;
+	}
+	.paper {
+		position: fixed;
+		width: 100%;
+		height: calc(100dvh - 5rem);
+		background-color: var(--np-paper-background-color);
+		border-radius: 1.5rem;
+	}
+
+	@media (min-width: 768px) {
+		.paper {
+			width: calc(100% - 16rem);
+			margin-left: 15rem;
+			height: calc(100dvh - 7rem);
+		}
+		.bottom-bar {
+			margin-left: 15rem;
+			height: 2rem;
+			width: calc(100% - 15rem);
+		}
+	}
 	:global(.icon) {
 		width: 24px;
 		height: 24px;
