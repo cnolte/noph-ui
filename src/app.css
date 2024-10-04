@@ -92,13 +92,13 @@ h3 {
 }
 
 .paper {
-	padding: 1rem;
+	padding: 1rem 1rem 1.5rem 1rem;
 	border-radius: 1.5rem;
 	background-color: var(--np-paper-background-color);
 }
 @media (min-width: 768px) {
 	.paper {
-		padding: 2rem;
+		padding: 2rem 2rem 2.5rem 2rem;
 	}
 }
 
