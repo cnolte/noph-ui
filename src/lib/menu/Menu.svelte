@@ -4,22 +4,18 @@
 
 	interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 		children: Snippet
-		anchor: HTMLElement
+		anchor: HTMLElement | undefined
 	}
 
 	let { anchor, children, ...attributes }: MenuProps = $props()
 
-	let anchorRect = $state(anchor.getBoundingClientRect())
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
 	let innerWidth = $state(0)
-	const distanceToBorder = 8
+	let popoverElement: HTMLDivElement
 
-	const id = Math.random().toString(36).substring(7)
-	anchor.setAttribute('popovertarget', id)
-
-	let maxHeight = $derived(
+	/*let maxHeight = $derived(
 		(anchorRect.top > innerHeight - anchorRect.bottom
 			? anchorRect.top
 			: innerHeight - anchorRect.bottom) - distanceToBorder,
@@ -41,43 +37,58 @@
 			return anchorRect.top - clientHeight - 2
 		}
 		return top
-	})
+	})*/
 	const refreshValues = () => {
-		anchorRect = anchor.getBoundingClientRect()
+		if (!('anchorName' in document.documentElement.style) && popoverElement && anchor) {
+			const anchorRect = anchor.getBoundingClientRect()
+			if (anchorRect.bottom + clientHeight > innerHeight) {
+				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
+			} else {
+				popoverElement.style.top = `${anchorRect.bottom + 2}px`
+			}
+			popoverElement.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+		}
 	}
+	$effect(refreshValues)
 
-	anchor.addEventListener('click', () => {
-		refreshValues()
+	$effect(() => {
+		anchor?.addEventListener('click', () => {
+			refreshValues()
+		})
 	})
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth onresize={refreshValues} onscroll={refreshValues} />
+<svelte:window bind:innerHeight bind:innerWidth />
 
 <div
+	bind:this={popoverElement}
 	bind:clientWidth
 	bind:clientHeight
 	{...attributes}
 	popover="auto"
-	{id}
-	style="max-height:{maxHeight}px;top:{calculateTopPos}px;left:{calculateLeftPos}px;"
+	role="menu"
 >
 	{@render children()}
 </div>
 
 <style>
 	div[popover] {
+		position: absolute;
+		inset: unset;
 		background-color: var(--np-menu-background-color, var(--np-background-color));
-		margin: 0 0;
+		margin: 0;
 		overflow: auto;
-		left: 0;
 		border-radius: 1rem;
 		padding: 1rem 0;
 		box-shadow: var(--np-elevation-2);
 		transition:
-			opacity 0.3s,
 			overlay 0.3s allow-discrete,
-			display 0.3s allow-discrete;
+			display 0.3s allow-discrete,
+			opacity 0.3s ease-out;
 		opacity: 0;
+		position-area: bottom;
+		position-try: normal flip-block;
+		z-index: 1;
 	}
 	div:popover-open {
 		opacity: 1;

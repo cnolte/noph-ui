@@ -5,7 +5,7 @@
 	import Menu from '$lib/menu/Menu.svelte'
 	import MenuItem from '$lib/menu/MenuItem.svelte'
 	import Code from '../../Code.svelte'
-	let browserMenu = $state<HTMLElement>()
+	let menuBtn = $state<HTMLElement>()
 </script>
 
 <svelte:head>
@@ -17,28 +17,28 @@
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
 >
-	<Button bind:element={browserMenu}>Open Menu</Button>
-	{#if browserMenu}
-		<Menu anchor={browserMenu}>
-			<ul>
-				<MenuItem>Chrome</MenuItem>
-				<MenuItem>Firefox</MenuItem>
-				<MenuItem>Safari</MenuItem>
-			</ul>
-		</Menu>
-	{/if}
-</div>
-<Code
-	value={`<Button bind:element={browserMenu}>Browser</Button>
-{#if browserMenu}
-	<Menu anchor={browserMenu}>
+	<Button popovertarget="browser-menu" style="anchor-name: --menu" bind:element={menuBtn}
+		>Open Menu</Button
+	>
+	<Menu anchor={menuBtn} id="browser-menu" style="position-anchor: --menu">
 		<ul>
 			<MenuItem>Chrome</MenuItem>
 			<MenuItem>Firefox</MenuItem>
 			<MenuItem>Safari</MenuItem>
 		</ul>
 	</Menu>
-{/if}`}
+</div>
+<Code
+	value={`<Button popovertarget="browser-menu" style="anchor-name: --menu" bind:element={menuBtn}>
+	Browser
+</Button>
+<Menu anchor={menuBtn} id="browser-menu" style="position-anchor: --menu">
+	<ul>
+		<MenuItem>Chrome</MenuItem>
+		<MenuItem>Firefox</MenuItem>
+		<MenuItem>Safari</MenuItem>
+	</ul>
+</Menu>`}
 />
 <h2>Menu items</h2>
 <div
