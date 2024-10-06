@@ -26,7 +26,7 @@
 	)
 
 	let calculateLeftPos = $derived.by(() => {
-		const left = anchorRect.x + anchorRect.width / 2 - clientWidth / 2
+		const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
 		if (left < distanceToBorder) {
 			return distanceToBorder
 		}
@@ -36,9 +36,9 @@
 		return left
 	})
 	let calculateTopPos = $derived.by(() => {
-		const top = anchorRect.y + anchorRect.height + 2
+		const top = anchorRect.bottom + 2
 		if (top + clientHeight > innerHeight) {
-			return anchorRect.y - clientHeight - 2
+			return anchorRect.top - clientHeight - 2
 		}
 		return top
 	})
