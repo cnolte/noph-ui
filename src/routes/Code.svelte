@@ -7,7 +7,7 @@
 </script>
 
 <div
-	class="relative mt-4 rounded-3xl border border-solid border-[var(--np-divider-color)] bg-[var(--np-background-color)]"
+	class="relative mt-4 rounded-3xl border border-solid border-[var(--np-divider-color)] bg-[var(--np-paper-background-color)]"
 >
 	<Button
 		{title}

@@ -65,7 +65,7 @@
 		width: max-content;
 		position: fixed;
 		background: var(--np-text-color-secondary);
-		color: var(--np-background-color);
+		color: var(--np-paper-background-color);
 		opacity: 0;
 		scale: 0;
 		z-index: 1;

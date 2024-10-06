@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-	--np-background-color: rgb(235, 238, 242);
-	--np-paper-background-color: rgb(244, 248, 251);
+	--np-background-color: rgb(244, 248, 251);
+	--np-paper-background-color: rgb(235, 238, 242);
 	--np-text-color: rgb(24, 28, 31);
 	--np-text-color-secondary: rgb(82 82 82);
 	--np-color-primary: rgb(4, 102, 138);
@@ -22,8 +22,8 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--np-background-color: rgb(28, 32, 35);
-		--np-paper-background-color: rgb(18, 22, 25);
+		--np-background-color: rgb(18, 22, 25);
+		--np-paper-background-color: rgb(28, 32, 35);
 		--np-text-color: rgb(226, 227, 231);
 		--np-text-color-secondary: rgb(212 212 212);
 		--np-color-primary: rgb(149, 216, 255);
@@ -42,8 +42,8 @@ html {
 
 [data-theme='light'] {
 	color-scheme: light;
-	--np-background-color: rgb(235, 238, 242);
-	--np-paper-background-color: rgb(244, 248, 251);
+	--np-background-color: rgb(244, 248, 251);
+	--np-paper-background-color: rgb(235, 238, 242);
 	--np-text-color: rgb(24, 28, 31);
 	--np-text-color-secondary: rgb(82 82 82);
 	--np-color-primary: rgb(4, 102, 138);
@@ -57,8 +57,8 @@ html {
 
 [data-theme='dark'] {
 	color-scheme: dark;
-	--np-background-color: rgb(28, 32, 35);
-	--np-paper-background-color: rgb(18, 22, 25);
+	--np-background-color: rgb(18, 22, 25);
+	--np-paper-background-color: rgb(28, 32, 35);
 	--np-text-color: rgb(226, 227, 231);
 	--np-text-color-secondary: rgb(212 212 212);
 	--np-color-primary: rgb(149, 216, 255);
@@ -97,7 +97,7 @@ h3 {
 
 body {
 	font-size: 1.125rem;
-	background-color: var(--np-background-color);
+	background-color: var(--np-paper-background-color);
 	color: var(--np-text-color);
 }
 

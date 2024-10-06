@@ -86,14 +86,14 @@
 		position: fixed;
 		width: 100%;
 		height: 0rem;
-		background-color: var(--np-background-color);
+		background-color: var(--np-paper-background-color);
 		bottom: 0;
 	}
 	.paper {
 		position: fixed;
 		width: 100%;
 		height: calc(100dvh - 5rem);
-		background-color: var(--np-paper-background-color);
+		background-color: var(--np-background-color);
 		border-radius: 1.5rem;
 	}
 
@@ -125,7 +125,7 @@
 		height: calc(100dvh - 5rem);
 	}
 	header {
-		background: var(--np-background-color);
+		background: var(--np-paper-background-color);
 	}
 	.nav[popover] {
 		margin-top: 5rem;
@@ -138,7 +138,7 @@
 			overlay 0.3s allow-discrete,
 			display 0.3s allow-discrete;
 		transform: translateX(100%);
-		background-color: var(--np-background-color);
+		background-color: var(--np-paper-background-color);
 	}
 	.nav:popover-open {
 		transform: translateX(0);

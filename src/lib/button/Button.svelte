@@ -140,18 +140,14 @@
 		transition-property: box-shadow background-color;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 300ms;
-		color: var(--np-background-color, rgb(255, 255, 255));
+		color: var(--np-paper-background-color, rgb(255, 255, 255));
 		background-color: var(--np-color-button);
-		--np-ripple-color: var(--np-background-color);
+		--np-ripple-color: var(--np-paper-background-color);
 	}
 
 	@media (hover: hover) {
 		.filled:hover {
-			background-color: color-mix(
-				in srgb,
-				var(--np-color-button) 85%,
-				var(--np-paper-background-color)
-			);
+			background-color: color-mix(in srgb, var(--np-color-button) 85%, var(--np-background-color));
 			box-shadow: var(
 				--np-elevation-1,
 				0 1px 2px 0 rgb(0 0 0 / 0.6),

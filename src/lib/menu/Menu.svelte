@@ -83,7 +83,7 @@
 	div[popover] {
 		position: absolute;
 		inset: unset;
-		background-color: var(--np-menu-background-color, var(--np-background-color));
+		background-color: var(--np-menu-background-color, var(--np-paper-background-color));
 		margin: 0;
 		overflow: auto;
 		border-radius: 1rem;

@@ -31,7 +31,9 @@
 />
 <h2>Buttons</h2>
 <Alert
-	>{#snippet end()}<Button title="Forward" style="--np-color-button: var(--np-background-color);"
+	>{#snippet end()}<Button
+			title="Forward"
+			style="--np-color-button: var(--np-paper-background-color);"
 			>{#snippet start()}
 				<ArrowForwardIcon />
 			{/snippet}</Button
@@ -40,7 +42,7 @@
 <Code
 	value={`<Alert>
 	{#snippet end()}
-		<Button title="Forward" style="--np-color-button: var(--np-background-color);">
+		<Button title="Forward" style="--np-color-button: var(--np-paper-background-color);">
 			{#snippet start()}
 				<ArrowForwardIcon />
 			{/snippet}
