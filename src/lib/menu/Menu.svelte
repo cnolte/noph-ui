@@ -13,6 +13,8 @@
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
 	let innerWidth = $state(0)
+	let scrollY = $state(0)
+	let scrollX = $state(0)
 	let popoverElement: HTMLDivElement
 
 	/*let maxHeight = $derived(
@@ -42,11 +44,11 @@
 		if (!('anchorName' in document.documentElement.style) && popoverElement && anchor) {
 			const anchorRect = anchor.getBoundingClientRect()
 			if (anchorRect.bottom + clientHeight > innerHeight) {
-				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
+				popoverElement.style.top = `${anchorRect.top - clientHeight + scrollY - 2}px`
 			} else {
-				popoverElement.style.top = `${anchorRect.bottom + 2}px`
+				popoverElement.style.top = `${anchorRect.bottom + scrollY + 2}px`
 			}
-			popoverElement.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+			popoverElement.style.left = `${anchorRect.left + scrollX + anchorRect.width / 2 - clientWidth / 2}px`
 		}
 	}
 	$effect(refreshValues)
@@ -58,7 +60,13 @@
 	})
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth />
+<svelte:window
+	bind:scrollX
+	bind:scrollY
+	bind:innerHeight
+	bind:innerWidth
+	onresize={refreshValues}
+/>
 
 <div
 	bind:this={popoverElement}
