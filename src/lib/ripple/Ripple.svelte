@@ -1,61 +1,101 @@
 <script lang="ts">
 	let element: HTMLSpanElement
 	let timeoutId: number | undefined = $state()
+	let pressed = $state(false)
+	let hovered = $state(false)
+	let timerStarted = $state(false)
 
 	const createRipple = (event: MouseEvent | TouchEvent): void => {
 		const container: HTMLElement = event.currentTarget as HTMLElement
-
+		console.log(container)
 		const isMouseEvent = event instanceof MouseEvent
 		const clientX = isMouseEvent ? (event as MouseEvent).clientX : event.touches[0].clientX
 		const clientY = isMouseEvent ? (event as MouseEvent).clientY : event.touches[0].clientY
 		const diameter = Math.max(container.clientWidth, container.clientHeight)
-		const radius = diameter / 2
 		const clientRect = container.getBoundingClientRect()
 		if (element) {
-			element.style.width = `${diameter}px`
-			element.style.height = `${diameter}px`
-			element.style.left = `${clientX - clientRect.x - radius}px`
-			element.style.top = `${clientY - clientRect.y - radius}px`
+			element.style.width = `${diameter * 2}px`
+			element.style.height = `${diameter * 2}px`
+			element.style.left = `${clientX - clientRect.x - diameter}px`
+			element.style.top = `${clientY - clientRect.y - diameter}px`
+			pressed = true
 			clearTimeout(timeoutId)
-			element.classList.remove('np-ripple')
-			void element.offsetWidth
-			element.classList.add('np-ripple')
-
+			timerStarted = true
 			timeoutId = setTimeout(() => {
-				element?.classList.remove('np-ripple')
-			}, 600)
-			return
+				timerStarted = false
+			}, 150)
 		}
 	}
 
 	$effect(() => {
 		element?.parentElement?.addEventListener('mousedown', createRipple)
+		element?.parentElement?.addEventListener('mouseup', () => {
+			pressed = false
+		})
 		element?.parentElement?.addEventListener('touchstart', createRipple)
+		element?.parentElement?.addEventListener('touchend', () => {
+			pressed = false
+		})
+		element?.parentElement?.addEventListener('mouseenter', () => {
+			hovered = true
+		})
+		element?.parentElement?.addEventListener('mouseleave', () => {
+			hovered = false
+		})
 	})
 </script>
 
-<span bind:this={element}></span>
+<div class:hovered class="surface" bind:this={element}>
+	<span class:pressed={pressed || timerStarted} class="ripple" bind:this={element}></span>
+</div>
 
 <style>
-	span {
-		border-radius: 50%;
+	:host,
+	.surface {
+		border-radius: inherit;
 		position: absolute;
-		pointer-events: none;
+		inset: 0;
+		overflow: hidden;
 	}
-	:global(.np-ripple) {
-		background: color-mix(
-			in srgb,
-			var(--np-color-primary-ripple, var(--np-color-primary-fixed)) 30%,
-			transparent
-		);
-		transform: scale(0);
+	.surface::before,
+	.ripple {
+		content: '';
+		position: absolute;
+	}
+	.ripple {
+		content: '';
+		position: absolute;
+	}
+	.surface::before {
+		background-color: var(--np-ripple-hover-color, var(--np-color-on-surface));
+		inset: 0;
+		opacity: 0;
+		transition:
+			opacity 15ms linear,
+			background-color 15ms linear;
+	}
+	.hovered::before {
+		opacity: var(--np-ripple-hover-opacity, 0.08);
+	}
+	.ripple {
+		background-color: var(--md-ripple-pressed-color, var(--np-color-on-surface));
+		opacity: 0;
+		border-radius: 9999px;
+		overflow: hidden;
+		transition: opacity 0.3s linear;
+	}
+	.pressed {
 		animation: ripple-animation 600ms linear;
+		opacity: 0.12;
 	}
 
 	@keyframes ripple-animation {
+		from {
+			transform: scale(0);
+			opacity: 0.12;
+		}
 		to {
 			transform: scale(4);
-			opacity: 0;
 		}
 	}
 </style>

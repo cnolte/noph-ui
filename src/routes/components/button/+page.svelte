@@ -13,7 +13,9 @@
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
+	<Button variant="elevated">Elevated</Button>
 	<Button variant="filled">Filled</Button>
+	<Button variant="tonal">Tonal</Button>
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="text">Text</Button>
 </div>

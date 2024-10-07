@@ -6,14 +6,14 @@
 
 	interface ButtonProps extends HTMLButtonAttributes {
 		size?: 'small' | 'medium' | 'large'
-		variant?: 'text' | 'filled' | 'outlined'
+		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
 		start?: Snippet
 		end?: Snippet
 		element?: HTMLElement
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
 		size?: 'small' | 'medium' | 'large'
-		variant?: 'text' | 'filled' | 'outlined'
+		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
 		start?: Snippet
 		end?: Snippet
 		element?: HTMLElement
@@ -110,7 +110,8 @@
 			var(--np-color-primary-container)
 		);
 		--np-color-on-primary-button: var(--np-button-on-container-color, var(--np-color-on-primary));
-		--np-color-primary-ripple: var(--np-button-ripple-color, var(--np-color-primary-fixed));
+		--np-ripple-hover-color: var(--np-color-primary-button);
+		--np-ripple-pressed-color: var(--np-color-primary-button);
 		transition: background-color 0.3s ease;
 	}
 	.bt-enabled:focus-visible {
@@ -134,25 +135,21 @@
 	.text {
 		color: var(--np-color-primary-button);
 	}
-	@media (hover: hover) {
-		.text:hover {
-			background-color: color-mix(in srgb, var(--np-color-primary-button) 10%, transparent);
-		}
-	}
 	.text-disabled {
 		color: var(--np-color-outline);
 	}
 	.filled {
-		transition-property: box-shadow background-color;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 300ms;
+		--np-ripple-hover-opacity: 0.12;
+		--np-ripple-hover-color: var(--np-color-surface);
+		--md-ripple-pressed-color: var(--np-color-surface);
+		transition:
+			background-color 150ms linear,
+			box-shadow 150ms linear;
 		color: var(--np-color-on-primary-button);
 		background-color: var(--np-color-primary-button);
 	}
-
 	@media (hover: hover) {
 		.filled:hover {
-			background-color: var(--np-color-primary-hover-button);
 			box-shadow: var(
 				--np-elevation-1,
 				0 1px 2px 0 rgb(0 0 0 / 0.6),
@@ -164,13 +161,55 @@
 		box-shadow: none;
 	}
 	.filled-disabled {
-		color: var(--np-color-on-surface-variant);
-		background-color: var(--np-color-surface-variant);
+		color: var(--np-color-outline);
+		background-color: var(--np-color-outline-variant);
 	}
+
+	.tonal {
+		transition:
+			background-color 150ms linear,
+			box-shadow 150ms linear;
+		color: var(--np-color-on-secondary-container);
+		background-color: var(--np-color-secondary-container);
+	}
+
 	@media (hover: hover) {
-		.outlined:hover {
-			background-color: color-mix(in srgb, var(--np-color-primary-hover-button) 10%, transparent);
+		.tonal:hover {
+			box-shadow: var(
+				--np-elevation-1,
+				0 1px 2px 0 rgb(0 0 0 / 0.6),
+				0 0px 0px -1px rgb(0 0 0 / 0.6)
+			);
 		}
+	}
+	.tonal:active {
+		box-shadow: none;
+	}
+	.tonal-disabled {
+		color: var(--np-color-outline);
+		background-color: var(--np-color-outline-variant);
+	}
+
+	.elevated {
+		transition:
+			background-color 150ms linear,
+			box-shadow 150ms linear;
+		color: var(--np-color-on-secondary-container);
+		background-color: var(--np-color-surface-container-low);
+		box-shadow: var(--np-elevation-1);
+	}
+
+	@media (hover: hover) {
+		.elevated:hover {
+			box-shadow: var(--np-elevation-2);
+		}
+	}
+	.elevated:active {
+		box-shadow: var(--np-elevation-1);
+	}
+	.elevated-disabled {
+		color: var(--np-color-outline);
+		background-color: var(--np-color-outline-variant);
 	}
 	.outlined {
 		border: 1px solid;
