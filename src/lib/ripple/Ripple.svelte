@@ -7,7 +7,6 @@
 
 	const createRipple = (event: MouseEvent | TouchEvent): void => {
 		const container: HTMLElement = event.currentTarget as HTMLElement
-		console.log(container)
 		const isMouseEvent = event instanceof MouseEvent
 		const clientX = isMouseEvent ? (event as MouseEvent).clientX : event.touches[0].clientX
 		const clientY = isMouseEvent ? (event as MouseEvent).clientY : event.touches[0].clientY

@@ -14,6 +14,7 @@
 	let value = $state<string>('#5fb9e9')
 	let menuBtn = $state<HTMLElement>()
 	let selectedTheme: 'system' | 'dark' | 'light' = $state('system')
+	let contrastLevel = $state(0.0)
 
 	const changeTheme = () => {
 		const isDarkTheme =
@@ -21,7 +22,7 @@
 				? window.matchMedia('(prefers-color-scheme: dark)').matches
 				: selectedTheme === 'dark'
 		if (value) {
-			const content = new SchemeContent(Hct.fromInt(argbFromHex(value)), isDarkTheme, 0.0)
+			const content = new SchemeContent(Hct.fromInt(argbFromHex(value)), isDarkTheme, contrastLevel)
 
 			const scheme = {
 				background: content.background,
@@ -85,6 +86,8 @@
 				const color = hexFromArgb(value as number)
 				document.documentElement.style.setProperty(`--np-color-${token}`, color)
 			}
+			localStorage.setItem('sourceColor', value)
+			localStorage.setItem('selectedTheme', selectedTheme)
 		}
 	}
 	onMount(() => {
@@ -96,12 +99,19 @@
 				document.documentElement.removeAttribute('data-theme')
 				theme = event.matches ? 'dark' : 'light'
 			})
+			const sourceColor = localStorage.getItem('sourceColor')
+			const selected = localStorage.getItem('selectedTheme')
+			if (sourceColor || selected) {
+				if (selected) {
+					selectedTheme = selected as 'system' | 'dark' | 'light'
+				}
+				if (sourceColor) {
+					value = sourceColor
+				}
+				changeTheme()
+			}
 		}
 	})
-
-	let switchThemeTitle = $derived(
-		theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme',
-	)
 
 	/**
 		{#if theme === 'light'}

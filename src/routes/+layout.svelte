@@ -139,6 +139,7 @@
 			overlay 0.3s allow-discrete,
 			display 0.3s allow-discrete;
 		transform: translateX(100%);
+		color: var(--np-color-on-surface);
 		background-color: var(--np-color-surface-container);
 	}
 	.nav:popover-open {
