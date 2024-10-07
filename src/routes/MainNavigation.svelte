@@ -13,7 +13,6 @@
 	<h3 class="ml-5">About</h3>
 	<Button
 		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
 		href="/about/quick-start"
 		variant="text"
 		class={$page.url.pathname === '/about/quick-start' ? 'btn-selected' : ''}
@@ -23,15 +22,6 @@
 	<h3 class="ml-5">Components</h3>
 	<Button
 		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
-		href="/components/alert"
-		variant="text"
-		class={$page.url.pathname === '/components/alert' ? 'btn-selected' : ''}
-		size="medium">Alert</Button
-	>
-	<Button
-		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
 		href="/components/button"
 		variant="text"
 		class={$page.url.pathname === '/components/button' ? 'btn-selected' : ''}
@@ -39,7 +29,6 @@
 	>
 	<Button
 		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
 		href="/components/menu"
 		variant="text"
 		class={$page.url.pathname === '/components/menu' ? 'btn-selected' : ''}
@@ -47,7 +36,6 @@
 	>
 	<Button
 		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
 		href="/components/progress"
 		variant="text"
 		class={$page.url.pathname === '/components/progress' ? 'btn-selected' : ''}
@@ -55,7 +43,6 @@
 	>
 	<Button
 		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
 		href="/components/ripple"
 		variant="text"
 		class={$page.url.pathname === '/components/ripple' ? 'btn-selected' : ''}
@@ -63,7 +50,13 @@
 	>
 	<Button
 		onclick={onclose}
-		style="--np-color-button: var(--np-text-color)"
+		href="/components/snackbar"
+		variant="text"
+		class={$page.url.pathname === '/components/snackbar' ? 'btn-selected' : ''}
+		size="medium">Snackbar</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/tooltip"
 		variant="text"
 		class={$page.url.pathname === '/components/tooltip' ? 'btn-selected' : ''}
@@ -79,6 +72,6 @@
 		z-index: -1;
 		height: 100%;
 		margin: -20px;
-		background-color: var(--np-selected-button-background-color);
+		background-color: var(--np-color-surface-container-highest);
 	}
 </style>

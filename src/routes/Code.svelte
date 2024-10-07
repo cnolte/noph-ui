@@ -7,12 +7,12 @@
 </script>
 
 <div
-	class="relative mt-4 rounded-3xl border border-solid border-[var(--np-divider-color)] bg-[var(--np-paper-background-color)]"
+	class="code-container relative mt-4 rounded-3xl border border-solid border-[var(--np-color-outline)] bg-[var(--np-color-surface-container)]"
 >
 	<Button
 		{title}
 		variant="text"
-		style="position:absolute;right:0.4rem;top:0.4rem;--np-color-button: var(--np-text-color);"
+		style="position:absolute;right:0.4rem;top:0.4rem;"
 		onclick={() => {
 			navigator.clipboard.writeText(value)
 			title = 'Copied!'
@@ -30,6 +30,9 @@
 </div>
 
 <style>
+	.code-container {
+		--np-button-container-color: var(--np-color-on-surface);
+	}
 	code {
 		color: var(--np-color-primary);
 		font-size: 0.875rem;

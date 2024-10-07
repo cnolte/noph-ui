@@ -69,15 +69,21 @@
 <style>
 	@media (hover: hover) {
 		.btn:hover {
-			background-color: color-mix(in srgb, var(--np-color-menu-item) 10%, transparent);
+			background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
 		}
 	}
-	.selected {
-		background-color: var(--np-selected-button-background-color);
+	:global(.selected::after) {
+		content: ' ';
+		position: absolute;
+		width: 100%;
+		z-index: -1;
+		height: 100%;
+		margin: -24px;
+		background-color: var(--np-color-surface-container-highest);
 	}
 	li {
-		--np-color-menu-item: var(--np-color-primary, rgb(5, 125, 187));
-		--np-ripple-color: var(--np-color-menu-item);
+		--np-color-menu-item: var(--np-color-primary);
+		--np-color-primary-ripple: var(--np-color-menu-item);
 	}
 	.btn:focus-visible {
 		outline-style: solid;

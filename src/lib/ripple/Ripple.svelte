@@ -43,7 +43,11 @@
 		pointer-events: none;
 	}
 	:global(.np-ripple) {
-		background: color-mix(in srgb, var(--np-ripple-color) 30%, transparent);
+		background: color-mix(
+			in srgb,
+			var(--np-color-primary-ripple, var(--np-color-primary-fixed)) 30%,
+			transparent
+		);
 		transform: scale(0);
 		animation: ripple-animation 600ms linear;
 	}

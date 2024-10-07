@@ -64,8 +64,8 @@
 		visibility: hidden;
 		width: max-content;
 		position: fixed;
-		background: var(--np-text-color-secondary);
-		color: var(--np-paper-background-color);
+		background: var(--np-color-inverse-surface);
+		color: var(--np-color-surface);
 		opacity: 0;
 		scale: 0;
 		z-index: 1;

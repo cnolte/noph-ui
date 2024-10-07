@@ -103,13 +103,19 @@
 
 <style>
 	.bt-enabled {
+		/** Color scheme */
+		--np-color-primary-button: var(--np-button-container-color, var(--np-color-primary));
+		--np-color-primary-hover-button: var(
+			--np-button-container-hover-color,
+			var(--np-color-primary-container)
+		);
+		--np-color-on-primary-button: var(--np-button-on-container-color, var(--np-color-on-primary));
+		--np-color-primary-ripple: var(--np-button-ripple-color, var(--np-color-primary-fixed));
 		transition: background-color 0.3s ease;
-		--np-color-button: var(--np-color-primary, rgb(1, 101, 146));
-		--np-ripple-color: var(--np-color-button);
 	}
 	.bt-enabled:focus-visible {
 		outline-style: solid;
-		outline-color: var(--np-color-button);
+		outline-color: var(--np-color-primary-button);
 		outline-width: 3px;
 		outline-offset: 2px;
 		animation: focusAnimation 0.3s ease forwards;
@@ -126,28 +132,27 @@
 		}
 	}
 	.text {
-		color: var(--np-color-button);
+		color: var(--np-color-primary-button);
 	}
 	@media (hover: hover) {
 		.text:hover {
-			background-color: color-mix(in srgb, var(--np-color-button) 10%, transparent);
+			background-color: color-mix(in srgb, var(--np-color-primary-button) 10%, transparent);
 		}
 	}
 	.text-disabled {
-		color: var(--np-disabled-color);
+		color: var(--np-color-outline);
 	}
 	.filled {
 		transition-property: box-shadow background-color;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 300ms;
-		color: var(--np-paper-background-color, rgb(255, 255, 255));
-		background-color: var(--np-color-button);
-		--np-ripple-color: var(--np-paper-background-color);
+		color: var(--np-color-on-primary-button);
+		background-color: var(--np-color-primary-button);
 	}
 
 	@media (hover: hover) {
 		.filled:hover {
-			background-color: color-mix(in srgb, var(--np-color-button) 85%, var(--np-background-color));
+			background-color: var(--np-color-primary-hover-button);
 			box-shadow: var(
 				--np-elevation-1,
 				0 1px 2px 0 rgb(0 0 0 / 0.6),
@@ -159,23 +164,23 @@
 		box-shadow: none;
 	}
 	.filled-disabled {
-		color: var(--np-disabled-color);
-		background-color: var(--np-disabled-background-color);
+		color: var(--np-color-on-surface-variant);
+		background-color: var(--np-color-surface-variant);
 	}
 	@media (hover: hover) {
 		.outlined:hover {
-			background-color: color-mix(in srgb, var(--np-color-button) 10%, transparent);
+			background-color: color-mix(in srgb, var(--np-color-primary-hover-button) 10%, transparent);
 		}
 	}
 	.outlined {
 		border: 1px solid;
-		color: var(--np-color-button);
-		border-color: var(--np-color-button);
+		color: var(--np-color-primary-button);
+		border-color: var(--np-color-primary-button);
 	}
 	.outlined-disabled {
 		border: 1px solid;
-		color: var(--np-disabled-color);
-		border-color: var(--np-disabled-background-color);
+		color: var(--np-color-outline);
+		border-color: var(--np-color-outline-variant);
 	}
 	.small {
 		font-size: 0.875rem;

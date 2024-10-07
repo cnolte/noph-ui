@@ -11,7 +11,7 @@
 <h1>Button</h1>
 <h2>Types</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button variant="filled">Filled</Button>
 	<Button variant="outlined">Outlined</Button>
@@ -24,7 +24,7 @@
 />
 <h2>Filled button</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button variant="filled">Filled</Button>
 	<Button variant="filled" disabled>Disabled</Button>
@@ -35,7 +35,7 @@
 />
 <h2>Outlined button</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="outlined" disabled>Disabled</Button>
@@ -46,7 +46,7 @@
 />
 <h2>Text button</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button variant="text">Text</Button>
 	<Button variant="text" disabled>Disabled</Button>
@@ -57,22 +57,21 @@
 />
 <h2>Custom Color</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
-	<Button style="--np-color-button: var(--np-color-success)" variant="filled">Success</Button>
-	<Button style="--np-color-button: var(--np-color-error)" variant="outlined">Error</Button>
+	<Button style="--np-button-container-color: var(--np-color-error)" variant="outlined"
+		>Error</Button
+	>
 </div>
 <Code
-	value={`<Button style="--np-color-button: var(--np-color-success)" variant="filled">
-	Success
-</Button>
-<Button style="--np-color-button: var(--np-color-error)" variant="outlined">
+	value={`
+<Button style="--np-button-container-color: var(--np-color-error)" variant="outlined">
 	Error
 </Button>`}
 />
 <h2>Icon</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button aria-label="Check 1" variant="text">
 		{#snippet start()}
@@ -129,7 +128,7 @@
 />
 <h2>Size</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button size="small">Small</Button>
 	<Button size="medium">Medium</Button>

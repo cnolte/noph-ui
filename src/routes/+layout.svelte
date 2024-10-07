@@ -20,7 +20,7 @@
 	/>
 </svelte:head>
 
-<header class="fixed left-0 right-0 top-0 z-10 grid">
+<header class="layout-btn fixed left-0 right-0 top-0 z-10 grid">
 	<div class="flex h-20 items-center gap-2 pl-4 pr-2 md:px-4">
 		<a href="/" class="flex items-center gap-3">
 			<img src="/favicon.svg" alt="Noph Logo" width="42" height="42" />
@@ -30,7 +30,6 @@
 		<Button
 			variant="text"
 			title="GitHub repository"
-			style="--np-color-button: var(--np-text-color)"
 			href="https://github.com/cnolte/noph-ui"
 			target="_blank"
 		>
@@ -44,7 +43,6 @@
 		<Button
 			popovertarget="mobile-drawer"
 			variant="text"
-			style="--np-color-button: var(--np-text-color)"
 			title={popoverState === 'open' ? 'Close' : 'Open'}
 			class="md:!hidden"
 			>{#snippet start()}{#if popoverState === 'open'}<CloseIcon />{:else}<MenuIcon
@@ -53,12 +51,12 @@
 	</div>
 </header>
 
-<nav class="main-nav fixed hidden w-56 overflow-y-auto px-2 md:block">
+<nav class="main-nav layout-btn fixed hidden w-56 overflow-y-auto px-2 md:block">
 	<MainNavigation />
 </nav>
 <nav
 	bind:this={popover}
-	class="nav flex flex-col px-4 py-0 md:hidden"
+	class="nav layout-btn flex flex-col px-4 py-0 md:hidden"
 	popover="auto"
 	id="mobile-drawer"
 	onbeforetoggle={(event) => {
@@ -82,18 +80,21 @@
 <div class="bottom-bar"></div>
 
 <style>
+	.layout-btn {
+		--np-button-container-color: var(--np-color-on-surface);
+	}
 	.bottom-bar {
 		position: fixed;
 		width: 100%;
 		height: 0rem;
-		background-color: var(--np-paper-background-color);
+		background-color: var(--np-color-surface-container);
 		bottom: 0;
 	}
 	.paper {
 		position: fixed;
 		width: 100%;
 		height: calc(100dvh - 5rem);
-		background-color: var(--np-background-color);
+		background-color: var(--np-color-background);
 		border-radius: 1.5rem;
 	}
 
@@ -119,13 +120,13 @@
 	}
 	:global(.icon svg path) {
 		scale: 0.24;
-		fill: var(--np-text-color);
+		fill: var(--np-color-on-surface);
 	}
 	.main-nav {
 		height: calc(100dvh - 5rem);
 	}
 	header {
-		background: var(--np-paper-background-color);
+		background: var(--np-color-surface-container);
 	}
 	.nav[popover] {
 		margin-top: 5rem;
@@ -138,7 +139,7 @@
 			overlay 0.3s allow-discrete,
 			display 0.3s allow-discrete;
 		transform: translateX(100%);
-		background-color: var(--np-paper-background-color);
+		background-color: var(--np-color-surface-container);
 	}
 	.nav:popover-open {
 		transform: translateX(0);

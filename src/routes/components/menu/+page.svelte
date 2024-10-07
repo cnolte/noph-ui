@@ -15,7 +15,7 @@
 <h1>Menu</h1>
 <h2>Basic Menu</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button popovertarget="browser-menu" style="anchor-name: --menu" bind:element={menuBtn}
 		>Open Menu</Button
@@ -42,7 +42,7 @@
 />
 <h2>Menu items</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<ul>
 		<MenuItem>Basic</MenuItem>

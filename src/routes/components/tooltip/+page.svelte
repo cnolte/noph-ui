@@ -13,7 +13,7 @@
 <h1>Tooltip</h1>
 <h2>Basic Tooltip</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<div aria-describedby="example-tooltip-1" bind:this={exampleBtn1}>Hover over this text</div>
 	{#if exampleBtn1}
@@ -33,7 +33,7 @@
 <h2>Button with Tooltip</h2>
 <p>Buttons have built-in support for tooltips. You can simply set the title attribute.</p>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<Button title="This is a button tooltip">Hover over this button</Button>
 </div>

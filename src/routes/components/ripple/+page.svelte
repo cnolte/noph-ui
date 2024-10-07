@@ -10,12 +10,10 @@
 <h1>Ripple</h1>
 <h2>Basic Ripple</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap items-center gap-4 rounded-3xl border border-solid border-[var(--np-divider-color)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap items-center gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	Click inside the div tag:
-	<div
-		class="relative h-10 w-28 overflow-hidden border-2 border-current bg-[--np-paper-background-color]"
-	>
+	<div class="relative h-10 w-28 overflow-hidden border-2 border-current bg-[--np-color-surface]">
 		<Ripple />
 	</div>
 </div>

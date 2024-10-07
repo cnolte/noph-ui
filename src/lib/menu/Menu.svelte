@@ -15,7 +15,7 @@
 	let innerWidth = $state(0)
 	let scrollY = $state(0)
 	let scrollX = $state(0)
-	let popoverElement: HTMLDivElement
+	let popoverElement: HTMLDivElement | undefined = $state()
 
 	/*let maxHeight = $derived(
 		(anchorRect.top > innerHeight - anchorRect.bottom
@@ -54,9 +54,11 @@
 	$effect(refreshValues)
 
 	$effect(() => {
-		anchor?.addEventListener('click', () => {
-			refreshValues()
-		})
+		if (!('anchorName' in document.documentElement.style) && anchor) {
+			anchor.addEventListener('click', () => {
+				refreshValues()
+			})
+		}
 	})
 </script>
 
@@ -83,7 +85,8 @@
 	div[popover] {
 		position: absolute;
 		inset: unset;
-		background-color: var(--np-menu-background-color, var(--np-paper-background-color));
+		color: var(--np-menu-color, var(--np-color-on-surface));
+		background-color: var(--np-menu-background-color, var(--np-color-surface-container));
 		margin: 0;
 		overflow: auto;
 		border-radius: 1rem;
