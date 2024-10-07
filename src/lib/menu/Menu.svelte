@@ -44,11 +44,18 @@
 		if (!('anchorName' in document.documentElement.style) && popoverElement && anchor) {
 			const anchorRect = anchor.getBoundingClientRect()
 			if (anchorRect.bottom + clientHeight > innerHeight) {
-				popoverElement.style.top = `${anchorRect.top - clientHeight + scrollY - 2}px`
+				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
 			} else {
-				popoverElement.style.top = `${anchorRect.bottom + scrollY + 2}px`
+				popoverElement.style.top = `${anchorRect.bottom + 2}px`
 			}
-			popoverElement.style.left = `${anchorRect.left + scrollX + anchorRect.width / 2 - clientWidth / 2}px`
+			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+			if (left > innerWidth - clientWidth) {
+				popoverElement.style.left = `${innerWidth - clientWidth - 8}px`
+			} else if (left < 8) {
+				popoverElement.style.left = '8px'
+			} else {
+				popoverElement.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+			}
 		}
 	}
 	$effect(refreshValues)
@@ -58,6 +65,13 @@
 			anchor.addEventListener('click', () => {
 				refreshValues()
 			})
+			window.addEventListener(
+				'scroll',
+				() => {
+					refreshValues()
+				},
+				{ passive: true },
+			)
 		}
 	})
 </script>
@@ -83,15 +97,14 @@
 
 <style>
 	div[popover] {
-		position: absolute;
-		inset: unset;
 		color: var(--np-menu-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-background-color, var(--np-color-surface-container));
-		margin: 0;
 		overflow: auto;
 		border-radius: 1rem;
 		padding: 1rem 0;
 		box-shadow: var(--np-elevation-2);
+		margin: 0;
+		margin-right: 2rem;
 		transition:
 			overlay 0.3s allow-discrete,
 			display 0.3s allow-discrete,
