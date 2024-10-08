@@ -44,12 +44,13 @@
 <style>
 	.segmented-control {
 		display: flex;
+		color: var(--np-color-on-surface);
 		border: 1px solid var(--np-color-outline);
 		border-radius: 1.5rem;
 		overflow: hidden;
 	}
 
-	.segmented-control label {
+	label {
 		flex: 1;
 		padding: 0.5rem 2rem;
 		text-align: center;
@@ -65,19 +66,19 @@
 		transition: all 0.15s linear;
 	}
 
-	.segmented-control label:has(input:disabled) {
+	label:has(input:disabled) {
 		cursor: unset;
 		opacity: 0.5;
 	}
 
-	.segmented-control label:last-child {
+	label:last-child {
 		border-right: none;
 	}
 
-	.segmented-control label input {
+	label input {
 		display: none;
 	}
-	.segmented-control label::after {
+	label::after {
 		content: ' ';
 		position: absolute;
 		inset: 0;
@@ -86,45 +87,27 @@
 		transition: opacity 0.15s linear;
 		background-color: var(--np-color-surface-container-highest);
 	}
-	.segmented-control label:has(input:checked) {
+	label:has(input:checked) {
 		padding: 0.5rem 1rem;
 	}
-	.segmented-control label:has(input:checked)::after {
+	label:has(input:checked)::after {
 		opacity: 1;
 	}
 	.check-icon {
 		width: 0;
 		overflow: hidden;
 		fill: var(--np-color-on-surface);
-		animation: deselectCheck 0.1s linear;
+		transition: width 0.3s ease;
 	}
 	.check-icon-wrapper {
 		width: 0;
+		overflow: hidden;
 		transition: width 0.15s linear;
 	}
-	.segmented-control label:has(input:checked) .check-icon-wrapper {
+	label:has(input:checked) .check-icon-wrapper {
 		width: 2rem;
 	}
-	.segmented-control label:has(input:checked) .check-icon-wrapper .check-icon {
-		animation: selectCheck 0.3s linear;
+	label:has(input:checked) .check-icon-wrapper .check-icon {
 		width: 1.5rem;
-	}
-
-	@keyframes selectCheck {
-		from {
-			width: 0;
-		}
-		to {
-			width: 1.5rem;
-		}
-	}
-
-	@keyframes deselectCheck {
-		from {
-			width: 1.5rem;
-		}
-		to {
-			width: 0;
-		}
 	}
 </style>
