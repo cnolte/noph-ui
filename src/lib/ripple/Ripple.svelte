@@ -27,20 +27,24 @@
 	}
 
 	$effect(() => {
-		element?.parentElement?.addEventListener('mousedown', createRipple)
-		element?.parentElement?.addEventListener('mouseup', () => {
-			pressed = false
-		})
-		element?.parentElement?.addEventListener('touchstart', createRipple)
-		element?.parentElement?.addEventListener('touchend', () => {
-			pressed = false
-		})
-		element?.parentElement?.addEventListener('mouseenter', () => {
-			hovered = true
-		})
-		element?.parentElement?.addEventListener('mouseleave', () => {
-			hovered = false
-		})
+		const isTouchDevice = 'ontouchstart' in window
+		if (!isTouchDevice) {
+			element?.parentElement?.addEventListener('touchstart', createRipple)
+			element?.parentElement?.addEventListener('touchend', () => {
+				pressed = false
+			})
+		} else {
+			element?.parentElement?.addEventListener('mousedown', createRipple)
+			element?.parentElement?.addEventListener('mouseup', () => {
+				pressed = false
+			})
+			element?.parentElement?.addEventListener('mouseenter', () => {
+				hovered = true
+			})
+			element?.parentElement?.addEventListener('mouseleave', () => {
+				hovered = false
+			})
+		}
 	})
 </script>
 
