@@ -21,7 +21,7 @@
 </svelte:head>
 
 <header class="layout-btn fixed left-0 right-0 top-0 z-10 grid">
-	<div class="flex h-20 items-center gap-2 pl-4 pr-2 md:px-4">
+	<div class="inner-header flex items-center gap-2 pl-4 pr-2 md:px-4">
 		<a href="/" class="flex items-center gap-3">
 			<img src="/favicon.svg" alt="Noph Logo" width="42" height="42" />
 			<div class="ml-1 text-xl font-semibold md:text-2xl">Noph UI</div>
@@ -72,7 +72,7 @@
 <div class="fixed -z-10">
 	<div class="paper"></div>
 </div>
-<main class="mt-20 md:ml-56">
+<main class="main md:ml-56">
 	<div class="mx-auto max-w-5xl px-6 pb-8 pt-8 md:px-12 md:pb-16">
 		{@render children()}
 	</div>
@@ -80,8 +80,14 @@
 <div class="bottom-bar"></div>
 
 <style>
+	.main {
+		margin-top: 4.5rem;
+	}
 	.layout-btn {
 		--np-button-container-color: var(--np-color-on-surface);
+	}
+	.inner-header {
+		height: 4.5rem;
 	}
 	.bottom-bar {
 		position: fixed;
@@ -123,13 +129,13 @@
 		fill: var(--np-color-on-surface);
 	}
 	.main-nav {
-		height: calc(100dvh - 5rem);
+		height: calc(100dvh - 4.5rem);
 	}
 	header {
 		background: var(--np-color-surface-container);
 	}
 	.nav[popover] {
-		margin-top: 5rem;
+		margin-top: 4.5rem;
 		width: 100vw;
 		height: calc(100dvh - 4rem);
 		transition-property: transform;

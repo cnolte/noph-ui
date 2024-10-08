@@ -99,7 +99,6 @@
 	})
 </script>
 
-<!--<input type="color" id="body" name="body" bind:value onchange={changeTheme} />-->
 <Button
 	popovertarget="palette-menu"
 	style="anchor-name: --palette-menu"
