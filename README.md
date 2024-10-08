@@ -10,11 +10,11 @@ npm install noph-ui
 
 ## Components
 
-- Alert
 - Button
 - Divider
 - Menu
 - MenuItem
 - Progress
 - Ripple
+- Snackbar
 - Tooltip

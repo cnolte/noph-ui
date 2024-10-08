@@ -13,14 +13,12 @@
 	} = $props()
 	let value = $state<string>('#5fb9e9')
 	let menuBtn = $state<HTMLElement>()
-	let selectedTheme: 'system' | 'dark' | 'light' = $state('system')
 	let contrastLevel = $state(0.0)
 
 	const changeTheme = () => {
-		const isDarkTheme =
-			selectedTheme === 'system'
-				? window.matchMedia('(prefers-color-scheme: dark)').matches
-				: selectedTheme === 'dark'
+		const isDarkTheme = !theme
+			? window.matchMedia('(prefers-color-scheme: dark)').matches
+			: theme === 'dark'
 		if (value) {
 			const content = new SchemeContent(Hct.fromInt(argbFromHex(value)), isDarkTheme, contrastLevel)
 
@@ -86,28 +84,16 @@
 				const color = hexFromArgb(value as number)
 				document.documentElement.style.setProperty(`--np-color-${token}`, color)
 			}
-			localStorage.setItem('sourceColor', value)
-			localStorage.setItem('selectedTheme', selectedTheme)
+			sessionStorage.setItem('sourceColor', value)
 		}
 	}
 	onMount(() => {
 		if (browser) {
 			const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
 			theme = theme || (prefersDarkMode.matches ? 'dark' : 'light')
-			prefersDarkMode.addEventListener('change', (event) => {
-				document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
-				document.documentElement.removeAttribute('data-theme')
-				theme = event.matches ? 'dark' : 'light'
-			})
-			const sourceColor = localStorage.getItem('sourceColor')
-			const selected = localStorage.getItem('selectedTheme')
-			if (sourceColor || selected) {
-				if (selected) {
-					selectedTheme = selected as 'system' | 'dark' | 'light'
-				}
-				if (sourceColor) {
-					value = sourceColor
-				}
+			const sourceColor = sessionStorage.getItem('sourceColor')
+			if (sourceColor) {
+				value = sourceColor
 				changeTheme()
 			}
 		}
@@ -165,19 +151,25 @@
 	</div>
 	<Button
 		onclick={() => {
-			selectedTheme = 'dark'
+			theme = 'dark'
+			document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+			document.documentElement.setAttribute('data-theme', theme)
 			changeTheme()
 		}}>Dark</Button
 	>
 	<Button
 		onclick={() => {
-			selectedTheme = 'system'
+			theme = undefined
+			document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
+			document.documentElement.removeAttribute('data-theme')
 			changeTheme()
 		}}>System</Button
 	>
 	<Button
 		onclick={() => {
-			selectedTheme = 'light'
+			theme = 'light'
+			document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+			document.documentElement.setAttribute('data-theme', theme)
 			changeTheme()
 		}}>Light</Button
 	>
