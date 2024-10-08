@@ -59,6 +59,7 @@
 		white-space: nowrap;
 		user-select: none;
 		display: flex;
+		align-items: center;
 		border-right: 1px solid var(--np-color-outline);
 		position: relative;
 		transition: all 0.15s linear;
