@@ -4,6 +4,7 @@
 	import MenuIcon from '$lib/icons/MenuIcon.svelte'
 	import '../app.css'
 	import GitHubMark from './GitHubMark.svelte'
+	import Logo from './Logo.svelte'
 	import MainNavigation from './MainNavigation.svelte'
 	import ThemeButton from './ThemeButton.svelte'
 
@@ -21,9 +22,9 @@
 </svelte:head>
 
 <header class="layout-btn fixed left-0 right-0 top-0 z-10 grid">
-	<div class="inner-header flex items-center gap-2 pl-4 pr-2 md:px-4">
-		<a href="/" class="flex items-center gap-3">
-			<img src="/favicon.svg" alt="Noph Logo" width="42" height="42" />
+	<div class="inner-header flex items-center gap-2 pl-6 pr-2 md:pr-4">
+		<a href="/" class="flex items-center gap-2 text-[var(--np-color-primary)]">
+			<Logo />
 			<div class="ml-1 text-xl font-semibold md:text-2xl">Noph UI</div>
 		</a>
 		<div class="flex-grow"></div>
