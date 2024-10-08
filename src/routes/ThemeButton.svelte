@@ -132,12 +132,46 @@
 			</div>
 		</label>
 	</div>
-	<SegmentedButton class="mt-4">
-		<input
+	<SegmentedButton
+		class="mt-4"
+		name="theme-picker"
+		options={[
+			{
+				label: 'Dark',
+				onclick: () => {
+					theme = 'dark'
+					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+					document.documentElement.setAttribute('data-theme', theme)
+					changeTheme()
+				},
+				checked: theme === 'dark',
+			},
+			{
+				label: 'System',
+				onclick: () => {
+					theme = undefined
+					document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
+					document.documentElement.removeAttribute('data-theme')
+					changeTheme()
+				},
+				checked: !theme,
+			},
+			{
+				label: 'Light',
+				onclick: () => {
+					theme = 'light'
+					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+					document.documentElement.setAttribute('data-theme', theme)
+					changeTheme()
+				},
+				checked: theme === 'light',
+			},
+		]}
+	>
+		<!--<input
 			type="radio"
-			name="flight-type"
-			value="coach"
-			id="coach"
+			name="theme"
+			id="select-dark-theme"
 			checked={theme === 'dark'}
 			onclick={() => {
 				theme = 'dark'
@@ -146,13 +180,11 @@
 				changeTheme()
 			}}
 		/>
-		<label for="coach"> Dark </label>
-
+		<label for="select-dark-theme">Dark</label>
 		<input
 			type="radio"
-			name="flight-type"
-			value="business"
-			id="business"
+			name="theme"
+			id="select-system-theme"
 			checked={!theme}
 			onclick={() => {
 				theme = undefined
@@ -161,12 +193,11 @@
 				changeTheme()
 			}}
 		/>
-		<label for="business"> System </label>
+		<label for="select-system-theme">System</label>
 		<input
 			type="radio"
-			name="flight-type"
-			value="first"
-			id="first"
+			name="theme"
+			id="select-light-theme"
 			checked={theme === 'light'}
 			onclick={() => {
 				theme = 'light'
@@ -175,7 +206,7 @@
 				changeTheme()
 			}}
 		/>
-		<label for="first"> Light </label>
+		<label for="select-light-theme">Light</label>--->
 	</SegmentedButton>
 </Menu>
 

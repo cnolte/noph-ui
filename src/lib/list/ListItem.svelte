@@ -72,7 +72,7 @@
 			background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
 		}
 	}
-	:global(.selected::after) {
+	.selected::after {
 		content: ' ';
 		position: absolute;
 		width: 100%;

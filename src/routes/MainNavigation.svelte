@@ -57,6 +57,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/segmented-button"
+		variant="text"
+		class={$page.url.pathname === '/components/segmented-button' ? 'btn-selected' : ''}
+		size="medium">Segmented Button</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/snackbar"
 		variant="text"
 		class={$page.url.pathname === '/components/snackbar' ? 'btn-selected' : ''}
