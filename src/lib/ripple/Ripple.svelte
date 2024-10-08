@@ -29,36 +29,32 @@
 	}
 
 	$effect(() => {
-		const supportsMouseMove = 'onmousemove' in window
-		if (!supportsMouseMove) {
-			element?.parentElement?.addEventListener('touchstart', (event) => {
-				lastTouchTime = Date.now()
-				createRipple(event)
-			})
-			element?.parentElement?.addEventListener('touchend', () => {
-				lastTouchTime = Date.now()
-				pressed = false
-			})
-		} else {
-			element?.parentElement?.addEventListener('mousedown', (event) => {
-				if (Date.now() - lastTouchTime < TOUCH_DELAY) {
-					return
-				}
-				createRipple(event)
-			})
-			element?.parentElement?.addEventListener('mouseup', () => {
-				if (Date.now() - lastTouchTime < TOUCH_DELAY) {
-					return
-				}
-				pressed = false
-			})
-			element?.parentElement?.addEventListener('mouseenter', () => {
-				hovered = true
-			})
-			element?.parentElement?.addEventListener('mouseleave', () => {
-				hovered = false
-			})
-		}
+		element?.parentElement?.addEventListener('touchstart', (event) => {
+			lastTouchTime = Date.now()
+			createRipple(event)
+		})
+		element?.parentElement?.addEventListener('touchend', () => {
+			lastTouchTime = Date.now()
+			pressed = false
+		})
+		element?.parentElement?.addEventListener('mousedown', (event) => {
+			if (Date.now() - lastTouchTime < TOUCH_DELAY) {
+				return
+			}
+			createRipple(event)
+		})
+		element?.parentElement?.addEventListener('mouseup', () => {
+			if (Date.now() - lastTouchTime < TOUCH_DELAY) {
+				return
+			}
+			pressed = false
+		})
+		element?.parentElement?.addEventListener('mouseenter', () => {
+			hovered = true
+		})
+		element?.parentElement?.addEventListener('mouseleave', () => {
+			hovered = false
+		})
 	})
 </script>
 
