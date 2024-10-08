@@ -99,7 +99,7 @@
 	.paper {
 		position: fixed;
 		width: 100%;
-		height: calc(100dvh - 5rem);
+		height: calc(100dvh - 4.5rem);
 		background-color: var(--np-color-background);
 		border-radius: 1.5rem;
 	}
@@ -108,7 +108,7 @@
 		.paper {
 			width: calc(100% - 16rem);
 			margin-left: 15rem;
-			height: calc(100dvh - 7rem);
+			height: calc(100dvh - 6.5rem);
 		}
 		.bottom-bar {
 			margin-left: 15rem;
