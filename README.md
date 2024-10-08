@@ -10,11 +10,15 @@ npm install noph-ui
 
 ## Components
 
-- Button
-- Divider
-- Menu
-- MenuItem
-- Progress
-- Ripple
-- Snackbar
-- Tooltip
+- Button (in progress)
+- Divider (in progress)
+- List (in progress)
+- Menu (in progress)
+- Progress (in progress)
+- Radio (waiting for start)
+- Ripple (in progress)
+- Segmented Button (in progress)
+- Snackbar (in progress)
+- Switch (witing for start)
+- Tooltip (in progress)
+- Textfield (waiting for start)

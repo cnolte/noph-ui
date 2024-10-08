@@ -66,20 +66,16 @@
 		position: fixed;
 		background: var(--np-color-inverse-surface);
 		color: var(--np-color-surface);
-		opacity: 0;
 		scale: 0;
 		z-index: 1;
 		padding: 0.25rem 0.5rem;
 		border-radius: 0.375rem;
 		font-size: 0.75rem;
-		transition:
-			opacity 0.3s ease,
-			scale 0.3s ease;
+		transition: scale 0.3s ease;
 	}
 	@media (hover: hover) {
 		:global([aria-describedby]:hover + [role='tooltip']) {
 			visibility: visible;
-			opacity: 1;
 			scale: 1;
 		}
 	}

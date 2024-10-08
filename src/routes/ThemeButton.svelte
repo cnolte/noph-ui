@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
 	import Button from '$lib/button/Button.svelte'
+	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
 	import PaletteIcon from '$lib/icons/PaletteIcon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
@@ -89,8 +90,6 @@
 	}
 	onMount(() => {
 		if (browser) {
-			const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
-			theme = theme || (prefersDarkMode.matches ? 'dark' : 'light')
 			const sourceColor = sessionStorage.getItem('sourceColor')
 			if (sourceColor) {
 				value = sourceColor
@@ -98,21 +97,6 @@
 			}
 		}
 	})
-
-	/**
-		{#if theme === 'light'}
-			<DarkModeIcon />
-		{:else}
-			<LightModeIcon />
-		{/if}
-		
-		
-	onclick={() => {
-		theme = theme === 'light' ? 'dark' : 'light'
-		document.cookie = `theme=${theme}; path=/; SameSite=Lax`
-		document.documentElement.setAttribute('data-theme', theme)
-	}}
-		*/
 </script>
 
 <!--<input type="color" id="body" name="body" bind:value onchange={changeTheme} />-->
@@ -130,9 +114,9 @@
 <Menu
 	anchor={menuBtn}
 	id="palette-menu"
-	style="position-area: bottom span-left;margin-right:0px;position-anchor: --palette-menu"
+	style="position-area: bottom span-left;margin-right:0px;padding: 1rem;position-anchor: --palette-menu"
 >
-	<div class="p-4">
+	<div class="card p-4">
 		<label class="flex items-center gap-4">
 			Hex Source Color
 			<div class="h-12 w-12 rounded-full">
@@ -149,33 +133,59 @@
 			</div>
 		</label>
 	</div>
-	<Button
-		onclick={() => {
-			theme = 'dark'
-			document.cookie = `theme=${theme}; path=/; SameSite=Lax`
-			document.documentElement.setAttribute('data-theme', theme)
-			changeTheme()
-		}}>Dark</Button
-	>
-	<Button
-		onclick={() => {
-			theme = undefined
-			document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
-			document.documentElement.removeAttribute('data-theme')
-			changeTheme()
-		}}>System</Button
-	>
-	<Button
-		onclick={() => {
-			theme = 'light'
-			document.cookie = `theme=${theme}; path=/; SameSite=Lax`
-			document.documentElement.setAttribute('data-theme', theme)
-			changeTheme()
-		}}>Light</Button
-	>
+	<SegmentedButton class="mt-4">
+		<input
+			type="radio"
+			name="flight-type"
+			value="coach"
+			id="coach"
+			checked={theme === 'dark'}
+			onclick={() => {
+				theme = 'dark'
+				document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+				document.documentElement.setAttribute('data-theme', theme)
+				changeTheme()
+			}}
+		/>
+		<label for="coach"> Dark </label>
+
+		<input
+			type="radio"
+			name="flight-type"
+			value="business"
+			id="business"
+			checked={!theme}
+			onclick={() => {
+				theme = undefined
+				document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
+				document.documentElement.removeAttribute('data-theme')
+				changeTheme()
+			}}
+		/>
+		<label for="business"> System </label>
+		<input
+			type="radio"
+			name="flight-type"
+			value="first"
+			id="first"
+			checked={theme === 'light'}
+			onclick={() => {
+				theme = 'light'
+				document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+				document.documentElement.setAttribute('data-theme', theme)
+				changeTheme()
+			}}
+		/>
+		<label for="first"> Light </label>
+	</SegmentedButton>
 </Menu>
 
 <style>
+	.card {
+		border-radius: 1.5rem;
+		color: var(--np-color-on-surface-variant);
+		background-color: var(--np-color-surface-variant);
+	}
 	.input {
 		min-width: 200%;
 		min-height: 200%;

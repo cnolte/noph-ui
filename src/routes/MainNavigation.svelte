@@ -29,6 +29,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/list"
+		variant="text"
+		class={$page.url.pathname === '/components/list' ? 'btn-selected' : ''}
+		size="medium">List</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/menu"
 		variant="text"
 		class={$page.url.pathname === '/components/menu' ? 'btn-selected' : ''}
