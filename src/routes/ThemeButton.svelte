@@ -137,7 +137,7 @@
 					document.documentElement.setAttribute('data-theme', theme)
 					changeTheme()
 				},
-				checked: theme === 'dark',
+				selected: theme === 'dark',
 			},
 			{
 				label: 'System',
@@ -147,7 +147,7 @@
 					document.documentElement.removeAttribute('data-theme')
 					changeTheme()
 				},
-				checked: !theme,
+				selected: !theme,
 			},
 			{
 				label: 'Light',
@@ -157,7 +157,7 @@
 					document.documentElement.setAttribute('data-theme', theme)
 					changeTheme()
 				},
-				checked: theme === 'light',
+				selected: theme === 'light',
 			},
 		]}
 	></SegmentedButton>
