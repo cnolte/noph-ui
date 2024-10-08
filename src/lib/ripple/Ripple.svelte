@@ -30,7 +30,6 @@
 
 	$effect(() => {
 		element?.parentElement?.addEventListener('touchstart', (event) => {
-			lastTouchTime = Date.now()
 			createRipple(event)
 		})
 		element?.parentElement?.addEventListener('touchend', () => {
