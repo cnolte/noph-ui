@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
+	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { Snippet } from 'svelte'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
@@ -30,14 +31,6 @@
 		disabled,
 		...attributes
 	}: ButtonProps | AnchorProps = $props()
-
-	const generateUUIDv4 = () => {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-			var r = (Math.random() * 16) | 0,
-				v = c === 'x' ? r : (r & 0x3) | 0x8
-			return v.toString(16)
-		})
-	}
 
 	let tooltipId = $state(title ? generateUUIDv4() : '')
 

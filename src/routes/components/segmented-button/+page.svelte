@@ -1,5 +1,8 @@
 <script lang="ts">
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
+	import BrightnessMediumIcon from '$lib/icons/BrightnessMediumIcon.svelte'
+	import DarkModeIcon from '$lib/icons/DarkModeIcon.svelte'
+	import LightModeIcon from '$lib/icons/LightModeIcon.svelte'
 	import Code from '../../Code.svelte'
 </script>
 
@@ -16,11 +19,14 @@
 		name="demo"
 		options={[
 			{
-				label: 'Apple',
+				label: 'Week',
 				selected: true,
 			},
 			{
-				label: 'Banana',
+				label: 'Month',
+			},
+			{
+				label: 'Year',
 			},
 		]}
 	/>
@@ -30,16 +36,19 @@
 	name="demo"
 	options={[
 		{
-			label: 'Apple',
+			label: 'Week',
 			selected: true,
 		},
 		{
-			label: 'Banana',
+			label: 'Month',
+		},
+		{
+			label: 'Year',
 		},
 	]}
 />`}
 />
-<h2>Multi Select</h2>
+<h2>Multiple Choice</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
@@ -48,13 +57,19 @@
 		multiSelect
 		options={[
 			{
-				label: 'Apple',
+				label: 'XS',
 			},
 			{
-				label: 'Banana',
+				label: 'S',
 			},
 			{
-				label: 'Orange',
+				label: 'M',
+			},
+			{
+				label: 'L',
+			},
+			{
+				label: 'XL',
 			},
 		]}
 	/>
@@ -65,13 +80,85 @@
 	multiSelect
 	options={[
 		{
-			label: 'Apple',
+			label: 'XS',
 		},
 		{
-			label: 'Banana',
+			label: 'S',
 		},
 		{
-			label: 'Orange',
+			label: 'M',
+		},
+		{
+			label: 'L',
+		},
+		{
+			label: 'XL',
+		},
+	]}
+/>`}
+/>
+
+<h2>Icon</h2>
+<div
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
+>
+	{#snippet darkIcon()}
+		<DarkModeIcon />
+	{/snippet}
+
+	{#snippet lightIcon()}
+		<LightModeIcon />
+	{/snippet}
+
+	{#snippet systemIcon()}
+		<BrightnessMediumIcon />
+	{/snippet}
+	<SegmentedButton
+		name="demo3"
+		options={[
+			{
+				label: 'Dark',
+				icon: darkIcon,
+			},
+			{
+				label: 'System',
+				icon: systemIcon,
+				selected: true,
+			},
+			{
+				label: 'Light',
+				icon: lightIcon,
+			},
+		]}
+	/>
+</div>
+<Code
+	value={`{#snippet darkIcon()}
+	<DarkModeIcon />
+{/snippet}
+
+{#snippet lightIcon()}
+	<LightModeIcon />
+{/snippet}
+
+{#snippet systemIcon()}
+	<BrightnessMediumIcon />
+{/snippet}
+<SegmentedButton
+	name="demo3"
+	options={[
+		{
+			label: 'Dark',
+			icon: darkIcon,
+		},
+		{
+			label: 'System',
+			icon: systemIcon,
+			selected: true,
+		},
+		{
+			label: 'Light',
+			icon: lightIcon,
 		},
 	]}
 />`}
@@ -81,36 +168,36 @@
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
 	<SegmentedButton
-		name="demo3"
+		name="demo4"
 		options={[
 			{
 				label: 'Apple',
-				selected: true,
+				disabled: true,
 			},
 			{
 				label: 'Banana',
+				selected: true,
 			},
 			{
 				label: 'Orange',
-				disabled: true,
 			},
 		]}
 	/>
 </div>
 <Code
 	value={`<SegmentedButton
-	name="demo3"
+	name="demo4"
 	options={[
 		{
 			label: 'Apple',
-			selected: true,
+			disabled: true,
 		},
 		{
 			label: 'Banana',
+			selected: true,
 		},
 		{
 			label: 'Orange',
-			disabled: true,
 		},
 	]}
 />`}
