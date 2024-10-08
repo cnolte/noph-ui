@@ -4,6 +4,8 @@
 	let pressed = $state(false)
 	let hovered = $state(false)
 	let timerStarted = $state(false)
+	let lastTouchTime = $state(0)
+	const TOUCH_DELAY = 500
 
 	const createRipple = (event: MouseEvent | TouchEvent): void => {
 		const container: HTMLElement = event.currentTarget as HTMLElement
@@ -27,15 +29,27 @@
 	}
 
 	$effect(() => {
-		const isTouchDevice = 'ontouchstart' in window
-		if (!isTouchDevice) {
-			element?.parentElement?.addEventListener('touchstart', createRipple)
+		const supportsMouseMove = 'onmousemove' in window
+		if (!supportsMouseMove) {
+			element?.parentElement?.addEventListener('touchstart', (event) => {
+				lastTouchTime = Date.now()
+				createRipple(event)
+			})
 			element?.parentElement?.addEventListener('touchend', () => {
+				lastTouchTime = Date.now()
 				pressed = false
 			})
 		} else {
-			element?.parentElement?.addEventListener('mousedown', createRipple)
+			element?.parentElement?.addEventListener('mousedown', (event) => {
+				if (Date.now() - lastTouchTime < TOUCH_DELAY) {
+					return
+				}
+				createRipple(event)
+			})
 			element?.parentElement?.addEventListener('mouseup', () => {
+				if (Date.now() - lastTouchTime < TOUCH_DELAY) {
+					return
+				}
 				pressed = false
 			})
 			element?.parentElement?.addEventListener('mouseenter', () => {
