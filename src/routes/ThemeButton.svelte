@@ -120,14 +120,7 @@
 			Hex Source Color
 			<div class="h-12 w-12 rounded-full">
 				<div class="flex h-full w-full items-center justify-center overflow-hidden rounded-full">
-					<input
-						class="input"
-						type="color"
-						id="body"
-						name="body"
-						bind:value
-						oninput={changeTheme}
-					/>
+					<input class="input" type="color" name="body" bind:value oninput={changeTheme} />
 				</div>
 			</div>
 		</label>
@@ -167,47 +160,7 @@
 				checked: theme === 'light',
 			},
 		]}
-	>
-		<!--<input
-			type="radio"
-			name="theme"
-			id="select-dark-theme"
-			checked={theme === 'dark'}
-			onclick={() => {
-				theme = 'dark'
-				document.cookie = `theme=${theme}; path=/; SameSite=Lax`
-				document.documentElement.setAttribute('data-theme', theme)
-				changeTheme()
-			}}
-		/>
-		<label for="select-dark-theme">Dark</label>
-		<input
-			type="radio"
-			name="theme"
-			id="select-system-theme"
-			checked={!theme}
-			onclick={() => {
-				theme = undefined
-				document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
-				document.documentElement.removeAttribute('data-theme')
-				changeTheme()
-			}}
-		/>
-		<label for="select-system-theme">System</label>
-		<input
-			type="radio"
-			name="theme"
-			id="select-light-theme"
-			checked={theme === 'light'}
-			onclick={() => {
-				theme = 'light'
-				document.cookie = `theme=${theme}; path=/; SameSite=Lax`
-				document.documentElement.setAttribute('data-theme', theme)
-				changeTheme()
-			}}
-		/>
-		<label for="select-light-theme">Light</label>--->
-	</SegmentedButton>
+	></SegmentedButton>
 </Menu>
 
 <style>
