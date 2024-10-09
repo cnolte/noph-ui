@@ -75,21 +75,6 @@
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
-	<Button aria-label="Check 1" variant="text">
-		{#snippet start()}
-			<CheckIcon />
-		{/snippet}</Button
-	>
-	<Button aria-label="Check 2">
-		{#snippet start()}
-			<CheckIcon />
-		{/snippet}</Button
-	>
-	<Button aria-label="Check 3" variant="filled">
-		{#snippet start()}
-			<CheckIcon />
-		{/snippet}</Button
-	>
 	<Button>
 		{#snippet start()}
 			<CheckIcon />
@@ -102,31 +87,16 @@
 	>
 </div>
 <Code
-	value={`<Button aria-label="Error" variant="text">
+	value={`<Button>
 	{#snippet start()}
 		<CheckIcon />
-	{/snippet}
-</Button>
-<Button aria-label="Error">
-	{#snippet start()}
-		<CheckIcon />
-	{/snippet}
-</Button>
-<Button aria-label="Error" variant="filled">
-	{#snippet start()}
-		<CheckIcon />
-	{/snippet}
-</Button>
-<Button>
-	{#snippet start()}
-		<CheckIcon />
-	{/snippet}Check
-</Button>
+	{/snippet}Check</Button
+>
 <Button variant="outlined">
 	{#snippet end()}
 		<CheckIcon />
-	{/snippet}Next
-</Button>`}
+	{/snippet}Next</Button
+>`}
 />
 <h2>Size</h2>
 <div

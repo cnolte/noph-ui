@@ -48,17 +48,21 @@
 
 {#snippet content()}
 	<Ripple />
-	{#if start}
-		{@render start()}
-	{/if}
+	<div>
+		{#if start}
+			{@render start()}
+		{/if}
+	</div>
 	{#if children}
 		<div class="flex-1">
 			{@render children()}
 		</div>
 	{/if}
-	{#if end}
-		{@render end()}
-	{/if}
+	<div>
+		{#if end}
+			{@render end()}
+		{/if}
+	</div>
 {/snippet}
 
 {#if isButton(attributes)}
@@ -69,9 +73,7 @@
 		bind:this={element}
 		class="{size} {variant}{disabled
 			? '-disabled pointer-events-none'
-			: ' bt-enabled cursor-pointer'} relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current text-left font-medium {children
-			? 'px-5'
-			: 'px-2'} {attributes.class}"
+			: ' bt-enabled cursor-pointer'} relative flex select-none items-center gap-2 overflow-hidden rounded-full fill-current px-4 text-left font-medium {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -129,6 +131,7 @@
 		color: var(--np-color-primary-button);
 	}
 	.text-disabled {
+		opacity: 0.5;
 		color: var(--np-color-outline);
 	}
 	.filled {
@@ -155,6 +158,7 @@
 	}
 	.filled-disabled {
 		color: var(--np-color-outline);
+		opacity: 0.5;
 		background-color: var(--np-color-outline-variant);
 	}
 
@@ -180,6 +184,7 @@
 	}
 	.tonal-disabled {
 		color: var(--np-color-outline);
+		opacity: 0.5;
 		background-color: var(--np-color-outline-variant);
 	}
 
@@ -187,7 +192,7 @@
 		transition:
 			background-color 150ms linear,
 			box-shadow 150ms linear;
-		color: var(--np-color-on-secondary-container);
+		color: var(--np-color-primary);
 		background-color: var(--np-color-surface-container-low);
 		box-shadow: var(--np-elevation-1);
 	}
@@ -201,15 +206,17 @@
 		box-shadow: var(--np-elevation-1);
 	}
 	.elevated-disabled {
+		opacity: 0.5;
 		color: var(--np-color-outline);
 		background-color: var(--np-color-outline-variant);
 	}
 	.outlined {
 		border: 1px solid;
 		color: var(--np-color-primary-button);
-		border-color: var(--np-color-primary-button);
+		border-color: var(--np-color-outline);
 	}
 	.outlined-disabled {
+		opacity: 0.5;
 		border: 1px solid;
 		color: var(--np-color-outline);
 		border-color: var(--np-color-outline-variant);
