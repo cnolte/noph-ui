@@ -73,9 +73,10 @@
 		class:large={size === 'large'}
 		class:filled-disabled={variant === 'filled'}
 		class:elevated-disabled={variant === 'elevated'}
-		class:tonal-disabled={variant === 'text'}
+		class:text-disabled={variant === 'text'}
+		class:tonal-disabled={variant === 'tonal'}
 		class:outlined-disabled={variant === 'outlined'}
-		class="button disabled {attributes.class}"
+		class="np-button disabled {attributes.class}"
 	>
 		{@render content()}
 	</div>
@@ -93,7 +94,7 @@
 		class:elevated={variant === 'elevated'}
 		class:tonal={variant === 'tonal'}
 		class:outlined={variant === 'outlined'}
-		class="{variant} button enabled {attributes.class}"
+		class="np-button enabled {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -111,7 +112,7 @@
 		class:elevated={variant === 'elevated'}
 		class:tonal={variant === 'tonal'}
 		class:outlined={variant === 'outlined'}
-		class="enabled button {attributes.class}"
+		class="np-button enabled {attributes.class}"
 	>
 		{@render content()}
 	</a>
@@ -125,7 +126,7 @@
 	.children-wrapper {
 		flex: 1;
 	}
-	.button {
+	.np-button {
 		border-width: 0;
 		position: relative;
 		cursor: pointer;
@@ -139,17 +140,16 @@
 	}
 	.disabled {
 		pointer-events: none;
-		opacity: 0.5;
-		color: var(--np-color-outline);
+		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
 	.filled-disabled,
 	.tonal-disabled,
 	.elevated-disabled {
-		background-color: var(--np-color-outline-variant);
+		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.outlined-disabled {
 		border: 1px solid;
-		border-color: var(--np-color-outline-variant);
+		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.enabled {
 		transition: background-color 0.3s ease;
@@ -253,10 +253,10 @@
 		border-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
 	}
 
-	:global(.button-icon svg) {
+	:global(.np-button .button-icon svg) {
 		fill: currentColor;
 	}
-	:global(.small .button-icon svg) {
+	:global(.np-button.small .button-icon svg) {
 		width: 1rem;
 		height: 1rem;
 	}
@@ -279,7 +279,7 @@
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
-	:global(.medium .button-icon svg) {
+	:global(.np-button.medium .button-icon svg) {
 		width: 1.25rem;
 		height: 1.25rem;
 	}
@@ -290,7 +290,7 @@
 		padding-right: 1.25rem;
 		gap: 0.75rem;
 	}
-	:global(.large .button-icon svg) {
+	:global(.np-button.large .button-icon svg) {
 		width: 1.5rem;
 		height: 1.5rem;
 	}

@@ -44,7 +44,14 @@
 {/snippet}
 
 {#if disabled}
-	<div bind:this={element} class="{variant}-disabled icon-button disabled {attributes.class}">
+	<div
+		bind:this={element}
+		class:filled-disabled={variant === 'filled'}
+		class:text-disabled={variant === 'text'}
+		class:tonal-disabled={variant === 'tonal'}
+		class:outlined-disabled={variant === 'outlined'}
+		class="np-icon-button disabled {attributes.class}"
+	>
 		{@render content()}
 	</div>
 {:else if isButton(attributes)}
@@ -53,7 +60,11 @@
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class="{variant} icon-button enabled {attributes.class}"
+		class:filled={variant === 'filled'}
+		class:text={variant === 'text'}
+		class:tonal={variant === 'tonal'}
+		class:outlined={variant === 'outlined'}
+		class="np-icon-button enabled {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -63,7 +74,11 @@
 		aria-describedby={title ? tooltipId : undefined}
 		aria-label={title}
 		bind:this={element}
-		class="{variant} icon-button enabled {attributes.class}"
+		class:filled={variant === 'filled'}
+		class:text={variant === 'text'}
+		class:tonal={variant === 'tonal'}
+		class:outlined={variant === 'outlined'}
+		class="np-icon-button enabled {attributes.class}"
 	>
 		{@render content()}
 	</a>
@@ -74,7 +89,7 @@
 {/if}
 
 <style>
-	.icon-button {
+	.np-icon-button {
 		border-width: 0;
 		position: relative;
 		cursor: pointer;
@@ -90,23 +105,22 @@
 		justify-content: center;
 	}
 
-	:global(.icon-button svg) {
+	:global(.np-icon-button svg) {
 		width: 1.5rem;
 		height: 1.5rem;
 		fill: currentColor;
 	}
 	.disabled {
 		pointer-events: none;
-		opacity: 0.5;
-		color: var(--np-color-outline);
+		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
 	.filled-disabled,
 	.tonal-disabled {
-		background-color: var(--np-color-outline-variant);
+		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.outlined-disabled {
 		border: 1px solid;
-		border-color: var(--np-color-outline-variant);
+		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.enabled {
 		transition: background-color 0.3s ease;
