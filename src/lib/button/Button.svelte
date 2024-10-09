@@ -66,18 +66,7 @@
 {/snippet}
 
 {#if disabled}
-	<div
-		bind:this={element}
-		class:small={size === 'small'}
-		class:medium={size === 'medium'}
-		class:large={size === 'large'}
-		class:filled-disabled={variant === 'filled'}
-		class:elevated-disabled={variant === 'elevated'}
-		class:text-disabled={variant === 'text'}
-		class:tonal-disabled={variant === 'tonal'}
-		class:outlined-disabled={variant === 'outlined'}
-		class="np-button disabled {attributes.class}"
-	>
+	<div bind:this={element} class="np-button disabled {variant}-disabled {size} {attributes.class}">
 		{@render content()}
 	</div>
 {:else if isButton(attributes)}
@@ -86,15 +75,7 @@
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class:small={size === 'small'}
-		class:medium={size === 'medium'}
-		class:large={size === 'large'}
-		class:text={variant === 'text'}
-		class:filled={variant === 'filled'}
-		class:elevated={variant === 'elevated'}
-		class:tonal={variant === 'tonal'}
-		class:outlined={variant === 'outlined'}
-		class="np-button enabled {attributes.class}"
+		class="np-button enabled {variant} {size} {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -104,15 +85,7 @@
 		aria-describedby={title ? tooltipId : undefined}
 		aria-label={title}
 		bind:this={element}
-		class:small={size === 'small'}
-		class:medium={size === 'medium'}
-		class:large={size === 'large'}
-		class:text={variant === 'text'}
-		class:filled={variant === 'filled'}
-		class:elevated={variant === 'elevated'}
-		class:tonal={variant === 'tonal'}
-		class:outlined={variant === 'outlined'}
-		class="np-button enabled {attributes.class}"
+		class="np-button enabled {variant} {size} {attributes.class}"
 	>
 		{@render content()}
 	</a>

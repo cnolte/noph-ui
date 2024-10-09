@@ -44,14 +44,7 @@
 {/snippet}
 
 {#if disabled}
-	<div
-		bind:this={element}
-		class:filled-disabled={variant === 'filled'}
-		class:text-disabled={variant === 'text'}
-		class:tonal-disabled={variant === 'tonal'}
-		class:outlined-disabled={variant === 'outlined'}
-		class="np-icon-button disabled {attributes.class}"
-	>
+	<div bind:this={element} class="np-icon-button disabled {variant}-disabled {attributes.class}">
 		{@render content()}
 	</div>
 {:else if isButton(attributes)}
@@ -60,11 +53,7 @@
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class:filled={variant === 'filled'}
-		class:text={variant === 'text'}
-		class:tonal={variant === 'tonal'}
-		class:outlined={variant === 'outlined'}
-		class="np-icon-button enabled {attributes.class}"
+		class="np-icon-button enabled {variant} {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -74,11 +63,7 @@
 		aria-describedby={title ? tooltipId : undefined}
 		aria-label={title}
 		bind:this={element}
-		class:filled={variant === 'filled'}
-		class:text={variant === 'text'}
-		class:tonal={variant === 'tonal'}
-		class:outlined={variant === 'outlined'}
-		class="np-icon-button enabled {attributes.class}"
+		class="np-icon-button enabled {variant} {attributes.class}"
 	>
 		{@render content()}
 	</a>
