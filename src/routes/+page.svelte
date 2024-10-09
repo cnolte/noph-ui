@@ -8,10 +8,7 @@
 
 <div class="hero grid rounded-3xl px-6 py-16 text-center md:px-24">
 	<h1 class="text-5xl md:text-8xl">Noph UI</h1>
-	<p class="my-12 text-2xl font-light md:text-4xl">
-		Material 3, optimized for Web Standards, Server-Side Rendering, and blazing-fast performance,
-		powered by Svelte 5.
-	</p>
+	<p class="my-12 text-2xl font-light md:text-4xl">Material 3 + Svelte 5</p>
 	<Button variant="elevated" size="large" href="/about/quick-start" style="width:fit-content"
 		>Get started</Button
 	>
