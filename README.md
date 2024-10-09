@@ -10,7 +10,8 @@ npm install noph-ui
 
 ## Components
 
-- Button (in progress)
+- Button (beta)
+- Icon Button (in progress)
 - Divider (in progress)
 - List (in progress)
 - Menu (in progress)

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
+	import IconButton from '$lib/button/IconButton.svelte'
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import MenuIcon from '$lib/icons/MenuIcon.svelte'
 	import '../app.css'
@@ -28,31 +28,26 @@
 			<div class="ml-1 text-xl font-semibold md:text-2xl">Noph UI</div>
 		</a>
 		<div class="flex-grow"></div>
-		<Button
+		<IconButton
 			variant="text"
 			title="GitHub repository"
 			href="https://github.com/cnolte/noph-ui"
 			target="_blank"
 		>
-			{#snippet start()}
-				<div class="icon">
-					<GitHubMark />
-				</div>
-			{/snippet}
-		</Button>
+			<GitHubMark />
+		</IconButton>
 		<ThemeButton theme={data.theme} />
-		<Button
+		<IconButton
 			popovertarget="mobile-drawer"
 			variant="text"
 			title={popoverState === 'open' ? 'Close' : 'Open'}
 			class="md:!hidden"
-			>{#snippet start()}{#if popoverState === 'open'}<CloseIcon />{:else}<MenuIcon
-					/>{/if}{/snippet}</Button
+			>{#if popoverState === 'open'}<CloseIcon />{:else}<MenuIcon />{/if}</IconButton
 		>
 	</div>
 </header>
 
-<nav class="main-nav layout-btn fixed hidden w-56 overflow-y-auto px-2 md:block">
+<nav class="main-nav layout-btn fixed hidden w-60 overflow-y-auto px-2 md:block">
 	<MainNavigation />
 </nav>
 <nav
@@ -73,7 +68,7 @@
 <div class="fixed -z-10">
 	<div class="paper"></div>
 </div>
-<main class="main md:ml-56">
+<main class="main md:ml-60">
 	<div class="mx-auto max-w-5xl px-6 pb-8 pt-8 md:px-12 md:pb-16">
 		{@render children()}
 	</div>
@@ -85,7 +80,7 @@
 		margin-top: 4.5rem;
 	}
 	.layout-btn {
-		--np-button-container-color: var(--np-color-on-surface);
+		--np-text-button-label-text-color: var(--np-color-on-surface);
 	}
 	.inner-header {
 		height: 4.5rem;
@@ -108,7 +103,7 @@
 	@media (min-width: 768px) {
 		.paper {
 			width: calc(100% - 16rem);
-			margin-left: 15rem;
+			margin-left: 16rem;
 			height: calc(100dvh - 6.5rem);
 		}
 		.bottom-bar {
@@ -116,18 +111,6 @@
 			height: 2rem;
 			width: calc(100% - 15rem);
 		}
-	}
-	:global(.icon) {
-		width: 24px;
-		height: 24px;
-	}
-	:global(.icon svg) {
-		width: 100%;
-		height: 100%;
-	}
-	:global(.icon svg path) {
-		scale: 0.24;
-		fill: var(--np-color-on-surface);
 	}
 	.main-nav {
 		height: calc(100dvh - 4.5rem);

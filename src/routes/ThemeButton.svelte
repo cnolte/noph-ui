@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
-	import Button from '$lib/button/Button.svelte'
+	import IconButton from '$lib/button/IconButton.svelte'
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
 	import PaletteIcon from '$lib/icons/PaletteIcon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
@@ -99,17 +99,14 @@
 	})
 </script>
 
-<Button
+<IconButton
 	popovertarget="palette-menu"
 	style="anchor-name: --palette-menu"
-	variant="text"
 	title="Change theme"
 	bind:element={menuBtn}
 >
-	{#snippet start()}
-		<PaletteIcon />
-	{/snippet}
-</Button>
+	<PaletteIcon />
+</IconButton>
 <Menu
 	anchor={menuBtn}
 	id="palette-menu"

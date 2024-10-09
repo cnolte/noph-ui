@@ -48,32 +48,34 @@
 
 {#snippet content()}
 	<Ripple />
-	<div>
+	<div class="button-icon">
 		{#if start}
 			{@render start()}
 		{/if}
 	</div>
 	{#if children}
-		<div class="flex-1">
+		<div class="children-wrapper">
 			{@render children()}
 		</div>
 	{/if}
-	<div>
+	<div class="button-icon">
 		{#if end}
 			{@render end()}
 		{/if}
 	</div>
 {/snippet}
 
-{#if isButton(attributes)}
+{#if disabled}
+	<div bind:this={element} class="{size} {variant}-disabled button disabled {attributes.class}">
+		{@render content()}
+	</div>
+{:else if isButton(attributes)}
 	<button
 		{...attributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class="{size} {variant}{disabled
-			? '-disabled pointer-events-none'
-			: ' bt-enabled cursor-pointer'} relative flex select-none items-center gap-2 overflow-hidden rounded-full fill-current px-4 text-left font-medium {attributes.class}"
+		class="{size} {variant} button enabled {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -83,35 +85,52 @@
 		aria-describedby={title ? tooltipId : undefined}
 		aria-label={title}
 		bind:this={element}
-		class="{size} {variant}{disabled
-			? '-disabled pointer-events-none'
-			: ' bt-enabled'} relative flex select-none items-center gap-1 overflow-hidden rounded-full fill-current font-medium {children
-			? 'px-5'
-			: 'px-2'} {attributes.class}"
+		class="{size} {variant} enabled button {attributes.class}"
 	>
 		{@render content()}
 	</a>
 {/if}
+
 {#if title && element}
 	<Tooltip anchor={element} id={tooltipId}>{title}</Tooltip>
 {/if}
 
 <style>
-	.bt-enabled {
-		/** Color scheme */
-		--np-color-primary-button: var(--np-button-container-color, var(--np-color-primary));
-		--np-color-primary-hover-button: var(
-			--np-button-container-hover-color,
-			var(--np-color-primary-container)
-		);
-		--np-color-on-primary-button: var(--np-button-on-container-color, var(--np-color-on-primary));
-		--np-ripple-hover-color: var(--np-color-primary-button);
-		--np-ripple-pressed-color: var(--np-color-primary-button);
+	.children-wrapper {
+		flex: 1;
+	}
+	.button {
+		border-width: 0;
+		position: relative;
+		cursor: pointer;
+		display: flex;
+		user-select: none;
+		align-items: center;
+		overflow: hidden;
+		border-radius: 9999px;
+		font-weight: 500;
+		text-decoration: none;
+	}
+	.disabled {
+		pointer-events: none;
+		opacity: 0.5;
+		color: var(--np-color-outline);
+	}
+	.filled-disabled,
+	.tonal-disabled,
+	.elevated-disabled {
+		background-color: var(--np-color-outline-variant);
+	}
+	.outlined-disabled {
+		border: 1px solid;
+		border-color: var(--np-color-outline-variant);
+	}
+	.enabled {
 		transition: background-color 0.3s ease;
 	}
-	.bt-enabled:focus-visible {
+	.enabled:focus-visible {
 		outline-style: solid;
-		outline-color: var(--np-color-primary-button);
+		outline-color: var(--np-color-primary);
 		outline-width: 3px;
 		outline-offset: 2px;
 		animation: focusAnimation 0.3s ease forwards;
@@ -128,11 +147,9 @@
 		}
 	}
 	.text {
-		color: var(--np-color-primary-button);
-	}
-	.text-disabled {
-		opacity: 0.5;
-		color: var(--np-color-outline);
+		--np-ripple-hover-color: var(--np-text-button-label-text-color, var(--np-color-primary));
+		--np-ripple-pressed-color: var(--np-text-button-label-text-color, var(--np-color-primary));
+		color: var(--np-text-button-label-text-color, var(--np-color-primary));
 	}
 	.filled {
 		--np-ripple-hover-opacity: 0.12;
@@ -141,8 +158,8 @@
 		transition:
 			background-color 150ms linear,
 			box-shadow 150ms linear;
-		color: var(--np-color-on-primary-button);
-		background-color: var(--np-color-primary-button);
+		color: var(--np-filled-button-label-text-color, var(--np-color-on-primary));
+		background-color: var(--np-filled-button-container-color, var(--np-color-primary));
 	}
 	@media (hover: hover) {
 		.filled:hover {
@@ -156,18 +173,15 @@
 	.filled:active {
 		box-shadow: none;
 	}
-	.filled-disabled {
-		color: var(--np-color-outline);
-		opacity: 0.5;
-		background-color: var(--np-color-outline-variant);
-	}
 
 	.tonal {
 		transition:
 			background-color 150ms linear,
 			box-shadow 150ms linear;
-		color: var(--np-color-on-secondary-container);
-		background-color: var(--np-color-secondary-container);
+		--np-ripple-hover-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
+		--np-ripple-pressed-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
+		color: var(--np-tonal-button-label-text-color, var(--np-color-on-secondary-container));
+		background-color: var(--np-tonal-button-container-color, var(--np-color-secondary-container));
 	}
 
 	@media (hover: hover) {
@@ -182,18 +196,18 @@
 	.tonal:active {
 		box-shadow: none;
 	}
-	.tonal-disabled {
-		color: var(--np-color-outline);
-		opacity: 0.5;
-		background-color: var(--np-color-outline-variant);
-	}
 
 	.elevated {
 		transition:
 			background-color 150ms linear,
 			box-shadow 150ms linear;
-		color: var(--np-color-primary);
-		background-color: var(--np-color-surface-container-low);
+		--np-ripple-hover-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
+		--np-ripple-pressed-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
+		color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
+		background-color: var(
+			--np-elevated-button-container-color,
+			var(--np-color-surface-container-low)
+		);
 		box-shadow: var(--np-elevation-1);
 	}
 
@@ -205,32 +219,48 @@
 	.elevated:active {
 		box-shadow: var(--np-elevation-1);
 	}
-	.elevated-disabled {
-		opacity: 0.5;
-		color: var(--np-color-outline);
-		background-color: var(--np-color-outline-variant);
-	}
 	.outlined {
 		border: 1px solid;
-		color: var(--np-color-primary-button);
-		border-color: var(--np-color-outline);
+		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
+		--np-ripple-pressed-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
+		color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
+		border-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
 	}
-	.outlined-disabled {
-		opacity: 0.5;
-		border: 1px solid;
-		color: var(--np-color-outline);
-		border-color: var(--np-color-outline-variant);
+
+	:global(.button-icon svg) {
+		fill: currentColor;
+	}
+	:global(.small .button-icon svg) {
+		width: 1rem;
+		height: 1rem;
 	}
 	.small {
 		font-size: 0.875rem;
 		height: 2.5rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		gap: 0.5rem;
+	}
+	:global(.medium .button-icon svg) {
+		width: 1.25rem;
+		height: 1.25rem;
 	}
 	.medium {
 		font-size: 1rem;
 		height: 3rem;
+		padding-left: 1.25rem;
+		padding-right: 1.25rem;
+		gap: 0.75rem;
+	}
+	:global(.large .button-icon svg) {
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 	.large {
 		font-size: 1.125rem;
 		height: 3.5rem;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+		gap: 1rem;
 	}
 </style>

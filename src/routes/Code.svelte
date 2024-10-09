@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
+	import IconButton from '$lib/button/IconButton.svelte'
 	import CopyContentIcon from '$lib/icons/CopyContentIcon.svelte'
 
 	let { value }: { value: string } = $props()
@@ -9,9 +9,8 @@
 <div
 	class="code-container relative mt-4 rounded-3xl border border-solid border-[var(--np-color-outline)] bg-[var(--np-color-surface-container)]"
 >
-	<Button
+	<IconButton
 		{title}
-		variant="text"
 		style="position:absolute;right:0.4rem;top:0.4rem;"
 		onclick={() => {
 			navigator.clipboard.writeText(value)
@@ -22,9 +21,8 @@
 				title = 'Copy Code'
 			}, 200)
 		}}
-		>{#snippet start()}
-			<CopyContentIcon />
-		{/snippet}</Button
+	>
+		<CopyContentIcon /></IconButton
 	>
 	<pre class="w-full text-wrap py-3 pl-3 pr-10"><code>{value}</code></pre>
 </div>

@@ -25,7 +25,14 @@
 		href="/components/button"
 		variant="text"
 		class={$page.url.pathname === '/components/button' ? 'btn-selected' : ''}
-		size="medium">Button</Button
+		size="medium">Buttons</Button
+	>
+	<Button
+		onclick={onclose}
+		href="/components/icon-button"
+		variant="text"
+		class={$page.url.pathname === '/components/icon-button' ? 'btn-selected' : ''}
+		size="medium">Icon Buttons</Button
 	>
 	<Button
 		onclick={onclose}
@@ -60,7 +67,7 @@
 		href="/components/segmented-button"
 		variant="text"
 		class={$page.url.pathname === '/components/segmented-button' ? 'btn-selected' : ''}
-		size="medium">Segmented Button</Button
+		size="medium">Segmented Buttons</Button
 	>
 	<Button
 		onclick={onclose}

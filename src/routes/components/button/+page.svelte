@@ -1,14 +1,15 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
-	import CheckIcon from '$lib/icons/CheckIcon.svelte'
+	import OpenInNewIcon from '$lib/icons/OpenInNewIcon.svelte'
+	import SendIcon from '$lib/icons/SendIcon.svelte'
 	import Code from '../../Code.svelte'
 </script>
 
 <svelte:head>
-	<title>Button - Noph UI</title>
+	<title>Buttons - Noph UI</title>
 </svelte:head>
 
-<h1>Button</h1>
+<h1>Buttons</h1>
 <h2>Types</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
@@ -19,10 +20,16 @@
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="text">Text</Button>
 </div>
+<h2>Elevated button</h2>
+<div
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
+>
+	<Button variant="elevated">Elevated</Button>
+	<Button variant="elevated" disabled>Disabled</Button>
+</div>
 <Code
-	value={`<Button variant="filled">Filled</Button>
-<Button variant="outlined">Outlined</Button>
-<Button variant="text">Text</Button>`}
+	value={`<Button variant="elevated">Elevated</Button>
+<Button variant="elevated" disabled>Disabled</Button>`}
 />
 <h2>Filled button</h2>
 <div
@@ -34,6 +41,17 @@
 <Code
 	value={`<Button variant="filled">Filled</Button>
 <Button variant="filled" disabled>Disabled</Button>`}
+/>
+<h2>Tonal button</h2>
+<div
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
+>
+	<Button variant="tonal">Tonal</Button>
+	<Button variant="tonal" disabled>Disabled</Button>
+</div>
+<Code
+	value={`<Button variant="tonal">Tonal</Button>
+<Button variant="tonal" disabled>Disabled</Button>`}
 />
 <h2>Outlined button</h2>
 <div
@@ -57,17 +75,15 @@
 	value={`<Button variant="text">Text</Button>
 <Button variant="text" disabled>Disabled</Button>`}
 />
-<h2>Custom Color</h2>
+<h2>Custom Buttons</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
-	<Button style="--np-button-container-color: var(--np-color-error)" variant="outlined"
-		>Error</Button
-	>
+	<Button style="--np-outlined-button-label-text-color: var(--np-color-error)">Error</Button>
 </div>
 <Code
 	value={`
-<Button style="--np-button-container-color: var(--np-color-error)" variant="outlined">
+<Button style="--np-outlined-button-label-text-color: var(--np-color-error)">
 	Error
 </Button>`}
 />
@@ -75,28 +91,30 @@
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
-	<Button>
+	<Button variant="tonal">
 		{#snippet start()}
-			<CheckIcon />
-		{/snippet}Check</Button
+			<SendIcon />
+		{/snippet}Send</Button
 	>
-	<Button variant="outlined">
+	<Button variant="text">
 		{#snippet end()}
-			<CheckIcon />
-		{/snippet}Next</Button
+			<OpenInNewIcon />
+		{/snippet}Open</Button
 	>
 </div>
 <Code
 	value={`<Button>
 	{#snippet start()}
-		<CheckIcon />
-	{/snippet}Check</Button
->
-<Button variant="outlined">
+		<SendIcon />
+	{/snippet}
+	Send
+</Button>
+<Button>
 	{#snippet end()}
-		<CheckIcon />
-	{/snippet}Next</Button
->`}
+		<OpenInNewIcon />
+	{/snippet}
+	Open
+</Button>`}
 />
 <h2>Size</h2>
 <div
