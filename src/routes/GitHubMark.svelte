@@ -7,17 +7,6 @@
 	xmlns="http://www.w3.org/2000/svg"
 >
 	<defs id="defs1" />
-	<sodipodi:namedview
-		id="namedview1"
-		pagecolor="#ffffff"
-		bordercolor="#000000"
-		borderopacity="0.25"
-		inkscape:showpageshadow="2"
-		inkscape:pageopacity="0.0"
-		inkscape:pagecheckerboard="0"
-		inkscape:deskcolor="#d1d1d1"
-		showguides="false"
-	/>
 	<path
 		fill-rule="evenodd"
 		clip-rule="evenodd"
