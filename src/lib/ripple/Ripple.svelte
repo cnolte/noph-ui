@@ -90,7 +90,7 @@
 		opacity: var(--np-ripple-hover-opacity, 0.08);
 	}
 	.ripple {
-		background-color: var(--md-ripple-pressed-color, var(--np-color-on-surface));
+		background-color: var(--np-ripple-pressed-color, var(--np-color-on-surface));
 		opacity: 0;
 		border-radius: 9999px;
 		overflow: hidden;

@@ -136,7 +136,7 @@
 	.filled {
 		--np-ripple-hover-opacity: 0.12;
 		--np-ripple-hover-color: var(--np-color-surface);
-		--md-ripple-pressed-color: var(--np-color-surface);
+		--np-ripple-pressed-color: var(--np-color-surface);
 		transition: background-color 150ms linear;
 		color: var(--np-filled-icon-button-icon-color, var(--np-color-on-primary));
 		background-color: var(--np-filled-icon-button-container-color, var(--np-color-primary));

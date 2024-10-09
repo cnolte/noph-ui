@@ -35,9 +35,9 @@
 		if (!anchorRect) {
 			return 0
 		}
-		const top = anchorRect.bottom + 2
+		const top = anchorRect.bottom + 4
 		if (top + clientHeight > innerHeight) {
-			return anchorRect.top - clientHeight - 2
+			return anchorRect.top - clientHeight - 4
 		}
 		return top
 	})
@@ -65,11 +65,12 @@
 		width: max-content;
 		position: fixed;
 		background: var(--np-color-inverse-surface);
-		color: var(--np-color-surface);
+		color: var(--np-color-inverse-on-surface);
 		scale: 0;
 		z-index: 1;
 		padding: 0.25rem 0.5rem;
-		border-radius: 0.375rem;
+		border-radius: 0.25rem;
+		line-height: 1rem;
 		font-size: 0.75rem;
 		transition: scale 0.3s ease;
 	}
