@@ -133,6 +133,7 @@
 		display: flex;
 		user-select: none;
 		align-items: center;
+		text-align: left;
 		overflow: hidden;
 		border-radius: 9999px;
 		font-weight: 500;
