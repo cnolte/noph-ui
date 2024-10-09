@@ -69,7 +69,7 @@
 	<div class="paper"></div>
 </div>
 <main class="main md:ml-60">
-	<div class="mx-auto max-w-5xl px-6 pb-8 pt-8 md:px-12 md:pb-16">
+	<div class="mx-auto max-w-5xl px-6 pb-8 pt-8 md:px-16 md:pb-16">
 		{@render children()}
 	</div>
 </main>
@@ -102,8 +102,8 @@
 
 	@media (min-width: 768px) {
 		.paper {
-			width: calc(100% - 16rem);
-			margin-left: 16rem;
+			width: calc(100% - 19rem);
+			margin-left: 17rem;
 			height: calc(100dvh - 6.5rem);
 		}
 		.bottom-bar {

@@ -66,7 +66,17 @@
 {/snippet}
 
 {#if disabled}
-	<div bind:this={element} class="{size} {variant}-disabled button disabled {attributes.class}">
+	<div
+		bind:this={element}
+		class:small={size === 'small'}
+		class:medium={size === 'medium'}
+		class:large={size === 'large'}
+		class:filled-disabled={variant === 'filled'}
+		class:elevated-disabled={variant === 'elevated'}
+		class:tonal-disabled={variant === 'text'}
+		class:outlined-disabled={variant === 'outlined'}
+		class="button disabled {attributes.class}"
+	>
 		{@render content()}
 	</div>
 {:else if isButton(attributes)}
@@ -75,7 +85,15 @@
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class="{size} {variant} button enabled {attributes.class}"
+		class:small={size === 'small'}
+		class:medium={size === 'medium'}
+		class:large={size === 'large'}
+		class:text={variant === 'text'}
+		class:filled={variant === 'filled'}
+		class:elevated={variant === 'elevated'}
+		class:tonal={variant === 'tonal'}
+		class:outlined={variant === 'outlined'}
+		class="{variant} button enabled {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -85,7 +103,15 @@
 		aria-describedby={title ? tooltipId : undefined}
 		aria-label={title}
 		bind:this={element}
-		class="{size} {variant} enabled button {attributes.class}"
+		class:small={size === 'small'}
+		class:medium={size === 'medium'}
+		class:large={size === 'large'}
+		class:text={variant === 'text'}
+		class:filled={variant === 'filled'}
+		class:elevated={variant === 'elevated'}
+		class:tonal={variant === 'tonal'}
+		class:outlined={variant === 'outlined'}
+		class="enabled button {attributes.class}"
 	>
 		{@render content()}
 	</a>
@@ -240,6 +266,18 @@
 		padding-left: 1rem;
 		padding-right: 1rem;
 		gap: 0.5rem;
+	}
+	.small.text {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+	.medium.text {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+	}
+	.large.text {
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 	:global(.medium .button-icon svg) {
 		width: 1.25rem;

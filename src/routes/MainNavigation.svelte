@@ -10,7 +10,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<h3 class="ml-5">About</h3>
+	<h3 class="ml-6">About</h3>
 	<Button
 		onclick={onclose}
 		href="/about/quick-start"
@@ -19,7 +19,7 @@
 		size="medium">Quick Start</Button
 	>
 	<Divider class="mt-4" />
-	<h3 class="ml-5">Components</h3>
+	<h3 class="ml-6">Components</h3>
 	<Button
 		onclick={onclose}
 		href="/components/button"
@@ -92,7 +92,7 @@
 		width: 100%;
 		z-index: -1;
 		height: 100%;
-		margin: -20px;
+		margin: -12px;
 		background-color: var(--np-color-surface-container-highest);
 	}
 </style>
