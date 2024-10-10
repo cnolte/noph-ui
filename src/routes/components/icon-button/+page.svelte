@@ -74,96 +74,76 @@
 <div
 	class="mx-auto mb-8 flex w-fit flex-col gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
+	{#snippet selectedIcon()}
+		<CheckIcon />
+	{/snippet}
 	<div class="flex flex-wrap gap-4">
-		<IconButton aria-label="Unselected Icon Button" toggle
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton {selectedIcon} aria-label="Unselected Icon Button" toggle><CloseIcon /></IconButton>
+		<IconButton {selectedIcon} aria-label="Unselected Filled Icon Button" variant="filled" toggle
+			><CloseIcon /></IconButton
 		>
-		<IconButton aria-label="Unselected Filled Icon Button" variant="filled" toggle
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton {selectedIcon} aria-label="Unselected Tonal Icon Button" variant="tonal" toggle
+			><CloseIcon /></IconButton
 		>
-		<IconButton aria-label="Unselected Tonal Icon Button" variant="tonal" toggle
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
-		>
-		<IconButton aria-label="Unselected Outlined Icon Button" variant="outlined" toggle
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton
+			{selectedIcon}
+			aria-label="Unselected Outlined Icon Button"
+			variant="outlined"
+			toggle><CloseIcon /></IconButton
 		>
 	</div>
 	<div class="flex flex-wrap gap-4">
-		<IconButton aria-label="Selected Icon Button" toggle selected
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton {selectedIcon} aria-label="Selected Icon Button" toggle selected
+			><CloseIcon /></IconButton
 		>
-		<IconButton aria-label="Selected Filled Icon Button" variant="filled" toggle selected
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton
+			{selectedIcon}
+			aria-label="Selected Filled Icon Button"
+			variant="filled"
+			toggle
+			selected><CloseIcon /></IconButton
 		>
-		<IconButton aria-label="Selected Tonal Icon Button" variant="tonal" toggle selected
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton
+			{selectedIcon}
+			aria-label="Selected Tonal Icon Button"
+			variant="tonal"
+			toggle
+			selected><CloseIcon /></IconButton
 		>
-		<IconButton aria-label="Selected Outlined Icon Button" variant="outlined" toggle selected
-			>{#snippet selectedIcon()}
-				<CheckIcon />
-			{/snippet}<CloseIcon /></IconButton
+		<IconButton
+			{selectedIcon}
+			aria-label="Selected Outlined Icon Button"
+			variant="outlined"
+			toggle
+			selected><CloseIcon /></IconButton
 		>
 	</div>
 </div>
 <Code
-	value={`<div>
-	<IconButton toggle
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
-	<IconButton variant="filled" toggle
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
-	<IconButtonvariant="tonal" toggle
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
-	<IconButton variant="outlined" toggle
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
+	value={`{#snippet selectedIcon()}
+	<CheckIcon />
+{/snippet}
+<div>
+	<IconButton {selectedIcon} toggle><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} variant="filled" toggle><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} variant="tonal" toggle><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} variant="outlined" toggle><CloseIcon /></IconButton>
 </div>
 <div>
-	<IconButton toggle selected
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
-	<IconButton variant="filled" toggle selected
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
-	<IconButton variant="tonal" toggle selected
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
-	<IconButton variant="outlined" toggle selected
-		>{#snippet selectedIcon()}
-			<CheckIcon />
-		{/snippet}<CloseIcon /></IconButton
-	>
+	<IconButton {selectedIcon} toggle selected><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} variant="filled" toggle selected><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} variant="tonal" toggle selected><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} variant="outlined" toggle selected><CloseIcon /></IconButton>
 </div>`}
+/>
+<h2>Tooltip</h2>
+<div
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
+>
+	<IconButton title="Icon button with tooltip" variant="filled"><CheckIcon /></IconButton>
+</div>
+<Code
+	value={`<IconButton title="Icon button with tooltip" variant="filled"><CheckIcon /></IconButton>`}
 />
 <h2>Custom icon button</h2>
 <div

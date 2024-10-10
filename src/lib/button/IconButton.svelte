@@ -104,6 +104,7 @@
 
 <style>
 	.np-icon-button {
+		background-color: transparent;
 		border-width: 0;
 		position: relative;
 		cursor: pointer;

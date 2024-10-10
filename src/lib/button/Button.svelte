@@ -100,6 +100,7 @@
 		flex: 1;
 	}
 	.np-button {
+		background-color: transparent;
 		border-width: 0;
 		position: relative;
 		cursor: pointer;
