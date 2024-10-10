@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Noph UI - Svelte UI library</title>
+	<title>Noph UI - Material 3 + Svelte 5</title>
 </svelte:head>
 
 <div class="hero grid rounded-3xl px-6 py-16 text-center md:px-24">
