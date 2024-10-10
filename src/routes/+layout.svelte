@@ -68,16 +68,22 @@
 <div class="fixed -z-10">
 	<div class="paper"></div>
 </div>
-<main class="main md:ml-60">
-	<div class="mx-auto max-w-5xl px-6 pb-8 pt-8 md:px-16 md:pb-16">
+<main class="main">
+	<div class="main-content">
 		{@render children()}
 	</div>
 </main>
 <div class="bottom-bar"></div>
 
 <style>
+	.main-content {
+		max-width: min(100%, 980px);
+		margin-left: auto;
+		margin-right: auto;
+	}
 	.main {
 		margin-top: 4.5rem;
+		padding: 2rem 1.5rem;
 	}
 	.layout-btn {
 		--np-text-button-label-text-color: var(--np-color-on-surface);
@@ -101,6 +107,10 @@
 	}
 
 	@media (min-width: 768px) {
+		.main {
+			margin-left: 15rem;
+			padding: 2rem 4rem 4rem 4rem;
+		}
 		.paper {
 			width: calc(100% - 19rem);
 			margin-left: 17rem;
