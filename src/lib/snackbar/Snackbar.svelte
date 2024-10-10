@@ -18,8 +18,8 @@
 </script>
 
 <div class="snackbar">
-	<div class="label">
-		<div>{label}</div>
+	<div class="label-container">
+		<div class="label">{label}</div>
 		{#if supportingText}
 			<div class="supportingText">{supportingText}</div>
 		{/if}
@@ -49,9 +49,15 @@
 	.supportingText {
 		font-weight: 400;
 	}
-	.label {
+	.label-container {
 		flex: 1;
+		overflow: hidden;
 		padding: 0.625rem 0;
+	}
+	.label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-wrap: nowrap;
 	}
 	.snackbar {
 		--np-ripple-hover-color: var(--np-color-primary);
