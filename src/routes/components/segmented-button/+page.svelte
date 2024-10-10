@@ -7,10 +7,10 @@
 </script>
 
 <svelte:head>
-	<title>Segmented Button - Noph UI</title>
+	<title>Segmented buttons - Noph UI</title>
 </svelte:head>
 
-<h1>Segmented Button</h1>
+<h1>Segmented buttons</h1>
 <h2>Basic</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
@@ -48,7 +48,7 @@
 	]}
 />`}
 />
-<h2>Multiple Choice</h2>
+<h2>Multiple choice</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >

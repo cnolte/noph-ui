@@ -7,10 +7,10 @@
 </script>
 
 <svelte:head>
-	<title>List - Noph UI</title>
+	<title>Lists - Noph UI</title>
 </svelte:head>
 
-<h1>List</h1>
+<h1>Lists</h1>
 <h2>List items</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"

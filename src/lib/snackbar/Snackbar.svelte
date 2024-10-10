@@ -2,9 +2,8 @@
 	import Button from '$lib/button/Button.svelte'
 	import IconButton from '$lib/button/IconButton.svelte'
 	import type { Snippet } from 'svelte'
-	import type { HTMLAttributes } from 'svelte/elements'
 
-	interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
+	interface SnackbarProps {
 		label: string
 		supportingText?: string
 		actionLabel?: string
@@ -27,7 +26,8 @@
 	{#if actionLabel}
 		<Button
 			variant="text"
-			style="border-radius:0.25rem; --np-text-button-label-text-color: var(--np-color-on-background-snackbar, var(--np-color-inverse-primary))"
+			--np-text-button-label-text-color="var(--np-color-on-background-snackbar, var(--np-color-inverse-primary))"
+			--np-text-button-container-shape="0"
 			aria-label={actionLabel}
 			onclick={onActionClick}
 		>
@@ -36,7 +36,8 @@
 	{/if}
 	{#if icon}
 		<IconButton
-			style="border-radius:0.25rem; --np-icon-button-icon-color: var(--np-color-on-background-snackbar, var(--np-color-inverse-on-surface))"
+			--np-icon-button-icon-color="var(--np-color-on-background-snackbar, var(--np-color-inverse-on-surface))"
+			style="border-radius:0.25rem"
 			aria-label="Close"
 			onclick={onIconClick}
 		>

@@ -108,7 +108,6 @@
 		align-items: center;
 		text-align: left;
 		overflow: hidden;
-		border-radius: 9999px;
 		font-weight: 500;
 		text-decoration: none;
 	}
@@ -116,14 +115,27 @@
 		pointer-events: none;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
+	.text-disable {
+		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
+	}
 	.filled-disabled,
 	.tonal-disabled,
 	.elevated-disabled {
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
+	.filled-disabled {
+		border-radius: var(--np-filled-button-container-shape, var(--np-shape-corner-full));
+	}
+	.tonal-disabled {
+		border-radius: var(--np-tonal-button-container-shape, var(--np-shape-corner-full));
+	}
+	.elevated-disabled {
+		border-radius: var(--np-elevated-button-container-shape, var(--np-shape-corner-full));
+	}
 	.outlined-disabled {
 		border: 1px solid;
 		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+		border-radius: var(--np-outlined-button-container-shape, var(--np-shape-corner-full));
 	}
 	.enabled {
 		transition: background-color 0.3s ease;
@@ -150,6 +162,7 @@
 		--np-ripple-hover-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		color: var(--np-text-button-label-text-color, var(--np-color-primary));
+		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
 	}
 	.filled {
 		--np-ripple-hover-opacity: 0.12;
@@ -160,6 +173,7 @@
 			box-shadow 150ms linear;
 		color: var(--np-filled-button-label-text-color, var(--np-color-on-primary));
 		background-color: var(--np-filled-button-container-color, var(--np-color-primary));
+		border-radius: var(--np-filled-button-container-shape, var(--np-shape-corner-full));
 	}
 	@media (hover: hover) {
 		.filled:hover {
@@ -182,6 +196,7 @@
 		--np-ripple-pressed-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
 		color: var(--np-tonal-button-label-text-color, var(--np-color-on-secondary-container));
 		background-color: var(--np-tonal-button-container-color, var(--np-color-secondary-container));
+		border-radius: var(--np-tonal-button-container-shape, var(--np-shape-corner-full));
 	}
 
 	@media (hover: hover) {
@@ -209,6 +224,7 @@
 			var(--np-color-surface-container-low)
 		);
 		box-shadow: var(--np-elevation-1);
+		border-radius: var(--np-elevated-button-container-shape, var(--np-shape-corner-full));
 	}
 
 	@media (hover: hover) {
@@ -225,6 +241,7 @@
 		--np-ripple-pressed-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		border-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
+		border-radius: var(--np-outlined-button-container-shape, var(--np-shape-corner-full));
 	}
 
 	:global(.np-button .button-icon svg) {

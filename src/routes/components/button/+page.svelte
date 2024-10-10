@@ -75,15 +75,16 @@
 	value={`<Button variant="text">Text</Button>
 <Button variant="text" disabled>Disabled</Button>`}
 />
-<h2>Custom Buttons</h2>
+<h2>Custom buttons</h2>
 <div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
+	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] bg-[#f7fafe] p-4"
 >
-	<Button style="--np-outlined-button-label-text-color: var(--np-color-error)">Error</Button>
+	<Button --np-outlined-button-label-text-color="#ba1a1a" --np-outlined-button-container-shape="0">
+		Error
+	</Button>
 </div>
 <Code
-	value={`
-<Button style="--np-outlined-button-label-text-color: var(--np-color-error)">
+	value={`<Button --np-outlined-button-label-text-color="#ba1a1a" --np-outlined-button-container-shape="0">
 	Error
 </Button>`}
 />

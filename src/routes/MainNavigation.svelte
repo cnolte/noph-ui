@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores'
 	import Button from '$lib/button/Button.svelte'
-	import Divider from '$lib/divider/Divider.svelte'
 	let {
 		onclose,
 	}: {
@@ -18,7 +17,7 @@
 		class={$page.url.pathname === '/about/quick-start' ? 'btn-selected' : ''}
 		size="medium">Quick Start</Button
 	>
-	<Divider class="mt-4" />
+	<div class="mt-4 h-px w-full bg-[--np-color-outline]"></div>
 	<h3 class="ml-6">Components</h3>
 	<Button
 		onclick={onclose}
@@ -32,28 +31,28 @@
 		href="/components/icon-button"
 		variant="text"
 		class={$page.url.pathname === '/components/icon-button' ? 'btn-selected' : ''}
-		size="medium">Icon Buttons</Button
+		size="medium">Icon buttons</Button
 	>
 	<Button
 		onclick={onclose}
 		href="/components/list"
 		variant="text"
 		class={$page.url.pathname === '/components/list' ? 'btn-selected' : ''}
-		size="medium">List</Button
+		size="medium">Lists</Button
 	>
 	<Button
 		onclick={onclose}
 		href="/components/menu"
 		variant="text"
 		class={$page.url.pathname === '/components/menu' ? 'btn-selected' : ''}
-		size="medium">Menu</Button
+		size="medium">Menus</Button
 	>
 	<Button
 		onclick={onclose}
 		href="/components/progress"
 		variant="text"
 		class={$page.url.pathname === '/components/progress' ? 'btn-selected' : ''}
-		size="medium">Progress</Button
+		size="medium">Progress indicators</Button
 	>
 	<Button
 		onclick={onclose}
@@ -67,7 +66,7 @@
 		href="/components/segmented-button"
 		variant="text"
 		class={$page.url.pathname === '/components/segmented-button' ? 'btn-selected' : ''}
-		size="medium">Segmented Buttons</Button
+		size="medium">Segmented buttons</Button
 	>
 	<Button
 		onclick={onclose}
@@ -81,7 +80,7 @@
 		href="/components/tooltip"
 		variant="text"
 		class={$page.url.pathname === '/components/tooltip' ? 'btn-selected' : ''}
-		size="medium">Tooltip</Button
+		size="medium">Tooltips</Button
 	>
 </div>
 

@@ -7,11 +7,11 @@
 </script>
 
 <svelte:head>
-	<title>Tooltip - Noph UI</title>
+	<title>Tooltips - Noph UI</title>
 </svelte:head>
 
-<h1>Tooltip</h1>
-<h2>Basic Tooltip</h2>
+<h1>Tooltips</h1>
+<h2>Basic tooltip</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
@@ -30,7 +30,7 @@
 	</Tooltip>
 {/if}`}
 />
-<h2>Button with Tooltip</h2>
+<h2>Button with tooltip</h2>
 <p>Buttons have built-in support for tooltips. You can simply set the title attribute.</p>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"

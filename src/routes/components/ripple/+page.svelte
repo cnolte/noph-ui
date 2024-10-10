@@ -8,7 +8,7 @@
 </svelte:head>
 
 <h1>Ripple</h1>
-<h2>Basic Ripple</h2>
+<h2>Basic ripple</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap items-center gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >

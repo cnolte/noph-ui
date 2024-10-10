@@ -10,7 +10,7 @@
 
 <h1>Snackbar</h1>
 
-<h2>Single line snackbar</h2>
+<h2>Single-line snackbar</h2>
 <Snackbar label="Single line snackbar with action and icon" actionLabel="Action"
 	>{#snippet icon()}
 		<CloseIcon />
@@ -23,7 +23,7 @@
 	{/snippet}
 </Snackbar>`}
 />
-<h2>Two line snackbar</h2>
+<h2>Two-line snackbar</h2>
 <Snackbar label="Two line snackbar" supportingText="with action and icon" actionLabel="Action"
 	>{#snippet icon()}
 		<CloseIcon />

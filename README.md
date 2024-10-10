@@ -10,16 +10,28 @@ npm install noph-ui
 
 ## Components
 
-- Button (beta)
-- Icon Button (in progress)
-- Divider (in progress)
-- List (in progress)
-- Menu (in progress)
-- Progress (in progress)
-- Radio (waiting for start)
-- Ripple (in progress)
-- Segmented Button (in progress)
-- Snackbar (in progress)
-- Switch (witing for start)
-- Tooltip (in progress)
-- Textfield (waiting for start)
+Beta (No breaking changes expected)
+
+- Buttons
+- Icon buttons
+
+In progress (Breaking changes expected)
+
+- Lists
+- Menus
+- Progress indicators
+- Ripple
+- Segmented buttons
+- Snackbar
+- Tooltips
+
+Pending
+
+- Chips
+- Dialogs
+- Radio
+- Select
+- Sliders
+- Switch
+- Tabs
+- Text fields

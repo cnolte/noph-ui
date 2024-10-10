@@ -64,6 +64,7 @@
 		rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
 	--np-elevation-3: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
 		rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+	--np-shape-corner-full: 9999px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -249,14 +250,14 @@ h1 {
 	font-size: 3rem;
 	line-height: 4rem;
 	font-weight: 500;
-	margin: 0 0 0.5rem 0;
+	margin: 0;
 }
 
 h2 {
 	font-size: 1.75rem;
 	line-height: 2.5rem;
 	font-weight: 400;
-	margin: 1.5rem 0 1rem 0;
+	margin: 3rem 0 1.5rem 0;
 }
 
 h3 {

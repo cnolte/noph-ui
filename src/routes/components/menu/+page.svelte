@@ -8,11 +8,11 @@
 </script>
 
 <svelte:head>
-	<title>Menu - Noph UI</title>
+	<title>Menus - Noph UI</title>
 </svelte:head>
 
-<h1>Menu</h1>
-<h2>Basic Menu</h2>
+<h1>Menus</h1>
+<h2>Basic menu</h2>
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
