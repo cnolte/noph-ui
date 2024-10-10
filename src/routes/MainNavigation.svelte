@@ -8,7 +8,7 @@
 	} = $props()
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2 pb-8">
 	<h3 class="ml-6">About</h3>
 	<Button
 		onclick={onclose}

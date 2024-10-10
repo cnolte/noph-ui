@@ -108,17 +108,17 @@
 
 	@media (min-width: 768px) {
 		.main {
-			margin-left: 15rem;
-			padding: 2rem 4rem 4rem 4rem;
+			margin-left: 16rem;
+			padding: 2rem 3rem 4rem 3rem;
 		}
 		.paper {
-			width: calc(100% - 19rem);
+			width: calc(100% - 18rem);
 			margin-left: 17rem;
-			height: calc(100dvh - 6.5rem);
+			height: calc(100dvh - 5.5rem);
 		}
 		.bottom-bar {
 			margin-left: 15rem;
-			height: 2rem;
+			height: 1rem;
 			width: calc(100% - 15rem);
 		}
 	}
