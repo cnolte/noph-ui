@@ -100,7 +100,6 @@
 		flex: 1;
 	}
 	.np-button {
-		box-sizing: border-box;
 		background-color: transparent;
 		border-width: 0;
 		position: relative;
