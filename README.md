@@ -16,13 +16,13 @@ Beta (No breaking changes expected)
 - Icon buttons
 - Progress indicators
 - Ripple
+- Snackbar
 
 In progress (Breaking changes expected)
 
 - Lists
 - Menus
 - Segmented buttons
-- Snackbar
 - Tooltips
 
 Pending

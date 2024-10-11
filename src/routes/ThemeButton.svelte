@@ -107,11 +107,7 @@
 >
 	<PaletteIcon />
 </IconButton>
-<Menu
-	anchor={menuBtn}
-	id="palette-menu"
-	style="position-area: bottom span-left;margin-right:0px;padding: 1rem;position-anchor: --palette-menu"
->
+<Menu anchor={menuBtn} id="palette-menu" style="margin-right:0px;padding: 1rem">
 	<div class="card p-4">
 		<label class="flex items-center gap-4">
 			Hex Source Color

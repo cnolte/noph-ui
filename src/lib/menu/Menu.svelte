@@ -22,30 +22,15 @@
 			? anchorRect.top
 			: innerHeight - anchorRect.bottom) - distanceToBorder,
 	)
-
-	let calculateLeftPos = $derived.by(() => {
-		const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-		if (left < distanceToBorder) {
-			return distanceToBorder
-		}
-		if (distanceToBorder + left + clientWidth > innerWidth) {
-			return innerWidth - clientWidth - distanceToBorder
-		}
-		return left
-	})
-	let calculateTopPos = $derived.by(() => {
-		const top = anchorRect.bottom + 2
-		if (top + clientHeight > innerHeight) {
-			return anchorRect.top - clientHeight - 2
-		}
-		return top
-	})*/
+*/
 	const refreshValues = () => {
-		if (!('anchorName' in document.documentElement.style) && popoverElement && anchor) {
+		if (popoverElement && anchor) {
 			const anchorRect = anchor.getBoundingClientRect()
 			if (anchorRect.bottom + clientHeight > innerHeight) {
+				popoverElement.style.setProperty('--np-offset', '50%')
 				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
 			} else {
+				popoverElement.style.setProperty('--np-offset', '-50%')
 				popoverElement.style.top = `${anchorRect.bottom + 2}px`
 			}
 			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
@@ -61,7 +46,7 @@
 	$effect(refreshValues)
 
 	$effect(() => {
-		if (!('anchorName' in document.documentElement.style) && anchor) {
+		if (anchor) {
 			anchor.addEventListener('click', () => {
 				refreshValues()
 			})
@@ -90,13 +75,14 @@
 	bind:clientHeight
 	{...attributes}
 	popover="auto"
+	class="np-menu"
 	role="menu"
 >
 	{@render children()}
 </div>
 
 <style>
-	div[popover] {
+	.np-menu[popover] {
 		color: var(--np-menu-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-background-color, var(--np-color-surface-container));
 		overflow: auto;
@@ -105,17 +91,25 @@
 		box-shadow: var(--np-elevation-2);
 		margin: 0;
 		margin-right: 2rem;
-		display: block;
 		transition:
-			overlay 0.3s allow-discrete,
-			display 0.3s allow-discrete,
-			opacity 0.3s ease-out;
+			overlay 0.1s allow-discrete,
+			display 0.1s allow-discrete,
+			opacity 0.1s linear;
 		opacity: 0;
-		position-area: bottom;
-		position-try: normal flip-block;
 		z-index: 1;
 	}
-	div:popover-open {
+	.np-menu:popover-open {
 		opacity: 1;
+		animation: fade-in 0.2s ease-out;
+	}
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(var(--np-offset, -50%)) scaleY(0);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scaleY(1);
+		}
 	}
 </style>

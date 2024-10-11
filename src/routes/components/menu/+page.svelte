@@ -16,10 +16,8 @@
 <div
 	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
 >
-	<Button popovertarget="browser-menu" style="anchor-name: --menu" bind:element={menuBtn}
-		>Open Menu</Button
-	>
-	<Menu anchor={menuBtn} id="browser-menu" style="position-anchor: --menu">
+	<Button popovertarget="browser-menu" bind:element={menuBtn}>Open Menu</Button>
+	<Menu anchor={menuBtn} id="browser-menu">
 		<List>
 			<ListItem>Chrome</ListItem>
 			<ListItem>Firefox</ListItem>
@@ -28,10 +26,10 @@
 	</Menu>
 </div>
 <Code
-	value={`<Button popovertarget="browser-menu" style="anchor-name: --menu" bind:element={menuBtn}>
+	value={`<Button popovertarget="browser-menu" bind:element={menuBtn}>
 	Browser
 </Button>
-<Menu anchor={menuBtn} id="browser-menu" style="position-anchor: --menu">
+<Menu anchor={menuBtn} id="browser-menu">
 	<List>
 		<ListItem>Chrome</ListItem>
 		<ListItem>Firefox</ListItem>
