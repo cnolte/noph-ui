@@ -10,13 +10,45 @@
 		onActionClick?: (event: Event) => void
 		icon?: Snippet
 		onIconClick?: (event: Event) => void
+		showSnackbar?: () => void
+		timeOut?: number
+	}
+	let timeoutId: number | undefined = $state()
+	const hideSnackbar = () => {
+		element?.hidePopover()
 	}
 
-	let { label, supportingText, actionLabel, onActionClick, icon, onIconClick }: SnackbarProps =
-		$props()
+	let {
+		label,
+		supportingText,
+		actionLabel,
+		onActionClick,
+		icon,
+		onIconClick = hideSnackbar,
+		showSnackbar = $bindable(),
+		timeOut = 3000,
+	}: SnackbarProps = $props()
+	let buttonHeight = $derived(supportingText ? '4.25rem' : '3rem')
+
+	showSnackbar = () => {
+		element?.showPopover()
+		timeoutId = setTimeout(() => {
+			element?.hidePopover()
+		}, timeOut)
+	}
+	let element: HTMLElement | undefined = $state()
 </script>
 
-<div class="snackbar">
+<div
+	popover="auto"
+	class="snackbar"
+	onbeforetoggle={(event) => {
+		if (event.newState === 'closed') {
+			clearTimeout(timeoutId)
+		}
+	}}
+	bind:this={element}
+>
 	<div class="label-container">
 		<div class="label">{label}</div>
 		{#if supportingText}
@@ -28,6 +60,7 @@
 			variant="text"
 			--np-text-button-label-text-color="var(--np-color-on-background-snackbar, var(--np-color-inverse-primary))"
 			--np-text-button-container-shape="0"
+			style="height:{buttonHeight}"
 			aria-label={actionLabel}
 			onclick={onActionClick}
 		>
@@ -37,7 +70,9 @@
 	{#if icon}
 		<IconButton
 			--np-icon-button-icon-color="var(--np-color-on-background-snackbar, var(--np-color-inverse-on-surface))"
-			style="border-radius:0.25rem"
+			--np-icon-button-container-shape="0"
+			--np-icon-button-container-height={buttonHeight}
+			--np-icon-button-container-width="2.5rem"
 			aria-label="Close"
 			onclick={onIconClick}
 		>
@@ -53,14 +88,15 @@
 	.label-container {
 		flex: 1;
 		overflow: hidden;
-		padding: 0.625rem 0;
+		padding: 0.875rem 1rem;
 	}
 	.label {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		text-wrap: nowrap;
 	}
-	.snackbar {
+	.snackbar[popover] {
+		margin-bottom: 1.5rem;
 		--np-ripple-hover-color: var(--np-color-primary);
 		--np-ripple-pressed-color: var(--np-color-primary);
 		--np-icon-button-icon-color: fillCurrentColor;
@@ -72,12 +108,33 @@
 		background-color: var(--np-color-background-snackbar, var(--np-color-inverse-surface));
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
 		line-height: 1.25rem;
 		font-weight: 500;
 		font-size: 0.875rem;
 		border-radius: 0.25rem;
 		fill: currentColor;
-		padding: 0.25rem 1rem;
+		box-shadow: var(--np-elevation-3);
+		padding: 0;
+		transition-property: opacity;
+		transition-timing-function: linear;
+		transition:
+			opacity 0.3s,
+			overlay 0.3s allow-discrete,
+			display 0.3s allow-discrete;
+		opacity: 0;
+	}
+
+	.snackbar:popover-open {
+		opacity: 1;
+		animation: slideIn 0.2s linear forwards;
+	}
+
+	@keyframes slideIn {
+		from {
+			transform: translateY(100%);
+		}
+		to {
+			transform: translateY(0);
+		}
 	}
 </style>

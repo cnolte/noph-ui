@@ -113,8 +113,6 @@
 		align-items: center;
 		overflow: hidden;
 		text-decoration: none;
-		height: 2.5rem;
-		width: 2.5rem;
 		align-items: center;
 		justify-content: center;
 	}
@@ -173,6 +171,8 @@
 		--np-ripple-pressed-color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
 		color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
 		border-radius: var(--np-icon-button-container-shape, var(--np-shape-corner-full));
+		height: var(--np-icon-button-container-height, 2.5rem);
+		width: var(--np-icon-button-container-width, 2.5rem);
 	}
 	.text.selected {
 		--np-ripple-hover-color: var(--np-color-primary);
@@ -189,6 +189,8 @@
 		color: var(--np-filled-icon-button-container-color, var(--np-color-primary));
 		background-color: var(--np-color-surface-container-highest);
 		border-radius: var(--np-filled-icon-button-container-shape, var(--np-shape-corner-full));
+		height: var(--np-filled-icon-button-container-height, 2.5rem);
+		width: var(--np-filled-icon-button-container-width, 2.5rem);
 	}
 	.filled.selected {
 		--np-ripple-hover-opacity: 0.12;
@@ -205,6 +207,8 @@
 		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
 		color: var(--np-color-on-surface-variant);
 		background-color: var(--np-color-surface-container-highest);
+		height: var(--np-tonal-icon-button-container-height, 2.5rem);
+		width: var(--np-tonal-icon-button-container-width, 2.5rem);
 	}
 	.tonal.selected {
 		--np-ripple-hover-color: var(--np-tonal-icon-button-icon-color, var(--np-color-primary));
@@ -220,6 +224,8 @@
 		color: var(--np-color-on-surface-variant);
 		border-color: var(--np-outlined-icon-button-outline-color, var(--np-color-outline));
 		border-radius: var(--np-outlined-icon-button-container-shape, var(--np-shape-corner-full));
+		height: var(--np-outlined-icon-button-container-height, 2.5rem);
+		width: var(--np-outlined-icon-button-container-width, 2.5rem);
 	}
 	.outlined.selected {
 		border: none;
