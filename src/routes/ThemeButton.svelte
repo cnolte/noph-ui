@@ -107,7 +107,12 @@
 >
 	<PaletteIcon />
 </IconButton>
-<Menu anchor={menuBtn} id="palette-menu" style="margin-right:0px;padding: 1rem">
+<Menu
+	--np-menu-container-shape="var(--np-shape-corner-extra-large)"
+	anchor={menuBtn}
+	id="palette-menu"
+	style="margin-right:0px;padding: 1rem"
+>
 	<div class="card p-4">
 		<label class="flex items-center gap-4">
 			Hex Source Color

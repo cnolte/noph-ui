@@ -83,10 +83,9 @@
 
 <style>
 	.np-menu[popover] {
-		color: var(--np-menu-color, var(--np-color-on-surface));
-		background-color: var(--np-menu-background-color, var(--np-color-surface-container));
+		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
 		overflow: auto;
-		border-radius: 1rem;
+		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
 		padding: 1rem 0;
 		box-shadow: var(--np-elevation-2);
 		margin: 0;
