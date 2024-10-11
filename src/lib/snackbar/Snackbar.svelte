@@ -97,6 +97,7 @@
 	}
 	.snackbar[popover] {
 		margin-bottom: 1.5rem;
+		max-width: calc(100% - 3rem);
 		--np-ripple-hover-color: var(--np-color-primary);
 		--np-ripple-pressed-color: var(--np-color-primary);
 		--np-icon-button-icon-color: fillCurrentColor;
