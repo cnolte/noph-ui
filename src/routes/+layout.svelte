@@ -21,8 +21,8 @@
 	/>
 </svelte:head>
 
-<header class="layout-btn fixed left-0 right-0 top-0 z-10 grid">
-	<div class="inner-header flex items-center gap-2 pl-6 pr-2 md:pr-4">
+<header class="layout-btn">
+	<div class="inner-header">
 		<a href="/" class="flex items-center gap-2 text-[var(--np-color-primary)]">
 			<Logo />
 			<div class="ml-1 text-xl font-semibold md:text-2xl">Noph UI</div>
@@ -47,12 +47,12 @@
 	</div>
 </header>
 
-<nav class="main-nav layout-btn fixed hidden w-60 overflow-y-auto px-2 md:block">
+<nav class="main-nav layout-btn">
 	<MainNavigation />
 </nav>
 <nav
 	bind:this={popover}
-	class="nav layout-btn flex flex-col px-4 py-0 md:hidden"
+	class="nav layout-btn"
 	popover="auto"
 	id="mobile-drawer"
 	onbeforetoggle={(event) => {
@@ -90,6 +90,11 @@
 	}
 	.inner-header {
 		height: 4.5rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding-left: 1.5rem;
+		padding-right: 0.5rem /* 8px */;
 	}
 	.bottom-bar {
 		position: fixed;
@@ -105,31 +110,29 @@
 		background-color: var(--np-color-background);
 		border-radius: 1.5rem;
 	}
-
-	@media (min-width: 768px) {
-		.main {
-			margin-left: 16rem;
-			padding: 2rem 3rem 4rem 3rem;
-		}
-		.paper {
-			width: calc(100% - 18rem);
-			margin-left: 17rem;
-			height: calc(100dvh - 5.5rem);
-		}
-		.bottom-bar {
-			margin-left: 15rem;
-			height: 1rem;
-			width: calc(100% - 15rem);
-		}
-	}
 	.main-nav {
+		position: fixed;
+		display: none;
+		width: 15rem;
+		overflow-y: auto;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 		height: calc(100dvh - 4.5rem);
 	}
 	header {
 		background: var(--np-color-surface-container);
+		position: fixed;
+		left: 0px;
+		right: 0;
+		top: 0;
+		z-index: 10;
+		display: grid;
 	}
 	.nav[popover] {
 		margin-top: 4.5rem;
+		display: flex;
+		flex-direction: column;
+		padding: 0 1rem;
 		width: 100vw;
 		height: calc(100dvh - 4rem);
 		transition-property: transform;
@@ -144,5 +147,31 @@
 	}
 	.nav:popover-open {
 		transform: translateX(0);
+	}
+
+	@media (min-width: 768px) {
+		.inner-header {
+			padding-right: 1rem /* 16px */;
+		}
+		.main {
+			margin-left: 16rem;
+			padding: 2rem 3rem 4rem 3rem;
+		}
+		.paper {
+			width: calc(100% - 18rem);
+			margin-left: 17rem;
+			height: calc(100dvh - 5.5rem);
+		}
+		.bottom-bar {
+			margin-left: 15rem;
+			height: 1rem;
+			width: calc(100% - 15rem);
+		}
+		.main-nav {
+			display: block;
+		}
+		.nav {
+			display: none;
+		}
 	}
 </style>

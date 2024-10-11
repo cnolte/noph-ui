@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores'
 	import Button from '$lib/button/Button.svelte'
+	import Divider from '$lib/divider/Divider.svelte'
 	let {
 		onclose,
 	}: {
@@ -17,7 +18,7 @@
 		class={$page.url.pathname === '/about/quick-start' ? 'btn-selected' : ''}
 		size="medium">Quick Start</Button
 	>
-	<div class="mt-4 h-px w-full bg-[--np-color-outline]"></div>
+	<Divider style="margin-top: 1rem" />
 	<h3 class="ml-6">Components</h3>
 	<Button
 		onclick={onclose}
