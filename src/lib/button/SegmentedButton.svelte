@@ -19,9 +19,9 @@
 	let { name, options, multiSelect = false, ...attributes }: SegmentedButtonProps = $props()
 </script>
 
-<div class="segmented-control {attributes.class}">
+<div class="np-segmented-buttons {attributes.class}">
 	{#each options as option}
-		<label class:width-icon={option.icon}>
+		<label class="np-segmented-button" class:width-icon={option.icon}>
 			<div class="check-icon-wrapper">
 				<div class="check-icon">
 					<CheckIcon />
@@ -51,7 +51,7 @@
 </div>
 
 <style>
-	.segmented-control {
+	.np-segmented-buttons {
 		--np-ripple-hover-color: var(--np-color-primary);
 		--np-ripple-pressed-color: var(--np-color-primary);
 		display: flex;
@@ -61,7 +61,7 @@
 		overflow: hidden;
 	}
 
-	label {
+	.np-segmented-button {
 		flex: 1;
 		padding: 0.5rem 2rem;
 		text-align: center;
@@ -78,19 +78,19 @@
 		transition: all 0.15s linear;
 	}
 
-	label:has(input:disabled) {
+	.np-segmented-button:has(input:disabled) {
 		cursor: unset;
 		opacity: 0.5;
 	}
 
-	label:last-child {
+	.np-segmented-button:last-child {
 		border-right: none;
 	}
 
-	label input {
+	.np-segmented-button input {
 		display: none;
 	}
-	label::after {
+	.np-segmented-button::after {
 		content: ' ';
 		position: absolute;
 		inset: 0;
@@ -100,13 +100,13 @@
 		background-color: var(--np-color-secondary-container);
 	}
 	.width-icon,
-	label:has(input:checked) {
+	.np-segmented-button:has(input:checked) {
 		padding: 0.5rem 1rem;
 	}
-	label:has(input:checked) {
+	.np-segmented-button:has(input:checked) {
 		color: var(--np-color-on-secondary-container);
 	}
-	label:has(input:checked)::after {
+	.np-segmented-button:has(input:checked)::after {
 		opacity: 1;
 	}
 	.check-icon {
@@ -133,17 +133,17 @@
 			width 0.15s linear,
 			opacity 0.15s linear;
 	}
-	label:has(input:checked) .alternate-icon-wrapper {
+	.np-segmented-button:has(input:checked) .alternate-icon-wrapper {
 		width: 0;
 	}
-	label:has(input:checked) .alternate-icon-wrapper .alternate-icon {
+	.np-segmented-button:has(input:checked) .alternate-icon-wrapper .alternate-icon {
 		width: 0rem;
 		opacity: 0;
 	}
-	label:has(input:checked) .check-icon-wrapper {
+	.np-segmented-button:has(input:checked) .check-icon-wrapper {
 		width: 2rem;
 	}
-	label:has(input:checked) .check-icon-wrapper .check-icon {
+	.np-segmented-button:has(input:checked) .check-icon-wrapper .check-icon {
 		width: 1.5rem;
 	}
 </style>

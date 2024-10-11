@@ -107,6 +107,7 @@
 		align-items: center;
 	}
 	.np-snackbar[popover] {
+		border: none;
 		margin-bottom: 1rem;
 		max-width: calc(100% - 3rem);
 		--np-ripple-hover-color: var(--np-color-primary);

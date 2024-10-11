@@ -2,6 +2,7 @@
 	import IconButton from '$lib/button/IconButton.svelte'
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import MenuIcon from '$lib/icons/MenuIcon.svelte'
+	import '$lib/themes/defaultTheme.css'
 	import '../app.css'
 	import GitHubMark from './GitHubMark.svelte'
 	import Logo from './Logo.svelte'
@@ -23,11 +24,11 @@
 
 <header class="layout-btn">
 	<div class="inner-header">
-		<a href="/" class="flex items-center gap-2 text-[var(--np-color-primary)]">
+		<a href="/" class="logo">
 			<Logo />
-			<div class="ml-1 text-xl font-semibold md:text-2xl">Noph UI</div>
+			<div class="logo-label">Noph UI</div>
 		</a>
-		<div class="flex-grow"></div>
+		<div class="spacer"></div>
 		<IconButton
 			variant="text"
 			title="GitHub repository"
@@ -41,7 +42,7 @@
 			popovertarget="mobile-drawer"
 			variant="text"
 			title={popoverState === 'open' ? 'Close' : 'Open'}
-			class="md:!hidden"
+			class="menu-btn"
 			>{#if popoverState === 'open'}<CloseIcon />{:else}<MenuIcon />{/if}</IconButton
 		>
 	</div>
@@ -76,6 +77,21 @@
 <div class="bottom-bar"></div>
 
 <style>
+	.logo-label {
+		font-weight: 600;
+		margin-left: 0.25rem;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+	}
+	.spacer {
+		flex-grow: 1;
+	}
+	.logo {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--np-color-primary);
+	}
 	.main-content {
 		max-width: min(100%, 980px);
 		margin-left: auto;
@@ -94,7 +110,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		padding-left: 1.5rem;
-		padding-right: 0.5rem /* 8px */;
+		padding-right: 0.5rem;
 	}
 	.bottom-bar {
 		position: fixed;
@@ -150,6 +166,10 @@
 	}
 
 	@media (min-width: 768px) {
+		.logo-label {
+			font-size: 1.5rem;
+			line-height: 2rem;
+		}
 		.inner-header {
 			padding-right: 1rem /* 16px */;
 		}
@@ -172,6 +192,9 @@
 		}
 		.nav {
 			display: none;
+		}
+		:global(.menu-btn) {
+			display: none !important;
 		}
 	}
 </style>
