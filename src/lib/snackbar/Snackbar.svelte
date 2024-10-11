@@ -11,7 +11,7 @@
 		icon?: Snippet
 		onIconClick?: (event: Event) => void
 		showSnackbar?: () => void
-		timeOut?: number
+		timeout?: number
 	}
 	let timeoutId: number | undefined = $state()
 	const hideSnackbar = () => {
@@ -26,7 +26,7 @@
 		icon,
 		onIconClick = hideSnackbar,
 		showSnackbar = $bindable(),
-		timeOut = 3000,
+		timeout = 3000,
 	}: SnackbarProps = $props()
 	let buttonHeight = $derived(supportingText ? '4.25rem' : '3rem')
 
@@ -34,7 +34,7 @@
 		element?.showPopover()
 		timeoutId = setTimeout(() => {
 			element?.hidePopover()
-		}, timeOut)
+		}, timeout)
 	}
 	let element: HTMLElement | undefined = $state()
 </script>
@@ -116,18 +116,17 @@
 		fill: currentColor;
 		box-shadow: var(--np-elevation-3);
 		padding: 0;
-		transition-property: opacity;
-		transition-timing-function: linear;
 		transition:
-			opacity 0.3s,
 			overlay 0.3s allow-discrete,
-			display 0.3s allow-discrete;
+			display 0.3s allow-discrete,
+			opacity 0.3s linear;
 		opacity: 0;
+		z-index: 1;
 	}
 
 	.snackbar:popover-open {
 		opacity: 1;
-		animation: slideIn 0.2s linear forwards;
+		animation: slideIn 0.3s linear;
 	}
 
 	@keyframes slideIn {

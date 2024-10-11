@@ -105,6 +105,7 @@
 		box-shadow: var(--np-elevation-2);
 		margin: 0;
 		margin-right: 2rem;
+		display: block;
 		transition:
 			overlay 0.3s allow-discrete,
 			display 0.3s allow-discrete,
@@ -116,10 +117,5 @@
 	}
 	div:popover-open {
 		opacity: 1;
-	}
-	@starting-style {
-		div[popover] {
-			opacity: 0;
-		}
 	}
 </style>
