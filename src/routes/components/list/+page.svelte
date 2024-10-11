@@ -4,6 +4,7 @@
 	import List from '$lib/list/List.svelte'
 	import ListItem from '$lib/list/ListItem.svelte'
 	import Code from '../../Code.svelte'
+	import DemoCaintainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -12,9 +13,7 @@
 
 <h1>Lists</h1>
 <h2>List items</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<List>
 		<ListItem>Basic</ListItem>
 		<ListItem selected>Selected</ListItem>
@@ -29,7 +28,7 @@
 			{/snippet}Icon end</ListItem
 		>
 	</List>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<List>
 	<ListItem>Basic</ListItem>

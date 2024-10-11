@@ -3,6 +3,7 @@
 	import OpenInNewIcon from '$lib/icons/OpenInNewIcon.svelte'
 	import SendIcon from '$lib/icons/SendIcon.svelte'
 	import Code from '../../Code.svelte'
+	import DemoCaintainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -11,87 +12,75 @@
 
 <h1>Buttons</h1>
 <h2>Types</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<Button variant="elevated">Elevated</Button>
 	<Button variant="filled">Filled</Button>
 	<Button variant="tonal">Tonal</Button>
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="text">Text</Button>
-</div>
+</DemoCaintainer>
 <h2>Elevated button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<Button variant="elevated">Elevated</Button>
 	<Button variant="elevated" disabled>Disabled</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button variant="elevated">Elevated</Button>
 <Button variant="elevated" disabled>Disabled</Button>`}
 />
 <h2>Filled button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<Button variant="filled">Filled</Button>
 	<Button variant="filled" disabled>Disabled</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button variant="filled">Filled</Button>
 <Button variant="filled" disabled>Disabled</Button>`}
 />
 <h2>Tonal button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+
+<DemoCaintainer>
 	<Button variant="tonal">Tonal</Button>
 	<Button variant="tonal" disabled>Disabled</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button variant="tonal">Tonal</Button>
 <Button variant="tonal" disabled>Disabled</Button>`}
 />
 <h2>Outlined button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+
+<DemoCaintainer>
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="outlined" disabled>Disabled</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button variant="outlined">Outlined</Button>
 <Button variant="outlined" disabled>Disabled</Button>`}
 />
 <h2>Text button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+
+<DemoCaintainer>
 	<Button variant="text">Text</Button>
 	<Button variant="text" disabled>Disabled</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button variant="text">Text</Button>
 <Button variant="text" disabled>Disabled</Button>`}
 />
 <h2>Custom buttons</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] bg-[#f7fafe] p-4"
->
+
+<DemoCaintainer style="background-color:#f7fafe">
 	<Button --np-outlined-button-label-text-color="#ba1a1a" --np-outlined-button-container-shape="0">
 		Error
 	</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button --np-outlined-button-label-text-color="#ba1a1a" --np-outlined-button-container-shape="0">
 	Error
 </Button>`}
 />
 <h2>Icon</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<Button variant="tonal">
 		{#snippet start()}
 			<SendIcon />
@@ -102,7 +91,7 @@
 			<OpenInNewIcon />
 		{/snippet}Open</Button
 	>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button>
 	{#snippet start()}
@@ -118,13 +107,11 @@
 </Button>`}
 />
 <h2>Size</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<Button size="small">Small</Button>
 	<Button size="medium">Medium</Button>
 	<Button size="large">Large</Button>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<Button size="small">Small</Button>
 <Button size="medium">Medium</Button>

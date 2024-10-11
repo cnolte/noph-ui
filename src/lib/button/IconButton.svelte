@@ -121,6 +121,7 @@
 		width: 1.5rem;
 		height: 1.5rem;
 		fill: currentColor;
+		display: block;
 	}
 	.disabled {
 		pointer-events: none;

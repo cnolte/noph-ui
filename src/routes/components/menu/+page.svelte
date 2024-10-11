@@ -4,6 +4,7 @@
 	import ListItem from '$lib/list/ListItem.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import Code from '../../Code.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 	let menuBtn = $state<HTMLElement>()
 </script>
 
@@ -13,9 +14,7 @@
 
 <h1>Menus</h1>
 <h2>Basic menu</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoContainer>
 	<Button popovertarget="browser-menu" bind:element={menuBtn}>Open Menu</Button>
 	<Menu anchor={menuBtn} id="browser-menu">
 		<List>
@@ -24,7 +23,7 @@
 			<ListItem>Safari</ListItem>
 		</List>
 	</Menu>
-</div>
+</DemoContainer>
 <Code
 	value={`<Button popovertarget="browser-menu" bind:element={menuBtn}>
 	Browser

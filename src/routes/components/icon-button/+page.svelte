@@ -4,6 +4,7 @@
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import SendIcon from '$lib/icons/SendIcon.svelte'
 	import Code from '../../Code.svelte'
+	import DemoCaintainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -12,72 +13,60 @@
 
 <h1>Icon buttons</h1>
 <h2>Types</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton aria-label="Icon Button"><SendIcon /></IconButton>
 	<IconButton aria-label="Filled Icon Button" variant="filled"><SendIcon /></IconButton>
 	<IconButton aria-label="Tonal Icon Button" variant="tonal"><SendIcon /></IconButton>
 	<IconButton aria-label="Outlined Icon Button" variant="outlined"><SendIcon /></IconButton>
-</div>
+</DemoCaintainer>
 <h2>Icon button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton aria-label="Icon Button"><CheckIcon /></IconButton>
 	<IconButton aria-label="Disabled Icon Button" disabled><CheckIcon /></IconButton>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<IconButton><CheckIcon /></IconButton>
 <IconButton disabled><CheckIcon /></IconButton>`}
 />
 <h2>Filled icon button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton aria-label="Filled Icon Button" variant="filled"><CheckIcon /></IconButton>
 	<IconButton aria-label="Disabled Filled Icon Button" variant="filled" disabled
 		><CheckIcon /></IconButton
 	>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<IconButton variant="filled"><CheckIcon /></IconButton>
 <IconButton variant="filled" disabled><CheckIcon /></IconButton>`}
 />
 <h2>Tonal icon button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton aria-label="Tonal Icon Button" variant="tonal"><CheckIcon /></IconButton>
 	<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled
 		><CheckIcon /></IconButton
 	>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<IconButton variant="filled"><CheckIcon /></IconButton>
 <IconButton variant="filled" disabled><CheckIcon /></IconButton>`}
 />
 <h2>Outlined icon button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton aria-label="Outlined Icon Button" variant="outlined"><CheckIcon /></IconButton>
 	<IconButton aria-label="Disabled Outlined Icon Button" variant="outlined" disabled
 		><CheckIcon /></IconButton
 	>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<IconButton variant="outlined"><CheckIcon /></IconButton>
 <IconButton variant="outlined" disabled><CheckIcon /></IconButton>`}
 />
 <h2>Toggle</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-col gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
-	{#snippet selectedIcon()}
-		<CheckIcon />
-	{/snippet}
-	<div class="flex flex-wrap gap-4">
+{#snippet selectedIcon()}
+	<CheckIcon />
+{/snippet}
+<DemoCaintainer style="flex-direction: column">
+	<div class="icon-list">
 		<IconButton {selectedIcon} aria-label="Unselected Icon Button" toggle><CloseIcon /></IconButton>
 		<IconButton {selectedIcon} aria-label="Unselected Filled Icon Button" variant="filled" toggle
 			><CloseIcon /></IconButton
@@ -92,7 +81,7 @@
 			toggle><CloseIcon /></IconButton
 		>
 	</div>
-	<div class="flex flex-wrap gap-4">
+	<div class="icon-list">
 		<IconButton {selectedIcon} aria-label="Selected Icon Button" toggle selected
 			><CloseIcon /></IconButton
 		>
@@ -118,7 +107,7 @@
 			selected><CloseIcon /></IconButton
 		>
 	</div>
-</div>
+</DemoCaintainer>
 <Code
 	value={`{#snippet selectedIcon()}
 	<CheckIcon />
@@ -137,18 +126,14 @@
 </div>`}
 />
 <h2>Tooltip</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton title="Icon button with tooltip" variant="filled"><CheckIcon /></IconButton>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<IconButton title="Icon button with tooltip" variant="filled"><CheckIcon /></IconButton>`}
 />
 <h2>Custom icon button</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoCaintainer>
 	<IconButton
 		aria-label="Custom Filled Icon Button"
 		--np-filled-icon-button-container-color="#ba1a1a"
@@ -159,7 +144,7 @@
 	>
 		<CheckIcon />
 	</IconButton>
-</div>
+</DemoCaintainer>
 <Code
 	value={`<IconButton
 	--np-filled-icon-button-container-color="#ba1a1a"
@@ -171,3 +156,11 @@
 	<CheckIcon />
 </IconButton>`}
 />
+
+<style>
+	.icon-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+</style>

@@ -27,12 +27,29 @@ h3 {
 	color: var(--np-color-primary);
 }
 
+html {
+	tab-size: 2;
+}
+
+a {
+	color: var(--np-color-on-surface);
+	text-decoration: none;
+}
+
 body {
-	font-size: 1.125rem;
+	font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
+	margin: 0;
 	background-color: var(--np-color-surface-container);
+	font-size: 1.125rem;
 	color: var(--np-color-on-surface);
 }
 
 p {
 	margin: 0 0 1rem 0;
+}
+
+code {
+	font-size: 0.875rem;
+	color: var(--np-color-primary);
 }

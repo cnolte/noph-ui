@@ -16,74 +16,110 @@
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
 
+	const getScheme = () => {
+		const hct = Hct.fromInt(argbFromHex(value))
+		const lightContent = new SchemeContent(hct, false, contrastLevel)
+		const darkContent = new SchemeContent(hct, true, contrastLevel)
+
+		return {
+			background: [lightContent.background, darkContent.background],
+			error: [lightContent.error, darkContent.error],
+			errorContainer: [lightContent.errorContainer, darkContent.errorContainer],
+			inverseOnSurface: [lightContent.inverseOnSurface, darkContent.inverseOnSurface],
+			inversePrimary: [lightContent.inversePrimary, darkContent.inversePrimary],
+			inverseSurface: [lightContent.inverseSurface, darkContent.inverseSurface],
+			neutralPaletteKeyColor: [
+				lightContent.neutralPaletteKeyColor,
+				darkContent.neutralPaletteKeyColor,
+			],
+			neutralVariantPaletteKeyColor: [
+				lightContent.neutralVariantPaletteKeyColor,
+				darkContent.neutralVariantPaletteKeyColor,
+			],
+			onBackground: [lightContent.onBackground, darkContent.onBackground],
+			onError: [lightContent.onError, darkContent.onError],
+			onErrorContainer: [lightContent.onErrorContainer, darkContent.onErrorContainer],
+			onPrimary: [lightContent.onPrimary, darkContent.onPrimary],
+			onPrimaryContainer: [lightContent.onPrimaryContainer, darkContent.onPrimaryContainer],
+			onPrimaryFixed: [lightContent.onPrimaryFixed, darkContent.onPrimaryFixed],
+			onPrimaryFixedVariant: [
+				lightContent.onPrimaryFixedVariant,
+				darkContent.onPrimaryFixedVariant,
+			],
+			onSecondary: [lightContent.onSecondary, darkContent.onSecondary],
+			onSecondaryContainer: [lightContent.onSecondaryContainer, darkContent.onSecondaryContainer],
+			onSecondaryFixed: [lightContent.onSecondaryFixed, darkContent.onSecondaryFixed],
+			onSecondaryFixedVariant: [
+				lightContent.onSecondaryFixedVariant,
+				darkContent.onSecondaryFixedVariant,
+			],
+			onSurface: [lightContent.onSurface, darkContent.onSurface],
+			onSurfaceVariant: [lightContent.onSurfaceVariant, darkContent.onSurfaceVariant],
+			onTertiary: [lightContent.onTertiary, darkContent.onTertiary],
+			onTertiaryContainer: [lightContent.onTertiaryContainer, darkContent.onTertiaryContainer],
+			onTertiaryFixed: [lightContent.onTertiaryFixed, darkContent.onTertiaryFixed],
+			onTertiaryFixedVariant: [
+				lightContent.onTertiaryFixedVariant,
+				darkContent.onTertiaryFixedVariant,
+			],
+			outline: [lightContent.outline, darkContent.outline],
+			outlineVariant: [lightContent.outlineVariant, darkContent.outlineVariant],
+			primary: [lightContent.primary, darkContent.primary],
+			primaryContainer: [lightContent.primaryContainer, darkContent.primaryContainer],
+			primaryFixed: [lightContent.primaryFixed, darkContent.primaryFixed],
+			primaryFixedDim: [lightContent.primaryFixedDim, darkContent.primaryFixedDim],
+			primaryPaletteKeyColor: [
+				lightContent.primaryPaletteKeyColor,
+				darkContent.primaryPaletteKeyColor,
+			],
+			scrim: [lightContent.scrim, darkContent.scrim],
+			secondary: [lightContent.secondary, darkContent.secondary],
+			secondaryContainer: [lightContent.secondaryContainer, darkContent.secondaryContainer],
+			secondaryFixed: [lightContent.secondaryFixed, darkContent.secondaryFixed],
+			secondaryFixedDim: [lightContent.secondaryFixedDim, darkContent.secondaryFixedDim],
+			secondaryPaletteKeyColor: [
+				lightContent.secondaryPaletteKeyColor,
+				darkContent.secondaryPaletteKeyColor,
+			],
+			shadow: [lightContent.shadow, darkContent.shadow],
+			surface: [lightContent.surface, darkContent.surface],
+			surfaceBright: [lightContent.surfaceBright, darkContent.surfaceBright],
+			surfaceContainer: [lightContent.surfaceContainer, darkContent.surfaceContainer],
+			surfaceContainerHigh: [lightContent.surfaceContainerHigh, darkContent.surfaceContainerHigh],
+			surfaceContainerHighest: [
+				lightContent.surfaceContainerHighest,
+				darkContent.surfaceContainerHighest,
+			],
+			surfaceContainerLow: [lightContent.surfaceContainerLow, darkContent.surfaceContainerLow],
+			surfaceContainerLowest: [
+				lightContent.surfaceContainerLowest,
+				darkContent.surfaceContainerLowest,
+			],
+			surfaceDim: [lightContent.surfaceDim, darkContent.surfaceDim],
+			surfaceTint: [lightContent.surfaceTint, darkContent.surfaceTint],
+			surfaceVariant: [lightContent.surfaceVariant, darkContent.surfaceVariant],
+			tertiary: [lightContent.tertiary, darkContent.tertiary],
+			tertiaryContainer: [lightContent.tertiaryContainer, darkContent.tertiaryContainer],
+			tertiaryFixed: [lightContent.tertiaryFixed, darkContent.tertiaryFixed],
+			tertiaryFixedDim: [lightContent.tertiaryFixedDim, darkContent.tertiaryFixedDim],
+			tertiaryPaletteKeyColor: [
+				lightContent.tertiaryPaletteKeyColor,
+				darkContent.tertiaryPaletteKeyColor,
+			],
+		}
+	}
+
 	const changeTheme = () => {
-		const isDarkTheme = !theme
-			? window.matchMedia('(prefers-color-scheme: dark)').matches
-			: theme === 'dark'
 		if (value) {
-			const content = new SchemeContent(Hct.fromInt(argbFromHex(value)), isDarkTheme, contrastLevel)
-
-			const scheme = {
-				background: content.background,
-				error: content.error,
-				errorContainer: content.errorContainer,
-				inverseOnSurface: content.inverseOnSurface,
-				inversePrimary: content.inversePrimary,
-				inverseSurface: content.inverseSurface,
-				neutralPaletteKeyColor: content.neutralPaletteKeyColor,
-				neutralVariantPaletteKeyColor: content.neutralVariantPaletteKeyColor,
-				onBackground: content.onBackground,
-				onError: content.onError,
-				onErrorContainer: content.onErrorContainer,
-				onPrimary: content.onPrimary,
-				onPrimaryContainer: content.onPrimaryContainer,
-				onPrimaryFixed: content.onPrimaryFixed,
-				onPrimaryFixedVariant: content.onPrimaryFixedVariant,
-				onSecondary: content.onSecondary,
-				onSecondaryContainer: content.onSecondaryContainer,
-				onSecondaryFixed: content.onSecondaryFixed,
-				onSecondaryFixedVariant: content.onSecondaryFixedVariant,
-				onSurface: content.onSurface,
-				onSurfaceVariant: content.onSurfaceVariant,
-				onTertiary: content.background,
-				onTertiaryContainer: content.onTertiaryContainer,
-				onTertiaryFixed: content.onTertiaryFixed,
-				onTertiaryFixedVariant: content.onTertiaryFixedVariant,
-				outline: content.outline,
-				outlineVariant: content.outlineVariant,
-				primary: content.primary,
-				primaryContainer: content.primaryContainer,
-				primaryFixed: content.primaryFixed,
-				primaryFixedDim: content.primaryFixedDim,
-				primaryPaletteKeyColor: content.primaryPaletteKeyColor,
-				scrim: content.scrim,
-				secondary: content.secondary,
-				secondaryContainer: content.secondaryContainer,
-				secondaryFixed: content.secondaryFixed,
-				secondaryFixedDim: content.secondaryFixedDim,
-				secondaryPaletteKeyColor: content.secondaryPaletteKeyColor,
-				shadow: content.shadow,
-				surface: content.surface,
-				surfaceBright: content.surfaceBright,
-				surfaceContainer: content.surfaceContainer,
-				surfaceContainerHigh: content.surfaceContainerHigh,
-				surfaceContainerHighest: content.surfaceContainerHighest,
-				surfaceContainerLow: content.surfaceContainerLow,
-				surfaceContainerLowest: content.surfaceContainerLowest,
-				surfaceDim: content.surfaceDim,
-				surfaceTint: content.surfaceTint,
-				surfaceVariant: content.surfaceVariant,
-				tertiary: content.tertiary,
-				tertiaryContainer: content.tertiaryContainer,
-				tertiaryFixed: content.tertiaryFixed,
-				tertiaryFixedDim: content.tertiaryFixedDim,
-				tertiaryPaletteKeyColor: content.tertiaryPaletteKeyColor,
-			}
-
+			const scheme = getScheme()
 			for (const [key, value] of Object.entries(scheme)) {
 				const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-				const color = hexFromArgb(value as number)
-				document.documentElement.style.setProperty(`--np-color-${token}`, color)
+				const lightColor = hexFromArgb(value[0] as number)
+				const darkColor = hexFromArgb(value[1] as number)
+				document.documentElement.style.setProperty(
+					`--np-color-${token}`,
+					`light-dark(${lightColor}, ${darkColor})`,
+				)
 			}
 			sessionStorage.setItem('sourceColor', value)
 		}
@@ -133,7 +169,6 @@
 					theme = 'dark'
 					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
 					document.documentElement.setAttribute('data-theme', theme)
-					changeTheme()
 				},
 				selected: theme === 'dark',
 			},
@@ -143,7 +178,6 @@
 					theme = undefined
 					document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
 					document.documentElement.removeAttribute('data-theme')
-					changeTheme()
 				},
 				selected: !theme,
 			},
@@ -153,7 +187,6 @@
 					theme = 'light'
 					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
 					document.documentElement.setAttribute('data-theme', theme)
-					changeTheme()
 				},
 				selected: theme === 'light',
 			},

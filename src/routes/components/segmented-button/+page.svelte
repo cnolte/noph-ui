@@ -4,6 +4,7 @@
 	import DarkModeIcon from '$lib/icons/DarkModeIcon.svelte'
 	import LightModeIcon from '$lib/icons/LightModeIcon.svelte'
 	import Code from '../../Code.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -12,9 +13,7 @@
 
 <h1>Segmented buttons</h1>
 <h2>Basic</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoContainer>
 	<SegmentedButton
 		name="demo"
 		options={[
@@ -30,7 +29,7 @@
 			},
 		]}
 	/>
-</div>
+</DemoContainer>
 <Code
 	value={`<SegmentedButton
 	name="demo"
@@ -49,9 +48,7 @@
 />`}
 />
 <h2>Multiple choice</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoContainer>
 	<SegmentedButton
 		name="demo2"
 		multiSelect
@@ -73,7 +70,7 @@
 			},
 		]}
 	/>
-</div>
+</DemoContainer>
 <Code
 	value={`<SegmentedButton
 	name="demo2"
@@ -99,20 +96,19 @@
 />
 
 <h2>Icon</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
-	{#snippet darkIcon()}
-		<DarkModeIcon />
-	{/snippet}
 
-	{#snippet lightIcon()}
-		<LightModeIcon />
-	{/snippet}
+{#snippet darkIcon()}
+	<DarkModeIcon />
+{/snippet}
 
-	{#snippet systemIcon()}
-		<BrightnessMediumIcon />
-	{/snippet}
+{#snippet lightIcon()}
+	<LightModeIcon />
+{/snippet}
+
+{#snippet systemIcon()}
+	<BrightnessMediumIcon />
+{/snippet}
+<DemoContainer>
 	<SegmentedButton
 		name="demo3"
 		options={[
@@ -131,7 +127,7 @@
 			},
 		]}
 	/>
-</div>
+</DemoContainer>
 <Code
 	value={`{#snippet darkIcon()}
 	<DarkModeIcon />
@@ -164,9 +160,7 @@
 />`}
 />
 <h2>Disabled</h2>
-<div
-	class="mx-auto mb-8 flex w-fit flex-wrap gap-4 rounded-3xl border border-solid border-[var(--np-color-outline)] p-4"
->
+<DemoContainer>
 	<SegmentedButton
 		name="demo4"
 		options={[
@@ -183,7 +177,7 @@
 			},
 		]}
 	/>
-</div>
+</DemoContainer>
 <Code
 	value={`<SegmentedButton
 	name="demo4"

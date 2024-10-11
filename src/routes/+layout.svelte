@@ -125,6 +125,7 @@
 		height: calc(100dvh - 4.5rem);
 		background-color: var(--np-color-background);
 		border-radius: 1.5rem;
+		z-index: -1;
 	}
 	.main-nav {
 		position: fixed;
@@ -147,6 +148,7 @@
 	.nav[popover] {
 		margin-top: 4.5rem;
 		display: flex;
+		border: none;
 		flex-direction: column;
 		padding: 0 1rem;
 		width: 100vw;

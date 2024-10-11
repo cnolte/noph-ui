@@ -9,8 +9,8 @@
 	} = $props()
 </script>
 
-<div class="flex flex-col gap-2 pb-8">
-	<h3 class="ml-6">About</h3>
+<div class="main-nav">
+	<h3 class="header">About</h3>
 	<Button
 		onclick={onclose}
 		href="/about/quick-start"
@@ -19,7 +19,7 @@
 		size="medium">Quick Start</Button
 	>
 	<Divider style="margin-top: 1rem" />
-	<h3 class="ml-6">Components</h3>
+	<h3 class="header">Components</h3>
 	<Button
 		onclick={onclose}
 		href="/components/button"
@@ -86,6 +86,15 @@
 </div>
 
 <style>
+	.header {
+		margin-left: 1.5rem;
+	}
+	.main-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding-bottom: 2rem;
+	}
 	:global(.btn-selected::after) {
 		content: ' ';
 		position: absolute;

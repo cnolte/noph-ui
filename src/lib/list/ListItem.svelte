@@ -48,25 +48,47 @@
 	{/if}
 {/snippet}
 
-<li>
+<li class="np-list-item">
 	{#if isButton(attributes)}
-		<button
-			class="{selected
-				? 'selected '
-				: ''} btn relative flex w-full cursor-pointer select-none items-center gap-4 overflow-hidden fill-current px-6 py-3 text-left text-sm font-medium"
-			{...attributes}>{@render content()}</button
-		>
+		<button class="{selected ? 'selected ' : ''} btn" {...attributes}>{@render content()}</button>
 	{:else if isLink(attributes)}
-		<a
-			class="{selected
-				? 'selected '
-				: ''} btn relative flex w-full select-none items-center gap-4 overflow-hidden fill-current px-6 py-3 text-sm font-medium"
-			{...attributes}>{@render content()}</a
-		>
+		<a class="{selected ? 'selected ' : ''} btn" {...attributes}>{@render content()}</a>
 	{/if}
 </li>
 
 <style>
+	.np-list-item {
+		--np-color-menu-item: var(--np-color-primary);
+		--np-color-primary-ripple: var(--np-color-menu-item);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font: inherit;
+		color: inherit;
+		text-align: left;
+	}
+	.btn {
+		position: relative;
+		background: none;
+		border: none;
+		display: flex;
+		width: 100%;
+		user-select: none;
+		cursor: pointer;
+		align-items: center;
+		gap: 1rem;
+		overflow: hidden;
+		fill: currentColor;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+		padding-top: 0.75rem;
+		padding-bottom: 0.75rem;
+		text-align: left;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		font-weight: 500;
+		font-family: inherit;
+	}
 	@media (hover: hover) {
 		.btn:hover {
 			background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
@@ -80,10 +102,6 @@
 		height: 100%;
 		margin: -24px;
 		background-color: var(--np-color-surface-container-highest);
-	}
-	li {
-		--np-color-menu-item: var(--np-color-primary);
-		--np-color-primary-ripple: var(--np-color-menu-item);
 	}
 	.btn:focus-visible {
 		outline-style: solid;

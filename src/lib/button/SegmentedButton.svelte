@@ -115,6 +115,9 @@
 		fill: currentColor;
 		transition: width 0.3s ease;
 	}
+	:global(.check-icon svg) {
+		display: block;
+	}
 	.check-icon-wrapper {
 		width: 0;
 		overflow: hidden;
@@ -125,6 +128,9 @@
 		overflow: hidden;
 		fill: currentColor;
 		transition: width 0.3s ease;
+	}
+	:global(.alternate-icon svg) {
+		display: block;
 	}
 	.alternate-icon-wrapper {
 		width: 2rem;

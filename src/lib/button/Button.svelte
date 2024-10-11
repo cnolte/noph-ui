@@ -100,6 +100,7 @@
 		flex: 1;
 	}
 	.np-button {
+		font-family: inherit;
 		background-color: transparent;
 		border-width: 0;
 		position: relative;
@@ -247,6 +248,7 @@
 
 	:global(.np-button .button-icon svg) {
 		fill: currentColor;
+		display: block;
 	}
 	:global(.np-button.small .button-icon svg) {
 		width: 1rem;

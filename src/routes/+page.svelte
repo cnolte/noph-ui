@@ -6,7 +6,7 @@
 	<title>Noph UI - Material 3 for Svelte 5</title>
 </svelte:head>
 
-<div class="hero grid rounded-3xl px-6 py-16 text-center md:px-24">
+<div class="hero">
 	<h1 class="text-5xl md:text-8xl">Noph UI</h1>
 	<p class="my-12 text-2xl font-light md:text-4xl">Material 3 for Svelte 5</p>
 	<Button variant="elevated" size="large" href="/about/quick-start" style="width:fit-content"
@@ -16,6 +16,13 @@
 
 <style>
 	.hero {
+		display: grid;
+		border-radius: 1.5rem;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+		padding-top: 4rem;
+		padding-bottom: 4rem;
+		text-align: center;
 		place-items: center;
 		color: var(--np-color-on-primary-container);
 		background: linear-gradient(
@@ -23,5 +30,11 @@
 			var(--np-color-primary-container),
 			var(--np-color-tertiary-container)
 		);
+	}
+	@media (min-width: 768px) {
+		.hero {
+			padding-left: 6rem;
+			padding-right: 6rem;
+		}
 	}
 </style>
