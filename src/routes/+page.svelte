@@ -7,14 +7,38 @@
 </svelte:head>
 
 <div class="hero">
-	<h1 class="text-5xl md:text-8xl">Noph UI</h1>
-	<p class="my-12 text-2xl font-light md:text-4xl">Material 3 for Svelte 5</p>
+	<h1 class="header">Noph UI</h1>
+	<p class="sub-header">Material 3 for Svelte 5</p>
 	<Button variant="elevated" size="large" href="/about/quick-start" style="width:fit-content"
 		>Get started</Button
 	>
 </div>
 
 <style>
+	.header {
+		font-size: 3rem;
+		line-height: 1;
+		font-weight: 500;
+		margin: 0;
+	}
+	.sub-header {
+		margin-top: 3rem;
+		margin-bottom: 3rem;
+		font-size: 1.5rem;
+		line-height: 2rem;
+		font-weight: 300;
+	}
+	@media (min-width: 768px) {
+		.header {
+			font-size: 6rem;
+			line-height: 1;
+		}
+		.sub-header {
+			font-size: 2.25rem;
+			line-height: 2.5rem;
+		}
+	}
+
 	.hero {
 		display: grid;
 		border-radius: 1.5rem;

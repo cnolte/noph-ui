@@ -149,18 +149,18 @@
 	id="palette-menu"
 	style="margin-right:0px;padding: 1rem"
 >
-	<div class="card p-4">
-		<label class="flex items-center gap-4">
+	<div class="card">
+		<label class="hex-label">
 			Hex Source Color
-			<div class="h-12 w-12 rounded-full">
-				<div class="flex h-full w-full items-center justify-center overflow-hidden rounded-full">
+			<div class="hex-input-wrapper">
+				<div class="hex-input">
 					<input class="input" type="color" name="body" bind:value oninput={changeTheme} />
 				</div>
 			</div>
 		</label>
 	</div>
 	<SegmentedButton
-		class="mt-4"
+		style="margin-top: 1rem;"
 		name="theme-picker"
 		options={[
 			{
@@ -195,7 +195,27 @@
 </Menu>
 
 <style>
+	.hex-label {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	.hex-input-wrapper {
+		height: 3rem;
+		width: 3rem;
+		border-radius: 9999px;
+	}
+	.hex-input {
+		display: flex;
+		height: 100%;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		border-radius: 9999px;
+	}
 	.card {
+		padding: 1rem;
 		border-radius: 1.5rem;
 		color: var(--np-color-on-surface-variant);
 		background-color: var(--np-color-surface-variant);

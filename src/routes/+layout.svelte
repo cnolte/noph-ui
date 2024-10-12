@@ -66,9 +66,7 @@
 		}}
 	/>
 </nav>
-<div class="fixed -z-10">
-	<div class="paper"></div>
-</div>
+<div class="paper"></div>
 <main class="main">
 	<div class="main-content">
 		{@render children()}
@@ -130,10 +128,11 @@
 	.main-nav {
 		position: fixed;
 		display: none;
-		width: 15rem;
-		overflow-y: auto;
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
+		width: 240px;
+		overflow-y: auto;
+		box-sizing: border-box;
 		height: calc(100dvh - 4.5rem);
 	}
 	header {
@@ -152,6 +151,7 @@
 		flex-direction: column;
 		padding: 0 1rem;
 		width: 100vw;
+		box-sizing: border-box;
 		height: calc(100dvh - 4rem);
 		transition-property: transform;
 		transition-timing-function: ease-in;

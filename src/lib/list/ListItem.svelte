@@ -39,7 +39,7 @@
 		{@render start()}
 	{/if}
 	{#if children}
-		<div class="flex-1">
+		<div class="np-list-item-label">
 			{@render children()}
 		</div>
 	{/if}
@@ -50,9 +50,12 @@
 
 <li class="np-list-item">
 	{#if isButton(attributes)}
-		<button class="{selected ? 'selected ' : ''} btn" {...attributes}>{@render content()}</button>
+		<button class="{selected ? 'selected ' : ''} np-list-item-btn" {...attributes}
+			>{@render content()}</button
+		>
 	{:else if isLink(attributes)}
-		<a class="{selected ? 'selected ' : ''} btn" {...attributes}>{@render content()}</a>
+		<a class="{selected ? 'selected ' : ''} np-list-item-btn" {...attributes}>{@render content()}</a
+		>
 	{/if}
 </li>
 
@@ -66,8 +69,12 @@
 		font: inherit;
 		color: inherit;
 		text-align: left;
+		text-decoration: none;
 	}
-	.btn {
+	.np-list-item-label {
+		flex: 1;
+	}
+	.np-list-item-btn {
 		position: relative;
 		background: none;
 		border: none;
@@ -90,7 +97,7 @@
 		font-family: inherit;
 	}
 	@media (hover: hover) {
-		.btn:hover {
+		.np-list-item-btn:hover {
 			background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
 		}
 	}
@@ -103,7 +110,7 @@
 		margin: -24px;
 		background-color: var(--np-color-surface-container-highest);
 	}
-	.btn:focus-visible {
+	.np-list-item-btn:focus-visible {
 		outline-style: solid;
 		outline-color: var(--np-color-menu-item);
 		outline-width: 3px;

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements'
-
 	interface MenuItemProps {
 		selected?: boolean
 		disabled?: boolean

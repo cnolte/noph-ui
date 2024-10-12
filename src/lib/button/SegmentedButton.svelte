@@ -19,7 +19,7 @@
 	let { name, options, multiSelect = false, ...attributes }: SegmentedButtonProps = $props()
 </script>
 
-<div class="np-segmented-buttons {attributes.class}">
+<div class="np-segmented-buttons {attributes.class}" {...attributes}>
 	{#each options as option}
 		<label class="np-segmented-button" class:width-icon={option.icon}>
 			<div class="check-icon-wrapper">
