@@ -109,6 +109,7 @@
 		position: relative;
 		cursor: pointer;
 		display: flex;
+		padding: 0;
 		user-select: none;
 		align-items: center;
 		overflow: hidden;
