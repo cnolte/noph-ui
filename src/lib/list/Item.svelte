@@ -1,0 +1,159 @@
+<script lang="ts">
+	import Ripple from '$lib/ripple/Ripple.svelte'
+	import type { Snippet } from 'svelte'
+	import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+
+	interface ButtonProps extends HTMLButtonAttributes {
+		selected?: boolean
+		start?: Snippet
+		end?: Snippet
+		type: 'button'
+		supportingText?: Snippet
+	}
+	interface AnchorProps extends HTMLAnchorAttributes {
+		selected?: boolean
+		start?: Snippet
+		end?: Snippet
+		disabled?: boolean
+		type: 'link'
+		supportingText?: Snippet
+	}
+	interface TextProps extends HTMLAttributes<HTMLDivElement> {
+		selected?: boolean
+		start?: Snippet
+		end?: Snippet
+		disabled?: boolean
+		type?: 'text'
+		supportingText?: Snippet
+	}
+
+	let {
+		selected = false,
+		start,
+		end,
+		children,
+		supportingText,
+		disabled = false,
+		...attributes
+	}: ButtonProps | AnchorProps | TextProps = $props()
+</script>
+
+{#snippet content()}
+	{#if !disabled && !(attributes.type === 'text' || attributes.type === undefined)}
+		<Ripple />
+	{/if}
+	{#if start}
+		<div class="np-item-start {selected ? 'selected ' : ''}">
+			{@render start()}
+		</div>
+	{/if}
+	<div class="np-item-text">
+		<div class="np-item-headline">
+			{#if children}
+				{@render children()}
+			{/if}
+		</div>
+		{#if supportingText}
+			<div class="np-item-supporting-text">
+				{@render supportingText()}
+			</div>
+		{/if}
+	</div>
+
+	{#if end}
+		<div class="np-item-end {selected ? 'selected ' : ''}">
+			{@render end()}
+		</div>
+	{/if}
+{/snippet}
+
+{#if disabled}
+	<div class="np-item disabled {attributes.class}">
+		{@render content()}
+	</div>
+{:else if attributes.type === 'text' || attributes.type === undefined}
+	<div {...attributes} class="{selected ? 'selected ' : ''} np-item {attributes.class}">
+		{@render content()}
+	</div>
+{:else if attributes.type === 'button'}
+	<button {...attributes} class="{selected ? 'selected ' : ''} np-item {attributes.class}"
+		>{@render content()}</button
+	>
+{:else if attributes.type === 'link'}
+	<a {...attributes} class="{selected ? 'selected ' : ''} np-item {attributes.class}"
+		>{@render content()}</a
+	>
+{/if}
+
+<style>
+	.np-item-end,
+	.np-item-start {
+		color: var(--np-color-on-surface-variant);
+	}
+
+	.np-item-end.selected,
+	.np-item-start.selected {
+		color: inherit;
+	}
+
+	:global(.np-item-end svg, .np-item-start svg) {
+		fill: currentColor;
+		display: block;
+	}
+
+	.np-item {
+		font-family: inherit;
+		background-color: transparent;
+		border-width: 0;
+		position: relative;
+		cursor: pointer;
+		display: flex;
+		flex: 1;
+		flex-grow: 1;
+		user-select: none;
+		align-items: center;
+		text-align: left;
+		overflow: hidden;
+		width: 100%;
+		padding: 0.75rem 1rem;
+		min-height: 3.5rem;
+		gap: 1rem;
+		color: var(--np-color-on-surface);
+		box-sizing: border-box;
+	}
+
+	div.np-item {
+		cursor: unset;
+	}
+
+	.np-item.selected {
+		background-color: var(--np-color-secondary-container);
+		color: var(--np-color-on-secondary-container);
+	}
+
+	.np-item-text {
+		flex: 1;
+		overflow: hidden;
+	}
+
+	.np-item-headline {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		color: inherit;
+		flex: 1;
+		font-size: 1rem;
+		line-height: 1.5rem;
+	}
+	.np-item-supporting-text {
+		color: var(--np-color-on-surface-variant);
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+	}
+
+	.np-item.disabled {
+		pointer-events: none;
+		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
+		background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
+	}
+</style>

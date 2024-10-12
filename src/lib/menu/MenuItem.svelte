@@ -1,16 +1,41 @@
 <script lang="ts">
-	interface MenuItemProps {
+	import Item from '$lib/list/Item.svelte'
+	import type { Snippet } from 'svelte'
+	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+
+	interface ButtonProps extends HTMLButtonAttributes {
 		selected?: boolean
+		start?: Snippet
+		end?: Snippet
+		supportingText?: Snippet
+	}
+	interface AnchorProps extends HTMLAnchorAttributes {
+		selected?: boolean
+		start?: Snippet
+		end?: Snippet
 		disabled?: boolean
+		supportingText?: Snippet
 	}
 
-	let { selected = false, disabled = false }: MenuItemProps = $props()
+	let { ...attributes }: ButtonProps | AnchorProps = $props()
+
+	const isButton = (
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+	): obj is HTMLButtonAttributes => {
+		return (obj as HTMLAnchorAttributes).href === undefined
+	}
 </script>
 
-<div class="np-menu-item"></div>
+<li class="np-menu-item" role="menuitem">
+	{#if isButton(attributes)}
+		<Item {...attributes} type="button" />
+	{:else}
+		<Item {...attributes} type="link" />
+	{/if}
+</li>
 
 <style>
 	.np-menu-item {
-		padding: 1rem;
+		display: flex;
 	}
 </style>

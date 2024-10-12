@@ -17,16 +17,10 @@
 	let scrollX = $state(0)
 	let popoverElement: HTMLDivElement | undefined = $state()
 
-	/*let maxHeight = $derived(
-		(anchorRect.top > innerHeight - anchorRect.bottom
-			? anchorRect.top
-			: innerHeight - anchorRect.bottom) - distanceToBorder,
-	)
-*/
 	const refreshValues = () => {
 		if (popoverElement && anchor) {
 			const anchorRect = anchor.getBoundingClientRect()
-			if (anchorRect.bottom + clientHeight > innerHeight) {
+			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
 				popoverElement.style.setProperty('--np-offset', '50%')
 				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
 			} else {
@@ -87,7 +81,7 @@
 		overflow: auto;
 		border: none;
 		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
-		padding: 1rem 0;
+		padding: 0.5rem 0;
 		box-shadow: var(--np-elevation-2);
 		margin: 0;
 		margin-right: 2rem;

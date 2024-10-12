@@ -1,134 +1,35 @@
 <script lang="ts">
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Item from '$lib/list/Item.svelte'
 	import type { Snippet } from 'svelte'
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 	interface ButtonProps extends HTMLButtonAttributes {
 		selected?: boolean
 		start?: Snippet
 		end?: Snippet
+		type: 'button'
+		supportingText?: Snippet
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
-		selected: boolean
+		selected?: boolean
 		start?: Snippet
 		end?: Snippet
+		disabled?: boolean
+		type: 'link'
+		supportingText?: Snippet
 	}
-	let {
-		selected = false,
-		start,
-		end,
-		children,
-		...attributes
-	}: ButtonProps | AnchorProps = $props()
+	interface TextProps extends HTMLAttributes<HTMLDivElement> {
+		selected?: boolean
+		start?: Snippet
+		end?: Snippet
+		disabled?: boolean
+		type?: 'text'
+		supportingText?: Snippet
+	}
 
-	const isButton = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
-	): obj is HTMLButtonAttributes => {
-		return (obj as HTMLAnchorAttributes).href === undefined
-	}
-	const isLink = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
-	): obj is HTMLAnchorAttributes => {
-		return (obj as HTMLAnchorAttributes).href !== undefined
-	}
+	let { ...attributes }: ButtonProps | AnchorProps | TextProps = $props()
 </script>
 
-{#snippet content()}
-	<Ripple />
-	{#if start}
-		{@render start()}
-	{/if}
-	{#if children}
-		<div class="np-list-item-label">
-			{@render children()}
-		</div>
-	{/if}
-	{#if end}
-		{@render end()}
-	{/if}
-{/snippet}
-
-<li class="np-list-item">
-	{#if isButton(attributes)}
-		<button class="{selected ? 'selected ' : ''} np-list-item-btn" {...attributes}
-			>{@render content()}</button
-		>
-	{:else if isLink(attributes)}
-		<a class="{selected ? 'selected ' : ''} np-list-item-btn" {...attributes}>{@render content()}</a
-		>
-	{/if}
+<li role="listitem">
+	<Item {...attributes} />
 </li>
-
-<style>
-	.np-list-item {
-		--np-color-menu-item: var(--np-color-primary);
-		--np-color-primary-ripple: var(--np-color-menu-item);
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		font: inherit;
-		color: inherit;
-		text-align: left;
-		text-decoration: none;
-	}
-	.np-list-item-label {
-		flex: 1;
-	}
-	.np-list-item-btn {
-		position: relative;
-		background: none;
-		border: none;
-		display: flex;
-		width: 100%;
-		user-select: none;
-		cursor: pointer;
-		align-items: center;
-		gap: 1rem;
-		overflow: hidden;
-		fill: currentColor;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
-		padding-top: 0.75rem;
-		padding-bottom: 0.75rem;
-		text-align: left;
-		font-size: 0.875rem;
-		line-height: 1.25rem;
-		font-weight: 500;
-		font-family: inherit;
-	}
-	@media (hover: hover) {
-		.np-list-item-btn:hover {
-			background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
-		}
-	}
-	.selected::after {
-		content: ' ';
-		position: absolute;
-		width: 100%;
-		z-index: -1;
-		height: 100%;
-		margin: -24px;
-		background-color: var(--np-color-surface-container-highest);
-	}
-	.np-list-item-btn:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-menu-item);
-		outline-width: 3px;
-		outline-offset: -3px;
-		animation: focusAnimation 0.3s ease forwards;
-	}
-	@keyframes focusAnimation {
-		0% {
-			outline-width: 3px;
-			outline-offset: -3px;
-		}
-		50% {
-			outline-width: 6px;
-			outline-offset: -6px;
-		}
-		100% {
-			outline-width: 3px;
-			outline-offset: -3px;
-		}
-	}
-</style>

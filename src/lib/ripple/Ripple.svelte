@@ -53,6 +53,7 @@
 		})
 		element?.parentElement?.addEventListener('mouseleave', () => {
 			hovered = false
+			pressed = false
 		})
 	})
 </script>
