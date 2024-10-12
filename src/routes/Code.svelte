@@ -39,7 +39,7 @@
 	}
 	.code-wrapper {
 		width: 100%;
-		overflow-y: auto;
+		text-wrap: wrap;
 		padding-left: 0.75rem;
 		padding-right: 2.5rem;
 	}
