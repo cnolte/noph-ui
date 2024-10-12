@@ -2,7 +2,7 @@
 	let { ...attributes } = $props()
 </script>
 
-<div role="separator" {...attributes} class="divider {attributes.class}"></div>
+<template class="divider {attributes.class}"></template>
 
 <style>
 	.divider {
