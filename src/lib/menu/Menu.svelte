@@ -86,9 +86,9 @@
 		margin: 0;
 		margin-right: 2rem;
 		transition:
-			overlay 0.1s allow-discrete,
-			display 0.1s allow-discrete,
-			opacity 0.1s linear;
+			overlay 0.2s allow-discrete,
+			display 0.2s allow-discrete,
+			opacity 0.2s linear;
 		opacity: 0;
 		z-index: 1;
 	}
