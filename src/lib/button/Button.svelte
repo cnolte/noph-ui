@@ -51,9 +51,7 @@
 </script>
 
 {#snippet content()}
-	{#if !disabled}
-		<Ripple />
-	{/if}
+	<Ripple {disabled} />
 	<div class="button-icon">
 		{#if start}
 			{@render start()}
