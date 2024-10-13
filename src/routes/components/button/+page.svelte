@@ -189,8 +189,8 @@
 <DemoCaintainer style="background-color:#f7fafe">
 	<Button
 		variant="filled"
-		--np-filled-button-label-text-color="#ba1a1a"
-		--np-filled-button-container-color="#f5e7eb"
+		--np-filled-button-label-text-color="#ffffff"
+		--np-filled-button-container-color="#d53764"
 		--np-filled-button-container-shape="4px"
 		--np-filled-button-container-height="48px"
 	>
@@ -200,8 +200,8 @@
 <Code
 	value={`<Button
 	variant="filled"
-	--np-filled-button-label-text-color="#ba1a1a"
-	--np-filled-button-container-color="#f5e7eb"
+	--np-filled-button-label-text-color="#ffffff"
+	--np-filled-button-container-color="#d53764"
 	--np-filled-button-container-shape="4px"
 	--np-filled-button-container-height="48px"
 >

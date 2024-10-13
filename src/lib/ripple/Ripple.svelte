@@ -28,37 +28,37 @@
 		}
 	}
 
+	const isTouch = ({ pointerType }: PointerEvent) => {
+		return pointerType === 'touch'
+	}
+
 	$effect(() => {
-		element?.parentElement?.addEventListener('touchstart', (event) => {
-			createRipple(event)
-		})
-		element?.parentElement?.addEventListener('touchend', () => {
-			lastTouchTime = Date.now()
-			pressed = false
-		})
-		element?.parentElement?.addEventListener('mousedown', (event) => {
-			if (Date.now() - lastTouchTime < TOUCH_DELAY) {
+		element?.parentElement?.addEventListener('pointerdown', (event) => {
+			if (!isTouch(event) && Date.now() - lastTouchTime < TOUCH_DELAY) {
 				return
 			}
 			createRipple(event)
 		})
-		element?.parentElement?.addEventListener('mouseup', () => {
-			if (Date.now() - lastTouchTime < TOUCH_DELAY) {
+
+		element?.parentElement?.addEventListener('pointerup', (event) => {
+			if (isTouch(event)) {
+				lastTouchTime = Date.now()
+			} else if (Date.now() - lastTouchTime < TOUCH_DELAY) {
 				return
 			}
 			pressed = false
 		})
-		element?.parentElement?.addEventListener('mouseenter', () => {
+		element?.parentElement?.addEventListener('pointerenter', () => {
 			hovered = true
 		})
-		element?.parentElement?.addEventListener('mouseleave', () => {
+		element?.parentElement?.addEventListener('pointerleave', () => {
 			hovered = false
 			pressed = false
 		})
 	})
 </script>
 
-<div class:hovered class="surface" bind:this={element}>
+<div aria-hidden="true" class:hovered class="surface" bind:this={element}>
 	<span class:pressed={pressed || timerStarted} class="ripple" bind:this={element}></span>
 </div>
 
