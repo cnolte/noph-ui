@@ -16,7 +16,7 @@ h3 {
 	font-size: 1.5rem;
 	line-height: 2rem;
 	font-weight: 400;
-	margin: 1rem 0 0.5rem 0;
+	margin: 2.5rem 0 1.5rem 0;
 }
 
 .primary {
@@ -47,5 +47,59 @@ p {
 
 code {
 	font-size: 0.875rem;
-	color: var(--np-color-primary);
+}
+
+table {
+	border-spacing: 0;
+	overflow-x: auto;
+	box-sizing: border-box;
+	display: block;
+}
+
+tr th:first-of-type {
+	border-start-start-radius: var(--np-shape-corner-extra-large);
+}
+tr th:last-of-type {
+	border-start-end-radius: var(--np-shape-corner-extra-large);
+}
+
+tr:last-of-type td:first-of-type {
+	border-end-start-radius: var(--np-shape-corner-extra-large);
+}
+
+tr:last-of-type td:last-of-type {
+	border-end-end-radius: var(--np-shape-corner-extra-large);
+}
+
+tr td:last-of-type,
+tr th:last-of-type {
+	border-inline-end: 1px solid var(--np-color-outline-variant);
+}
+
+tr:last-of-type td,
+tr:last-of-type th {
+	border-block-end: 1px solid var(--np-color-outline-variant);
+}
+
+th {
+	background-color: var(--np-color-surface-container);
+	color: var(--np-color-on-surface);
+	font-size: 1.25rem;
+	font-weight: 400;
+}
+
+td,
+th {
+	border-block-start: 1px solid var(--np-color-outline-variant);
+	border-inline-start: 1px solid var(--np-color-outline-variant);
+	padding: 8px 16px;
+}
+
+:not(pre) > code {
+	display: inline-flex;
+	background-color: var(--np-color-surface-variant);
+	text-shadow: 0 1px 1px var(--np-color-surface-variant);
+	color: var(--np-color-on-surface);
+	padding: 0.25rem;
+	border-radius: 0.5rem;
 }

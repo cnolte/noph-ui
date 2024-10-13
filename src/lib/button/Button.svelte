@@ -3,17 +3,22 @@
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { Snippet } from 'svelte'
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 	interface ButtonProps extends HTMLButtonAttributes {
-		size?: 'small' | 'medium' | 'large'
 		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
 		start?: Snippet
 		end?: Snippet
 		element?: HTMLElement
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
-		size?: 'small' | 'medium' | 'large'
+		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
+		start?: Snippet
+		end?: Snippet
+		element?: HTMLElement
+		disabled?: boolean
+	}
+	interface DisabledProps extends HTMLAttributes<HTMLDivElement> {
 		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
 		start?: Snippet
 		end?: Snippet
@@ -21,7 +26,6 @@
 		disabled?: boolean
 	}
 	let {
-		size = 'small',
 		variant = 'outlined',
 		children,
 		start,
@@ -30,17 +34,17 @@
 		element = $bindable(),
 		disabled,
 		...attributes
-	}: ButtonProps | AnchorProps = $props()
+	}: ButtonProps | AnchorProps | DisabledProps = $props()
 
 	let tooltipId = $state(title ? generateUUIDv4() : '')
 
 	const isButton = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes | HTMLAttributes<HTMLDivElement>,
 	): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
 	}
 	const isLink = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
+		obj: HTMLAnchorAttributes | HTMLButtonAttributes | HTMLAttributes<HTMLDivElement>,
 	): obj is HTMLAnchorAttributes => {
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
@@ -68,26 +72,32 @@
 {/snippet}
 
 {#if disabled}
-	<div bind:this={element} class="np-button disabled {variant}-disabled {size} {attributes.class}">
+	<div
+		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
+		aria-label={title || attributes['aria-label']}
+		{...attributes as HTMLAttributes<HTMLDivElement>}
+		bind:this={element}
+		class="np-button {variant}-disabled disabled {attributes.class}"
+	>
 		{@render content()}
 	</div>
 {:else if isButton(attributes)}
 	<button
-		{...attributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
+		{...attributes}
 		bind:this={element}
-		class="np-button enabled {variant} {size} {attributes.class}"
+		class="np-button enabled {variant} {attributes.class}"
 	>
 		{@render content()}
 	</button>
 {:else if isLink(attributes)}
 	<a
+		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
+		aria-label={title || attributes['aria-label']}
 		{...attributes}
-		aria-describedby={title ? tooltipId : undefined}
-		aria-label={title}
 		bind:this={element}
-		class="np-button enabled {variant} {size} {attributes.class}"
+		class="np-button enabled {variant} {attributes.class}"
 	>
 		{@render content()}
 	</a>
@@ -114,13 +124,15 @@
 		overflow: hidden;
 		font-weight: 500;
 		text-decoration: none;
+		font-size: calc(var(--button-height) * 0.35);
+		height: var(--button-height);
+		padding-left: calc((var(--button-height) - 0.5rem) / 2);
+		padding-right: calc((var(--button-height) - 0.5rem) / 2);
+		gap: calc((var(--button-height) - 1.5rem) / 2);
 	}
 	.disabled {
 		pointer-events: none;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-	.text-disable {
-		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
 	}
 	.filled-disabled,
 	.tonal-disabled,
@@ -128,18 +140,26 @@
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.filled-disabled {
+		--button-height: var(--np-filled-button-container-height, 2.5rem);
 		border-radius: var(--np-filled-button-container-shape, var(--np-shape-corner-full));
 	}
 	.tonal-disabled {
+		--button-height: var(--np-tonal-button-container-height, 2.5rem);
 		border-radius: var(--np-tonal-button-container-shape, var(--np-shape-corner-full));
 	}
 	.elevated-disabled {
+		--button-height: var(--np-elevated-button-container-height, 2.5rem);
 		border-radius: var(--np-elevated-button-container-shape, var(--np-shape-corner-full));
 	}
 	.outlined-disabled {
 		border: 1px solid;
+		--button-height: var(--np-outlined-button-container-height, 2.5rem);
 		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 		border-radius: var(--np-outlined-button-container-shape, var(--np-shape-corner-full));
+	}
+	.text-disabled {
+		--button-height: var(--np-text-button-container-height, 2.5rem);
+		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
 	}
 	.enabled {
 		transition: background-color 0.3s ease;
@@ -163,12 +183,16 @@
 		}
 	}
 	.text {
+		--button-height: var(--np-text-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
+		padding-left: calc((var(--button-height) - 1.5rem) / 2);
+		padding-right: calc((var(--button-height) - 1.5rem) / 2);
 	}
 	.filled {
+		--button-height: var(--np-filled-button-container-height, 2.5rem);
 		--np-ripple-hover-opacity: 0.12;
 		--np-ripple-hover-color: var(--np-color-surface);
 		--np-ripple-pressed-color: var(--np-color-surface);
@@ -196,6 +220,7 @@
 		transition:
 			background-color 150ms linear,
 			box-shadow 150ms linear;
+		--button-height: var(--np-tonal-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
 		color: var(--np-tonal-button-label-text-color, var(--np-color-on-secondary-container));
@@ -220,6 +245,7 @@
 		transition:
 			background-color 150ms linear,
 			box-shadow 150ms linear;
+		--button-height: var(--np-elevated-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
 		color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
@@ -241,6 +267,7 @@
 	}
 	.outlined {
 		border: 1px solid;
+		--button-height: var(--np-outlined-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
@@ -252,49 +279,8 @@
 		fill: currentColor;
 		display: block;
 	}
-	:global(.np-button.small .button-icon svg) {
-		width: 1rem;
-		height: 1rem;
-	}
-	.small {
-		font-size: 0.875rem;
-		height: 2.5rem;
-		padding-left: 1rem;
-		padding-right: 1rem;
-		gap: 0.5rem;
-	}
-	.small.text {
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
-	}
-	.medium.text {
-		padding-left: 0.75rem;
-		padding-right: 0.75rem;
-	}
-	.large.text {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
-	:global(.np-button.medium .button-icon svg) {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
-	.medium {
-		font-size: 1rem;
-		height: 3rem;
-		padding-left: 1.25rem;
-		padding-right: 1.25rem;
-		gap: 0.75rem;
-	}
-	:global(.np-button.large .button-icon svg) {
-		width: 1.5rem;
-		height: 1.5rem;
-	}
-	.large {
-		font-size: 1.125rem;
-		height: 3.5rem;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
-		gap: 1rem;
+	:global(.np-button .button-icon svg) {
+		width: calc((var(--button-height) - 0.5rem) / 2);
+		height: calc((var(--button-height) - 0.5rem) / 2);
 	}
 </style>

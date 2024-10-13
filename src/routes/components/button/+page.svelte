@@ -67,18 +67,6 @@
 	value={`<Button variant="text">Text</Button>
 <Button variant="text" disabled>Disabled</Button>`}
 />
-<h2>Custom buttons</h2>
-
-<DemoCaintainer style="background-color:#f7fafe">
-	<Button --np-outlined-button-label-text-color="#ba1a1a" --np-outlined-button-container-shape="0">
-		Error
-	</Button>
-</DemoCaintainer>
-<Code
-	value={`<Button --np-outlined-button-label-text-color="#ba1a1a" --np-outlined-button-container-shape="0">
-	Error
-</Button>`}
-/>
 <h2>Icon</h2>
 <DemoCaintainer>
 	<Button variant="tonal">
@@ -108,12 +96,324 @@
 />
 <h2>Size</h2>
 <DemoCaintainer>
-	<Button size="small">Small</Button>
-	<Button size="medium">Medium</Button>
-	<Button size="large">Large</Button>
+	<Button>Default: 40px</Button>
+	<Button --np-outlined-button-container-height="48px">Height: 48px</Button>
+	<Button --np-outlined-button-container-height="56px">Height: 56px</Button>
 </DemoCaintainer>
 <Code
-	value={`<Button size="small">Small</Button>
-<Button size="medium">Medium</Button>
-<Button size="large">Large</Button>`}
+	value={`<Button>Small</Button>
+<Button --np-outlined-button-container-height="48px">Medium</Button>
+<Button --np-outlined-button-container-height="56px">Large</Button>`}
 />
+<h2>Theming</h2>
+
+<h3>Elevated button tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-elevated-button-container-color</code></td>
+			<td><code>--np-color-surface-container-low</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-elevated-button-container-height</code></td>
+			<td><code>2.5rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-elevated-button-container-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-elevated-button-label-text-color</code></td>
+			<td><code>--np-color-on-primary</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Elevated button example</h3>
+<DemoCaintainer style="background-color:#f7fafe">
+	<Button
+		variant="elevated"
+		--np-elevated-button-label-text-color="#ba1a1a"
+		--np-elevated-button-container-color="#f5e7eb"
+		--np-elevated-button-container-shape="4px"
+		--np-elevated-button-container-height="48px"
+	>
+		Custom button
+	</Button>
+</DemoCaintainer>
+<Code
+	value={`<Button
+	variant="elevated"
+	--np-elevated-button-label-text-color="#ba1a1a"
+	--np-elevated-button-container-color="#f5e7eb"
+	--np-elevated-button-container-shape="4px"
+	--np-elevated-button-container-height="48px"
+>
+	Custom button
+</Button>`}
+/>
+
+<h3>Filled button tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-filled-button-container-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-button-container-height</code></td>
+			<td><code>2.5rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-button-container-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-button-label-text-color</code></td>
+			<td><code>--np-color-on-primary</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Filled button example</h3>
+<DemoCaintainer style="background-color:#f7fafe">
+	<Button
+		variant="filled"
+		--np-filled-button-label-text-color="#ba1a1a"
+		--np-filled-button-container-color="#f5e7eb"
+		--np-filled-button-container-shape="4px"
+		--np-filled-button-container-height="48px"
+	>
+		Custom button
+	</Button>
+</DemoCaintainer>
+<Code
+	value={`<Button
+	variant="filled"
+	--np-filled-button-label-text-color="#ba1a1a"
+	--np-filled-button-container-color="#f5e7eb"
+	--np-filled-button-container-shape="4px"
+	--np-filled-button-container-height="48px"
+>
+	Custom button
+</Button>`}
+/>
+
+<h3>Tonal button tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-tonal-button-container-color</code></td>
+			<td><code>--np-color-secondary-container</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-tonal-button-container-height</code></td>
+			<td><code>2.5rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-tonal-button-container-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-tonal-button-label-text-color</code></td>
+			<td><code>--np-color-on-secondary-container</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Tonal button example</h3>
+<DemoCaintainer style="background-color:#f7fafe">
+	<Button
+		variant="tonal"
+		--np-tonal-button-label-text-color="#ba1a1a"
+		--np-tonal-button-container-color="#f5e7eb"
+		--np-tonal-button-container-shape="4px"
+		--np-tonal-button-container-height="48px"
+	>
+		Custom button
+	</Button>
+</DemoCaintainer>
+<Code
+	value={`<Button
+	variant="tonal"
+	--np-tonal-button-label-text-color="#ba1a1a"
+	--np-tonal-button-container-color="#f5e7eb"
+	--np-tonal-button-container-shape="4px"
+	--np-tonal-button-container-height="48px"
+>
+	Custom button
+</Button>`}
+/>
+<h3>Outlined button tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-outlined-button-outline-color</code></td>
+			<td><code>--np-color-outline</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-outlined-button-container-height</code></td>
+			<td><code>2.5rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-outlined-button-container-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-outlined-button-label-text-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Outlined button example</h3>
+<DemoCaintainer style="background-color:#f7fafe">
+	<Button
+		variant="outlined"
+		--np-outlined-button-label-text-color="#ba1a1a"
+		--np-outlined-button-container-color="#f5e7eb"
+		--np-outlined-button-container-shape="4px"
+		--np-outlined-button-container-height="48px"
+	>
+		Custom button
+	</Button>
+</DemoCaintainer>
+<Code
+	value={`<Button
+	variant="outlined"
+	--np-outlined-button-label-text-color="#ba1a1a"
+	--np-outlined-button-container-color="#f5e7eb"
+	--np-outlined-button-container-shape="4px"
+	--np-outlined-button-container-height="48px"
+>
+	Custom button
+</Button>`}
+/>
+<h3>Text button tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-text-button-label-text-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-text-button-container-height</code></td>
+			<td><code>2.5rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-text-button-container-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Text button example</h3>
+<DemoCaintainer style="background-color:#f7fafe">
+	<Button
+		variant="text"
+		--np-text-button-label-text-color="#ba1a1a"
+		--np-text-button-container-shape="4px"
+		--np-text-button-container-height="48px"
+	>
+		Custom button
+	</Button>
+</DemoCaintainer>
+<Code
+	value={`<Button
+	variant="text"
+	--np-text-button-label-text-color="#ba1a1a"
+	--np-text-button-container-shape="4px"
+	--np-text-button-container-height="48px"
+>
+	Custom button
+</Button>`}
+/>
+<h2>API</h2>
+<h3>Properties</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>variant</code></td>
+			<td><code>'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'</code></td>
+			<td><code>'outlined'</code></td>
+			<td>The type of button</td>
+		</tr>
+		<tr>
+			<td><code>start</code></td>
+			<td><code>Snippet</code></td>
+			<td></td>
+			<td>Icon at the start of the button</td>
+		</tr>
+		<tr>
+			<td><code>end</code></td>
+			<td><code>Snippet</code></td>
+			<td></td>
+			<td>Icon at the end of the button</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td></td>
+			<td>Element to bind the button to</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Disables the button</td>
+		</tr>
+		<tr>
+			<td><code>title</code></td>
+			<td><code>string</code></td>
+			<td></td>
+			<td>Tooltip text</td>
+		</tr>
+		<tr>
+			<td><code>...attributes</code></td>
+			<td
+				><code
+					>HTMLButtonAttributes | HTMLAnchorAttributes | HTMLAttributes&lt;HTMLDivElement&gt;</code
+				></td
+			>
+			<td></td>
+			<td
+				>Use <code>HTMLButtonAttributes</code> for a plain button, <code>HTMLAnchorAttributes</code>
+				(automatically applied when href is set) for a link button, and
+				<code>HTMLAttributes&lt;HTMLDivElement&gt;</code> for a disabled button.</td
+			>
+		</tr>
+	</tbody>
+</table>
