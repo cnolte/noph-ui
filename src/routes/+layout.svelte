@@ -97,7 +97,7 @@
 	}
 	.main {
 		margin-top: 4.5rem;
-		padding: 2rem 1.5rem;
+		padding: 2rem 1rem;
 	}
 	.layout-btn {
 		--np-text-button-label-text-color: var(--np-color-on-surface);
@@ -173,7 +173,7 @@
 			line-height: 2rem;
 		}
 		.inner-header {
-			padding-right: 1rem /* 16px */;
+			padding-right: 1rem;
 		}
 		.main {
 			margin-left: 16rem;
