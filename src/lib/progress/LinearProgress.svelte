@@ -28,10 +28,11 @@
 	let hideDots = $derived(indeterminate || !hasBuffer || bufferValue >= max || value >= max)
 </script>
 
-<div class="container" {...attributes}>
+<div class="container">
 	<div
 		class:four-color={fourColor}
 		class:indeterminate
+		{...attributes}
 		class="progress"
 		role="progressbar"
 		aria-valuemin="0"

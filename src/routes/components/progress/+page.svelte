@@ -12,11 +12,11 @@
 <h1>Progress indicators</h1>
 <h2>Usage</h2>
 <DemoContainer>
-	<CircularProgress value={0.75} />
-	<CircularProgress indeterminate />
+	<CircularProgress aria-label="Circular progress 75%" value={0.75} />
+	<CircularProgress aria-label="Circular progress indeterminate" indeterminate />
 	<div class="icon-list">
-		<LinearProgress value={0.75} />
-		<LinearProgress indeterminate />
+		<LinearProgress aria-label="Linear progress 75%" value={0.75} />
+		<LinearProgress aria-label="Linear progress indeterminate" indeterminate />
 	</div></DemoContainer
 >
 <Code
@@ -28,9 +28,13 @@
 
 <h2>Four colors</h2>
 <DemoContainer>
-	<CircularProgress fourColor indeterminate />
+	<CircularProgress
+		aria-label="Circular progress indeterminate fourColor"
+		fourColor
+		indeterminate
+	/>
 	<div class="icon-list">
-		<LinearProgress fourColor indeterminate />
+		<LinearProgress aria-label="Linear progress indeterminate fourColor" fourColor indeterminate />
 	</div>
 </DemoContainer>
 <Code

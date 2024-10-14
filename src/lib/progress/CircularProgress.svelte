@@ -17,10 +17,11 @@
 	let dashOffset = $derived((1 - value / max) * 100)
 </script>
 
-<div class="container" {...attributes}>
+<div class="container">
 	<div
 		class:four-color={fourColor}
 		class:indeterminate
+		{...attributes}
 		class="progress"
 		role="progressbar"
 		aria-valuemin="0"
