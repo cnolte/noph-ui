@@ -56,7 +56,9 @@
 </script>
 
 {#snippet content()}
-	<Ripple />
+	{#if !disabled}
+		<Ripple />
+	{/if}
 	{#if selectedIcon && selectedState}
 		{@render selectedIcon()}
 	{:else if children}
@@ -64,17 +66,14 @@
 	{/if}
 {/snippet}
 
-{#if disabled}
-	<div bind:this={element} class="np-icon-button disabled {variant}-disabled {attributes.class}">
-		{@render content()}
-	</div>
-{:else if isButton(attributes)}
+{#if isButton(attributes) || disabled}
 	<button
-		{...attributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
+		{...attributes as HTMLButtonAttributes}
+		{disabled}
 		bind:this={element}
-		class="np-icon-button enabled {variant} {selectedState
+		class="np-icon-button {variant}{disabled ? '-disabled disabled' : ' enabled'} {selectedState
 			? (variant === 'outlined' || variant === 'text') && !toggle
 				? ''
 				: 'selected'

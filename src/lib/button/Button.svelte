@@ -18,13 +18,6 @@
 		element?: HTMLElement
 		disabled?: boolean
 	}
-	interface DisabledProps extends HTMLAttributes<HTMLDivElement> {
-		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
-		start?: Snippet
-		end?: Snippet
-		element?: HTMLElement
-		disabled?: boolean
-	}
 	let {
 		variant = 'outlined',
 		children,
@@ -34,7 +27,7 @@
 		element = $bindable(),
 		disabled,
 		...attributes
-	}: ButtonProps | AnchorProps | DisabledProps = $props()
+	}: ButtonProps | AnchorProps = $props()
 
 	let tooltipId = $state(title ? generateUUIDv4() : '')
 
@@ -51,7 +44,9 @@
 </script>
 
 {#snippet content()}
-	<Ripple {disabled} />
+	{#if !disabled}
+		<Ripple />
+	{/if}
 	<div class="button-icon">
 		{#if start}
 			{@render start()}
@@ -69,23 +64,14 @@
 	</div>
 {/snippet}
 
-{#if disabled}
-	<div
-		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
-		aria-label={title || attributes['aria-label']}
-		{...attributes as HTMLAttributes<HTMLDivElement>}
-		bind:this={element}
-		class="np-button {variant}-disabled disabled {attributes.class}"
-	>
-		{@render content()}
-	</div>
-{:else if isButton(attributes)}
+{#if isButton(attributes) || disabled}
 	<button
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		{...attributes}
+		{...attributes as HTMLButtonAttributes}
+		{disabled}
 		bind:this={element}
-		class="np-button enabled {variant} {attributes.class}"
+		class="np-button {variant}{disabled ? '-disabled disabled' : ' enabled'} {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -93,7 +79,7 @@
 	<a
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		{...attributes}
+		{...attributes as HTMLAnchorAttributes}
 		bind:this={element}
 		class="np-button enabled {variant} {attributes.class}"
 	>

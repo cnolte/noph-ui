@@ -1,5 +1,4 @@
 <script lang="ts">
-	let { disabled = false }: { disabled: boolean | null | undefined } = $props()
 	let pressed = $state(false)
 	let hovered = $state(false)
 	let element: HTMLDivElement
@@ -12,6 +11,7 @@
 	const SOFT_EDGE_CONTAINER_RATIO = 0.35
 	const PRESS_PSEUDO = '::after'
 	const ANIMATION_FILL = 'forwards'
+	const EASING_STANDARD = 'cubic-bezier(0.2, 0, 0, 1)'
 	const TOUCH_DELAY_MS = 150
 
 	let rippleSize = $state('')
@@ -27,7 +27,7 @@
 	}
 
 	const shouldReactToEvent = (event: PointerEvent) => {
-		if (disabled || !event.isPrimary) {
+		if (!event.isPrimary) {
 			return false
 		}
 
@@ -122,7 +122,7 @@
 			{
 				pseudoElement: PRESS_PSEUDO,
 				duration: PRESS_GROW_MS,
-				easing: 'cubic-bezier(0.2, 0, 0, 1)',
+				easing: EASING_STANDARD,
 				fill: ANIMATION_FILL,
 			},
 		)
@@ -227,10 +227,6 @@
 	}
 
 	const handleClick = () => {
-		if (disabled) {
-			return
-		}
-
 		if (step === 'WAITING_FOR_CLICK') {
 			endPressAnimation()
 			return
@@ -251,10 +247,6 @@
 	}
 
 	const handleContextmenu = () => {
-		if (disabled) {
-			return
-		}
-
 		checkBoundsAfterContextMenu = true
 		endPressAnimation()
 	}
@@ -275,39 +267,27 @@
 
 <div
 	aria-hidden="true"
-	class="surface"
-	class:disabled
-	class:pressed
-	class:hovered
+	class="np-ripple-surface"
+	class:np-ripple-pressed={pressed}
+	class:np-ripple-hovered={hovered}
 	bind:this={element}
 ></div>
 
 <style>
-	:host {
-		display: flex;
-		margin: auto;
-		pointer-events: none;
-	}
-
-	.disabled {
-		display: none;
-	}
-
 	@media (forced-colors: active) {
-		:host {
+		.np-ripple-surface {
 			display: none;
 		}
 	}
 
-	:host,
-	.surface {
+	.np-ripple-surface {
 		border-radius: inherit;
 		position: absolute;
 		inset: 0;
 		overflow: hidden;
 	}
 
-	.surface {
+	.np-ripple-surface {
 		-webkit-tap-highlight-color: transparent;
 
 		&::before,
@@ -336,12 +316,12 @@
 		}
 	}
 
-	.hovered::before {
+	.np-ripple-hovered::before {
 		background-color: var(--np-ripple-hover-color, var(--np-color-on-surface));
 		opacity: var(--np-ripple-hover-opacity, 0.08);
 	}
 
-	.pressed::after {
+	.np-ripple-pressed::after {
 		opacity: var(--np-ripple-pressed-opacity, 0.12);
 		transition-duration: 105ms;
 	}

@@ -403,16 +403,12 @@
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>
-			<td
-				><code
-					>HTMLButtonAttributes | HTMLAnchorAttributes | HTMLAttributes&lt;HTMLDivElement&gt;</code
-				></td
-			>
+			<td><code>HTMLButtonAttributes | HTMLAnchorAttributes</code></td>
 			<td></td>
 			<td
-				>Use <code>HTMLButtonAttributes</code> for a plain button, <code>HTMLAnchorAttributes</code>
-				(automatically applied when href is set) for a link button, and
-				<code>HTMLAttributes&lt;HTMLDivElement&gt;</code> for a disabled button.</td
+				>Use <code>HTMLButtonAttributes</code> for a plain button and
+				<code>HTMLAnchorAttributes</code>
+				(automatically applied when href is set) for a link button.</td
 			>
 		</tr>
 	</tbody>
