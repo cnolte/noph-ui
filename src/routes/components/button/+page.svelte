@@ -135,11 +135,10 @@
 	</tbody>
 </table>
 <h3>Elevated button example</h3>
-<DemoCaintainer style="background-color:#f7fafe">
+<DemoCaintainer>
 	<Button
 		variant="elevated"
-		--np-elevated-button-label-text-color="#ba1a1a"
-		--np-elevated-button-container-color="#f5e7eb"
+		--np-elevated-button-label-text-color="var(--np-color-tertiary)"
 		--np-elevated-button-container-shape="4px"
 		--np-elevated-button-container-height="48px"
 	>
@@ -149,8 +148,7 @@
 <Code
 	value={`<Button
 	variant="elevated"
-	--np-elevated-button-label-text-color="#ba1a1a"
-	--np-elevated-button-container-color="#f5e7eb"
+	--np-elevated-button-label-text-color="var(--np-color-tertiary)"
 	--np-elevated-button-container-shape="4px"
 	--np-elevated-button-container-height="48px"
 >
@@ -186,11 +184,11 @@
 	</tbody>
 </table>
 <h3>Filled button example</h3>
-<DemoCaintainer style="background-color:#f7fafe">
+<DemoCaintainer>
 	<Button
 		variant="filled"
-		--np-filled-button-label-text-color="#ffffff"
-		--np-filled-button-container-color="#d53764"
+		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
+		--np-filled-button-container-color="var(--np-color-tertiary)"
 		--np-filled-button-container-shape="4px"
 		--np-filled-button-container-height="48px"
 	>
@@ -198,15 +196,16 @@
 	</Button>
 </DemoCaintainer>
 <Code
-	value={`<Button
-	variant="filled"
-	--np-filled-button-label-text-color="#ffffff"
-	--np-filled-button-container-color="#d53764"
-	--np-filled-button-container-shape="4px"
-	--np-filled-button-container-height="48px"
->
-	Custom button
-</Button>`}
+	value={`
+	<Button
+		variant="filled"
+		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
+		--np-filled-button-container-color="var(--np-color-tertiary)"
+		--np-filled-button-container-shape="4px"
+		--np-filled-button-container-height="48px"
+	>
+		Custom button
+	</Button>`}
 />
 
 <h3>Tonal button tokens</h3>
@@ -237,11 +236,11 @@
 	</tbody>
 </table>
 <h3>Tonal button example</h3>
-<DemoCaintainer style="background-color:#f7fafe">
+<DemoCaintainer>
 	<Button
 		variant="tonal"
-		--np-tonal-button-label-text-color="#ba1a1a"
-		--np-tonal-button-container-color="#f5e7eb"
+		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
+		--np-tonal-button-container-color="var(--np-color-tertiary-fixed)"
 		--np-tonal-button-container-shape="4px"
 		--np-tonal-button-container-height="48px"
 	>
@@ -250,14 +249,14 @@
 </DemoCaintainer>
 <Code
 	value={`<Button
-	variant="tonal"
-	--np-tonal-button-label-text-color="#ba1a1a"
-	--np-tonal-button-container-color="#f5e7eb"
-	--np-tonal-button-container-shape="4px"
-	--np-tonal-button-container-height="48px"
->
-	Custom button
-</Button>`}
+		variant="tonal"
+		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
+		--np-tonal-button-container-color="var(--np-color-tertiary-fixed)"
+		--np-tonal-button-container-shape="4px"
+		--np-tonal-button-container-height="48px"
+	>
+		Custom button
+	</Button>`}
 />
 <h3>Outlined button tokens</h3>
 <table>
@@ -287,11 +286,10 @@
 	</tbody>
 </table>
 <h3>Outlined button example</h3>
-<DemoCaintainer style="background-color:#f7fafe">
+<DemoCaintainer>
 	<Button
 		variant="outlined"
-		--np-outlined-button-label-text-color="#ba1a1a"
-		--np-outlined-button-container-color="#f5e7eb"
+		--np-outlined-button-label-text-color="var(--np-color-tertiary)"
 		--np-outlined-button-container-shape="4px"
 		--np-outlined-button-container-height="48px"
 	>
@@ -301,8 +299,7 @@
 <Code
 	value={`<Button
 	variant="outlined"
-	--np-outlined-button-label-text-color="#ba1a1a"
-	--np-outlined-button-container-color="#f5e7eb"
+	--np-outlined-button-label-text-color="var(--np-color-tertiary)"
 	--np-outlined-button-container-shape="4px"
 	--np-outlined-button-container-height="48px"
 >
@@ -333,10 +330,10 @@
 	</tbody>
 </table>
 <h3>Text button example</h3>
-<DemoCaintainer style="background-color:#f7fafe">
+<DemoCaintainer>
 	<Button
 		variant="text"
-		--np-text-button-label-text-color="#ba1a1a"
+		--np-text-button-label-text-color="var(--np-color-tertiary)"
 		--np-text-button-container-shape="4px"
 		--np-text-button-container-height="48px"
 	>
@@ -346,7 +343,7 @@
 <Code
 	value={`<Button
 	variant="text"
-	--np-text-button-label-text-color="#ba1a1a"
+	--np-text-button-label-text-color="var(--np-color-tertiary)"
 	--np-text-button-container-shape="4px"
 	--np-text-button-container-height="48px"
 >
@@ -384,12 +381,6 @@
 			<td>Icon at the end of the button</td>
 		</tr>
 		<tr>
-			<td><code>element</code></td>
-			<td><code>HTMLElement</code></td>
-			<td></td>
-			<td>Element to bind the button to</td>
-		</tr>
-		<tr>
 			<td><code>disabled</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
@@ -410,6 +401,24 @@
 				<code>HTMLAnchorAttributes</code>
 				(automatically applied when href is set) for a link button.</td
 			>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Bindables</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td>This represents <code>bind:this</code></td>
 		</tr>
 	</tbody>
 </table>

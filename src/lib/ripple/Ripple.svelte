@@ -1,4 +1,5 @@
 <script lang="ts">
+	let { ...attributes } = $props()
 	let pressed = $state(false)
 	let hovered = $state(false)
 	let element: HTMLDivElement
@@ -267,9 +268,10 @@
 
 <div
 	aria-hidden="true"
-	class="np-ripple-surface"
-	class:np-ripple-pressed={pressed}
-	class:np-ripple-hovered={hovered}
+	{...attributes}
+	class="{pressed ? 'np-ripple-pressed' : ''} {hovered
+		? 'np-ripple-hovered'
+		: ''} np-ripple-surface {attributes.class}"
 	bind:this={element}
 ></div>
 
