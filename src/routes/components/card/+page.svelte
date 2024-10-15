@@ -12,37 +12,64 @@
 <h1>Cards</h1>
 <h2>Types</h2>
 
-{#snippet action()}
-	<Button variant="filled">Action</Button>
-{/snippet}
-<DemoCaintainer>
-	<div class="cards">
+<DemoCaintainer style="width: calc(100% - 2rem)">
+	<div class="cards" style="width:100%;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));">
 		<Card
-			type="text"
+			type="button"
 			variant="elevated"
 			headline="Elevated"
-			subhead="Subhead"
-			{action}
 			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			image="/pollock.avif"
 		></Card>
 		<Card
-			type="text"
+			type="button"
 			variant="filled"
-			headline="Filled"
-			subhead="Subhead"
-			{action}
+			headline="Filled Card"
 			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			image="/pollock2.avif"
 		></Card>
 		<Card
-			type="text"
+			type="button"
 			variant="outlined"
-			headline="Outlined"
-			subhead="Subhead"
-			{action}
+			headline="Outlined Card"
 			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			image="/pollock3.avif"
 		></Card>
 	</div>
 </DemoCaintainer>
+<Code
+	value={`<Card
+	type="button"
+	variant="elevated"
+	headline="Elevated"
+	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+>
+	{#snippet image()}
+		<img src="/pollock.avif" alt="Pollock" />
+	{/snippet}</Card
+>
+<Card
+	type="button"
+	variant="filled"
+	headline="Filled Card"
+	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+	>{#snippet image()}
+		<img src="/pollock2.avif" alt="Pollock" />
+	{/snippet}</Card
+>
+<Card
+	type="button"
+	variant="outlined"
+	headline="Outlined Card"
+	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+	>{#snippet image()}
+		<img src="/pollock3.avif" alt="Pollock" />
+	{/snippet}</Card
+>`}
+/>
+{#snippet action()}
+	<Button variant="filled">Action</Button>
+{/snippet}
 <h2>Elevated card</h2>
 <DemoCaintainer>
 	<div class="cards">
@@ -175,45 +202,6 @@
   supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2>Type Button</h2>
-<p>Cards of type button can be clicked and should use the <code>onclick</code> event.</p>
-<DemoCaintainer>
-	<div class="cards">
-		<Card
-			type="button"
-			variant="elevated"
-			headline="Button Card"
-			subhead="Subhead"
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
-		></Card>
-		<Card
-			type="button"
-			variant="filled"
-			headline="Button Card"
-			subhead="Subhead"
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
-		></Card>
-	</div>
-</DemoCaintainer>
-<Code
-	value={`{#snippet action()}
-	<Button variant="filled">Action</Button>
-{/snippet}
-<Card
-  type="button"
-  variant="elevated"
-  headline="Button Card"
-  subhead="Subhead"
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
-></Card>
-<Card
-  type="button"
-  variant="filled"
-  headline="Button Card"
-  subhead="Subhead"
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
-></Card>`}
-/>
 <h2>Theming</h2>
 <h3>Elevated card tokens</h3>
 <table>
@@ -304,9 +292,9 @@
 		</tr>
 		<tr>
 			<td><code>image</code></td>
-			<td><code>Snippet | undefined</code></td>
+			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>The image of the card</td>
+			<td>The path to the image of the card</td>
 		</tr>
 		<tr>
 			<td><code>headline</code></td>

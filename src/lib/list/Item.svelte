@@ -122,6 +122,28 @@
 		box-sizing: border-box;
 	}
 
+	.np-item:focus-visible {
+		outline-style: solid;
+		outline-color: var(--np-color-primary);
+		outline-width: 3px;
+		outline-offset: -3px;
+		animation: focusAnimation 0.3s ease forwards;
+	}
+	@keyframes focusAnimation {
+		0% {
+			outline-offset: -3px;
+			outline-width: 3px;
+		}
+		50% {
+			outline-offset: -6px;
+			outline-width: 6px;
+		}
+		100% {
+			outline-offset: -3px;
+			outline-width: 3px;
+		}
+	}
+
 	div.np-item {
 		cursor: unset;
 	}

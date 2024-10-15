@@ -6,7 +6,7 @@
 	interface TextProps extends HTMLAttributes<HTMLDivElement> {
 		variant?: 'elevated' | 'filled' | 'outlined'
 		disabled?: boolean
-		image?: Snippet
+		image?: string
 		element?: HTMLElement
 		headline?: string
 		subhead?: string
@@ -16,7 +16,7 @@
 	}
 	interface ButtonProps extends HTMLButtonAttributes {
 		variant?: 'elevated' | 'filled' | 'outlined'
-		image?: Snippet
+		image?: string
 		element?: HTMLElement
 		headline?: string
 		subhead?: string
@@ -27,7 +27,7 @@
 	interface AnchorProps extends HTMLAnchorAttributes {
 		variant?: 'elevated' | 'filled' | 'outlined'
 		disabled?: boolean
-		image?: Snippet
+		image?: string
 		element?: HTMLElement
 		headline?: string
 		subhead?: string
@@ -47,9 +47,24 @@
 		action,
 		...attributes
 	}: TextProps | AnchorProps | ButtonProps = $props()
+
+	$effect(() => {
+		if (disabled && element) {
+			const formElements: NodeListOf<
+				HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+			> = element.querySelectorAll('input, button, select, textarea')
+
+			formElements.forEach((element) => {
+				element.disabled = disabled
+			})
+		}
+	})
 </script>
 
 {#snippet content()}
+	{#if image}
+		<div class="np-card-image" style="background-image: url({image})"></div>
+	{/if}
 	<div class="np-card-content">
 		{#if headline}
 			<span class="np-card-headline">
@@ -75,7 +90,16 @@
 	{/if}
 {/snippet}
 
-{#if attributes.type === 'text'}
+{#if attributes.type === 'button' || disabled}
+	<button
+		{...attributes as HTMLButtonAttributes}
+		bind:this={element}
+		{disabled}
+		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
+	>
+		{@render content()}
+	</button>
+{:else if attributes.type === 'text'}
 	<div
 		{...attributes}
 		bind:this={element}
@@ -83,14 +107,6 @@
 	>
 		{@render content()}
 	</div>
-{:else if attributes.type === 'button'}
-	<button
-		{...attributes}
-		bind:this={element}
-		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
-	>
-		{@render content()}
-	</button>
 {:else if attributes.type === 'link'}
 	<a
 		{...attributes}
@@ -141,16 +157,48 @@
 		box-sizing: border-box;
 		text-align: start;
 		display: inline-flex;
+		flex-direction: column;
 		position: relative;
+		padding: 0;
 		box-sizing: border-box;
 		border-radius: var(--border-radius);
 		background-color: var(--background-color);
 		cursor: pointer;
 	}
+
+	.np-card-container:focus-visible {
+		outline-style: solid;
+		outline-color: var(--np-color-primary);
+		outline-width: 3px;
+		outline-offset: 2px;
+		animation: focusAnimation 0.3s ease forwards;
+	}
+	@keyframes focusAnimation {
+		0% {
+			outline-width: 3px;
+		}
+		50% {
+			outline-width: 6px;
+		}
+		100% {
+			outline-width: 3px;
+		}
+	}
 	.np-card-disabled {
 		opacity: 0.38;
 		cursor: unset;
 		pointer-events: none;
+	}
+
+	.np-card-image {
+		width: 100%;
+		height: 200px;
+		overflow: hidden;
+		justify-content: center;
+		background-size: cover;
+		background-position: 50%;
+		align-items: center;
+		border-radius: var(--border-radius);
 	}
 	.np-card-content {
 		display: grid;
