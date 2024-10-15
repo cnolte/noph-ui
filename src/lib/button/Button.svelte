@@ -96,12 +96,13 @@
 		flex: 1;
 	}
 	.np-button {
+		box-sizing: border-box;
 		font-family: inherit;
 		background-color: transparent;
 		border-width: 0;
 		position: relative;
 		cursor: pointer;
-		display: flex;
+		display: inline-flex;
 		user-select: none;
 		align-items: center;
 		text-align: left;

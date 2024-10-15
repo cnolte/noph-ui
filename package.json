@@ -1,6 +1,6 @@
 {
 	"name": "noph-ui",
-	"version": "0.1.84",
+	"version": "0.1.85",
 	"license": "MIT",
 	"homepage": "https://ui.noph.de",
 	"repository": {
@@ -12,6 +12,7 @@
 	},
 	"keywords": [
 		"svelte",
+		"svelte 5",
 		"material",
 		"material 3",
 		"material you",

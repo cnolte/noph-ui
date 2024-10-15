@@ -103,6 +103,7 @@
 
 <style>
 	.np-icon-button {
+		box-sizing: border-box;
 		background-color: transparent;
 		border-width: 0;
 		position: relative;
@@ -110,7 +111,6 @@
 		display: flex;
 		padding: 0;
 		user-select: none;
-		align-items: center;
 		overflow: hidden;
 		text-decoration: none;
 		align-items: center;
