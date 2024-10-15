@@ -63,6 +63,7 @@ Beta (No breaking changes expected)
 In progress (Breaking changes expected)
 
 - Lists
+- Cards
 - Menus
 - Segmented buttons
 - Tooltips

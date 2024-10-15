@@ -61,11 +61,19 @@
 </p>
 
 <p>
-	<strong>Get Started Now!</strong> Build lightning-fast, customizable, and visually appealing Svelte
-	applications with Noph UI and take advantage of modern Material Design.
+	<a class="link" href="/about/quick-start">Get Started Now!</a> Build lightning-fast, customizable,
+	and visually appealing Svelte applications with Noph UI and take advantage of modern Material Design.
 </p>
 
 <style>
+	.link {
+		color: var(--np-color-primary);
+		text-decoration: none;
+		font-weight: 500;
+	}
+	.link:hover {
+		text-decoration: underline;
+	}
 	.header {
 		font-size: 3rem;
 		line-height: 1;

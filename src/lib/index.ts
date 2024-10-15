@@ -1,6 +1,7 @@
 // Reexport your entry components here
 
 export * from './button/index.js'
+export * from './card/index.js'
 export * from './divider/index.js'
 export * from './list/index.js'
 export * from './menu/index.js'

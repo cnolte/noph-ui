@@ -370,14 +370,14 @@
 		</tr>
 		<tr>
 			<td><code>start</code></td>
-			<td><code>Snippet</code></td>
-			<td></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
 			<td>Icon at the start of the button</td>
 		</tr>
 		<tr>
 			<td><code>end</code></td>
-			<td><code>Snippet</code></td>
-			<td></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
 			<td>Icon at the end of the button</td>
 		</tr>
 		<tr>
@@ -388,8 +388,8 @@
 		</tr>
 		<tr>
 			<td><code>title</code></td>
-			<td><code>string</code></td>
-			<td></td>
+			<td><code>string | null | undefined</code></td>
+			<td><code>undefined</code></td>
 			<td>Tooltip text</td>
 		</tr>
 		<tr>

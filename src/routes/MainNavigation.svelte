@@ -29,6 +29,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/card"
+		variant="text"
+		class={$page.url.pathname === '/components/card' ? 'btn-selected' : ''}
+		--np-text-button-container-height="3rem">Cards</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/icon-button"
 		variant="text"
 		class={$page.url.pathname === '/components/icon-button' ? 'btn-selected' : ''}

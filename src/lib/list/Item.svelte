@@ -39,9 +39,6 @@
 </script>
 
 {#snippet content()}
-	{#if !disabled && !(attributes.type === 'text' || attributes.type === undefined)}
-		<Ripple />
-	{/if}
 	{#if start}
 		<div class="np-item-start {selected ? 'selected ' : ''}">
 			{@render start()}
@@ -64,6 +61,9 @@
 		<div class="np-item-end {selected ? 'selected ' : ''}">
 			{@render end()}
 		</div>
+	{/if}
+	{#if !disabled && !(attributes.type === 'text' || attributes.type === undefined)}
+		<Ripple />
 	{/if}
 {/snippet}
 
@@ -112,7 +112,7 @@
 		flex-grow: 1;
 		user-select: none;
 		align-items: center;
-		text-align: left;
+		text-align: start;
 		overflow: hidden;
 		width: 100%;
 		padding: 0.75rem 1rem;
