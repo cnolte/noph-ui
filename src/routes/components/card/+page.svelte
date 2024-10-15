@@ -43,29 +43,22 @@
 	variant="elevated"
 	headline="Elevated"
 	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
->
-	{#snippet image()}
-		<img src="/pollock.avif" alt="Pollock" />
-	{/snippet}</Card
->
+	image="/pollock.avif"
+></Card>
 <Card
 	type="button"
 	variant="filled"
 	headline="Filled Card"
 	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
-	>{#snippet image()}
-		<img src="/pollock2.avif" alt="Pollock" />
-	{/snippet}</Card
->
+	image="/pollock2.avif"
+></Card>
 <Card
 	type="button"
 	variant="outlined"
 	headline="Outlined Card"
 	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
-	>{#snippet image()}
-		<img src="/pollock3.avif" alt="Pollock" />
-	{/snippet}</Card
->`}
+	image="/pollock3.avif"
+></Card>`}
 />
 {#snippet action()}
 	<Button variant="filled">Action</Button>
