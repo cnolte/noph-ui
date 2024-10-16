@@ -30,6 +30,6 @@
 	let { ...attributes }: ButtonProps | AnchorProps | TextProps = $props()
 </script>
 
-<li role="listitem">
+<li>
 	<Item {...attributes} />
 </li>

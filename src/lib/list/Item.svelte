@@ -36,6 +36,8 @@
 		disabled = false,
 		...attributes
 	}: ButtonProps | AnchorProps | TextProps = $props()
+
+	let focused = $state(false)
 </script>
 
 {#snippet content()}
@@ -63,12 +65,12 @@
 		</div>
 	{/if}
 	{#if !disabled && !(attributes.type === 'text' || attributes.type === undefined)}
-		<Ripple />
+		<Ripple activateHover={focused} />
 	{/if}
 {/snippet}
 
 {#if disabled}
-	<div class="np-item disabled {attributes.class}">
+	<div aria-disabled="true" class="np-item disabled {attributes.class}">
 		{@render content()}
 	</div>
 {:else if attributes.type === 'text' || attributes.type === undefined}
@@ -76,12 +78,26 @@
 		{@render content()}
 	</div>
 {:else if attributes.type === 'button'}
-	<button {...attributes} class="{selected ? 'selected ' : ''} np-item {attributes.class}"
-		>{@render content()}</button
+	<button
+		{...attributes}
+		class="{selected ? 'selected ' : ''} np-item {attributes.class}"
+		onfocus={() => {
+			focused = true
+		}}
+		onfocusout={() => {
+			focused = false
+		}}>{@render content()}</button
 	>
 {:else if attributes.type === 'link'}
-	<a {...attributes} class="{selected ? 'selected ' : ''} np-item {attributes.class}"
-		>{@render content()}</a
+	<a
+		{...attributes}
+		class="{selected ? 'selected ' : ''} np-item {attributes.class}"
+		onfocus={() => {
+			focused = true
+		}}
+		onfocusout={() => {
+			focused = false
+		}}>{@render content()}</a
 	>
 {/if}
 
@@ -127,6 +143,7 @@
 		outline-color: var(--np-color-primary);
 		outline-width: 3px;
 		outline-offset: -3px;
+		border-radius: var(--np-shape-corner-extra-small);
 		animation: focusAnimation 0.3s ease forwards;
 	}
 	@keyframes focusAnimation {

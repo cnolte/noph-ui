@@ -48,6 +48,8 @@
 		...attributes
 	}: TextProps | AnchorProps | ButtonProps = $props()
 
+	let focused = $state(false)
+
 	$effect(() => {
 		if (disabled && element) {
 			const formElements: NodeListOf<
@@ -86,31 +88,44 @@
 		{/if}
 	</div>
 	{#if !disabled && attributes.type !== 'text'}
-		<Ripple />
+		<Ripple activateHover={focused} />
 	{/if}
 {/snippet}
 
-{#if attributes.type === 'button' || disabled}
+{#if attributes.type === 'text' || disabled}
+	<div
+		{...attributes as HTMLAttributes<HTMLDivElement>}
+		bind:this={element}
+		aria-disabled={disabled}
+		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
+	>
+		{@render content()}
+	</div>
+{:else if attributes.type === 'button'}
 	<button
 		{...attributes as HTMLButtonAttributes}
 		bind:this={element}
+		onfocus={() => {
+			focused = true
+		}}
+		onfocusout={() => {
+			focused = false
+		}}
 		{disabled}
 		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
 	>
 		{@render content()}
 	</button>
-{:else if attributes.type === 'text'}
-	<div
-		{...attributes}
-		bind:this={element}
-		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
-	>
-		{@render content()}
-	</div>
 {:else if attributes.type === 'link'}
 	<a
 		{...attributes}
 		bind:this={element}
+		onfocus={() => {
+			focused = true
+		}}
+		onfocusout={() => {
+			focused = false
+		}}
 		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
 	>
 		{@render content()}

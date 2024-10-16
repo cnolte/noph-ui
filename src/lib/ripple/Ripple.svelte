@@ -1,5 +1,10 @@
 <script lang="ts">
-	let { ...attributes } = $props()
+	import type { HTMLAttributes } from 'svelte/elements'
+
+	interface RippleProps extends HTMLAttributes<HTMLDivElement> {
+		activateHover?: boolean
+	}
+	let { activateHover = false, ...attributes }: RippleProps = $props()
 	let pressed = $state(false)
 	let hovered = $state(false)
 	let element: HTMLDivElement
@@ -269,7 +274,7 @@
 <div
 	aria-hidden="true"
 	{...attributes}
-	class="{pressed ? 'np-ripple-pressed' : ''} {hovered
+	class="{pressed ? 'np-ripple-pressed' : ''} {hovered || activateHover
 		? 'np-ripple-hovered'
 		: ''} np-ripple-surface {attributes.class}"
 	bind:this={element}
