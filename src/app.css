@@ -1,5 +1,5 @@
 h1 {
-	font-size: 4rem;
+	font-size: 2.5rem;
 	line-height: 4.5rem;
 	font-weight: 500;
 }
@@ -100,5 +100,11 @@ th {
 	}
 	html {
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+	}
+}
+
+@media (min-width: 768px) {
+	h1 {
+		font-size: 4rem;
 	}
 }

@@ -132,9 +132,10 @@
 		padding-right: 0.5rem;
 	}
 	.bottom-bar {
+		display: none;
 		position: fixed;
+		height: 1rem;
 		width: 100%;
-		height: 0rem;
 		background-color: var(--np-color-surface-container);
 		bottom: 0;
 	}
@@ -151,7 +152,7 @@
 		display: none;
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
-		width: 240px;
+		width: 16rem;
 		overflow-y: auto;
 		box-sizing: border-box;
 		height: calc(100dvh - 4.5rem);
@@ -206,9 +207,9 @@
 			height: calc(100dvh - 5.5rem);
 		}
 		.bottom-bar {
-			margin-left: 15rem;
-			height: 1rem;
-			width: calc(100% - 15rem);
+			display: block;
+			margin-left: 16rem;
+			width: calc(100% - 16rem);
 		}
 		.main-nav {
 			display: block;
