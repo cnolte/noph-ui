@@ -8,7 +8,7 @@
 
 <div class="hero">
 	<h1 class="header">Noph UI</h1>
-	<p class="sub-header">The Ultimate Material 3 UI Library for Svelte 5</p>
+	<div class="sub-header">The Ultimate Material 3 UI Library for Svelte 5</div>
 	<Button
 		variant="elevated"
 		--np-elevated-button-container-height="3.5rem"
@@ -75,12 +75,11 @@
 		text-decoration: underline;
 	}
 	.header {
-		font-size: 3rem;
-		line-height: 1;
-		font-weight: 500;
+		font-stretch: 105%;
 		margin: 0;
 	}
 	.sub-header {
+		font-stretch: 105%;
 		margin-top: 3rem;
 		margin-bottom: 3rem;
 		font-size: 1.5rem;

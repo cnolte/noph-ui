@@ -1,22 +1,21 @@
+@font-face {
+	font-family: 'Roboto Flex';
+	src: url('/RobotoFlex.ttf') format('truetype');
+	font-weight: 100 1000;
+}
+
 h1 {
-	font-size: 3rem;
-	line-height: 4rem;
+	font-size: 4rem;
+	line-height: 4.5rem;
 	font-weight: 500;
-	margin: 0;
 }
 
 h2 {
-	font-size: 1.75rem;
-	line-height: 2.5rem;
-	font-weight: 400;
-	margin: 3rem 0 1.5rem 0;
+	font-weight: 500;
 }
 
 h3 {
-	font-size: 1.5rem;
-	line-height: 2rem;
-	font-weight: 400;
-	margin: 2.5rem 0 1.5rem 0;
+	font-weight: 500;
 }
 
 .primary {
@@ -33,16 +32,12 @@ a {
 }
 
 body {
-	font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-		'Segoe UI Symbol', 'Noto Color Emoji';
+	font-family: 'Roboto Flex', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 	margin: 0;
 	background-color: var(--np-color-surface-container);
 	font-size: 1.125rem;
 	color: var(--np-color-on-surface);
-}
-
-p {
-	margin: 0 0 1rem 0;
 }
 
 code {

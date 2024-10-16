@@ -28,7 +28,8 @@
 <style>
 	.code-container {
 		position: relative;
-		margin-top: 1rem;
+		margin-top: 0.875rem;
+		margin-bottom: 0.875rem;
 		border-radius: 1.5rem;
 		border-width: 1px;
 		border-style: solid;

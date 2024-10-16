@@ -10,13 +10,13 @@
 <h2>Install</h2>
 <p>Install Noph UI components using npm and node.</p>
 <Code value={`npm install noph-ui`} />
-<h2>Color</h2>
+<h2>Theming</h2>
 <p>
 	The quickest way to get started with Noph UI is by using the default theme. You can import it into
 	your <code>+layout.svelte</code> file as shown below:
 </p>
 <Code value={`import 'noph-ui/defaultTheme'`} />
-<p class="spacer">
+<p>
 	To apply both the theme's background color and text color to the entire app, you can target the
 	<code>&lt;body&gt;</code> element directly in your app.css file like this:
 </p>
@@ -32,7 +32,7 @@
 	theme's color scheme.
 </p>
 <h3>Dark and light color schemes</h3>
-<p class="spacer">
+<p>
 	The theme includes color schemes for both dark and light modes. The selected theme is
 	automatically determined based on the user's system settings. Alternatively, you can enforce a
 	specific theme by setting the <code>data-theme</code> attribute in your <code>app.html</code>.
@@ -40,7 +40,7 @@
 </p>
 <Code value={`<html lang="en" data-theme="dark">`} />
 
-<h2>Typography</h2>
+<h3>Typography</h3>
 <p>
 	Define a font family in your <code>app.css</code>. You can load the default 'Roboto' font, for
 	example, from fonts.google.com.
@@ -51,9 +51,3 @@
 	...
 }`}
 />
-
-<style>
-	.spacer {
-		margin-top: 2rem;
-	}
-</style>
