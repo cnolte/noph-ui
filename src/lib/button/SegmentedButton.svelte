@@ -139,17 +139,17 @@
 			width 0.15s linear,
 			opacity 0.15s linear;
 	}
-	.np-segmented-button:has(input:checked) .alternate-icon-wrapper {
+	.np-segmented-button:has(input:checked) :global(.alternate-icon-wrapper) {
 		width: 0;
 	}
-	.np-segmented-button:has(input:checked) .alternate-icon-wrapper .alternate-icon {
+	.np-segmented-button:has(input:checked) :global(.alternate-icon-wrapper .alternate-icon) {
 		width: 0rem;
 		opacity: 0;
 	}
-	.np-segmented-button:has(input:checked) .check-icon-wrapper {
+	.np-segmented-button:has(input:checked) :global(.check-icon-wrapper) {
 		width: 2rem;
 	}
-	.np-segmented-button:has(input:checked) .check-icon-wrapper .check-icon {
+	.np-segmented-button:has(input:checked) :global(.check-icon-wrapper .check-icon) {
 		width: 1.5rem;
 	}
 </style>
