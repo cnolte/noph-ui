@@ -2,7 +2,7 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import { generateUUIDv4 } from '$lib/utils.js'
-	import { onMount, type Snippet } from 'svelte'
+	import { type Snippet } from 'svelte'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 	interface ButtonProps extends HTMLButtonAttributes {
@@ -46,7 +46,7 @@
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
 
-	onMount(() => {
+	$effect(() => {
 		if (toggle) {
 			element?.addEventListener('click', () => {
 				selectedState = !selectedState
