@@ -95,10 +95,10 @@ th {
 
 @media (pointer: fine) {
 	.scroll-wrapper {
-		scrollbar-color: var(--np-color-primary) transparent;
+		scrollbar-color: var(--np-color-on-surface) transparent;
 		scrollbar-width: thin;
 	}
 	html {
-		scrollbar-color: var(--np-color-primary) transparent;
+		scrollbar-color: var(--np-color-on-surface) transparent;
 	}
 }
