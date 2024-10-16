@@ -12,7 +12,7 @@ Install Noph UI components using npm and node.
 npm install noph-ui
 ```
 
-## Color
+## Theming
 
 The quickest way to get started with Noph UI is by using the default theme. You can import it into your `+layout.svelte` file as shown below:
 
@@ -59,11 +59,11 @@ Beta (No breaking changes expected)
 - Progress indicators
 - Ripple
 - Snackbar
+- Cards
 
 In progress (Breaking changes expected)
 
 - Lists
-- Cards
 - Menus
 - Segmented buttons
 - Tooltips

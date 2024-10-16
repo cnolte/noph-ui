@@ -2,12 +2,12 @@
 	import type { HTMLAttributes } from 'svelte/elements'
 
 	interface RippleProps extends HTMLAttributes<HTMLDivElement> {
-		activateHover?: boolean
+		forceHover?: boolean
+		element?: HTMLDivElement
 	}
-	let { activateHover = false, ...attributes }: RippleProps = $props()
+	let { forceHover = false, element = $bindable(), ...attributes }: RippleProps = $props()
 	let pressed = $state(false)
 	let hovered = $state(false)
-	let element: HTMLDivElement
 
 	const PRESS_GROW_MS = 450
 	const MINIMUM_PRESS_MS = 225
@@ -50,7 +50,7 @@
 	}
 
 	const determineRippleSize = () => {
-		const { height, width } = element.parentElement!.getBoundingClientRect()
+		const { height, width } = element!.parentElement!.getBoundingClientRect()
 		const maxDim = Math.max(height, width)
 		const softEdgeSize = Math.max(SOFT_EDGE_CONTAINER_RATIO * maxDim, SOFT_EDGE_MINIMUM_SIZE)
 
@@ -69,7 +69,7 @@
 		y: number
 	} => {
 		const { scrollX, scrollY } = window
-		const { left, top } = element.parentElement!.getBoundingClientRect()
+		const { left, top } = element!.parentElement!.getBoundingClientRect()
 		const documentX = scrollX + left
 		const documentY = scrollY + top
 		const { pageX, pageY } = pointerEvent
@@ -77,7 +77,7 @@
 	}
 
 	const getTranslationCoordinates = (positionEvent?: Event) => {
-		const { height, width } = element.parentElement!.getBoundingClientRect()
+		const { height, width } = element!.parentElement!.getBoundingClientRect()
 		// end in the center
 		const endPoint = {
 			x: (width - initialSize) / 2,
@@ -161,7 +161,7 @@
 	}
 
 	const inBounds = ({ x, y }: PointerEvent) => {
-		const { top, left, bottom, right } = element.parentElement!.getBoundingClientRect()
+		const { top, left, bottom, right } = element!.parentElement!.getBoundingClientRect()
 		return x >= left && x <= right && y >= top && y <= bottom
 	}
 
@@ -259,7 +259,7 @@
 
 	$effect(() => {
 		const forcedColors = window?.matchMedia('(forced-colors: active)')
-		if (!forcedColors.matches) {
+		if (!forcedColors.matches && element) {
 			element.addEventListener('click', handleClick)
 			element.addEventListener('contextmenu', handleContextmenu)
 			element.addEventListener('pointercancel', handlePointercancel)
@@ -274,7 +274,7 @@
 <div
 	aria-hidden="true"
 	{...attributes}
-	class="{pressed ? 'np-ripple-pressed' : ''} {hovered || activateHover
+	class="{pressed ? 'np-ripple-pressed' : ''} {hovered || forceHover
 		? 'np-ripple-hovered'
 		: ''} np-ripple-surface {attributes.class}"
 	bind:this={element}

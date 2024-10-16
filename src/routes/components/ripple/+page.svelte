@@ -88,6 +88,52 @@
 	<Ripple />
 </div>`}
 />
+<h2>API</h2>
+<h3>Properties</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>forceHover</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td
+				>When set to <code>true</code>, applies the hover effect programmatically, regardless of
+				whether the user is actively hovering over the element. When <code>false</code>, the hover
+				effect is only applied through actual user interaction.</td
+			>
+		</tr>
+	</tbody>
+</table>
+<h3>Bindables</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td
+				>A reference to the root DOM element of the component. This variable is bound using <code
+					>bind:this</code
+				>, allowing direct access to the underlying HTML element for manipulation or querying within
+				the component's logic.</td
+			>
+		</tr>
+	</tbody>
+</table>
 
 <style>
 	.theming-example {

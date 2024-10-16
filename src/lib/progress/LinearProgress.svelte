@@ -6,6 +6,7 @@
 		fourColor?: boolean
 		buffer?: number
 		'aria-label'?: string | undefined | null
+		element?: HTMLDivElement
 	}
 	let {
 		value = 0,
@@ -13,6 +14,7 @@
 		indeterminate = false,
 		fourColor = false,
 		buffer = 0,
+		element = $bindable(),
 		...attributes
 	}: ProgressProps = $props()
 
@@ -28,7 +30,7 @@
 	let hideDots = $derived(indeterminate || !hasBuffer || bufferValue >= max || value >= max)
 </script>
 
-<div class="container">
+<div class="container" bind:this={element}>
 	<div
 		class:four-color={fourColor}
 		class:indeterminate
@@ -111,8 +113,8 @@
 			var(--np-color-surface-container-highest)
 		);
 		background-repeat: repeat-x;
-		-webkit-mask-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 2' preserveAspectRatio='xMinYMin slice'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/svg%3E");
-		mask-image: url($svg);
+		-webkit-mask-image: url("data:image/svg+xml,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 2' preserveAspectRatio='xMinYMin slice'><circle cx='1' cy='1' r='1'/></svg>");
+		mask-image: url("data:image/svg+xml,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 2' preserveAspectRatio='xMinYMin slice'><circle cx='1' cy='1' r='1'/></svg>");
 		z-index: -1;
 	}
 

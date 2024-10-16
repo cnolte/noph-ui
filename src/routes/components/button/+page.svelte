@@ -112,7 +112,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Default Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -161,7 +161,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Default Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -213,7 +213,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Default Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -263,7 +263,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Default Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -311,7 +311,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Default Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -355,7 +355,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>Property</th>
+			<th>Attribute</th>
 			<th>Type</th>
 			<th>Default</th>
 			<th>Description</th>
@@ -409,7 +409,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>Property</th>
+			<th>Attribute</th>
 			<th>Type</th>
 			<th>Description</th>
 		</tr>
@@ -418,7 +418,12 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td>This represents <code>bind:this</code></td>
+			<td
+				>A reference to the root DOM element of the component. This variable is bound using <code
+					>bind:this</code
+				>, allowing direct access to the underlying HTML element for manipulation or querying within
+				the component's logic.</td
+			>
 		</tr>
 	</tbody>
 </table>

@@ -5,19 +5,21 @@
 		indeterminate?: boolean
 		fourColor?: boolean
 		'aria-label'?: string | undefined | null
+		element?: HTMLDivElement
 	}
 	let {
 		value = 0,
 		max = 1,
 		indeterminate = false,
 		fourColor = false,
+		element = $bindable(),
 		...attributes
 	}: ProgressProps = $props()
 
 	let dashOffset = $derived((1 - value / max) * 100)
 </script>
 
-<div class="container">
+<div class="container" bind:this={element}>
 	<div
 		class:four-color={fourColor}
 		class:indeterminate

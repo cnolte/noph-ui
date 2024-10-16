@@ -18,21 +18,21 @@
 			type="button"
 			variant="elevated"
 			headline="Elevated"
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 			image="/pollock.avif"
 		></Card>
 		<Card
 			type="button"
 			variant="filled"
 			headline="Filled Card"
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 			image="/pollock2.avif"
 		></Card>
 		<Card
 			type="button"
 			variant="outlined"
 			headline="Outlined Card"
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 			image="/pollock3.avif"
 		></Card>
 	</div>
@@ -42,21 +42,21 @@
 	type="button"
 	variant="elevated"
 	headline="Elevated"
-	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 	image="/pollock.avif"
 ></Card>
 <Card
 	type="button"
 	variant="filled"
 	headline="Filled Card"
-	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 	image="/pollock2.avif"
 ></Card>
 <Card
 	type="button"
 	variant="outlined"
 	headline="Outlined Card"
-	supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 	image="/pollock3.avif"
 ></Card>`}
 />
@@ -72,7 +72,7 @@
 			headline="Elevated"
 			subhead="Subhead"
 			{action}
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 		<Card
 			type="text"
@@ -81,7 +81,7 @@
 			headline="Elevated Disabled"
 			subhead="Subhead"
 			{action}
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 	</div>
 </DemoCaintainer>
@@ -95,7 +95,7 @@
   headline="Elevated"
   subhead="Subhead"
   {action}
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>
 <Card
   type="text"
@@ -104,7 +104,7 @@
   headline="Elevated Disabled"
   subhead="Subhead"
   {action}
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
 <h2>Filled card</h2>
@@ -116,7 +116,7 @@
 			headline="Filled"
 			subhead="Subhead"
 			{action}
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 		<Card
 			type="text"
@@ -125,7 +125,7 @@
 			headline="Filled Disabled"
 			subhead="Subhead"
 			{action}
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 	</div>
 </DemoCaintainer>
@@ -139,7 +139,7 @@
   headline="Filled"
   subhead="Subhead"
   {action}
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>
 <Card
   type="text"
@@ -148,7 +148,7 @@
   headline="Filled Disabled"
   subhead="Subhead"
   {action}
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
 <h2>Outlined card</h2>
@@ -160,7 +160,7 @@
 			headline="Outlined"
 			subhead="Subhead"
 			{action}
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 		<Card
 			type="text"
@@ -169,7 +169,7 @@
 			headline="Outlined Disabled"
 			subhead="Subhead"
 			{action}
-			supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 	</div>
 </DemoCaintainer>
@@ -183,7 +183,7 @@
   headline="Outlined"
   subhead="Subhead"
   {action}
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>
 <Card
   type="text"
@@ -192,7 +192,7 @@
   headline="Outlined Disabled"
   subhead="Subhead"
   {action}
-  supportingText="Explain more about the topic ahown in the headline and subhead through supporting text."
+  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
 <h2>Theming</h2>
@@ -201,7 +201,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -220,7 +220,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -239,7 +239,7 @@
 	<thead>
 		<tr>
 			<th>Token</th>
-			<th>Value</th>
+			<th>Default value</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -258,7 +258,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>Property</th>
+			<th>Attribute</th>
 			<th>Type</th>
 			<th>Default</th>
 			<th>Description</th>
@@ -319,7 +319,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>Property</th>
+			<th>Attribute</th>
 			<th>Type</th>
 			<th>Description</th>
 		</tr>
@@ -328,7 +328,12 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td>This represents <code>bind:this</code></td>
+			<td
+				>A reference to the root DOM element of the component. This variable is bound using <code
+					>bind:this</code
+				>, allowing direct access to the underlying HTML element for manipulation or querying within
+				the component's logic.</td
+			>
 		</tr>
 	</tbody>
 </table>

@@ -88,7 +88,7 @@
 		{/if}
 	</div>
 	{#if !disabled && attributes.type !== 'text'}
-		<Ripple activateHover={focused} />
+		<Ripple forceHover={focused} />
 	{/if}
 {/snippet}
 
