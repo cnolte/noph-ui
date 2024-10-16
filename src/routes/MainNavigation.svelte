@@ -104,10 +104,10 @@
 		padding-bottom: 2rem;
 	}
 	:global(.btn) {
-		font-weight: 300 !important;
+		font-weight: 400 !important;
 	}
 	:global(.btn-selected) {
-		font-weight: 300 !important;
+		font-weight: 400 !important;
 	}
 	:global(.btn-selected::after) {
 		content: ' ';

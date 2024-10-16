@@ -92,3 +92,10 @@ th {
 	padding: 0.25rem;
 	border-radius: 0.5rem;
 }
+
+@media (pointer: fine) {
+	html {
+		scrollbar-color: var(--np-color-primary) transparent;
+		scrollbar-width: thin;
+	}
+}
