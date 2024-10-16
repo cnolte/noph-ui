@@ -48,12 +48,12 @@
 	</div>
 </header>
 
-<nav class="main-nav layout-btn">
+<nav class="main-nav layout-btn scroll-wrapper">
 	<MainNavigation />
 </nav>
 <nav
 	bind:this={popover}
-	class="nav layout-btn"
+	class="nav layout-btn scroll-wrapper"
 	popover="auto"
 	id="mobile-drawer"
 	onbeforetoggle={(event) => {

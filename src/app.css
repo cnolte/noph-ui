@@ -94,8 +94,11 @@ th {
 }
 
 @media (pointer: fine) {
-	html {
+	.scroll-wrapper {
 		scrollbar-color: var(--np-color-primary) transparent;
 		scrollbar-width: thin;
+	}
+	html {
+		scrollbar-color: var(--np-color-primary) transparent;
 	}
 }
