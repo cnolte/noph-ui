@@ -87,8 +87,29 @@
 	.logo {
 		display: flex;
 		align-items: center;
+		border-radius: var(--np-shape-corner-large);
 		gap: 0.5rem;
+		padding-right: 1rem;
 		color: var(--np-color-primary);
+	}
+
+	.logo:focus-visible {
+		outline-style: solid;
+		outline-color: var(--np-color-primary);
+		outline-width: 3px;
+		outline-offset: 2px;
+		animation: focusAnimation 0.3s ease forwards;
+	}
+	@keyframes focusAnimation {
+		0% {
+			outline-width: 3px;
+		}
+		50% {
+			outline-width: 6px;
+		}
+		100% {
+			outline-width: 3px;
+		}
 	}
 	.main-content {
 		max-width: min(100%, 980px);
@@ -122,7 +143,7 @@
 		width: 100%;
 		height: calc(100dvh - 4.5rem);
 		background-color: var(--np-color-background);
-		border-radius: 1.5rem;
+		border-radius: var(--np-shape-corner-large);
 		z-index: -1;
 	}
 	.main-nav {
@@ -192,7 +213,7 @@
 		.main-nav {
 			display: block;
 		}
-		.nav {
+		.nav[popover] {
 			display: none;
 		}
 		:global(.menu-btn) {
