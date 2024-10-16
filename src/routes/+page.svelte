@@ -75,11 +75,9 @@
 		text-decoration: underline;
 	}
 	.header {
-		font-stretch: 105%;
 		margin: 0;
 	}
 	.sub-header {
-		font-stretch: 105%;
 		margin-top: 3rem;
 		margin-bottom: 3rem;
 		font-size: 1.5rem;

@@ -1,9 +1,3 @@
-@font-face {
-	font-family: 'Roboto Flex';
-	src: url('/RobotoFlex.ttf') format('truetype');
-	font-weight: 100 1000;
-}
-
 h1 {
 	font-size: 4rem;
 	line-height: 4.5rem;
@@ -32,8 +26,8 @@ a {
 }
 
 body {
-	font-family: 'Roboto Flex', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+	font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
 	margin: 0;
 	background-color: var(--np-color-surface-container);
 	font-size: 1.125rem;
