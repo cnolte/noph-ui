@@ -2,8 +2,9 @@
 	import Button from '$lib/button/Button.svelte'
 	import IconButton from '$lib/button/IconButton.svelte'
 	import type { Snippet } from 'svelte'
+	import type { HTMLAttributes } from 'svelte/elements'
 
-	interface SnackbarProps {
+	interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
 		label: string
 		supportingText?: string
 		actionLabel?: string
@@ -27,6 +28,7 @@
 		showSnackbar = $bindable(),
 		hideSnackbar = $bindable(),
 		timeout = 3000,
+		...attributes
 	}: SnackbarProps = $props()
 
 	let timeoutId: number | undefined = $state()
@@ -35,23 +37,29 @@
 
 	showSnackbar = () => {
 		element?.showPopover()
-		timeoutId = setTimeout(() => {
-			element?.hidePopover()
-		}, timeout)
 	}
+
 	hideSnackbar = () => {
 		element?.hidePopover()
+	}
+
+	const toggleHandler = (event: ToggleEvent) => {
+		if (event.newState === 'closed') {
+			clearTimeout(timeoutId)
+		}
+		if (event.newState === 'open' && timeout) {
+			timeoutId = setTimeout(() => {
+				element?.hidePopover()
+			}, timeout)
+		}
 	}
 </script>
 
 <div
 	popover="auto"
+	{...attributes}
 	class="np-snackbar"
-	onbeforetoggle={(event) => {
-		if (event.newState === 'closed') {
-			clearTimeout(timeoutId)
-		}
-	}}
+	onbeforetoggle={toggleHandler}
 	bind:this={element}
 >
 	<div class="np-snackbar-inner">

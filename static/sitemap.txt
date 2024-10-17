@@ -1,6 +1,7 @@
 https://ui.noph.de/
 https://ui.noph.de/about/quick-start
 https://ui.noph.de/components/button
+https://ui.noph.de/components/card
 https://ui.noph.de/components/icon-button
 https://ui.noph.de/components/list
 https://ui.noph.de/components/menu

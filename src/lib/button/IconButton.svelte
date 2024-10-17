@@ -73,7 +73,9 @@
 		{...attributes as HTMLButtonAttributes}
 		{disabled}
 		bind:this={element}
-		class="np-icon-button {variant}{disabled ? '-disabled disabled' : ' enabled'} {selectedState
+		class="np-icon-button {variant}{disabled ? '-disabled disabled' : ' enabled'}{toggle
+			? ' toggle '
+			: ''}{selectedState
 			? (variant === 'outlined' || variant === 'text') && !toggle
 				? ''
 				: 'selected'
@@ -180,18 +182,23 @@
 		}
 	}
 	.text {
-		--np-ripple-hover-color: var(--np-color-on-surface-variant);
-		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
-		color: var(--np-color-on-surface-variant);
+		--np-ripple-hover-color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
+		--np-ripple-pressed-color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
+		color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
 		border-radius: var(--np-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-icon-button-container-height, 2.5rem);
 		width: var(--np-icon-button-container-width, 2.5rem);
 		--icon-size: var(--np-icon-button-icon-size);
 	}
+	.text.toggle {
+		--np-ripple-hover-color: var(--np-color-on-surface-variant);
+		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
+		color: var(--np-color-on-surface-variant);
+	}
 	.text.selected {
 		--np-ripple-hover-color: var(--np-icon-button-icon-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-icon-button-icon-color, var(--np-color-primary));
-		color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
+		color: var(--np-icon-button-icon-color, var(--np-color-primary));
 	}
 	.filled {
 		transition: background-color 150ms linear;
