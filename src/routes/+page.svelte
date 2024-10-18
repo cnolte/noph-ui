@@ -66,14 +66,6 @@
 </p>
 
 <style>
-	.link {
-		color: var(--np-color-primary);
-		text-decoration: none;
-		font-weight: 500;
-	}
-	.link:hover {
-		text-decoration: underline;
-	}
 	.header {
 		margin: 0;
 	}
@@ -101,6 +93,7 @@
 		padding-left: 1.5rem;
 		padding-right: 1.5rem;
 		padding-top: 4rem;
+		margin-top: 1rem;
 		padding-bottom: 4rem;
 		margin-bottom: 4rem;
 		text-align: center;
@@ -114,6 +107,7 @@
 	}
 	@media (min-width: 768px) {
 		.hero {
+			margin-top: 2rem;
 			padding-left: 6rem;
 			padding-right: 6rem;
 		}

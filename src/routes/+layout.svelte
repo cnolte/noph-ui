@@ -118,7 +118,8 @@
 	}
 	.main {
 		margin-top: 4.5rem;
-		padding: 2rem 1rem;
+		padding: 0 1rem 2rem 1rem;
+		overflow: auto;
 	}
 	.layout-btn {
 		--np-text-button-label-text-color: var(--np-color-on-surface);
@@ -199,7 +200,7 @@
 		}
 		.main {
 			margin-left: 16rem;
-			padding: 2rem 3rem 4rem 3rem;
+			padding: 0 3rem 4rem 3rem;
 		}
 		.paper {
 			width: calc(100% - 18rem);
