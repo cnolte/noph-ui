@@ -19,7 +19,8 @@
 <p>
 	The snackbar uses the <a
 		class="link"
-		href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">Popover API</a
+		href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API"
+		target="_blank">Popover API</a
 	> internally.
 </p>
 <h2>Usage</h2>

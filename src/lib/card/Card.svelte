@@ -40,7 +40,6 @@
 		variant = 'outlined',
 		disabled = false,
 		element = $bindable(),
-		title,
 		headline,
 		subhead,
 		supportingText,
