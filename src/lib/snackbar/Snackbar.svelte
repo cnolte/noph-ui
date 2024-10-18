@@ -11,9 +11,10 @@
 		onActionClick?: (event: Event) => void
 		icon?: Snippet
 		onIconClick?: (event: Event) => void
-		showSnackbar?: () => void
-		hideSnackbar?: () => void
+		showPopover?: () => void
+		hidePopover?: () => void
 		timeout?: number
+		element?: HTMLElement
 	}
 
 	let {
@@ -25,21 +26,21 @@
 		onIconClick = () => {
 			element?.hidePopover()
 		},
-		showSnackbar = $bindable(),
-		hideSnackbar = $bindable(),
+		showPopover = $bindable(),
+		hidePopover = $bindable(),
 		timeout = 3000,
+		element = $bindable(),
 		...attributes
 	}: SnackbarProps = $props()
 
 	let timeoutId: number | undefined = $state()
-	let element: HTMLElement | undefined = $state()
 	let buttonHeight = $derived(supportingText ? '4.25rem' : '3rem')
 
-	showSnackbar = () => {
+	showPopover = () => {
 		element?.showPopover()
 	}
 
-	hideSnackbar = () => {
+	hidePopover = () => {
 		element?.hidePopover()
 	}
 
@@ -47,7 +48,7 @@
 		if (event.newState === 'closed') {
 			clearTimeout(timeoutId)
 		}
-		if (event.newState === 'open' && timeout) {
+		if (event.newState === 'open' && timeout > 0) {
 			timeoutId = setTimeout(() => {
 				element?.hidePopover()
 			}, timeout)
@@ -72,7 +73,7 @@
 		{#if actionLabel}
 			<Button
 				variant="text"
-				--np-text-button-label-text-color="var(--np-color-on-background-snackbar, var(--np-color-inverse-primary))"
+				--np-text-button-label-text-color="var(--np-snackbar-action-color, var(--np-color-inverse-primary))"
 				--np-text-button-container-shape="0"
 				style="height:{buttonHeight}"
 				aria-label={actionLabel}
@@ -83,7 +84,7 @@
 		{/if}
 		{#if icon}
 			<IconButton
-				--np-icon-button-icon-color="var(--np-color-on-background-snackbar, var(--np-color-inverse-on-surface))"
+				--np-icon-button-icon-color="var(--np-snackbar-text-color, var(--np-color-inverse-on-surface))"
 				--np-icon-button-container-shape="0"
 				--np-icon-button-container-height={buttonHeight}
 				--np-icon-button-container-width="2.5rem"
@@ -118,19 +119,12 @@
 		border: none;
 		margin-bottom: 1rem;
 		max-width: calc(100% - 3rem);
-		--np-ripple-hover-color: var(--np-color-primary);
-		--np-ripple-pressed-color: var(--np-color-primary);
-		--np-icon-button-icon-color: fillCurrentColor;
-		--np-button-container-color: var(
-			--np-color-on-background-snackbar,
-			var(--np-color-inverse-on-surface)
-		);
-		color: var(--np-color-on-background-snackbar, var(--np-color-inverse-on-surface));
-		background-color: var(--np-color-background-snackbar, var(--np-color-inverse-surface));
+		color: var(--np-snackbar-text-color, var(--np-color-inverse-on-surface));
+		background-color: var(--np-snackbar-container-color, var(--np-color-inverse-surface));
 		line-height: 1.25rem;
 		font-weight: 500;
 		font-size: 0.875rem;
-		border-radius: 0.25rem;
+		border-radius: var(--np-snackbar-container-shape, 0.25rem);
 		fill: currentColor;
 		box-shadow: var(--np-elevation-3);
 		padding: 0;

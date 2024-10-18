@@ -36,7 +36,6 @@
 		overflow: hidden;
 		border-color: var(--np-color-outline);
 		background-color: var(--np-color-surface-container);
-		--np-button-container-color: var(--np-color-on-surface);
 	}
 	.code-wrapper {
 		width: 100%;

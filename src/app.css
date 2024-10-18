@@ -25,6 +25,15 @@ a {
 	text-decoration: none;
 }
 
+a.link {
+	color: var(--np-color-primary);
+	text-decoration: none;
+	font-weight: 500;
+}
+a.link:hover {
+	text-decoration: underline;
+}
+
 body {
 	font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 		'Segoe UI Symbol', 'Noto Color Emoji';
