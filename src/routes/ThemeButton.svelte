@@ -2,7 +2,10 @@
 	import { browser } from '$app/environment'
 	import IconButton from '$lib/button/IconButton.svelte'
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
+	import BrightnessMediumIcon from '$lib/icons/BrightnessMediumIcon.svelte'
 	import CopyContentIcon from '$lib/icons/CopyContentIcon.svelte'
+	import DarkModeIcon from '$lib/icons/DarkModeIcon.svelte'
+	import LightModeIcon from '$lib/icons/LightModeIcon.svelte'
 	import PaletteIcon from '$lib/icons/PaletteIcon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
@@ -165,6 +168,18 @@
 >
 	<PaletteIcon />
 </IconButton>
+
+{#snippet darkIcon()}
+	<DarkModeIcon />
+{/snippet}
+
+{#snippet lightIcon()}
+	<LightModeIcon />
+{/snippet}
+
+{#snippet systemIcon()}
+	<BrightnessMediumIcon />
+{/snippet}
 <Menu
 	--np-menu-container-shape="var(--np-shape-corner-extra-large)"
 	anchor={menuBtn}
@@ -188,7 +203,7 @@
 	</div>
 	<div class="card">
 		<label class="hex-label">
-			Hex Source Color
+			<div class="spacer">Hex Source Color</div>
 			<div class="hex-input-wrapper">
 				<div class="hex-input">
 					<input class="input" type="color" name="body" bind:value oninput={changeTheme} />
@@ -201,7 +216,7 @@
 		name="theme-picker"
 		options={[
 			{
-				label: 'Dark',
+				label: darkIcon,
 				onclick: () => {
 					theme = 'dark'
 					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
@@ -210,7 +225,7 @@
 				selected: theme === 'dark',
 			},
 			{
-				label: 'System',
+				label: systemIcon,
 				onclick: () => {
 					theme = undefined
 					document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
@@ -219,7 +234,7 @@
 				selected: !theme,
 			},
 			{
-				label: 'Light',
+				label: lightIcon,
 				onclick: () => {
 					theme = 'light'
 					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
@@ -232,6 +247,9 @@
 </Menu>
 
 <style>
+	.spacer {
+		flex: 1;
+	}
 	.head {
 		display: flex;
 		justify-content: space-between;

@@ -55,17 +55,17 @@ body {
 Beta (No breaking changes expected)
 
 - Buttons
+- Cards
 - Icon buttons
 - Progress indicators
 - Ripple
+- Segmented buttons
 - Snackbar
-- Cards
 
 In progress (Breaking changes expected)
 
 - Lists
 - Menus
-- Segmented buttons
 - Tooltips
 
 Pending

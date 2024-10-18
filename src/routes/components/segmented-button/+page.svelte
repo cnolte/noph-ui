@@ -12,7 +12,7 @@
 </svelte:head>
 
 <h1>Segmented buttons</h1>
-<h2>Basic</h2>
+<h2>Single choice</h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo"
@@ -95,7 +95,7 @@
 />`}
 />
 
-<h2>Icon</h2>
+<h2>Icons</h2>
 
 {#snippet darkIcon()}
 	<DarkModeIcon />
@@ -108,7 +108,7 @@
 {#snippet systemIcon()}
 	<BrightnessMediumIcon />
 {/snippet}
-<DemoContainer>
+<DemoContainer style="flex-direction:column">
 	<SegmentedButton
 		name="demo3"
 		options={[
@@ -124,6 +124,21 @@
 			{
 				label: 'Light',
 				icon: lightIcon,
+			},
+		]}
+	/>
+	<SegmentedButton
+		name="demo4"
+		options={[
+			{
+				label: darkIcon,
+			},
+			{
+				label: systemIcon,
+				selected: true,
+			},
+			{
+				label: lightIcon,
 			},
 		]}
 	/>
@@ -157,12 +172,27 @@
 			icon: lightIcon,
 		},
 	]}
+/>
+<SegmentedButton
+	name="demo4"
+	options={[
+		{
+			label: darkIcon,
+		},
+		{
+			label: systemIcon,
+			selected: true,
+		},
+		{
+			label: lightIcon,
+		},
+	]}
 />`}
 />
 <h2>Disabled</h2>
 <DemoContainer>
 	<SegmentedButton
-		name="demo4"
+		name="demo5"
 		options={[
 			{
 				label: 'Apple',
@@ -196,3 +226,63 @@
 	]}
 />`}
 />
+
+<h2>API</h2>
+<h3>Attributes</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>name</code></td>
+			<td><code>string</code></td>
+			<td></td>
+			<td>The name of the input group</td>
+		</tr>
+		<tr>
+			<td><code>options</code></td>
+			<td
+				><code
+					>&#123; label: string | Snippet, icon?: Snippet, selected?: boolean, disabled?: boolean,
+					onclick?: &#40;event: Event&#41; =&gt; void &#125;&#91;&#93;</code
+				></td
+			>
+			<td></td>
+			<td>The options to display</td>
+		</tr>
+		<tr>
+			<td><code>multiSelect</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Whether to allow multiple options to be selected</td>
+		</tr>
+	</tbody>
+</table>
+<h3>Bindables</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td
+				>A reference to the root DOM element of the component. This variable is bound using <code
+					>bind:this</code
+				>, allowing direct access to the underlying HTML element for manipulation or querying within
+				the component's logic.</td
+			>
+		</tr>
+	</tbody>
+</table>

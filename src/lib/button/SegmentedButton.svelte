@@ -8,19 +8,31 @@
 		name: string
 		multiSelect?: boolean
 		options: {
-			label: string
+			label: string | Snippet
 			selected?: boolean
 			disabled?: boolean
 			icon?: Snippet
 			onclick?: (event: Event) => void
 		}[]
+		element?: HTMLElement
 	}
 
-	let { name, options, multiSelect = false, ...attributes }: SegmentedButtonProps = $props()
+	let {
+		name,
+		options,
+		multiSelect = false,
+		element = $bindable(),
+		...attributes
+	}: SegmentedButtonProps = $props()
+	let hoverState = $state(-1)
 </script>
 
-<div class="np-segmented-buttons {attributes.class}" {...attributes}>
-	{#each options as option}
+<div
+	class="np-segmented-buttons {attributes.class}"
+	bind:this={element}
+	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"
+>
+	{#each options as option, i}
 		<label class="np-segmented-button" class:width-icon={option.icon}>
 			<div class="check-icon-wrapper">
 				<div class="check-icon">
@@ -34,14 +46,25 @@
 					</div>
 				</div>
 			{/if}
-			{option.label}
+			{#if typeof option.label === 'function'}
+				<div class="np-segmented-button-icon-label">
+					{@render option.label()}
+				</div>
+			{:else}
+				{option.label}
+			{/if}
 			{#if !option.disabled}
-				<Ripple />
+				<Ripple forceHover={i === hoverState} />
 			{/if}
 			<input
 				type={multiSelect ? 'checkbox' : 'radio'}
 				onclick={option.onclick}
+				onfocus={(event) => {
+					if (event) hoverState = i
+				}}
+				onblur={() => (hoverState = -1)}
 				{name}
+				aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
 				value={option.label}
 				disabled={option.disabled}
 				checked={option.selected}
@@ -54,11 +77,11 @@
 	.np-segmented-buttons {
 		--np-ripple-hover-color: var(--np-color-primary);
 		--np-ripple-pressed-color: var(--np-color-primary);
-		display: flex;
+		display: grid;
 		color: var(--np-color-on-surface);
 		border: 1px solid var(--np-color-outline);
 		border-radius: 1.5rem;
-		overflow: hidden;
+		overflow-x: auto;
 	}
 
 	.np-segmented-button {
@@ -77,6 +100,12 @@
 		position: relative;
 		transition: all 0.15s linear;
 	}
+	:global(.np-segmented-button-icon-label svg) {
+		fill: currentColor;
+		width: 1.5rem;
+		height: 1.5rem;
+		display: block;
+	}
 
 	.np-segmented-button:has(input:disabled) {
 		cursor: unset;
@@ -88,7 +117,9 @@
 	}
 
 	.np-segmented-button input {
-		display: none;
+		opacity: 0;
+		position: absolute;
+		pointer-events: none;
 	}
 	.np-segmented-button::after {
 		content: ' ';
@@ -131,6 +162,8 @@
 	}
 	:global(.alternate-icon svg) {
 		display: block;
+		width: 1.5rem;
+		height: 1.5rem;
 	}
 	.alternate-icon-wrapper {
 		width: 2rem;
@@ -151,5 +184,24 @@
 	}
 	.np-segmented-button:has(input:checked) :global(.check-icon-wrapper .check-icon) {
 		width: 1.5rem;
+	}
+
+	.np-segmented-buttons:has(input:focus-visible) {
+		outline-style: solid;
+		outline-color: var(--np-color-primary);
+		outline-width: 3px;
+		outline-offset: 2px;
+		animation: focusAnimation 0.3s ease forwards;
+	}
+	@keyframes focusAnimation {
+		0% {
+			outline-width: 3px;
+		}
+		50% {
+			outline-width: 6px;
+		}
+		100% {
+			outline-width: 3px;
+		}
 	}
 </style>

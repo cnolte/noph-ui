@@ -351,7 +351,7 @@
 </Button>`}
 />
 <h2>API</h2>
-<h3>Properties</h3>
+<h3>Attributes</h3>
 <table>
 	<thead>
 		<tr>
