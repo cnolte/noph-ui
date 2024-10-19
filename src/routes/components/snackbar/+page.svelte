@@ -164,18 +164,18 @@
 		<tr>
 			<td><code>label</code></td>
 			<td><code>string</code></td>
-			<td><code>undefined</code></td>
+			<td></td>
 			<td>Text to display in the snackbar</td>
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>
-			<td><code>string</code></td>
+			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Supporting text to display in the snackbar</td>
 		</tr>
 		<tr>
 			<td><code>actionLabel</code></td>
-			<td><code>string</code></td>
+			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td
 				>Text to display in the action button. If <code>undefined</code>, the action button will not
@@ -184,7 +184,7 @@
 		</tr>
 		<tr>
 			<td><code>icon</code></td>
-			<td><code>Snippet</code></td>
+			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Icon for the close affordance</td>
 		</tr>
@@ -205,7 +205,7 @@
 		</tr>
 		<tr>
 			<td><code>onActionClick</code></td>
-			<td><code>(event: Event) =&gt; void</code></td>
+			<td><code>(event: Event) =&gt; void | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Function that is triggered when clicking on the action button.</td>
 		</tr>
@@ -214,6 +214,12 @@
 			<td><code>(event: Event) =&gt; void</code></td>
 			<td><code>hidePopover()</code></td>
 			<td>Function that is triggered when clicking on the icon button.</td>
+		</tr>
+		<tr>
+			<td><code>...attributes</code></td>
+			<td><code>HTMLAttributes&lt;HTMLDivElement&gt;</code></td>
+			<td></td>
+			<td>Attributes are passed to the component container.</td>
 		</tr>
 	</tbody>
 </table>

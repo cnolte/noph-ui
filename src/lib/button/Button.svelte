@@ -7,9 +7,10 @@
 
 	interface ButtonProps extends HTMLButtonAttributes {
 		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
-		start?: Snippet
-		end?: Snippet
+		start?: Snippet | undefined
+		end?: Snippet | undefined
 		element?: HTMLElement
+		disabled?: boolean
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
 		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
@@ -25,7 +26,7 @@
 		end,
 		title,
 		element = $bindable(),
-		disabled,
+		disabled = false,
 		...attributes
 	}: ButtonProps | AnchorProps = $props()
 
@@ -66,9 +67,9 @@
 
 {#if isButton(attributes) || disabled}
 	<button
+		{...attributes as HTMLButtonAttributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		{...attributes as HTMLButtonAttributes}
 		{disabled}
 		bind:this={element}
 		class="np-button {variant}{disabled ? '-disabled disabled' : ' enabled'} {attributes.class}"
@@ -77,9 +78,9 @@
 	</button>
 {:else if isLink(attributes)}
 	<a
+		{...attributes as HTMLAnchorAttributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		{...attributes as HTMLAnchorAttributes}
 		bind:this={element}
 		class="np-button enabled {variant} {attributes.class}"
 	>

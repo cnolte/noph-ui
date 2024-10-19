@@ -6,15 +6,16 @@
 
 	interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
 		label: string
-		supportingText?: string
-		actionLabel?: string
+		supportingText?: string | undefined
+		actionLabel?: string | undefined
 		onActionClick?: (event: Event) => void
-		icon?: Snippet
+		icon?: Snippet | undefined
 		onIconClick?: (event: Event) => void
 		showPopover?: () => void
 		hidePopover?: () => void
 		timeout?: number
 		element?: HTMLElement
+		popover?: 'auto' | 'manual'
 	}
 
 	let {
@@ -30,6 +31,7 @@
 		hidePopover = $bindable(),
 		timeout = 3000,
 		element = $bindable(),
+		popover = 'auto',
 		...attributes
 	}: SnackbarProps = $props()
 
@@ -57,8 +59,8 @@
 </script>
 
 <div
-	popover="auto"
 	{...attributes}
+	{popover}
 	class="np-snackbar"
 	onbeforetoggle={toggleHandler}
 	bind:this={element}

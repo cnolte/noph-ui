@@ -266,6 +266,12 @@
 	</thead>
 	<tbody>
 		<tr>
+			<td><code>type</code></td>
+			<td><code>'text' | 'link' | 'button'</code></td>
+			<td></td>
+			<td>The type of the card</td>
+		</tr>
+		<tr>
 			<td><code>variant</code></td>
 			<td><code>'elevated' | 'filled' | 'outlined'</code></td>
 			<td><code>'outlined'</code></td>
@@ -276,12 +282,6 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td>Disables the card</td>
-		</tr>
-		<tr>
-			<td><code>type</code></td>
-			<td><code>'text' | 'link' | 'button'</code></td>
-			<td></td>
-			<td>The type of the card</td>
 		</tr>
 		<tr>
 			<td><code>image</code></td>
@@ -312,6 +312,22 @@
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>The action of the card</td>
+		</tr>
+		<tr>
+			<td><code>...attributes</code></td>
+			<td
+				><code
+					>HTMLButtonAttributes | HTMLAnchorAttributes | HTMLAttributes&lt;HTMLDivElement&gt;</code
+				></td
+			>
+			<td></td>
+			<td
+				><code>HTMLButtonAttributes</code> for type = <code>button</code>,
+				<code>HTMLAttributes&lt;HTMLDivElement&gt;</code>
+				for type = <code>text</code>, and
+				<code>HTMLAnchorAttributes</code>
+				for type = <code>link</code>.</td
+			>
 		</tr>
 	</tbody>
 </table>

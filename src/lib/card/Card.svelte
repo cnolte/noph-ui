@@ -6,9 +6,9 @@
 	interface TextProps extends HTMLAttributes<HTMLDivElement> {
 		variant?: 'elevated' | 'filled' | 'outlined'
 		disabled?: boolean
-		image?: string
+		image?: string | undefined
 		element?: HTMLElement
-		headline?: string
+		headline?: string | undefined
 		subhead?: string
 		supportingText?: string
 		action?: Snippet
@@ -16,9 +16,10 @@
 	}
 	interface ButtonProps extends HTMLButtonAttributes {
 		variant?: 'elevated' | 'filled' | 'outlined'
-		image?: string
+		disabled?: boolean
+		image?: string | undefined
 		element?: HTMLElement
-		headline?: string
+		headline?: string | undefined
 		subhead?: string
 		supportingText?: string
 		action?: Snippet
@@ -27,9 +28,9 @@
 	interface AnchorProps extends HTMLAnchorAttributes {
 		variant?: 'elevated' | 'filled' | 'outlined'
 		disabled?: boolean
-		image?: string
+		image?: string | undefined
 		element?: HTMLElement
-		headline?: string
+		headline?: string | undefined
 		subhead?: string
 		supportingText?: string
 		action?: Snippet
