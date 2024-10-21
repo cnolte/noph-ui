@@ -70,6 +70,7 @@
 	<button
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
+		aria-pressed={selectedState}
 		{...attributes as HTMLButtonAttributes}
 		{disabled}
 		bind:this={element}
