@@ -67,6 +67,7 @@ In progress (Breaking changes expected)
 - Lists
 - Menus
 - Tooltips
+- Text fields
 
 Pending
 
@@ -77,4 +78,3 @@ Pending
 - Sliders
 - Switch
 - Tabs
-- Text fields
