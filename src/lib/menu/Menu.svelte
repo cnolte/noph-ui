@@ -44,6 +44,13 @@
 			anchor.addEventListener('click', () => {
 				refreshValues()
 			})
+			window.addEventListener(
+				'scroll',
+				() => {
+					refreshValues()
+				},
+				{ passive: true },
+			)
 		}
 	})
 </script>

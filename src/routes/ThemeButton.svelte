@@ -11,7 +11,7 @@
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
 	import { onMount } from 'svelte'
 
-	let { theme }: any = $props()
+	let { theme }: { theme?: string } = $props()
 	let value = $state<string>('#5fb9e9')
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
