@@ -11,11 +11,7 @@
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
 	import { onMount } from 'svelte'
 
-	let {
-		theme,
-	}: {
-		theme?: string
-	} = $props()
+	let { theme }: any = $props()
 	let value = $state<string>('#5fb9e9')
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
@@ -184,7 +180,7 @@
 	--np-menu-container-shape="var(--np-shape-corner-extra-large)"
 	anchor={menuBtn}
 	id="palette-menu"
-	style="margin-right:0px;padding: 1rem"
+	style="margin-right:0px;padding: 1rem;position:fixed;"
 >
 	<div class="head">
 		<div class="headline">Theme Controls</div>

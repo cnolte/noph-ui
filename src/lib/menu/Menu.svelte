@@ -44,13 +44,6 @@
 			anchor.addEventListener('click', () => {
 				refreshValues()
 			})
-			window.addEventListener(
-				'scroll',
-				() => {
-					refreshValues()
-				},
-				{ passive: true },
-			)
 		}
 	})
 </script>
@@ -84,11 +77,12 @@
 		padding: 0.5rem 0;
 		box-shadow: var(--np-elevation-2);
 		margin: 0;
+		position: absolute;
 		margin-right: 2rem;
 		transition:
-			overlay 0.2s allow-discrete,
-			display 0.2s allow-discrete,
-			opacity 0.2s linear;
+			display 0.2s,
+			opacity 0.2s;
+		transition-behavior: allow-discrete;
 		opacity: 0;
 		z-index: 1;
 	}
