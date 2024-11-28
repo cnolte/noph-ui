@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { generateUUIDv4 } from '$lib/utils.ts'
 	import type { Snippet } from 'svelte'
 	import type { HTMLAttributes } from 'svelte/elements'
 
@@ -16,15 +17,14 @@
 	let scrollY = $state(0)
 	let scrollX = $state(0)
 	let popoverElement: HTMLDivElement | undefined = $state()
+	let anchorId = `--${generateUUIDv4()}`
 
 	const refreshValues = () => {
-		if (popoverElement && anchor) {
+		if (popoverElement && anchor && !('anchorName' in document.documentElement.style)) {
 			const anchorRect = anchor.getBoundingClientRect()
 			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
-				popoverElement.style.setProperty('--np-offset', '50%')
 				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
 			} else {
-				popoverElement.style.setProperty('--np-offset', '-50%')
 				popoverElement.style.top = `${anchorRect.bottom + 2}px`
 			}
 			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
@@ -40,17 +40,22 @@
 	$effect(refreshValues)
 
 	$effect(() => {
-		if (anchor) {
-			anchor.addEventListener('click', () => {
-				refreshValues()
-			})
-			window.addEventListener(
-				'scroll',
-				() => {
+		if (anchor && popoverElement) {
+			if (!('anchorName' in document.documentElement.style)) {
+				anchor.addEventListener('click', () => {
 					refreshValues()
-				},
-				{ passive: true },
-			)
+				})
+				window.addEventListener(
+					'scroll',
+					() => {
+						refreshValues()
+					},
+					{ passive: true },
+				)
+			} else {
+				popoverElement.style.setProperty('position-anchor', anchorId)
+				anchor.style.setProperty('anchor-name', anchorId)
+			}
 		}
 	})
 </script>
@@ -69,7 +74,7 @@
 	bind:clientHeight
 	{...attributes}
 	popover="auto"
-	class="np-menu"
+	class="np-menu {attributes.class}"
 	role="menu"
 >
 	{@render children()}
@@ -84,27 +89,25 @@
 		padding: 0.5rem 0;
 		box-shadow: var(--np-elevation-2);
 		margin: 0;
-		position: absolute;
-		margin-right: 2rem;
+		margin-bottom: 2px;
+		margin-top: 2px;
+		top: anchor(bottom);
+		position-try-fallbacks: --menu-top;
+		justify-self: anchor-center;
 		transition:
-			display 0.2s,
-			opacity 0.2s;
-		transition-behavior: allow-discrete;
+			display 0.2s allow-discrete,
+			opacity 0.2s linear;
 		opacity: 0;
 		z-index: 1;
 	}
 	.np-menu:popover-open {
 		opacity: 1;
-		animation: fade-in 0.2s ease-out;
-	}
-	@keyframes fade-in {
-		from {
+		@starting-style {
 			opacity: 0;
-			transform: translateY(var(--np-offset, -50%)) scaleY(0);
 		}
-		to {
-			opacity: 1;
-			transform: translateY(0) scaleY(1);
-		}
+	}
+	@position-try --menu-top {
+		inset: auto;
+		bottom: anchor(top);
 	}
 </style>

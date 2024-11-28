@@ -156,12 +156,7 @@
 	})
 </script>
 
-<IconButton
-	popovertarget="palette-menu"
-	style="anchor-name: --palette-menu"
-	title="Change theme"
-	bind:element={menuBtn}
->
+<IconButton popovertarget="palette-menu" title="Change theme" bind:element={menuBtn}>
 	<PaletteIcon />
 </IconButton>
 
@@ -180,7 +175,7 @@
 	--np-menu-container-shape="var(--np-shape-corner-extra-large)"
 	anchor={menuBtn}
 	id="palette-menu"
-	style="margin-right:0px;padding: 1rem;position:fixed;"
+	class="theme-menu"
 >
 	<div class="head">
 		<div class="headline">Theme Controls</div>
@@ -243,6 +238,10 @@
 </Menu>
 
 <style>
+	:global(.theme-menu) {
+		margin-right: 0px !important;
+		padding: 1rem !important;
+	}
 	.spacer {
 		flex: 1;
 	}
