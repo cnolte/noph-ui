@@ -43,8 +43,15 @@ body {
 	color: var(--np-color-on-surface);
 }
 
+pre {
+	margin: 0;
+}
+
 code {
 	font-size: 0.875rem;
+	padding: 1.5rem;
+	display: block;
+	overflow-y: auto;
 }
 
 table {
@@ -103,7 +110,8 @@ th {
 }
 
 @media (pointer: fine) {
-	.scroll-wrapper {
+	.scroll-wrapper,
+	pre {
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 	}
