@@ -52,6 +52,7 @@ code {
 	padding: 1.5rem;
 	display: block;
 	overflow-y: auto;
+	color: var(--np-color-primary);
 }
 
 table {

@@ -1,8 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/button/IconButton.svelte'
 	import CopyContentIcon from '$lib/icons/CopyContentIcon.svelte'
-	import { createHighlighter } from 'shiki'
-	import nophTheme from './code-theme.ts'
 
 	let { value }: { value: string } = $props()
 	let title = $state('Copy Code')
@@ -24,20 +22,10 @@
 	>
 		<CopyContentIcon /></IconButton
 	>
-	{#await createHighlighter({ themes: [nophTheme], langs: ['html'] })}
-		<div class="loader">Loading...</div>
-	{:then highlighter}
-		{@html highlighter.codeToHtml(value, {
-			lang: 'html',
-			theme: 'noph',
-		})}
-	{/await}
+	<pre><code>{value}</code></pre>
 </div>
 
 <style>
-	.loader {
-		padding: 1.5rem;
-	}
 	.code-container {
 		position: relative;
 		margin-top: 0.875rem;
