@@ -24,7 +24,7 @@
 	>
 		<CopyContentIcon /></IconButton
 	>
-	{#await createHighlighter({ themes: [nophTheme], langs: ['javascript', 'html'] })}
+	{#await createHighlighter({ themes: [nophTheme], langs: ['html'] })}
 		<div class="loader">Loading...</div>
 	{:then highlighter}
 		{@html highlighter.codeToHtml(value, {
