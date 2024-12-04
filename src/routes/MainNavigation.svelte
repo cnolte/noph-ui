@@ -85,6 +85,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/text-field"
+		variant="text"
+		class={$page.url.pathname === '/components/text-field' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Text fields</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/tooltip"
 		variant="text"
 		class={$page.url.pathname === '/components/tooltip' ? 'btn-selected' : 'btn'}

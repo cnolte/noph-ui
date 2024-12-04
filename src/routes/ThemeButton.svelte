@@ -142,6 +142,7 @@
 --np-shape-corner-medium: 0.75rem;
 --np-shape-corner-large: 1.5rem;
 --np-shape-corner-extra-large: 1.75rem;
+--np-shape-corner-none: 0;
 }`
 		navigator.clipboard.writeText(schemeString)
 	}
