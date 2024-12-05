@@ -51,7 +51,9 @@
 <span
 	style={variant === 'outlined'
 		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px'
-		: ''}
+		: !label?.length
+			? '--top-space:1rem;--bottom-space:1rem'
+			: ''}
 	class="text-field"
 	bind:this={textField}
 >
@@ -76,11 +78,13 @@
 			{#if variant === 'outlined'}
 				<div class="outline">
 					<div class="outline-start"></div>
-					<div class="outline-notch">
-						<span class="notch hidden" aria-hidden="true"
-							>{label}{noAsterisk || !attributes.required ? '' : '*'}</span
-						>
-					</div>
+					{#if label?.length}
+						<div class="outline-notch">
+							<span class="notch hidden" aria-hidden="true"
+								>{label}{noAsterisk || !attributes.required ? '' : '*'}</span
+							>
+						</div>
+					{/if}
 					<div class="outline-end"></div>
 				</div>
 			{/if}
@@ -154,6 +158,7 @@
 										focused = true
 									}}
 									aria-label={label}
+									aria-invalid={error}
 									oninvalid={(event) => {
 										event.preventDefault()
 										const { currentTarget } = event
