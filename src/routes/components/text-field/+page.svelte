@@ -35,6 +35,23 @@
 <TextField label="Label" value="Value" variant="outlined" />`}
 />
 
+<h3>Labels</h3>
+<DemoContainer>
+	<TextField label="Country" variant="outlined" />
+	<TextField placeholder="email@domain.com" variant="outlined" />
+	<label>
+		City
+		<TextField variant="outlined" />
+	</label>
+</DemoContainer>
+<Code
+	value={`<TextField label="Country" variant="outlined" />
+<TextField placeholder="email@domain.com" variant="outlined" />
+<label>
+	City
+	<TextField variant="outlined" />
+</label>`}
+/>
 <h3>Textarea</h3>
 <DemoContainer>
 	<TextField label="Resize" type="textarea" />

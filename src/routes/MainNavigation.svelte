@@ -36,6 +36,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/chip"
+		variant="text"
+		class={$page.url.pathname === '/components/chip' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Chips</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/icon-button"
 		variant="text"
 		class={$page.url.pathname === '/components/icon-button' ? 'btn-selected' : 'btn'}
@@ -61,6 +68,13 @@
 		variant="text"
 		class={$page.url.pathname === '/components/progress' ? 'btn-selected' : 'btn'}
 		--np-text-button-container-height="3rem">Progress indicators</Button
+	>
+	<Button
+		onclick={onclose}
+		href="/components/radio"
+		variant="text"
+		class={$page.url.pathname === '/components/radio' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Radio</Button
 	>
 	<Button
 		onclick={onclose}

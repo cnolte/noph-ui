@@ -19,7 +19,6 @@
 	let focused = $state(false)
 
 	let contentEl: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
-	let textField: HTMLSpanElement | undefined = $state()
 	let hovered = $state(false)
 	let errorTextRaw = $state(errorText)
 
@@ -66,27 +65,12 @@
 			})
 		}
 	})
-	$effect(() => {
-		if (textField) {
-			textField.addEventListener('pointerenter', () => {
-				hovered = true
-			})
-
-			textField.addEventListener('pointerleave', () => {
-				hovered = false
-			})
-			textField.addEventListener('click', () => {
-				if (attributes.disabled) {
-					return
-				}
-				focused = true
-				contentEl?.focus()
-			})
-		}
-	})
 	let emptyValue = $derived(value === undefined || value === null || value === '')
 </script>
 
+<!-- svelte-ignore a11y_interactive_supports_focus -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <span
 	style={variant === 'outlined'
 		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px'
@@ -94,7 +78,15 @@
 			? '--top-space:1rem;--bottom-space:1rem'
 			: ''}
 	class="text-field"
-	bind:this={textField}
+	onpointerenter={() => (hovered = true)}
+	onpointerleave={() => (hovered = false)}
+	onclick={() => {
+		if (attributes.disabled) {
+			return
+		}
+		focused = true
+		contentEl?.focus()
+	}}
 >
 	<div
 		class="field"

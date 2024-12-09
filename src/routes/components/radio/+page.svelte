@@ -9,9 +9,4 @@
 
 <h1>Radio button</h1>
 <h2>Usage</h2>
-<DemoContainer>
-	<Radio name="browsers" />
-	<Radio name="browsers" />
-	<Radio name="browsers" />
-	<Radio name="browsers" />
-</DemoContainer>
+<DemoContainer>Coming soon</DemoContainer>

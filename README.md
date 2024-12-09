@@ -64,16 +64,16 @@ Beta (No breaking changes expected)
 
 In progress (Breaking changes expected)
 
+- Chips
 - Lists
 - Menus
+- Radio
 - Tooltips
 - Text fields
 
 Pending
 
-- Chips
 - Dialogs
-- Radio
 - Select
 - Sliders
 - Switch
