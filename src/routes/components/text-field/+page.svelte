@@ -179,22 +179,10 @@
 <h4>Manual validation</h4>
 
 <DemoContainer>
-	<TextField
-		label="Username"
-		error
-		value="eric20"
-		errorText="Username is not available"
-		onchange={reportValidity}
-	/>
+	<TextField label="Username" error value="eric20" errorText="Username is not available" />
 </DemoContainer>
 <Code
-	value={`<TextField
-		label="Username"
-		error
-		value="eric20"
-		errorText="Username is not available"
-		onchange={reportValidity}
-	/>`}
+	value={`<TextField label="Username" error value="eric20" errorText="Username is not available" />`}
 />
 
 <style>
