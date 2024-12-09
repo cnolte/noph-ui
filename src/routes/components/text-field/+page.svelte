@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$lib/button/Button.svelte'
 	import IconButton from '$lib/button/IconButton.svelte'
 	import ErrorIcon from '$lib/icons/ErrorIcon.svelte'
 	import SearchIcon from '$lib/icons/SearchIcon.svelte'
@@ -7,6 +8,11 @@
 	import TextField from '$lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+
+	const reportValidity = (event: Event) => {
+		const textField = event.target as HTMLInputElement
+		textField.reportValidity()
+	}
 </script>
 
 <svelte:head>
@@ -36,8 +42,8 @@
 <Code value={`<TextField label="Resize" type="textarea" />`} />
 
 <h3>Icons</h3>
-<DemoContainer>
-	<TextField placeholder="Search" type="search" variant="outlined">
+<DemoContainer style="align-items:baseline">
+	<TextField placeholder="Search" type="search" inputmode="search" variant="outlined">
 		{#snippet start()}<SearchIcon />{/snippet}
 	</TextField>
 	<TextField autocomplete="one-time-code" label="Password" type="password" variant="outlined">
@@ -76,3 +82,125 @@
 	{/snippet}
 </TextField>`}
 />
+
+<h3>Prefix and suffix</h3>
+<DemoContainer>
+	<TextField
+		label="Amount"
+		value={0}
+		inputmode="numeric"
+		prefixText="$"
+		suffixText=".00"
+		type="number"
+		variant="outlined"
+	/>
+</DemoContainer>
+
+<Code
+	value={`<TextField
+	label="Amount"
+	value={0}
+	prefixText="$"
+	suffixText=".00"
+	type="number"
+	variant="outlined"
+/>`}
+/>
+<h3>Supporting text</h3>
+<DemoContainer>
+	<TextField label="Username" supportingText="Your username is your unique identifier." />
+	<TextField
+		label="Email"
+		type="email"
+		inputmode="email"
+		required
+		supportingText="Email is required"
+	/>
+</DemoContainer>
+
+<Code
+	value={`<TextField label="Username" supportingText="Your username is your unique identifier." />
+<TextField
+	label="Email"
+	type="email"
+	inputmode="email"
+	required
+	supportingText="Email is required"
+/>`}
+/>
+
+<h3>Character counter</h3>
+
+<DemoContainer>
+	<TextField label="Name" maxlength={10} />
+</DemoContainer>
+<Code value={`<TextField label="Name" maxlength={10} />`} />
+
+<h3>Validation</h3>
+<h4>Constraint validation</h4>
+
+<DemoContainer>
+	<form>
+		<TextField label="First name" required onchange={reportValidity} />
+		<TextField
+			label="Last name"
+			required
+			pattern="[a-zA-Z]+"
+			supportingText="Characters only"
+			onchange={reportValidity}
+		/>
+		<div class="button-footer">
+			<Button>Submit</Button>
+		</div>
+	</form>
+</DemoContainer>
+<Code
+	value={`\<script\>
+	const reportValidity = (event: Event) => {
+		const textField = event.target as HTMLInputElement
+		textField.reportValidity()
+	}
+</script>
+<form>
+	<TextField label="First name" required onchange={reportValidity} />
+	<TextField
+		label="Last name"
+		required
+		pattern="[a-zA-Z]+"
+		supportingText="Characters only"
+		onchange={reportValidity}
+	/>
+	<div class="button-footer">
+		<Button>Submit</Button>
+	</div>
+</form>`}
+/>
+
+<h4>Manual validation</h4>
+
+<DemoContainer>
+	<TextField
+		label="Username"
+		error
+		value="eric20"
+		errorText="Username is not available"
+		onchange={reportValidity}
+	/>
+</DemoContainer>
+<Code
+	value={`<TextField
+		label="Username"
+		error
+		value="eric20"
+		errorText="Username is not available"
+		onchange={reportValidity}
+	/>`}
+/>
+
+<style>
+	.button-footer {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 1rem;
+	}
+</style>

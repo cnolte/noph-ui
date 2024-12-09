@@ -21,12 +21,48 @@
 	let contentEl: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 	let textField: HTMLSpanElement | undefined = $state()
 	let hovered = $state(false)
+	let errorTextRaw = $state(errorText)
 
 	$effect(() => {
 		if (contentEl) {
 			contentEl.form?.addEventListener('reset', () => {
 				error = false
 				value = ''
+			})
+			contentEl.addEventListener('invalid', (event) => {
+				event.preventDefault()
+				const { currentTarget } = event as Event & {
+					currentTarget: HTMLInputElement | HTMLTextAreaElement
+				}
+				error = true
+				if (errorText === undefined) {
+					errorTextRaw = currentTarget.validationMessage
+				}
+				if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+					currentTarget.focus()
+				}
+			})
+			contentEl.addEventListener('focus', () => {
+				if (!attributes.disabled) {
+					focused = true
+				}
+			})
+
+			contentEl.addEventListener('blur', () => {
+				if (hovered) {
+					return
+				}
+				focused = false
+			})
+
+			contentEl.addEventListener('change', (event) => {
+				const { currentTarget } = event as Event & {
+					currentTarget: HTMLInputElement | HTMLTextAreaElement
+				}
+				if (currentTarget.checkValidity()) {
+					error = false
+					errorTextRaw = ''
+				}
 			})
 		}
 	})
@@ -40,6 +76,9 @@
 				hovered = false
 			})
 			textField.addEventListener('click', () => {
+				if (attributes.disabled) {
+					return
+				}
 				focused = true
 				contentEl?.focus()
 			})
@@ -114,27 +153,6 @@
 								class="input"
 								aria-label={label}
 								rows={attributes.rows || 2}
-								onblur={() => {
-									if (hovered) {
-										return
-									}
-									focused = false
-								}}
-								onfocus={() => {
-									focused = true
-								}}
-								oninvalid={(event) => {
-									event.preventDefault()
-									const { currentTarget } = event
-									error = true
-									if (!errorText) {
-										errorText = currentTarget.validationMessage
-									}
-
-									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-										currentTarget.focus()
-									}
-								}}
 							></textarea>
 						{:else}
 							<div class="input-wrapper">
@@ -148,29 +166,8 @@
 									bind:value
 									bind:this={contentEl}
 									class="input"
-									onblur={() => {
-										if (hovered) {
-											return
-										}
-										focused = false
-									}}
-									onfocus={() => {
-										focused = true
-									}}
 									aria-label={label}
 									aria-invalid={error}
-									oninvalid={(event) => {
-										event.preventDefault()
-										const { currentTarget } = event
-										error = true
-										if (!errorText) {
-											errorText = currentTarget.validationMessage
-										}
-
-										if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-											currentTarget.focus()
-										}
-									}}
 								/>
 								{#if suffixText}
 									<span class="suffix">
@@ -188,13 +185,13 @@
 				{/if}
 			</div>
 		</div>
-		{#if supportingText || (errorText && error) || attributes.maxlength}
+		{#if supportingText || (errorTextRaw && error) || attributes.maxlength}
 			<div class="supporting-text" role={error ? 'alert' : undefined}>
 				<span>
-					{error && errorText ? errorText : supportingText}
+					{error && errorTextRaw ? errorTextRaw : supportingText}
 				</span>
 				{#if attributes.maxlength}
-					<span>{value.length}/{attributes.maxlength}</span>
+					<span>{value?.length || 0}/{attributes.maxlength}</span>
 				{/if}
 			</div>
 		{/if}
@@ -234,8 +231,17 @@
 	.error .active-indicator::after {
 		border-bottom-color: var(--np-color-error);
 	}
+	.disabled .active-indicator::before {
+		border-bottom-color: var(--np-color-on-surface);
+		border-bottom-width: 1px;
+		opacity: 0.38;
+	}
 	.background {
 		background: var(--np-color-surface-container-highest);
+	}
+	.disabled .background {
+		background: var(--np-color-on-surface);
+		opacity: 0.04;
 	}
 	.background,
 	.state-layer {
@@ -279,6 +285,10 @@
 		cursor: text;
 	}
 
+	.field.disabled {
+		cursor: default;
+	}
+
 	.field {
 		display: flex;
 		flex: 1;
@@ -299,11 +309,19 @@
 	.error .supporting-text {
 		color: var(--np-color-error);
 	}
+	.disabled .supporting-text {
+		color: var(--np-color-on-surface);
+		opacity: 0.38;
+	}
 
 	.field:not(.disabled):hover .state-layer {
 		visibility: visible;
 	}
-	:hover .state-layer {
+
+	.disabled {
+		pointer-events: none;
+	}
+	.field:not(.disabled):hover .state-layer {
 		background: var(--np-color-on-surface);
 		opacity: 0.08;
 	}
@@ -364,6 +382,9 @@
 		opacity: 0;
 		transition: opacity 83ms cubic-bezier(0.2, 0, 0, 1);
 	}
+	.disabled .content {
+		color: var(--np-color-on-surface);
+	}
 	.field:not(.with-end) .content .input-wrapper,
 	.field:not(.with-end) .content textarea {
 		padding-inline-end: 16px;
@@ -420,6 +441,11 @@
 	.error .start,
 	.error .end {
 		color: var(--np-color-error);
+	}
+	.disabled .start,
+	.disabled .end {
+		color: var(--np-color-on-surface);
+		opacity: 0.38;
 	}
 	.start,
 	.middle,
@@ -509,9 +535,20 @@
 	.focused .label {
 		color: var(--np-color-primary);
 	}
+	.disabled .label {
+		color: var(--np-color-on-surface);
+	}
+	.disabled .label:not(.hidden) {
+		opacity: 0.38;
+	}
 	.resizable:not(.disabled) .container {
 		resize: inherit;
 		overflow: hidden;
+	}
+	.disabled.no-label .content,
+	.disabled.focused .content,
+	.disabled.populated .content {
+		opacity: 0.38;
 	}
 	.field,
 	.container-overflow {
@@ -641,5 +678,14 @@
 	.focused .outline {
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
+	}
+	.disabled .outline {
+		border-color: var(--np-color-on-surface);
+		color: var(--np-color-on-surface);
+	}
+	.disabled .outline-start,
+	.disabled .outline-end,
+	.disabled .outline-notch {
+		opacity: 0.12;
 	}
 </style>
