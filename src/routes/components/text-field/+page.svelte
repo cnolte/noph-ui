@@ -172,12 +172,13 @@
 	</form>
 </DemoContainer>
 <Code
-	value={`\<script\>
+	value={`<script>
 	const reportValidity = (event: Event) => {
 		const textField = event.target as HTMLInputElement
 		textField.reportValidity()
 	}
-</script>
+</` +
+		`script>
 <form>
 	<TextField label="First name" required onchange={reportValidity} />
 	<TextField

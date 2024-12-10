@@ -23,9 +23,10 @@
 	</Menu>
 </DemoContainer>
 <Code
-	value={`\<script lang="ts"\>
+	value={`<script lang="ts">
 	let menuBtn = $state<HTMLElement>()
-\</script\>
+</` +
+		`script>
 <Button popovertarget="browser-menu" bind:element={menuBtn}>
 	Open Menu
 </Button>

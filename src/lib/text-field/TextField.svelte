@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isFirstInvalidControlInForm } from './report-validity.ts'
+	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
 	import type { TextFieldProps, TextAreaFieldProps } from './types.ts'
 
 	let {
@@ -68,7 +68,6 @@
 	let emptyValue = $derived(value === undefined || value === null || value === '')
 </script>
 
-<!-- svelte-ignore a11y_interactive_supports_focus -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <span
@@ -111,7 +110,7 @@
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="outline-notch">
-							<span class="notch hidden" aria-hidden="true"
+							<span class="notch np-hidden" aria-hidden="true"
 								>{label}{noAsterisk || !attributes.required ? '' : '*'}</span
 							>
 						</div>
@@ -493,11 +492,11 @@
 		font-size: 0.75rem;
 		line-height: 1rem;
 	}
-	.notch.hidden {
+	.notch.np-hidden {
 		opacity: 0;
 	}
 
-	.label.hidden {
+	.label.np-hidden {
 		opacity: 0;
 	}
 	.label.resting {
@@ -530,7 +529,7 @@
 	.disabled .label {
 		color: var(--np-color-on-surface);
 	}
-	.disabled .label:not(.hidden) {
+	.disabled .label:not(.np-hidden) {
 		opacity: 0.38;
 	}
 	.resizable:not(.disabled) .container {
@@ -608,6 +607,7 @@
 	.outline-notch::before,
 	.outline-notch::after {
 		border-bottom-style: solid;
+		border-top-style: none;
 	}
 	.field:not(.focused):not(.populated) .outline-notch::before {
 		border-top-style: solid;

@@ -9,4 +9,4 @@
 
 <h1>Radio button</h1>
 <h2>Usage</h2>
-<DemoContainer>Coming soon</DemoContainer>
+<DemoContainer><Radio /></DemoContainer>

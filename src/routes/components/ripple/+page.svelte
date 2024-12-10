@@ -17,7 +17,7 @@
 	</div>
 </DemoContainer>
 <Code
-	value={`\<style\>
+	value={`<style>
 	.ripple-container {
 		position: relative;
 		overflow: hidden;
@@ -27,7 +27,7 @@
 		border-style: solid;
 		border-color: currentColor;
 	}
-\</style\>
+</style>
 <div class="ripple-container">
 	<Ripple />
 </div>`}
@@ -69,7 +69,7 @@
 </DemoContainer>
 
 <Code
-	value={`\<style\>
+	value={`<style>
 	.theming-example {
 		--np-ripple-hover-color: var(--np-color-primary);
 		--np-ripple-pressed-color: var(--np-color-primary);
@@ -83,7 +83,7 @@
 		border-style: solid;
 		border-color: currentColor;
 	}
-\</style\>
+</style>
 <div class="ripple-container theming-example">
 	<Ripple />
 </div>`}

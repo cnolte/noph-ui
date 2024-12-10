@@ -64,6 +64,7 @@ Beta (No breaking changes expected)
 
 In progress (Breaking changes expected)
 
+- Checkbox
 - Chips
 - Lists
 - Menus

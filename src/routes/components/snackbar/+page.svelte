@@ -77,12 +77,13 @@
 	/>
 </DemoContainer>
 <Code
-	value={`\<script lang="ts"\>
+	value={`<script lang="ts">
 	import { Button, Snackbar } from 'noph-ui'
 
 	let showPopover: () => void
 	let hidePopover: () => void
-\</script\>
+</` +
+		`script>
 <Button onclick={showPopover}>Show Snackbar</Button>
 <Button onclick={hidePopover}>Hide Snackbar</Button>
 <Snackbar

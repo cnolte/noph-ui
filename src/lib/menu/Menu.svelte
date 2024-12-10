@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { generateUUIDv4 } from '$lib/utils.ts'
+	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { Snippet } from 'svelte'
 	import type { HTMLAttributes } from 'svelte/elements'
 

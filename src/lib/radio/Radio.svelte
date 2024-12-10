@@ -8,7 +8,7 @@
 
 <div class="host">
 	<div class="container" aria-hidden="true">
-		{#if !attributes.disabled && false}
+		{#if !attributes.disabled}
 			<Ripple />
 		{/if}
 		<svg class="icon" viewBox="0 0 20 20">
@@ -24,4 +24,7 @@
 </div>
 
 <style>
+	.container {
+		position: relative;
+	}
 </style>

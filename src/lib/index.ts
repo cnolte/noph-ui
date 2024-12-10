@@ -2,6 +2,7 @@
 
 export * from './button/index.js'
 export * from './card/index.js'
+export * from './checkbox/index.js'
 export * from './chip/index.js'
 export * from './divider/index.js'
 export * from './list/index.js'

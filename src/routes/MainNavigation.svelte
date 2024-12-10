@@ -36,6 +36,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/checkbox"
+		variant="text"
+		class={$page.url.pathname === '/components/checkbox' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Checkbox</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/chip"
 		variant="text"
 		class={$page.url.pathname === '/components/chip' ? 'btn-selected' : 'btn'}
