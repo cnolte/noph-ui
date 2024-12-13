@@ -121,8 +121,8 @@
 	}
 
 	:global(.np-icon-button svg) {
-		width: var(--icon-size, 1.5rem);
-		height: var(--icon-size, 1.5rem);
+		width: var(--_icon-size, 1.5rem);
+		height: var(--_icon-size, 1.5rem);
 		fill: currentColor;
 		display: block;
 	}
@@ -138,19 +138,19 @@
 		border-radius: var(--np-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-icon-button-container-height, 2.5rem);
 		width: var(--np-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-icon-button-icon-size);
+		--_icon-size: var(--np-icon-button-icon-size);
 	}
 	.filled-disabled {
 		border-radius: var(--np-filled-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-filled-icon-button-container-height, 2.5rem);
 		width: var(--np-filled-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-filled-icon-button-icon-size);
+		--_icon-size: var(--np-filled-icon-button-icon-size);
 	}
 	.tonal-disabled {
 		border-radius: var(--np-tonal-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-tonal-icon-button-container-height, 2.5rem);
 		width: var(--np-tonal-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-tonal-icon-button-icon-size);
+		--_icon-size: var(--np-tonal-icon-button-icon-size);
 	}
 
 	.outlined-disabled {
@@ -159,7 +159,7 @@
 		border-radius: var(--np-outlined-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-outlined-icon-button-container-height, 2.5rem);
 		width: var(--np-outlined-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-outlined-icon-button-icon-size);
+		--_icon-size: var(--np-outlined-icon-button-icon-size);
 	}
 	.enabled {
 		transition: background-color 0.3s ease;
@@ -189,7 +189,7 @@
 		border-radius: var(--np-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-icon-button-container-height, 2.5rem);
 		width: var(--np-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-icon-button-icon-size);
+		--_icon-size: var(--np-icon-button-icon-size);
 	}
 	.text.toggle {
 		--np-ripple-hover-color: var(--np-color-on-surface-variant);
@@ -213,7 +213,7 @@
 		border-radius: var(--np-filled-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-filled-icon-button-container-height, 2.5rem);
 		width: var(--np-filled-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-filled-icon-button-icon-size);
+		--_icon-size: var(--np-filled-icon-button-icon-size);
 	}
 	.filled.selected {
 		--np-ripple-hover-opacity: 0.12;
@@ -232,7 +232,7 @@
 		background-color: var(--np-color-surface-container-highest);
 		height: var(--np-tonal-icon-button-container-height, 2.5rem);
 		width: var(--np-tonal-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-tonal-icon-button-icon-size);
+		--_icon-size: var(--np-tonal-icon-button-icon-size);
 	}
 	.tonal.selected {
 		--np-ripple-hover-color: var(--np-tonal-icon-button-icon-color, var(--np-color-primary));
@@ -255,7 +255,7 @@
 		border-radius: var(--np-outlined-icon-button-container-shape, var(--np-shape-corner-full));
 		height: var(--np-outlined-icon-button-container-height, 2.5rem);
 		width: var(--np-outlined-icon-button-container-width, 2.5rem);
-		--icon-size: var(--np-outlined-icon-button-icon-size);
+		--_icon-size: var(--np-outlined-icon-button-icon-size);
 	}
 	.outlined.selected {
 		border: none;

@@ -1,8 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/button/IconButton.svelte'
-	import CheckIcon from '$lib/icons/CheckIcon.svelte'
-	import CloseIcon from '$lib/icons/CloseIcon.svelte'
-	import SendIcon from '$lib/icons/SendIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoCaintainer from '../../DemoContainer.svelte'
 </script>
@@ -14,123 +12,125 @@
 <h1>Icon buttons</h1>
 <h2>Types</h2>
 <DemoCaintainer>
-	<IconButton aria-label="Icon Button"><SendIcon /></IconButton>
-	<IconButton aria-label="Filled Icon Button" variant="filled"><SendIcon /></IconButton>
-	<IconButton aria-label="Tonal Icon Button" variant="tonal"><SendIcon /></IconButton>
-	<IconButton aria-label="Outlined Icon Button" variant="outlined"><SendIcon /></IconButton>
+	<IconButton aria-label="Icon Button"><Icon>send</Icon></IconButton>
+	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>send</Icon></IconButton>
+	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>send</Icon></IconButton>
+	<IconButton aria-label="Outlined Icon Button" variant="outlined"><Icon>send</Icon></IconButton>
 </DemoCaintainer>
 <h2>Icon button</h2>
 <DemoCaintainer>
-	<IconButton aria-label="Icon Button"><CheckIcon /></IconButton>
-	<IconButton aria-label="Disabled Icon Button" disabled><CheckIcon /></IconButton>
+	<IconButton aria-label="Icon Button"><Icon>check</Icon></IconButton>
+	<IconButton aria-label="Disabled Icon Button" disabled><Icon>check</Icon></IconButton>
 </DemoCaintainer>
 <Code
-	value={`<IconButton><CheckIcon /></IconButton>
-<IconButton disabled><CheckIcon /></IconButton>`}
+	value={`<IconButton><Icon>check</Icon></IconButton>
+<IconButton disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Filled icon button</h2>
 <DemoCaintainer>
-	<IconButton aria-label="Filled Icon Button" variant="filled"><CheckIcon /></IconButton>
+	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Filled Icon Button" variant="filled" disabled
-		><CheckIcon /></IconButton
+		><Icon>check</Icon></IconButton
 	>
 </DemoCaintainer>
 <Code
-	value={`<IconButton variant="filled"><CheckIcon /></IconButton>
-<IconButton variant="filled" disabled><CheckIcon /></IconButton>`}
+	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
+<IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Tonal icon button</h2>
 <DemoCaintainer>
-	<IconButton aria-label="Tonal Icon Button" variant="tonal"><CheckIcon /></IconButton>
+	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled
-		><CheckIcon /></IconButton
+		><Icon>check</Icon></IconButton
 	>
 </DemoCaintainer>
 <Code
-	value={`<IconButton variant="filled"><CheckIcon /></IconButton>
-<IconButton variant="filled" disabled><CheckIcon /></IconButton>`}
+	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
+<IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Outlined icon button</h2>
 <DemoCaintainer>
-	<IconButton aria-label="Outlined Icon Button" variant="outlined"><CheckIcon /></IconButton>
+	<IconButton aria-label="Outlined Icon Button" variant="outlined"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Outlined Icon Button" variant="outlined" disabled
-		><CheckIcon /></IconButton
+		><Icon>check</Icon></IconButton
 	>
 </DemoCaintainer>
 <Code
-	value={`<IconButton variant="outlined"><CheckIcon /></IconButton>
-<IconButton variant="outlined" disabled><CheckIcon /></IconButton>`}
+	value={`<IconButton variant="outlined"><Icon>check</Icon></IconButton>
+<IconButton variant="outlined" disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Toggle</h2>
 {#snippet selectedIcon()}
-	<CheckIcon />
+	<Icon>check</Icon>
 {/snippet}
 <DemoCaintainer style="flex-direction: column">
 	<div class="icon-list">
-		<IconButton {selectedIcon} aria-label="Unselected Icon Button" toggle><CloseIcon /></IconButton>
+		<IconButton {selectedIcon} aria-label="Unselected Icon Button" toggle
+			><Icon>close</Icon></IconButton
+		>
 		<IconButton {selectedIcon} aria-label="Unselected Filled Icon Button" variant="filled" toggle
-			><CloseIcon /></IconButton
+			><Icon>close</Icon></IconButton
 		>
 		<IconButton {selectedIcon} aria-label="Unselected Tonal Icon Button" variant="tonal" toggle
-			><CloseIcon /></IconButton
+			><Icon>close</Icon></IconButton
 		>
 		<IconButton
 			{selectedIcon}
 			aria-label="Unselected Outlined Icon Button"
 			variant="outlined"
-			toggle><CloseIcon /></IconButton
+			toggle><Icon>close</Icon></IconButton
 		>
 	</div>
 	<div class="icon-list">
 		<IconButton {selectedIcon} aria-label="Selected Icon Button" toggle selected
-			><CloseIcon /></IconButton
+			><Icon>close</Icon></IconButton
 		>
 		<IconButton
 			{selectedIcon}
 			aria-label="Selected Filled Icon Button"
 			variant="filled"
 			toggle
-			selected><CloseIcon /></IconButton
+			selected><Icon>close</Icon></IconButton
 		>
 		<IconButton
 			{selectedIcon}
 			aria-label="Selected Tonal Icon Button"
 			variant="tonal"
 			toggle
-			selected><CloseIcon /></IconButton
+			selected><Icon>close</Icon></IconButton
 		>
 		<IconButton
 			{selectedIcon}
 			aria-label="Selected Outlined Icon Button"
 			variant="outlined"
 			toggle
-			selected><CloseIcon /></IconButton
+			selected><Icon>close</Icon></IconButton
 		>
 	</div>
 </DemoCaintainer>
 <Code
 	value={`{#snippet selectedIcon()}
-	<CheckIcon />
+	<Icon>check</Icon>
 {/snippet}
 <div>
-	<IconButton {selectedIcon} toggle><CloseIcon /></IconButton>
-	<IconButton {selectedIcon} variant="filled" toggle><CloseIcon /></IconButton>
-	<IconButton {selectedIcon} variant="tonal" toggle><CloseIcon /></IconButton>
-	<IconButton {selectedIcon} variant="outlined" toggle><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} toggle><Icon>close</Icon></IconButton>
+	<IconButton {selectedIcon} variant="filled" toggle><Icon>close</Icon></IconButton>
+	<IconButton {selectedIcon} variant="tonal" toggle><Icon>close</Icon></IconButton>
+	<IconButton {selectedIcon} variant="outlined" toggle><Icon>close</Icon></IconButton>
 </div>
 <div>
-	<IconButton {selectedIcon} toggle selected><CloseIcon /></IconButton>
-	<IconButton {selectedIcon} variant="filled" toggle selected><CloseIcon /></IconButton>
-	<IconButton {selectedIcon} variant="tonal" toggle selected><CloseIcon /></IconButton>
-	<IconButton {selectedIcon} variant="outlined" toggle selected><CloseIcon /></IconButton>
+	<IconButton {selectedIcon} toggle selected><Icon>close</Icon></IconButton>
+	<IconButton {selectedIcon} variant="filled" toggle selected><Icon>close</Icon></IconButton>
+	<IconButton {selectedIcon} variant="tonal" toggle selected><Icon>close</Icon></IconButton>
+	<IconButton {selectedIcon} variant="outlined" toggle selected><Icon>close</Icon></IconButton>
 </div>`}
 />
 <h2>Tooltip</h2>
 <DemoCaintainer>
-	<IconButton title="Icon button with tooltip" variant="filled"><CheckIcon /></IconButton>
+	<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>
 </DemoCaintainer>
 <Code
-	value={`<IconButton title="Icon button with tooltip" variant="filled"><CheckIcon /></IconButton>`}
+	value={`<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>`}
 />
 
 <h2>Theming</h2>
@@ -177,7 +177,7 @@
 		toggle
 		selected
 	>
-		<CloseIcon />
+		<Icon>close</Icon>
 	</IconButton>
 </DemoCaintainer>
 <Code
@@ -189,7 +189,7 @@
 		toggle
 		selected
 	>
-		<CloseIcon />
+		<Icon>close</Icon>
 	</IconButton>`}
 />
 <h3>Filled icon button tokens</h3>
@@ -241,7 +241,7 @@
 		selected
 		variant="filled"
 	>
-		<CloseIcon />
+		<Icon>close</Icon>
 	</IconButton>
 </DemoCaintainer>
 <Code
@@ -256,7 +256,7 @@
 	selected
 	variant="filled"
 >
-	<CloseIcon />
+	<Icon>close</Icon>
 </IconButton>`}
 />
 <h3>Tonal icon buttons tokens</h3>
@@ -308,7 +308,7 @@
 		selected
 		variant="tonal"
 	>
-		<CloseIcon />
+		<Icon>close</Icon>
 	</IconButton>
 </DemoCaintainer>
 <Code
@@ -372,7 +372,7 @@
 		toggle
 		variant="outlined"
 	>
-		<CloseIcon />
+		<Icon>close</Icon>
 	</IconButton>
 </DemoCaintainer>
 <Code

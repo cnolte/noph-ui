@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
-	import OpenInNewIcon from '$lib/icons/OpenInNewIcon.svelte'
-	import SendIcon from '$lib/icons/SendIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoCaintainer from '../../DemoContainer.svelte'
 </script>
@@ -71,12 +70,12 @@
 <DemoCaintainer>
 	<Button variant="tonal">
 		{#snippet start()}
-			<SendIcon />
+			<Icon>send</Icon>
 		{/snippet}Send</Button
 	>
 	<Button variant="text">
 		{#snippet end()}
-			<OpenInNewIcon />
+			<Icon>open_in_new</Icon>
 		{/snippet}Open</Button
 	>
 </DemoCaintainer>
@@ -89,7 +88,7 @@
 </Button>
 <Button>
 	{#snippet end()}
-		<OpenInNewIcon />
+		<Icon>open_in_new</Icon>
 	{/snippet}
 	Open
 </Button>`}

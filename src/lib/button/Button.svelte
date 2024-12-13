@@ -260,6 +260,15 @@
 		border-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
 		border-radius: var(--np-outlined-button-container-shape, var(--np-shape-corner-full));
 	}
+	.button-icon {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	:global(.np-button .button-icon) {
+		--_icon-size: calc((var(--button-height) - 0.5rem) / 2);
+		--_icon-color: inherit;
+	}
 
 	:global(.np-button .button-icon svg) {
 		fill: currentColor;
