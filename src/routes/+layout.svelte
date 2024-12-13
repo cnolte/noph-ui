@@ -1,7 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/button/IconButton.svelte'
-	import CloseIcon from '$lib/icons/CloseIcon.svelte'
-	import MenuIcon from '$lib/icons/MenuIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import '$lib/themes/defaultTheme.css'
 	import '../app.css'
 	import GitHubMark from './GitHubMark.svelte'
@@ -43,7 +42,7 @@
 			variant="text"
 			title={popoverState === 'open' ? 'Close' : 'Open'}
 			class="menu-btn"
-			>{#if popoverState === 'open'}<CloseIcon />{:else}<MenuIcon />{/if}</IconButton
+			>{#if popoverState === 'open'}<Icon>close</Icon>{:else}<Icon>menu</Icon>{/if}</IconButton
 		>
 	</div>
 </header>

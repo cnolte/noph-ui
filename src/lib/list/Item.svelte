@@ -104,6 +104,7 @@
 <style>
 	.np-item-end,
 	.np-item-start {
+		display: flex;
 		color: var(--np-color-on-surface-variant);
 	}
 

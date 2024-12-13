@@ -82,7 +82,7 @@
 <Code
 	value={`<Button>
 	{#snippet start()}
-		<SendIcon />
+		<Icon>send</Icon>
 	{/snippet}
 	Send
 </Button>

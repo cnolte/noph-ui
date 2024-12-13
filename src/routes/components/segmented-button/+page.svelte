@@ -1,8 +1,6 @@
 <script lang="ts">
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
-	import BrightnessMediumIcon from '$lib/icons/BrightnessMediumIcon.svelte'
-	import DarkModeIcon from '$lib/icons/DarkModeIcon.svelte'
-	import LightModeIcon from '$lib/icons/LightModeIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>
@@ -98,15 +96,15 @@
 <h2>Icons</h2>
 
 {#snippet darkIcon()}
-	<DarkModeIcon />
+	<Icon>dark_mode</Icon>
 {/snippet}
 
 {#snippet lightIcon()}
-	<LightModeIcon />
+	<Icon>light_mode</Icon>
 {/snippet}
 
 {#snippet systemIcon()}
-	<BrightnessMediumIcon />
+	<Icon>brightness_medium</Icon>
 {/snippet}
 <DemoContainer style="flex-direction:column">
 	<SegmentedButton
@@ -145,15 +143,15 @@
 </DemoContainer>
 <Code
 	value={`{#snippet darkIcon()}
-	<DarkModeIcon />
+	<Icon>dark_mode</Icon>
 {/snippet}
 
 {#snippet lightIcon()}
-	<LightModeIcon />
+	<Icon>light_mode</Icon>
 {/snippet}
 
 {#snippet systemIcon()}
-	<BrightnessMediumIcon />
+	<Icon>brightness_medium</Icon>
 {/snippet}
 <SegmentedButton
 	name="demo3"

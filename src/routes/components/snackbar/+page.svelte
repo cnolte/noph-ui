@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
-	import CloseIcon from '$lib/icons/CloseIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import Snackbar from '$lib/snackbar/Snackbar.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
@@ -13,7 +13,7 @@
 	<title>Snackbar - Noph UI</title>
 </svelte:head>
 {#snippet icon()}
-	<CloseIcon />
+	<Icon>close</Icon>
 {/snippet}
 <h1>Snackbar</h1>
 <p>

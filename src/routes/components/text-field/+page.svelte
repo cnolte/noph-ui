@@ -1,10 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
 	import IconButton from '$lib/button/IconButton.svelte'
-	import ErrorIcon from '$lib/icons/ErrorIcon.svelte'
-	import SearchIcon from '$lib/icons/SearchIcon.svelte'
-	import VisibilityIcon from '$lib/icons/VisibilityIcon.svelte'
-	import VisibilityOffIcon from '$lib/icons/VisibilityOffIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import TextField from '$lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
@@ -61,41 +58,41 @@
 <h3>Icons</h3>
 <DemoContainer style="align-items:baseline">
 	<TextField placeholder="Search" type="search" inputmode="search" variant="outlined">
-		{#snippet start()}<SearchIcon />{/snippet}
+		{#snippet start()}<Icon>search</Icon>{/snippet}
 	</TextField>
 	<TextField autocomplete="one-time-code" label="Password" type="password" variant="outlined">
 		{#snippet end()}
 			<IconButton toggle title="Toggle visibility">
 				{#snippet selectedIcon()}
-					<VisibilityOffIcon />
+					<Icon>visibility_off</Icon>
 				{/snippet}
-				<VisibilityIcon />
+				<Icon>visibility</Icon>
 			</IconButton>
 		{/snippet}
 	</TextField>
 	<TextField label="Username" variant="outlined" error errorText="Username not available">
 		{#snippet end()}
-			<ErrorIcon />
+			<Icon>error</Icon>
 		{/snippet}
 	</TextField>
 </DemoContainer>
 <Code
 	value={`<TextField placeholder="Search" type="search" variant="outlined">
-	{#snippet start()}<SearchIcon />{/snippet}
+	{#snippet start()}<Icon>search</Icon>{/snippet}
 </TextField>
 <TextField autocomplete="one-time-code" label="Password" type="password" variant="outlined">
 	{#snippet end()}
 		<IconButton toggle title="Toggle visibility">
 			{#snippet selectedIcon()}
-				<VisibilityOffIcon />
+				<Icon>visibility_off</Icon>
 			{/snippet}
-			<VisibilityIcon />
+			<Icon>visibility</Icon>
 		</IconButton>
 	{/snippet}
 </TextField>
 <TextField label="Username" variant="outlined" error>
 	{#snippet end()}
-		<ErrorIcon />
+		<Icon>error</Icon>
 	{/snippet}
 </TextField>`}
 />

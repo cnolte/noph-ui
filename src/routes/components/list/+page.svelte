@@ -1,9 +1,6 @@
 <script lang="ts">
 	import Divider from '$lib/divider/Divider.svelte'
-	import LogoutIcon from '$lib/icons/LogoutIcon.svelte'
-	import OpenInNewIcon from '$lib/icons/OpenInNewIcon.svelte'
-	import PersonIcon from '$lib/icons/PersonIcon.svelte'
-	import SettingsIcon from '$lib/icons/SettingsIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import List from '$lib/list/List.svelte'
 	import ListItem from '$lib/list/ListItem.svelte'
 	import Code from '../../Code.svelte'
@@ -29,7 +26,7 @@
 		>
 		<ListItem type="button"
 			>{#snippet end()}
-				<OpenInNewIcon />
+				<Icon>open_in_new</Icon>
 			{/snippet}
 			{#snippet supportingText()}
 				This will open a new tab
@@ -55,7 +52,7 @@
 			This will open a new tab
 		{/snippet}
 		{#snippet end()}
-			<OpenInNewIcon />
+			<Icon>open_in_new</Icon>
 		{/snippet}
 	</ListItem>
 </List>`}
@@ -66,21 +63,21 @@
 		<ListItem>
 			Account
 			{#snippet start()}
-				<PersonIcon />
+				<Icon>person</Icon>
 			{/snippet}
 		</ListItem>
 		<Divider />
 		<ListItem>
 			Setting
 			{#snippet start()}
-				<SettingsIcon />
+				<Icon>settings</Icon>
 			{/snippet}
 		</ListItem>
 		<Divider />
 		<ListItem>
 			Sign out
 			{#snippet start()}
-				<LogoutIcon />
+				<Icon>logout</Icon>
 			{/snippet}
 		</ListItem>
 	</List>
@@ -91,21 +88,21 @@
 	<ListItem>
 		Account
 		{#snippet start()}
-			<PersonIcon />
+			<Icon>person</Icon>
 		{/snippet}
 	</ListItem>
 	<Divider />
 	<ListItem>
 		Setting
 		{#snippet start()}
-			<SettingsIcon />
+			<Icon>settings</Icon>
 		{/snippet}
 	</ListItem>
 	<Divider />
 	<ListItem>
 		Sign out
 		{#snippet start()}
-			<LogoutIcon />
+			<Icon>logout</Icon>
 		{/snippet}
 	</ListItem>
 </List>`}

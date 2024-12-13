@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/button/IconButton.svelte'
-	import CopyContentIcon from '$lib/icons/CopyContentIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 
 	let { value }: { value: string } = $props()
 	let title = $state('Copy Code')
@@ -20,7 +20,7 @@
 			}, 200)
 		}}
 	>
-		<CopyContentIcon /></IconButton
+		<Icon>content_copy</Icon></IconButton
 	>
 	<pre><code>{value}</code></pre>
 </div>

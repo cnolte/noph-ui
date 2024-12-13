@@ -2,11 +2,7 @@
 	import { browser } from '$app/environment'
 	import IconButton from '$lib/button/IconButton.svelte'
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
-	import BrightnessMediumIcon from '$lib/icons/BrightnessMediumIcon.svelte'
-	import CopyContentIcon from '$lib/icons/CopyContentIcon.svelte'
-	import DarkModeIcon from '$lib/icons/DarkModeIcon.svelte'
-	import LightModeIcon from '$lib/icons/LightModeIcon.svelte'
-	import PaletteIcon from '$lib/icons/PaletteIcon.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
 	import { onMount } from 'svelte'
@@ -158,19 +154,19 @@
 </script>
 
 <IconButton popovertarget="palette-menu" title="Change theme" bind:element={menuBtn}>
-	<PaletteIcon />
+	<Icon>palette</Icon>
 </IconButton>
 
 {#snippet darkIcon()}
-	<DarkModeIcon />
+	<Icon>dark_mode</Icon>
 {/snippet}
 
 {#snippet lightIcon()}
-	<LightModeIcon />
+	<Icon>light_mode</Icon>
 {/snippet}
 
 {#snippet systemIcon()}
-	<BrightnessMediumIcon />
+	<Icon>brightness_medium</Icon>
 {/snippet}
 <Menu
 	--np-menu-container-shape="var(--np-shape-corner-extra-large)"
@@ -190,7 +186,7 @@
 				setTimeout(() => {
 					copyTitle = 'Copy Theme'
 				}, 200)
-			}}><CopyContentIcon /></IconButton
+			}}><Icon>content_copy</Icon></IconButton
 		>
 	</div>
 	<div class="card">
