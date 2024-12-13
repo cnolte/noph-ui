@@ -100,6 +100,10 @@
 		position: relative;
 		transition: all 0.15s linear;
 	}
+	.np-segmented-button-icon-label {
+		display: inline-flex;
+	}
+
 	:global(.np-segmented-button-icon-label svg) {
 		fill: currentColor;
 		width: 1.5rem;
