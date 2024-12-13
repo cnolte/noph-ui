@@ -30,7 +30,7 @@
 	let hideDots = $derived(indeterminate || !hasBuffer || bufferValue >= max || value >= max)
 </script>
 
-<div class="container" bind:this={element}>
+<div class="np-container" bind:this={element}>
 	<div
 		class:four-color={fourColor}
 		class:indeterminate
@@ -53,7 +53,7 @@
 </div>
 
 <style>
-	.container {
+	.np-container {
 		border-radius: var(--np-linear-progress-track-shape, 0);
 		display: flex;
 		position: relative;
@@ -288,7 +288,7 @@
 	}
 
 	@media (forced-colors: active) {
-		.container {
+		.np-container {
 			outline: 1px solid CanvasText;
 		}
 

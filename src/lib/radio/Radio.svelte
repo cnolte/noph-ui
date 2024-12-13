@@ -7,7 +7,7 @@
 </script>
 
 <div class="host">
-	<div class="container" aria-hidden="true">
+	<div class="np-container" aria-hidden="true">
 		{#if !attributes.disabled}
 			<Ripple />
 		{/if}
@@ -24,7 +24,7 @@
 </div>
 
 <style>
-	.container {
+	.np-container {
 		position: relative;
 	}
 </style>

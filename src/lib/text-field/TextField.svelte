@@ -19,7 +19,6 @@
 	let focused = $state(false)
 
 	let contentEl: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
-	let hovered = $state(false)
 	let errorTextRaw = $state(errorText)
 
 	$effect(() => {
@@ -48,9 +47,6 @@
 			})
 
 			contentEl.addEventListener('blur', () => {
-				if (hovered) {
-					return
-				}
 				focused = false
 			})
 
@@ -77,8 +73,6 @@
 			? '--top-space:1rem;--bottom-space:1rem'
 			: ''}
 	class="text-field"
-	onpointerenter={() => (hovered = true)}
-	onpointerleave={() => (hovered = false)}
 	onclick={() => {
 		if (attributes.disabled) {
 			return
@@ -106,7 +100,7 @@
 				<div class="active-indicator"></div>
 			{/if}
 			{#if variant === 'outlined'}
-				<div class="outline">
+				<div class="np-outline">
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="outline-notch">
@@ -118,7 +112,7 @@
 					<div class="outline-end"></div>
 				</div>
 			{/if}
-			<div class="container">
+			<div class="np-container">
 				{#if start}
 					<div class="start">
 						<span class="icon leading">{@render start()}</span>
@@ -241,7 +235,7 @@
 		pointer-events: none;
 		position: absolute;
 	}
-	.container {
+	.np-container {
 		align-items: center;
 		border-radius: inherit;
 		display: flex;
@@ -316,7 +310,7 @@
 		background: var(--np-color-on-surface);
 		opacity: 0.08;
 	}
-	.resizable .container > * {
+	.resizable .np-container > * {
 		top: var(--_focus-outline-width, 3px);
 		inset-inline-start: var(--_focus-outline-width, 0);
 	}
@@ -532,7 +526,7 @@
 	.disabled .label:not(.np-hidden) {
 		opacity: 0.38;
 	}
-	.resizable:not(.disabled) .container {
+	.resizable:not(.disabled) .np-container {
 		resize: inherit;
 		overflow: hidden;
 	}
@@ -545,7 +539,7 @@
 	.container-overflow {
 		resize: inherit;
 	}
-	.resizable .container {
+	.resizable .np-container {
 		bottom: 3px;
 		inset-inline-end: var(--_focus-outline-width, 0);
 		clip-path: inset(3px 0 0 var(--_focus-outline-width));
@@ -652,7 +646,7 @@
 	.focused .outline-notch::after {
 		opacity: 1;
 	}
-	.outline {
+	.np-outline {
 		border-color: var(--np-color-outline);
 		border-radius: inherit;
 		display: flex;
@@ -662,16 +656,16 @@
 		width: 100%;
 		z-index: 1;
 	}
-	.error .outline,
-	.error.focused .outline {
+	.error .np-outline,
+	.error.focused .np-outline {
 		border-color: var(--np-color-error);
 	}
 
-	.focused .outline {
+	.focused .np-outline {
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
 	}
-	.disabled .outline {
+	.disabled .np-outline {
 		border-color: var(--np-color-on-surface);
 		color: var(--np-color-on-surface);
 	}

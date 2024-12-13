@@ -19,7 +19,7 @@
 	let dashOffset = $derived((1 - value / max) * 100)
 </script>
 
-<div class="container" bind:this={element}>
+<div class="np-container" bind:this={element}>
 	<div
 		class:four-color={fourColor}
 		class:indeterminate
@@ -49,7 +49,7 @@
 </div>
 
 <style>
-	.container {
+	.np-container {
 		all: unset;
 		display: inline-flex;
 		vertical-align: middle;
