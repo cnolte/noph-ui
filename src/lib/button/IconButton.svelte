@@ -34,6 +34,7 @@
 
 	let tooltipId = $state(title ? generateUUIDv4() : '')
 	let selectedState = $state(!toggle || selected)
+	let touchEl: HTMLSpanElement | undefined = $state()
 
 	const isButton = (
 		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
@@ -57,7 +58,7 @@
 
 {#snippet content()}
 	{#if !disabled}
-		<Ripple />
+		<Ripple forElement={touchEl} />
 	{/if}
 	{#if selectedIcon && selectedState}
 		{@render selectedIcon()}
@@ -83,6 +84,7 @@
 			: ''} {attributes.class}"
 	>
 		{@render content()}
+		<span class="np-touch" bind:this={touchEl}></span>
 	</button>
 {:else if isLink(attributes)}
 	<a
@@ -114,7 +116,6 @@
 		display: flex;
 		padding: 0;
 		user-select: none;
-		overflow: hidden;
 		text-decoration: none;
 		align-items: center;
 		justify-content: center;
@@ -263,5 +264,10 @@
 		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
 		color: var(--np-color-inverse-on-surface);
 		background-color: var(--np-color-inverse-surface);
+	}
+	.np-touch {
+		position: absolute;
+		height: max(48px, 100%);
+		width: max(48px, 100%);
 	}
 </style>

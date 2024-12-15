@@ -4,7 +4,7 @@
 
 <svelte:head>
 	<style>
-		.material-symbols-outlined {
+		.np-icon {
 			font-family: 'Material Symbols Outlined';
 			font-weight: normal;
 			font-style: normal;
@@ -20,14 +20,14 @@
 			-webkit-font-feature-settings: 'liga';
 			-webkit-font-smoothing: antialiased;
 		}
-		.material-symbols-outlined {
+		.np-icon {
 			font-variation-settings:
 				'FILL' 0,
 				'wght' 400,
 				'GRAD' 0,
 				'opsz' 24;
 		}
-		:where(.button-icon) .material-symbols-outlined {
+		:where(.button-icon) .np-icon {
 			display: inline-flex;
 			fill: currentColor;
 			color: var(--_icon-color);
@@ -41,4 +41,4 @@
 	</style>
 </svelte:head>
 
-<span class="material-symbols-outlined">{@render children()}</span>
+<span class="np-icon">{@render children()}</span>

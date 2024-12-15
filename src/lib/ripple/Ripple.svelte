@@ -4,8 +4,14 @@
 	interface RippleProps extends HTMLAttributes<HTMLDivElement> {
 		forceHover?: boolean
 		element?: HTMLDivElement
+		forElement?: HTMLElement
 	}
-	let { forceHover = false, element = $bindable(), ...attributes }: RippleProps = $props()
+	let {
+		forceHover = false,
+		element = $bindable(),
+		forElement,
+		...attributes
+	}: RippleProps = $props()
 	let pressed = $state(false)
 	let hovered = $state(false)
 
@@ -257,16 +263,32 @@
 		endPressAnimation()
 	}
 
+	const addEvents = (el: HTMLElement) => {
+		el.removeEventListener('click', handleClick)
+		el.removeEventListener('contextmenu', handleContextmenu)
+		el.removeEventListener('pointercancel', handlePointercancel)
+		el.removeEventListener('pointerdown', handlePointerdown)
+		el.removeEventListener('pointerenter', handlePointerenter)
+		el.removeEventListener('pointerleave', handlePointerleave)
+		el.removeEventListener('pointerup', handlePointerup)
+
+		el.addEventListener('click', handleClick)
+		el.addEventListener('contextmenu', handleContextmenu)
+		el.addEventListener('pointercancel', handlePointercancel)
+		el.addEventListener('pointerdown', handlePointerdown)
+		el.addEventListener('pointerenter', handlePointerenter)
+		el.addEventListener('pointerleave', handlePointerleave)
+		el.addEventListener('pointerup', handlePointerup)
+	}
+
 	$effect(() => {
 		const forcedColors = window?.matchMedia('(forced-colors: active)')
-		if (!forcedColors.matches && element) {
-			element.addEventListener('click', handleClick)
-			element.addEventListener('contextmenu', handleContextmenu)
-			element.addEventListener('pointercancel', handlePointercancel)
-			element.addEventListener('pointerdown', handlePointerdown)
-			element.addEventListener('pointerenter', handlePointerenter)
-			element.addEventListener('pointerleave', handlePointerleave)
-			element.addEventListener('pointerup', handlePointerup)
+		if (!forcedColors.matches && forElement) {
+			addEvents(forElement)
+		} else {
+			if (!forcedColors.matches && element) {
+				addEvents(element)
+			}
 		}
 	})
 </script>
