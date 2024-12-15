@@ -79,7 +79,7 @@
 			: ''}{selectedState
 			? (variant === 'outlined' || variant === 'text') && !toggle
 				? ''
-				: 'selected'
+				: ' selected'
 			: ''} {attributes.class}"
 	>
 		{@render content()}
@@ -93,7 +93,7 @@
 		class="np-icon-button enabled {variant} {selectedState
 			? (variant === 'outlined' || variant === 'text') && !toggle
 				? ''
-				: 'selected'
+				: ' selected'
 			: ''} {attributes.class}"
 	>
 		{@render content()}

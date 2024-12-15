@@ -266,7 +266,7 @@
 	}
 
 	:global(.np-button .button-icon) {
-		--_icon-size: calc((var(--button-height) - 0.5rem) / 2);
+		--_icon-size: calc((var(--button-height) - 0.375rem) / 2);
 		--_icon-color: inherit;
 	}
 
@@ -275,7 +275,7 @@
 		display: block;
 	}
 	:global(.np-button .button-icon svg) {
-		width: calc((var(--button-height) - 0.5rem) / 2);
-		height: calc((var(--button-height) - 0.5rem) / 2);
+		width: calc((var(--button-height) - 0.375rem) / 2);
+		height: calc((var(--button-height) - 0.375rem) / 2);
 	}
 </style>

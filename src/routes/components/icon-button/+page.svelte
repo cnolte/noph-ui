@@ -12,10 +12,13 @@
 <h1>Icon buttons</h1>
 <h2>Types</h2>
 <DemoCaintainer>
-	<IconButton aria-label="Icon Button"><Icon>send</Icon></IconButton>
-	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>send</Icon></IconButton>
-	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>send</Icon></IconButton>
-	<IconButton aria-label="Outlined Icon Button" variant="outlined"><Icon>send</Icon></IconButton>
+	<IconButton aria-label="Icon Button"><Icon>favorite</Icon></IconButton>
+	<IconButton aria-label="Icon Button" selected toggle><Icon>bookmark</Icon></IconButton>
+	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>videocam</Icon></IconButton>
+	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>settings</Icon></IconButton>
+	<IconButton aria-label="Outlined Icon Button" variant="outlined"
+		><Icon>more_vert</Icon></IconButton
+	>
 </DemoCaintainer>
 <h2>Icon button</h2>
 <DemoCaintainer>
