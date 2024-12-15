@@ -191,7 +191,7 @@
 		width: 100%;
 		z-index: 1;
 	}
-	.focused .active-indicator::after {
+	.field:has(input:focus-visible) .active-indicator::after {
 		opacity: 1;
 	}
 	.active-indicator::after {
@@ -355,7 +355,7 @@
 	}
 
 	.no-label .content,
-	.focused .content,
+	.field:has(input:focus-visible) .content,
 	.populated .content {
 		opacity: 1;
 	}
@@ -470,18 +470,6 @@
 	.field:not(.with-start) .label-wrapper {
 		margin-inline-start: 1rem;
 	}
-	.label.floating {
-		font-size: 0.75rem;
-		line-height: 1rem;
-		transform-origin: top left;
-	}
-	.label.floating {
-		position: absolute;
-		top: var(--floating-label-top, 0.5rem);
-	}
-	.with-start .label.floating {
-		left: var(--floating-label-left, 0);
-	}
 	.notch {
 		font-size: 0.75rem;
 		line-height: 1rem;
@@ -498,6 +486,19 @@
 		top: 1rem;
 		left: 0rem;
 	}
+
+	.label.floating {
+		font-size: 0.75rem;
+		line-height: 1rem;
+		transform-origin: top left;
+	}
+	.label.floating {
+		position: absolute;
+		top: var(--floating-label-top, 0.5rem);
+	}
+	.with-start .label.floating {
+		left: var(--floating-label-left, 0);
+	}
 	.label {
 		transition-property: all;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -513,12 +514,12 @@
 		line-height: 1.5rem;
 		width: min-content;
 	}
-	.error .label,
-	.error.focused .label {
-		color: var(--np-color-error);
-	}
-	.focused .label {
+	.field:has(input:focus-visible) .label {
 		color: var(--np-color-primary);
+	}
+	.error .label,
+	.error:has(input:focus-visible) .label {
+		color: var(--np-color-error);
 	}
 	.disabled .label {
 		color: var(--np-color-on-surface);
@@ -531,7 +532,6 @@
 		overflow: hidden;
 	}
 	.disabled.no-label .content,
-	.disabled.focused .content,
 	.disabled.populated .content {
 		opacity: 0.38;
 	}
@@ -603,7 +603,7 @@
 		border-bottom-style: solid;
 		border-top-style: none;
 	}
-	.field:not(.focused):not(.populated) .outline-notch::before {
+	.field:not(:has(input:focus-visible)):not(.populated) .outline-notch::before {
 		border-top-style: solid;
 	}
 
@@ -641,9 +641,9 @@
 		opacity: 0;
 		transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
 	}
-	.focused .outline-start::after,
-	.focused .outline-end::after,
-	.focused .outline-notch::after {
+	.field:has(input:focus-visible) .outline-start::after,
+	.field:has(input:focus-visible) .outline-end::after,
+	.field:has(input:focus-visible) .outline-notch::after {
 		opacity: 1;
 	}
 	.np-outline {
@@ -656,14 +656,14 @@
 		width: 100%;
 		z-index: 1;
 	}
-	.error .np-outline,
-	.error.focused .np-outline {
-		border-color: var(--np-color-error);
-	}
 
-	.focused .np-outline {
+	.field:has(input:focus-visible) .np-outline {
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
+	}
+	.error .np-outline,
+	.error:has(input:focus-visible) .np-outline {
+		border-color: var(--np-color-error);
 	}
 	.disabled .np-outline {
 		border-color: var(--np-color-on-surface);

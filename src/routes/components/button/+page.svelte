@@ -12,7 +12,7 @@
 <h1>Buttons</h1>
 <h2>Types</h2>
 <DemoCaintainer>
-	<Button variant="elevated">Elevated</Button>
+	<Button variant="elevated">{#snippet start()} <Icon>add</Icon>{/snippet}Elevated</Button>
 	<Button variant="filled">Filled</Button>
 	<Button variant="tonal">Tonal</Button>
 	<Button variant="outlined">Outlined</Button>
