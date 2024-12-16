@@ -611,7 +611,8 @@
 		border-top-style: solid;
 	}
 	.field:has(input:focus-visible) .outline-notch::before,
-	.field:has(textarea:focus-visible) .outline-notch::before {
+	.field:has(textarea:focus-visible) .outline-notch::before,
+	.populated .outline-notch::before {
 		border-top-style: none;
 	}
 
