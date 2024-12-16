@@ -18,6 +18,13 @@
 		class={$page.url.pathname === '/about/quick-start' ? 'btn-selected' : 'btn'}
 		--np-text-button-container-height="3rem">Quick Start</Button
 	>
+	<Button
+		onclick={onclose}
+		href="/about/icons"
+		variant="text"
+		class={$page.url.pathname === '/about/icons' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Icons</Button
+	>
 	<Divider style="margin-top: 1rem" />
 	<div class="header">Components</div>
 	<Button

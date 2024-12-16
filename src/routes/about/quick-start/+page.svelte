@@ -40,7 +40,7 @@
 </p>
 <Code value={`<html lang="en" data-theme="dark">`} />
 
-<h3>Typography</h3>
+<h2>Typography</h2>
 <p>
 	Define a font family in your <code>app.css</code>. You can load the default 'Roboto' font, for
 	example, from fonts.google.com.

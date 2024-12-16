@@ -6,30 +6,33 @@
 	let title = $state('Copy Code')
 </script>
 
-<div class="code-container">
-	<IconButton
-		{title}
-		style="position:absolute;right:0.4rem;top:0.4rem;"
-		onclick={() => {
-			navigator.clipboard.writeText(value)
-			title = 'Copied!'
-		}}
-		onmouseleave={() => {
-			setTimeout(() => {
-				title = 'Copy Code'
-			}, 200)
-		}}
-	>
-		<Icon>content_copy</Icon></IconButton
-	>
-	<pre><code>{value}</code></pre>
+<div class="code-wrapper">
+	<div class="code-container">
+		<IconButton
+			{title}
+			style="position:absolute;right:0.4rem;top:0.4rem;"
+			onclick={() => {
+				navigator.clipboard.writeText(value)
+				title = 'Copied!'
+			}}
+			onmouseleave={() => {
+				setTimeout(() => {
+					title = 'Copy Code'
+				}, 200)
+			}}
+		>
+			<Icon>content_copy</Icon></IconButton
+		>
+		<pre><code>{value}</code></pre>
+	</div>
 </div>
 
 <style>
+	.code-wrapper {
+		padding: 0.875rem 0;
+	}
 	.code-container {
 		position: relative;
-		margin-top: 0.875rem;
-		margin-bottom: 0.875rem;
 		border-radius: 1.5rem;
 		border-width: 1px;
 		border-style: solid;

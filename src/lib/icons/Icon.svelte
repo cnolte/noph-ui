@@ -21,11 +21,10 @@
 			-webkit-font-smoothing: antialiased;
 		}
 		.np-icon {
-			font-variation-settings:
-				'FILL' 0,
-				'wght' 400,
-				'GRAD' 0,
-				'opsz' 24;
+			transition-property: font-variation-settings;
+			transition-timing-function: ease-in;
+			transition: font-variation-settings 0.3s;
+			font-variation-settings: var(--np-icon-settings, 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24);
 		}
 		:where(.button-icon) .np-icon {
 			display: inline-flex;
