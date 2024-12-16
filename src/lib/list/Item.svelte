@@ -135,6 +135,7 @@
 		padding: 0.75rem 1rem;
 		min-height: 3.5rem;
 		gap: 1rem;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		color: var(--np-color-on-surface);
 		box-sizing: border-box;
 	}
