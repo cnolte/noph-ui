@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte'
 	import type { HTMLAttributes } from 'svelte/elements'
-	interface DemoContainerProps extends HTMLAttributes<HTMLDivElement> {
+	interface DemoContainerProps extends HTMLAttributes<HTMLElement> {
 		children: Snippet
 	}
 	let { children, ...attributes }: DemoContainerProps = $props()
 </script>
 
-<div {...attributes} class="demo-container">
-	<figure>
+<div class="demo-container">
+	<figure {...attributes}>
 		{@render children()}
 	</figure>
 </div>
@@ -19,9 +19,9 @@
 		margin-right: auto;
 		padding: 1.75rem 0;
 		width: fit-content;
-		align-items: center;
 	}
 	figure {
+		align-items: center;
 		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
