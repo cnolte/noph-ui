@@ -7,7 +7,7 @@
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
 	import { onMount } from 'svelte'
 
-	let { theme }: { theme?: string } = $props()
+	let theme: string | null = $state(null)
 	let value = $state<string>('#5fb9e9')
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
@@ -142,8 +142,9 @@
 }`
 		navigator.clipboard.writeText(schemeString)
 	}
-	onMount(() => {
+	$effect(() => {
 		if (browser) {
+			theme = localStorage.getItem('theme')
 			const sourceColor = sessionStorage.getItem('sourceColor')
 			if (sourceColor) {
 				value = sourceColor
@@ -207,7 +208,7 @@
 				label: darkIcon,
 				onclick: () => {
 					theme = 'dark'
-					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+					localStorage.setItem('theme', theme)
 					document.documentElement.setAttribute('data-theme', theme)
 				},
 				selected: theme === 'dark',
@@ -215,8 +216,8 @@
 			{
 				label: systemIcon,
 				onclick: () => {
-					theme = undefined
-					document.cookie = 'theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax'
+					theme = null
+					localStorage.removeItem('theme')
 					document.documentElement.removeAttribute('data-theme')
 				},
 				selected: !theme,
@@ -225,7 +226,7 @@
 				label: lightIcon,
 				onclick: () => {
 					theme = 'light'
-					document.cookie = `theme=${theme}; path=/; SameSite=Lax`
+					localStorage.setItem('theme', theme)
 					document.documentElement.setAttribute('data-theme', theme)
 				},
 				selected: theme === 'light',
