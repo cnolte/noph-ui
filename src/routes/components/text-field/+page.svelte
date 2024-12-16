@@ -52,6 +52,7 @@
 <h3>Textarea</h3>
 <DemoContainer>
 	<TextField label="Resize" type="textarea" />
+	<TextField label="Resize" type="textarea" variant="outlined" />
 </DemoContainer>
 <Code value={`<TextField label="Resize" type="textarea" />`} />
 

@@ -191,7 +191,8 @@
 		width: 100%;
 		z-index: 1;
 	}
-	.field:has(input:focus-visible) .active-indicator::after {
+	.field:has(input:focus-visible) .active-indicator::after,
+	.field:has(textarea:focus-visible) .active-indicator::after {
 		opacity: 1;
 	}
 	.active-indicator::after {
@@ -356,6 +357,7 @@
 
 	.no-label .content,
 	.field:has(input:focus-visible) .content,
+	.field:has(textarea:focus-visible) .content,
 	.populated .content {
 		opacity: 1;
 	}
@@ -514,11 +516,13 @@
 		line-height: 1.5rem;
 		width: min-content;
 	}
-	.field:has(input:focus-visible) .label {
+	.field:has(input:focus-visible) .label,
+	.field:has(textarea:focus-visible) .label {
 		color: var(--np-color-primary);
 	}
 	.error .label,
-	.error:has(input:focus-visible) .label {
+	.error:has(input:focus-visible) .label,
+	.error:has(textarea:focus-visible) .label {
 		color: var(--np-color-error);
 	}
 	.disabled .label {
@@ -598,13 +602,17 @@
 		border-bottom-style: solid;
 		border-top-style: solid;
 	}
-	.outline-notch::before,
 	.outline-notch::after {
 		border-bottom-style: solid;
 		border-top-style: none;
 	}
-	.field:not(:has(input:focus-visible)):not(.populated) .outline-notch::before {
+	.outline-notch::before {
+		border-bottom-style: solid;
 		border-top-style: solid;
+	}
+	.field:has(input:focus-visible) .outline-notch::before,
+	.field:has(textarea:focus-visible) .outline-notch::before {
+		border-top-style: none;
 	}
 
 	.outline-notch::before,
@@ -643,7 +651,10 @@
 	}
 	.field:has(input:focus-visible) .outline-start::after,
 	.field:has(input:focus-visible) .outline-end::after,
-	.field:has(input:focus-visible) .outline-notch::after {
+	.field:has(input:focus-visible) .outline-notch::after,
+	.field:has(textarea:focus-visible) .outline-start::after,
+	.field:has(textarea:focus-visible) .outline-end::after,
+	.field:has(textarea:focus-visible) .outline-notch::after {
 		opacity: 1;
 	}
 	.np-outline {
@@ -657,12 +668,14 @@
 		z-index: 1;
 	}
 
-	.field:has(input:focus-visible) .np-outline {
+	.field:has(input:focus-visible) .np-outline,
+	.field:has(textarea:focus-visible) .np-outline {
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
 	}
 	.error .np-outline,
-	.error:has(input:focus-visible) .np-outline {
+	.error:has(input:focus-visible) .np-outline,
+	.error:has(textarea:focus-visible) .np-outline {
 		border-color: var(--np-color-error);
 	}
 	.disabled .np-outline {
