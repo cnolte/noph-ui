@@ -26,6 +26,8 @@
 <DemoContainer>
 	<TextField label="Label" value="Value" />
 	<TextField label="Label" value="Value" variant="outlined" />
+	<TextField label="Label" disabled value="Value" />
+	<TextField label="Label" disabled value="Value" variant="outlined" />
 </DemoContainer>
 <Code
 	value={`<TextField label="Label" value="Value" />
@@ -53,6 +55,8 @@
 <DemoContainer>
 	<TextField label="Resize" type="textarea" />
 	<TextField label="Resize" type="textarea" variant="outlined" />
+	<TextField label="Resize" disabled type="textarea" />
+	<TextField label="Resize" disabled type="textarea" variant="outlined" />
 </DemoContainer>
 <Code value={`<TextField label="Resize" type="textarea" />`} />
 
@@ -165,7 +169,7 @@
 			onchange={reportValidity}
 		/>
 		<div class="button-footer">
-			<Button>Submit</Button>
+			<Button variant="filled">Submit</Button>
 		</div>
 	</form>
 </DemoContainer>

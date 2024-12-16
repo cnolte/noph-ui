@@ -14,9 +14,9 @@
 		label,
 		noAsterisk = false,
 		variant = 'filled',
+		placeholder = ' ',
 		...attributes
 	}: TextFieldProps | TextAreaFieldProps = $props()
-	let focused = $state(false)
 
 	let contentEl: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 	let errorTextRaw = $state(errorText)
@@ -40,15 +40,6 @@
 					currentTarget.focus()
 				}
 			})
-			contentEl.addEventListener('focus', () => {
-				if (!attributes.disabled) {
-					focused = true
-				}
-			})
-
-			contentEl.addEventListener('blur', () => {
-				focused = false
-			})
 
 			contentEl.addEventListener('change', (event) => {
 				const { currentTarget } = event as Event & {
@@ -61,7 +52,6 @@
 			})
 		}
 	})
-	let emptyValue = $derived(value === undefined || value === null || value === '')
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -77,15 +67,12 @@
 		if (attributes.disabled) {
 			return
 		}
-		focused = true
 		contentEl?.focus()
 	}}
 >
 	<div
 		class="field"
-		class:populated={!emptyValue}
 		class:error
-		class:focused
 		class:resizable={attributes.type === 'textarea'}
 		class:no-label={!label?.length}
 		class:with-start={start}
@@ -121,12 +108,7 @@
 				<div class="middle">
 					<div class="label-wrapper">
 						{#if label?.length}
-							<span
-								class="label"
-								class:resting={!focused && emptyValue}
-								class:floating={focused || !emptyValue}
-								>{label}{noAsterisk || !attributes.required ? '' : '*'}
-							</span>
+							<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
 						{/if}
 					</div>
 					<div class="content">
@@ -137,6 +119,7 @@
 								bind:this={contentEl}
 								class="input"
 								aria-label={label}
+								{placeholder}
 								rows={attributes.rows || 2}
 							></textarea>
 						{:else}
@@ -151,6 +134,7 @@
 									bind:value
 									bind:this={contentEl}
 									class="input"
+									{placeholder}
 									aria-label={label}
 									aria-invalid={error}
 								/>
@@ -358,7 +342,8 @@
 	.no-label .content,
 	.field:has(input:focus-visible) .content,
 	.field:has(textarea:focus-visible) .content,
-	.populated .content {
+	.field:has(input:not(:placeholder-shown)) .content,
+	.field:has(textarea:not(:placeholder-shown)) .content {
 		opacity: 1;
 	}
 
@@ -483,22 +468,31 @@
 	.label.np-hidden {
 		opacity: 0;
 	}
-	.label.resting {
+
+	.field:has(input:not(:focus-visible):placeholder-shown) .label,
+	.field:has(textarea:not(:focus-visible):placeholder-shown) .label {
 		position: absolute;
 		top: 1rem;
 		left: 0rem;
 	}
-
-	.label.floating {
+	.field:has(input:focus-visible:not(:placeholder-shown)) .label,
+	.field:has(input:focus-visible) .label,
+	.field:has(input:not(:placeholder-shown)) .label,
+	.field:has(textarea:focus-visible:not(:placeholder-shown)) .label,
+	.field:has(textarea:focus-visible) .label,
+	.field:has(textarea:not(:placeholder-shown)) .label {
 		font-size: 0.75rem;
 		line-height: 1rem;
 		transform-origin: top left;
-	}
-	.label.floating {
 		position: absolute;
 		top: var(--floating-label-top, 0.5rem);
 	}
-	.with-start .label.floating {
+	.with-start:has(input:focus-visible:not(:placeholder-shown)) .label,
+	.with-start:has(input:focus-visible) .label,
+	.with-start:has(input:not(:placeholder-shown)) .label,
+	.with-start:has(textarea:focus-visible:not(:placeholder-shown)) .label,
+	.with-start:has(textarea:focus-visible) .label,
+	.with-start:has(textarea:not(:placeholder-shown)) .label {
 		left: var(--floating-label-left, 0);
 	}
 	.label {
@@ -536,7 +530,8 @@
 		overflow: hidden;
 	}
 	.disabled.no-label .content,
-	.disabled.populated .content {
+	.disabled:has(input:not(:placeholder-shown)) .content,
+	.disabled:has(textarea:not(:placeholder-shown)) .content {
 		opacity: 0.38;
 	}
 	.field,
@@ -612,7 +607,7 @@
 	}
 	.field:has(input:focus-visible) .outline-notch::before,
 	.field:has(textarea:focus-visible) .outline-notch::before,
-	.populated .outline-notch::before {
+	.field:has(input:not(:placeholder-shown)) .outline-notch::before {
 		border-top-style: none;
 	}
 
