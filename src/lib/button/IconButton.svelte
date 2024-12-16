@@ -109,6 +109,7 @@
 <style>
 	.np-icon-button {
 		box-sizing: border-box;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		background-color: transparent;
 		border-width: 0;
 		position: relative;

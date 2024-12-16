@@ -101,6 +101,7 @@
 		font-family: inherit;
 		background-color: transparent;
 		border-width: 0;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		position: relative;
 		cursor: pointer;
 		display: inline-flex;
