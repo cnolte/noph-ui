@@ -1,9 +1,5 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements'
-
-	interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-		anchor: HTMLElement
-	}
+	import type { TooltipProps } from './types.ts'
 
 	let { children, anchor, ...attributes }: TooltipProps = $props()
 	let clientWidth = $state(0)

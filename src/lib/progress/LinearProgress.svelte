@@ -1,13 +1,6 @@
 <script lang="ts">
-	interface ProgressProps {
-		value?: number
-		max?: number
-		indeterminate?: boolean
-		fourColor?: boolean
-		buffer?: number
-		'aria-label'?: string | undefined | null
-		element?: HTMLDivElement
-	}
+	import type { LinearProgressProps } from './types.ts'
+
 	let {
 		value = 0,
 		max = 1,
@@ -16,7 +9,7 @@
 		buffer = 0,
 		element = $bindable(),
 		...attributes
-	}: ProgressProps = $props()
+	}: LinearProgressProps = $props()
 
 	let progressStyles = $derived(`transform: scaleX(${(indeterminate ? 1 : value / max) * 100}%)`)
 

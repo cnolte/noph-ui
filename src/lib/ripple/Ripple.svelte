@@ -1,11 +1,6 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements'
+	import type { RippleProps } from './types.ts'
 
-	interface RippleProps extends HTMLAttributes<HTMLDivElement> {
-		forceHover?: boolean
-		element?: HTMLDivElement
-		forElement?: HTMLElement
-	}
 	let {
 		forceHover = false,
 		element = $bindable(),

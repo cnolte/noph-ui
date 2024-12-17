@@ -1,5 +1,3 @@
-// Reexport your entry components here
-
 export * from './button/index.js'
 export * from './card/index.js'
 export * from './checkbox/index.js'

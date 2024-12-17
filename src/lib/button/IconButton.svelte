@@ -2,24 +2,9 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import { generateUUIDv4 } from '$lib/utils.js'
-	import { type Snippet } from 'svelte'
+	import type { IconButtonProps } from './types.ts'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-	interface ButtonProps extends HTMLButtonAttributes {
-		variant?: 'text' | 'filled' | 'outlined' | 'tonal'
-		element?: HTMLElement
-		toggle?: boolean
-		selected?: boolean
-		selectedIcon?: Snippet
-	}
-	interface AnchorProps extends HTMLAnchorAttributes {
-		variant?: 'text' | 'filled' | 'outlined' | 'tonal'
-		element?: HTMLElement
-		disabled?: boolean
-		toggle?: boolean
-		selected?: boolean
-		selectedIcon?: Snippet
-	}
 	let {
 		variant = 'text',
 		toggle = false,
@@ -30,20 +15,16 @@
 		selected = false,
 		selectedIcon,
 		...attributes
-	}: ButtonProps | AnchorProps = $props()
+	}: IconButtonProps = $props()
 
 	let tooltipId = $state(title ? generateUUIDv4() : '')
 	let selectedState = $state(!toggle || selected)
 	let touchEl: HTMLSpanElement | undefined = $state()
 
-	const isButton = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
-	): obj is HTMLButtonAttributes => {
+	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
 	}
-	const isLink = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
-	): obj is HTMLAnchorAttributes => {
+	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
 

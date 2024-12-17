@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte'
 import type { HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements'
 
-export interface TextFieldProps extends Omit<HTMLInputAttributes, 'class'> {
+export interface InputFieldProps extends Omit<HTMLInputAttributes, 'class'> {
 	label?: string
 	type?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'
 	supportingText?: string
@@ -28,3 +28,5 @@ export interface TextAreaFieldProps extends Omit<HTMLTextareaAttributes, 'class'
 	end?: Snippet
 	noAsterisk?: boolean
 }
+
+export type TextFieldProps = InputFieldProps | TextAreaFieldProps

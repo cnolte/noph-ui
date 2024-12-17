@@ -1,12 +1,6 @@
 <script lang="ts">
 	import { generateUUIDv4 } from '$lib/utils.js'
-	import type { Snippet } from 'svelte'
-	import type { HTMLAttributes } from 'svelte/elements'
-
-	interface MenuProps extends HTMLAttributes<HTMLDivElement> {
-		children: Snippet
-		anchor?: HTMLElement | undefined
-	}
+	import type { MenuProps } from './types.ts'
 
 	let { anchor, children, ...attributes }: MenuProps = $props()
 

@@ -2,23 +2,9 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import { generateUUIDv4 } from '$lib/utils.js'
-	import type { Snippet } from 'svelte'
-	import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { ButtonProps } from './types.ts'
 
-	interface ButtonProps extends HTMLButtonAttributes {
-		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
-		start?: Snippet | undefined
-		end?: Snippet | undefined
-		element?: HTMLElement
-		disabled?: boolean
-	}
-	interface AnchorProps extends HTMLAnchorAttributes {
-		variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
-		start?: Snippet
-		end?: Snippet
-		element?: HTMLElement
-		disabled?: boolean
-	}
 	let {
 		variant = 'outlined',
 		children,
@@ -28,18 +14,14 @@
 		element = $bindable(),
 		disabled = false,
 		...attributes
-	}: ButtonProps | AnchorProps = $props()
+	}: ButtonProps = $props()
 
 	let tooltipId = $state(title ? generateUUIDv4() : '')
 
-	const isButton = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes | HTMLAttributes<HTMLDivElement>,
-	): obj is HTMLButtonAttributes => {
+	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
 	}
-	const isLink = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes | HTMLAttributes<HTMLDivElement>,
-	): obj is HTMLAnchorAttributes => {
+	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
 </script>
@@ -78,7 +60,7 @@
 	</button>
 {:else if isLink(attributes)}
 	<a
-		{...attributes as HTMLAnchorAttributes}
+		{...attributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}

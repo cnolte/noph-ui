@@ -1,41 +1,8 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { Snippet } from 'svelte'
-	import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { CardProps } from './types.ts'
+	import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-	interface TextProps extends HTMLAttributes<HTMLDivElement> {
-		variant?: 'elevated' | 'filled' | 'outlined'
-		disabled?: boolean
-		image?: string | undefined
-		element?: HTMLElement
-		headline?: string | undefined
-		subhead?: string
-		supportingText?: string
-		action?: Snippet
-		type: 'text'
-	}
-	interface ButtonProps extends HTMLButtonAttributes {
-		variant?: 'elevated' | 'filled' | 'outlined'
-		disabled?: boolean
-		image?: string | undefined
-		element?: HTMLElement
-		headline?: string | undefined
-		subhead?: string
-		supportingText?: string
-		action?: Snippet
-		type: 'button'
-	}
-	interface AnchorProps extends HTMLAnchorAttributes {
-		variant?: 'elevated' | 'filled' | 'outlined'
-		disabled?: boolean
-		image?: string | undefined
-		element?: HTMLElement
-		headline?: string | undefined
-		subhead?: string
-		supportingText?: string
-		action?: Snippet
-		type: 'link'
-	}
 	let {
 		image,
 		variant = 'outlined',
@@ -46,7 +13,7 @@
 		supportingText,
 		action,
 		...attributes
-	}: TextProps | AnchorProps | ButtonProps = $props()
+	}: CardProps = $props()
 
 	let focused = $state(false)
 
@@ -97,7 +64,9 @@
 		{...attributes as HTMLAttributes<HTMLDivElement>}
 		bind:this={element}
 		aria-disabled={disabled}
-		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
+		class="np-card-container np-card-{variant}{disabled
+			? ' np-card-disabled'
+			: ''} {attributes.class}"
 	>
 		{@render content()}
 	</div>
@@ -105,14 +74,16 @@
 	<button
 		{...attributes as HTMLButtonAttributes}
 		bind:this={element}
-		onfocus={() => {
+		onfocusin={() => {
 			focused = true
 		}}
 		onfocusout={() => {
 			focused = false
 		}}
 		{disabled}
-		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
+		class="np-card-container np-card-{variant}{disabled
+			? ' np-card-disabled'
+			: ''} {attributes.class}"
 	>
 		{@render content()}
 	</button>
@@ -120,13 +91,15 @@
 	<a
 		{...attributes}
 		bind:this={element}
-		onfocus={() => {
+		onfocusin={() => {
 			focused = true
 		}}
 		onfocusout={() => {
 			focused = false
 		}}
-		class="np-card-container np-card-{variant}{disabled ? ' np-card-disabled' : ''}"
+		class="np-card-container np-card-{variant}{disabled
+			? ' np-card-disabled'
+			: ''} {attributes.class}"
 	>
 		{@render content()}
 	</a>

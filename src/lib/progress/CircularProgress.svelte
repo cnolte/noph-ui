@@ -1,12 +1,6 @@
 <script lang="ts">
-	interface ProgressProps {
-		value?: number
-		max?: number
-		indeterminate?: boolean
-		fourColor?: boolean
-		'aria-label'?: string | undefined | null
-		element?: HTMLDivElement
-	}
+	import type { CircularProgressProps } from './types.ts'
+
 	let {
 		value = 0,
 		max = 1,
@@ -14,7 +8,7 @@
 		fourColor = false,
 		element = $bindable(),
 		...attributes
-	}: ProgressProps = $props()
+	}: CircularProgressProps = $props()
 
 	let dashOffset = $derived((1 - value / max) * 100)
 </script>

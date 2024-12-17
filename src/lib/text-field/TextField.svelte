@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import type { TextFieldProps, TextAreaFieldProps } from './types.ts'
+	import type { TextFieldProps } from './types.ts'
 
 	let {
 		value = $bindable(),
@@ -17,7 +17,7 @@
 		variant = 'filled',
 		placeholder = ' ',
 		...attributes
-	}: TextFieldProps | TextAreaFieldProps = $props()
+	}: TextFieldProps = $props()
 
 	let contentEl: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 	let errorTextRaw = $state(errorText)

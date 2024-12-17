@@ -1,27 +1,11 @@
 <script lang="ts">
 	import Item from '$lib/list/Item.svelte'
-	import type { Snippet } from 'svelte'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { MenuItemProps } from './types.ts'
 
-	interface ButtonProps extends HTMLButtonAttributes {
-		selected?: boolean
-		start?: Snippet
-		end?: Snippet
-		supportingText?: Snippet
-	}
-	interface AnchorProps extends HTMLAnchorAttributes {
-		selected?: boolean
-		start?: Snippet
-		end?: Snippet
-		disabled?: boolean
-		supportingText?: Snippet
-	}
+	let { ...attributes }: MenuItemProps = $props()
 
-	let { ...attributes }: ButtonProps | AnchorProps = $props()
-
-	const isButton = (
-		obj: HTMLAnchorAttributes | HTMLButtonAttributes,
-	): obj is HTMLButtonAttributes => {
+	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
 	}
 </script>

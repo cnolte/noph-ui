@@ -56,21 +56,22 @@ Beta (No breaking changes expected)
 
 - Buttons
 - Cards
+- Checkbox
+- Divider
 - Icon buttons
 - Progress indicators
 - Ripple
 - Segmented buttons
 - Snackbar
+- Radio
+- Text fields
 
 In progress (Breaking changes expected)
 
-- Checkbox
 - Chips
 - Lists
 - Menus
-- Radio
 - Tooltips
-- Text fields
 
 Pending
 

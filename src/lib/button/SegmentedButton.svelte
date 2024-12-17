@@ -1,21 +1,7 @@
 <script lang="ts">
 	import CheckIcon from '$lib/icons/CheckIcon.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { Snippet } from 'svelte'
-	import type { HTMLAttributes } from 'svelte/elements'
-
-	interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
-		name: string
-		multiSelect?: boolean
-		options: {
-			label: string | Snippet
-			selected?: boolean
-			disabled?: boolean
-			icon?: Snippet
-			onclick?: (event: Event) => void
-		}[]
-		element?: HTMLElement
-	}
+	import type { SegmentedButtonProps } from './types.ts'
 
 	let {
 		name,
@@ -28,6 +14,7 @@
 </script>
 
 <div
+	{...attributes}
 	class="np-segmented-buttons {attributes.class}"
 	bind:this={element}
 	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"

@@ -1,22 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/button/Button.svelte'
 	import IconButton from '$lib/button/IconButton.svelte'
-	import type { Snippet } from 'svelte'
-	import type { HTMLAttributes } from 'svelte/elements'
-
-	interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
-		label: string
-		supportingText?: string | undefined
-		actionLabel?: string | undefined
-		onActionClick?: (event: Event) => void
-		icon?: Snippet | undefined
-		onIconClick?: (event: Event) => void
-		showPopover?: () => void
-		hidePopover?: () => void
-		timeout?: number
-		element?: HTMLElement
-		popover?: 'auto' | 'manual'
-	}
+	import type { SnackbarProps } from './types.ts'
 
 	let {
 		label,
@@ -61,7 +46,7 @@
 <div
 	{...attributes}
 	{popover}
-	class="np-snackbar"
+	class="np-snackbar {attributes.class}"
 	onbeforetoggle={toggleHandler}
 	bind:this={element}
 >

@@ -1,31 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { Snippet } from 'svelte'
-	import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
-
-	interface ButtonProps extends HTMLButtonAttributes {
-		selected?: boolean
-		start?: Snippet
-		end?: Snippet
-		variant: 'button'
-		supportingText?: Snippet
-	}
-	interface AnchorProps extends HTMLAnchorAttributes {
-		selected?: boolean
-		start?: Snippet
-		end?: Snippet
-		disabled?: boolean
-		variant: 'link'
-		supportingText?: Snippet
-	}
-	interface TextProps extends HTMLAttributes<HTMLDivElement> {
-		selected?: boolean
-		start?: Snippet
-		end?: Snippet
-		disabled?: boolean
-		variant?: 'text'
-		supportingText?: Snippet
-	}
+	import type { ItemProps } from './types.ts'
 
 	let {
 		selected = false,
@@ -35,7 +10,7 @@
 		supportingText,
 		disabled = false,
 		...attributes
-	}: ButtonProps | AnchorProps | TextProps = $props()
+	}: ItemProps = $props()
 
 	let focused = $state(false)
 </script>
