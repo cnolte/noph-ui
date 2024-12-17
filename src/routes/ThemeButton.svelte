@@ -153,7 +153,12 @@
 	})
 </script>
 
-<IconButton popovertarget="palette-menu" title="Change theme" bind:element={menuBtn}>
+<IconButton
+	style="anchor-name:--palette-menu"
+	popovertarget="palette-menu"
+	title="Change theme"
+	bind:element={menuBtn}
+>
 	<Icon>palette</Icon>
 </IconButton>
 
@@ -236,6 +241,7 @@
 
 <style>
 	:global(.theme-menu) {
+		position-anchor: --palette-menu;
 		margin-right: 0px !important;
 		padding: 1rem !important;
 	}

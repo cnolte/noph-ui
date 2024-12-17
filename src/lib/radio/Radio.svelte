@@ -50,6 +50,26 @@
 		outline: none;
 	}
 
+	.np-host:has(input:focus-visible) .np-container {
+		outline-style: solid;
+		outline-color: var(--np-color-primary);
+		outline-width: 3px;
+		outline-offset: 12px;
+		border-radius: 50%;
+		animation: focusAnimation 0.3s ease forwards;
+	}
+	@keyframes focusAnimation {
+		0% {
+			outline-width: 3px;
+		}
+		50% {
+			outline-width: 6px;
+		}
+		100% {
+			outline-width: 3px;
+		}
+	}
+
 	.np-host:has(input:disabled) {
 		cursor: default;
 	}

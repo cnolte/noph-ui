@@ -345,6 +345,7 @@
 		}
 	}
 
+	.np-ripple-surface:hover:before,
 	.np-ripple-hovered::before {
 		background-color: var(--np-ripple-hover-color, var(--np-color-on-surface));
 		opacity: var(--np-ripple-hover-opacity, 0.08);

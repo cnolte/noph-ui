@@ -5,7 +5,7 @@
 
 	interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 		children: Snippet
-		anchor: HTMLElement | undefined
+		anchor?: HTMLElement | undefined
 	}
 
 	let { anchor, children, ...attributes }: MenuProps = $props()
@@ -17,8 +17,7 @@
 	let scrollY = $state(0)
 	let scrollX = $state(0)
 	let popoverElement: HTMLDivElement | undefined = $state()
-	let anchorId = `--${generateUUIDv4()}`
-
+	let anchorId = anchor?.style.getPropertyValue('anchor-name')
 	const refreshValues = () => {
 		if (popoverElement && anchor && !('anchorName' in document.documentElement.style)) {
 			const anchorRect = anchor.getBoundingClientRect()
@@ -52,9 +51,10 @@
 					},
 					{ passive: true },
 				)
-			} else {
-				popoverElement.style.setProperty('position-anchor', anchorId)
-				anchor.style.setProperty('anchor-name', anchorId)
+			} else if (!anchorId) {
+				const generatedId = `--${generateUUIDv4()}`
+				popoverElement.style.setProperty('position-anchor', generatedId)
+				anchor.style.setProperty('anchor-name', generatedId)
 			}
 		}
 	})

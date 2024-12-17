@@ -264,6 +264,7 @@
 	.button-icon {
 		display: inline-flex;
 		align-items: center;
+		pointer-events: none;
 	}
 
 	:global(.np-button .button-icon) {

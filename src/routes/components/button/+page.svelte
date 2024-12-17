@@ -100,9 +100,9 @@
 	<Button --np-outlined-button-container-height="56px">Height: 56px</Button>
 </DemoCaintainer>
 <Code
-	value={`<Button>Small</Button>
-<Button --np-outlined-button-container-height="48px">Medium</Button>
-<Button --np-outlined-button-container-height="56px">Large</Button>`}
+	value={`<Button>Default: 40px</Button>
+<Button --np-outlined-button-container-height="48px">Height: 48px</Button>
+<Button --np-outlined-button-container-height="56px">Height: 56px</Button>`}
 />
 <h2>Theming</h2>
 

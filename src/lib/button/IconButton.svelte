@@ -59,6 +59,7 @@
 {#snippet content()}
 	{#if !disabled}
 		<Ripple forElement={touchEl} />
+		<span class="np-touch" bind:this={touchEl}></span>
 	{/if}
 	{#if selectedIcon && selectedState}
 		{@render selectedIcon()}
@@ -84,7 +85,6 @@
 			: ''} {attributes.class}"
 	>
 		{@render content()}
-		<span class="np-touch" bind:this={touchEl}></span>
 	</button>
 {:else if isLink(attributes)}
 	<a
