@@ -16,19 +16,19 @@
 		noAsterisk = false,
 		variant = 'filled',
 		placeholder = ' ',
+		element = $bindable(),
 		...attributes
 	}: TextFieldProps = $props()
 
-	let contentEl: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 	let errorTextRaw = $state(errorText)
 
 	$effect(() => {
-		if (contentEl) {
-			contentEl.form?.addEventListener('reset', () => {
+		if (element) {
+			element.form?.addEventListener('reset', () => {
 				error = false
 				value = ''
 			})
-			contentEl.addEventListener('invalid', (event) => {
+			element.addEventListener('invalid', (event) => {
 				event.preventDefault()
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
@@ -42,7 +42,7 @@
 				}
 			})
 
-			contentEl.addEventListener('change', (event) => {
+			element.addEventListener('change', (event) => {
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
@@ -68,7 +68,7 @@
 		if (attributes.disabled) {
 			return
 		}
-		contentEl?.focus()
+		element?.focus()
 	}}
 >
 	<div
@@ -117,7 +117,7 @@
 							<textarea
 								{...attributes}
 								bind:value
-								bind:this={contentEl}
+								bind:this={element}
 								class="input"
 								aria-label={label}
 								{placeholder}
@@ -133,7 +133,7 @@
 								<input
 									{...attributes}
 									bind:value
-									bind:this={contentEl}
+									bind:this={element}
 									class="input"
 									{placeholder}
 									aria-label={label}
