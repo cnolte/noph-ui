@@ -20,7 +20,10 @@
 		...attributes
 	}: TextFieldProps = $props()
 
-	let errorTextRaw = $state(errorText)
+	let errorTextRaw = $state()
+	$effect(() => {
+		errorTextRaw = errorText
+	})
 	let textElement: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 
 	$effect(() => {
