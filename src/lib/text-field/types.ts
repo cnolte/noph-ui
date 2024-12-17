@@ -13,7 +13,7 @@ export interface InputFieldProps extends Omit<HTMLInputAttributes, 'class'> {
 	start?: Snippet
 	end?: Snippet
 	noAsterisk?: boolean
-	element?: HTMLInputElement
+	element?: HTMLSpanElement
 }
 
 export interface TextAreaFieldProps extends Omit<HTMLTextareaAttributes, 'class'> {
@@ -28,7 +28,7 @@ export interface TextAreaFieldProps extends Omit<HTMLTextareaAttributes, 'class'
 	start?: Snippet
 	end?: Snippet
 	noAsterisk?: boolean
-	element?: HTMLTextAreaElement
+	element?: HTMLSpanElement
 }
 
 export type TextFieldProps = InputFieldProps | TextAreaFieldProps

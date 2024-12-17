@@ -21,14 +21,15 @@
 	}: TextFieldProps = $props()
 
 	let errorTextRaw = $state(errorText)
+	let textElement: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 
 	$effect(() => {
-		if (element) {
-			element.form?.addEventListener('reset', () => {
+		if (textElement) {
+			textElement.form?.addEventListener('reset', () => {
 				error = false
 				value = ''
 			})
-			element.addEventListener('invalid', (event) => {
+			textElement.addEventListener('invalid', (event) => {
 				event.preventDefault()
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
@@ -42,7 +43,7 @@
 				}
 			})
 
-			element.addEventListener('change', (event) => {
+			textElement.addEventListener('change', (event) => {
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
@@ -64,11 +65,12 @@
 			? '--top-space:1rem;--bottom-space:1rem'
 			: '') + style}
 	class="text-field"
+	bind:this={element}
 	onclick={() => {
 		if (attributes.disabled) {
 			return
 		}
-		element?.focus()
+		textElement?.focus()
 	}}
 >
 	<div
@@ -117,7 +119,7 @@
 							<textarea
 								{...attributes}
 								bind:value
-								bind:this={element}
+								bind:this={textElement}
 								class="input"
 								aria-label={label}
 								{placeholder}
@@ -133,7 +135,7 @@
 								<input
 									{...attributes}
 									bind:value
-									bind:this={element}
+									bind:this={textElement}
 									class="input"
 									{placeholder}
 									aria-label={label}
