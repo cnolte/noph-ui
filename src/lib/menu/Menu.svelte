@@ -2,7 +2,14 @@
 	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { MenuProps } from './types.ts'
 
-	let { anchor, children, ...attributes }: MenuProps = $props()
+	let {
+		anchor,
+		children,
+		element = $bindable(),
+		showPopover = $bindable(),
+		hidePopover = $bindable(),
+		...attributes
+	}: MenuProps = $props()
 
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
@@ -10,30 +17,38 @@
 	let innerWidth = $state(0)
 	let scrollY = $state(0)
 	let scrollX = $state(0)
-	let popoverElement: HTMLDivElement | undefined = $state()
 	let anchorId = anchor?.style.getPropertyValue('anchor-name')
+
+	showPopover = () => {
+		element?.showPopover()
+	}
+
+	hidePopover = () => {
+		element?.hidePopover()
+	}
+
 	const refreshValues = () => {
-		if (popoverElement && anchor && !('anchorName' in document.documentElement.style)) {
+		if (element && anchor && !('anchorName' in document.documentElement.style)) {
 			const anchorRect = anchor.getBoundingClientRect()
 			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
-				popoverElement.style.top = `${anchorRect.top - clientHeight - 2}px`
+				element.style.top = `${anchorRect.top - clientHeight - 2}px`
 			} else {
-				popoverElement.style.top = `${anchorRect.bottom + 2}px`
+				element.style.top = `${anchorRect.bottom + 2}px`
 			}
 			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
 			if (left > innerWidth - clientWidth) {
-				popoverElement.style.left = `${innerWidth - clientWidth - 8}px`
+				element.style.left = `${innerWidth - clientWidth - 8}px`
 			} else if (left < 8) {
-				popoverElement.style.left = '8px'
+				element.style.left = '8px'
 			} else {
-				popoverElement.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+				element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
 			}
 		}
 	}
 	$effect(refreshValues)
 
 	$effect(() => {
-		if (anchor && popoverElement) {
+		if (anchor && element) {
 			if (!('anchorName' in document.documentElement.style)) {
 				anchor.addEventListener('click', () => {
 					refreshValues()
@@ -47,7 +62,7 @@
 				)
 			} else if (!anchorId) {
 				const generatedId = `--${generateUUIDv4()}`
-				popoverElement.style.setProperty('position-anchor', generatedId)
+				element.style.setProperty('position-anchor', generatedId)
 				anchor.style.setProperty('anchor-name', generatedId)
 			}
 		}
@@ -63,7 +78,7 @@
 />
 
 <div
-	bind:this={popoverElement}
+	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
 	{...attributes}

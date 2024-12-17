@@ -4,6 +4,9 @@ import type { HTMLAttributes, HTMLAnchorAttributes, HTMLButtonAttributes } from 
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 	children: Snippet
 	anchor?: HTMLElement | undefined
+	showPopover?: () => void
+	hidePopover?: () => void
+	element?: HTMLDivElement
 }
 
 interface ButtonProps extends HTMLButtonAttributes {
