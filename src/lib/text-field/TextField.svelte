@@ -12,6 +12,7 @@
 		start,
 		end,
 		label,
+		style,
 		noAsterisk = false,
 		variant = 'filled',
 		placeholder = ' ',
@@ -57,11 +58,11 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <span
-	style={variant === 'outlined'
+	style={(variant === 'outlined'
 		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px'
 		: !label?.length
 			? '--top-space:1rem;--bottom-space:1rem'
-			: ''}
+			: '') + style}
 	class="text-field"
 	onclick={() => {
 		if (attributes.disabled) {

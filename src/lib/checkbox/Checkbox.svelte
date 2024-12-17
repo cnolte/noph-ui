@@ -1,43 +1,32 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { HTMLInputAttributes } from 'svelte/elements'
+	import type { CheckboxProps } from './types.ts'
 
 	let {
 		indeterminate = $bindable(),
 		checked = $bindable(),
 		...attributes
-	}: HTMLInputAttributes = $props()
-	let selected = $derived(checked || indeterminate)
+	}: CheckboxProps = $props()
 </script>
 
 <div class="np-host">
-	<div
-		class:selected
-		class="np-container"
-		class:checked
-		class:unselected={!selected}
-		class:prev-checked={!checked}
-		class:prev-unselected={selected}
-		class:indeterminate
-	>
+	<div class="np-container">
 		<label class="np-input-wrapper">
 			<input
-				{...attributes}
 				class="np-input"
 				type="checkbox"
-				{indeterminate}
+				bind:indeterminate
 				bind:checked
 				aria-checked={indeterminate ? 'mixed' : undefined}
-				onclick={() => {
-					indeterminate = false
-				}}
+				{...attributes}
 			/>
-			<Ripple />
+			{#if !attributes.disabled}
+				<Ripple />
+			{/if}
 		</label>
 
 		<div class="np-outline"></div>
 		<div class="np-background"></div>
-		{#if !attributes.disabled}{/if}
 		<svg class="np-icon" viewBox="0 0 18 18" aria-hidden="true">
 			<rect class="mark short" />
 			<rect class="mark long" />
@@ -59,6 +48,9 @@
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		cursor: pointer;
 		margin: max(0px, (48px - 18px)/2);
+	}
+	.np-host:has(input:disabled) {
+		cursor: default;
 	}
 	.np-container {
 		border-radius: inherit;
@@ -114,6 +106,12 @@
 	.np-background {
 		border-radius: inherit;
 	}
+	.np-outline {
+		border-color: var(--np-checkbox-outline-color, var(--np-color-on-surface-variant));
+		border-style: solid;
+		border-width: 2px;
+		box-sizing: border-box;
+	}
 	:where(:hover) .np-outline {
 		border-color: var(--np-color-on-surface);
 		border-width: 2px;
@@ -122,11 +120,14 @@
 		border-color: var(--np-color-on-surface);
 		border-width: 2px;
 	}
-	.np-outline {
-		border-color: var(--np-checkbox-outline-color, var(--np-color-on-surface-variant));
-		border-style: solid;
+	.np-container:has(input:disabled) .np-outline {
+		border-color: var(--np-color-on-surface);
 		border-width: 2px;
-		box-sizing: border-box;
+		opacity: 0.38;
+	}
+	.np-container:has(input:disabled:checked) .np-outline,
+	.np-container:has(input:disabled:indeterminate) .np-outline {
+		visibility: hidden;
 	}
 	.np-background {
 		background-color: var(--np-color-primary);
@@ -139,29 +140,42 @@
 		transition-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15), linear;
 		transform: scale(0.6);
 	}
-	:where(.selected) :is(.np-background, .np-icon) {
+	.np-container:has(input:indeterminate) .np-background,
+	.np-container:has(input:checked) .np-background,
+	.np-container:has(input:indeterminate) .np-icon,
+	.np-container:has(input:checked) .np-icon {
 		opacity: 1;
 		transition-duration: 350ms, 50ms;
 		transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1), linear;
 		transform: scale(1);
+	}
+	.np-container:has(input:disabled:checked) .np-background,
+	.np-container:has(input:disabled:indeterminate) .np-background {
+		background: var(--np-color-on-surface);
+		opacity: 0.38;
 	}
 	.np-icon {
 		fill: var(--np-checkbox-selected-icon-color, var(--np-color-on-primary));
 		height: 18px;
 		width: 18px;
 	}
-	.checked .mark.short,
-	.prev-checked.unselected .mark.short {
+	.np-container:has(input:disabled) .np-icon {
+		fill: var(--np-color-surface);
+	}
+	.np-container:has(input:checked) .mark.short,
+	.np-container:has(input:not(:checked):not(:indeterminate)) .mark.short {
 		height: 5.6568542495px;
 	}
-	.prev-unselected .mark {
+	.np-container:has(input:indeterminate) .mark,
+	.np-container:has(input:checked) .mark {
 		transition-property: none;
 	}
-	.checked .mark,
-	.prev-checked.unselected .mark {
+	.np-container:has(input:checked) .mark,
+	.np-container:has(input:not(:checked):not(:indeterminate)) .mark {
 		transform: scaleY(-1) translate(7px, -14px) rotate(45deg);
 	}
-	.selected .mark {
+	.np-container:has(input:indeterminate) .mark,
+	.np-container:has(input:checked) .mark {
 		animation-duration: 350ms;
 		animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
 		transition-duration: 350ms;
@@ -178,11 +192,11 @@
 		transition-duration: 150ms;
 		transition-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
 	}
-	.prev-unselected.checked .mark.long {
+	.np-container:has(input:checked) .mark.long {
 		animation-name: prev-unselected-to-checked;
 	}
-	.checked .mark.long,
-	.prev-checked.unselected .mark.long {
+	.np-container:has(input:checked) .mark.long,
+	.np-container:has(input:not(:checked):not(:indeterminate)) .mark.long {
 		width: 11.313708499px;
 	}
 	.mark.long {
@@ -190,7 +204,7 @@
 		transition-property: transform, width;
 		width: 10px;
 	}
-	.indeterminate .mark {
+	.np-container:has(input:indeterminate) .mark {
 		transform: scaleY(-1) translate(4px, -10px) rotate(0deg);
 	}
 	@keyframes prev-unselected-to-checked {

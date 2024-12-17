@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { HTMLInputAttributes } from 'svelte/elements'
-	let { ...attributes }: HTMLInputAttributes = $props()
+	import type { RadioProps } from './types.ts'
+
+	let { ...attributes }: RadioProps = $props()
 
 	let touchEl: HTMLSpanElement | undefined = $state()
 </script>
