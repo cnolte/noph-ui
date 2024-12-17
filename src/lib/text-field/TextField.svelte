@@ -60,9 +60,9 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <span
 	style={(variant === 'outlined'
-		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px'
+		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
 		: !label?.length
-			? '--top-space:1rem;--bottom-space:1rem'
+			? '--top-space:1rem;--bottom-space:1rem;'
 			: '') + style}
 	class="text-field"
 	bind:this={element}
