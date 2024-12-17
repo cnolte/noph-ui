@@ -49,7 +49,7 @@
 				}
 				if (currentTarget.checkValidity()) {
 					error = false
-					errorTextRaw = ''
+					errorTextRaw = errorText
 				}
 			})
 		}
