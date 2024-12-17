@@ -20,7 +20,7 @@
 		...attributes
 	}: TextFieldProps = $props()
 
-	let errorTextRaw = $state()
+	let errorTextRaw: string | undefined = $state()
 	$effect(() => {
 		errorTextRaw = errorText
 	})
