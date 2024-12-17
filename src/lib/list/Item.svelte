@@ -7,7 +7,7 @@
 		selected?: boolean
 		start?: Snippet
 		end?: Snippet
-		type: 'button'
+		variant: 'button'
 		supportingText?: Snippet
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
@@ -15,7 +15,7 @@
 		start?: Snippet
 		end?: Snippet
 		disabled?: boolean
-		type: 'link'
+		variant: 'link'
 		supportingText?: Snippet
 	}
 	interface TextProps extends HTMLAttributes<HTMLDivElement> {
@@ -23,7 +23,7 @@
 		start?: Snippet
 		end?: Snippet
 		disabled?: boolean
-		type?: 'text'
+		variant?: 'text'
 		supportingText?: Snippet
 	}
 
@@ -64,7 +64,7 @@
 			{@render end()}
 		</div>
 	{/if}
-	{#if !disabled && !(attributes.type === 'text' || attributes.type === undefined)}
+	{#if !disabled && !(attributes.variant === 'text' || attributes.variant === undefined)}
 		<Ripple forceHover={focused} />
 	{/if}
 {/snippet}
@@ -73,11 +73,11 @@
 	<div aria-disabled="true" class="np-item disabled {attributes.class}">
 		{@render content()}
 	</div>
-{:else if attributes.type === 'text' || attributes.type === undefined}
+{:else if attributes.variant === 'text' || attributes.variant === undefined}
 	<div {...attributes} class="{selected ? 'selected ' : ''} np-item {attributes.class}">
 		{@render content()}
 	</div>
-{:else if attributes.type === 'button'}
+{:else if attributes.variant === 'button'}
 	<button
 		{...attributes}
 		class="{selected ? 'selected ' : ''} np-item {attributes.class}"
@@ -88,7 +88,7 @@
 			focused = false
 		}}>{@render content()}</button
 	>
-{:else if attributes.type === 'link'}
+{:else if attributes.variant === 'link'}
 	<a
 		{...attributes}
 		class="{selected ? 'selected ' : ''} np-item {attributes.class}"

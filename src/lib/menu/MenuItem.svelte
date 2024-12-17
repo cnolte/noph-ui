@@ -28,9 +28,9 @@
 
 <li class="np-menu-item" role="menuitem">
 	{#if isButton(attributes)}
-		<Item {...attributes} type="button" />
+		<Item {...attributes} variant="button" />
 	{:else}
-		<Item {...attributes} type="link" />
+		<Item {...attributes} variant="link" />
 	{/if}
 </li>
 

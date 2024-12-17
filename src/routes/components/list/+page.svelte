@@ -24,7 +24,7 @@
 				Firefox is the spiritual successor of Netscape Navigator.
 			{/snippet}Firefox</ListItem
 		>
-		<ListItem type="button"
+		<ListItem variant="button"
 			>{#snippet end()}
 				<Icon>open_in_new</Icon>
 			{/snippet}
@@ -46,7 +46,7 @@
 			Firefox is the spiritual successor of Netscape Navigator.
 		{/snippet}
 	</ListItem>
-	<ListItem type="button">
+	<ListItem variant="button">
 		Compare benchmarks
 		{#snippet supportingText()}
 			This will open a new tab

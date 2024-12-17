@@ -7,7 +7,7 @@
 		selected?: boolean
 		start?: Snippet
 		end?: Snippet
-		type: 'button'
+		variant: 'button'
 		supportingText?: Snippet
 	}
 	interface AnchorProps extends HTMLAnchorAttributes {
@@ -15,7 +15,7 @@
 		start?: Snippet
 		end?: Snippet
 		disabled?: boolean
-		type: 'link'
+		variant: 'link'
 		supportingText?: Snippet
 	}
 	interface TextProps extends HTMLAttributes<HTMLDivElement> {
@@ -23,7 +23,7 @@
 		start?: Snippet
 		end?: Snippet
 		disabled?: boolean
-		type?: 'text'
+		variant?: 'text'
 		supportingText?: Snippet
 	}
 
