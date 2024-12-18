@@ -91,6 +91,7 @@
 
 <style>
 	.np-menu[popover] {
+		color: var(--np-menu-text-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
 		overflow: auto;
 		border: none;
