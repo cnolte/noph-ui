@@ -56,22 +56,23 @@ Beta (No breaking changes expected)
 
 - Buttons
 - Cards
-- Checkbox
+- Checkbox (Docs missing)
 - Divider
 - Icon buttons
+- Lists (Docs missing)
 - Progress indicators
+- Radio (Docs missing)
 - Ripple
 - Segmented buttons
 - Snackbar
-- Radio
-- Text fields
+- Text fields (Textarea Docs missing)
 
 In progress (Breaking changes expected)
 
 - Chips
-- Lists
-- Menus
-- Tooltips
+- Dialogs (Fullscreen + Docs missing)
+- Menus (Positioning missing + Docs missing)
+- Tooltips (Positioning missing)
 
 Pending
 

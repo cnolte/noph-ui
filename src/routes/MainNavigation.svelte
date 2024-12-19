@@ -57,6 +57,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/dialogs"
+		variant="text"
+		class={$page.url.pathname === '/components/dialogs' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Dialogs</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/divider"
 		variant="text"
 		class={$page.url.pathname === '/components/divider' ? 'btn-selected' : 'btn'}

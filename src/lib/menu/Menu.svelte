@@ -112,7 +112,9 @@
 	}
 	.np-menu:popover-open {
 		opacity: 1;
-		@starting-style {
+	}
+	@starting-style {
+		.np-menu:popover-open {
 			opacity: 0;
 		}
 	}
