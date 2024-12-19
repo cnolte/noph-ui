@@ -72,6 +72,7 @@ In progress (Breaking changes expected)
 - Chips
 - Dialogs (Fullscreen + Docs missing)
 - Menus (Positioning missing + Docs missing)
+- Navigation Rail (Badge is missing)
 - Tooltips (Positioning missing)
 
 Pending

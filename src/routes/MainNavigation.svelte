@@ -92,6 +92,13 @@
 	>
 	<Button
 		onclick={onclose}
+		href="/components/navigation-rail"
+		variant="text"
+		class={$page.url.pathname === '/components/navigation-rail' ? 'btn-selected' : 'btn'}
+		--np-text-button-container-height="3rem">Navigation Rail</Button
+	>
+	<Button
+		onclick={onclose}
 		href="/components/progress"
 		variant="text"
 		class={$page.url.pathname === '/components/progress' ? 'btn-selected' : 'btn'}

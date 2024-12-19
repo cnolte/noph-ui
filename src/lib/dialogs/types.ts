@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes, HTMLFormAttributes } from 'svelte/elements'
+import type { HTMLFormAttributes } from 'svelte/elements'
 
 export interface DialogProps extends Omit<HTMLFormAttributes, 'class' | 'popover'> {
 	icon?: Snippet
