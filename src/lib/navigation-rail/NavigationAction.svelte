@@ -48,6 +48,25 @@
 		flex-direction: column;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	}
+	.np-navigation-action:focus-visible {
+		outline-style: solid;
+		outline-color: var(--np-color-primary);
+		outline-width: 3px;
+		outline-offset: 2px;
+		border-radius: 1rem;
+		animation: focusAnimation 0.3s ease forwards;
+	}
+	@keyframes focusAnimation {
+		0% {
+			outline-width: 3px;
+		}
+		50% {
+			outline-width: 6px;
+		}
+		100% {
+			outline-width: 3px;
+		}
+	}
 	.np-navigation-action-icon {
 		position: relative;
 		color: var(--np-color-on-surface-variant);
