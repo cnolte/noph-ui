@@ -12,6 +12,7 @@
 		subhead,
 		supportingText,
 		action,
+		children,
 		...attributes
 	}: CardProps = $props()
 
@@ -49,6 +50,9 @@
 			<span class="np-card-supporting-text">
 				{supportingText}
 			</span>
+		{/if}
+		{#if children}
+			{@render children()}
 		{/if}
 		{#if action}
 			<div class="np-card-action">{@render action()}</div>
