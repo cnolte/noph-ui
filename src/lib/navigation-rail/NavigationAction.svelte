@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
-	import type { NavigationAction } from './types.ts'
+	import type { NavigationActionProps } from './types.ts'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 
-	let { selected, icon, label, ...attributes }: NavigationAction = $props()
+	let { selected, icon, label, ...attributes }: NavigationActionProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
 
 	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {

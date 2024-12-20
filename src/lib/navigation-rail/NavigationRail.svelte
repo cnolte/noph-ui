@@ -1,16 +1,22 @@
 <script lang="ts">
-	import type { NavigationRail } from './types.ts'
+	import type { NavigationRailProps } from './types.ts'
 
-	let { children, ...attributes }: NavigationRail = $props()
+	let { children, ...attributes }: NavigationRailProps = $props()
 </script>
 
-<nav {...attributes} class="navigation-rail">
-	{#if children}
-		{@render children()}
-	{/if}
-</nav>
+<div {...attributes} class="navigation-rail-container {attributes.class}">
+	<nav class="navigation-rail">
+		{#if children}
+			{@render children()}
+		{/if}
+	</nav>
+</div>
 
 <style>
+	.navigation-rail-container {
+		overflow-y: auto;
+		background-color: var(--np-color-surface);
+	}
 	.navigation-rail {
 		z-index: 8;
 		display: flex;
@@ -18,6 +24,5 @@
 		justify-content: space-between;
 		width: 80px;
 		gap: 0.75rem;
-		background-color: var(--np-color-surface);
 	}
 </style>
