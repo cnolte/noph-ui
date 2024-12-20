@@ -89,7 +89,7 @@
 		color: var(--np-color-on-surface-variant);
 	}
 	.np-navigation-action-selected .np-navigation-action-icon {
-		color: var(--np-color-secondary-container);
+		color: var(--np-color-on-secondary-container);
 		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 	}
 	.np-navigation-action-icon::before {
@@ -102,7 +102,7 @@
 		transition-duration: 0.2s;
 		transition-property: transform, opacity;
 		transition-timing-function: linear;
-		background-color: var(--np-color-on-secondary-container);
+		background-color: var(--np-color-secondary-container);
 		border-radius: 100px;
 		z-index: -1;
 	}
