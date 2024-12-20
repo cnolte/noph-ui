@@ -213,7 +213,10 @@
 		opacity: 0.38;
 	}
 	.background {
-		background: var(--np-text-field-background-color, var(--np-color-surface-container-highest));
+		background: var(
+			--np-text-field-filled-background-color,
+			var(--np-color-surface-container-highest)
+		);
 	}
 	.disabled .background {
 		background: var(--np-color-on-surface);
