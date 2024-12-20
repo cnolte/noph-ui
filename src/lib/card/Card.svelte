@@ -197,7 +197,7 @@
 		display: grid;
 		position: relative;
 		align-self: start;
-		min-width: calc(100% - 48px);
+		min-width: calc(100% - 32px);
 		margin: 1rem;
 		grid-gap: 0.5rem;
 		gap: 0.5rem;
