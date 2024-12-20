@@ -15,10 +15,10 @@
 <style>
 	.navigation-rail-container {
 		overflow-y: auto;
+		z-index: 8;
 		background-color: var(--np-color-surface);
 	}
 	.navigation-rail {
-		z-index: 8;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

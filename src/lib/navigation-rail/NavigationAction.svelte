@@ -32,7 +32,11 @@
 		{@render content()}
 	</button>
 {:else if isLink(attributes)}
-	<a {...attributes} class="np-navigation-action {attributes.class}">
+	<a
+		{...attributes}
+		class:np-navigation-action-selected={selected}
+		class="np-navigation-action {attributes.class}"
+	>
 		{@render content()}
 	</a>
 {/if}
