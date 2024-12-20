@@ -40,7 +40,7 @@
 	<TextField placeholder="email@domain.com" variant="outlined" />
 	<label>
 		City
-		<TextField variant="outlined" />
+		<TextField variant="outlined" aria-label="City" />
 	</label>
 </DemoContainer>
 <Code
@@ -48,7 +48,7 @@
 <TextField placeholder="email@domain.com" variant="outlined" />
 <label>
 	City
-	<TextField variant="outlined" />
+	<TextField variant="outlined" aria-label="City" />
 </label>`}
 />
 <h3>Textarea</h3>
