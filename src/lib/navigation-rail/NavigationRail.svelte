@@ -4,24 +4,21 @@
 	let { children, ...attributes }: NavigationRailProps = $props()
 </script>
 
-<div {...attributes} class="navigation-rail-container {attributes.class}">
-	<nav class="navigation-rail">
-		{#if children}
-			{@render children()}
-		{/if}
-	</nav>
-</div>
+<nav {...attributes} class="navigation-rail {attributes.class}">
+	{#if children}
+		{@render children()}
+	{/if}
+</nav>
 
 <style>
-	.navigation-rail-container {
+	.navigation-rail {
 		overflow-y: auto;
 		z-index: 8;
 		background-color: var(--np-color-surface);
-	}
-	.navigation-rail {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		align-items: center;
 		width: 80px;
 		gap: 0.75rem;
 	}
