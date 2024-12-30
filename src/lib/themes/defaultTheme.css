@@ -1,0 +1,78 @@
+:root {
+	color-scheme: light dark;
+	--np-color-background: light-dark(#f7fafe, #101417);
+	--np-color-error: light-dark(#ba1a1a, #ffb4ab);
+	--np-color-error-container: light-dark(#ffdad6, #93000a);
+	--np-color-inverse-on-surface: light-dark(#eef1f5, #2d3134);
+	--np-color-inverse-primary: light-dark(#7dd0ff, #00658b);
+	--np-color-inverse-surface: light-dark(#2d3134, #e0e3e7);
+	--np-color-neutral-palette-key-color: light-dark(#73777b, #73777b);
+	--np-color-neutral-variant-palette-key-color: light-dark(#6f787f, #6f787f);
+	--np-color-on-background: light-dark(#181c1f, #e0e3e7);
+	--np-color-on-error: light-dark(#ffffff, #690005);
+	--np-color-on-error-container: light-dark(#93000a, #ffdad6);
+	--np-color-on-primary: light-dark(#ffffff, #00344a);
+	--np-color-on-primary-container: light-dark(#004863, #004863);
+	--np-color-on-primary-fixed: light-dark(#001e2c, #001e2c);
+	--np-color-on-primary-fixed-variant: light-dark(#004c69, #004c69);
+	--np-color-on-secondary: light-dark(#ffffff, #133444);
+	--np-color-on-secondary-container: light-dark(#4a687b, #9dbdd1);
+	--np-color-on-secondary-fixed: light-dark(#001e2c, #001e2c);
+	--np-color-on-secondary-fixed-variant: light-dark(#2c4a5c, #2c4a5c);
+	--np-color-on-surface: light-dark(#181c1f, #e0e3e7);
+	--np-color-on-surface-variant: light-dark(#3f484e, #bec8cf);
+	--np-color-on-tertiary: light-dark(#ffffff, #491a5f);
+	--np-color-on-tertiary-container: light-dark(#5d2e73, #5d2e73);
+	--np-color-on-tertiary-fixed: light-dark(#310048, #310048);
+	--np-color-on-tertiary-fixed-variant: light-dark(#623377, #623377);
+	--np-color-outline: light-dark(#6f787f, #899299);
+	--np-color-outline-variant: light-dark(#bec8cf, #3f484e);
+	--np-color-primary: light-dark(#00658b, #8ad4ff);
+	--np-color-primary-container: light-dark(#5fb9e9, #5fb9e9);
+	--np-color-primary-fixed: light-dark(#c4e7ff, #c4e7ff);
+	--np-color-primary-fixed-dim: light-dark(#7dd0ff, #7dd0ff);
+	--np-color-primary-palette-key-color: light-dark(#0980ad, #0980ad);
+	--np-color-scrim: light-dark(#000000, #000000);
+	--np-color-secondary: light-dark(#446274, #abcbe0);
+	--np-color-secondary-container: light-dark(#c7e7fd, #2e4d5e);
+	--np-color-secondary-fixed: light-dark(#c7e7fd, #c7e7fd);
+	--np-color-secondary-fixed-dim: light-dark(#abcbe0, #abcbe0);
+	--np-color-secondary-palette-key-color: light-dark(#5d7b8e, #5d7b8e);
+	--np-color-shadow: light-dark(#000000, #000000);
+	--np-color-surface: light-dark(#f7fafe, #101417);
+	--np-color-surface-bright: light-dark(#f7fafe, #363a3d);
+	--np-color-surface-container: light-dark(#ebeef2, #1c2023);
+	--np-color-surface-container-high: light-dark(#e5e8ec, #262a2e);
+	--np-color-surface-container-highest: light-dark(#e0e3e7, #313538);
+	--np-color-surface-container-low: light-dark(#f1f4f8, #181c1f);
+	--np-color-surface-container-lowest: light-dark(#ffffff, #0b0f12);
+	--np-color-surface-dim: light-dark(#d7dade, #101417);
+	--np-color-surface-tint: light-dark(#00658b, #7dd0ff);
+	--np-color-surface-variant: light-dark(#dae4ec, #3f484e);
+	--np-color-tertiary: light-dark(#7b4b91, #ecb8ff);
+	--np-color-tertiary-container: light-dark(#d29be8, #d29be8);
+	--np-color-tertiary-fixed: light-dark(#f7d8ff, #f7d8ff);
+	--np-color-tertiary-fixed-dim: light-dark(#eab2ff, #eab2ff);
+	--np-color-tertiary-palette-key-color: light-dark(#d29be8, #d29be8);
+
+	--np-elevation-1: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px,
+		rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+	--np-elevation-2: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+		rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
+	--np-elevation-3: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px,
+		rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
+	--np-shape-corner-full: 9999px;
+	--np-shape-corner-extra-small: 0.25rem;
+	--np-shape-corner-medium: 0.75rem;
+	--np-shape-corner-large: 1.5rem;
+	--np-shape-corner-extra-large: 1.75rem;
+	--np-shape-corner-none: 0;
+}
+
+[data-theme='light'] {
+	color-scheme: light;
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+}

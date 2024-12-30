@@ -1,0 +1,251 @@
+<script lang="ts">
+	import Button from '$lib/button/Button.svelte'
+	import IconButton from '$lib/button/IconButton.svelte'
+	import Icon from '$lib/icons/Icon.svelte'
+	import TextField from '$lib/text-field/TextField.svelte'
+	import Code from '../../Code.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
+
+	const reportValidity = (event: Event) => {
+		const textField = event.target as HTMLInputElement
+		textField.reportValidity()
+	}
+</script>
+
+<svelte:head>
+	<title>Text fields - Noph UI</title>
+</svelte:head>
+
+<h1>Text fields</h1>
+
+<h2>Usage</h2>
+<p>
+	Text fields function similarly to <code>&lt;input&gt;</code> elements, serving as containers with labels
+	to facilitate user input.
+</p>
+<DemoContainer>
+	<TextField label="Label" value="Value" />
+	<TextField label="Label" value="Value" variant="outlined" />
+</DemoContainer>
+<Code
+	value={`<TextField label="Label" value="Value" />
+<TextField label="Label" value="Value" variant="outlined" />`}
+/>
+<h3>Input type</h3>
+<p>
+	The <code>type</code> attribute of a text field changes how the text field works, such as displaying
+	a different keyboard or providing default validation.
+</p>
+<ul>
+	<li><code>type="text"</code> (default)</li>
+	<li><code>type="email"</code></li>
+	<li><code>type="password"</code></li>
+	<li><code>type="url"</code></li>
+	<li><code>type="number"</code></li>
+	<li><code>type="search"</code></li>
+	<li><code>type="tel"</code></li>
+	<li><code>type="textarea"</code></li>
+</ul>
+<DemoContainer>
+	<TextField label="Email" type="email" variant="outlined" />
+	<TextField label="Password" type="password" variant="outlined" />
+</DemoContainer>
+<Code
+	value={`<TextField label="Email" type="email" variant="outlined" />
+<TextField label="Password" type="password" variant="outlined" />`}
+/>
+<h3>Disabled</h3>
+<DemoContainer>
+	<TextField label="Label" disabled value="Value" />
+	<TextField label="Label" disabled value="Value" variant="outlined" />
+</DemoContainer>
+<Code
+	value={`<TextField label="Label" disabled value="Value" />
+<TextField label="Label" disabled value="Value" variant="outlined" />`}
+/>
+
+<h3>Labels</h3>
+<DemoContainer>
+	<TextField label="Country" variant="outlined" />
+	<TextField placeholder="email@domain.com" variant="outlined" />
+	<label id="city-label">
+		City
+		<TextField variant="outlined" aria-labelledby="city-label" />
+	</label>
+</DemoContainer>
+<Code
+	value={`<TextField label="Country" variant="outlined" />
+<TextField placeholder="email@domain.com" variant="outlined" />
+<label id="city-label">
+	City
+	<TextField variant="outlined" aria-labelledby="city-label" />
+</label>`}
+/>
+<blockquote>
+	<Icon>bookmark</Icon> Nesting text fields in labels without aria-labelledby is not currently supported.
+	If you want to avoid using an id, you can use aria-label instead.
+</blockquote>
+<h3>Textarea</h3>
+<DemoContainer>
+	<TextField label="Resize" type="textarea" />
+	<TextField label="Resize" type="textarea" variant="outlined" />
+</DemoContainer>
+<Code
+	value={`<TextField label="Resize" type="textarea" />
+<TextField label="Resize" type="textarea" variant="outlined" />`}
+/>
+
+<h3>Icons</h3>
+<DemoContainer style="align-items:baseline">
+	<TextField placeholder="Search" type="search" inputmode="search" variant="outlined">
+		{#snippet start()}<Icon>search</Icon>{/snippet}
+	</TextField>
+	<TextField label="Password" type="password" variant="outlined">
+		{#snippet end()}
+			<IconButton toggle title="Toggle visibility">
+				{#snippet selectedIcon()}
+					<Icon>visibility_off</Icon>
+				{/snippet}
+				<Icon>visibility</Icon>
+			</IconButton>
+		{/snippet}
+	</TextField>
+	<TextField label="Username" variant="outlined" error errorText="Username not available">
+		{#snippet end()}
+			<Icon>error</Icon>
+		{/snippet}
+	</TextField>
+</DemoContainer>
+<Code
+	value={`<TextField placeholder="Search" type="search" variant="outlined">
+	{#snippet start()}<Icon>search</Icon>{/snippet}
+</TextField>
+<TextField label="Password" type="password" variant="outlined">
+	{#snippet end()}
+		<IconButton toggle title="Toggle visibility">
+			{#snippet selectedIcon()}
+				<Icon>visibility_off</Icon>
+			{/snippet}
+			<Icon>visibility</Icon>
+		</IconButton>
+	{/snippet}
+</TextField>
+<TextField label="Username" variant="outlined" error>
+	{#snippet end()}
+		<Icon>error</Icon>
+	{/snippet}
+</TextField>`}
+/>
+
+<h3>Prefix and suffix</h3>
+<DemoContainer>
+	<TextField
+		label="Amount"
+		value={0}
+		inputmode="numeric"
+		prefixText="$"
+		suffixText=".00"
+		type="number"
+		variant="outlined"
+	/>
+</DemoContainer>
+
+<Code
+	value={`<TextField
+	label="Amount"
+	value={0}
+	prefixText="$"
+	suffixText=".00"
+	type="number"
+	variant="outlined"
+/>`}
+/>
+<h3>Supporting text</h3>
+<DemoContainer>
+	<TextField label="Username" supportingText="Your username is your unique identifier." />
+	<TextField
+		label="Email"
+		type="email"
+		inputmode="email"
+		required
+		supportingText="Email is required"
+	/>
+</DemoContainer>
+
+<Code
+	value={`<TextField label="Username" supportingText="Your username is your unique identifier." />
+<TextField
+	label="Email"
+	type="email"
+	inputmode="email"
+	required
+	supportingText="Email is required"
+/>`}
+/>
+
+<h3>Character counter</h3>
+
+<DemoContainer>
+	<TextField label="Name" maxlength={10} />
+</DemoContainer>
+<Code value={`<TextField label="Name" maxlength={10} />`} />
+
+<h3>Validation</h3>
+<h4>Constraint validation</h4>
+
+<DemoContainer>
+	<form>
+		<div style="display:flex;gap:1rem;flex-wrap: wrap;align-items: baseline;">
+			<TextField label="First name" required onchange={reportValidity} />
+			<TextField
+				label="Last name"
+				required
+				pattern="[a-zA-Z]+"
+				supportingText="Characters only"
+				onchange={reportValidity}
+			/>
+		</div>
+		<div class="button-footer">
+			<Button variant="filled">Submit</Button>
+		</div>
+	</form>
+</DemoContainer>
+<Code
+	value={`<script>
+	const reportValidity = (event: Event) => {
+		const textField = event.target as HTMLInputElement
+		textField.reportValidity()
+	}
+</` +
+		`script>
+<form>
+	<TextField label="First name" required onchange={reportValidity} />
+	<TextField
+		label="Last name"
+		required
+		pattern="[a-zA-Z]+"
+		supportingText="Characters only"
+		onchange={reportValidity}
+	/>
+	<Button>Submit</Button>
+</form>`}
+/>
+
+<h4>Manual validation</h4>
+
+<DemoContainer>
+	<TextField label="Username" error value="eric20" errorText="Username is not available" />
+</DemoContainer>
+<Code
+	value={`<TextField label="Username" error value="eric20" errorText="Username is not available" />`}
+/>
+
+<h2>Theming</h2>
+
+<style>
+	.button-footer {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 1rem;
+	}
+</style>

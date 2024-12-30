@@ -1,0 +1,142 @@
+h1 {
+	font-size: 2.5rem;
+	line-height: 4.5rem;
+	font-weight: 500;
+}
+
+h2 {
+	font-weight: 500;
+}
+
+h3 {
+	font-weight: 500;
+}
+
+h4 {
+	font-weight: 500;
+}
+
+.primary {
+	color: var(--np-color-primary);
+}
+
+html {
+	tab-size: 2;
+}
+
+a {
+	color: var(--np-color-on-surface);
+	text-decoration: none;
+}
+
+a.link {
+	color: var(--np-color-primary);
+	text-decoration: none;
+	font-weight: 500;
+}
+a.link:hover {
+	text-decoration: underline;
+}
+
+body {
+	font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
+	margin: 0;
+	background-color: var(--np-color-surface-container);
+	font-size: 1.125rem;
+	color: var(--np-color-on-surface);
+}
+
+pre {
+	margin: 0;
+}
+
+code {
+	font-size: 0.875rem;
+	padding: 1.5rem;
+	display: block;
+	overflow-y: auto;
+	color: var(--np-color-primary);
+}
+
+table {
+	border-spacing: 0;
+	overflow-x: auto;
+	box-sizing: border-box;
+	display: block;
+}
+
+tr th:first-of-type {
+	border-start-start-radius: var(--np-shape-corner-extra-large);
+}
+tr th:last-of-type {
+	border-start-end-radius: var(--np-shape-corner-extra-large);
+}
+
+tr:last-of-type td:first-of-type {
+	border-end-start-radius: var(--np-shape-corner-extra-large);
+}
+
+tr:last-of-type td:last-of-type {
+	border-end-end-radius: var(--np-shape-corner-extra-large);
+}
+
+tr td:last-of-type,
+tr th:last-of-type {
+	border-inline-end: 1px solid var(--np-color-outline-variant);
+}
+
+tr:last-of-type td,
+tr:last-of-type th {
+	border-block-end: 1px solid var(--np-color-outline-variant);
+}
+
+th {
+	background-color: var(--np-color-surface-container);
+	color: var(--np-color-on-surface);
+	font-size: 1.25rem;
+	font-weight: 400;
+}
+
+td,
+th {
+	border-block-start: 1px solid var(--np-color-outline-variant);
+	border-inline-start: 1px solid var(--np-color-outline-variant);
+	padding: 8px 16px;
+}
+
+:not(pre) > code {
+	display: inline-flex;
+	background-color: var(--np-color-surface-variant);
+	text-shadow: 0 1px 1px var(--np-color-surface-variant);
+	color: var(--np-color-on-surface);
+	padding: 0.25rem;
+	border-radius: 0.5rem;
+}
+
+@media (pointer: fine) {
+	.scroll-wrapper,
+	pre {
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
+	}
+	html {
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+	}
+}
+
+@media (min-width: 768px) {
+	h1 {
+		font-size: 4rem;
+	}
+}
+
+blockquote {
+	margin: 1rem 0;
+	color: var(--np-color-on-secondary-container);
+	padding: 1rem;
+	border-radius: 1rem;
+	background-color: var(--np-color-secondary-container);
+	display: flex;
+	gap: 0.5rem;
+}
