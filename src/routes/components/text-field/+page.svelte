@@ -240,7 +240,127 @@
 	value={`<TextField label="Username" error value="eric20" errorText="Username is not available" />`}
 />
 
-<h2>Theming</h2>
+<h2>API</h2>
+<h3>Attributes</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>type</code></td>
+			<td
+				><code
+					>'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url' | 'textarea'</code
+				></td
+			>
+			<td><code>'text'</code></td>
+			<td>Specifies the type of the field.</td>
+		</tr>
+		<tr>
+			<td><code>variant</code></td>
+			<td><code>'outlined' | 'filled'</code></td>
+			<td><code>'filled'</code></td>
+			<td>Visual appearance</td>
+		</tr>
+		<tr>
+			<td><code>label</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Label of the text field.</td>
+		</tr>
+		<tr>
+			<td><code>supportingText</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td>Provides additional information below the text field, such as usage guidelines.</td>
+		</tr>
+		<tr>
+			<td><code>start</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Icon displayed at the beginning of the text field.</td>
+		</tr>
+		<tr>
+			<td><code>end</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Icon displayed at the end of the text field.</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Disables the text field.</td>
+		</tr>
+		<tr>
+			<td><code>noAsterisk</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Disables the asterisk on the floating label when the text field is required.</td>
+		</tr>
+		<tr>
+			<td><code>error</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Gets or sets whether or not the text field is in a visually invalid state.</td>
+		</tr>
+		<tr>
+			<td><code>errorText</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td
+				>The error message that replaces supporting text when <code>error</code> is true. If
+				<code>errorText</code> is an empty string, then the supporting text will continue to show.</td
+			>
+		</tr>
+		<tr>
+			<td><code>prefixText</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td>An optional prefix to display before the input value.</td>
+		</tr>
+		<tr>
+			<td><code>suffixText</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td>An optional suffix to display after the input value.</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Bindables</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>value</code></td>
+			<td><code>any</code></td>
+			<td>Value of the input or textarea.</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td
+				>A reference to the root DOM element of the component. This variable is bound using <code
+					>bind:this</code
+				>, allowing direct access to the underlying HTML element for manipulation or querying within
+				the component's logic.</td
+			>
+		</tr>
+	</tbody>
+</table>
 
 <style>
 	.button-footer {

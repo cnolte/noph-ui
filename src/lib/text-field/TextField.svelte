@@ -4,11 +4,11 @@
 
 	let {
 		value = $bindable(),
-		error,
-		errorText,
-		prefixText,
-		suffixText,
-		supportingText,
+		error = false,
+		errorText = '',
+		prefixText = '',
+		suffixText = '',
+		supportingText = '',
 		start,
 		end,
 		label,
@@ -20,7 +20,7 @@
 		...attributes
 	}: TextFieldProps = $props()
 
-	let errorTextRaw: string | undefined = $state()
+	let errorTextRaw: string = $state(errorText)
 	$effect(() => {
 		errorTextRaw = errorText
 	})
@@ -38,7 +38,7 @@
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
 				error = true
-				if (errorText === undefined) {
+				if (errorText === '') {
 					errorTextRaw = currentTarget.validationMessage
 				}
 				if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
@@ -88,6 +88,9 @@
 				<div class="np-outline">
 					<div class="outline-start"></div>
 					{#if label?.length}
+						<div class="label-wrapper">
+							<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
+						</div>
 						<div class="outline-notch">
 							<span class="notch np-hidden" aria-hidden="true"
 								>{label}{noAsterisk || !attributes.required ? '' : '*'}</span
@@ -104,11 +107,13 @@
 					</div>
 				{/if}
 				<div class="middle">
-					<div class="label-wrapper">
-						{#if label?.length}
-							<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
-						{/if}
-					</div>
+					{#if variant === 'filled'}
+						<div class="label-wrapper">
+							{#if label?.length}
+								<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
+							{/if}
+						</div>
+					{/if}
 					<div class="content">
 						{#if attributes.type === 'textarea'}
 							<textarea
@@ -458,6 +463,29 @@
 	.field:not(.with-start) .label-wrapper {
 		margin-inline-start: 1rem;
 	}
+	.with-start .np-outline .label-wrapper {
+		left: 3.25rem;
+	}
+	.with-end .np-outline .label-wrapper {
+		margin-inline-end: 3.25rem;
+	}
+	.with-start:has(input:focus-visible:not(:placeholder-shown)) .label-wrapper,
+	.with-start:has(input:focus-visible) .label-wrapper,
+	.with-start:has(input:not(:placeholder-shown)) .label-wrapper,
+	.with-start:has(textarea:focus-visible:not(:placeholder-shown)) .label-wrapper,
+	.with-start:has(textarea:focus-visible) .label-wrapper,
+	.with-start:has(textarea:not(:placeholder-shown)) .label-wrapper {
+		right: -2.25rem;
+	}
+
+	.with-end:has(input:focus-visible:not(:placeholder-shown)) .label-wrapper,
+	.with-end:has(input:focus-visible) .label-wrapper,
+	.with-end:has(input:not(:placeholder-shown)) .label-wrapper,
+	.with-end:has(textarea:focus-visible:not(:placeholder-shown)) .label-wrapper,
+	.with-end:has(textarea:focus-visible) .label-wrapper,
+	.with-end:has(textarea:not(:placeholder-shown)) .label-wrapper {
+		margin-inline-end: 1rem;
+	}
 	.notch {
 		font-size: 0.75rem;
 		line-height: 1rem;
@@ -608,7 +636,8 @@
 	}
 	.field:has(input:focus-visible) .outline-notch::before,
 	.field:has(textarea:focus-visible) .outline-notch::before,
-	.field:has(input:not(:placeholder-shown)) .outline-notch::before {
+	.field:has(input:not(:placeholder-shown)) .outline-notch::before,
+	.field:has(textarea:not(:placeholder-shown)) .outline-notch::before {
 		border-top-style: none;
 	}
 

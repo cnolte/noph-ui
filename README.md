@@ -65,7 +65,7 @@ Beta (No breaking changes expected)
 - Ripple
 - Segmented buttons
 - Snackbar
-- Text fields (Textarea + Docs missing)
+- Text fields (Theming missing)
 
 In progress (Breaking changes expected)
 

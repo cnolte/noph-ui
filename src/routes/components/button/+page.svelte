@@ -365,7 +365,7 @@
 			<td><code>variant</code></td>
 			<td><code>'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'</code></td>
 			<td><code>'outlined'</code></td>
-			<td>The type of button</td>
+			<td>Visual appearance</td>
 		</tr>
 		<tr>
 			<td><code>start</code></td>
