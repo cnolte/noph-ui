@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import type { CardProps } from './types.ts'
-	import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 	let {
 		image,

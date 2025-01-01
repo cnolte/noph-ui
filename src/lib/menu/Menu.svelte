@@ -8,6 +8,7 @@
 		element = $bindable(),
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		position = 'bottom',
 		...attributes
 	}: MenuProps = $props()
 
@@ -83,7 +84,7 @@
 	bind:clientWidth
 	bind:clientHeight
 	popover="auto"
-	class={['np-menu', attributes.class]}
+	class={[position, 'np-menu', attributes.class]}
 	role="menu"
 >
 	{@render children()}
@@ -101,15 +102,25 @@
 		margin: 0;
 		margin-bottom: 2px;
 		margin-top: 2px;
-		top: anchor(bottom);
-		position-try-fallbacks: --menu-top;
-		justify-self: anchor-center;
 		transition:
 			display 0.2s allow-discrete,
 			opacity 0.2s linear;
 		opacity: 0;
 		z-index: 1;
 	}
+	.bottom-left.np-menu[popover] {
+		top: anchor(bottom);
+		left: anchor(left);
+		justify-self: anchor-center;
+		position-try-fallbacks: --menu-top-left;
+	}
+
+	.bottom.np-menu[popover] {
+		top: anchor(bottom);
+		position-try-fallbacks: --menu-top;
+		justify-self: anchor-center;
+	}
+
 	.np-menu:popover-open {
 		opacity: 1;
 	}
@@ -121,5 +132,10 @@
 	@position-try --menu-top {
 		inset: auto;
 		bottom: anchor(top);
+	}
+	@position-try --menu-top-left {
+		inset: auto;
+		bottom: anchor(top);
+		left: anchor(left);
 	}
 </style>

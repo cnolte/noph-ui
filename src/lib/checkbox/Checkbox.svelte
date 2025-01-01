@@ -214,4 +214,27 @@
 			width: 0;
 		}
 	}
+	@media (forced-colors: active) {
+		.np-background {
+			background-color: CanvasText;
+		}
+
+		.np-container:has(input:disabled:checked) .np-background {
+			background-color: GrayText;
+			opacity: 1;
+		}
+
+		.np-outline {
+			border-color: CanvasText;
+		}
+
+		.np-container:has(input:disabled) .np-outline {
+			border-color: GrayText;
+			opacity: 1;
+		}
+
+		.np-icon {
+			fill: Canvas;
+		}
+	}
 </style>

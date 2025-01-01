@@ -6,6 +6,7 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 	anchor?: HTMLElement | undefined
 	showPopover?: () => void
 	hidePopover?: () => void
+	position?: 'bottom-left' | 'bottom'
 	element?: HTMLDivElement
 }
 

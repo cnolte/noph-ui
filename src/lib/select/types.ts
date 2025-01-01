@@ -1,7 +1,15 @@
-import type { HTMLAttributes } from 'svelte/elements'
+import type { Snippet } from 'svelte'
+import type { HTMLSelectAttributes } from 'svelte/elements'
 
-export interface SelectProps extends HTMLAttributes<HTMLDivElement> {
-	forceHover?: boolean
-	element?: HTMLDivElement
-	forElement?: HTMLElement
+export interface SelectProps extends HTMLSelectAttributes {
+	label?: string
+	supportingText?: string
+	error?: boolean
+	errorText?: string
+	variant?: 'outlined' | 'filled'
+	start?: Snippet
+	end?: Snippet
+	noAsterisk?: boolean
+	element?: HTMLSpanElement
+	options: { value: string | number; label: string }[]
 }

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Checkbox from '$lib/checkbox/Checkbox.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

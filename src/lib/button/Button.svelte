@@ -269,4 +269,10 @@
 		width: calc((var(--button-height) - 0.375rem) / 2);
 		height: calc((var(--button-height) - 0.375rem) / 2);
 	}
+
+	@media (forced-colors: active) {
+		.np-button {
+			border: 1px solid CanvasText;
+		}
+	}
 </style>
