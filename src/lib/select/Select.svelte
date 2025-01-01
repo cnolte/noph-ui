@@ -78,8 +78,6 @@
 	</svg>
 {/snippet}
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <label
 	style={(variant === 'outlined'
 		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
@@ -89,9 +87,6 @@
 	class={['text-field', attributes.class]}
 	bind:this={element}
 	bind:clientWidth
-	onclick={() => {
-		menuElement?.showPopover()
-	}}
 >
 	<div
 		class="field"
@@ -143,9 +138,13 @@
 						<select
 							aria-label={label}
 							{...attributes}
+							onclick={(event) => {
+								menuElement?.togglePopover(true)
+								event.preventDefault()
+							}}
 							onkeydown={(event) => {
 								if (event.key === 'Tab') {
-									menuElement?.hidePopover()
+									menuElement?.togglePopover(false)
 								} else {
 									event.preventDefault()
 									if (
@@ -154,6 +153,7 @@
 										event.key === 'Enter'
 									) {
 										menuElement?.showPopover()
+										;(menuElement?.firstElementChild as HTMLElement)?.focus()
 									}
 								}
 							}}
@@ -196,6 +196,7 @@
 	style="position-anchor:{menuId};min-width: {clientWidth}px;"
 	popover="manual"
 	position="bottom-left"
+	anchor={element}
 	ontoggle={({ newState }) => {
 		if (newState === 'open') {
 			menuOpen = true
@@ -228,7 +229,6 @@
 					event.preventDefault()
 				}
 			}}
-			autofocus={value === option.value}
 			variant="button"
 			selected={value === option.value}>{option.label}</Item
 		>
@@ -441,12 +441,12 @@
 		color: var(--np-color-on-surface);
 	}
 	.field:not(.with-end) .content .input-wrapper,
-	.field:not(.with-end) .content select {
+	.field:not(.with-end) .content .input {
 		padding-inline-end: 16px;
 	}
 	.outline-start,
 	.field:not(.with-start) .content .input-wrapper,
-	.field:not(.with-start) .content select {
+	.field:not(.with-start) .content .input {
 		padding-inline-start: 16px;
 	}
 
