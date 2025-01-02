@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Menu from '$lib/menu/Menu.svelte'
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import { generateUUIDv4 } from '$lib/utils.ts'
+	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
 
