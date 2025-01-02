@@ -67,6 +67,8 @@
 		border-radius: var(--np-shape-corner-extra-large);
 		box-shadow: var(--np-elevation-3);
 		max-height: 100dvh;
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
 		transition:
 			display 0.2s allow-discrete,
 			overlay 0.2s allow-discrete,
