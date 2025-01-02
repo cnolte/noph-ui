@@ -28,9 +28,9 @@
 	let menuElement: HTMLDivElement | undefined = $state()
 	let menuId = $state(`--select-${generateUUIDv4()}`)
 	let menuOpen = $state(false)
-	let selectedLabel = $derived<string>(
-		options.find((option) => option.value === value)?.label || '',
-	)
+	let selectedLabel = $derived.by<string>(() => {
+		return options.find((option) => option.value === value)?.label || ''
+	})
 	let clientWidth = $state(0)
 	$effect(() => {
 		if (value !== '') {
@@ -139,12 +139,12 @@
 							aria-label={label}
 							{...attributes}
 							onclick={(event) => {
-								menuElement?.togglePopover(true)
 								event.preventDefault()
+								menuElement?.showPopover()
 							}}
 							onkeydown={(event) => {
 								if (event.key === 'Tab') {
-									menuElement?.togglePopover(false)
+									menuElement?.hidePopover()
 								} else {
 									event.preventDefault()
 									if (
