@@ -86,6 +86,20 @@
 	popover="auto"
 	class={[position, 'np-menu', attributes.class]}
 	role="menu"
+	ontoggle={(event) => {
+		if (event.newState === 'open') {
+			const rect = event.currentTarget.getBoundingClientRect()
+			const viewportHeight = window.innerHeight
+
+			if (rect.bottom > viewportHeight) {
+				const maxHeight = viewportHeight - rect.top - 18
+				event.currentTarget.style.maxHeight = `${maxHeight}px`
+			}
+		}
+		if (event.newState === 'closed') {
+			event.currentTarget.style.maxHeight = '80dvh'
+		}
+	}}
 >
 	{@render children()}
 </div>
@@ -94,7 +108,7 @@
 	.np-menu[popover] {
 		color: var(--np-menu-text-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
-		overflow: auto;
+		overflow-y: auto;
 		border: none;
 		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
 		padding: 0.5rem 0;
@@ -102,6 +116,9 @@
 		margin: 0;
 		margin-bottom: 2px;
 		margin-top: 2px;
+		max-height: 80dvh;
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
 		transition:
 			display 0.2s allow-discrete,
 			opacity 0.2s linear;
