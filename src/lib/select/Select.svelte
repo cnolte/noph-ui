@@ -160,9 +160,7 @@
 					<div class="content">
 						<select aria-label={label} {...attributes} bind:value bind:this={selectElement}>
 							{#each options as option}
-								<option value={option.value} selected={option.value === value}
-									>{option.label}</option
-								>
+								<option value={option.value} selected={option.selected}>{option.label}</option>
 							{/each}
 						</select>
 						<div class="input">

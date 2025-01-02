@@ -15,10 +15,9 @@
 		label="Fruit"
 		variant="outlined"
 		name="fruit"
-		value="apple"
 		options={[
 			{ value: '', label: '' },
-			{ value: 'apple', label: 'Apple' },
+			{ value: 'apple', label: 'Apple', selected: true },
 			{ value: 'apricot', label: 'Apricot' },
 			{ value: 'banana', label: 'Banana' },
 		]}
@@ -26,9 +25,8 @@
 	<Select
 		label="Fruit"
 		name="fruit"
-		value=""
 		options={[
-			{ value: '', label: '' },
+			{ value: '', label: '', selected: true },
 			{ value: 'apple', label: 'Apple' },
 			{ value: 'apricot', label: 'Apricot' },
 			{ value: 'banana', label: 'Banana' },

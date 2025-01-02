@@ -11,5 +11,5 @@ export interface SelectProps extends HTMLSelectAttributes {
 	end?: Snippet
 	noAsterisk?: boolean
 	element?: HTMLSpanElement
-	options: { value: string | number; label: string }[]
+	options: { value: string | number; label: string; selected?: boolean | undefined | null }[]
 }
