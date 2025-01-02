@@ -66,6 +66,7 @@
 		padding: 1.5rem;
 		border-radius: var(--np-shape-corner-extra-large);
 		box-shadow: var(--np-elevation-3);
+		max-height: 100dvh;
 		transition:
 			display 0.2s allow-discrete,
 			overlay 0.2s allow-discrete,
