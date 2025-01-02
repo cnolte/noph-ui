@@ -12,29 +12,29 @@
 <h2>Usage</h2>
 <DemoContainer>
 	<form>
-		<Radio name="group" value="first" aria-label="First radio" checked />
+		<Radio name="group" value="first" aria-label="First radio" checked defaultChecked={true} />
 		<Radio name="group" value="second" aria-label="Second radio" />
 		<Radio name="group" value="third" aria-label="Third radio" />
 	</form>
 </DemoContainer>
 <Code
-	value={`<Radio name="group" value="first" aria-label="First radio" checked />
+	value={`<Radio name="group" value="first" aria-label="First radio" checked defaultChecked={true} />
 <Radio name="group" value="second" aria-label="Second radio" />
 <Radio name="group" value="third" aria-label="Third radio" />`}
 />
 <h3>Labels</h3>
 <DemoContainer>
 	<form style="display: flex; align-items: center;">
-		<Radio name="group" value="cat" id="cat-radio" checked />
+		<Radio name="animals" value="cat" id="cat-radio" checked defaultChecked={true} />
 		<label style="margin-right:1rem" for="cat-radio">Cat</label>
-		<Radio name="group" value="second" id="mouse-radio" />
+		<Radio name="animals" value="second" id="mouse-radio" />
 		<label style="margin-right:1rem" for="mouse-radio">Mouse</label>
-		<Radio name="group" value="third" id="dog-radio" />
+		<Radio name="animals" value="third" id="dog-radio" />
 		<label for="dog-radio">Dog</label>
 	</form>
 </DemoContainer>
 <Code
-	value={`<Radio name="animals" value="cat" id="cat-radio" checked />
+	value={`<Radio name="animals" value="cat" id="cat-radio" checked defaultChecked={true} />
 <label for="cat-radio">Cat</label>
 
 <Radio name="animals" value="second" id="mouse-radio" />
@@ -74,6 +74,7 @@
 		--np-radio-icon-color="var(--np-color-secondary)"
 		--np-radio-selected-icon-color="var(--np-color-tertiary)"
 		checked
+		defaultChecked={true}
 		aria-label="Themed Radio 1"
 		name="themed"
 	/>
@@ -81,7 +82,6 @@
 		--np-radio-icon-size="40px"
 		--np-radio-icon-color="var(--np-color-secondary)"
 		--np-radio-selected-icon-color="var(--np-color-tertiary)"
-		checked
 		aria-label="Themed Radio 2"
 		name="themed"
 	/>
@@ -89,7 +89,6 @@
 		--np-radio-icon-size="40px"
 		--np-radio-icon-color="var(--np-color-secondary)"
 		--np-radio-selected-icon-color="var(--np-color-tertiary)"
-		checked
 		aria-label="Themed Radio 3"
 		name="themed"
 	/>
@@ -100,20 +99,19 @@
 	--np-radio-icon-color="var(--np-color-secondary)"
 	--np-radio-selected-icon-color="var(--np-color-tertiary)"
 	checked
+	defaultChecked={true}
 	name="themed"
 />
 <Radio
 	--np-radio-icon-size="40px"
 	--np-radio-icon-color="var(--np-color-secondary)"
 	--np-radio-selected-icon-color="var(--np-color-tertiary)"
-	checked
 	name="themed"
 />
 <Radio
 	--np-radio-icon-size="40px"
 	--np-radio-icon-color="var(--np-color-secondary)"
 	--np-radio-selected-icon-color="var(--np-color-tertiary)"
-	checked
 	name="themed"
 />`}
 />

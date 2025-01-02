@@ -2,13 +2,19 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import type { RadioProps } from './types.ts'
 
-	let { element = $bindable(), style, ...attributes }: RadioProps = $props()
+	let {
+		checked,
+		defaultChecked,
+		element = $bindable(),
+		style,
+		...attributes
+	}: RadioProps = $props()
 
 	let touchEl: HTMLSpanElement | undefined = $state()
 </script>
 
 <label {style} class={['np-host', attributes.class]} bind:this={element}>
-	<input {...attributes} type="radio" class="np-input" />
+	<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} />
 	<div class="np-container" aria-hidden="true">
 		{#if !attributes.disabled}
 			<Ripple forElement={touchEl} class="np-radio-ripple" />
