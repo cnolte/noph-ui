@@ -331,8 +331,8 @@
 		flex: 1;
 		flex-direction: column;
 		writing-mode: horizontal-tb;
-		max-width: 100%;
-		min-width: 210px;
+		max-width: var(--np-select-max-width, 100%);
+		min-width: var(--np-select-min-width, 210px);
 	}
 
 	.supporting-text {
