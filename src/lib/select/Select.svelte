@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Menu from '$lib/menu/Menu.svelte'
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import { generateUUIDv4 } from '$lib/utils.js'
+	import { generateUUIDv4, isIOS } from '$lib/utils.js'
 	import type { SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
 
@@ -78,6 +78,7 @@
 	</svg>
 {/snippet}
 
+<!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
 <label
 	style={(variant === 'outlined'
 		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
@@ -87,6 +88,28 @@
 	class={['text-field', attributes.class]}
 	bind:this={element}
 	bind:clientWidth
+	role="combobox"
+	aria-controls="listbox"
+	aria-expanded={menuOpen}
+	onclick={(event) => {
+		event.preventDefault()
+		menuElement?.showPopover()
+		menuElement?.focus()
+	}}
+	onkeydown={(event) => {
+		if (event.key === 'Tab') {
+			if (isIOS()) {
+				event.preventDefault()
+			}
+			menuElement?.hidePopover()
+		} else {
+			event.preventDefault()
+			if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
+				menuElement?.showPopover()
+				;(menuElement?.firstElementChild as HTMLElement)?.focus()
+			}
+		}
+	}}
 >
 	<div
 		class="field"
@@ -135,31 +158,7 @@
 						</div>
 					{/if}
 					<div class="content">
-						<select
-							aria-label={label}
-							{...attributes}
-							onclick={(event) => {
-								event.preventDefault()
-								menuElement?.showPopover()
-							}}
-							onkeydown={(event) => {
-								if (event.key === 'Tab') {
-									menuElement?.hidePopover()
-								} else {
-									event.preventDefault()
-									if (
-										event.key === 'ArrowDown' ||
-										event.key === 'ArrowUp' ||
-										event.key === 'Enter'
-									) {
-										menuElement?.showPopover()
-										;(menuElement?.firstElementChild as HTMLElement)?.focus()
-									}
-								}
-							}}
-							bind:value
-							bind:this={selectElement}
-						>
+						<select aria-label={label} {...attributes} bind:value bind:this={selectElement}>
 							{#each options as option}
 								<option value={option.value} selected={option.value === value}
 									>{option.label}</option
@@ -211,7 +210,9 @@
 			onclick={(event) => {
 				value = option.value
 				menuElement?.hidePopover()
-				selectElement?.focus()
+				if (!isIOS()) {
+					element?.focus()
+				}
 				event.preventDefault()
 			}}
 			onkeydown={(event) => {
