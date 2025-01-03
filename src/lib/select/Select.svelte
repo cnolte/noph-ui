@@ -107,11 +107,9 @@
 		onclick={(event) => {
 			event.preventDefault()
 			menuElement?.showPopover()
-			menuElement?.focus()
 		}}
 		onkeydown={(event) => {
 			if (event.key === 'Tab') {
-				event.preventDefault()
 				menuElement?.hidePopover()
 			} else {
 				event.preventDefault()
@@ -231,6 +229,9 @@
 					value = option.value
 					menuElement?.hidePopover()
 					event.preventDefault()
+				}
+				if (event.key === 'Tab') {
+					menuElement?.hidePopover()
 				}
 			}}
 			variant="button"
