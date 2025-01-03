@@ -1,8 +1,12 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte'
+	import type { HTMLAttributes } from 'svelte/elements'
 
-	let { children, element = $bindable() }: { children: Snippet; element?: HTMLSpanElement } =
-		$props()
+	interface IconProps extends HTMLAttributes<HTMLSpanElement> {
+		children: Snippet
+		element?: HTMLSpanElement
+	}
+	let { children, element = $bindable(), ...attributes }: IconProps = $props()
 </script>
 
 <svelte:head>
@@ -43,4 +47,6 @@
 	</style>
 </svelte:head>
 
-<span class="np-icon" bind:this={element}>{@render children()}</span>
+<span {...attributes} class={['np-icon', attributes.class]} bind:this={element}
+	>{@render children()}</span
+>
