@@ -1,17 +1,15 @@
 <script lang="ts">
 	import type { TooltipProps } from './types.ts'
 
-	let { children, anchor, ...attributes }: TooltipProps = $props()
+	let { children, element = $bindable(), id, ...attributes }: TooltipProps = $props()
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
 	let innerWidth = $state(0)
-	let anchorRect: DOMRect | undefined = $state(anchor.getBoundingClientRect())
+	let anchor: HTMLElement | undefined = $state()
+	let anchorRect: DOMRect | undefined = $state()
 
 	const distanceToBorder = 8
-	const refreshValues = () => {
-		anchorRect = anchor?.getBoundingClientRect()
-	}
 
 	let calculateLeftPos = $derived.by(() => {
 		if (!anchor || !anchorRect) {
@@ -37,18 +35,34 @@
 		}
 		return top
 	})
-	anchor.addEventListener('mouseenter', () => {
-		refreshValues()
+	let setAnchor = (document: Document) => {
+		anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
+	}
+
+	$effect(() => {
+		if (anchor) {
+			anchor.addEventListener('pointerenter', () => {
+				anchorRect = anchor?.getBoundingClientRect() ?? undefined
+				element?.showPopover()
+			})
+			anchor.addEventListener('pointerleave', () => {
+				element?.hidePopover()
+			})
+		}
 	})
 </script>
 
-<svelte:window bind:innerHeight bind:innerWidth onresize={refreshValues} onscroll={refreshValues} />
+<svelte:document use:setAnchor />
+<svelte:window bind:innerHeight bind:innerWidth />
 
 <div
 	{...attributes}
-	class={['tooltip', attributes.class]}
+	{id}
+	class={['np-tooltip', attributes.class]}
 	style="top:{calculateTopPos}px;left:{calculateLeftPos}px;{attributes.style}"
 	role="tooltip"
+	popover="manual"
+	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
 >
@@ -56,23 +70,31 @@
 </div>
 
 <style>
-	.tooltip {
-		visibility: hidden;
+	.np-tooltip {
 		width: max-content;
-		position: fixed;
+		margin: 0;
 		background: var(--np-color-inverse-surface);
 		color: var(--np-color-inverse-on-surface);
-		scale: 0;
-		z-index: 1;
 		padding: 0.25rem 0.5rem;
 		border-radius: 0.25rem;
 		line-height: 1rem;
 		font-size: 0.75rem;
-		transition: scale 0.3s ease;
+		opacity: 0;
+		transition:
+			overlay 0.3s allow-discrete,
+			display 0.3s allow-discrete,
+			opacity 0.3s ease;
 	}
-	@media (hover: hover) {
-		:global([aria-describedby]:hover + [role='tooltip']) {
-			visibility: visible;
+	.np-tooltip:popover-open {
+		opacity: 1;
+		animation: scaleIn 0.3s ease;
+	}
+
+	@keyframes scaleIn {
+		from {
+			scale: 0;
+		}
+		to {
 			scale: 1;
 		}
 	}

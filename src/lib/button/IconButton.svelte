@@ -85,8 +85,8 @@
 	</a>
 {/if}
 
-{#if title && element}
-	<Tooltip anchor={element} id={tooltipId}>{title}</Tooltip>
+{#if title}
+	<Tooltip id={tooltipId}>{title}</Tooltip>
 {/if}
 
 <style>

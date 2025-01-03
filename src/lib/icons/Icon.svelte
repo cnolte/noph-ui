@@ -1,5 +1,8 @@
 <script lang="ts">
-	let { children } = $props()
+	import type { Snippet } from 'svelte'
+
+	let { children, element = $bindable() }: { children: Snippet; element?: HTMLSpanElement } =
+		$props()
 </script>
 
 <svelte:head>
@@ -40,4 +43,4 @@
 	</style>
 </svelte:head>
 
-<span class="np-icon">{@render children()}</span>
+<span class="np-icon" bind:this={element}>{@render children()}</span>

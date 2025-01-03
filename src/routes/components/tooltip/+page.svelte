@@ -3,8 +3,6 @@
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let exampleBtn1: HTMLDivElement | undefined = $state()
 </script>
 
 <svelte:head>
@@ -14,20 +12,16 @@
 <h1>Tooltips</h1>
 <h2>Basic tooltip</h2>
 <DemoContainer>
-	<div aria-describedby="example-tooltip-1" bind:this={exampleBtn1}>Hover over this text</div>
-	{#if exampleBtn1}
-		<Tooltip anchor={exampleBtn1} id="example-tooltip-1">This is a basic tooltip</Tooltip>
-	{/if}
+	<div aria-describedby="example-tooltip-1">Hover over this text</div>
+	<Tooltip id="example-tooltip-1">This is a basic tooltip</Tooltip>
 </DemoContainer>
 <Code
-	value={`<div aria-describedby="tooltip" bind:this={buttonEl}>
+	value={`<div aria-describedby="tooltip">
 	Hover over this text
 </div>
-{#if buttonEl}
-	<Tooltip anchor={buttonEl} id="tooltip">
-		This is a basic tooltip
-	</Tooltip>
-{/if}`}
+<Tooltip id="tooltip">
+	This is a basic tooltip
+</Tooltip>`}
 />
 <h2>Button with tooltip</h2>
 <p>Buttons have built-in support for tooltips. You can simply set the title attribute.</p>
