@@ -87,7 +87,6 @@
 			: '') + style}
 	class={['text-field', attributes.class]}
 	bind:this={element}
-	bind:clientWidth
 >
 	<div
 		class="field"
@@ -102,8 +101,9 @@
 		tabindex={attributes.disabled ? -1 : tabindex}
 		aria-controls="listbox"
 		aria-expanded={menuOpen}
-		aria-label={label}
+		aria-label={attributes['aria-label'] || label}
 		bind:this={field}
+		bind:clientWidth
 		onclick={(event) => {
 			event.preventDefault()
 			menuElement?.showPopover()
@@ -161,6 +161,7 @@
 							tabindex="-1"
 							aria-label={label}
 							{...attributes}
+							class={[]}
 							bind:value
 							bind:this={selectElement}
 						>
