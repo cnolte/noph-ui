@@ -50,6 +50,23 @@
 
 	$effect(() => {
 		if (anchor && element) {
+			element.addEventListener('toggle', (event) => {
+				const { newState, currentTarget } = event as ToggleEvent & {
+					currentTarget: EventTarget & HTMLDivElement
+				}
+				if (newState === 'open') {
+					const rect = currentTarget.getBoundingClientRect()
+					const viewportHeight = window.innerHeight
+
+					if (rect.bottom > viewportHeight) {
+						const maxHeight = viewportHeight - rect.top - 18
+						currentTarget.style.maxHeight = `${maxHeight}px`
+					}
+				}
+				if (newState === 'closed') {
+					currentTarget.style.maxHeight = '80dvh'
+				}
+			})
 			if (!('anchorName' in document.documentElement.style)) {
 				anchor.addEventListener('click', () => {
 					refreshValues()
@@ -86,20 +103,6 @@
 	popover="auto"
 	class={[position, 'np-menu', attributes.class]}
 	role="menu"
-	ontoggle={(event) => {
-		if (event.newState === 'open') {
-			const rect = event.currentTarget.getBoundingClientRect()
-			const viewportHeight = window.innerHeight
-
-			if (rect.bottom > viewportHeight) {
-				const maxHeight = viewportHeight - rect.top - 18
-				event.currentTarget.style.maxHeight = `${maxHeight}px`
-			}
-		}
-		if (event.newState === 'closed') {
-			event.currentTarget.style.maxHeight = '80dvh'
-		}
-	}}
 >
 	{@render children()}
 </div>

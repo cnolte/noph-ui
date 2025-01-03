@@ -28,6 +28,16 @@
 			})
 		}
 	})
+	$effect(() => {
+		if (element) {
+			element.addEventListener('focus', () => {
+				focused = true
+			})
+			element.addEventListener('blur', () => {
+				focused = false
+			})
+		}
+	})
 </script>
 
 {#snippet content()}
@@ -78,15 +88,9 @@
 	</div>
 {:else if attributes.type === 'button'}
 	<button
+		aria-disabled={disabled}
 		{...attributes}
 		bind:this={element}
-		aria-disabled={disabled}
-		onfocusin={() => {
-			focused = true
-		}}
-		onfocusout={() => {
-			focused = false
-		}}
 		{disabled}
 		class={[
 			'np-card-container',

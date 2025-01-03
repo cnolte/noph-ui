@@ -13,6 +13,17 @@
 	}: ItemProps = $props()
 
 	let focused = $state(false)
+	let element: HTMLButtonElement | HTMLAnchorElement | undefined = $state()
+	$effect(() => {
+		if (element) {
+			element.addEventListener('focus', () => {
+				focused = true
+			})
+			element.addEventListener('blur', () => {
+				focused = false
+			})
+		}
+	})
 </script>
 
 {#snippet content()}
@@ -56,23 +67,13 @@
 	<button
 		{...attributes}
 		class={['np-item', selected && 'selected', attributes.class]}
-		onfocus={() => {
-			focused = true
-		}}
-		onfocusout={() => {
-			focused = false
-		}}>{@render content()}</button
+		bind:this={element}>{@render content()}</button
 	>
 {:else if attributes.variant === 'link'}
 	<a
 		{...attributes}
 		class={['np-item', selected && 'selected', attributes.class]}
-		onfocus={() => {
-			focused = true
-		}}
-		onfocusout={() => {
-			focused = false
-		}}>{@render content()}</a
+		bind:this={element}>{@render content()}</a
 	>
 {/if}
 
