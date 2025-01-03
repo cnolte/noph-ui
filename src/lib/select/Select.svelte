@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Menu from '$lib/menu/Menu.svelte'
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import { generateUUIDv4, isIOS } from '$lib/utils.js'
+	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
 
@@ -11,6 +11,7 @@
 		error = false,
 		errorText = '',
 		supportingText = '',
+		tabindex = 0,
 		start,
 		label,
 		style,
@@ -26,6 +27,7 @@
 	})
 	let selectElement: HTMLSelectElement | undefined = $state()
 	let menuElement: HTMLDivElement | undefined = $state()
+	let field: HTMLDivElement | undefined = $state()
 	let menuId = $state(`--select-${generateUUIDv4()}`)
 	let menuOpen = $state(false)
 	let selectedLabel = $derived.by<string>(() => {
@@ -42,7 +44,6 @@
 		if (selectElement) {
 			selectElement.form?.addEventListener('reset', () => {
 				error = false
-				value = ''
 			})
 			selectElement.addEventListener('invalid', (event) => {
 				event.preventDefault()
@@ -78,8 +79,7 @@
 	</svg>
 {/snippet}
 
-<!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
-<label
+<div
 	style={(variant === 'outlined'
 		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
 		: !label?.length
@@ -88,28 +88,6 @@
 	class={['text-field', attributes.class]}
 	bind:this={element}
 	bind:clientWidth
-	role="combobox"
-	aria-controls="listbox"
-	aria-expanded={menuOpen}
-	onclick={(event) => {
-		event.preventDefault()
-		menuElement?.showPopover()
-		menuElement?.focus()
-	}}
-	onkeydown={(event) => {
-		if (event.key === 'Tab') {
-			if (isIOS()) {
-				event.preventDefault()
-			}
-			menuElement?.hidePopover()
-		} else {
-			event.preventDefault()
-			if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
-				menuElement?.showPopover()
-				;(menuElement?.firstElementChild as HTMLElement)?.focus()
-			}
-		}
-	}}
 >
 	<div
 		class="field"
@@ -120,6 +98,29 @@
 		class:with-end={true}
 		class:disabled={attributes.disabled}
 		class:outlined={variant === 'outlined'}
+		role="combobox"
+		tabindex={attributes.disabled ? -1 : tabindex}
+		aria-controls="listbox"
+		aria-expanded={menuOpen}
+		aria-label={label}
+		bind:this={field}
+		onclick={(event) => {
+			event.preventDefault()
+			menuElement?.showPopover()
+			menuElement?.focus()
+		}}
+		onkeydown={(event) => {
+			if (event.key === 'Tab') {
+				event.preventDefault()
+				menuElement?.hidePopover()
+			} else {
+				event.preventDefault()
+				if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
+					menuElement?.showPopover()
+					;(menuElement?.firstElementChild as HTMLElement)?.focus()
+				}
+			}
+		}}
 	>
 		<div class="container-overflow">
 			{#if variant === 'filled'}
@@ -158,7 +159,13 @@
 						</div>
 					{/if}
 					<div class="content">
-						<select aria-label={label} {...attributes} bind:value bind:this={selectElement}>
+						<select
+							tabindex="-1"
+							aria-label={label}
+							{...attributes}
+							bind:value
+							bind:this={selectElement}
+						>
 							{#each options as option}
 								<option value={option.value} selected={option.selected}>{option.label}</option>
 							{/each}
@@ -187,7 +194,7 @@
 			</div>
 		{/if}
 	</div>
-</label>
+</div>
 
 <Menu
 	style="position-anchor:{menuId};min-width: {clientWidth}px;"
@@ -208,9 +215,7 @@
 			onclick={(event) => {
 				value = option.value
 				menuElement?.hidePopover()
-				if (!isIOS()) {
-					element?.focus()
-				}
+				field?.focus()
 				event.preventDefault()
 			}}
 			onkeydown={(event) => {
@@ -243,7 +248,7 @@
 		z-index: 1;
 	}
 	.field.menu-open .active-indicator::after,
-	.field:has(select:focus-visible) .active-indicator::after {
+	.field:focus .active-indicator::after {
 		opacity: 1;
 	}
 	.active-indicator::after {
@@ -332,6 +337,7 @@
 		writing-mode: horizontal-tb;
 		max-width: var(--np-select-max-width, 100%);
 		min-width: var(--np-select-min-width, 210px);
+		outline: none;
 	}
 
 	.supporting-text {
@@ -412,13 +418,13 @@
 
 	.no-label .content,
 	.field.menu-open .content,
-	.field:has(select:focus-visible) .content,
+	.field:focus .content,
 	.field:has(select option:checked:not([value=''])) .content {
 		opacity: 1;
 	}
 
 	.field:not(.error).menu-open .down,
-	.field:not(.error):has(select:focus-visible) .down {
+	.field:not(.error):focus .down {
 		color: var(--np-color-primary);
 	}
 	.icon .down {
@@ -540,9 +546,8 @@
 	}
 
 	.with-end.menu-open .label-wrapper,
-	.with-end:has(select:focus-visible option:checked:not([value=''])) .label-wrapper,
-	.with-end:has(select option:checked:not([value=''])) .label-wrapper,
-	.with-end:has(select:focus-visible) .label-wrapper {
+	.with-end:focus:has(select option:checked:not([value=''])) .label-wrapper,
+	.with-end:focus .label-wrapper {
 		margin-inline-end: 1rem;
 	}
 	.notch {
@@ -557,16 +562,16 @@
 		opacity: 0;
 	}
 
-	.field:not(.menu-open):has(select:not(:focus-visible)) .label {
+	.field:not(.menu-open):not(:focus) .label {
 		position: absolute;
 		top: 1rem;
 		left: 0rem;
 	}
 
 	.field.menu-open .label,
-	.field:has(select:focus-visible option:checked:not([value=''])) .label,
+	.field:focus:has(select option:checked:not([value=''])) .label,
 	.field:has(select option:checked:not([value=''])) .label,
-	.field:has(select:focus-visible) .label {
+	.field:focus .label {
 		font-size: 0.75rem;
 		line-height: 1rem;
 		transform-origin: top left;
@@ -597,12 +602,12 @@
 	}
 
 	.field.menu-open .label,
-	.field:has(select:focus-visible) .label {
+	.field:focus .label {
 		color: var(--np-color-primary);
 	}
 	.error .label,
 	.error.menu-open .label,
-	.error:has(select:focus-visible) .label {
+	.error:focus .label {
 		color: var(--np-color-error);
 	}
 	.disabled .label {
@@ -692,7 +697,7 @@
 	}
 
 	.field.menu-open .outline-notch::before,
-	.field:has(select:focus-visible) .outline-notch::before,
+	.field:focus .outline-notch::before,
 	.field:has(select option:checked:not([value=''])) .outline-notch::before {
 		border-top-style: none;
 	}
@@ -735,9 +740,9 @@
 	.field.menu-open .outline-start::after,
 	.field.menu-open .outline-end::after,
 	.field.menu-open .outline-notch::after,
-	.field:has(select:focus-visible) .outline-start::after,
-	.field:has(select:focus-visible) .outline-end::after,
-	.field:has(select:focus-visible) .outline-notch::after {
+	.field:focus .outline-start::after,
+	.field:focus .outline-end::after,
+	.field:focus .outline-notch::after {
 		opacity: 1;
 	}
 	.np-outline {
@@ -752,13 +757,13 @@
 	}
 
 	.field.menu-open .np-outline,
-	.field:has(select:focus-visible) .np-outline {
+	.field:focus .np-outline {
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
 	}
 	.error .np-outline,
 	.error.menu-open .np-outline,
-	.error:has(select:focus-visible) .np-outline {
+	.error:focus .np-outline {
 		border-color: var(--np-color-error);
 	}
 	.disabled .np-outline {
