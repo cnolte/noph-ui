@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DemoCaintainer from '../../DemoContainer.svelte'
-	import Dialog from '$lib/dialogs/Dialog.svelte'
+	import Dialog from '$lib/dialog/Dialog.svelte'
 	import Button from '$lib/button/Button.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
