@@ -242,7 +242,6 @@
 <style>
 	:global(.theme-menu) {
 		position-anchor: --palette-menu;
-		margin-right: 0px !important;
 		padding: 1rem !important;
 	}
 	.spacer {

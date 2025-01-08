@@ -116,9 +116,7 @@
 		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
 		padding: 0.5rem 0;
 		box-shadow: var(--np-elevation-2);
-		margin: 0;
-		margin-bottom: 2px;
-		margin-top: 2px;
+		margin: 2px;
 		max-height: 80dvh;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
