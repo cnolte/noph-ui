@@ -4,6 +4,7 @@
 	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
+	import { tick } from 'svelte'
 
 	let {
 		options = [],
@@ -216,6 +217,9 @@
 				menuElement?.hidePopover()
 				field?.focus()
 				event.preventDefault()
+				tick().then(() => {
+					selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
+				})
 			}}
 			onkeydown={(event) => {
 				if (event.key === 'ArrowDown') {
@@ -230,6 +234,9 @@
 					value = option.value
 					menuElement?.hidePopover()
 					event.preventDefault()
+					tick().then(() => {
+						selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
+					})
 				}
 				if (event.key === 'Tab') {
 					menuElement?.hidePopover()
