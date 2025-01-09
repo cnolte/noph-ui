@@ -1,51 +1,54 @@
 <script lang="ts">
+	import { generateUUIDv4 } from '$lib/utils.ts'
 	import type { TooltipProps } from './types.ts'
 
 	let { children, element = $bindable(), id, ...attributes }: TooltipProps = $props()
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
-	let innerWidth = $state(0)
 	let anchor: HTMLElement | undefined = $state()
-	let anchorRect: DOMRect | undefined = $state()
 
-	const distanceToBorder = 8
-
-	let calculateLeftPos = $derived.by(() => {
-		if (!anchor || !anchorRect) {
-			return 0
+	const refreshValues = () => {
+		if (element && anchor && !('anchorName' in document.documentElement.style)) {
+			const docClientWidth = document.documentElement.clientWidth
+			const anchorRect = anchor.getBoundingClientRect()
+			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
+				element.style.top = `${anchorRect.top - clientHeight - 8}px`
+			} else {
+				element.style.top = `${anchorRect.bottom}px`
+			}
+			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+			if (left < 2) {
+				element.style.left = '2px'
+			} else if (left > docClientWidth - clientWidth) {
+				element.style.left = `${docClientWidth - clientWidth - 2}px`
+			} else {
+				element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+			}
 		}
-		const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-		if (left < distanceToBorder) {
-			return distanceToBorder
-		}
-		if (innerWidth < left + clientWidth + distanceToBorder) {
-			return innerWidth - clientWidth - distanceToBorder
-		}
-		return anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-	})
-
-	let calculateTopPos = $derived.by(() => {
-		if (!anchorRect) {
-			return 0
-		}
-		const top = anchorRect.bottom + 4
-		if (top + clientHeight > innerHeight) {
-			return anchorRect.top - clientHeight - 4
-		}
-		return top
-	})
+	}
+	$effect(refreshValues)
 	let setAnchor = (document: Document) => {
 		anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
 	}
 
 	$effect(() => {
-		if (anchor) {
-			anchor.addEventListener('pointerenter', () => {
-				anchorRect = anchor?.getBoundingClientRect() ?? undefined
+		if (anchor && element) {
+			if ('anchorName' in document.documentElement.style) {
+				const anchorName = anchor.style.getPropertyValue('anchor-name')
+				const generatedId = anchorName || `--${generateUUIDv4()}`
+				element.style.setProperty('position-anchor', generatedId)
+				if (!anchorName) {
+					anchor.style.setProperty('anchor-name', generatedId)
+				}
+			}
+			anchor.addEventListener('mouseenter', () => {
 				element?.showPopover()
 			})
-			anchor.addEventListener('pointerleave', () => {
+			anchor.addEventListener('mouseleave', () => {
+				element?.hidePopover()
+			})
+			anchor.addEventListener('click', () => {
 				element?.hidePopover()
 			})
 		}
@@ -53,13 +56,12 @@
 </script>
 
 <svelte:document use:setAnchor />
-<svelte:window bind:innerHeight bind:innerWidth />
+<svelte:window bind:innerHeight />
 
 <div
 	{...attributes}
 	{id}
 	class={['np-tooltip', attributes.class]}
-	style="top:{calculateTopPos}px;left:{calculateLeftPos}px;{attributes.style}"
 	role="tooltip"
 	popover="manual"
 	bind:this={element}
@@ -70,24 +72,30 @@
 </div>
 
 <style>
-	.np-tooltip {
+	.np-tooltip[popover] {
 		width: max-content;
-		margin: 0;
+		margin: 4px 0;
 		background: var(--np-color-inverse-surface);
 		color: var(--np-color-inverse-on-surface);
 		padding: 0.25rem 0.5rem;
+		border: none;
 		border-radius: 0.25rem;
 		line-height: 1rem;
 		font-size: 0.75rem;
 		opacity: 0;
 		transition:
-			overlay 0.3s allow-discrete,
 			display 0.3s allow-discrete,
 			opacity 0.3s ease;
+		justify-self: var(--np-tooltip-justify-self, anchor-center);
+		position-area: var(--np-tooltip-position-area, top);
+		position-try-fallbacks: --np-tooltip-position-fallback;
 	}
 	.np-tooltip:popover-open {
 		opacity: 1;
 		animation: scaleIn 0.3s ease;
+	}
+	@position-try --np-tooltip-position-fallback {
+		position-area: var(--np-tooltip-position-area-fallback, bottom);
 	}
 
 	@keyframes scaleIn {
