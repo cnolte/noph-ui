@@ -2,7 +2,13 @@
 	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { TooltipProps } from './types.ts'
 
-	let { children, element = $bindable(), id, ...attributes }: TooltipProps = $props()
+	let {
+		children,
+		element = $bindable(),
+		id,
+		ignoreAnchorClick = false,
+		...attributes
+	}: TooltipProps = $props()
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
@@ -48,9 +54,11 @@
 			anchor.addEventListener('mouseleave', () => {
 				element?.hidePopover()
 			})
-			anchor.addEventListener('click', () => {
-				element?.hidePopover()
-			})
+			if (!ignoreAnchorClick) {
+				anchor.addEventListener('mouseup', () => {
+					element?.hidePopover()
+				})
+			}
 		}
 	})
 </script>

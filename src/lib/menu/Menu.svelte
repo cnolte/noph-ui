@@ -14,7 +14,6 @@
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
-	let innerWidth = $state(0)
 
 	showPopover = () => {
 		element?.showPopover()
