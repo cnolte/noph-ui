@@ -14,6 +14,7 @@
 		disabled,
 		selected = false,
 		selectedIcon,
+		keepTooltipOnClick,
 		...attributes
 	}: IconButtonProps = $props()
 
@@ -86,7 +87,7 @@
 {/if}
 
 {#if title}
-	<Tooltip id={tooltipId}>{title}</Tooltip>
+	<Tooltip {keepTooltipOnClick} id={tooltipId}>{title}</Tooltip>
 {/if}
 
 <style>

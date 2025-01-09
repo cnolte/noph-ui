@@ -6,7 +6,7 @@
 		children,
 		element = $bindable(),
 		id,
-		ignoreAnchorClick = false,
+		keepTooltipOnClick = false,
 		...attributes
 	}: TooltipProps = $props()
 	let clientWidth = $state(0)
@@ -54,7 +54,7 @@
 			anchor.addEventListener('mouseleave', () => {
 				element?.hidePopover()
 			})
-			if (!ignoreAnchorClick) {
+			if (!keepTooltipOnClick) {
 				anchor.addEventListener('mouseup', () => {
 					element?.hidePopover()
 				})

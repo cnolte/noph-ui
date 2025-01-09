@@ -13,6 +13,7 @@
 		title,
 		element = $bindable(),
 		disabled = false,
+		keepTooltipOnClick,
 		...attributes
 	}: ButtonProps = $props()
 
@@ -75,7 +76,7 @@
 {/if}
 
 {#if title}
-	<Tooltip id={tooltipId}>{title}</Tooltip>
+	<Tooltip {keepTooltipOnClick} id={tooltipId}>{title}</Tooltip>
 {/if}
 
 <style>

@@ -7,12 +7,14 @@ interface ButtonButtonProps extends HTMLButtonAttributes {
 	end?: Snippet | undefined
 	element?: HTMLElement
 	disabled?: boolean
+	keepTooltipOnClick?: boolean
 }
 interface ButtonAnchorProps extends HTMLAnchorAttributes {
 	variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
 	start?: Snippet
 	end?: Snippet
 	element?: HTMLElement
+	keepTooltipOnClick?: boolean
 	disabled?: boolean
 }
 
@@ -21,6 +23,7 @@ interface IconButtonButtonProps extends HTMLButtonAttributes {
 	element?: HTMLElement
 	toggle?: boolean
 	selected?: boolean
+	keepTooltipOnClick?: boolean
 	selectedIcon?: Snippet
 }
 interface IconButtonAnchorProps extends HTMLAnchorAttributes {
@@ -29,6 +32,7 @@ interface IconButtonAnchorProps extends HTMLAnchorAttributes {
 	disabled?: boolean
 	toggle?: boolean
 	selected?: boolean
+	keepTooltipOnClick?: boolean
 	selectedIcon?: Snippet
 }
 

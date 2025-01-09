@@ -10,6 +10,7 @@
 	<div class="code-container">
 		<IconButton
 			{title}
+			keepTooltipOnClick
 			style="position:absolute;right:0.4rem;top:0.4rem;"
 			onclick={() => {
 				navigator.clipboard.writeText(value)

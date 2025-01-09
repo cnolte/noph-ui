@@ -183,6 +183,7 @@
 		<div class="headline">Theme Controls</div>
 		<IconButton
 			title={copyTitle}
+			keepTooltipOnClick
 			onclick={() => {
 				copyTheme()
 				copyTitle = 'Copied!'
