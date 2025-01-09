@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { generateUUIDv4 } from '$lib/utils.ts'
+	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { TooltipProps } from './types.ts'
 
 	let { children, element = $bindable(), id, ...attributes }: TooltipProps = $props()
