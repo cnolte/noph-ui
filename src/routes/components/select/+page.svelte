@@ -39,7 +39,6 @@
 		variant="outlined"
 		name="fruit"
 		disabled
-		autofocus
 		options={[
 			{ value: '', label: '' },
 			{ value: 'apple', label: 'Apple', selected: true },
