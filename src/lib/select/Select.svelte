@@ -110,7 +110,7 @@
 		aria-controls="listbox"
 		aria-expanded={menuOpen}
 		aria-label={attributes['aria-label'] || label}
-		data-test-id={attributes['data-test-id']}
+		data-testid={attributes['data-testid']}
 		bind:this={field}
 		autofocus={disabled ? false : autofocus}
 		onclick={(event) => {
