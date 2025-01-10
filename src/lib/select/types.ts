@@ -1,7 +1,8 @@
 import type { Snippet } from 'svelte'
 import type { HTMLSelectAttributes } from 'svelte/elements'
 
-export interface SelectProps extends HTMLSelectAttributes {
+export interface SelectProps
+	extends Omit<HTMLSelectAttributes, 'multiple' | 'size' | 'autocomplete'> {
 	label?: string
 	supportingText?: string
 	error?: boolean

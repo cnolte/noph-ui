@@ -19,6 +19,12 @@
 		noAsterisk = false,
 		variant = 'filled',
 		element = $bindable(),
+		required,
+		disabled,
+		name,
+		id,
+		form,
+		autofocus,
 		...attributes
 	}: SelectProps = $props()
 
@@ -34,7 +40,6 @@
 	let selectedLabel = $derived.by<string>(() => {
 		return options.find((option) => option.value === value)?.label || ''
 	})
-	let clientWidth = $state(0)
 	$effect(() => {
 		if (value !== '') {
 			error = false
@@ -89,22 +94,25 @@
 	class={['text-field', attributes.class]}
 	bind:this={element}
 >
+	<!-- svelte-ignore a11y_autofocus -->
 	<div
+		{id}
 		class="field"
 		class:error
 		class:no-label={!label?.length}
 		class:with-start={start}
 		class:menu-open={menuOpen}
 		class:with-end={true}
-		class:disabled={attributes.disabled}
+		class:disabled
 		class:outlined={variant === 'outlined'}
 		role="combobox"
-		tabindex={attributes.disabled ? -1 : tabindex}
+		tabindex={disabled ? -1 : tabindex}
 		aria-controls="listbox"
 		aria-expanded={menuOpen}
 		aria-label={attributes['aria-label'] || label}
+		data-test-id={attributes['data-test-id']}
 		bind:this={field}
-		bind:clientWidth
+		autofocus={disabled ? false : autofocus}
 		onclick={(event) => {
 			event.preventDefault()
 			menuElement?.showPopover()
@@ -132,11 +140,11 @@
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="label-wrapper">
-							<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
+							<span class="label">{label}{noAsterisk || !required ? '' : '*'} </span>
 						</div>
 						<div class="outline-notch">
 							<span class="notch np-hidden" aria-hidden="true"
-								>{label}{noAsterisk || !attributes.required ? '' : '*'}</span
+								>{label}{noAsterisk || !required ? '' : '*'}</span
 							>
 						</div>
 					{/if}
@@ -153,16 +161,18 @@
 					{#if variant === 'filled'}
 						<div class="label-wrapper">
 							{#if label?.length}
-								<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
+								<span class="label">{label}{noAsterisk || !required ? '' : '*'} </span>
 							{/if}
 						</div>
 					{/if}
 					<div class="content">
 						<select
 							tabindex="-1"
-							aria-label={label}
-							{...attributes}
-							class={[]}
+							aria-label={attributes['aria-label'] || label}
+							{disabled}
+							{required}
+							{name}
+							{form}
 							bind:value
 							bind:this={selectElement}
 						>
@@ -457,31 +467,15 @@
 	.disabled .content {
 		color: var(--np-color-on-surface);
 	}
-	.field:not(.with-end) .content .input-wrapper,
 	.field:not(.with-end) .content .input {
 		padding-inline-end: 16px;
 	}
 	.outline-start,
-	.field:not(.with-start) .content .input-wrapper,
 	.field:not(.with-start) .content .input {
 		padding-inline-start: 16px;
 	}
 
 	.content .input {
-		padding-top: var(--top-space, 1.5rem);
-		padding-bottom: var(--bottom-space, 0.5rem);
-	}
-
-	.input-wrapper {
-		display: flex;
-	}
-
-	.input-wrapper > * {
-		all: inherit;
-		padding: 0;
-	}
-
-	.content .input-wrapper {
 		padding-top: var(--top-space, 1.5rem);
 		padding-bottom: var(--bottom-space, 0.5rem);
 	}
