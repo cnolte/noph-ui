@@ -25,6 +25,8 @@
 		id,
 		form,
 		autofocus,
+		onchange,
+		oninput,
 		...attributes
 	}: SelectProps = $props()
 
@@ -173,6 +175,8 @@
 							{required}
 							{name}
 							{form}
+							{onchange}
+							{oninput}
 							bind:value
 							bind:this={selectElement}
 						>
