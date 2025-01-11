@@ -9,7 +9,7 @@ interface TextProps extends HTMLAttributes<HTMLDivElement> {
 	headline?: string | null
 	subhead?: string | null
 	supportingText?: string | null
-	action?: Snippet
+	action?: Snippet<[]>
 	type: 'text'
 }
 interface ButtonProps extends HTMLButtonAttributes {
@@ -20,7 +20,7 @@ interface ButtonProps extends HTMLButtonAttributes {
 	headline?: string | null
 	subhead?: string | null
 	supportingText?: string | null
-	action?: Snippet
+	action?: Snippet<[]>
 	type: 'button'
 }
 interface AnchorProps extends HTMLAnchorAttributes {
@@ -31,7 +31,7 @@ interface AnchorProps extends HTMLAnchorAttributes {
 	headline?: string | null
 	subhead?: string | null
 	supportingText?: string | null
-	action?: Snippet
+	action?: Snippet<[]>
 	type: 'link'
 }
 

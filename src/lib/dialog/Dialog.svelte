@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms'
 	import Divider from '$lib/divider/Divider.svelte'
 	import type { DialogProps } from './types.ts'
 
@@ -13,7 +12,6 @@
 		supportingText,
 		buttons,
 		divider,
-		submitFunction,
 		...attributes
 	}: DialogProps = $props()
 
@@ -26,14 +24,7 @@
 	}
 </script>
 
-<form
-	use:enhance={submitFunction}
-	bind:this={element}
-	class="np-dialog"
-	popover="auto"
-	role="dialog"
-	{...attributes}
->
+<div bind:this={element} class="np-dialog" popover="auto" role="dialog" {...attributes}>
 	{#if icon}
 		<div class="np-dialog-icon">
 			{@render icon()}
@@ -54,7 +45,7 @@
 			{@render buttons()}
 		</div>
 	{/if}
-</form>
+</div>
 
 <style>
 	.np-dialog {
