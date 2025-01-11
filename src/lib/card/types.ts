@@ -4,33 +4,33 @@ import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 
 interface TextProps extends HTMLAttributes<HTMLDivElement> {
 	variant?: 'elevated' | 'filled' | 'outlined'
 	disabled?: boolean
-	image?: string | undefined
+	image?: string | null
 	element?: HTMLElement
-	headline?: string | undefined
-	subhead?: string
-	supportingText?: string
+	headline?: string | null
+	subhead?: string | null
+	supportingText?: string | null
 	action?: Snippet
 	type: 'text'
 }
 interface ButtonProps extends HTMLButtonAttributes {
 	variant?: 'elevated' | 'filled' | 'outlined'
 	disabled?: boolean
-	image?: string | undefined
+	image?: string | null
 	element?: HTMLElement
-	headline?: string | undefined
-	subhead?: string
-	supportingText?: string
+	headline?: string | null
+	subhead?: string | null
+	supportingText?: string | null
 	action?: Snippet
 	type: 'button'
 }
 interface AnchorProps extends HTMLAnchorAttributes {
 	variant?: 'elevated' | 'filled' | 'outlined'
 	disabled?: boolean
-	image?: string | undefined
+	image?: string | null
 	element?: HTMLElement
-	headline?: string | undefined
-	subhead?: string
-	supportingText?: string
+	headline?: string | null
+	subhead?: string | null
+	supportingText?: string | null
 	action?: Snippet
 	type: 'link'
 }

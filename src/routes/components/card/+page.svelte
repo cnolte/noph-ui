@@ -285,25 +285,25 @@
 		</tr>
 		<tr>
 			<td><code>image</code></td>
-			<td><code>string | undefined</code></td>
+			<td><code>string | undefined | null</code></td>
 			<td><code>undefined</code></td>
 			<td>The path to the image of the card</td>
 		</tr>
 		<tr>
 			<td><code>headline</code></td>
-			<td><code>string | undefined</code></td>
+			<td><code>string | undefined | null</code></td>
 			<td><code>undefined</code></td>
 			<td>The headline of the card</td>
 		</tr>
 		<tr>
 			<td><code>subhead</code></td>
-			<td><code>string | undefined</code></td>
+			<td><code>string | undefined | null</code></td>
 			<td><code>undefined</code></td>
 			<td>The subhead of the card</td>
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>
-			<td><code>string | undefined</code></td>
+			<td><code>string | undefined | null</code></td>
 			<td><code>undefined</code></td>
 			<td>The supporting text of the card</td>
 		</tr>

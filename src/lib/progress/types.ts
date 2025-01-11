@@ -1,4 +1,4 @@
-interface ProgressProps {
+export interface CircularProgressProps {
 	value?: number
 	max?: number
 	indeterminate?: boolean
@@ -7,8 +7,6 @@ interface ProgressProps {
 	element?: HTMLDivElement
 }
 
-export interface LinearProgressProps extends ProgressProps {
+export interface LinearProgressProps extends CircularProgressProps {
 	buffer?: number
 }
-
-export type CircularProgressProps = ProgressProps
