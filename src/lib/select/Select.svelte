@@ -118,6 +118,7 @@
 		onclick={(event) => {
 			event.preventDefault()
 			menuElement?.showPopover()
+			menuElement?.style.setProperty('min-width', `${field?.clientWidth}px`)
 		}}
 		onkeydown={(event) => {
 			if (event.key === 'Tab') {
@@ -126,6 +127,7 @@
 				event.preventDefault()
 				if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
 					menuElement?.showPopover()
+					menuElement?.style.setProperty('min-width', `${field?.clientWidth}px`)
 					;(menuElement?.firstElementChild as HTMLElement)?.focus()
 				}
 			}
@@ -211,7 +213,7 @@
 </div>
 
 <Menu
-	style="position-anchor:{menuId};min-width: 300px;"
+	style="position-anchor:{menuId}"
 	popover="manual"
 	--np-menu-justify-self="none"
 	--np-menu-position-area-fallback="top span-right"
