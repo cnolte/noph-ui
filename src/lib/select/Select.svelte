@@ -31,9 +31,7 @@
 	}: SelectProps = $props()
 
 	let errorTextRaw: string = $state(errorText)
-	$effect(() => {
-		errorTextRaw = errorText
-	})
+	let errorRaw = $state(error)
 	let selectElement: HTMLSelectElement | undefined = $state()
 	let menuElement: HTMLDivElement | undefined = $state()
 	let field: HTMLDivElement | undefined = $state()
@@ -43,37 +41,27 @@
 		return options.find((option) => option.value === value)?.label || ''
 	})
 	$effect(() => {
-		if (value !== '') {
-			error = false
+		if (value !== '' && selectElement?.checkValidity()) {
+			errorRaw = error
 			errorTextRaw = errorText
 		}
 	})
 	$effect(() => {
 		if (selectElement) {
 			selectElement.form?.addEventListener('reset', () => {
-				error = false
+				errorRaw = error
 			})
 			selectElement.addEventListener('invalid', (event) => {
 				event.preventDefault()
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
-				error = true
+				errorRaw = true
 				if (errorText === '') {
 					errorTextRaw = currentTarget.validationMessage
 				}
 				if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
 					currentTarget.focus()
-				}
-			})
-
-			selectElement.addEventListener('select', (event) => {
-				const { currentTarget } = event as Event & {
-					currentTarget: HTMLSelectElement
-				}
-				if (currentTarget.checkValidity()) {
-					error = false
-					errorTextRaw = errorText
 				}
 			})
 		}
@@ -100,7 +88,7 @@
 	<div
 		{id}
 		class="field"
-		class:error
+		class:error={errorRaw}
 		class:no-label={!label?.length}
 		class:with-start={start}
 		class:menu-open={menuOpen}
@@ -202,10 +190,10 @@
 				</div>
 			</div>
 		</div>
-		{#if supportingText || (errorTextRaw && error)}
-			<div class="supporting-text" role={error ? 'alert' : undefined}>
+		{#if supportingText || (errorTextRaw && errorRaw)}
+			<div class="supporting-text" role={errorRaw ? 'alert' : undefined}>
 				<span>
-					{error && errorTextRaw ? errorTextRaw : supportingText}
+					{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
 				</span>
 			</div>
 		{/if}

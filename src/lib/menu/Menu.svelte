@@ -127,5 +127,6 @@
 	}
 	@position-try --np-menu-position-fallback {
 		position-area: var(--np-menu-position-area-fallback, top center);
+		position-area: var(--np-menu-position-area-fallback, top center);
 	}
 </style>
