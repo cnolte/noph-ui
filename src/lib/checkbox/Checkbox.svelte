@@ -6,6 +6,7 @@
 		indeterminate = $bindable(),
 		checked = $bindable(),
 		element = $bindable(),
+		group = $bindable(),
 		style,
 		...attributes
 	}: CheckboxProps = $props()
@@ -20,6 +21,7 @@
 				type="checkbox"
 				bind:indeterminate
 				bind:checked
+				bind:group
 				aria-checked={indeterminate ? 'mixed' : undefined}
 			/>
 			{#if !attributes.disabled}

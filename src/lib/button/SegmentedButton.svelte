@@ -8,6 +8,7 @@
 		options,
 		multiSelect = false,
 		element = $bindable(),
+		group = $bindable(),
 		...attributes
 	}: SegmentedButtonProps = $props()
 	let hoverState = $state(-1)
@@ -43,19 +44,37 @@
 			{#if !option.disabled}
 				<Ripple forceHover={i === hoverState} />
 			{/if}
-			<input
-				type={multiSelect ? 'checkbox' : 'radio'}
-				onclick={option.onclick}
-				onfocus={(event) => {
-					if (event) hoverState = i
-				}}
-				onblur={() => (hoverState = -1)}
-				{name}
-				aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
-				value={option.label}
-				disabled={option.disabled}
-				checked={option.selected}
-			/>
+			{#if multiSelect}
+				<input
+					type="checkbox"
+					onclick={option.onclick}
+					bind:group
+					onfocus={(event) => {
+						if (event) hoverState = i
+					}}
+					onblur={() => (hoverState = -1)}
+					{name}
+					aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
+					value={option.label}
+					disabled={option.disabled}
+					checked={option.selected}
+				/>
+			{:else}
+				<input
+					type="radio"
+					onclick={option.onclick}
+					bind:group
+					onfocus={(event) => {
+						if (event) hoverState = i
+					}}
+					onblur={() => (hoverState = -1)}
+					{name}
+					aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
+					value={option.label}
+					disabled={option.disabled}
+					checked={option.selected}
+				/>
+			{/if}
 		</label>
 	{/each}
 </div>

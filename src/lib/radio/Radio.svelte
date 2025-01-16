@@ -6,6 +6,7 @@
 		checked,
 		defaultChecked,
 		element = $bindable(),
+		group = $bindable(),
 		style,
 		...attributes
 	}: RadioProps = $props()
@@ -14,7 +15,7 @@
 </script>
 
 <label {style} class={['np-host', attributes.class]} bind:this={element}>
-	<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} />
+	<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} bind:group />
 	<div class="np-container" aria-hidden="true">
 		{#if !attributes.disabled}
 			<Ripple forElement={touchEl} class="np-radio-ripple" />

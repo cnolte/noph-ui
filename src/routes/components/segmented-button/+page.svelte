@@ -273,6 +273,11 @@
 	</thead>
 	<tbody>
 		<tr>
+			<td><code>group</code></td>
+			<td><code>string | number | undefined</code></td>
+			<td>Input property</td>
+		</tr>
+		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
 			<td
