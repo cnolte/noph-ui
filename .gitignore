@@ -2,6 +2,7 @@
 node_modules
 /build
 /dist
+/.vercel
 /.svelte-kit
 /package
 .env

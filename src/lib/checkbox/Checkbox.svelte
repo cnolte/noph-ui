@@ -15,15 +15,26 @@
 <div {style} class={['np-host', attributes.class]} bind:this={element}>
 	<div class="np-container">
 		<label class="np-input-wrapper">
-			<input
-				{...attributes}
-				class="np-input"
-				type="checkbox"
-				bind:indeterminate
-				bind:checked
-				bind:group
-				aria-checked={indeterminate ? 'mixed' : undefined}
-			/>
+			{#if group}
+				<input
+					{...attributes}
+					class="np-input"
+					type="checkbox"
+					bind:indeterminate
+					bind:checked
+					bind:group
+					aria-checked={indeterminate ? 'mixed' : undefined}
+				/>
+			{:else}
+				<input
+					{...attributes}
+					class="np-input"
+					type="checkbox"
+					bind:indeterminate
+					bind:checked
+					aria-checked={indeterminate ? 'mixed' : undefined}
+				/>
+			{/if}
 			{#if !attributes.disabled}
 				<Ripple />
 			{/if}

@@ -49,6 +49,6 @@ export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
 		icon?: Snippet
 		onclick?: (event: Event) => void
 	}[]
-	group?: string | number
+	group?: string | number | null
 	element?: HTMLElement
 }

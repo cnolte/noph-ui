@@ -44,26 +44,42 @@
 			{#if !option.disabled}
 				<Ripple forceHover={i === hoverState} />
 			{/if}
-			{#if multiSelect}
-				<input
-					type="checkbox"
-					onclick={option.onclick}
-					bind:group
-					onfocus={(event) => {
-						if (event) hoverState = i
-					}}
-					onblur={() => (hoverState = -1)}
-					{name}
-					aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
-					value={option.label}
-					disabled={option.disabled}
-					checked={option.selected}
-				/>
+			{#if group}
+				{#if multiSelect}
+					<input
+						type="checkbox"
+						onclick={option.onclick}
+						bind:group
+						onfocus={(event) => {
+							if (event) hoverState = i
+						}}
+						onblur={() => (hoverState = -1)}
+						{name}
+						aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
+						value={option.label}
+						disabled={option.disabled}
+						checked={option.selected}
+					/>
+				{:else}
+					<input
+						type="radio"
+						onclick={option.onclick}
+						bind:group
+						onfocus={(event) => {
+							if (event) hoverState = i
+						}}
+						onblur={() => (hoverState = -1)}
+						{name}
+						aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
+						value={option.label}
+						disabled={option.disabled}
+						checked={option.selected}
+					/>
+				{/if}
 			{:else}
 				<input
-					type="radio"
+					type={multiSelect ? 'checkbox' : 'radio'}
 					onclick={option.onclick}
-					bind:group
 					onfocus={(event) => {
 						if (event) hoverState = i
 					}}
