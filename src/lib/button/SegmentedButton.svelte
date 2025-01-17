@@ -44,7 +44,7 @@
 			{#if !option.disabled}
 				<Ripple forceHover={i === hoverState} />
 			{/if}
-			{#if group}
+			{#if group !== undefined}
 				{#if multiSelect}
 					<input
 						type="checkbox"

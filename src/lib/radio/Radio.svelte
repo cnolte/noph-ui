@@ -15,7 +15,7 @@
 </script>
 
 <label {style} class={['np-host', attributes.class]} bind:this={element}>
-	{#if group}
+	{#if group !== undefined}
 		<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} bind:group />
 	{:else}
 		<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} />

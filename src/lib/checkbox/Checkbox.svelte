@@ -15,7 +15,7 @@
 <div {style} class={['np-host', attributes.class]} bind:this={element}>
 	<div class="np-container">
 		<label class="np-input-wrapper">
-			{#if group}
+			{#if group !== undefined}
 				<input
 					{...attributes}
 					class="np-input"
