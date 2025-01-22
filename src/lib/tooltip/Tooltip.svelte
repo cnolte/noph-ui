@@ -38,6 +38,10 @@
 		anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
 	}
 
+	const isTouch = (event: PointerEvent) => {
+		return event.pointerType === 'touch'
+	}
+
 	$effect(() => {
 		if (anchor && element) {
 			if ('anchorName' in document.documentElement.style) {
@@ -48,15 +52,21 @@
 					anchor.style.setProperty('anchor-name', generatedId)
 				}
 			}
-			anchor.addEventListener('mouseenter', () => {
-				element?.showPopover()
+			anchor.addEventListener('pointerenter', (event: PointerEvent) => {
+				if (!isTouch(event)) {
+					element?.showPopover()
+				}
 			})
-			anchor.addEventListener('mouseleave', () => {
-				element?.hidePopover()
+			anchor.addEventListener('pointerleave', (event: PointerEvent) => {
+				if (!isTouch(event)) {
+					element?.hidePopover()
+				}
 			})
 			if (!keepTooltipOnClick) {
-				anchor.addEventListener('mouseup', () => {
-					element?.hidePopover()
+				anchor.addEventListener('pointerup', (event: PointerEvent) => {
+					if (!isTouch(event)) {
+						element?.hidePopover()
+					}
 				})
 			}
 		}
