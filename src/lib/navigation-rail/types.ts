@@ -3,15 +3,15 @@ import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 
 
 export type NavigationRailProps = HTMLAttributes<HTMLElement>
 
-interface NavigationActionButton extends HTMLButtonAttributes {
+interface NavigationRailItemButton extends HTMLButtonAttributes {
 	icon: Snippet
 	label: string
 	selected?: boolean
 }
 
-interface NavigationActionLink extends HTMLAnchorAttributes {
+interface NavigationRailItemLink extends HTMLAnchorAttributes {
 	icon: Snippet
 	label: string
 	selected?: boolean
 }
-export type NavigationActionProps = NavigationActionButton | NavigationActionLink
+export type NavigationRailItemProps = NavigationRailItemButton | NavigationRailItemLink

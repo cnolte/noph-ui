@@ -297,7 +297,7 @@
 	}
 	.card {
 		padding: 1rem;
-		border-radius: 1.5rem;
+		border-radius: var(--np-shape-corner-large);
 		color: var(--np-color-on-surface-variant);
 		background-color: var(--np-color-surface-variant);
 	}

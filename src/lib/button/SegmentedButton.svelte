@@ -102,7 +102,7 @@
 		display: grid;
 		color: var(--np-color-on-surface);
 		border: 1px solid var(--np-color-outline);
-		border-radius: 1.5rem;
+		border-radius: var(--np-shape-corner-full);
 		overflow-x: auto;
 	}
 

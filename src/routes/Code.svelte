@@ -34,7 +34,7 @@
 	}
 	.code-container {
 		position: relative;
-		border-radius: 1.5rem;
+		border-radius: var(--np-shape-corner-extra-large);
 		border-width: 1px;
 		border-style: solid;
 		overflow: hidden;

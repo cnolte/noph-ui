@@ -39,8 +39,8 @@ a.link:hover {
 }
 
 body {
-	font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-		'Segoe UI Symbol', 'Noto Color Emoji';
+	font-family: 'Roboto Flex', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 	margin: 0;
 	background-color: var(--np-color-surface-container);
 	font-size: 1.125rem;
@@ -57,6 +57,7 @@ code {
 	display: block;
 	overflow-y: auto;
 	color: var(--np-color-primary);
+	scrollbar-width: thin;
 }
 
 table {

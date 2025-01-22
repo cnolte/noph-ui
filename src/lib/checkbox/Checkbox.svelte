@@ -89,7 +89,7 @@
 		position: absolute;
 		width: 48px;
 		z-index: 1;
-		border-radius: var(--np-shape-corner-large);
+		border-radius: var(--np-shape-corner-full);
 		cursor: inherit;
 	}
 

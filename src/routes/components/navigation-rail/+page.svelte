@@ -3,7 +3,7 @@
 	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import NavigationRail from '$lib/navigation-rail/NavigationRail.svelte'
-	import NavigationAction from '$lib/navigation-rail/NavigationAction.svelte'
+	import NavigationRailItem from '$lib/navigation-rail/NavigationRailItem.svelte'
 	let selection = $state(1)
 </script>
 
@@ -15,7 +15,7 @@
 <h2>Usage</h2>
 <DemoCaintainer>
 	<NavigationRail>
-		<NavigationAction
+		<NavigationRailItem
 			selected={selection === 1}
 			onclick={() => {
 				selection = 1
@@ -23,8 +23,8 @@
 			label="Videos"
 		>
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationAction>
-		<NavigationAction
+		</NavigationRailItem>
+		<NavigationRailItem
 			selected={selection === 2}
 			onclick={() => {
 				selection = 2
@@ -32,8 +32,8 @@
 			label="Styles"
 		>
 			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationAction>
-		<NavigationAction
+		</NavigationRailItem>
+		<NavigationRailItem
 			selected={selection === 3}
 			onclick={() => {
 				selection = 3
@@ -41,12 +41,12 @@
 			label="Settings"
 		>
 			{#snippet icon()}<Icon>settings</Icon>{/snippet}
-		</NavigationAction>
+		</NavigationRailItem>
 	</NavigationRail>
 </DemoCaintainer>
 <Code
 	value={`<NavigationRail>
-	<NavigationAction
+	<NavigationRailItem
 		selected={selection === 1}
 		onclick={() => {
 			selection = 1
@@ -54,8 +54,8 @@
 		label="Videos"
 	>
 		{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-	</NavigationAction>
-	<NavigationAction
+	</NavigationRailItem>
+	<NavigationRailItem
 		selected={selection === 2}
 		onclick={() => {
 			selection = 2
@@ -63,8 +63,8 @@
 		label="Styles"
 	>
 		{#snippet icon()}<Icon>palette</Icon>{/snippet}
-	</NavigationAction>
-	<NavigationAction
+	</NavigationRailItem>
+	<NavigationRailItem
 		selected={selection === 3}
 		onclick={() => {
 			selection = 3
@@ -72,6 +72,6 @@
 		label="Settings"
 	>
 		{#snippet icon()}<Icon>settings</Icon>{/snippet}
-	</NavigationAction>
+	</NavigationRailItem>
 </NavigationRail>`}
 />

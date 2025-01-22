@@ -26,7 +26,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1rem;
-		border-radius: var(--np-shape-corner-large);
+		border-radius: var(--np-shape-corner-extra-large);
 		border-width: 1px;
 		border-style: solid;
 		border-color: var(--np-color-outline);

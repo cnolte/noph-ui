@@ -89,7 +89,7 @@
 
 	.hero {
 		display: grid;
-		border-radius: 1.5rem;
+		border-radius: var(--np-shape-corner-extra-large);
 		padding-left: 1.5rem;
 		padding-right: 1.5rem;
 		padding-top: 4rem;

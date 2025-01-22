@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
-	import type { NavigationActionProps } from './types.ts'
+	import type { NavigationRailItemProps } from './types.ts'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 
-	let { selected, icon, label, ...attributes }: NavigationActionProps = $props()
+	let { selected, icon, label, ...attributes }: NavigationRailItemProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
 
 	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
@@ -80,6 +80,7 @@
 		width: 3.5rem;
 		height: 2rem;
 		align-items: center;
+		z-index: 1;
 	}
 	.np-navigation-action-label {
 		font-size: 0.75rem;
