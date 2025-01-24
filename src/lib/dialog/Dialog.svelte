@@ -73,23 +73,18 @@
 			opacity: 0;
 		}
 	}
-	.np-dialog::backdrop {
+	.np-dialog[popover]::backdrop {
 		background-color: var(--np-color-scrim);
 		opacity: 0;
-		transition:
-			display 0.2s allow-discrete,
-			overlay 0.2s allow-discrete,
-			opacity 0.2s linear;
+		transition: opacity 0.2s linear;
 	}
-	.np-dialog:popover-open::backdrop {
+	.np-dialog[popover]:popover-open::backdrop {
 		opacity: 0.38;
-	}
-
-	@starting-style {
-		.np-dialog:popover-open::backdrop {
+		@starting-style {
 			opacity: 0;
 		}
 	}
+
 	.np-dialog-icon {
 		color: var(--np-color-secondary);
 		display: flex;
