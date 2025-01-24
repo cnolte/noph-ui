@@ -43,7 +43,7 @@
 		background-color: transparent;
 	}
 	.np-navigation-drawer-container-modal {
-		z-index: 100;
+		z-index: 1000;
 	}
 	.np-navigation-wrapper {
 		background-color: var(--np-navigation-drawer-background, var(--np-color-surface-container-low));

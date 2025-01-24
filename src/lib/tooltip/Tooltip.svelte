@@ -101,6 +101,7 @@
 		line-height: 1rem;
 		font-size: 0.75rem;
 		opacity: 0;
+		z-index: 1000;
 		transition:
 			display 0.3s allow-discrete,
 			opacity 0.3s ease;
