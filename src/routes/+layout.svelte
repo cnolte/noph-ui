@@ -60,7 +60,7 @@
 	</div>
 </header>
 <NavigationDrawer
-	--np-navigation-drawer-font-size="1rem"
+	--np-navigation-drawer-item-font-size="1rem"
 	--np-navigation-drawer-width="16rem"
 	--np-navigation-drawer-height="calc(100dvh - 4.5rem)"
 	--np-navigation-drawer-background="var(--np-color-surface-container)"
@@ -69,7 +69,7 @@
 	<MainNavigation />
 </NavigationDrawer>
 <NavigationDrawer
-	--np-navigation-drawer-font-size="1rem"
+	--np-navigation-drawer-item-font-size="1rem"
 	bind:element={popover}
 	popover="auto"
 	id="mobile-drawer"

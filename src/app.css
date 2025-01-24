@@ -47,6 +47,11 @@ body {
 	color: var(--np-color-on-surface);
 }
 
+button {
+	font-family: 'Roboto Flex', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
 pre {
 	margin: 0;
 }

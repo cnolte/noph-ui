@@ -119,9 +119,9 @@
 	}
 
 	.np-navigation-drawer-item-label {
-		font-size: var(--np-navigation-drawer-font-size, 0.875rem);
+		font-size: var(--np-navigation-drawer-item-font-size, 0.875rem);
 		line-height: 1.25rem;
-		font-weight: 500;
+		font-weight: var(--np-navigation-drawer-item-font-weight, 500);
 		flex: 1;
 		text-align: left;
 		overflow: hidden;
@@ -131,7 +131,7 @@
 	}
 
 	.np-navigation-drawer-item-selected .np-navigation-drawer-item-label {
-		font-weight: 700;
+		font-weight: var(--np-navigation-drawer-item-selected-font-weight, 700);
 		color: var(--np-color-on-secondary-container);
 	}
 
