@@ -51,6 +51,7 @@
 <style>
 	.np-navigation-drawer-item {
 		cursor: pointer;
+		font-family: inherit;
 		border: 0;
 		background: none;
 		align-items: center;
