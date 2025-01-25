@@ -11,13 +11,7 @@
 	} = $props()
 </script>
 
-<IconButton
-	style="margin-left: 1rem"
-	popovertarget="mobile-drawer"
-	variant="text"
-	title="Close"
-	class="menu-btn"
->
+<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
 	<Icon>menu_open</Icon>
 </IconButton>
 <div class="header">About</div>

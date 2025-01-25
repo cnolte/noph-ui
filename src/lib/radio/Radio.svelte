@@ -20,7 +20,6 @@
 	{:else}
 		<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} />
 	{/if}
-	<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} bind:group />
 	<div class="np-container" aria-hidden="true">
 		{#if !attributes.disabled}
 			<Ripple forElement={touchEl} class="np-radio-ripple" />
