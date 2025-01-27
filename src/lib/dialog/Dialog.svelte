@@ -66,6 +66,7 @@
 			opacity 0.2s linear;
 		opacity: 0;
 		z-index: 1;
+		margin: auto;
 	}
 	.np-dialog:popover-open {
 		opacity: 1;
