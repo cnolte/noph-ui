@@ -109,7 +109,7 @@
 	}
 	.np-snackbar[popover] {
 		border: none;
-		margin-bottom: 1rem;
+		margin: auto auto 1rem;
 		max-width: calc(100% - 3rem);
 		color: var(--np-snackbar-text-color, var(--np-color-inverse-on-surface));
 		background-color: var(--np-snackbar-container-color, var(--np-color-inverse-surface));
