@@ -14,6 +14,7 @@
 		},
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		onbeforetoggle,
 		timeout = 3000,
 		element = $bindable(),
 		popover = 'auto',
@@ -30,9 +31,15 @@
 	hidePopover = () => {
 		element?.hidePopover()
 	}
+</script>
 
-	const toggleHandler = (event: Event) => {
-		let { newState } = event as ToggleEvent
+<div
+	{...attributes}
+	{popover}
+	class={['np-snackbar', attributes.class]}
+	bind:this={element}
+	onbeforetoggle={(event) => {
+		let { newState } = event
 		if (newState === 'closed') {
 			clearTimeout(timeoutId)
 		}
@@ -41,15 +48,9 @@
 				element?.hidePopover()
 			}, timeout)
 		}
-	}
-	$effect(() => {
-		if (element) {
-			element.addEventListener('beforetoggle', toggleHandler)
-		}
-	})
-</script>
-
-<div {...attributes} {popover} class={['np-snackbar', attributes.class]} bind:this={element}>
+		onbeforetoggle?.(event)
+	}}
+>
 	<div class="np-snackbar-inner">
 		<div class="np-snackbar-label-container">
 			<div class="np-snackbar-label">{label}</div>

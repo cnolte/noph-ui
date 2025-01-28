@@ -51,19 +51,6 @@
 			selectElement.form?.addEventListener('reset', () => {
 				errorRaw = error
 			})
-			selectElement.addEventListener('invalid', (event) => {
-				event.preventDefault()
-				const { currentTarget } = event as Event & {
-					currentTarget: HTMLInputElement | HTMLTextAreaElement
-				}
-				errorRaw = true
-				if (errorText === '') {
-					errorTextRaw = currentTarget.validationMessage
-				}
-				if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-					currentTarget.focus()
-				}
-			})
 		}
 	})
 </script>
@@ -167,6 +154,17 @@
 							{form}
 							{onchange}
 							{oninput}
+							oninvalid={(event) => {
+								event.preventDefault()
+								const { currentTarget } = event
+								errorRaw = true
+								if (errorText === '') {
+									errorTextRaw = currentTarget.validationMessage
+								}
+								if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+									currentTarget.focus()
+								}
+							}}
 							bind:value
 							bind:this={selectElement}
 						>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
+	import type { FocusEventHandler } from 'svelte/elements'
 	import type { ItemProps } from './types.ts'
 
 	let {
@@ -8,22 +9,14 @@
 		end,
 		children,
 		supportingText,
+		onblur,
+		onfocus,
 		disabled = false,
 		...attributes
 	}: ItemProps = $props()
 
 	let focused = $state(false)
 	let element: HTMLButtonElement | HTMLAnchorElement | undefined = $state()
-	$effect(() => {
-		if (element) {
-			element.addEventListener('focus', () => {
-				focused = true
-			})
-			element.addEventListener('blur', () => {
-				focused = false
-			})
-		}
-	})
 </script>
 
 {#snippet content()}
@@ -60,12 +53,29 @@
 		{@render content()}
 	</div>
 {:else if attributes.variant === 'text' || attributes.variant === undefined}
-	<div {...attributes} class={['np-item', selected && 'selected', attributes.class]}>
+	<div
+		{...attributes}
+		onfocus={(event) => {
+			;(onfocus as FocusEventHandler<HTMLDivElement>)?.(event)
+		}}
+		onblur={(event) => {
+			;(onblur as FocusEventHandler<HTMLDivElement>)?.(event)
+		}}
+		class={['np-item', selected && 'selected', attributes.class]}
+	>
 		{@render content()}
 	</div>
 {:else if attributes.variant === 'button'}
 	<button
 		{...attributes}
+		onfocus={(event) => {
+			focused = true
+			;(onfocus as FocusEventHandler<HTMLButtonElement>)?.(event)
+		}}
+		onblur={(event) => {
+			focused = false
+			;(onblur as FocusEventHandler<HTMLButtonElement>)?.(event)
+		}}
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}
 		>{@render content()}
@@ -73,6 +83,14 @@
 {:else if attributes.variant === 'link'}
 	<a
 		{...attributes}
+		onfocus={(event) => {
+			focused = true
+			;(onfocus as FocusEventHandler<HTMLAnchorElement>)?.(event)
+		}}
+		onblur={(event) => {
+			focused = false
+			;(onblur as FocusEventHandler<HTMLAnchorElement>)?.(event)
+		}}
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}>{@render content()}</a
 	>
