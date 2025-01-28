@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { MenuProps } from './types.ts'
 
 	let {
@@ -75,7 +74,7 @@
 					{ passive: true },
 				)
 			} else if (!anchor.style.getPropertyValue('anchor-name')) {
-				const generatedId = `--${generateUUIDv4()}`
+				const generatedId = `--${crypto.randomUUID()}`
 				element.style.setProperty('position-anchor', generatedId)
 				anchor.style.setProperty('anchor-name', generatedId)
 			}

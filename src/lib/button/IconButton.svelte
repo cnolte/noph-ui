@@ -1,9 +1,12 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
-	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { IconButtonProps } from './types.ts'
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type {
+		HTMLAnchorAttributes,
+		HTMLButtonAttributes,
+		MouseEventHandler,
+	} from 'svelte/elements'
 
 	let {
 		variant = 'text',
@@ -15,10 +18,11 @@
 		selected = false,
 		selectedIcon,
 		keepTooltipOnClick,
+		onclick,
 		...attributes
 	}: IconButtonProps = $props()
 
-	let tooltipId = $state(title ? generateUUIDv4() : '')
+	let tooltipId = $state(title ? crypto.randomUUID() : '')
 	let selectedState = $state(!toggle || selected)
 	let touchEl: HTMLSpanElement | undefined = $state()
 
@@ -28,14 +32,6 @@
 	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
 		return (obj as HTMLAnchorAttributes).href !== undefined
 	}
-
-	$effect(() => {
-		if (toggle) {
-			element?.addEventListener('click', () => {
-				selectedState = !selectedState
-			})
-		}
-	})
 </script>
 
 {#snippet content()}
@@ -58,6 +54,12 @@
 		{...attributes as HTMLButtonAttributes}
 		{disabled}
 		bind:this={element}
+		onclick={(event) => {
+			if (toggle) {
+				selectedState = !selectedState
+			}
+			;(onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
+		}}
 		class={[
 			'np-icon-button',
 			disabled ? `${variant}-disabled disabled` : `${variant} enabled`,

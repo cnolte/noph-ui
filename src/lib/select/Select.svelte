@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Menu from '$lib/menu/Menu.svelte'
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
 	import { tick } from 'svelte'
@@ -35,7 +34,7 @@
 	let selectElement: HTMLSelectElement | undefined = $state()
 	let menuElement: HTMLDivElement | undefined = $state()
 	let field: HTMLDivElement | undefined = $state()
-	let menuId = $state(`--select-${generateUUIDv4()}`)
+	let menuId = $state(`--select-${crypto.randomUUID()}`)
 	let menuOpen = $state(false)
 	let selectedLabel = $derived.by<string>(() => {
 		return options.find((option) => option.value === value)?.label || ''

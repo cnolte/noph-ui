@@ -80,6 +80,9 @@
 		popoverState = event.newState
 	}}
 >
+	<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
+		<Icon>menu_open</Icon>
+	</IconButton>
 	<MainNavigation
 		onclose={() => {
 			popover?.hidePopover()

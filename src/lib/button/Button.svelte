@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
-	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'
 
@@ -17,7 +16,7 @@
 		...attributes
 	}: ButtonProps = $props()
 
-	let tooltipId = $state(title ? generateUUIDv4() : '')
+	let tooltipId = $state(title ? crypto.randomUUID() : '')
 
 	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined

@@ -5,6 +5,7 @@
 	import Icon from '$lib/icons/Icon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
+	import { onMount } from 'svelte'
 
 	let theme: string | null = $state(null)
 	let value = $state<string>('#5fb9e9')
@@ -141,7 +142,7 @@
 }`
 		navigator.clipboard.writeText(schemeString)
 	}
-	$effect(() => {
+	onMount(() => {
 		if (browser) {
 			theme = localStorage.getItem('theme')
 			const sourceColor = sessionStorage.getItem('sourceColor')

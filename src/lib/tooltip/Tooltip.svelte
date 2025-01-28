@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { generateUUIDv4 } from '$lib/utils.js'
 	import type { TooltipProps } from './types.ts'
 
 	let {
@@ -46,7 +45,7 @@
 		if (anchor && element) {
 			if ('anchorName' in document.documentElement.style) {
 				const anchorName = anchor.style.getPropertyValue('anchor-name')
-				const generatedId = anchorName || `--${generateUUIDv4()}`
+				const generatedId = anchorName || `--${crypto.randomUUID()}`
 				element.style.setProperty('position-anchor', generatedId)
 				if (!anchorName) {
 					anchor.style.setProperty('anchor-name', generatedId)
