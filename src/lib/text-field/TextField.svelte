@@ -23,6 +23,7 @@
 	let errorRaw: boolean = $state(error)
 	let errorTextRaw: string = $state(errorText)
 	$effect(() => {
+		errorRaw = error
 		errorTextRaw = errorText
 	})
 	let textElement: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
