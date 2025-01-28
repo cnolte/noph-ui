@@ -67,8 +67,9 @@
 	<button
 		{...attributes}
 		class={['np-item', selected && 'selected', attributes.class]}
-		bind:this={element}>{@render content()}</button
-	>
+		bind:this={element}
+		>{@render content()}
+	</button>
 {:else if attributes.variant === 'link'}
 	<a
 		{...attributes}

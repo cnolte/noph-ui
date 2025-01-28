@@ -20,6 +20,7 @@
 		...attributes
 	}: TextFieldProps = $props()
 
+	let errorRaw: boolean = $state(error)
 	let errorTextRaw: string = $state(errorText)
 	$effect(() => {
 		errorTextRaw = errorText
@@ -29,7 +30,7 @@
 	$effect(() => {
 		if (textElement) {
 			textElement.form?.addEventListener('reset', () => {
-				error = false
+				errorRaw = error
 				value = ''
 			})
 			textElement.addEventListener('invalid', (event) => {
@@ -37,7 +38,7 @@
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
-				error = true
+				errorRaw = true
 				if (errorText === '') {
 					errorTextRaw = currentTarget.validationMessage
 				}
@@ -51,7 +52,7 @@
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
 				if (currentTarget.checkValidity()) {
-					error = false
+					errorRaw = error
 					errorTextRaw = errorText
 				}
 			})
@@ -70,7 +71,7 @@
 >
 	<div
 		class="field"
-		class:error
+		class:error={errorRaw}
 		class:resizable={attributes.type === 'textarea'}
 		class:no-label={!label?.length}
 		class:with-start={start}
@@ -139,7 +140,7 @@
 									bind:this={textElement}
 									class="input"
 									{placeholder}
-									aria-invalid={error}
+									aria-invalid={errorRaw}
 								/>
 								{#if suffixText}
 									<span class="suffix">
@@ -157,10 +158,10 @@
 				{/if}
 			</div>
 		</div>
-		{#if supportingText || (errorTextRaw && error) || attributes.maxlength}
-			<div class="supporting-text" role={error ? 'alert' : undefined}>
+		{#if supportingText || (errorTextRaw && errorRaw) || attributes.maxlength}
+			<div class="supporting-text" role={errorRaw ? 'alert' : undefined}>
 				<span>
-					{error && errorTextRaw ? errorTextRaw : supportingText}
+					{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
 				</span>
 				{#if attributes.maxlength}
 					<span>{value?.length || 0}/{attributes.maxlength}</span>
