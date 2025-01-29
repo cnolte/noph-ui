@@ -21,6 +21,15 @@
 		attributes.class,
 	]}
 >
+	{#if backdrop}
+		<div
+			role="none"
+			class="np-backdrop"
+			onclick={() => {
+				element?.hidePopover()
+			}}
+		></div>
+	{/if}
 	<div class={['np-navigation-wrapper', modal && 'np-navigation-drawer-shade']}>
 		<div class="np-navigation-drawer">
 			{#if children}
@@ -31,12 +40,13 @@
 </nav>
 
 <style>
+	.np-backdrop {
+		inset: 0;
+		position: fixed;
+	}
 	.np-navigation-drawer-container {
 		color: var(--np-color-on-surface-variant);
 		width: calc(var(--np-navigation-drawer-width, 22.5rem) + 3px);
-		overflow: hidden;
-		scrollbar-width: thin;
-		overflow-y: auto;
 		border: 0;
 		margin: 0;
 		padding: 0;
@@ -52,16 +62,17 @@
 		width: var(--np-navigation-drawer-width, 22.5rem);
 		height: var(--np-navigation-drawer-height, 100dvh);
 		overflow-y: auto;
+		scrollbar-width: thin;
 	}
 
 	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
 		transform: translateX(-100%);
-		transition: transform 0.2s ease-in;
+		transition: transform 0.25s ease-in;
 	}
 	.np-navigation-drawer-container[popover] {
 		transition:
-			overlay 0.2s allow-discrete,
-			display 0.2s allow-discrete;
+			overlay 0.25s allow-discrete,
+			display 0.25s allow-discrete;
 	}
 	.np-navigation-drawer-container:popover-open .np-navigation-wrapper {
 		transform: translateX(0);
@@ -80,10 +91,12 @@
 	.np-navigation-drawer-backdrop[popover]::backdrop {
 		background-color: var(--np-color-scrim);
 		opacity: 0;
-		transition: opacity 0.2s linear;
+		transition: opacity 0.25s linear;
 	}
 	.np-navigation-drawer-backdrop[popover]:popover-open::backdrop {
 		opacity: 0.38;
+		z-index: 999;
+		pointer-events: all !important;
 		@starting-style {
 			opacity: 0;
 		}
