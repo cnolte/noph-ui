@@ -47,6 +47,6 @@
 	</style>
 </svelte:head>
 
-<span {...attributes} class={['np-icon', attributes.class]} bind:this={element}
+<span {...attributes} class={['np-icon', 'notranslate', attributes.class]} bind:this={element}
 	>{@render children()}</span
 >
