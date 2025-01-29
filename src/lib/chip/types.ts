@@ -8,4 +8,5 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	elevated?: boolean
 	label?: string
 	icon?: Snippet
+	ariaLabelRemove?: string
 }

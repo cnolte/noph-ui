@@ -12,6 +12,7 @@
 		disabled = false,
 		label = '',
 		icon,
+		ariaLabelRemove = 'Remove',
 		...attributes
 	}: FilterChipProps = $props()
 
@@ -56,6 +57,7 @@
 			--np-icon-button-container-height="1.75rem"
 			--np-icon-button-container-width="1.75rem"
 			--np-icon-button-icon-size="1.125rem"
+			aria-label={ariaLabelRemove}
 			onclick={(event: Event) => {
 				event.stopPropagation()
 			}}
