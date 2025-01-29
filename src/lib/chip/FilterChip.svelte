@@ -51,7 +51,9 @@
 		}}
 	>
 		{#if icon && !selected}
-			{@render icon()}
+			<div class="np-chip-icon">
+				{@render icon()}
+			</div>
 		{/if}
 		{#if selected}
 			<CheckIcon width={18} height={18} />
@@ -107,6 +109,10 @@
 		z-index: 1;
 		padding-left: 1rem;
 		padding-right: 1rem;
+	}
+	.np-chip-icon {
+		color: var(--np-color-primary);
+		display: flex;
 	}
 	.np-filter-chip-icon .np-filter-chip-btn {
 		padding-left: 0.5rem;

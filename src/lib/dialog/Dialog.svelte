@@ -24,30 +24,49 @@
 	}
 </script>
 
-<div bind:this={element} class="np-dialog" popover="auto" role="dialog" {...attributes}>
-	{#if icon}
-		<div class="np-dialog-icon">
-			{@render icon()}
-		</div>
-	{/if}
-	<h1 class="np-dialog-headline" style={icon ? 'text-align: center' : ''}>{headline}</h1>
-	{#if supportingText}
-		<p class="np-dialog-supporting-text">{supportingText}</p>
-	{/if}
-	{#if divider}
-		<Divider style="margin-top: 1rem" --np-divider-color="var(--np-color-outline)" />
-	{/if}
-	{#if children}
-		{@render children()}
-	{/if}
-	{#if buttons}
-		<div class="np-dialog-buttons">
-			{@render buttons()}
-		</div>
-	{/if}
+<div bind:this={element} popover="auto" class="np-dialog-container" {...attributes}>
+	<div
+		role="none"
+		class="np-backdrop"
+		onclick={() => {
+			element?.hidePopover()
+		}}
+	></div>
+	<div class="np-dialog" role="dialog">
+		{#if icon}
+			<div class="np-dialog-icon">
+				{@render icon()}
+			</div>
+		{/if}
+		<h1 class="np-dialog-headline" style={icon ? 'text-align: center' : ''}>{headline}</h1>
+		{#if supportingText}
+			<p class="np-dialog-supporting-text">{supportingText}</p>
+		{/if}
+		{#if divider}
+			<Divider style="margin-top: 1rem" --np-divider-color="var(--np-color-outline)" />
+		{/if}
+		{#if children}
+			{@render children()}
+		{/if}
+		{#if buttons}
+			<div class="np-dialog-buttons">
+				{@render buttons()}
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
+	.np-dialog-container {
+		background: transparent;
+		border: none;
+		padding: 9px 14px 20px 14px;
+		z-index: 1000;
+		padding: 2rem 1rem;
+		transition:
+			display 0.25s allow-discrete,
+			overlay 0.25s allow-discrete;
+	}
 	.np-dialog {
 		border: 0;
 		min-width: 280px;
@@ -60,26 +79,25 @@
 		max-height: 100dvh;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
-		transition:
-			display 0.2s allow-discrete,
-			overlay 0.2s allow-discrete,
-			opacity 0.2s linear;
+		transition: opacity 0.25s ease;
 		opacity: 0;
-		z-index: 1;
 		margin: auto;
+		position: relative;
 	}
-	.np-dialog:popover-open {
+	.np-dialog-container:popover-open .np-dialog {
 		opacity: 1;
 		@starting-style {
 			opacity: 0;
 		}
 	}
-	.np-dialog[popover]::backdrop {
+	.np-dialog-container[popover] .np-backdrop {
+		inset: 0;
+		position: fixed;
 		background-color: var(--np-color-scrim);
 		opacity: 0;
-		transition: opacity 0.2s linear;
+		transition: opacity 0.25s ease;
 	}
-	.np-dialog[popover]:popover-open::backdrop {
+	.np-dialog-container[popover]:popover-open .np-backdrop {
 		opacity: 0.38;
 		@starting-style {
 			opacity: 0;

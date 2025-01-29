@@ -40,10 +40,6 @@
 </nav>
 
 <style>
-	.np-backdrop {
-		inset: 0;
-		position: fixed;
-	}
 	.np-navigation-drawer-container {
 		color: var(--np-color-on-surface-variant);
 		width: calc(var(--np-navigation-drawer-width, 22.5rem) + 3px);
@@ -67,7 +63,7 @@
 
 	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
 		transform: translateX(-100%);
-		transition: transform 0.25s ease-in;
+		transition: transform 0.25s ease;
 	}
 	.np-navigation-drawer-container[popover] {
 		transition:
@@ -88,15 +84,16 @@
 	.np-navigation-drawer-shade {
 		box-shadow: var(--np-elevation-1);
 	}
-	.np-navigation-drawer-backdrop[popover]::backdrop {
+
+	.np-navigation-drawer-backdrop[popover] .np-backdrop {
+		inset: 0;
+		position: fixed;
 		background-color: var(--np-color-scrim);
 		opacity: 0;
-		transition: opacity 0.25s linear;
+		transition: opacity 0.25s ease;
 	}
-	.np-navigation-drawer-backdrop[popover]:popover-open::backdrop {
+	.np-navigation-drawer-backdrop[popover]:popover-open .np-backdrop {
 		opacity: 0.38;
-		z-index: 999;
-		pointer-events: all !important;
 		@starting-style {
 			opacity: 0;
 		}

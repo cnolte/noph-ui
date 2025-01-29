@@ -62,4 +62,4 @@
 		{@render chipsList(true, false)}
 	</ChipSet>
 </DemoCaintainer>
-<Snackbar bind:showPopover label="Remove is clicked" />
+<Snackbar bind:showPopover label="Remove was clicked" />
