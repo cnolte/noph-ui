@@ -22,6 +22,7 @@
 
 	$effect(() => {
 		if (disabled && element) {
+			// eslint-disable-next-line no-undef
 			const formElements: NodeListOf<
 				HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 			> = element.querySelectorAll('input, button, select, textarea')

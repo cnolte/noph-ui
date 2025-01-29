@@ -12,7 +12,11 @@
 		disabled = false,
 		label = '',
 		icon,
+		element = $bindable(),
 		ariaLabelRemove = 'Remove',
+		remove,
+		select,
+		deselect,
 		...attributes
 	}: FilterChipProps = $props()
 
@@ -21,6 +25,7 @@
 
 <div
 	{...attributes}
+	bind:this={element}
 	class={[
 		'np-filter-chip',
 		elevated ? 'np-filter-chip-elevated' : 'np-filter-chip-default',
@@ -36,7 +41,12 @@
 		class="np-filter-chip-btn"
 		{disabled}
 		onclick={() => {
-			console.log('click')
+			if (element === undefined) return
+			if (selected) {
+				deselect?.(element)
+			} else {
+				select?.(element)
+			}
 			selected = !selected
 		}}
 	>
@@ -58,8 +68,11 @@
 			--np-icon-button-container-width="1.75rem"
 			--np-icon-button-icon-size="1.125rem"
 			aria-label={ariaLabelRemove}
-			onclick={(event: Event) => {
-				event.stopPropagation()
+			onclick={() => {
+				if (element === undefined) {
+					return
+				}
+				remove?.(element)
 			}}
 		>
 			<CloseIcon />
