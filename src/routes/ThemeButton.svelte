@@ -135,8 +135,9 @@
 --np-elevation-3: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
 --np-shape-corner-full: 9999px;
 --np-shape-corner-extra-small: 0.25rem;
+--np-shape-corner-small: 0.5rem;
 --np-shape-corner-medium: 0.75rem;
---np-shape-corner-large: 1.5rem;
+--np-shape-corner-large: 1rem;
 --np-shape-corner-extra-large: 1.75rem;
 --np-shape-corner-none: 0;
 }`
