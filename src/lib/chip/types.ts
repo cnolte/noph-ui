@@ -1,0 +1,11 @@
+import type { Snippet } from 'svelte'
+import type { HTMLAttributes } from 'svelte/elements'
+
+export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
+	selected?: boolean
+	removable?: boolean
+	disabled?: boolean
+	elevated?: boolean
+	label?: string
+	icon?: Snippet
+}

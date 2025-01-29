@@ -20,16 +20,6 @@
 		name="description"
 		content="Noph UI is a modern, powerful UI library for Svelte 5, fully aligned with the Material 3 guidelines."
 	/>
-	<script>
-		const storageTheme = localStorage.getItem('theme') || ''
-		const theme = ['light', 'dark'].find((supportedTheme) => supportedTheme === storageTheme) ?? ''
-
-		if (theme) {
-			document.documentElement.setAttribute('data-theme', theme)
-		} else {
-			document.documentElement.removeAttribute('data-theme')
-		}
-	</script>
 </svelte:head>
 
 <header class="layout-btn">

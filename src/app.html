@@ -29,6 +29,17 @@
 				src: url(%sveltekit.assets%/roboto-flex.woff2) format('woff2');
 			}
 		</style>
+		<script>
+			const storageTheme = localStorage.getItem('theme') || ''
+			const theme =
+				['light', 'dark'].find((supportedTheme) => supportedTheme === storageTheme) ?? ''
+
+			if (theme) {
+				document.documentElement.setAttribute('data-theme', theme)
+			} else {
+				document.documentElement.removeAttribute('data-theme')
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

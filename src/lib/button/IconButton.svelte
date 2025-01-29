@@ -125,8 +125,10 @@
 	}
 	.text-disabled {
 		border-radius: var(--np-icon-button-container-shape, var(--np-shape-corner-full));
-		height: var(--np-icon-button-container-height, 2.5rem);
-		width: var(--np-icon-button-container-width, 2.5rem);
+		--_button-height: var(--np-icon-button-container-height, 2.5rem);
+		--_button-width: var(--np-icon-button-container-width, 2.5rem);
+		height: var(--_button-height);
+		width: var(--_button-width);
 		--_icon-size: var(--np-icon-button-icon-size);
 	}
 	.filled-disabled {
@@ -176,8 +178,10 @@
 		--np-ripple-pressed-color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
 		color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
 		border-radius: var(--np-icon-button-container-shape, var(--np-shape-corner-full));
-		height: var(--np-icon-button-container-height, 2.5rem);
-		width: var(--np-icon-button-container-width, 2.5rem);
+		--_button-height: var(--np-icon-button-container-height, 2.5rem);
+		--_button-width: var(--np-icon-button-container-width, 2.5rem);
+		height: var(--_button-height);
+		width: var(--_button-width);
 		--_icon-size: var(--np-icon-button-icon-size);
 	}
 	.text.toggle {
@@ -255,7 +259,7 @@
 	}
 	.np-touch {
 		position: absolute;
-		height: max(48px, 100%);
-		width: max(48px, 100%);
+		height: max(calc(var(--_button-height, 40px) + 8px), 100%);
+		width: max(calc(var(--_button-width, 40px) + 8px), 100%);
 	}
 </style>

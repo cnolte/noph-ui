@@ -69,15 +69,14 @@ Beta (No breaking changes expected)
 
 In progress (Breaking changes expected)
 
-- Chips
+- Chips (Docs missing)
 - Dialogs (Fullscreen + Docs missing)
 - Menus (Positioning missing + Docs missing)
-- Navigation Rail (Badge is missing)
+- Navigation Drawer (Docs missing)
+- Navigation Rail (Badge is missing + Docs missing)
 - Tooltips (Positioning missing)
-- Select
+- Select (iOS issues)
 
 Pending
 
-- Sliders
-- Switch
 - Tabs

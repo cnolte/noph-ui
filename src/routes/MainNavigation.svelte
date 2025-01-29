@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state'
-	import IconButton from '$lib/button/IconButton.svelte'
 	import Divider from '$lib/divider/Divider.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
 	import NavigationDrawerItem from '$lib/navigation-drawer/NavigationDrawerItem.svelte'
 	let {
 		onclose,
