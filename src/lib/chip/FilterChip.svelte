@@ -113,6 +113,7 @@
 		inset: 0;
 		border-radius: inherit;
 		pointer-events: none;
+		background-color: var(--np-color-surface-container-low);
 	}
 	.np-filter-chip-default::before {
 		border-width: 1px;
