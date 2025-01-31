@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { FocusEventHandler } from 'svelte/elements'
 	import type { CardProps } from './types.ts'
 
 	let {
@@ -13,8 +12,6 @@
 		supportingText,
 		action,
 		children,
-		onblur,
-		onfocus,
 		...attributes
 	}: CardProps = $props()
 
@@ -71,12 +68,6 @@
 		{...attributes}
 		bind:this={element}
 		aria-disabled={disabled}
-		onfocus={(event) => {
-			;(onfocus as FocusEventHandler<HTMLDivElement>)?.(event)
-		}}
-		onblur={(event) => {
-			;(onblur as FocusEventHandler<HTMLDivElement>)?.(event)
-		}}
 		class={[
 			'np-card-container',
 			`np-card-${variant}`,
@@ -91,14 +82,7 @@
 		aria-disabled={disabled}
 		{...attributes}
 		bind:this={element}
-		onfocus={(event) => {
-			focused = true
-			;(onfocus as FocusEventHandler<HTMLButtonElement>)?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			;(onblur as FocusEventHandler<HTMLButtonElement>)?.(event)
-		}}
+		bind:focused
 		{disabled}
 		class={[
 			'np-card-container',
@@ -116,14 +100,7 @@
 		aria-disabled={disabled}
 		tabindex={disabled ? -1 : undefined}
 		role="link"
-		onfocus={(event) => {
-			focused = true
-			;(onfocus as FocusEventHandler<HTMLAnchorElement>)?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			;(onblur as FocusEventHandler<HTMLAnchorElement>)?.(event)
-		}}
+		bind:focused
 		class={[
 			'np-card-container',
 			`np-card-${variant}`,

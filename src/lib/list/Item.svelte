@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import type { FocusEventHandler } from 'svelte/elements'
 	import type { ItemProps } from './types.ts'
 
 	let {
@@ -9,8 +8,6 @@
 		end,
 		children,
 		supportingText,
-		onblur,
-		onfocus,
 		disabled = false,
 		...attributes
 	}: ItemProps = $props()
@@ -43,9 +40,6 @@
 			{@render end()}
 		</div>
 	{/if}
-	{#if !disabled && !(attributes.variant === 'text' || attributes.variant === undefined)}
-		<Ripple forceHover={focused} />
-	{/if}
 {/snippet}
 
 {#if disabled}
@@ -53,47 +47,29 @@
 		{@render content()}
 	</div>
 {:else if attributes.variant === 'text' || attributes.variant === undefined}
-	<div
-		{...attributes}
-		onfocus={(event) => {
-			;(onfocus as FocusEventHandler<HTMLDivElement>)?.(event)
-		}}
-		onblur={(event) => {
-			;(onblur as FocusEventHandler<HTMLDivElement>)?.(event)
-		}}
-		class={['np-item', selected && 'selected', attributes.class]}
-	>
+	<div {...attributes} class={['np-item', selected && 'selected', attributes.class]}>
 		{@render content()}
 	</div>
 {:else if attributes.variant === 'button'}
 	<button
 		{...attributes}
-		onfocus={(event) => {
-			focused = true
-			;(onfocus as FocusEventHandler<HTMLButtonElement>)?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			;(onblur as FocusEventHandler<HTMLButtonElement>)?.(event)
-		}}
+		bind:focused
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}
-		>{@render content()}
+	>
+		{@render content()}
+		<Ripple forceHover={focused} />
 	</button>
 {:else if attributes.variant === 'link'}
 	<a
 		{...attributes}
-		onfocus={(event) => {
-			focused = true
-			;(onfocus as FocusEventHandler<HTMLAnchorElement>)?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			;(onblur as FocusEventHandler<HTMLAnchorElement>)?.(event)
-		}}
+		bind:focused
 		class={['np-item', selected && 'selected', attributes.class]}
-		bind:this={element}>{@render content()}</a
+		bind:this={element}
 	>
+		{@render content()}
+		<Ripple forceHover={focused} />
+	</a>
 {/if}
 
 <style>
