@@ -202,7 +202,7 @@
 			<div class="spacer">Hex Source Color</div>
 			<div class="hex-input-wrapper">
 				<div class="hex-input">
-					<input class="input" type="color" name="body" bind:value onchange={changeTheme} />
+					<input class="input" type="color" name="theme-color" {value} oninput={changeTheme} />
 				</div>
 			</div>
 		</label>
