@@ -39,6 +39,7 @@
 	<button
 		bind:this={chipBtn}
 		class="np-filter-chip-btn"
+		type="button"
 		{disabled}
 		onclick={() => {
 			if (element === undefined) return
