@@ -6,7 +6,7 @@
 	import type { FilterChipProps } from './types.ts'
 
 	let {
-		selected = $bindable(false),
+		selected = $bindable(),
 		removable = false,
 		elevated = false,
 		disabled = false,
@@ -18,6 +18,7 @@
 		name,
 		value,
 		group = $bindable(),
+		defaultSelected,
 		...attributes
 	}: FilterChipProps = $props()
 
@@ -47,9 +48,24 @@
 		</div>
 		<div class="np-chip-label">{label}</div>
 		{#if group !== undefined}
-			<input type="checkbox" bind:checked={selected} {value} {name} {disabled} bind:group />
+			<input
+				type="checkbox"
+				bind:checked={selected}
+				{value}
+				{name}
+				{disabled}
+				defaultChecked={defaultSelected}
+				bind:group
+			/>
 		{:else}
-			<input type="checkbox" bind:checked={selected} {value} {name} {disabled} />
+			<input
+				type="checkbox"
+				bind:checked={selected}
+				{value}
+				{name}
+				{disabled}
+				defaultChecked={defaultSelected}
+			/>
 		{/if}
 	</label>
 	{#if !disabled}
