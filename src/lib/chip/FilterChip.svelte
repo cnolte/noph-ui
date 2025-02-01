@@ -30,22 +30,21 @@
 	class={[
 		'np-filter-chip',
 		elevated ? 'np-filter-chip-elevated' : 'np-filter-chip-default',
-		icon || selected ? 'np-filter-chip-icon' : '',
-		selected ? 'np-filter-chip-selected' : '',
+		icon ? 'np-filter-chip-icon' : '',
 		removable ? 'np-filter-chip-removable' : '',
 		disabled ? 'np-filter-chip-disabled' : '',
 		attributes.class,
 	]}
 >
 	<label bind:this={chipLabel} class="np-filter-chip-label">
-		{#if icon && !selected}
+		{#if icon}
 			<div class="np-chip-icon">
 				{@render icon()}
 			</div>
 		{/if}
-		{#if selected}
+		<div class="np-chip-icon-checked">
 			<CheckIcon width={18} height={18} />
-		{/if}
+		</div>
 		<div class="np-chip-label">{label}</div>
 		{#if group !== undefined}
 			<input type="checkbox" bind:checked={selected} {value} {name} {disabled} bind:group />
@@ -95,6 +94,7 @@
 		display: inline-flex;
 		align-items: center;
 		height: 2rem;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		color: var(--np-color-on-surface-variant);
 		fill: currentColor;
 		gap: 0.5rem;
@@ -102,10 +102,20 @@
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
+	.np-chip-icon-checked {
+		display: none;
+	}
+	.np-filter-chip:has(input:checked) .np-chip-icon-checked {
+		display: flex;
+	}
+	.np-filter-chip:has(input:checked) .np-chip-icon {
+		display: none;
+	}
 	.np-chip-icon {
 		color: var(--np-color-primary);
 		display: flex;
 	}
+	.np-filter-chip:has(input:checked) .np-filter-chip-label,
 	.np-filter-chip-icon .np-filter-chip-label {
 		padding-left: 0.5rem;
 	}
@@ -133,7 +143,7 @@
 		border-style: solid;
 		border-color: var(--np-filter-chip-outline-color, var(--np-color-outline-variant));
 	}
-	.np-filter-chip-selected::before {
+	.np-filter-chip:has(input:checked)::before {
 		border-width: 0;
 		background-color: var(--np-color-secondary-container);
 	}
@@ -141,10 +151,10 @@
 		border-width: 0;
 		box-shadow: var(--np-elevation-1);
 	}
-	.np-filter-chip-selected {
+	.np-filter-chip:has(input:checked) {
 		--np-icon-button-icon-color: var(--np-color-on-secondary-container);
 	}
-	.np-filter-chip-selected .np-filter-chip-label {
+	.np-filter-chip:has(input:checked) .np-filter-chip-label {
 		color: var(--np-color-on-secondary-container);
 	}
 	.np-filter-chip-label:focus-visible {
@@ -177,10 +187,10 @@
 	.np-filter-chip-disabled.np-filter-chip-elevated {
 		box-shadow: none;
 	}
-	.np-filter-chip-disabled.np-filter-chip-selected::before {
+	.np-filter-chip-disabled:has(input:checked)::before {
 		opacity: 0.12;
 	}
-	:not(.np-filter-chip-selected).np-filter-chip-disabled.np-filter-chip-default::after {
+	.np-filter-chip-disabled:has(input:not(:checked)).np-filter-chip-default::after {
 		content: '';
 		position: absolute;
 		inset: 0;
