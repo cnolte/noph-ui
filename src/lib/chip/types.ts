@@ -10,7 +10,8 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	icon?: Snippet
 	ariaLabelRemove?: string
 	element?: HTMLDivElement
+	name?: string
+	value?: string
+	group?: string | number | null
 	remove?: (chip: HTMLDivElement) => void
-	select?: (chip: HTMLDivElement) => void
-	deselect?: (chip: HTMLDivElement) => void
 }

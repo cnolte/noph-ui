@@ -15,12 +15,13 @@
 		element = $bindable(),
 		ariaLabelRemove = 'Remove',
 		remove,
-		select,
-		deselect,
+		name,
+		value,
+		group = $bindable(),
 		...attributes
 	}: FilterChipProps = $props()
 
-	let chipBtn: HTMLButtonElement | undefined = $state()
+	let chipLabel: HTMLLabelElement | undefined = $state()
 </script>
 
 <div
@@ -36,21 +37,7 @@
 		attributes.class,
 	]}
 >
-	<button
-		bind:this={chipBtn}
-		class="np-filter-chip-btn"
-		type="button"
-		{disabled}
-		onclick={() => {
-			if (element === undefined) return
-			if (selected) {
-				deselect?.(element)
-			} else {
-				select?.(element)
-			}
-			selected = !selected
-		}}
-	>
+	<label bind:this={chipLabel} class="np-filter-chip-label">
 		{#if icon && !selected}
 			<div class="np-chip-icon">
 				{@render icon()}
@@ -60,9 +47,14 @@
 			<CheckIcon width={18} height={18} />
 		{/if}
 		<div class="np-chip-label">{label}</div>
-	</button>
+		{#if group !== undefined}
+			<input type="checkbox" bind:checked={selected} {value} {name} {disabled} bind:group />
+		{:else}
+			<input type="checkbox" bind:checked={selected} {value} {name} {disabled} />
+		{/if}
+	</label>
 	{#if !disabled}
-		<Ripple forElement={chipBtn} />
+		<Ripple forElement={chipLabel} />
 	{/if}
 	{#if removable}
 		<IconButton
@@ -93,16 +85,15 @@
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
 	}
-	.np-filter-chip-btn {
-		box-sizing: border-box;
-		font-family: inherit;
-		background-color: transparent;
-		border-width: 0;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	.np-filter-chip-label input {
+		opacity: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+	.np-filter-chip-label {
 		cursor: pointer;
 		display: inline-flex;
 		align-items: center;
-		padding: 0;
 		height: 2rem;
 		color: var(--np-color-on-surface-variant);
 		fill: currentColor;
@@ -115,13 +106,13 @@
 		color: var(--np-color-primary);
 		display: flex;
 	}
-	.np-filter-chip-icon .np-filter-chip-btn {
+	.np-filter-chip-icon .np-filter-chip-label {
 		padding-left: 0.5rem;
 	}
 	.np-filter-chip-removable {
 		padding-right: 2px;
 	}
-	.np-filter-chip-removable .np-filter-chip-btn {
+	.np-filter-chip-removable .np-filter-chip-label {
 		padding-right: 2px;
 	}
 	.np-chip-label {
@@ -153,13 +144,13 @@
 	.np-filter-chip-selected {
 		--np-icon-button-icon-color: var(--np-color-on-secondary-container);
 	}
-	.np-filter-chip-selected .np-filter-chip-btn {
+	.np-filter-chip-selected .np-filter-chip-label {
 		color: var(--np-color-on-secondary-container);
 	}
-	.np-filter-chip-btn:focus-visible {
+	.np-filter-chip-label:focus-visible {
 		outline-width: 0;
 	}
-	.np-filter-chip:has(.np-filter-chip-btn:focus-visible) {
+	.np-filter-chip:has(input:focus-visible) {
 		outline-style: solid;
 		outline-color: var(--np-color-primary);
 		outline-width: 3px;
@@ -178,7 +169,7 @@
 		}
 	}
 
-	.np-filter-chip-disabled .np-filter-chip-btn {
+	.np-filter-chip-disabled .np-filter-chip-label {
 		cursor: default;
 		color: var(--np-color-on-surface);
 		opacity: 0.38;
