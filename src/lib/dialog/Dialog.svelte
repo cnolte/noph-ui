@@ -60,6 +60,7 @@
 	.np-dialog-container {
 		background: transparent;
 		border: none;
+		margin: auto;
 		padding: 9px 14px 20px 14px;
 		z-index: 1000;
 		padding: 2rem 1rem;
@@ -81,7 +82,6 @@
 		scrollbar-width: thin;
 		transition: opacity 0.25s ease;
 		opacity: 0;
-		margin: auto;
 		position: relative;
 	}
 	.np-dialog-container:popover-open .np-dialog {
