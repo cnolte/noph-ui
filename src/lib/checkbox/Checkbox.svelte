@@ -10,31 +10,42 @@
 		style,
 		...attributes
 	}: CheckboxProps = $props()
+
+	$effect(() => {
+		if (group && attributes.value) {
+			checked = group.includes(attributes.value)
+		}
+	})
+
+	$effect(() => {
+		if (attributes.value && group) {
+			const index = group.indexOf(attributes.value)
+			if (checked) {
+				if (index < 0) {
+					group?.push(attributes.value)
+					group = group
+				}
+			} else {
+				if (index >= 0) {
+					group.splice(index, 1)
+					group = group
+				}
+			}
+		}
+	})
 </script>
 
 <div {style} class={['np-host', attributes.class]} bind:this={element}>
 	<div class="np-container">
 		<label class="np-input-wrapper">
-			{#if group !== undefined}
-				<input
-					{...attributes}
-					class="np-input"
-					type="checkbox"
-					bind:indeterminate
-					bind:checked
-					bind:group
-					aria-checked={indeterminate ? 'mixed' : undefined}
-				/>
-			{:else}
-				<input
-					{...attributes}
-					class="np-input"
-					type="checkbox"
-					bind:indeterminate
-					bind:checked
-					aria-checked={indeterminate ? 'mixed' : undefined}
-				/>
-			{/if}
+			<input
+				{...attributes}
+				class="np-input"
+				type="checkbox"
+				bind:indeterminate
+				bind:checked
+				aria-checked={indeterminate ? 'mixed' : undefined}
+			/>
 			{#if !attributes.disabled}
 				<Ripple />
 			{/if}

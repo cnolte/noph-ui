@@ -12,7 +12,7 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	element?: HTMLDivElement
 	name?: string
 	value?: string
-	group?: string | number | null
+	group?: (string | number)[] | null
 	defaultSelected?: boolean | null
 	remove?: (chip: HTMLDivElement) => void
 }

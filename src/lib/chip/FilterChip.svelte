@@ -23,6 +23,29 @@
 	}: FilterChipProps = $props()
 
 	let chipLabel: HTMLLabelElement | undefined = $state()
+
+	$effect(() => {
+		if (group && value) {
+			selected = group.includes(value)
+		}
+	})
+
+	$effect(() => {
+		if (value && group) {
+			const index = group.indexOf(value)
+			if (selected) {
+				if (index < 0) {
+					group?.push(value)
+					group = group
+				}
+			} else {
+				if (index >= 0) {
+					group.splice(index, 1)
+					group = group
+				}
+			}
+		}
+	})
 </script>
 
 <div
@@ -47,26 +70,14 @@
 			<CheckIcon width={18} height={18} />
 		</div>
 		<div class="np-chip-label">{label}</div>
-		{#if group !== undefined}
-			<input
-				type="checkbox"
-				bind:checked={selected}
-				{value}
-				{name}
-				{disabled}
-				defaultChecked={defaultSelected}
-				bind:group
-			/>
-		{:else}
-			<input
-				type="checkbox"
-				bind:checked={selected}
-				{value}
-				{name}
-				{disabled}
-				defaultChecked={defaultSelected}
-			/>
-		{/if}
+		<input
+			type="checkbox"
+			bind:checked={selected}
+			{value}
+			{name}
+			{disabled}
+			defaultChecked={defaultSelected}
+		/>
 	</label>
 	{#if !disabled}
 		<Ripple forElement={chipLabel} />
