@@ -6,7 +6,8 @@ export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'class
 	headline: string
 	supportingText?: string
 	divider?: boolean
-	buttons?: Snippet
+	actions?: Snippet
+	quick?: boolean
 	element?: HTMLElement
 	showPopover?: () => void
 	hidePopover?: () => void

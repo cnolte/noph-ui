@@ -25,7 +25,7 @@
 		{#snippet icon()}
 			<Icon>settings</Icon>
 		{/snippet}
-		{#snippet buttons()}
+		{#snippet actions()}
 			<Button
 				onclick={() => {
 					hidePopover()
@@ -53,7 +53,7 @@
 	{#snippet icon()}
 		<Icon>settings</Icon>
 	{/snippet}
-	{#snippet buttons()}
+	{#snippet actions()}
 		<Button
 			onclick={() => {
 				hidePopover()

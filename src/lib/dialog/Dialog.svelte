@@ -6,11 +6,12 @@
 		element = $bindable(),
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		quick = false,
 		children,
 		headline,
 		icon,
 		supportingText,
-		buttons,
+		actions,
 		divider,
 		...attributes
 	}: DialogProps = $props()
@@ -24,7 +25,12 @@
 	}
 </script>
 
-<div bind:this={element} popover="auto" class="np-dialog-container" {...attributes}>
+<div
+	bind:this={element}
+	popover="auto"
+	{...attributes}
+	class={['np-dialog-container', !quick && 'np-animate']}
+>
 	<div
 		role="none"
 		class="np-backdrop"
@@ -48,9 +54,9 @@
 		{#if children}
 			{@render children()}
 		{/if}
-		{#if buttons}
-			<div class="np-dialog-buttons">
-				{@render buttons()}
+		{#if actions}
+			<div class="np-dialog-actions">
+				{@render actions()}
 			</div>
 		{/if}
 	</div>
@@ -64,9 +70,6 @@
 		padding: 9px 14px 20px 14px;
 		z-index: 1000;
 		padding: 2rem 1rem;
-		transition:
-			display 0.25s allow-discrete,
-			overlay 0.25s allow-discrete;
 	}
 	.np-dialog {
 		border: 0;
@@ -80,11 +83,20 @@
 		max-height: 100dvh;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
-		transition: opacity 0.25s ease;
-		opacity: 0;
 		position: relative;
 	}
-	.np-dialog-container:popover-open .np-dialog {
+
+	.np-animate {
+		transition:
+			display 0.25s allow-discrete,
+			overlay 0.25s allow-discrete;
+	}
+
+	.np-animate[popover] .np-dialog {
+		transition: opacity 0.25s ease;
+		opacity: 0;
+	}
+	.np-animate:popover-open .np-dialog {
 		opacity: 1;
 		@starting-style {
 			opacity: 0;
@@ -94,10 +106,13 @@
 		inset: 0;
 		position: fixed;
 		background-color: var(--np-color-scrim);
+		opacity: 0.38;
+	}
+	.np-animate[popover] .np-backdrop {
 		opacity: 0;
 		transition: opacity 0.25s ease;
 	}
-	.np-dialog-container[popover]:popover-open .np-backdrop {
+	.np-animate[popover]:popover-open .np-backdrop {
 		opacity: 0.38;
 		@starting-style {
 			opacity: 0;
@@ -117,10 +132,11 @@
 		font-size: 1.5rem;
 		font-weight: 400;
 	}
-	.np-dialog-buttons {
+	.np-dialog-actions {
 		display: flex;
 		justify-content: flex-end;
 		gap: 0.5rem;
+		box-sizing: border-box;
 		margin-top: 1.5rem;
 	}
 	.np-dialog-supporting-text {
