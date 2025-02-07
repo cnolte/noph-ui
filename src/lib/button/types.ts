@@ -7,6 +7,7 @@ interface ButtonButtonProps extends HTMLButtonAttributes {
 	end?: Snippet | undefined
 	element?: HTMLElement
 	disabled?: boolean
+	loading?: boolean
 	keepTooltipOnClick?: boolean
 }
 interface ButtonAnchorProps extends HTMLAnchorAttributes {
@@ -16,6 +17,7 @@ interface ButtonAnchorProps extends HTMLAnchorAttributes {
 	element?: HTMLElement
 	keepTooltipOnClick?: boolean
 	disabled?: boolean
+	loading?: boolean
 }
 
 interface IconButtonButtonProps extends HTMLButtonAttributes {

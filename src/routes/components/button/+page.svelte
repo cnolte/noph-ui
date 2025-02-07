@@ -93,6 +93,18 @@
 	Open
 </Button>`}
 />
+<h2>Loading</h2>
+<DemoCaintainer>
+	<Button loading variant="elevated">Elevated</Button>
+	<Button loading variant="outlined">Outlined</Button>
+	<Button loading variant="text">Text</Button>
+</DemoCaintainer>
+<Code
+	value={`
+	<Button loading variant="elevated">Elevated</Button>
+	<Button loading variant="outlined">Outlined</Button>
+	<Button loading variant="text">Text</Button>`}
+/>
 <h2>Size</h2>
 <DemoCaintainer>
 	<Button>Default: 40px</Button>
@@ -384,6 +396,12 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td>Disables the button</td>
+		</tr>
+		<tr>
+			<td><code>loading</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Sets the button to the loading state</td>
 		</tr>
 		<tr>
 			<td><code>title</code></td>

@@ -3,6 +3,7 @@
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'
+	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 
 	let {
 		variant = 'outlined',
@@ -12,6 +13,7 @@
 		title,
 		element = $bindable(),
 		disabled = false,
+		loading = false,
 		keepTooltipOnClick,
 		...attributes
 	}: ButtonProps = $props()
@@ -27,8 +29,13 @@
 </script>
 
 {#snippet content()}
-	{#if !disabled}
+	{#if !disabled && !loading}
 		<Ripple />
+	{/if}
+	{#if loading}
+		<div class="circular-progress">
+			<CircularProgress indeterminate />
+		</div>
 	{/if}
 	<div class="button-icon">
 		{#if start}
@@ -47,16 +54,17 @@
 	</div>
 {/snippet}
 
-{#if isButton(attributes) || disabled}
+{#if isButton(attributes) || disabled || loading}
 	<button
 		{...attributes as HTMLButtonAttributes}
 		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		{disabled}
+		disabled={disabled || loading}
 		bind:this={element}
 		class={[
 			'np-button',
-			disabled ? `${variant}-disabled disabled` : `${variant} enabled`,
+			loading ? 'np-loading' : '',
+			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
 			attributes.class,
 		]}
 	>
@@ -84,6 +92,18 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		text-wrap: nowrap;
+	}
+	.circular-progress {
+		--np-circular-progress-size: calc(var(--button-height) * 0.75);
+		--np-circular-progress-color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.np-loading .button-icon,
+	.np-loading .children-wrapper {
+		opacity: 0;
 	}
 	.np-button {
 		box-sizing: border-box;
