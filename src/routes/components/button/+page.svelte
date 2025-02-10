@@ -2,7 +2,7 @@
 	import Button from '$lib/button/Button.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -11,63 +11,63 @@
 
 <h1>Buttons</h1>
 <h2>Types</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="elevated">{#snippet start()} <Icon>add</Icon>{/snippet}Elevated</Button>
 	<Button variant="filled">Filled</Button>
 	<Button variant="tonal">Tonal</Button>
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="text">Text</Button>
-</DemoCaintainer>
+</DemoContainer>
 <h2>Elevated button</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="elevated">Elevated</Button>
 	<Button variant="elevated" disabled>Disabled</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button variant="elevated">Elevated</Button>
 <Button variant="elevated" disabled>Disabled</Button>`}
 />
 <h2>Filled button</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="filled">Filled</Button>
 	<Button variant="filled" disabled>Disabled</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button variant="filled">Filled</Button>
 <Button variant="filled" disabled>Disabled</Button>`}
 />
 <h2>Tonal button</h2>
 
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="tonal">Tonal</Button>
 	<Button variant="tonal" disabled>Disabled</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button variant="tonal">Tonal</Button>
 <Button variant="tonal" disabled>Disabled</Button>`}
 />
 <h2>Outlined button</h2>
 
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="outlined" disabled>Disabled</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button variant="outlined">Outlined</Button>
 <Button variant="outlined" disabled>Disabled</Button>`}
 />
 <h2>Text button</h2>
 
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="text">Text</Button>
 	<Button variant="text" disabled>Disabled</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button variant="text">Text</Button>
 <Button variant="text" disabled>Disabled</Button>`}
 />
 <h2>Icon</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button variant="tonal">
 		{#snippet start()}
 			<Icon>send</Icon>
@@ -78,7 +78,7 @@
 			<Icon>open_in_new</Icon>
 		{/snippet}Open</Button
 	>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button>
 	{#snippet start()}
@@ -94,11 +94,11 @@
 </Button>`}
 />
 <h2>Loading</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button loading variant="elevated">Elevated</Button>
 	<Button loading variant="outlined">Outlined</Button>
 	<Button loading variant="text">Text</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`
 	<Button loading variant="elevated">Elevated</Button>
@@ -106,11 +106,11 @@
 	<Button loading variant="text">Text</Button>`}
 />
 <h2>Size</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button>Default: 40px</Button>
 	<Button --np-outlined-button-container-height="48px">Height: 48px</Button>
 	<Button --np-outlined-button-container-height="56px">Height: 56px</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button>Default: 40px</Button>
 <Button --np-outlined-button-container-height="48px">Height: 48px</Button>
@@ -146,7 +146,7 @@
 	</tbody>
 </table>
 <h3>Elevated button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<Button
 		variant="elevated"
 		--np-elevated-button-label-text-color="var(--np-color-tertiary)"
@@ -155,7 +155,7 @@
 	>
 		Custom button
 	</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button
 	variant="elevated"
@@ -195,7 +195,7 @@
 	</tbody>
 </table>
 <h3>Filled button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<Button
 		variant="filled"
 		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
@@ -205,7 +205,7 @@
 	>
 		Custom button
 	</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`
 	<Button
@@ -247,7 +247,7 @@
 	</tbody>
 </table>
 <h3>Tonal button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<Button
 		variant="tonal"
 		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
@@ -257,7 +257,7 @@
 	>
 		Custom button
 	</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button
 		variant="tonal"
@@ -297,7 +297,7 @@
 	</tbody>
 </table>
 <h3>Outlined button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<Button
 		variant="outlined"
 		--np-outlined-button-label-text-color="var(--np-color-tertiary)"
@@ -306,7 +306,7 @@
 	>
 		Custom button
 	</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button
 	variant="outlined"
@@ -341,7 +341,7 @@
 	</tbody>
 </table>
 <h3>Text button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<Button
 		variant="text"
 		--np-text-button-label-text-color="var(--np-color-tertiary)"
@@ -350,7 +350,7 @@
 	>
 		Custom button
 	</Button>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button
 	variant="text"

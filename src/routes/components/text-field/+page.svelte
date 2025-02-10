@@ -240,6 +240,101 @@
 	value={`<TextField label="Username" error value="eric20" errorText="Username is not available" />`}
 />
 
+<h2>Theming</h2>
+<h3>Filled text field tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-filled-text-field-container-shape</code></td>
+			<td><code>--np-shape-corner-extra-small</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-text-field-container-color</code></td>
+			<td><code>--np-color-surface-container-highest</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-text-field-label-text-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-text-field-focus-active-indicator-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Filled text field example</h3>
+<DemoContainer>
+	<TextField
+		variant="filled"
+		label="Filled"
+		--np-filled-text-field-container-shape="0"
+		--np-filled-text-field-container-color="var(--np-color-surface-container)"
+		--np-filled-text-field-label-text-color="var(--np-color-tertiary)"
+		--np-filled-text-field-focus-active-indicator-color="var(--np-color-tertiary)"
+	/>
+</DemoContainer>
+<Code
+	value={`
+	<TextField
+		variant="filled"
+		label="Filled"
+		--np-filled-text-field-container-shape="0"
+		--np-filled-text-field-container-color="var(--np-color-surface-container)"
+		--np-filled-text-field-label-text-color="var(--np-color-tertiary)"
+		--np-filled-text-field-focus-active-indicator-color="var(--np-color-tertiary)"
+	/>`}
+/>
+
+<h3>Outlined text field tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-outlined-text-field-container-shape</code></td>
+			<td><code>--np-shape-corner-extra-small</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-outlined-text-field-label-text-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-outlined-text-field-focus-outline-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+	</tbody>
+</table>
+<h3>Outlined text field example</h3>
+<DemoContainer>
+	<TextField
+		variant="outlined"
+		label="Outlined"
+		--np-outlined-text-field-container-shape="0"
+		--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
+		--np-outlined-text-field-focus-outline-color="var(--np-color-tertiary)"
+	/>
+</DemoContainer>
+<Code
+	value={`
+	<TextField
+		variant="outlined"
+		label="Outlined"
+		--np-outlined-text-field-container-shape="0"
+		--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
+		--np-outlined-text-field-focus-outline-color="var(--np-color-tertiary)"
+	/>`}
+/>
+
 <h2>API</h2>
 <h3>Attributes</h3>
 <table>

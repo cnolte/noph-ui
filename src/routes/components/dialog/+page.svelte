@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 	import Dialog from '$lib/dialog/Dialog.svelte'
 	import Button from '$lib/button/Button.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
@@ -13,7 +13,7 @@
 
 <h1>Dialogs</h1>
 <h2>Usage</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<Button popovertarget="simple-dialog">Show Dialog</Button>
 	<Dialog
 		bind:hidePopover
@@ -40,7 +40,7 @@
 			>
 		{/snippet}
 	</Dialog>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Button popovertarget="simple-dialog">Show Dialog</Button>
 <Dialog

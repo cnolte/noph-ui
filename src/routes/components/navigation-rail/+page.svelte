@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import NavigationRail from '$lib/navigation-rail/NavigationRail.svelte'
@@ -13,7 +13,7 @@
 
 <h1>Navigation Rail</h1>
 <h2>Usage</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<NavigationRail>
 		<NavigationRailItem
 			selected={selection === 1}
@@ -43,7 +43,7 @@
 			{#snippet icon()}<Icon>settings</Icon>{/snippet}
 		</NavigationRailItem>
 	</NavigationRail>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<NavigationRail>
 	<NavigationRailItem

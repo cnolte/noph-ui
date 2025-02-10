@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import NavigationDrawer from '$lib/navigation-drawer/NavigationDrawer.svelte'
@@ -15,7 +15,7 @@
 <h1>Navigation Drawer</h1>
 <h2>Usage</h2>
 
-<DemoCaintainer>
+<DemoContainer>
 	<Button popovertarget="demo-drawer">Open Nav</Button>
 	<NavigationDrawer id="demo-drawer" modal backdrop>
 		<NavigationDrawerItem
@@ -47,7 +47,7 @@
 			{#snippet icon()}<Icon>settings</Icon>{/snippet}
 		</NavigationDrawerItem>
 	</NavigationDrawer>
-</DemoCaintainer>
+</DemoContainer>
 
 <Code
 	value={`<Button popovertarget="demo-drawer">Open Nav</Button>
@@ -83,7 +83,7 @@
 </NavigationDrawer>`}
 />
 
-<DemoCaintainer>
+<DemoContainer>
 	<NavigationDrawer --np-navigation-drawer-height="200px">
 		<NavigationDrawerItem
 			selected={selection === 1}
@@ -114,7 +114,7 @@
 			{#snippet icon()}<Icon>settings</Icon>{/snippet}
 		</NavigationDrawerItem>
 	</NavigationDrawer>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<NavigationDrawer --np-navigation-drawer-height="200px">
   <NavigationDrawerItem

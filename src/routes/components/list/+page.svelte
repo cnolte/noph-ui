@@ -4,7 +4,7 @@
 	import List from '$lib/list/List.svelte'
 	import ListItem from '$lib/list/ListItem.svelte'
 	import Code from '../../Code.svelte'
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -13,7 +13,7 @@
 
 <h1>Lists</h1>
 <h2>Usage</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<List style="max-width:300px">
 		<ListItem>Browsers</ListItem>
 		<Divider />
@@ -33,7 +33,7 @@
 			{/snippet}Compare benchmarks</ListItem
 		>
 	</List>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<List style="max-width:300px">
 	<ListItem>Browsers</ListItem>
@@ -58,7 +58,7 @@
 </List>`}
 />
 <h2>Icon Item</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<List style="max-width:300px">
 		<ListItem>
 			Account
@@ -81,7 +81,7 @@
 			{/snippet}
 		</ListItem>
 	</List>
-</DemoCaintainer>
+</DemoContainer>
 
 <Code
 	value={`<List style="max-width:300px">

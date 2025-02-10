@@ -63,10 +63,10 @@
 
 <label
 	style={(variant === 'outlined'
-		? '--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
+		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
 		: !label?.length
-			? '--top-space:1rem;--bottom-space:1rem;'
-			: '') + style}
+			? '--_label-text-color:var(--np-filled-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem; '
+			: '--_label-text-color:var(--np-filled-text-field-label-text-color); ') + style}
 	class={['text-field', attributes.class]}
 	bind:this={element}
 >
@@ -197,7 +197,10 @@
 		width: 100%;
 	}
 	.active-indicator::after {
-		border-bottom-color: var(--np-color-primary);
+		border-bottom-color: var(
+			--np-filled-text-field-focus-active-indicator-color,
+			var(--np-color-primary)
+		);
 		border-bottom-width: 3px;
 	}
 	.error .active-indicator::before {
@@ -213,7 +216,7 @@
 	}
 	.background {
 		background: var(
-			--np-text-field-filled-background-color,
+			--np-filled-text-field-container-color,
 			var(--np-color-surface-container-highest)
 		);
 	}
@@ -239,14 +242,32 @@
 		position: relative;
 	}
 	.outlined .container-overflow {
-		border-start-start-radius: var(--np-shape-corner-extra-small);
-		border-start-end-radius: var(--np-shape-corner-extra-small);
-		border-end-end-radius: var(--np-shape-corner-extra-small);
-		border-end-start-radius: var(--np-shape-corner-extra-small);
+		border-start-start-radius: var(
+			--np-outlined-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
+		border-start-end-radius: var(
+			--np-outlined-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
+		border-end-end-radius: var(
+			--np-outlined-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
+		border-end-start-radius: var(
+			--np-outlined-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
 	}
 	.container-overflow {
-		border-start-start-radius: var(--np-shape-corner-extra-small);
-		border-start-end-radius: var(--np-shape-corner-extra-small);
+		border-start-start-radius: var(
+			--np-filled-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
+		border-start-end-radius: var(
+			--np-filled-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
 		border-end-end-radius: var(--np-shape-corner-none);
 		border-end-start-radius: var(--np-shape-corner-none);
 		display: flex;
@@ -543,7 +564,7 @@
 	}
 	.field:has(input:focus-visible) .label,
 	.field:has(textarea:focus-visible) .label {
-		color: var(--np-color-primary);
+		color: var(--_label-text-color, var(--np-color-primary));
 	}
 	.error .label,
 	.error:has(input:focus-visible) .label,
@@ -698,7 +719,7 @@
 
 	.field:has(input:focus-visible) .np-outline,
 	.field:has(textarea:focus-visible) .np-outline {
-		border-color: var(--np-color-primary);
+		border-color: var(--np-outlined-text-field-focus-outline-color, var(--np-color-primary));
 		color: var(--np-color-primary);
 	}
 	.error .np-outline,

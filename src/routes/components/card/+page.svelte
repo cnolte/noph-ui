@@ -2,7 +2,7 @@
 	import Button from '$lib/button/Button.svelte'
 	import Card from '$lib/card/Card.svelte'
 	import Code from '../../Code.svelte'
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -12,7 +12,7 @@
 <h1>Cards</h1>
 <h2>Types</h2>
 
-<DemoCaintainer style="width: calc(100% - 2rem)">
+<DemoContainer style="width: calc(100% - 2rem)">
 	<div class="cards" style="width:100%;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));">
 		<Card
 			type="button"
@@ -36,7 +36,7 @@
 			image="/pollock3.avif"
 		></Card>
 	</div>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<Card
 	type="button"
@@ -64,7 +64,7 @@
 	<Button variant="filled">Action</Button>
 {/snippet}
 <h2>Elevated card</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<div class="cards">
 		<Card
 			type="text"
@@ -84,7 +84,7 @@
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 	</div>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`{#snippet action()}
 	<Button variant="filled">Action</Button>
@@ -108,7 +108,7 @@
 ></Card>`}
 />
 <h2>Filled card</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<div class="cards">
 		<Card
 			type="text"
@@ -128,7 +128,7 @@
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 	</div>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`{#snippet action()}
 	<Button variant="filled">Action</Button>
@@ -152,7 +152,7 @@
 ></Card>`}
 />
 <h2>Outlined card</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<div class="cards">
 		<Card
 			type="text"
@@ -172,7 +172,7 @@
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 		></Card>
 	</div>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`{#snippet action()}
 	<Button variant="filled">Action</Button>

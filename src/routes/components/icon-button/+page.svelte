@@ -2,7 +2,7 @@
 	import IconButton from '$lib/button/IconButton.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 </script>
 
 <svelte:head>
@@ -11,7 +11,7 @@
 
 <h1>Icon buttons</h1>
 <h2>Types</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton aria-label="Icon Button"><Icon>favorite</Icon></IconButton>
 	<IconButton aria-label="Icon Button" selected toggle><Icon>bookmark</Icon></IconButton>
 	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>videocam</Icon></IconButton>
@@ -19,45 +19,45 @@
 	<IconButton aria-label="Outlined Icon Button" variant="outlined"
 		><Icon>more_vert</Icon></IconButton
 	>
-</DemoCaintainer>
+</DemoContainer>
 <h2>Icon button</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton aria-label="Icon Button"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Icon Button" disabled><Icon>check</Icon></IconButton>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton><Icon>check</Icon></IconButton>
 <IconButton disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Filled icon button</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Filled Icon Button" variant="filled" disabled
 		><Icon>check</Icon></IconButton
 	>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
 <IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Tonal icon button</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled
 		><Icon>check</Icon></IconButton
 	>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
 <IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
 />
 <h2>Outlined icon button</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton aria-label="Outlined Icon Button" variant="outlined"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Outlined Icon Button" variant="outlined" disabled
 		><Icon>check</Icon></IconButton
 	>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton variant="outlined"><Icon>check</Icon></IconButton>
 <IconButton variant="outlined" disabled><Icon>check</Icon></IconButton>`}
@@ -66,7 +66,7 @@
 {#snippet selectedIcon()}
 	<Icon>check</Icon>
 {/snippet}
-<DemoCaintainer style="flex-direction: column">
+<DemoContainer style="flex-direction: column">
 	<div class="icon-list">
 		<IconButton {selectedIcon} aria-label="Unselected Icon Button" toggle
 			><Icon>close</Icon></IconButton
@@ -110,7 +110,7 @@
 			selected><Icon>close</Icon></IconButton
 		>
 	</div>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`{#snippet selectedIcon()}
 	<Icon>check</Icon>
@@ -129,9 +129,9 @@
 </div>`}
 />
 <h2>Tooltip</h2>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>`}
 />
@@ -170,7 +170,7 @@
 </table>
 
 <h3>Icon button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton
 		{selectedIcon}
 		aria-label="Custom Icon Button"
@@ -182,7 +182,7 @@
 	>
 		<Icon>close</Icon>
 	</IconButton>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton
 		{selectedIcon}
@@ -232,7 +232,7 @@
 </table>
 
 <h3>Filled icon button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton
 		{selectedIcon}
 		aria-label="Custom Filled Icon Button"
@@ -246,7 +246,7 @@
 	>
 		<Icon>close</Icon>
 	</IconButton>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton
 {selectedIcon}
@@ -299,7 +299,7 @@
 </table>
 
 <h3>Tonal icon button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton
 		{selectedIcon}
 		aria-label="Custom Tonal Icon Button"
@@ -313,7 +313,7 @@
 	>
 		<Icon>close</Icon>
 	</IconButton>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton
 		{selectedIcon}
@@ -364,7 +364,7 @@
 </table>
 
 <h3>Outlined icon button example</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<IconButton
 		{selectedIcon}
 		aria-label="Custom Outlined Icon Button"
@@ -377,7 +377,7 @@
 	>
 		<Icon>close</Icon>
 	</IconButton>
-</DemoCaintainer>
+</DemoContainer>
 <Code
 	value={`<IconButton
 		{selectedIcon}

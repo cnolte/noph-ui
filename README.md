@@ -65,7 +65,7 @@ Beta (No breaking changes expected)
 - Ripple
 - Segmented buttons
 - Snackbar
-- Text fields (Theming missing)
+- Text fields
 
 In progress (Breaking changes expected)
 
@@ -75,7 +75,7 @@ In progress (Breaking changes expected)
 - Navigation Drawer (Docs missing)
 - Navigation Rail (Badge is missing + Docs missing)
 - Tooltips (Positioning missing)
-- Select (iOS issues)
+- Select (iOS issues + Docs missing)
 
 Pending
 

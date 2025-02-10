@@ -3,7 +3,7 @@
 	import FilterChip from '$lib/chip/FilterChip.svelte'
 	import { Icon } from '$lib/icons/index.ts'
 	import Snackbar from '$lib/snackbar/Snackbar.svelte'
-	import DemoCaintainer from '../../DemoContainer.svelte'
+	import DemoContainer from '../../DemoContainer.svelte'
 
 	let showPopover: (() => void) | undefined = $state()
 	let chips = $state([
@@ -45,21 +45,21 @@
 	{/each}
 {/snippet}
 
-<DemoCaintainer>
+<DemoContainer>
 	<ChipSet>
 		{@render chipsList()}
 	</ChipSet>
-</DemoCaintainer>
+</DemoContainer>
 <h3>Elevated</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<ChipSet>
 		{@render chipsList(false, true)}
 	</ChipSet>
-</DemoCaintainer>
+</DemoContainer>
 <h3>Disabled</h3>
-<DemoCaintainer>
+<DemoContainer>
 	<ChipSet>
 		{@render chipsList(true, false)}
 	</ChipSet>
-</DemoCaintainer>
+</DemoContainer>
 <Snackbar bind:showPopover label="Remove was clicked" />
