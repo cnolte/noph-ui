@@ -280,15 +280,14 @@
 	/>
 </DemoContainer>
 <Code
-	value={`
-	<TextField
-		variant="filled"
-		label="Filled"
-		--np-filled-text-field-container-shape="0"
-		--np-filled-text-field-container-color="var(--np-color-surface-container)"
-		--np-filled-text-field-label-text-color="var(--np-color-tertiary)"
-		--np-filled-text-field-focus-active-indicator-color="var(--np-color-tertiary)"
-	/>`}
+	value={`<TextField
+	variant="filled"
+	label="Filled"
+	--np-filled-text-field-container-shape="0"
+	--np-filled-text-field-container-color="var(--np-color-surface-container)"
+	--np-filled-text-field-label-text-color="var(--np-color-tertiary)"
+	--np-filled-text-field-focus-active-indicator-color="var(--np-color-tertiary)"
+/>`}
 />
 
 <h3>Outlined text field tokens</h3>
@@ -325,14 +324,13 @@
 	/>
 </DemoContainer>
 <Code
-	value={`
-	<TextField
-		variant="outlined"
-		label="Outlined"
-		--np-outlined-text-field-container-shape="0"
-		--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
-		--np-outlined-text-field-focus-outline-color="var(--np-color-tertiary)"
-	/>`}
+	value={`<TextField
+	variant="outlined"
+	label="Outlined"
+	--np-outlined-text-field-container-shape="0"
+	--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
+	--np-outlined-text-field-focus-outline-color="var(--np-color-tertiary)"
+/>`}
 />
 
 <h2>API</h2>
