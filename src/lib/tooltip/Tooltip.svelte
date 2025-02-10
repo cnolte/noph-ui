@@ -92,6 +92,7 @@
 	.np-tooltip[popover] {
 		width: max-content;
 		margin: 4px 0;
+		inset: auto;
 		background: var(--np-color-inverse-surface);
 		color: var(--np-color-inverse-on-surface);
 		padding: 0.25rem 0.5rem;
@@ -106,14 +107,11 @@
 			opacity 0.3s ease;
 		justify-self: var(--np-tooltip-justify-self, anchor-center);
 		position-area: var(--np-tooltip-position-area, top);
-		position-try-fallbacks: --np-tooltip-position-fallback;
+		position-try: normal flip-block;
 	}
 	.np-tooltip:popover-open {
 		opacity: 1;
 		animation: scaleIn 0.3s ease;
-	}
-	@position-try --np-tooltip-position-fallback {
-		position-area: var(--np-tooltip-position-area-fallback, bottom);
 	}
 
 	@keyframes scaleIn {

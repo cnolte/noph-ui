@@ -251,8 +251,9 @@
 				}
 			}}
 			variant="button"
-			selected={value === option.value}>{option.label}</Item
-		>
+			selected={value === option.value}
+			>{option.label}
+		</Item>
 	{/each}
 </Menu>
 

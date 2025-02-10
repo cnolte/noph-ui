@@ -104,6 +104,7 @@
 		padding: 0.5rem 0;
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
+		inset: auto;
 		max-height: 80dvh;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
@@ -113,7 +114,7 @@
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
-		position-try: most-height flip-block;
+		position-try: normal flip-block;
 	}
 
 	.np-menu:popover-open {
