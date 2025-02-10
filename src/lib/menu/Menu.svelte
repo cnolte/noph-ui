@@ -45,23 +45,6 @@
 
 	$effect(() => {
 		if (anchor && element) {
-			element.addEventListener('toggle', (event) => {
-				const { newState, currentTarget } = event as ToggleEvent & {
-					currentTarget: EventTarget & HTMLDivElement
-				}
-				if (newState === 'open') {
-					const rect = currentTarget.getBoundingClientRect()
-					const viewportHeight = window.innerHeight
-
-					if (rect.bottom > viewportHeight) {
-						const maxHeight = viewportHeight - rect.top - 18
-						currentTarget.style.maxHeight = `${maxHeight}px`
-					}
-				}
-				if (newState === 'closed') {
-					currentTarget.style.maxHeight = '80dvh'
-				}
-			})
 			if (!('anchorName' in document.documentElement.style)) {
 				anchor.addEventListener('click', () => {
 					refreshValues()
@@ -83,12 +66,27 @@
 </script>
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
-
 <div
 	{...attributes}
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
+	ontoggle={(event) => {
+		const { newState, currentTarget } = event
+		if (newState === 'open') {
+			const rect = currentTarget.getBoundingClientRect()
+			const viewportHeight = innerHeight
+
+			if (rect.bottom > viewportHeight && rect.top < viewportHeight / 2) {
+				const maxHeight = viewportHeight - rect.top - 18
+				currentTarget.style.maxHeight = `${maxHeight}px`
+			}
+		}
+		if (newState === 'closed') {
+			currentTarget.style.maxHeight = '80dvh'
+		}
+		attributes.ontoggle?.(event)
+	}}
 	popover="auto"
 	class={['np-menu', attributes.class]}
 	role="menu"
@@ -115,7 +113,7 @@
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
-		position-try-fallbacks: --np-menu-position-fallback;
+		position-try: most-height flip-block;
 	}
 
 	.np-menu:popover-open {
@@ -123,9 +121,5 @@
 		@starting-style {
 			opacity: 0;
 		}
-	}
-	@position-try --np-menu-position-fallback {
-		position-area: var(--np-menu-position-area-fallback, top center);
-		position-area: var(--np-menu-position-area-fallback, top center);
 	}
 </style>

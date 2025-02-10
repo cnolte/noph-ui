@@ -34,6 +34,7 @@
 	let selectElement: HTMLSelectElement | undefined = $state()
 	let menuElement: HTMLDivElement | undefined = $state()
 	let field: HTMLDivElement | undefined = $state()
+	let clientWidth = $state(0)
 	let menuId = $state(`--select-${crypto.randomUUID()}`)
 	let menuOpen = $state(false)
 	let selectedLabel = $derived.by<string>(() => {
@@ -88,11 +89,11 @@
 		aria-label={attributes['aria-label'] || label}
 		data-testid={attributes['data-testid']}
 		bind:this={field}
+		bind:clientWidth
 		autofocus={disabled ? false : autofocus}
 		onclick={(event) => {
 			event.preventDefault()
 			menuElement?.showPopover()
-			menuElement?.style.setProperty('min-width', `${field?.clientWidth}px`)
 		}}
 		onkeydown={(event) => {
 			if (event.key === 'Tab') {
@@ -101,7 +102,6 @@
 				event.preventDefault()
 				if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
 					menuElement?.showPopover()
-					menuElement?.style.setProperty('min-width', `${field?.clientWidth}px`)
 					;(menuElement?.firstElementChild as HTMLElement)?.focus()
 				}
 			}
@@ -161,7 +161,8 @@
 									errorTextRaw = currentTarget.validationMessage
 								}
 								if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-									currentTarget.focus()
+									field?.focus()
+									menuElement?.showPopover()
 								}
 							}}
 							bind:value
@@ -198,7 +199,7 @@
 </div>
 
 <Menu
-	style="position-anchor:{menuId}"
+	style="position-anchor:{menuId};min-width:{clientWidth}px;"
 	popover="manual"
 	--np-menu-justify-self="none"
 	--np-menu-position-area-fallback="top span-right"

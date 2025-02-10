@@ -75,7 +75,7 @@ In progress (Breaking changes expected)
 - Navigation Drawer (Docs missing)
 - Navigation Rail (Badge is missing + Docs missing)
 - Tooltips (Positioning missing)
-- Select (iOS issues + Docs missing)
+- Select (Docs missing)
 
 Pending
 

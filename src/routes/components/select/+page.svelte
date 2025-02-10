@@ -76,6 +76,26 @@
 	/>
 </DemoContainer>
 
+<h3>Validation</h3>
+<DemoContainer>
+	<form>
+		<Select
+			label="Genre"
+			variant="outlined"
+			name="genre"
+			required
+			options={[
+				{ value: '', label: '' },
+				{ value: 'rock', label: 'Rock' },
+				{ value: 'pop', label: 'Pop' },
+			]}
+		/>
+		<div class="button-area">
+			<Button type="submit">Send</Button>
+		</div>
+	</form>
+</DemoContainer>
+
 <Code
 	value={`<Select
 	label="Fruit"
@@ -188,3 +208,11 @@
 	--np-color-primary="var(--np-color-tertiary)"
 />`}
 />
+
+<style>
+	.button-area {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 1rem;
+	}
+</style>
