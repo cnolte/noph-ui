@@ -88,6 +88,7 @@
 				{ value: '', label: '' },
 				{ value: 'rock', label: 'Rock' },
 				{ value: 'pop', label: 'Pop' },
+				{ value: 'jazz', label: 'Jazz' },
 			]}
 		/>
 		<div class="button-area">

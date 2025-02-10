@@ -23,21 +23,33 @@
 	}
 
 	const refreshValues = () => {
-		if (element && anchor && !('anchorName' in document.documentElement.style)) {
-			const docClientWidth = document.documentElement.clientWidth
+		if (element && anchor) {
 			const anchorRect = anchor.getBoundingClientRect()
-			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
-				element.style.top = `${anchorRect.top - clientHeight - 2}px`
+			let maxHeight: number
+			if (innerHeight - anchorRect.bottom > anchorRect.top) {
+				maxHeight = innerHeight - anchorRect.bottom
 			} else {
-				element.style.top = `${anchorRect.bottom + 2}px`
+				maxHeight = anchorRect.top
 			}
-			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-			if (left < 2) {
-				element.style.left = '2px'
-			} else if (left > docClientWidth - clientWidth) {
-				element.style.left = `${docClientWidth - clientWidth - 4}px`
-			} else {
-				element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+			element.style.maxHeight =
+				maxHeight > innerHeight - anchorRect.height
+					? `${innerHeight - anchorRect.height - 20}px`
+					: `${maxHeight - 20}px`
+			if (!('anchorName' in document.documentElement.style)) {
+				const docClientWidth = document.documentElement.clientWidth
+				if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
+					element.style.top = `${anchorRect.top - clientHeight - 2}px`
+				} else {
+					element.style.top = `${anchorRect.bottom + 2}px`
+				}
+				const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+				if (left < 2) {
+					element.style.left = '2px'
+				} else if (left > docClientWidth - clientWidth) {
+					element.style.left = `${docClientWidth - clientWidth - 4}px`
+				} else {
+					element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+				}
 			}
 		}
 	}
@@ -45,17 +57,17 @@
 
 	$effect(() => {
 		if (anchor && element) {
+			window.addEventListener(
+				'scroll',
+				() => {
+					refreshValues()
+				},
+				{ passive: true },
+			)
 			if (!('anchorName' in document.documentElement.style)) {
 				anchor.addEventListener('click', () => {
 					refreshValues()
 				})
-				window.addEventListener(
-					'scroll',
-					() => {
-						refreshValues()
-					},
-					{ passive: true },
-				)
 			} else if (!anchor.style.getPropertyValue('anchor-name')) {
 				const generatedId = `--${crypto.randomUUID()}`
 				element.style.setProperty('position-anchor', generatedId)
@@ -71,22 +83,6 @@
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
-	ontoggle={(event) => {
-		const { newState, currentTarget } = event
-		if (newState === 'open') {
-			const rect = currentTarget.getBoundingClientRect()
-			const viewportHeight = innerHeight
-
-			if (rect.bottom > viewportHeight && rect.top < viewportHeight / 2) {
-				const maxHeight = viewportHeight - rect.top - 18
-				currentTarget.style.maxHeight = `${maxHeight}px`
-			}
-		}
-		if (newState === 'closed') {
-			currentTarget.style.maxHeight = '80dvh'
-		}
-		attributes.ontoggle?.(event)
-	}}
 	popover="auto"
 	class={['np-menu', attributes.class]}
 	role="menu"
@@ -105,7 +101,6 @@
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
 		inset: auto;
-		max-height: 80dvh;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 		transition:
@@ -114,7 +109,7 @@
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
-		position-try: normal flip-block;
+		position-try: most-height flip-block;
 	}
 
 	.np-menu:popover-open {
