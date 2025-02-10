@@ -55,20 +55,44 @@
 	}
 	$effect(refreshValues)
 
+	const getScrollableParent = (start: HTMLElement) => {
+		let element: HTMLElement | null = start
+		while (element) {
+			const style = getComputedStyle(element)
+			const overflowY = style.overflowY
+			const overflowX = style.overflowX
+			const isScrollableY =
+				(overflowY === 'auto' || overflowY === 'scroll') &&
+				element.scrollHeight > element.clientHeight
+			const isScrollableX =
+				(overflowX === 'auto' || overflowX === 'scroll') &&
+				element.scrollWidth > element.clientWidth
+
+			if (isScrollableY || isScrollableX) {
+				return element
+			}
+
+			element = element.parentElement
+		}
+		return window
+	}
+
 	$effect(() => {
 		if (anchor && element) {
-			window.addEventListener(
+			getScrollableParent(element).addEventListener(
 				'scroll',
 				() => {
 					refreshValues()
 				},
 				{ passive: true },
 			)
-			if (!('anchorName' in document.documentElement.style)) {
-				anchor.addEventListener('click', () => {
-					refreshValues()
-				})
-			} else if (!anchor.style.getPropertyValue('anchor-name')) {
+			anchor.addEventListener('click', () => {
+				refreshValues()
+			})
+			if (
+				'anchorName' in document.documentElement.style &&
+				!anchor.style.getPropertyValue('anchor-name')
+			) {
 				const generatedId = `--${crypto.randomUUID()}`
 				element.style.setProperty('position-anchor', generatedId)
 				anchor.style.setProperty('anchor-name', generatedId)
