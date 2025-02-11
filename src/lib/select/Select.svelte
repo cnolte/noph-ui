@@ -202,7 +202,6 @@
 	style="position-anchor:{menuId};min-width:{clientWidth}px;"
 	popover="manual"
 	--np-menu-justify-self="none"
-	--np-menu-position-area-fallback="top span-right"
 	--np-menu-position-area="bottom span-right"
 	--np-menu-margin="2px 0"
 	--np-menu-container-shape={variant === 'outlined'

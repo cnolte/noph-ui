@@ -13,6 +13,7 @@
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
+	let menuOpen = $state(false)
 
 	showPopover = () => {
 		element?.showPopover()
@@ -23,7 +24,7 @@
 	}
 
 	const refreshValues = () => {
-		if (element && anchor) {
+		if (element && anchor && menuOpen) {
 			const anchorRect = anchor.getBoundingClientRect()
 			let maxHeight: number
 			if (innerHeight - anchorRect.bottom > anchorRect.top) {
@@ -33,8 +34,8 @@
 			}
 			element.style.maxHeight =
 				maxHeight > innerHeight - anchorRect.height
-					? `${innerHeight - anchorRect.height - 20}px`
-					: `${maxHeight - 20}px`
+					? `${innerHeight - anchorRect.height - 4}px`
+					: `${maxHeight - 4}px`
 			if (!('anchorName' in document.documentElement.style)) {
 				const docClientWidth = document.documentElement.clientWidth
 				if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
@@ -86,9 +87,6 @@
 				},
 				{ passive: true },
 			)
-			anchor.addEventListener('click', () => {
-				refreshValues()
-			})
 			if (
 				'anchorName' in document.documentElement.style &&
 				!anchor.style.getPropertyValue('anchor-name')
@@ -107,26 +105,37 @@
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
+	ontoggle={(event) => {
+		let { newState } = event
+		menuOpen = newState === 'open'
+	}}
 	popover="auto"
-	class={['np-menu', attributes.class]}
+	class={['np-menu-container', attributes.class]}
 	role="menu"
 >
-	{@render children()}
+	<div class="np-menu">
+		{@render children()}
+	</div>
 </div>
 
 <style>
-	.np-menu[popover] {
+	.np-menu {
+		overflow-y: auto;
+		overflow-x: hidden;
+		flex: 1;
+		padding: 0.5rem 0;
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
+	}
+	.np-menu-container[popover] {
 		color: var(--np-menu-text-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
-		overflow-y: auto;
 		border: none;
 		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
-		padding: 0.5rem 0;
+		padding: 0;
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
 		inset: auto;
-		scrollbar-color: var(--np-color-on-surface-variant) transparent;
-		scrollbar-width: thin;
 		transition:
 			display 0.2s allow-discrete,
 			opacity 0.2s linear;
@@ -136,8 +145,9 @@
 		position-try: most-height flip-block;
 	}
 
-	.np-menu:popover-open {
+	.np-menu-container:popover-open {
 		opacity: 1;
+		display: flex;
 		@starting-style {
 			opacity: 0;
 		}

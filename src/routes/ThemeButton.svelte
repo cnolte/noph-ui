@@ -181,71 +181,75 @@
 	id="palette-menu"
 	class="theme-menu"
 >
-	<div class="head">
-		<div class="headline">Theme Controls</div>
-		<IconButton
-			title={copyTitle}
-			keepTooltipOnClick
-			onclick={() => {
-				copyTheme()
-				copyTitle = 'Copied!'
-			}}
-			onmouseleave={() => {
-				setTimeout(() => {
-					copyTitle = 'Copy Theme'
-				}, 200)
-			}}><Icon>content_copy</Icon></IconButton
-		>
-	</div>
-	<div class="card">
-		<label class="hex-label">
-			<div class="spacer">Hex Source Color</div>
-			<div class="hex-input-wrapper">
-				<div class="hex-input">
-					<input class="input" type="color" name="theme-color" bind:value oninput={changeTheme} />
+	<div class="theme-menu-container">
+		<div class="head">
+			<div class="headline">Theme Controls</div>
+			<IconButton
+				title={copyTitle}
+				keepTooltipOnClick
+				onclick={() => {
+					copyTheme()
+					copyTitle = 'Copied!'
+				}}
+				onmouseleave={() => {
+					setTimeout(() => {
+						copyTitle = 'Copy Theme'
+					}, 200)
+				}}><Icon>content_copy</Icon></IconButton
+			>
+		</div>
+		<div class="card">
+			<label class="hex-label">
+				<div class="spacer">Hex Source Color</div>
+				<div class="hex-input-wrapper">
+					<div class="hex-input">
+						<input class="input" type="color" name="theme-color" bind:value oninput={changeTheme} />
+					</div>
 				</div>
-			</div>
-		</label>
+			</label>
+		</div>
+		<SegmentedButton
+			style="margin-top: 1rem;"
+			name="theme-picker"
+			options={[
+				{
+					label: darkIcon,
+					onclick: () => {
+						theme = 'dark'
+						localStorage.setItem('theme', theme)
+						document.documentElement.setAttribute('data-theme', theme)
+					},
+					selected: theme === 'dark',
+				},
+				{
+					label: systemIcon,
+					onclick: () => {
+						theme = null
+						localStorage.removeItem('theme')
+						document.documentElement.removeAttribute('data-theme')
+					},
+					selected: !theme,
+				},
+				{
+					label: lightIcon,
+					onclick: () => {
+						theme = 'light'
+						localStorage.setItem('theme', theme)
+						document.documentElement.setAttribute('data-theme', theme)
+					},
+					selected: theme === 'light',
+				},
+			]}
+		></SegmentedButton>
 	</div>
-	<SegmentedButton
-		style="margin-top: 1rem;"
-		name="theme-picker"
-		options={[
-			{
-				label: darkIcon,
-				onclick: () => {
-					theme = 'dark'
-					localStorage.setItem('theme', theme)
-					document.documentElement.setAttribute('data-theme', theme)
-				},
-				selected: theme === 'dark',
-			},
-			{
-				label: systemIcon,
-				onclick: () => {
-					theme = null
-					localStorage.removeItem('theme')
-					document.documentElement.removeAttribute('data-theme')
-				},
-				selected: !theme,
-			},
-			{
-				label: lightIcon,
-				onclick: () => {
-					theme = 'light'
-					localStorage.setItem('theme', theme)
-					document.documentElement.setAttribute('data-theme', theme)
-				},
-				selected: theme === 'light',
-			},
-		]}
-	></SegmentedButton>
 </Menu>
 
 <style>
 	:global(.theme-menu) {
 		position-anchor: --palette-menu;
-		padding: 1rem !important;
+	}
+	.theme-menu-container {
+		padding: 1rem;
 	}
 	.spacer {
 		flex: 1;
