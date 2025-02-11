@@ -15,6 +15,7 @@
 		disabled = false,
 		loading = false,
 		keepTooltipOnClick,
+		loadingAriaLabel,
 		...attributes
 	}: ButtonProps = $props()
 
@@ -34,7 +35,7 @@
 	{/if}
 	{#if loading}
 		<div class="circular-progress">
-			<CircularProgress indeterminate />
+			<CircularProgress aria-label={loadingAriaLabel} indeterminate />
 		</div>
 	{/if}
 	<div class="button-icon">

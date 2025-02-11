@@ -95,16 +95,19 @@
 />
 <h2>Loading</h2>
 <DemoContainer>
-	<Button loading variant="elevated">Elevated</Button>
-	<Button loading variant="outlined">Outlined</Button>
-	<Button loading variant="text">Text</Button>
+	<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
+	<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
+	<Button loading loadingAriaLabel="Loading text" variant="text">Text</Button>
 </DemoContainer>
 <Code
-	value={`
-	<Button loading variant="elevated">Elevated</Button>
-	<Button loading variant="outlined">Outlined</Button>
-	<Button loading variant="text">Text</Button>`}
+	value={`<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
+<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
+<Button loading loadingAriaLabel="Loading text" variant="text">Text</Button>`}
 />
+<blockquote>
+	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
+	when using the loading state.
+</blockquote>
 <h2>Size</h2>
 <DemoContainer>
 	<Button>Default: 40px</Button>

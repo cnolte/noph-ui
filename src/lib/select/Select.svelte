@@ -33,6 +33,7 @@
 	let errorRaw = $state(error)
 	let selectElement: HTMLSelectElement | undefined = $state()
 	let menuElement: HTMLDivElement | undefined = $state()
+	let anchorElement: HTMLDivElement | undefined = $state()
 	let field: HTMLDivElement | undefined = $state()
 	let clientWidth = $state(0)
 	let menuId = $state(`--select-${crypto.randomUUID()}`)
@@ -87,6 +88,7 @@
 		aria-controls="listbox"
 		aria-expanded={menuOpen}
 		aria-label={attributes['aria-label'] || label}
+		aria-disabled={disabled}
 		data-testid={attributes['data-testid']}
 		bind:this={field}
 		bind:clientWidth
@@ -102,7 +104,7 @@
 				event.preventDefault()
 				if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
 					menuElement?.showPopover()
-					;(menuElement?.firstElementChild as HTMLElement)?.focus()
+					;(menuElement?.firstElementChild?.firstElementChild as HTMLElement)?.focus()
 				}
 			}
 		}}
@@ -129,7 +131,7 @@
 					<div class="outline-end"></div>
 				</div>
 			{/if}
-			<div class="np-container" style="anchor-name:{menuId};">
+			<div class="np-container" bind:this={anchorElement} style="anchor-name:{menuId};">
 				{#if start}
 					<div class="start">
 						<span class="icon leading">{@render start()}</span>
@@ -175,8 +177,6 @@
 						<div class="input">
 							{#if selectedLabel}
 								{selectedLabel}
-							{:else}
-								&nbsp;
 							{/if}
 						</div>
 					</div>
@@ -201,13 +201,14 @@
 <Menu
 	style="position-anchor:{menuId};min-width:{clientWidth}px;"
 	popover="manual"
+	role="listbox"
 	--np-menu-justify-self="none"
 	--np-menu-position-area="bottom span-right"
 	--np-menu-margin="2px 0"
 	--np-menu-container-shape={variant === 'outlined'
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
-	anchor={element}
+	anchor={anchorElement}
 	ontoggle={({ newState }) => {
 		if (newState === 'open') {
 			menuOpen = true
@@ -321,6 +322,7 @@
 		min-height: 100%;
 		min-width: min-content;
 		position: relative;
+		user-select: none;
 	}
 	.outlined .container-overflow {
 		border-start-start-radius: var(
@@ -431,6 +433,7 @@
 		overflow-x: hidden;
 		text-align: inherit;
 		width: 100%;
+		height: 1.5rem;
 
 		&::placeholder {
 			color: currentColor;
@@ -599,6 +602,7 @@
 	}
 
 	.with-start.menu-open .label,
+	.with-start:focus .label,
 	.with-start:has(select:focus-visible option:checked:not([value=''])) .label,
 	.with-start:has(select option:checked:not([value=''])) .label,
 	.with-start:has(select:focus-visible) .label {

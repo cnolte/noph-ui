@@ -64,6 +64,7 @@ Beta (No breaking changes expected)
 - Radio
 - Ripple
 - Segmented buttons
+- Select
 - Snackbar
 - Text fields
 
@@ -75,7 +76,6 @@ In progress (Breaking changes expected)
 - Navigation Drawer (Docs missing)
 - Navigation Rail (Badge is missing + Docs missing)
 - Tooltips (Positioning missing)
-- Select (Docs missing)
 
 Pending
 

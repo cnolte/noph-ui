@@ -14,7 +14,7 @@
 	let anchor: HTMLElement | undefined = $state()
 
 	const refreshValues = () => {
-		if (element && anchor && !('anchorName' in document.documentElement.style)) {
+		if (element && anchor && !('positionArea' in document.documentElement.style)) {
 			const docClientWidth = document.documentElement.clientWidth
 			const anchorRect = anchor.getBoundingClientRect()
 			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {

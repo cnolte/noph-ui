@@ -9,7 +9,6 @@ export interface SelectProps
 	errorText?: string
 	variant?: 'outlined' | 'filled'
 	start?: Snippet
-	end?: Snippet
 	noAsterisk?: boolean
 	element?: HTMLSpanElement
 	options: { value: string | number; label: string; selected?: boolean | undefined | null }[]

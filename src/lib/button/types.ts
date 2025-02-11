@@ -8,6 +8,7 @@ interface ButtonButtonProps extends HTMLButtonAttributes {
 	element?: HTMLElement
 	disabled?: boolean
 	loading?: boolean
+	loadingAriaLabel?: string
 	keepTooltipOnClick?: boolean
 }
 interface ButtonAnchorProps extends HTMLAnchorAttributes {
@@ -18,6 +19,7 @@ interface ButtonAnchorProps extends HTMLAnchorAttributes {
 	keepTooltipOnClick?: boolean
 	disabled?: boolean
 	loading?: boolean
+	loadingAriaLabel?: string
 }
 
 interface IconButtonButtonProps extends HTMLButtonAttributes {

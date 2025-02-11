@@ -36,7 +36,7 @@
 				maxHeight > innerHeight - anchorRect.height
 					? `${innerHeight - anchorRect.height - 4}px`
 					: `${maxHeight - 4}px`
-			if (!('anchorName' in document.documentElement.style)) {
+			if (!('positionArea' in document.documentElement.style)) {
 				const docClientWidth = document.documentElement.clientWidth
 				if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
 					element.style.top = `${anchorRect.top - clientHeight - 2}px`
@@ -101,6 +101,7 @@
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
 <div
+	role="menu"
 	{...attributes}
 	bind:this={element}
 	bind:clientWidth
@@ -108,10 +109,10 @@
 	ontoggle={(event) => {
 		let { newState } = event
 		menuOpen = newState === 'open'
+		attributes.ontoggle?.(event)
 	}}
 	popover="auto"
 	class={['np-menu-container', attributes.class]}
-	role="menu"
 >
 	<div class="np-menu">
 		{@render children()}
@@ -142,7 +143,7 @@
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
-		position-try: most-height flip-block;
+		position-try: normal flip-block;
 	}
 
 	.np-menu-container:popover-open {
