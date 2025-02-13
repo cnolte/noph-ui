@@ -134,7 +134,7 @@
 			<div class="np-container" bind:this={anchorElement} style="anchor-name:{menuId};">
 				{#if start}
 					<div class="start">
-						<span class="icon leading">{@render start()}</span>
+						<span class="icon">{@render start()}</span>
 					</div>
 				{/if}
 				<div class="middle">
@@ -320,7 +320,7 @@
 		flex: 1;
 		max-height: 100%;
 		min-height: 100%;
-		min-width: min-content;
+		min-width: 0;
 		position: relative;
 		user-select: none;
 	}
@@ -426,13 +426,17 @@
 		align-items: stretch;
 		align-self: baseline;
 		flex: 1;
+		min-width: 0;
 	}
 
 	.input {
 		caret-color: var(--np-color-primary);
-		overflow-x: hidden;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		text-align: inherit;
-		width: 100%;
+		flex: 1;
+		min-width: 0;
 		height: 1.5rem;
 
 		&::placeholder {
@@ -478,6 +482,7 @@
 		display: flex;
 		flex: 1 1 0%;
 		opacity: 1;
+		min-width: 0;
 		transition: opacity 83ms cubic-bezier(0.2, 0, 0, 1);
 	}
 	.disabled .content {

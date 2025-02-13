@@ -105,7 +105,7 @@
 			<div class="np-container">
 				{#if start}
 					<div class="start">
-						<span class="icon leading">{@render start()}</span>
+						<span class="icon">{@render start()}</span>
 					</div>
 				{/if}
 				<div class="middle">
