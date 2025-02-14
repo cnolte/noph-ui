@@ -355,7 +355,7 @@
 		}
 
 		&::-webkit-calendar-picker-indicator {
-			display: none;
+			display: var(--np-picker-indicator-display, none);
 		}
 
 		&::-webkit-search-decoration,

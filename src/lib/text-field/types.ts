@@ -16,7 +16,7 @@ interface FieldProps {
 }
 
 export interface InputFieldProps extends HTMLInputAttributes, FieldProps {
-	type?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'
+	type?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url' | 'datetime-local'
 }
 
 export interface TextAreaFieldProps extends HTMLTextareaAttributes, FieldProps {
