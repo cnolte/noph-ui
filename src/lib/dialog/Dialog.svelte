@@ -35,7 +35,7 @@
 		role="none"
 		class="np-backdrop"
 		onclick={() => {
-			element?.hidePopover()
+			hidePopover()
 		}}
 	></div>
 	<div class="np-dialog" role="dialog">
@@ -86,17 +86,14 @@
 		position: relative;
 	}
 
-	.np-animate {
+	.np-animate[popover] {
 		transition:
+			opacity 0.25s ease,
 			display 0.25s allow-discrete,
 			overlay 0.25s allow-discrete;
-	}
-
-	.np-animate[popover] .np-dialog {
-		transition: opacity 0.25s ease;
 		opacity: 0;
 	}
-	.np-animate:popover-open .np-dialog {
+	.np-animate[popover]:popover-open {
 		opacity: 1;
 		@starting-style {
 			opacity: 0;
@@ -107,16 +104,6 @@
 		position: fixed;
 		background-color: var(--np-color-scrim);
 		opacity: 0.38;
-	}
-	.np-animate[popover] .np-backdrop {
-		opacity: 0;
-		transition: opacity 0.25s ease;
-	}
-	.np-animate[popover]:popover-open .np-backdrop {
-		opacity: 0.38;
-		@starting-style {
-			opacity: 0;
-		}
 	}
 
 	.np-dialog-icon {
