@@ -66,6 +66,12 @@
 		transition: transform 0.25s ease;
 	}
 
+	.np-navigation-drawer-container[popover] {
+		transition:
+			overlay 0.25s allow-discrete,
+			display 0.25s allow-discrete;
+	}
+
 	.np-navigation-drawer-container:popover-open .np-navigation-wrapper {
 		transform: translateX(0);
 		@starting-style {

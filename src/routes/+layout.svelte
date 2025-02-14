@@ -10,8 +10,6 @@
 	import ThemeButton from './ThemeButton.svelte'
 
 	let { children } = $props()
-
-	let popoverState = $state('closed')
 	let popover: HTMLElement | undefined = $state()
 </script>
 
@@ -24,14 +22,8 @@
 
 <header class="layout-btn">
 	<div class="inner-header">
-		<IconButton
-			popovertarget="mobile-drawer"
-			variant="text"
-			title={popoverState === 'open' ? 'Close' : 'Open'}
-			class="menu-btn"
-			><Icon
-				>{#if popoverState === 'open'}menu_open{:else}menu{/if}</Icon
-			></IconButton
+		<IconButton popovertarget="mobile-drawer" variant="text" title={'Open'} class="menu-btn"
+			><Icon>menu_open</Icon></IconButton
 		>
 		<a href="/" class="logo">
 			<Logo />
@@ -66,9 +58,6 @@
 	class={['scroll-wrapper']}
 	backdrop
 	modal
-	onbeforetoggle={(event) => {
-		popoverState = event.newState
-	}}
 >
 	<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
 		<Icon>menu_open</Icon>
