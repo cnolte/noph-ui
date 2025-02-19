@@ -22,7 +22,7 @@
 		...attributes
 	}: IconButtonProps = $props()
 
-	let tooltipId = $state(title ? crypto.randomUUID() : '')
+	let uid = $props.id()
 	let selectedState = $state(!toggle || selected)
 	let touchEl: HTMLSpanElement | undefined = $state()
 
@@ -48,7 +48,7 @@
 
 {#if isButton(attributes) || disabled}
 	<button
-		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
+		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		aria-pressed={selectedState}
 		{...attributes as HTMLButtonAttributes}
@@ -73,7 +73,7 @@
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
-		aria-describedby={title ? tooltipId : undefined}
+		aria-describedby={title ? uid : undefined}
 		aria-label={title}
 		bind:this={element}
 		class={[
@@ -89,7 +89,7 @@
 {/if}
 
 {#if title}
-	<Tooltip {keepTooltipOnClick} id={tooltipId}>{title}</Tooltip>
+	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
 {/if}
 
 <style>

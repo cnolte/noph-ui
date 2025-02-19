@@ -19,7 +19,7 @@
 		...attributes
 	}: ButtonProps = $props()
 
-	let tooltipId = $state(title ? crypto.randomUUID() : '')
+	let uid = $props.id()
 
 	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined
@@ -58,7 +58,7 @@
 {#if isButton(attributes) || disabled || loading}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
+		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		disabled={disabled || loading}
 		bind:this={element}
@@ -74,7 +74,7 @@
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
-		aria-describedby={title ? tooltipId : attributes['aria-describedby']}
+		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
 		class={['np-button', 'enabled', variant, attributes.class]}
@@ -84,7 +84,7 @@
 {/if}
 
 {#if title}
-	<Tooltip {keepTooltipOnClick} id={tooltipId}>{title}</Tooltip>
+	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
 {/if}
 
 <style>

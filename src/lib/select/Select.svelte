@@ -29,6 +29,8 @@
 		...attributes
 	}: SelectProps = $props()
 
+	const uid = $props.id()
+
 	let errorTextRaw: string = $state(errorText)
 	let errorRaw = $state(error)
 	let selectElement: HTMLSelectElement | undefined = $state()
@@ -36,7 +38,6 @@
 	let anchorElement: HTMLDivElement | undefined = $state()
 	let field: HTMLDivElement | undefined = $state()
 	let clientWidth = $state(0)
-	let menuId = $state(`--select-${crypto.randomUUID()}`)
 	let menuOpen = $state(false)
 	let selectedLabel = $derived.by<string>(() => {
 		return options.find((option) => option.value === value)?.label || ''
@@ -131,7 +132,7 @@
 					<div class="outline-end"></div>
 				</div>
 			{/if}
-			<div class="np-container" bind:this={anchorElement} style="anchor-name:{menuId};">
+			<div class="np-container" bind:this={anchorElement} style="anchor-name:--{uid};">
 				{#if start}
 					<div class="start">
 						<span class="icon">{@render start()}</span>
@@ -199,7 +200,7 @@
 </div>
 
 <Menu
-	style="position-anchor:{menuId};min-width:{clientWidth}px;"
+	style="position-anchor:--{uid};min-width:{clientWidth}px;"
 	popover="manual"
 	role="listbox"
 	--np-menu-justify-self="none"
