@@ -33,16 +33,22 @@
 {#if isButton(attributes)}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		class:np-navigation-drawer-item-selected={selected}
-		class="np-navigation-drawer-item {attributes.class}"
+		class={[
+			'np-navigation-drawer-item',
+			selected && 'np-navigation-drawer-item-selected',
+			attributes.class,
+		]}
 	>
 		{@render content()}
 	</button>
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
-		class:np-navigation-drawer-item-selected={selected}
-		class="np-navigation-drawer-item {attributes.class}"
+		class={[
+			'np-navigation-drawer-item',
+			selected && 'np-navigation-drawer-item-selected',
+			attributes.class,
+		]}
 	>
 		{@render content()}
 	</a>

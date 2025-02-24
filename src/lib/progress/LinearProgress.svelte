@@ -25,10 +25,8 @@
 
 <div class="np-container" bind:this={element}>
 	<div
-		class:four-color={fourColor}
-		class:indeterminate
 		{...attributes}
-		class="progress"
+		class={['progress', indeterminate && 'indeterminate', fourColor && 'four-color']}
 		role="progressbar"
 		aria-valuemin="0"
 		aria-valuemax={max}
