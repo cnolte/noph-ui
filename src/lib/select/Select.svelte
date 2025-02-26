@@ -176,7 +176,7 @@
 							bind:value
 							bind:this={selectElement}
 						>
-							{#each options as option}
+							{#each options as option, index (index)}
 								<option value={option.value} selected={option.selected}>{option.label}</option>
 							{/each}
 						</select>
@@ -228,7 +228,7 @@
 	}}
 	bind:element={menuElement}
 >
-	{#each options as option}
+	{#each options as option, index (index)}
 		<Item
 			onclick={(event) => {
 				value = option.value

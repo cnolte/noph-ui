@@ -22,7 +22,7 @@
 
 <header class="layout-btn">
 	<div class="inner-header">
-		<IconButton popovertarget="mobile-drawer" variant="text" title={'Open'} class="menu-btn"
+		<IconButton popovertarget="mobile-drawer" variant="text" title="Open" class="menu-btn"
 			><Icon>menu</Icon></IconButton
 		>
 		<a href="/" class="logo">

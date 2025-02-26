@@ -28,7 +28,7 @@
 <h3>Outlined</h3>
 
 {#snippet chipsList(disabled = false, elevated = false)}
-	{#each chips as chip}
+	{#each chips as chip, index (index)}
 		<FilterChip
 			label={chip.label}
 			{disabled}

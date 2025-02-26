@@ -9,13 +9,13 @@
 <h1>Quick Start</h1>
 <h2>Install</h2>
 <p>Install Noph UI components using npm and node.</p>
-<Code value={`npm install noph-ui`} />
+<Code value="npm install noph-ui" />
 <h2>Theming</h2>
 <p>
 	The quickest way to get started with Noph UI is by using the default theme. You can import it into
 	your <code>+layout.svelte</code> file as shown below:
 </p>
-<Code value={`import 'noph-ui/defaultTheme'`} />
+<Code value="import 'noph-ui/defaultTheme'" />
 <p>
 	To apply both the theme's background color and text color to the entire app, you can target the
 	<code>&lt;body&gt;</code> element directly in your app.css file like this:

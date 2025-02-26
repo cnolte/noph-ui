@@ -20,7 +20,7 @@
 	bind:this={element}
 	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"
 >
-	{#each options as option, i}
+	{#each options as option, i (i)}
 		<label class={['np-segmented-button', option.icon && 'width-icon']}>
 			<div class="check-icon-wrapper">
 				<div class="check-icon">
