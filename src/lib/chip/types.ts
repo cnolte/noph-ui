@@ -14,5 +14,5 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	value?: string
 	group?: (string | number)[] | null
 	defaultSelected?: boolean | null
-	remove?: (chip: HTMLDivElement) => void
+	onremove?: (chip: HTMLDivElement) => void
 }

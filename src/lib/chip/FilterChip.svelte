@@ -14,7 +14,7 @@
 		icon,
 		element = $bindable(),
 		ariaLabelRemove = 'Remove',
-		remove,
+		onremove,
 		name,
 		value,
 		group = $bindable(),
@@ -85,6 +85,7 @@
 	{#if removable}
 		<IconButton
 			{disabled}
+			type="button"
 			--np-icon-button-container-height="1.75rem"
 			--np-icon-button-container-width="1.75rem"
 			--np-icon-button-icon-size="1.125rem"
@@ -93,7 +94,7 @@
 				if (element === undefined) {
 					return
 				}
-				remove?.(element)
+				onremove?.(element)
 			}}
 		>
 			<CloseIcon />

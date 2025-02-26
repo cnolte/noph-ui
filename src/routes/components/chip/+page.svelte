@@ -34,7 +34,7 @@
 			{disabled}
 			{elevated}
 			removable={chip.removable}
-			remove={chip.remove}
+			onremove={chip.remove}
 		>
 			{#snippet icon()}
 				{#if chip.icon}
