@@ -13,6 +13,7 @@ interface FieldProps {
 	end?: Snippet
 	noAsterisk?: boolean
 	element?: HTMLSpanElement
+	inputElement?: HTMLInputElement | HTMLTextAreaElement
 }
 
 export interface InputFieldProps extends HTMLInputAttributes, FieldProps {

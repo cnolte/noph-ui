@@ -17,6 +17,7 @@
 		variant = 'filled',
 		placeholder = ' ',
 		element = $bindable(),
+		inputElement = $bindable(),
 		...attributes
 	}: TextFieldProps = $props()
 
@@ -28,18 +29,17 @@
 		errorRaw = error
 		errorTextRaw = errorText
 	})
-	let textElement: HTMLInputElement | HTMLTextAreaElement | undefined = $state()
 
 	$effect(() => {
-		if (textElement) {
-			textElement.form?.addEventListener('reset', () => {
+		if (inputElement) {
+			inputElement.form?.addEventListener('reset', () => {
 				errorRaw = error
 				value = ''
 			})
-			textElement.addEventListener('input', () => {
+			inputElement.addEventListener('input', () => {
 				checkValidity = true
 			})
-			textElement.addEventListener('invalid', (event) => {
+			inputElement.addEventListener('invalid', (event) => {
 				event.preventDefault()
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
@@ -53,7 +53,7 @@
 				}
 			})
 
-			textElement.addEventListener('blur', (event) => {
+			inputElement.addEventListener('blur', (event) => {
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
@@ -131,7 +131,7 @@
 								aria-label={label}
 								{...attributes}
 								bind:value
-								bind:this={textElement}
+								bind:this={inputElement}
 								class="input"
 								{placeholder}
 								rows={attributes.rows || 2}
@@ -147,7 +147,7 @@
 									aria-label={label}
 									{...attributes}
 									bind:value
-									bind:this={textElement}
+									bind:this={inputElement}
 									class="input"
 									{placeholder}
 									aria-invalid={errorRaw}

@@ -444,13 +444,18 @@
 		</tr>
 		<tr>
 			<td><code>element</code></td>
-			<td><code>HTMLElement</code></td>
+			<td><code>HTMLSpanElement</code></td>
 			<td
 				>A reference to the root DOM element of the component. This variable is bound using <code
 					>bind:this</code
 				>, allowing direct access to the underlying HTML element for manipulation or querying within
 				the component's logic.</td
 			>
+		</tr>
+		<tr>
+			<td><code>inputElement</code></td>
+			<td><code>HTMLInputElement | HTMLTextAreaElement | undefined</code></td>
+			<td>Allows access to the input element</td>
 		</tr>
 	</tbody>
 </table>
