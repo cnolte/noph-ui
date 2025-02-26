@@ -22,6 +22,8 @@
 
 	let errorRaw: boolean = $state(error)
 	let errorTextRaw: string = $state(errorText)
+	let focusOnInvalid = $state(true)
+	let checkValidity = $state(false)
 	$effect(() => {
 		errorRaw = error
 		errorTextRaw = errorText
@@ -34,6 +36,9 @@
 				errorRaw = error
 				value = ''
 			})
+			textElement.addEventListener('input', () => {
+				checkValidity = true
+			})
 			textElement.addEventListener('invalid', (event) => {
 				event.preventDefault()
 				const { currentTarget } = event as Event & {
@@ -43,18 +48,22 @@
 				if (errorText === '') {
 					errorTextRaw = currentTarget.validationMessage
 				}
-				if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+				if (focusOnInvalid && isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
 					currentTarget.focus()
 				}
 			})
 
-			textElement.addEventListener('change', (event) => {
+			textElement.addEventListener('blur', (event) => {
 				const { currentTarget } = event as Event & {
 					currentTarget: HTMLInputElement | HTMLTextAreaElement
 				}
-				if (currentTarget.checkValidity()) {
-					errorRaw = error
-					errorTextRaw = errorText
+				if (checkValidity) {
+					focusOnInvalid = false
+					if (currentTarget.checkValidity()) {
+						errorRaw = error
+						errorTextRaw = errorText
+					}
+					focusOnInvalid = true
 				}
 			})
 		}
