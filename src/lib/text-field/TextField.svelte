@@ -18,13 +18,35 @@
 		placeholder = ' ',
 		element = $bindable(),
 		inputElement = $bindable(),
+		reportValidity = $bindable(),
+		checkValidity = $bindable(),
 		...attributes
 	}: TextFieldProps = $props()
 
 	let errorRaw: boolean = $state(error)
 	let errorTextRaw: string = $state(errorText)
 	let focusOnInvalid = $state(true)
-	let checkValidity = $state(false)
+	let doValidity = $state(false)
+
+	reportValidity = () => {
+		if (inputElement) {
+			const valid = inputElement.reportValidity()
+			if (valid) {
+				errorRaw = error
+				errorTextRaw = errorText
+			}
+			return valid
+		}
+		return false
+	}
+
+	checkValidity = () => {
+		if (inputElement) {
+			return inputElement.checkValidity()
+		}
+		return false
+	}
+
 	$effect(() => {
 		errorRaw = error
 		errorTextRaw = errorText
@@ -37,7 +59,7 @@
 				value = ''
 			})
 			inputElement.addEventListener('input', () => {
-				checkValidity = true
+				doValidity = true
 			})
 			inputElement.addEventListener('invalid', (event) => {
 				event.preventDefault()
@@ -53,13 +75,10 @@
 				}
 			})
 
-			inputElement.addEventListener('blur', (event) => {
-				const { currentTarget } = event as Event & {
-					currentTarget: HTMLInputElement | HTMLTextAreaElement
-				}
-				if (checkValidity) {
+			inputElement.addEventListener('blur', () => {
+				if (doValidity) {
 					focusOnInvalid = false
-					if (currentTarget.checkValidity()) {
+					if (checkValidity()) {
 						errorRaw = error
 						errorTextRaw = errorText
 					}

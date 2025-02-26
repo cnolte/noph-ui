@@ -14,6 +14,8 @@ interface FieldProps {
 	noAsterisk?: boolean
 	element?: HTMLSpanElement
 	inputElement?: HTMLInputElement | HTMLTextAreaElement
+	reportValidity?: () => boolean
+	checkValidity?: () => boolean
 }
 
 export interface InputFieldProps extends HTMLInputAttributes, FieldProps {
