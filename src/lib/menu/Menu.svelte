@@ -144,6 +144,7 @@
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
+		z-index: 1000;
 	}
 
 	.np-menu-container:popover-open {

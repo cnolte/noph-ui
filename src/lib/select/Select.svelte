@@ -95,8 +95,12 @@
 		bind:clientWidth
 		autofocus={disabled ? false : autofocus}
 		onclick={(event) => {
-			event.preventDefault()
-			menuElement?.showPopover()
+			const target = event.target as HTMLElement
+			const link = target.closest('a[href]')
+			if (!link) {
+				event.preventDefault()
+				menuElement?.showPopover()
+			}
 		}}
 		onkeydown={(event) => {
 			if (event.key === 'Tab') {
