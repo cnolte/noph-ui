@@ -13,6 +13,7 @@
 		supportingText = '',
 		tabindex = 0,
 		start,
+		end,
 		label,
 		style,
 		noAsterisk = false,
@@ -188,7 +189,11 @@
 				</div>
 				<div class="end">
 					<span class="icon trailing">
-						{@render arrows()}
+						{#if end}
+							{@render end()}
+						{:else}
+							{@render arrows()}
+						{/if}
 					</span>
 				</div>
 			</div>

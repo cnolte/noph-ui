@@ -131,6 +131,22 @@
 			<Icon>favorite</Icon>
 		{/snippet}
 	</Select>
+	<Select
+		label="Favorite car"
+		variant="outlined"
+		name="car"
+		options={[
+			{ value: '', label: '' },
+			{ value: 'audi', label: 'Audi' },
+			{ value: 'bmw', label: 'BMW' },
+			{ value: 'mercedes', label: 'Mercedes' },
+			{ value: 'vw', label: 'Volkswagen' },
+		]}
+	>
+		{#snippet end()}
+			<Icon>favorite</Icon>
+		{/snippet}
+	</Select>
 </DemoContainer>
 <Code
 	value={`<Select
@@ -275,6 +291,12 @@
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Icon displayed at the beginning of the select field.</td>
+		</tr>
+		<tr>
+			<td><code>end</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Replaces the arrow</td>
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>
