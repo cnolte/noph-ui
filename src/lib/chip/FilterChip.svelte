@@ -90,11 +90,15 @@
 			--np-icon-button-container-width="1.75rem"
 			--np-icon-button-icon-size="1.125rem"
 			aria-label={ariaLabelRemove}
-			onclick={() => {
+			onclick={(
+				event: MouseEvent & {
+					currentTarget: EventTarget & HTMLButtonElement
+				},
+			) => {
 				if (element === undefined) {
 					return
 				}
-				onremove?.(element)
+				onremove?.(event)
 			}}
 		>
 			<CloseIcon />
