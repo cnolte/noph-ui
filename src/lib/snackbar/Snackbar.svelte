@@ -63,12 +63,12 @@
 				variant="text"
 				--np-text-button-label-text-color="var(--np-snackbar-action-color, var(--np-color-inverse-primary))"
 				--np-text-button-container-shape="0"
-				style="height:{buttonHeight}"
+				style="height:{buttonHeight};margin-right:0.25rem"
 				aria-label={actionLabel}
 				onclick={onActionClick}
 			>
-				{actionLabel}</Button
-			>
+				{actionLabel}
+			</Button>
 		{/if}
 		{#if icon}
 			<div class="np-snackbar-icon-container">
@@ -76,7 +76,7 @@
 					--np-icon-button-icon-color="var(--np-snackbar-text-color, var(--np-color-inverse-on-surface))"
 					--np-icon-button-container-shape="0"
 					--np-icon-button-container-height={buttonHeight}
-					--np-icon-button-container-width="2.5rem"
+					--np-icon-button-container-width="2.75rem"
 					aria-label="Close"
 					onclick={onIconClick}
 				>
@@ -106,6 +106,7 @@
 	}
 	.np-snackbar-inner {
 		display: flex;
+		overflow: hidden;
 		align-items: center;
 	}
 	.np-snackbar[popover] {

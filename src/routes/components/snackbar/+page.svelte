@@ -131,7 +131,7 @@
 		{icon}
 		actionLabel="Action"
 		--np-snackbar-container-color="var(--np-color-tertiary)"
-		--np-snackbar-action-color="var(--np-color-on-error)"
+		--np-snackbar-action-color="var(--np-color-on-tertiary)"
 		--np-snackbar-container-shape="1rem"
 		--np-snackbar-text-color="var(--np-color-on-tertiary)"
 		label="Themed snackbar"
@@ -144,7 +144,7 @@
 	{icon}
 	actionLabel="Action"
 	--np-snackbar-container-color="var(--np-color-tertiary)"
-	--np-snackbar-action-color="var(--np-color-on-error)"
+	--np-snackbar-action-color="var(--np-color-on-tertiary)"
 	--np-snackbar-container-shape="1rem"
 	--np-snackbar-text-color="var(--np-color-on-tertiary)"
 	label="Themed snackbar"
