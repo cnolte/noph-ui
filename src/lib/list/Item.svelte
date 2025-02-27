@@ -93,7 +93,12 @@
 	.np-item-end,
 	.np-item-start {
 		display: flex;
-		color: var(--np-color-on-surface-variant);
+	}
+	.np-item-start {
+		color: var(--np-item-leading-icon-color, var(--np-color-on-surface-variant));
+	}
+	.np-item-end {
+		color: var(--np-item-trailing-icon-color, var(--np-color-on-surface-variant));
 	}
 
 	.np-item-end.selected,
@@ -124,7 +129,7 @@
 		min-height: 3.5rem;
 		gap: 1rem;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-		color: var(--np-color-on-surface);
+		color: var(--np-item-label-text-color, var(--np-color-on-surface));
 		box-sizing: border-box;
 	}
 
@@ -175,7 +180,7 @@
 		line-height: 1.5rem;
 	}
 	.np-item-supporting-text {
-		color: var(--np-color-on-surface-variant);
+		color: var(--np-item-supporting-text-color, var(--np-color-on-surface-variant));
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 	}
