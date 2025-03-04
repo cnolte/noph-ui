@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte'
+	import type { ChipSetProps } from './types.ts'
 
-	let { children }: { children?: Snippet } = $props()
+	let { children, ...attributes }: ChipSetProps = $props()
 </script>
 
 {#if children}
-	<div class="np-chip-set" role="toolbar">
+	<div class={['np-chip-set', attributes.class]} role="toolbar">
 		{@render children()}
 	</div>
 {/if}

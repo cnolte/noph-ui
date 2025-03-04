@@ -1,6 +1,8 @@
 import type { Snippet } from 'svelte'
 import type { HTMLAttributes } from 'svelte/elements'
 
+export type ChipSetProps = HTMLAttributes<HTMLDivElement>
+
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
 	removable?: boolean
