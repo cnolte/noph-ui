@@ -1,7 +1,24 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes } from 'svelte/elements'
+import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 export type ChipSetProps = HTMLAttributes<HTMLDivElement>
+
+interface AssistChipButtonProps extends HTMLButtonAttributes {
+	elevated?: boolean
+	disabled?: boolean
+	label?: string
+	icon?: Snippet
+	element?: HTMLDivElement
+}
+interface AssistChipAnchorProps extends HTMLAnchorAttributes {
+	elevated?: boolean
+	disabled?: boolean
+	label?: string
+	icon?: Snippet
+	element?: HTMLDivElement
+}
+
+export type AssistChipProps = AssistChipButtonProps | AssistChipAnchorProps
 
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean

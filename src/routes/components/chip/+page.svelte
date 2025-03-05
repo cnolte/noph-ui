@@ -3,6 +3,7 @@
 	import FilterChip from '$lib/chip/FilterChip.svelte'
 	import InputChip from '$lib/chip/InputChip.svelte'
 	import { Icon } from '$lib/icons/index.ts'
+	import { AssistChip } from '$lib/index.ts'
 	import Snackbar from '$lib/snackbar/Snackbar.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 
@@ -25,6 +26,27 @@
 </svelte:head>
 
 <h1>Chips</h1>
+
+<h2>Assist chip</h2>
+<DemoContainer>
+	<ChipSet>
+		<AssistChip label="Assist chip">
+			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
+		</AssistChip>
+		<AssistChip elevated label="Assist chip" />
+	</ChipSet>
+</DemoContainer>
+
+<h3>Disabled</h3>
+<DemoContainer>
+	<ChipSet>
+		<AssistChip disabled label="Assist chip">
+			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
+		</AssistChip>
+		<AssistChip disabled elevated label="Assist chip" />
+	</ChipSet>
+</DemoContainer>
+
 <h2>Filter chip</h2>
 <h3>Outlined</h3>
 

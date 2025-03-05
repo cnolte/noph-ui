@@ -121,11 +121,11 @@
 		overflow: hidden;
 		font-weight: 500;
 		text-decoration: none;
-		font-size: calc(var(--button-height) * 0.35);
+		font-size: var(--np-button-label-text-font-size, calc(var(--button-height) * 0.35));
 		height: var(--button-height);
-		padding-left: calc((var(--button-height) - 0.5rem) / 2);
-		padding-right: calc((var(--button-height) - 0.5rem) / 2);
-		gap: calc((var(--button-height) - 1.5rem) / 2);
+		padding-left: var(--np-button-padding-left, calc((var(--button-height) - 0.5rem) / 2));
+		padding-right: var(--np-button-padding-right, calc((var(--button-height) - 0.5rem) / 2));
+		gap: var(--np-button-gap, calc((var(--button-height) - 1.5rem) / 2));
 	}
 	.disabled {
 		pointer-events: none;
@@ -263,6 +263,7 @@
 		box-shadow: var(--np-elevation-1);
 	}
 	.outlined {
+		background-color: var(--np-outlined-button-container-color, transparent);
 		border: 1px solid;
 		--button-height: var(--np-outlined-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
@@ -278,8 +279,8 @@
 	}
 
 	:global(.np-button .button-icon) {
-		--_icon-size: calc((var(--button-height) - 0.375rem) / 2);
-		--_icon-color: inherit;
+		--_icon-size: var(--np-button-icon-size, calc((var(--button-height) - 0.375rem) / 2));
+		--_icon-color: var(--np-button-icon-color, inherit);
 	}
 
 	:global(.np-button .button-icon svg) {
