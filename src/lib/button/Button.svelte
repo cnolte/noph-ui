@@ -19,7 +19,7 @@
 		...attributes
 	}: ButtonProps = $props()
 
-	let uid = $props.id()
+	const uid = $props.id()
 
 	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
 		return (obj as HTMLAnchorAttributes).href === undefined

@@ -237,7 +237,7 @@
 	<TextField label="Username" error value="eric20" errorText="Username is not available" />
 </DemoContainer>
 <Code
-	value={`<TextField label="Username" error value="eric20" errorText="Username is not available" />`}
+	value="<TextField label=&quot;Username&quot; error value=&quot;eric20&quot; errorText=&quot;Username is not available&quot; />"
 />
 
 <h2>Theming</h2>

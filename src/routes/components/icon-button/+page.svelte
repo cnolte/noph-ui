@@ -133,7 +133,7 @@
 	<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>
 </DemoContainer>
 <Code
-	value={`<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>`}
+	value="<IconButton title=&quot;Icon button with tooltip&quot; variant=&quot;filled&quot;><Icon>check</Icon></IconButton>"
 />
 
 <h2>Theming</h2>

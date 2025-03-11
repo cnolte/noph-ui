@@ -73,7 +73,7 @@
 		width: 18px;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		cursor: pointer;
-		margin: max(0px, (48px - 18px)/2);
+		margin: var(--np-checkbox-margin, max(0px, (48px - 18px)/2));
 	}
 	.np-host:has(input:disabled) {
 		cursor: default;

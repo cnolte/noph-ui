@@ -22,7 +22,7 @@
 		...attributes
 	}: IconButtonProps = $props()
 
-	let uid = $props.id()
+	const uid = $props.id()
 	let selectedState = $state(!toggle || selected)
 	let touchEl: HTMLSpanElement | undefined = $state()
 

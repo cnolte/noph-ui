@@ -11,7 +11,7 @@
 <h1>Divider</h1>
 <h2>Usage</h2>
 <DemoContainer><Divider style="width:200px" /></DemoContainer>
-<Code value={`<Divider style="width:200px" />`} />
+<Code value="<Divider style=&quot;width:200px&quot; />" />
 
 <h2>Theming</h2>
 <table>
@@ -32,7 +32,9 @@
 <DemoContainer>
 	<Divider --np-divider-color="var(--np-color-tertiary)" style="width:200px" />
 </DemoContainer>
-<Code value={`--np-divider-color="var(--np-color-tertiary)" style="width:200px"`} />
+<Code
+	value="--np-divider-color=&quot;var(--np-color-tertiary)&quot; style=&quot;width:200px&quot;"
+/>
 
 <h2>API</h2>
 <h3>Attributes</h3>

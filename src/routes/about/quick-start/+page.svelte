@@ -38,7 +38,7 @@
 	specific theme by setting the <code>data-theme</code> attribute in your <code>app.html</code>.
 	Valid values for this attribute are <code>dark</code> and <code>light</code>.
 </p>
-<Code value={`<html lang="en" data-theme="dark">`} />
+<Code value="<html lang=&quot;en&quot; data-theme=&quot;dark&quot;>" />
 
 <h2>Typography</h2>
 <p>
