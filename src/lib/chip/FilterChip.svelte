@@ -133,6 +133,7 @@
 		z-index: 1;
 		padding-left: 1rem;
 		padding-right: 1rem;
+		overflow: hidden;
 	}
 	.np-chip-icon-checked {
 		display: none;
@@ -161,6 +162,9 @@
 		line-height: 1.25rem;
 		font-size: 0.875rem;
 		font-weight: 500;
+		white-space: pre;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.np-filter-chip::before {
 		content: '';

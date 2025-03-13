@@ -125,6 +125,7 @@
 		z-index: 1;
 		padding-left: 1rem;
 		padding-right: 2px;
+		overflow: hidden;
 	}
 	.np-chip-icon {
 		color: var(--np-color-primary);
@@ -138,6 +139,9 @@
 		font-size: 0.875rem;
 		font-weight: 500;
 		padding-right: 2px;
+		white-space: pre;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.np-filter-chip::before {
 		content: '';
