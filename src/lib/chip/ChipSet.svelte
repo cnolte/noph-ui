@@ -14,6 +14,9 @@
 	.np-chip-set {
 		display: flex;
 		flex-wrap: wrap;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		padding-right: 2px;
 		gap: 0.5rem;
 	}
 </style>
