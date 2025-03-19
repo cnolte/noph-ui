@@ -28,3 +28,7 @@ interface TextProps extends HTMLAttributes<HTMLDivElement> {
 
 export type ItemProps = ButtonProps | AnchorProps | TextProps
 export type ListItemProps = ButtonProps | AnchorProps | TextProps
+
+export interface ListProps extends HTMLAttributes<HTMLUListElement> {
+	element?: HTMLUListElement
+}

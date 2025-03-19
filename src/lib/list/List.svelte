@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements'
+	import type { ListProps } from './types.ts'
 
-	let { children, ...attributes }: HTMLAttributes<HTMLUListElement> = $props()
+	let { element = $bindable(), children, ...attributes }: ListProps = $props()
 </script>
 
-<ul {...attributes}>
+<ul bind:this={element} {...attributes}>
 	{#if children}
 		{@render children()}
 	{/if}
