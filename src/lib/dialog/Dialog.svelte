@@ -52,7 +52,9 @@
 			<Divider style="margin-top: 1rem" --np-divider-color="var(--np-color-outline)" />
 		{/if}
 		{#if children}
-			{@render children()}
+			<div class="np-dialog-scroller">
+				{@render children()}
+			</div>
 		{/if}
 		{#if actions}
 			<div class="np-dialog-actions">
@@ -80,10 +82,19 @@
 		padding: 1.5rem;
 		border-radius: var(--np-shape-corner-extra-large);
 		box-shadow: var(--np-elevation-3);
-		max-height: 100dvh;
+		max-height: calc(100dvh - 3rem);
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 		position: relative;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.np-dialog-scroller {
+		overflow-y: auto;
+		display: flex;
+		flex: 1 1 0%;
+		flex-direction: column;
 	}
 
 	.np-animate[popover] {
