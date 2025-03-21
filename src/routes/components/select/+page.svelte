@@ -148,10 +148,6 @@
 			{ value: 'cherry', label: 'Cherry' },
 			{ value: 'elderberry', label: 'Elderberry' },
 			{ value: 'fig', label: 'Fig' },
-			...Array.from({ length: 100000 }, (_, i) => ({
-				value: `option${i + 1}`,
-				label: `Option fdds sdfdsf dsf ds dsf ds dsadsadsadas dsa dsadsa dsad sad sad sad as fdds sdfdsf dsf ds dsf ds dsadsadsadas dsa dsadsa dsad sad sad sad as fdds sdfdsf dsf ds dsf ds dsadsadsadas dsa dsadsa dsad sad sad sad as ${i + 1}`,
-			})),
 		]}
 	/>
 </DemoContainer>
@@ -171,6 +167,40 @@
 			{ value: 'fig', label: 'Fig' },
 		]}
 	/>`}
+/>
+
+<h3>Virtual list</h3>
+<p>
+	If there are more than 500 options, the <code>Select</code> component uses a virtual list to render
+	the options. The virtual list has the limitation that it has a fixed height.
+</p>
+<DemoContainer>
+	<Select
+		label="Virtual list"
+		variant="outlined"
+		name="virtual_list"
+		style="max-width: 300px"
+		options={[
+			...Array.from({ length: 1000 }, (_, i) => ({
+				value: `option${i + 1}`,
+				label: `Option ${i + 1}`,
+			})),
+		]}
+	/>
+</DemoContainer>
+<Code
+	value={`<Select
+	label="Virtual list"
+	variant="outlined"
+	name="virtual_list"
+	style="max-width: 300px"
+	options={[
+		...Array.from({ length: 100000 }, (_, i) => ({
+			value: \`option\${i + 1}\`,
+			label: \`Option \${i + 1}\`,
+		})),
+	]}
+/>`}
 />
 
 <h3>Icons</h3>

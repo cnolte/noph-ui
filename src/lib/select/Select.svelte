@@ -343,7 +343,7 @@
 	}}
 	bind:element={menuElement}
 >
-	{#if options.length > 100}
+	{#if options.length > 500}
 		<VirtualList width="{clientWidth}px" height="250px" itemHeight={56} items={options}>
 			{#snippet row(option)}
 				{@render item(option, clientWidth - 15)}
