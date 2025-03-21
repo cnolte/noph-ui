@@ -5,24 +5,21 @@
 	interface VitualListProps extends HTMLAttributes<HTMLDivElement> {
 		items: T[]
 		height?: string
-		width?: string
 		itemHeight?: number
 		start?: number
 		end?: number
 		row: Snippet<[T]>
 	}
-	// props
+
 	let {
 		items,
 		height = '100%',
-		width,
 		itemHeight,
 		start = $bindable(0),
 		end = $bindable(0),
 		row,
 	}: VitualListProps = $props()
 
-	// local state
 	let height_map: number[] = []
 	// eslint-disable-next-line no-undef
 	let rows: HTMLCollectionOf<HTMLElement> | undefined = $state()
@@ -52,7 +49,7 @@
 		}
 		const { scrollTop } = viewport
 
-		await tick() // wait until the DOM is up to date
+		await tick()
 
 		let content_height = top - scrollTop
 		let i = start
@@ -62,7 +59,7 @@
 
 			if (!row) {
 				end = i + 1
-				await tick() // render the newly visible row
+				await tick()
 				row = rows[i - start]
 			}
 
@@ -124,7 +121,6 @@
 		height_map.fill(average_height, i, items.length)
 		bottom = remaining * average_height
 
-		// prevent jumping if we scrolled up into unknown territory
 		if (start < old_start) {
 			await tick()
 
@@ -159,12 +155,9 @@
 	bind:this={viewport}
 	bind:offsetHeight={viewport_height}
 	onscroll={handle_scroll}
-	style="display:flex;height: {height};width: {width};"
+	style="height: {height};"
 >
-	<div
-		bind:this={contents}
-		style="flex:1;display:block;padding-top: {top}px; padding-bottom: {bottom}px;"
-	>
+	<div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">
 		{#each visible as entry (entry.index)}
 			{@render row(entry.data)}
 		{/each}

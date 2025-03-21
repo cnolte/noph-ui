@@ -30,6 +30,7 @@
 		onchange,
 		oninput,
 		multiple,
+		clampMenuWidth = false,
 		...attributes
 	}: SelectProps = $props()
 
@@ -42,6 +43,8 @@
 		}
 	}
 	let selectedOption = $state(options.filter((option) => option.selected))
+
+	let useVirtualList = $derived(options.length > 500)
 
 	let errorTextRaw: string = $state(errorText)
 	let errorRaw = $state(error)
@@ -288,7 +291,7 @@
 	</div>
 </div>
 
-{#snippet item(option: SelectOption, width?: number)}
+{#snippet item(option: SelectOption)}
 	<Item
 		onclick={(event) => {
 			handleOptionSelect(event, option)
@@ -312,7 +315,6 @@
 			}
 		}}
 		variant="button"
-		style={width ? `width:${width}px` : ''}
 		selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
 		>{option.label}
 		{#snippet start()}
@@ -324,7 +326,9 @@
 {/snippet}
 
 <Menu
-	style="position-anchor:--{uid};min-width:{clientWidth}px;"
+	style="position-anchor:--{uid};{clampMenuWidth || useVirtualList
+		? 'width'
+		: 'min-width'}:{clientWidth}px"
 	popover="manual"
 	role="listbox"
 	--np-menu-justify-self="none"
@@ -343,10 +347,10 @@
 	}}
 	bind:element={menuElement}
 >
-	{#if options.length > 500}
-		<VirtualList width="{clientWidth}px" height="250px" itemHeight={56} items={options}>
+	{#if useVirtualList}
+		<VirtualList height="250px" itemHeight={56} items={options}>
 			{#snippet row(option)}
-				{@render item(option, clientWidth - 15)}
+				{@render item(option)}
 			{/snippet}
 		</VirtualList>
 	{:else}

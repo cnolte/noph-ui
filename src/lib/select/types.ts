@@ -19,4 +19,5 @@ export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autoco
 	noAsterisk?: boolean
 	element?: HTMLSpanElement
 	options: SelectOption[]
+	clampMenuWidth?: boolean
 }

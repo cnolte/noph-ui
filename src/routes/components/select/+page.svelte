@@ -446,6 +446,12 @@
 			<td>Allows multiple selections when set to true.</td>
 		</tr>
 		<tr>
+			<td><code>clampMenuWidth</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Restricts the menu width to match the width of the select component.</td>
+		</tr>
+		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLAttributes&lt;HTMLDivElement&gt;</code></td>
 			<td></td>
