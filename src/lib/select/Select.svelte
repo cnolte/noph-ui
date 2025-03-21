@@ -155,7 +155,7 @@
 			}
 		}}
 		onkeydown={(event) => {
-			if (event.key === 'Tab') {
+			if (event.key === 'Tab' || event.key === 'Escape') {
 				menuElement?.hidePopover()
 			} else {
 				event.preventDefault()
