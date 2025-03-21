@@ -7,6 +7,7 @@
 		element = $bindable(),
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		style,
 		...attributes
 	}: MenuProps = $props()
 
@@ -57,29 +58,36 @@
 	$effect(refreshValues)
 
 	const getScrollableParent = (start: HTMLElement) => {
-		let element: HTMLElement | null = start
-		while (element) {
-			const style = getComputedStyle(element)
+		let el: HTMLElement | null = start
+		while (el) {
+			const style = getComputedStyle(el)
 			const overflowY = style.overflowY
 			const overflowX = style.overflowX
 			const isScrollableY =
-				(overflowY === 'auto' || overflowY === 'scroll') &&
-				element.scrollHeight > element.clientHeight
+				(overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight
 			const isScrollableX =
-				(overflowX === 'auto' || overflowX === 'scroll') &&
-				element.scrollWidth > element.clientWidth
+				(overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth
 
 			if (isScrollableY || isScrollableX) {
-				return element
+				return el
 			}
 
-			element = element.parentElement
+			el = el.parentElement
 		}
 		return window
 	}
 
 	$effect(() => {
 		if (anchor && element) {
+			if (style) {
+				const styleEntries = style
+					.split(';')
+					.filter(Boolean)
+					.map((entry) => entry.split(':').map((str) => str.trim()))
+				styleEntries.forEach(([key, value]) => {
+					element?.style.setProperty(key, value)
+				})
+			}
 			getScrollableParent(element).addEventListener(
 				'scroll',
 				() => {

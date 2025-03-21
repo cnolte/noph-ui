@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Menu from '$lib/menu/Menu.svelte'
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import type { SelectProps } from './types.ts'
+	import type { SelectOption, SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
 	import { tick } from 'svelte'
+	import Check from '$lib/select/Check.svelte'
+	import VirtualList from '$lib/select/VirtualList.svelte'
 
 	let {
 		options = [],
@@ -27,10 +29,19 @@
 		autofocus,
 		onchange,
 		oninput,
+		multiple,
 		...attributes
 	}: SelectProps = $props()
 
 	const uid = $props.id()
+	if (value === undefined) {
+		if (multiple) {
+			value = options.filter((option) => option.selected).map((option) => option.value)
+		} else {
+			value = options.find((option) => option.selected)?.value
+		}
+	}
+	let selectedOption = $state(options.filter((option) => option.selected))
 
 	let errorTextRaw: string = $state(errorText)
 	let errorRaw = $state(error)
@@ -40,11 +51,24 @@
 	let field: HTMLDivElement | undefined = $state()
 	let clientWidth = $state(0)
 	let menuOpen = $state(false)
-	let selectedLabel = $derived.by<string>(() => {
+	let selectedLabel = $derived.by<string | string[]>(() => {
+		if (multiple) {
+			if (value && Array.isArray(value)) {
+				return value
+					.map((v) => options.find((option) => option.value === v)?.label || '')
+					.filter((o) => o)
+					.join(', ')
+			}
+			return ''
+		}
 		return options.find((option) => option.value === value)?.label || ''
 	})
 	$effect(() => {
-		if (value !== '' && selectElement?.checkValidity()) {
+		if (
+			value &&
+			(Array.isArray(value) ? value.length !== 0 : value !== '') &&
+			selectElement?.checkValidity()
+		) {
 			errorRaw = error
 			errorTextRaw = errorText
 		}
@@ -56,6 +80,30 @@
 			})
 		}
 	})
+	const handleOptionSelect = (event: Event, option: SelectOption) => {
+		if (multiple) {
+			if (Array.isArray(value)) {
+				if (value.includes(option.value)) {
+					selectedOption = selectedOption.filter((v) => v.value !== option.value)
+					value = value.filter((v) => v !== option.value)
+				} else {
+					selectedOption = [...selectedOption, option]
+					value = [...value, option.value]
+				}
+			} else {
+				selectedOption = [option]
+				value = [option.value]
+			}
+		} else {
+			selectedOption = [option]
+			value = option.value
+			menuElement?.hidePopover()
+		}
+		event.preventDefault()
+		tick().then(() => {
+			selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
+		})
+	}
 </script>
 
 {#snippet arrows()}
@@ -152,34 +200,66 @@
 						</div>
 					{/if}
 					<div class="content">
-						<select
-							tabindex="-1"
-							aria-label={attributes['aria-label'] || label}
-							{disabled}
-							{required}
-							{name}
-							{form}
-							{onchange}
-							{oninput}
-							oninvalid={(event) => {
-								event.preventDefault()
-								const { currentTarget } = event
-								errorRaw = true
-								if (errorText === '') {
-									errorTextRaw = currentTarget.validationMessage
-								}
-								if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-									field?.focus()
-									menuElement?.showPopover()
-								}
-							}}
-							bind:value
-							bind:this={selectElement}
-						>
-							{#each options as option, index (index)}
-								<option value={option.value} selected={option.selected}>{option.label}</option>
-							{/each}
-						</select>
+						{#if multiple}
+							<select
+								tabindex="-1"
+								aria-label={attributes['aria-label'] || label}
+								{disabled}
+								{required}
+								{name}
+								{form}
+								multiple
+								{onchange}
+								{oninput}
+								oninvalid={(event) => {
+									event.preventDefault()
+									const { currentTarget } = event
+									errorRaw = true
+									if (errorText === '') {
+										errorTextRaw = currentTarget.validationMessage
+									}
+									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+										field?.focus()
+										menuElement?.showPopover()
+									}
+								}}
+								bind:value
+								bind:this={selectElement}
+							>
+								{#each selectedOption as option, index (index)}
+									<option value={option.value} selected={option.selected}>{option.label}</option>
+								{/each}
+							</select>
+						{:else}
+							<select
+								tabindex="-1"
+								aria-label={attributes['aria-label'] || label}
+								{disabled}
+								{required}
+								{name}
+								{form}
+								{onchange}
+								{oninput}
+								oninvalid={(event) => {
+									event.preventDefault()
+									const { currentTarget } = event
+									errorRaw = true
+									if (errorText === '') {
+										errorTextRaw = currentTarget.validationMessage
+									}
+									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+										field?.focus()
+										menuElement?.showPopover()
+									}
+								}}
+								bind:value
+								bind:this={selectElement}
+							>
+								{#each selectedOption as option, index (index)}
+									<option value={option.value} selected={option.selected}>{option.label}</option>
+								{/each}
+							</select>
+						{/if}
 						<div class="input">
 							{#if selectedLabel}
 								{selectedLabel}
@@ -208,6 +288,41 @@
 	</div>
 </div>
 
+{#snippet item(option: SelectOption, width?: number)}
+	<Item
+		onclick={(event) => {
+			handleOptionSelect(event, option)
+			field?.focus()
+		}}
+		disabled={option.disabled}
+		onkeydown={(event) => {
+			if (event.key === 'ArrowDown') {
+				;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
+				event.preventDefault()
+			}
+			if (event.key === 'ArrowUp') {
+				;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
+				event.preventDefault()
+			}
+			if (event.key === 'Enter') {
+				handleOptionSelect(event, option)
+			}
+			if (event.key === 'Tab') {
+				menuElement?.hidePopover()
+			}
+		}}
+		variant="button"
+		style={width ? `width:${width}px` : ''}
+		selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
+		>{option.label}
+		{#snippet start()}
+			{#if Array.isArray(value) && multiple}
+				<Check disabled={option.disabled} checked={value.includes(option.value)} />
+			{/if}
+		{/snippet}
+	</Item>
+{/snippet}
+
 <Menu
 	style="position-anchor:--{uid};min-width:{clientWidth}px;"
 	popover="manual"
@@ -228,43 +343,17 @@
 	}}
 	bind:element={menuElement}
 >
-	{#each options as option, index (index)}
-		<Item
-			onclick={(event) => {
-				value = option.value
-				menuElement?.hidePopover()
-				field?.focus()
-				event.preventDefault()
-				tick().then(() => {
-					selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
-				})
-			}}
-			onkeydown={(event) => {
-				if (event.key === 'ArrowDown') {
-					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
-					event.preventDefault()
-				}
-				if (event.key === 'ArrowUp') {
-					;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
-					event.preventDefault()
-				}
-				if (event.key === 'Enter') {
-					value = option.value
-					menuElement?.hidePopover()
-					event.preventDefault()
-					tick().then(() => {
-						selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
-					})
-				}
-				if (event.key === 'Tab') {
-					menuElement?.hidePopover()
-				}
-			}}
-			variant="button"
-			selected={value === option.value}
-			>{option.label}
-		</Item>
-	{/each}
+	{#if options.length > 100}
+		<VirtualList width="{clientWidth}px" height="250px" itemHeight={56} items={options}>
+			{#snippet row(option)}
+				{@render item(option, clientWidth - 15)}
+			{/snippet}
+		</VirtualList>
+	{:else}
+		{#each options as option, index (index)}
+			{@render item(option)}
+		{/each}
+	{/if}
 </Menu>
 
 <style>
@@ -430,6 +519,8 @@
 
 	.content select {
 		width: 0;
+		height: 0;
+		visibility: hidden;
 	}
 
 	.middle {

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Button from '$lib/button/Button.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Select from '$lib/select/Select.svelte'
@@ -76,6 +76,21 @@
 		options={[{ value: '', label: '', selected: true }]}
 	/>
 </DemoContainer>
+<Code
+	value={`<Select
+	label="Fruit"
+	variant="outlined"
+	name="fruit"
+	disabled
+	options={[{ value: '', label: '' }]}
+/>
+<Select
+	label="Fruit"
+	name="fruit"
+	disabled
+	options={[{ value: '', label: '', selected: true }]}
+/>`}
+/>
 
 <h3>Validation</h3>
 <DemoContainer>
@@ -99,19 +114,63 @@
 </DemoContainer>
 
 <Code
-	value={`<Select
-	label="Fruit"
-	variant="outlined"
-	name="fruit"
-	disabled
-	options={[{ value: '', label: '' }]}
+	value={`<form>
+	<Select
+		label="Genre"
+		variant="outlined"
+		name="genre"
+		required
+		options={[
+			{ value: '', label: '' },
+			{ value: 'rock', label: 'Rock' },
+			{ value: 'pop', label: 'Pop' },
+			{ value: 'jazz', label: 'Jazz' },
+		]}
+	/>
+	<div class="button-area">
+		<Button type="submit">Send</Button>
+	</div>
+</form>`}
 />
-<Select
-	label="Fruit"
-	name="fruit"
-	disabled
-	options={[{ value: '', label: '', selected: true }]}
-/>`}
+
+<h3>Multiple selection</h3>
+<DemoContainer>
+	<Select
+		label="Favorite fruit"
+		variant="outlined"
+		name="fruit"
+		style="max-width: 300px"
+		multiple
+		options={[
+			{ value: 'apple', label: 'Apple' },
+			{ value: 'apricot', label: 'Apricot' },
+			{ value: 'banana', label: 'Banana' },
+			{ value: 'cherry', label: 'Cherry' },
+			{ value: 'elderberry', label: 'Elderberry' },
+			{ value: 'fig', label: 'Fig' },
+			...Array.from({ length: 100000 }, (_, i) => ({
+				value: `option${i + 1}`,
+				label: `Option fdds sdfdsf dsf ds dsf ds dsadsadsadas dsa dsadsa dsad sad sad sad as fdds sdfdsf dsf ds dsf ds dsadsadsadas dsa dsadsa dsad sad sad sad as fdds sdfdsf dsf ds dsf ds dsadsadsadas dsa dsadsa dsad sad sad sad as ${i + 1}`,
+			})),
+		]}
+	/>
+</DemoContainer>
+<Code
+	value={`<Select
+		label="Favorite fruit"
+		variant="outlined"
+		name="fruit"
+		style="max-width: 300px"
+		multiple
+		options={[
+			{ value: 'apple', label: 'Apple' },
+			{ value: 'apricot', label: 'Apricot' },
+			{ value: 'banana', label: 'Banana' },
+			{ value: 'cherry', label: 'Cherry' },
+			{ value: 'elderberry', label: 'Elderberry' },
+			{ value: 'fig', label: 'Fig' },
+		]}
+	/>`}
 />
 
 <h3>Icons</h3>
@@ -161,6 +220,22 @@
 	]}
 >
 	{#snippet start()}
+		<Icon>favorite</Icon>
+	{/snippet}
+</Select>
+<Select
+	label="Favorite car"
+	variant="outlined"
+	name="car"
+	options={[
+		{ value: '', label: '' },
+		{ value: 'audi', label: 'Audi' },
+		{ value: 'bmw', label: 'BMW' },
+		{ value: 'mercedes', label: 'Mercedes' },
+		{ value: 'vw', label: 'Volkswagen' },
+	]}
+>
+	{#snippet end()}
 		<Icon>favorite</Icon>
 	{/snippet}
 </Select>`}
@@ -333,6 +408,12 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td>Indicates whether the select field is disabled.</td>
+		</tr>
+		<tr>
+			<td><code>multiple</code></td>
+			<td><code>boolean | null | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Allows multiple selections when set to true.</td>
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>
