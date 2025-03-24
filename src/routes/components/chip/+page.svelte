@@ -5,12 +5,16 @@
 	import { Icon } from '$lib/icons/index.ts'
 	import { AssistChip } from '$lib/index.ts'
 	import Snackbar from '$lib/snackbar/Snackbar.svelte'
+	import TextField from '$lib/text-field/TextField.svelte'
+	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 
 	let showPopover: (() => void) | undefined = $state()
 	let chips = $state([
-		{ label: 'Filter chip' },
+		{ label: 'Outlined' },
+		{ label: 'Elevated', elevated: true },
 		{ label: 'Filter chip with icon', icon: 'bookmark' },
+		{ label: 'Selected', selected: true },
 		{
 			label: 'Removable filter chip',
 			removable: true,
@@ -19,6 +23,10 @@
 			},
 		},
 	])
+
+	let reportEmailValidity: (() => boolean) | undefined = $state()
+	let emails: string[] = $state(['info@noph.dev'])
+	let email = $state('')
 </script>
 
 <svelte:head>
@@ -48,14 +56,14 @@
 </DemoContainer>
 
 <h2>Filter chip</h2>
-<h3>Outlined</h3>
 
-{#snippet filterChipsList(disabled = false, elevated = false)}
+{#snippet filterChipsList(disabled = false)}
 	{#each chips as chip, index (index)}
 		<FilterChip
 			label={chip.label}
 			{disabled}
-			{elevated}
+			elevated={chip.elevated}
+			selected={chip.selected}
 			removable={chip.removable}
 			onremove={chip.remove}
 		>
@@ -73,16 +81,10 @@
 		{@render filterChipsList()}
 	</ChipSet>
 </DemoContainer>
-<h3>Elevated</h3>
-<DemoContainer>
-	<ChipSet>
-		{@render filterChipsList(false, true)}
-	</ChipSet>
-</DemoContainer>
 <h3>Disabled</h3>
 <DemoContainer>
 	<ChipSet>
-		{@render filterChipsList(true, false)}
+		{@render filterChipsList(true)}
 	</ChipSet>
 </DemoContainer>
 <Snackbar bind:showPopover label="Remove was clicked" />
@@ -102,3 +104,88 @@
 		<InputChip disabled selected label="Input chip" />
 	</ChipSet>
 </DemoContainer>
+
+<h3>Chips with text fields</h3>
+
+<DemoContainer>
+	<TextField
+		type="email"
+		label="Emails"
+		variant="outlined"
+		placeholder="Add email..."
+		style="width:340px"
+		bind:value={email}
+		bind:reportValidity={reportEmailValidity}
+		populated={emails.length > 0}
+		onkeydown={(e) => {
+			if (e.key === 'Enter') {
+				e.preventDefault()
+				if (e.currentTarget.value && reportEmailValidity?.()) {
+					emails.push(e.currentTarget.value)
+					email = ''
+				}
+			}
+		}}
+		onblur={(e) => {
+			if (e.currentTarget.value && reportEmailValidity?.()) {
+				emails.push(e.currentTarget.value)
+				email = ''
+			}
+		}}
+	>
+		<ChipSet>
+			{#each emails as email, index (index)}
+				<InputChip
+					name="email"
+					value={email}
+					onremove={() => {
+						if (index > -1) {
+							emails.splice(index, 1)
+						}
+					}}
+				/>
+			{/each}
+		</ChipSet>
+	</TextField>
+</DemoContainer>
+<Code
+	value={`<TextField
+	type="email"
+	label="Emails"
+	variant="outlined"
+	placeholder="Add email..."
+	style="width:340px"
+	bind:value={email}
+	bind:reportValidity={reportEmailValidity}
+	populated={emails.length > 0}
+	onkeydown={(e) => {
+		if (e.key === 'Enter') {
+			e.preventDefault()
+			if (e.currentTarget.value && reportEmailValidity?.()) {
+				emails.push(e.currentTarget.value)
+				email = ''
+			}
+		}
+	}}
+	onblur={(e) => {
+		if (e.currentTarget.value && reportEmailValidity?.()) {
+			emails.push(e.currentTarget.value)
+			email = ''
+		}
+	}}
+>
+	<ChipSet>
+		{#each emails as email, index (index)}
+			<InputChip
+				name="email"
+				value={email}
+				onremove={() => {
+					if (index > -1) {
+						emails.splice(index, 1)
+					}
+				}}
+			/>
+		{/each}
+	</ChipSet>
+</TextField>`}
+/>

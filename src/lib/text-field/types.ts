@@ -14,6 +14,7 @@ interface FieldProps {
 	noAsterisk?: boolean
 	element?: HTMLSpanElement
 	inputElement?: HTMLInputElement | HTMLTextAreaElement
+	populated?: boolean
 	reportValidity?: () => boolean
 	checkValidity?: () => boolean
 }

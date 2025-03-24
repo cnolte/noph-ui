@@ -148,6 +148,10 @@
 		color: var(--np-color-primary);
 		display: flex;
 	}
+
+	.np-filter-chip-disabled .np-chip-icon {
+		color: var(--np-color-on-surface);
+	}
 	.np-filter-chip:has(input:checked) .np-filter-chip-label,
 	.np-filter-chip-icon .np-filter-chip-label {
 		padding-left: 0.5rem;
@@ -172,7 +176,6 @@
 		inset: 0;
 		border-radius: inherit;
 		pointer-events: none;
-		background-color: var(--np-color-surface-container-low);
 	}
 	.np-filter-chip-default::before {
 		border-width: 1px;
@@ -184,8 +187,10 @@
 		background-color: var(--np-color-secondary-container);
 	}
 	.np-filter-chip-elevated {
-		border-width: 0;
 		box-shadow: var(--np-elevation-1);
+	}
+	.np-filter-chip-elevated::before {
+		background-color: var(--np-color-surface-container-low);
 	}
 	.np-filter-chip:has(input:checked) {
 		--np-icon-button-icon-color: var(--np-color-on-secondary-container);
@@ -217,7 +222,7 @@
 
 	.np-filter-chip-disabled .np-filter-chip-label {
 		cursor: default;
-		color: var(--np-color-on-surface);
+		color: var(--np-color-on-surface) !important;
 		opacity: 0.38;
 	}
 	.np-filter-chip-disabled.np-filter-chip-elevated {
@@ -238,7 +243,7 @@
 		opacity: 0.12;
 	}
 	.np-filter-chip-disabled::before {
-		background-color: var(--np-color-on-surface);
+		background-color: var(--np-color-on-surface) !important;
 		opacity: 0.12;
 		border-width: 0;
 	}

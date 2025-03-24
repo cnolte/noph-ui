@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
+	import type { FocusEventHandler } from 'svelte/elements'
 	import type { TextFieldProps } from './types.ts'
 
 	let {
@@ -15,11 +16,14 @@
 		style,
 		noAsterisk = false,
 		variant = 'filled',
-		placeholder = ' ',
 		element = $bindable(),
+		populated = false,
 		inputElement = $bindable(),
 		reportValidity = $bindable(),
 		checkValidity = $bindable(),
+		children,
+		onfocus,
+		onblur,
 		...attributes
 	}: TextFieldProps = $props()
 
@@ -27,6 +31,7 @@
 	let errorTextRaw: string = $state(errorText)
 	let focusOnInvalid = $state(true)
 	let doValidity = $state(false)
+	let focused = $state(false)
 
 	reportValidity = () => {
 		if (inputElement) {
@@ -89,14 +94,26 @@
 	})
 </script>
 
-<label
+<div
 	style={(variant === 'outlined'
 		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
 		: !label?.length
-			? '--_label-text-color:var(--np-filled-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem; '
-			: '--_label-text-color:var(--np-filled-text-field-label-text-color); ') + style}
+			? '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline);--top-space:1rem;--bottom-space:1rem; '
+			: '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline); ' +
+				(children ? '--top-space:2rem;--bottom-space:1rem;' : '')) + style}
 	class={['text-field', attributes.class]}
 	bind:this={element}
+	role="button"
+	tabindex="-1"
+	onfocus={() => {
+		inputElement?.focus()
+	}}
+	onkeydown={(event) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault()
+			inputElement?.focus()
+		}
+	}}
 >
 	<div
 		class="field"
@@ -106,6 +123,8 @@
 		class:with-start={start}
 		class:with-end={end}
 		class:disabled={attributes.disabled}
+		class:populated={(value !== '' && value !== undefined && value !== null) || populated}
+		class:focused
 		class:outlined={variant === 'outlined'}
 	>
 		<div class="container-overflow">
@@ -119,7 +138,9 @@
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="label-wrapper">
-							<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
+							<span class="label" aria-disabled={attributes.disabled}
+								>{label}{noAsterisk || !attributes.required ? '' : '*'}
+							</span>
 						</div>
 						<div class="outline-notch">
 							<span class="notch np-hidden" aria-hidden="true"
@@ -140,7 +161,9 @@
 					{#if variant === 'filled'}
 						<div class="label-wrapper">
 							{#if label?.length}
-								<span class="label">{label}{noAsterisk || !attributes.required ? '' : '*'} </span>
+								<span class="label" aria-disabled={attributes.disabled}
+									>{label}{noAsterisk || !attributes.required ? '' : '*'}
+								</span>
 							{/if}
 						</div>
 					{/if}
@@ -149,10 +172,17 @@
 							<textarea
 								aria-label={label}
 								{...attributes}
+								onfocus={(event) => {
+									focused = true
+									;(onfocus as FocusEventHandler<HTMLTextAreaElement>)?.(event)
+								}}
+								onblur={(event) => {
+									focused = false
+									;(onblur as FocusEventHandler<HTMLTextAreaElement>)?.(event)
+								}}
 								bind:value
 								bind:this={inputElement}
 								class="input"
-								{placeholder}
 								rows={attributes.rows || 2}
 							></textarea>
 						{:else}
@@ -162,13 +192,21 @@
 										{prefixText}
 									</span>
 								{/if}
+								{@render children?.()}
 								<input
 									aria-label={label}
 									{...attributes}
 									bind:value
 									bind:this={inputElement}
+									onfocus={(event) => {
+										focused = true
+										;(onfocus as FocusEventHandler<HTMLInputElement>)?.(event)
+									}}
+									onblur={(event) => {
+										focused = false
+										;(onblur as FocusEventHandler<HTMLInputElement>)?.(event)
+									}}
 									class="input"
-									{placeholder}
 									aria-invalid={errorRaw}
 								/>
 								{#if suffixText}
@@ -198,7 +236,7 @@
 			</div>
 		{/if}
 	</div>
-</label>
+</div>
 
 <style>
 	.active-indicator {
@@ -356,6 +394,7 @@
 		top: var(--_focus-outline-width, 3px);
 		inset-inline-start: var(--_focus-outline-width, 0);
 	}
+
 	.content * {
 		all: unset;
 		color: currentColor;
@@ -364,6 +403,17 @@
 		width: 100%;
 		overflow-wrap: revert;
 		white-space: revert;
+	}
+
+	.input-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+	}
+
+	.input-wrapper > * {
+		all: inherit;
+		padding: 0;
 	}
 
 	.middle {
@@ -376,6 +426,7 @@
 		caret-color: var(--np-color-primary);
 		overflow-x: hidden;
 		text-align: inherit;
+		flex: 1;
 
 		&::placeholder {
 			color: currentColor;
@@ -399,8 +450,7 @@
 	.no-label .content,
 	.field:has(input:focus-visible) .content,
 	.field:has(textarea:focus-visible) .content,
-	.field:has(input:not(:placeholder-shown)) .content,
-	.field:has(textarea:not(:placeholder-shown)) .content {
+	.field.populated .content {
 		opacity: 1;
 	}
 
@@ -429,18 +479,18 @@
 		margin-bottom: var(--bottom-space, 0.5rem);
 	}
 
-	.input-wrapper {
-		display: flex;
+	.content .input-wrapper .input,
+	.content .input-wrapper .prefix,
+	.content .input-wrapper .suffix {
+		margin-top: var(--top-space, 1.5rem);
+		margin-bottom: var(--bottom-space, 0.5rem);
 	}
-
-	.input-wrapper > * {
-		all: inherit;
-		padding: 0;
+	.content .input-wrapper .input {
+		min-width: 100px;
 	}
-
-	.content .input-wrapper {
-		padding-top: var(--top-space, 1.5rem);
-		padding-bottom: var(--bottom-space, 0.5rem);
+	:global(.content .input-wrapper .np-chip-set) {
+		margin-top: calc(var(--top-space, 1.5rem) - 4px);
+		margin-right: 0.5rem;
 	}
 
 	.prefix {
@@ -456,6 +506,8 @@
 		user-select: none;
 		text-wrap: nowrap;
 		width: min-content;
+		display: flex;
+		align-items: center;
 	}
 	.start {
 		color: var(--np-color-on-surface-variant);
@@ -520,21 +572,13 @@
 	.with-end .np-outline .label-wrapper {
 		margin-inline-end: 3.25rem;
 	}
-	.with-start:has(input:focus-visible:not(:placeholder-shown)) .label-wrapper,
-	.with-start:has(input:focus-visible) .label-wrapper,
-	.with-start:has(input:not(:placeholder-shown)) .label-wrapper,
-	.with-start:has(textarea:focus-visible:not(:placeholder-shown)) .label-wrapper,
-	.with-start:has(textarea:focus-visible) .label-wrapper,
-	.with-start:has(textarea:not(:placeholder-shown)) .label-wrapper {
+	.with-start.populated .with-start:has(input:focus-visible) .label-wrapper,
+	.with-start:has(textarea:focus-visible) .label-wrapper {
 		right: -2.25rem;
 	}
 
-	.with-end:has(input:focus-visible:not(:placeholder-shown)) .label-wrapper,
-	.with-end:has(input:focus-visible) .label-wrapper,
-	.with-end:has(input:not(:placeholder-shown)) .label-wrapper,
-	.with-end:has(textarea:focus-visible:not(:placeholder-shown)) .label-wrapper,
-	.with-end:has(textarea:focus-visible) .label-wrapper,
-	.with-end:has(textarea:not(:placeholder-shown)) .label-wrapper {
+	.with-end.populated .with-end:has(input:focus-visible) .label-wrapper,
+	.with-end:has(textarea:focus-visible) .label-wrapper {
 		margin-inline-end: 1rem;
 	}
 	.notch {
@@ -549,30 +593,23 @@
 		opacity: 0;
 	}
 
-	.field:has(input:not(:focus-visible):placeholder-shown) .label,
-	.field:has(textarea:not(:focus-visible):placeholder-shown) .label {
+	.field:not(.populated) .label {
 		position: absolute;
 		top: 1rem;
 		left: 0rem;
 	}
-	.field:has(input:focus-visible:not(:placeholder-shown)) .label,
+	.field.populated .label,
 	.field:has(input:focus-visible) .label,
-	.field:has(input:not(:placeholder-shown)) .label,
-	.field:has(textarea:focus-visible:not(:placeholder-shown)) .label,
-	.field:has(textarea:focus-visible) .label,
-	.field:has(textarea:not(:placeholder-shown)) .label {
+	.field:has(textarea:focus-visible) .label {
 		font-size: 0.75rem;
 		line-height: 1rem;
 		transform-origin: top left;
 		position: absolute;
 		top: var(--floating-label-top, 0.5rem);
 	}
-	.with-start:has(input:focus-visible:not(:placeholder-shown)) .label,
+	.with-start.populated .label,
 	.with-start:has(input:focus-visible) .label,
-	.with-start:has(input:not(:placeholder-shown)) .label,
-	.with-start:has(textarea:focus-visible:not(:placeholder-shown)) .label,
-	.with-start:has(textarea:focus-visible) .label,
-	.with-start:has(textarea:not(:placeholder-shown)) .label {
+	.with-start:has(textarea:focus-visible) .label {
 		left: var(--floating-label-left, 0);
 	}
 	.label {
@@ -610,8 +647,7 @@
 		overflow: hidden;
 	}
 	.disabled.no-label .content,
-	.disabled:has(input:not(:placeholder-shown)) .content,
-	.disabled:has(textarea:not(:placeholder-shown)) .content {
+	.disabled.populated .content {
 		opacity: 0.38;
 	}
 	.field,
@@ -687,8 +723,7 @@
 	}
 	.field:has(input:focus-visible) .outline-notch::before,
 	.field:has(textarea:focus-visible) .outline-notch::before,
-	.field:has(input:not(:placeholder-shown)) .outline-notch::before,
-	.field:has(textarea:not(:placeholder-shown)) .outline-notch::before {
+	.field.populated .outline-notch::before {
 		border-top-style: none;
 	}
 

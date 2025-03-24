@@ -5,7 +5,7 @@
 </script>
 
 {#if children}
-	<div class={['np-chip-set', attributes.class]} role="toolbar">
+	<div class={['np-chip-set', attributes.class]} style={attributes.style} role="toolbar">
 		{@render children()}
 	</div>
 {/if}
@@ -14,9 +14,7 @@
 	.np-chip-set {
 		display: flex;
 		flex-wrap: wrap;
-		padding-top: 2px;
-		padding-bottom: 2px;
-		padding-right: 2px;
 		gap: 0.5rem;
+		align-items: center;
 	}
 </style>

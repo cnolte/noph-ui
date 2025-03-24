@@ -49,8 +49,6 @@ export interface InputChipProps extends HTMLAttributes<HTMLDivElement> {
 	element?: HTMLDivElement
 	name?: string
 	value?: string
-	group?: (string | number)[] | null
-	defaultSelected?: boolean | null
 	onremove?: (
 		event: MouseEvent & {
 			currentTarget: EventTarget & HTMLButtonElement
