@@ -2,6 +2,7 @@
 	import IconButton from '$lib/button/IconButton.svelte'
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
+	import { onMount } from 'svelte'
 	import type { InputChipProps } from './types.ts'
 
 	let {
@@ -18,6 +19,24 @@
 	}: InputChipProps = $props()
 
 	let chipLabel: HTMLDivElement | undefined = $state()
+	let visible = $state(false)
+
+	onMount(() => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					visible = true
+					observer.disconnect()
+				}
+			})
+		})
+
+		if (element) {
+			observer.observe(element)
+		}
+
+		return () => observer.disconnect()
+	})
 </script>
 
 <div
@@ -34,38 +53,40 @@
 		attributes.class,
 	]}
 >
-	<div bind:this={chipLabel} class={['np-input-chip-label']}>
-		{#if icon}
-			<div class="np-chip-icon">
-				{@render icon()}
-			</div>
+	{#if visible}
+		<div bind:this={chipLabel} class={['np-input-chip-label']}>
+			{#if icon}
+				<div class="np-chip-icon">
+					{@render icon()}
+				</div>
+			{/if}
+			<div class="np-chip-label">{label || value}</div>
+			<input type="hidden" {value} {name} {disabled} />
+		</div>
+		{#if !disabled}
+			<Ripple forElement={chipLabel} />
 		{/if}
-		<div class="np-chip-label">{label || value}</div>
-		<input type="hidden" {value} {name} {disabled} />
-	</div>
-	{#if !disabled}
-		<Ripple forElement={chipLabel} />
+		<IconButton
+			{disabled}
+			type="button"
+			--np-icon-button-container-height="1.75rem"
+			--np-icon-button-container-width="1.75rem"
+			--np-icon-button-icon-size="1.125rem"
+			aria-label={ariaLabelRemove}
+			onclick={(
+				event: MouseEvent & {
+					currentTarget: EventTarget & HTMLButtonElement
+				},
+			) => {
+				if (element === undefined) {
+					return
+				}
+				onremove?.(event)
+			}}
+		>
+			<CloseIcon />
+		</IconButton>
 	{/if}
-	<IconButton
-		{disabled}
-		type="button"
-		--np-icon-button-container-height="1.75rem"
-		--np-icon-button-container-width="1.75rem"
-		--np-icon-button-icon-size="1.125rem"
-		aria-label={ariaLabelRemove}
-		onclick={(
-			event: MouseEvent & {
-				currentTarget: EventTarget & HTMLButtonElement
-			},
-		) => {
-			if (element === undefined) {
-				return
-			}
-			onremove?.(event)
-		}}
-	>
-		<CloseIcon />
-	</IconButton>
 </div>
 
 <style>

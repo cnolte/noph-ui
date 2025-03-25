@@ -2,6 +2,7 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import type { FocusEventHandler } from 'svelte/elements'
 	import type { ItemProps } from './types.ts'
+	import { onMount } from 'svelte'
 
 	let {
 		selected = false,
@@ -16,7 +17,24 @@
 	}: ItemProps = $props()
 
 	let focused = $state(false)
+	let visible = $state(false)
 	let element: HTMLButtonElement | HTMLAnchorElement | undefined = $state()
+	onMount(() => {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					visible = true
+					observer.disconnect()
+				}
+			})
+		})
+
+		if (element) {
+			observer.observe(element)
+		}
+
+		return () => observer.disconnect()
+	})
 </script>
 
 {#snippet content()}
@@ -67,8 +85,10 @@
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}
 	>
-		{@render content()}
-		<Ripple forceHover={focused} />
+		{#if visible}
+			{@render content()}
+			<Ripple forceHover={focused} />
+		{/if}
 	</button>
 {:else if attributes.variant === 'link'}
 	<a
@@ -84,8 +104,10 @@
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}
 	>
-		{@render content()}
-		<Ripple forceHover={focused} />
+		{#if visible}
+			{@render content()}
+			<Ripple forceHover={focused} />
+		{/if}
 	</a>
 {/if}
 

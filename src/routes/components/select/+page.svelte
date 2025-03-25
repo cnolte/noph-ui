@@ -171,8 +171,9 @@
 
 <h3>Virtual list</h3>
 <p>
-	If there are more than 500 options, the <code>Select</code> component uses a virtual list to render
-	the options. The virtual list has the limitation that it has a fixed height.
+	An <code>option</code> uses the Intersection Observer API to improve performance. This enables
+	lists of up to 4000 options. If there are more than 4000 options, the <code>Select</code> component
+	uses a virtual list to render the options. The virtual list has the limitation of having a fixed height.
 </p>
 <DemoContainer>
 	<Select
@@ -181,7 +182,7 @@
 		name="virtual_list"
 		style="max-width: 300px"
 		options={[
-			...Array.from({ length: 1000 }, (_, i) => ({
+			...Array.from({ length: 4001 }, (_, i) => ({
 				value: `option${i + 1}`,
 				label: `Option ${i + 1}`,
 			})),
@@ -195,7 +196,7 @@
 	name="virtual_list"
 	style="max-width: 300px"
 	options={[
-		...Array.from({ length: 100000 }, (_, i) => ({
+		...Array.from({ length: 5001 }, (_, i) => ({
 			value: \`option\${i + 1}\`,
 			label: \`Option \${i + 1}\`,
 		})),

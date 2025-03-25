@@ -44,7 +44,7 @@
 	}
 	let selectedOption = $state(options.filter((option) => option.selected))
 
-	let useVirtualList = $derived(options.length > 500)
+	let useVirtualList = $derived(options.length > 4000)
 
 	let errorTextRaw: string = $state(errorText)
 	let errorRaw = $state(error)
