@@ -86,10 +86,23 @@
 		>
 			<CloseIcon />
 		</IconButton>
+	{:else}
+		<div class="np-skeleton">{label}</div>
 	{/if}
 </div>
 
 <style>
+	.np-skeleton {
+		height: 2rem;
+		line-height: 1.25rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		opacity: 0;
+		display: flex;
+		align-items: center;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
 	.np-input-chip {
 		position: relative;
 		display: inline-flex;
