@@ -67,13 +67,10 @@
 		return options.find((option) => option.value === value)?.label || ''
 	})
 	$effect(() => {
-		if (
-			value &&
-			(Array.isArray(value) ? value.length !== 0 : value !== '') &&
-			selectElement?.checkValidity()
-		) {
-			errorRaw = error
-			errorTextRaw = errorText
+		errorRaw = error
+		errorTextRaw = errorText
+		if (error && errorText !== '') {
+			selectElement?.setCustomValidity(errorText)
 		}
 	})
 	$effect(() => {
@@ -207,6 +204,7 @@
 							<select
 								tabindex="-1"
 								aria-label={attributes['aria-label'] || label}
+								aria-invalid={errorRaw}
 								{disabled}
 								{required}
 								{name}
