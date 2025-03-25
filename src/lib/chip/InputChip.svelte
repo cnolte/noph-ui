@@ -104,7 +104,7 @@
 		display: flex;
 		align-items: center;
 		padding-left: 1rem;
-		padding-right: 1rem;
+		padding-right: 2rem;
 	}
 	.np-input-chip {
 		position: relative;

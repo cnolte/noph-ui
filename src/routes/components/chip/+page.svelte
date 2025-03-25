@@ -13,10 +13,10 @@
 	let chips = $state([
 		{ label: 'Outlined' },
 		{ label: 'Elevated', elevated: true },
-		{ label: 'Filter chip with icon', icon: 'bookmark' },
+		{ label: 'Icon', icon: 'bookmark' },
 		{ label: 'Selected', selected: true },
 		{
-			label: 'Removable filter chip',
+			label: 'Removable',
 			removable: true,
 			remove: () => {
 				showPopover?.()

@@ -799,4 +799,8 @@
 	.disabled .outline-notch {
 		opacity: 0.12;
 	}
+
+	input:-webkit-autofill {
+		-webkit-background-clip: text;
+	}
 </style>
