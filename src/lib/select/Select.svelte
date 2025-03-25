@@ -69,7 +69,7 @@
 	$effect(() => {
 		errorRaw = error
 		errorTextRaw = errorText
-		selectElement?.setCustomValidity(errorText)
+		selectElement?.setCustomValidity(error ? errorText : '')
 	})
 	$effect(() => {
 		if (selectElement) {
