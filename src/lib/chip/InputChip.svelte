@@ -87,7 +87,10 @@
 			<CloseIcon />
 		</IconButton>
 	{:else}
-		<div class="np-skeleton">{label}</div>
+		<div class="np-skeleton">
+			{label}
+			<input type="hidden" {value} {name} {disabled} />
+		</div>
 	{/if}
 </div>
 
