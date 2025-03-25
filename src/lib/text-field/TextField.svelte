@@ -55,9 +55,7 @@
 	$effect(() => {
 		errorRaw = error
 		errorTextRaw = errorText
-		if (error && errorText !== '') {
-			inputElement?.setCustomValidity(errorText)
-		}
+		inputElement?.setCustomValidity(errorText)
 	})
 
 	$effect(() => {
