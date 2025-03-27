@@ -487,7 +487,7 @@
 		margin-bottom: var(--bottom-space, 0.5rem);
 	}
 	.content .input-wrapper .input {
-		min-width: 100px;
+		min-width: 4rem;
 	}
 	:global(.content .input-wrapper .np-chip-set) {
 		margin-top: calc(var(--top-space, 1.5rem) - 4px);
