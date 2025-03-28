@@ -424,12 +424,6 @@
 			<td><code>''</code></td>
 			<td>An optional suffix to display after the input value.</td>
 		</tr>
-		<tr>
-			<td><code>inputClass</code></td>
-			<td><code>ClassValue</code></td>
-			<td><code>undefined</code></td>
-			<td>Allows you to add custom classes to the input element for additional styling.</td>
-		</tr>
 	</tbody>
 </table>
 
