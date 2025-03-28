@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte'
-import type { HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements'
+import type { ClassValue, HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements'
 
 interface FieldProps {
 	label?: string
@@ -15,6 +15,7 @@ interface FieldProps {
 	element?: HTMLSpanElement
 	inputElement?: HTMLInputElement | HTMLTextAreaElement
 	populated?: boolean
+	inputClass?: ClassValue
 	reportValidity?: () => boolean
 	checkValidity?: () => boolean
 }

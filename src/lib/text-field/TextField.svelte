@@ -24,6 +24,7 @@
 		children,
 		onfocus,
 		onblur,
+		inputClass,
 		...attributes
 	}: TextFieldProps = $props()
 
@@ -183,7 +184,7 @@
 								}}
 								bind:value
 								bind:this={inputElement}
-								class="input"
+								class={['input', inputClass]}
 								rows={attributes.rows || 2}
 							></textarea>
 						{:else}
@@ -207,7 +208,7 @@
 										focused = false
 										;(onblur as FocusEventHandler<HTMLInputElement>)?.(event)
 									}}
-									class="input"
+									class={['input', inputClass]}
 									aria-invalid={errorRaw}
 								/>
 								{#if suffixText}
