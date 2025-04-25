@@ -34,9 +34,9 @@
 					</div>
 				</div>
 			{/if}
-			{#if typeof option.label === 'function'}
+			{#if option.labelIcon}
 				<div class="np-segmented-button-icon-label">
-					{@render option.label()}
+					{@render option.labelIcon()}
 				</div>
 			{:else}
 				{option.label}
@@ -85,7 +85,7 @@
 					}}
 					onblur={() => (hoverState = -1)}
 					{name}
-					aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
+					aria-label={option.label ?? `${name}-${i}`}
 					value={option.label}
 					disabled={option.disabled}
 					checked={option.selected}

@@ -213,7 +213,7 @@
 			name="theme-picker"
 			options={[
 				{
-					label: darkIcon,
+					labelIcon: darkIcon,
 					onclick: () => {
 						theme = 'dark'
 						localStorage.setItem('theme', theme)
@@ -222,7 +222,7 @@
 					selected: theme === 'dark',
 				},
 				{
-					label: systemIcon,
+					labelIcon: systemIcon,
 					onclick: () => {
 						theme = null
 						localStorage.removeItem('theme')
@@ -231,7 +231,7 @@
 					selected: !theme,
 				},
 				{
-					label: lightIcon,
+					labelIcon: lightIcon,
 					onclick: () => {
 						theme = 'light'
 						localStorage.setItem('theme', theme)

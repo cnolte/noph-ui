@@ -47,7 +47,8 @@ export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
 	name: string
 	multiSelect?: boolean
 	options: {
-		label: string | Snippet
+		label?: string
+		labelIcon?: Snippet
 		selected?: boolean
 		disabled?: boolean
 		icon?: Snippet

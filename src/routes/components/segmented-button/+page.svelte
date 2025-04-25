@@ -129,14 +129,14 @@
 		name="demo4"
 		options={[
 			{
-				label: darkIcon,
+				labelIcon: darkIcon,
 			},
 			{
-				label: systemIcon,
+				labelIcon: systemIcon,
 				selected: true,
 			},
 			{
-				label: lightIcon,
+				labelIcon: lightIcon,
 			},
 		]}
 	/>
@@ -175,14 +175,14 @@
 	name="demo4"
 	options={[
 		{
-			label: darkIcon,
+			labelIcon: darkIcon,
 		},
 		{
-			label: systemIcon,
+			labelIcon: systemIcon,
 			selected: true,
 		},
 		{
-			label: lightIcon,
+			labelIcon: lightIcon,
 		},
 	]}
 />`}
@@ -247,8 +247,8 @@
 			<td><code>options</code></td>
 			<td
 				><code
-					>&#123; label: string | Snippet, icon?: Snippet, selected?: boolean, disabled?: boolean,
-					onclick?: &#40;event: Event&#41; =&gt; void &#125;&#91;&#93;</code
+					>&#123; label?: string, labelIcon?: Snippet, icon?: Snippet, selected?: boolean,
+					disabled?: boolean, onclick?: &#40;event: Event&#41; =&gt; void &#125;&#91;&#93;</code
 				></td
 			>
 			<td></td>
