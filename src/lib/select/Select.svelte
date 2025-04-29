@@ -42,7 +42,11 @@
 			value = options.find((option) => option.selected)?.value
 		}
 	}
-	let selectedOption = $state(options.filter((option) => option.selected))
+	let selectedOption: SelectOption[] = $state(
+		options
+			.filter((option) => option.selected || value?.includes(option.value))
+			.map((option) => ({ ...option, selected: true })),
+	)
 
 	let useVirtualList = $derived(options.length > 4000)
 
