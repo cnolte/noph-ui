@@ -44,7 +44,9 @@
 	}
 	let selectedOption: SelectOption[] = $state(
 		options
-			.filter((option) => option.selected || value?.includes(option.value))
+			.filter((option) =>
+				option.selected || Array.isArray(value) ? value.includes(option.value) : false,
+			)
 			.map((option) => ({ ...option, selected: true })),
 	)
 
