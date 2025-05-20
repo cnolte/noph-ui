@@ -76,8 +76,4 @@ In progress (Breaking changes expected)
 - Navigation Drawer (Docs missing)
 - Navigation Rail (Badge is missing + Docs missing)
 - Tooltips (Positioning missing)
-
-Pending
-
 - Tabs
-- Date Field

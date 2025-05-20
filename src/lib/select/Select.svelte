@@ -516,16 +516,13 @@
 		top: var(--_focus-outline-width, 3px);
 		inset-inline-start: var(--_focus-outline-width, 0);
 	}
-	.content * {
+	.content select {
 		all: unset;
 		color: currentColor;
 		font-size: 1rem;
 		line-height: 1.5rem;
 		overflow-wrap: revert;
 		white-space: revert;
-	}
-
-	.content select {
 		width: 0;
 		height: 0;
 		visibility: hidden;
