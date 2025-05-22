@@ -1,6 +1,6 @@
 {
 	"name": "noph-ui",
-	"version": "0.16.21",
+	"version": "0.16.22",
 	"license": "MIT",
 	"homepage": "https://noph.dev",
 	"repository": {
@@ -64,7 +64,7 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^5.20.0"
+		"svelte": "^5.32.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.27.0",
@@ -77,12 +77,12 @@
 		"@types/eslint": "^9.6.1",
 		"eslint": "^9.27.0",
 		"eslint-config-prettier": "^10.1.5",
-		"eslint-plugin-svelte": "^3.8.2",
+		"eslint-plugin-svelte": "^3.9.0",
 		"globals": "^16.1.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.4.0",
 		"publint": "^0.3.12",
-		"svelte": "^5.32.0",
+		"svelte": "^5.32.1",
 		"svelte-check": "^4.2.1",
 		"typescript": "^5.8.3",
 		"typescript-eslint": "^8.32.1",

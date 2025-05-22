@@ -134,6 +134,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Tabs"
+	href="/components/tabs"
+	selected={page.url.pathname === '/components/tabs'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Tooltips"
 	href="/components/tooltip"
 	selected={page.url.pathname === '/components/tooltip'}
