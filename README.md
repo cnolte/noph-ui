@@ -67,6 +67,7 @@ Beta (No breaking changes expected)
 - Select
 - Snackbar
 - Text fields
+- Tabs
 
 In progress (Breaking changes expected)
 
@@ -76,4 +77,3 @@ In progress (Breaking changes expected)
 - Navigation Drawer (Docs missing)
 - Navigation Rail (Badge is missing + Docs missing)
 - Tooltips (Positioning missing)
-- Tabs

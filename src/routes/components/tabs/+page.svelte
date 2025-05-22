@@ -2,7 +2,9 @@
 	import { Icon } from '$lib/icons/index.ts'
 	import Tab from '$lib/tabs/Tab.svelte'
 	import Tabs from '$lib/tabs/Tabs.svelte'
+	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	let value = $state('videos')
 </script>
 
 <svelte:head>
@@ -10,7 +12,13 @@
 </svelte:head>
 
 <h1>Tabs</h1>
+<h2>Usage</h2>
+<p>
+	Tabs let you switch between different sections. Use only one type of tab (primary or secondary) in
+	each tab bar.
+</p>
 
+<h3>Primary Tabs</h3>
 <DemoContainer>
 	<Tabs value="videos">
 		<Tab value="videos">{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos</Tab>
@@ -18,6 +26,67 @@
 		<Tab value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
 	</Tabs>
 </DemoContainer>
+<Code
+	value={`<Tabs value="videos">
+	<Tab value="videos">{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos</Tab>
+	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
+	<Tab value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+</Tabs>`}
+/>
+<h3>Secondary Tabs</h3>
+<DemoContainer>
+	<Tabs value="videos">
+		<Tab variant="secondary" value="videos"
+			>{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos</Tab
+		>
+		<Tab variant="secondary" value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab
+		>
+		<Tab variant="secondary" value="settings"
+			>{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab
+		>
+	</Tabs>
+</DemoContainer>
+<Code
+	value={`<Tabs value="videos">
+	<Tab variant="secondary" value="videos">
+		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
+	</Tab>
+	<Tab variant="secondary" value="theme">
+		{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme
+	</Tab>
+	<Tab variant="secondary" value="settings">
+		{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings
+	</Tab>
+</Tabs>`}
+/>
+<h3>Selection</h3>
+<p>
+	The <code>value</code> prop on <code>&lt;Tabs&gt;</code> determines which tab is currently
+	selected. Each <code>&lt;Tab&gt;</code> must have a unique <code>value</code> within the same
+	<code>&lt;Tabs&gt;</code>
+	group. When the <code>value</code> of <code>&lt;Tabs&gt;</code> matches a
+	<code>&lt;Tab&gt;</code>'s <code>value</code>, that tab is highlighted as selected. To react to
+	tab changes, use <code>bind:value</code> on <code>&lt;Tabs&gt;</code> to keep track of the selected
+	tab in your component state.
+</p>
+<DemoContainer>
+	<div>
+		<Tabs bind:value>
+			<Tab value="videos">Videos</Tab>
+			<Tab value="theme">Theme</Tab>
+			<Tab value="settings">Setttings</Tab>
+		</Tabs>
+		<div style="margin-top:1rem;font-size:0.825rem">Selected Tab: {value}</div>
+	</div>
+</DemoContainer>
+<Code
+	value={`<Tabs bind:value>
+	<Tab value="videos">Videos</Tab>
+	<Tab value="theme">Theme</Tab>
+	<Tab value="settings">Setttings</Tab>
+</Tabs>
+<div>Selected Tab: {value}</div>`}
+/>
 
 <h2>API</h2>
 <h3>Tabs</h3>
@@ -95,7 +164,6 @@
 			<td><code>href</code></td>
 			<td><code>string</code></td>
 			<td><code>undefined</code></td>
-			<td></td>
 			<td>
 				When set, the tab will render as a link using the provided URL. This allows navigation to
 				other pages or routes when the tab is clicked.
