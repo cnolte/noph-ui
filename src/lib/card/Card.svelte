@@ -174,6 +174,8 @@
 		position: relative;
 		padding: 0;
 		box-sizing: border-box;
+		color: var(--np-color-on-surface);
+		text-decoration: none;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		border-radius: var(--border-radius);
 		background-color: var(--background-color);

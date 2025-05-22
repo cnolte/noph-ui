@@ -49,6 +49,8 @@
 		gap: 0.25rem;
 		display: flex;
 		flex-direction: column;
+		color: var(--np-color-on-surface);
+		text-decoration: none;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	}
 	.np-navigation-action:focus-visible {

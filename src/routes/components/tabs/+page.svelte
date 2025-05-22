@@ -91,5 +91,15 @@
 				Svelte snippet, such as an <code>&lt;Icon&gt;</code> component.</td
 			>
 		</tr>
+		<tr>
+			<td><code>href</code></td>
+			<td><code>string</code></td>
+			<td><code>undefined</code></td>
+			<td></td>
+			<td>
+				When set, the tab will render as a link using the provided URL. This allows navigation to
+				other pages or routes when the tab is clicked.
+			</td>
+		</tr>
 	</tbody>
 </table>

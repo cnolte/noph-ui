@@ -58,6 +58,8 @@
 	.np-navigation-drawer-item {
 		cursor: pointer;
 		font-family: inherit;
+		color: var(--np-color-on-surface);
+		text-decoration: none;
 		border: 0;
 		background: none;
 		align-items: center;

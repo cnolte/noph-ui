@@ -10,19 +10,20 @@
 		onclick,
 		onkeydown,
 		value,
+		href,
 		variant = 'primary',
 		...attributes
 	}: TabProps = $props()
 	let activeTab: { value: string | number; node: HTMLElement } = getContext('activeTab')
 	let isActive = $derived(activeTab.value === value)
 
-	const setTabActive = (el: HTMLDivElement) => {
+	const setTabActive = (el: HTMLElement) => {
 		const oldTab = activeTab.node as HTMLElement | undefined
 		const oldIndicator = oldTab?.querySelector('.np-indicator') as HTMLElement
 		const oldIndicatorRect = oldIndicator?.getBoundingClientRect()
 		if (oldIndicatorRect) {
-			const newIndicator = el.querySelector('.np-indicator') as HTMLElement
-			newIndicator.style.setProperty(
+			const newIndicator = el.querySelector<HTMLElement>('.np-indicator')
+			newIndicator?.style.setProperty(
 				'--np-tab-indicator-start',
 				`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
 			)
@@ -30,38 +31,28 @@
 		activeTab.value = value
 		activeTab.node = el
 	}
-</script>
-
-<div
-	{@attach (el) => {
+	const setActiveTab = (el: HTMLElement) => {
 		if (isActive) {
 			activeTab.node = el
 		}
-	}}
-	{...attributes}
-	tabindex={isActive ? 0 : -1}
-	role="tab"
-	class={[
-		'np-tab',
-		variant === 'secondary' && 'np-tab-secondary',
-		isActive && 'np-tab-content-active',
-		attributes.class,
-	]}
-	onclick={(event) => {
+	}
+	const onClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		setTabActive(event.currentTarget)
 		if (onclick) {
 			onclick(event)
 		}
-	}}
-	onkeydown={(event) => {
+	}
+	const onKeyDown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		if (event.key === 'Enter' || event.key === ' ') {
 			setTabActive(event.currentTarget)
 		}
 		if (onkeydown) {
 			onkeydown(event)
 		}
-	}}
->
+	}
+</script>
+
+{#snippet content()}
 	<div
 		class="np-tab-content"
 		style={variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : ''}
@@ -84,7 +75,44 @@
 	</div>
 	<div class="focus-area"></div>
 	<Ripple />
-</div>
+{/snippet}
+
+{#if href}
+	<a
+		{@attach setActiveTab}
+		{...attributes}
+		tabindex={isActive ? 0 : -1}
+		role="tab"
+		{href}
+		class={[
+			'np-tab',
+			variant === 'secondary' && 'np-tab-secondary',
+			isActive && 'np-tab-content-active',
+			attributes.class,
+		]}
+		onclick={onClick}
+		onkeydown={onKeyDown}
+	>
+		{@render content()}
+	</a>
+{:else}
+	<div
+		{@attach setActiveTab}
+		{...attributes}
+		tabindex={isActive ? 0 : -1}
+		role="tab"
+		class={[
+			'np-tab',
+			variant === 'secondary' && 'np-tab-secondary',
+			isActive && 'np-tab-content-active',
+			attributes.class,
+		]}
+		onclick={onClick}
+		onkeydown={onKeyDown}
+	>
+		{@render content()}
+	</div>
+{/if}
 
 <style>
 	.np-tab {
@@ -94,9 +122,7 @@
 		justify-content: center;
 		font-family: inherit;
 		box-sizing: border-box;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-		background-color: transparent;
-		border-width: 0;
+		text-decoration: none;
 		position: relative;
 		cursor: pointer;
 		padding: 0 1rem;
