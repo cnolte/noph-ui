@@ -115,7 +115,7 @@
 
 	.np-navigation-action-selected .np-navigation-action-label {
 		font-weight: var(--np-navigation-rail-item-selected-font-weight, 700);
-		color: var(--np-color-on-surface);
+		color: var(--np-color-secondary);
 	}
 	.np-touch {
 		height: 56px;
