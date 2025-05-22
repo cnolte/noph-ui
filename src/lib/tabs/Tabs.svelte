@@ -3,13 +3,7 @@
 	import { setContext } from 'svelte'
 	import type { TabsProps } from './types.ts'
 
-	let {
-		children,
-		element = $bindable(),
-		value = $bindable(),
-		onkeydown,
-		...attributes
-	}: TabsProps = $props()
+	let { children, element = $bindable(), value = $bindable(), ...attributes }: TabsProps = $props()
 	let active = $state({
 		value: value,
 		node: element?.firstChild as HTMLElement | undefined,
@@ -21,10 +15,9 @@
 	})
 </script>
 
-<div>
+<div {...attributes} class={[attributes.class]}>
 	<div
-		{...attributes}
-		class={['np-tabs', attributes.class]}
+		class={['np-tabs']}
 		role="tablist"
 		tabindex="-1"
 		bind:this={element}
@@ -37,9 +30,6 @@
 				const newTab =
 					index < 0 ? tabs[tabs.length - 1] : index >= tabs.length ? tabs[0] : tabs[index]
 				newTab.focus()
-			}
-			if (onkeydown) {
-				onkeydown(event)
 			}
 		}}
 	>
