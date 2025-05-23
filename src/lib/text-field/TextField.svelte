@@ -109,12 +109,6 @@
 	onfocus={() => {
 		inputElement?.focus()
 	}}
-	onkeydown={(event) => {
-		if (event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault()
-			inputElement?.focus()
-		}
-	}}
 >
 	<div
 		class="field"
