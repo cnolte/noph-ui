@@ -20,4 +20,6 @@ export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autoco
 	element?: HTMLSpanElement
 	options: SelectOption[]
 	clampMenuWidth?: boolean
+	reportValidity?: () => boolean
+	checkValidity?: () => boolean
 }

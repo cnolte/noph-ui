@@ -29,12 +29,15 @@
 		autofocus,
 		onchange,
 		oninput,
+		reportValidity = $bindable(),
+		checkValidity = $bindable(),
 		multiple,
 		clampMenuWidth = false,
 		...attributes
 	}: SelectProps = $props()
 
 	const uid = $props.id()
+	let doValidity = $state(false)
 	if (value === undefined) {
 		if (multiple) {
 			value = options.filter((option) => option.selected).map((option) => option.value)
@@ -74,6 +77,26 @@
 		}
 		return options.find((option) => option.value === value)?.label || ''
 	})
+
+	reportValidity = () => {
+		if (selectElement) {
+			const valid = selectElement.reportValidity()
+			if (valid) {
+				errorRaw = error
+				errorTextRaw = errorText
+			}
+			return valid
+		}
+		return false
+	}
+
+	checkValidity = () => {
+		if (selectElement) {
+			return selectElement.checkValidity()
+		}
+		return false
+	}
+
 	$effect(() => {
 		errorRaw = error
 		errorTextRaw = errorText
@@ -107,6 +130,10 @@
 		}
 		event.preventDefault()
 		tick().then(() => {
+			if (doValidity && checkValidity()) {
+				errorRaw = error
+				errorTextRaw = errorText
+			}
 			selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
 		})
 	}
@@ -222,12 +249,12 @@
 									event.preventDefault()
 									const { currentTarget } = event
 									errorRaw = true
+									doValidity = true
 									if (errorText === '') {
 										errorTextRaw = currentTarget.validationMessage
 									}
 									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
 										field?.focus()
-										menuElement?.showPopover()
 									}
 								}}
 								bind:value
@@ -251,12 +278,12 @@
 									event.preventDefault()
 									const { currentTarget } = event
 									errorRaw = true
+									doValidity = true
 									if (errorText === '') {
 										errorTextRaw = currentTarget.validationMessage
 									}
 									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
 										field?.focus()
-										menuElement?.showPopover()
 									}
 								}}
 								bind:value
