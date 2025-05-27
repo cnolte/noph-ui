@@ -261,7 +261,9 @@
 								bind:this={selectElement}
 							>
 								{#each selectedOption as option, index (index)}
-									<option value={option.value} selected={option.selected}>{option.label}</option>
+									<option class="np-option" value={option.value} selected={option.selected}
+										>{option.label}</option
+									>
 								{/each}
 							</select>
 						{:else}
@@ -593,6 +595,12 @@
 		@media (forced-colors: active) {
 			background: none;
 		}
+	}
+
+	.np-option {
+		width: 0;
+		height: 0;
+		display: block;
 	}
 
 	.no-label .content,
