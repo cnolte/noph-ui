@@ -301,6 +301,7 @@
 		min-height: 100%;
 		min-width: min-content;
 		position: relative;
+		min-width: 0;
 	}
 	.outlined .container-overflow {
 		border-start-start-radius: var(
@@ -404,6 +405,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: baseline;
+		min-width: 0;
 	}
 
 	.input-wrapper > * {
@@ -415,6 +417,7 @@
 		align-items: stretch;
 		align-self: baseline;
 		flex: 1;
+		min-width: 0;
 	}
 
 	.input {
@@ -455,6 +458,7 @@
 		flex: 1 1 0%;
 		opacity: 0;
 		transition: opacity 83ms cubic-bezier(0.2, 0, 0, 1);
+		min-width: 0;
 	}
 	.disabled .content {
 		color: var(--np-color-on-surface);

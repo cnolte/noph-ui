@@ -115,6 +115,7 @@
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
 		padding-right: 2px;
+		min-width: 0;
 	}
 	.np-input-chip-label input {
 		opacity: 0;

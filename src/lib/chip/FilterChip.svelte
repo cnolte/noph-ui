@@ -115,6 +115,7 @@
 		border-radius: var(--np-filter-chip-container-shape, var(--np-shape-corner-small));
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
+		min-width: 0;
 	}
 	.np-filter-chip-label input {
 		opacity: 0;
