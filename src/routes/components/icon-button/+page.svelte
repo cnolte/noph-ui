@@ -405,27 +405,39 @@
 	<tbody>
 		<tr>
 			<td><code>variant</code></td>
-			<td><code>'text' | 'filled' | 'tonal' | 'outlined'</code></td>
+			<td><code>'text' | 'filled' | 'outlined' | 'tonal'</code></td>
 			<td><code>'text'</code></td>
-			<td>Button variant</td>
+			<td>Defines the visual style of the button.</td>
 		</tr>
 		<tr>
 			<td><code>toggle</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Toggle button</td>
+			<td>Enables toggle behavior for the button.</td>
 		</tr>
 		<tr>
 			<td><code>selected</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Selected state</td>
+			<td>Indicates whether the button is selected.</td>
+		</tr>
+		<tr>
+			<td><code>selectedIcon</code></td>
+			<td><code>Snippet</code></td>
+			<td><code>undefined</code></td>
+			<td>Icon to display when the button is selected.</td>
+		</tr>
+		<tr>
+			<td><code>keepTooltipOnClick</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Keeps the tooltip visible after clicking the button.</td>
 		</tr>
 		<tr>
 			<td><code>disabled</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Disabled state</td>
+			<td>Disables the button.</td>
 		</tr>
 		<tr>
 			<td><code>title</code></td>

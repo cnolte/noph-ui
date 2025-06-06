@@ -398,29 +398,37 @@
 			<td><code>disabled</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Disables the button</td>
+			<td>Disables the button.</td>
 		</tr>
 		<tr>
 			<td><code>loading</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Sets the button to the loading state</td>
+			<td>Sets the button to a loading state.</td>
+		</tr>
+		<tr>
+			<td><code>loadingAriaLabel</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Provides an accessibility label for the loading state.</td>
+		</tr>
+		<tr>
+			<td><code>keepTooltipOnClick</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td><code>false</code></td>
+			<td>Keeps the tooltip visible after the button is clicked.</td>
 		</tr>
 		<tr>
 			<td><code>title</code></td>
 			<td><code>string | null | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Tooltip text</td>
+			<td>Specifies the tooltip text.</td>
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLButtonAttributes | HTMLAnchorAttributes</code></td>
 			<td></td>
-			<td
-				>Use <code>HTMLButtonAttributes</code> for a plain button and
-				<code>HTMLAnchorAttributes</code>
-				(automatically applied when href is set) for a link button.</td
-			>
+			<td>Use <code>HTMLButtonAttributes</code> for a plain button or <code>HTMLAnchorAttributes</code> for a link button (applied automatically when href is set).</td>
 		</tr>
 	</tbody>
 </table>
