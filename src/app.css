@@ -60,6 +60,9 @@ code {
 	color: var(--np-color-primary);
 	scrollbar-width: thin;
 }
+code .bind {
+	color: var(--np-color-tertiary);
+}
 
 table {
 	border-spacing: 0;

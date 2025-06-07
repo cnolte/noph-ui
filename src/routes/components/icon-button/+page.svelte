@@ -392,11 +392,11 @@
 	>`}
 />
 <h2>API</h2>
-<h3>Attributes</h3>
+<h3>Props</h3>
 <table>
 	<thead>
 		<tr>
-			<th>Attribute</th>
+			<th>Prop</th>
 			<th>Type</th>
 			<th>Default</th>
 			<th>Description</th>
@@ -417,7 +417,7 @@
 		</tr>
 		<tr>
 			<td><code>selected</code></td>
-			<td><code>boolean</code></td>
+			<td><code><span class="bind">bind</span>:boolean</code></td>
 			<td><code>false</code></td>
 			<td>Indicates whether the button is selected.</td>
 		</tr>
@@ -446,6 +446,17 @@
 			<td>Tooltip text</td>
 		</tr>
 		<tr>
+			<td><code>element</code></td>
+			<td><code><span class="bind">bind</span>:HTMLElement</code></td>
+			<td></td>
+			<td
+				>A reference to the root DOM element of the component. This variable is bound using <code
+					>bind:this</code
+				>, allowing direct access to the underlying HTML element for manipulation or querying within
+				the component's logic.</td
+			>
+		</tr>
+		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLButtonAttributes | HTMLAnchorAttributes</code></td>
 			<td></td>
@@ -453,29 +464,6 @@
 				>Use <code>HTMLButtonAttributes</code> for a plain icon button and
 				<code>HTMLAnchorAttributes</code>
 				(automatically applied when href is set) for a link icon button.</td
-			>
-		</tr>
-	</tbody>
-</table>
-
-<h3>Bindables</h3>
-<table>
-	<thead>
-		<tr>
-			<th>Attribute</th>
-			<th>Type</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>element</code></td>
-			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
 			>
 		</tr>
 	</tbody>

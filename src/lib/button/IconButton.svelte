@@ -15,7 +15,7 @@
 		title,
 		element = $bindable(),
 		disabled,
-		selected = false,
+		selected = $bindable(false),
 		selectedIcon,
 		keepTooltipOnClick,
 		onclick,
@@ -23,7 +23,6 @@
 	}: IconButtonProps = $props()
 
 	const uid = $props.id()
-	let selectedState = $state(!toggle || selected)
 	let touchEl: HTMLSpanElement | undefined = $state()
 
 	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
@@ -39,7 +38,7 @@
 		<Ripple forElement={touchEl} />
 		<span class="np-touch" bind:this={touchEl}></span>
 	{/if}
-	{#if selectedIcon && selectedState}
+	{#if selectedIcon && selected}
 		{@render selectedIcon()}
 	{:else if children}
 		{@render children()}
@@ -50,13 +49,13 @@
 	<button
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		aria-pressed={selectedState}
+		aria-pressed={selected}
 		{...attributes as HTMLButtonAttributes}
 		{disabled}
 		bind:this={element}
 		onclick={(event) => {
 			if (toggle) {
-				selectedState = !selectedState
+				selected = !selected
 			}
 			;(onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
 		}}
@@ -64,7 +63,7 @@
 			'np-icon-button',
 			disabled ? `${variant}-disabled disabled` : `${variant} enabled`,
 			toggle && 'toggle',
-			selectedState &&
+			selected &&
 				((variant !== 'outlined' && variant !== 'text') || toggle || selected) &&
 				'selected',
 			attributes.class,
@@ -82,7 +81,7 @@
 			'np-icon-button',
 			variant,
 			'enabled',
-			selectedState &&
+			selected &&
 				((variant !== 'outlined' && variant !== 'text') || toggle || selected) &&
 				'selected',
 			attributes.class,
