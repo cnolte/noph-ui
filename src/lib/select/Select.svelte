@@ -189,7 +189,12 @@
 				menuElement?.hidePopover()
 			} else {
 				event.preventDefault()
-				if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter') {
+				if (
+					event.key === 'ArrowDown' ||
+					event.key === 'ArrowUp' ||
+					event.key === 'Enter' ||
+					event.key === ' '
+				) {
 					menuElement?.showPopover()
 					;(menuElement?.firstElementChild?.firstElementChild as HTMLElement)?.focus()
 				}
