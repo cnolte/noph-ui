@@ -63,9 +63,7 @@
 			'np-icon-button',
 			disabled ? `${variant}-disabled disabled` : `${variant} enabled`,
 			toggle && 'toggle',
-			selected &&
-				((variant !== 'outlined' && variant !== 'text') || toggle || selected) &&
-				'selected',
+			(selected || (variant !== 'outlined' && variant !== 'text' && !toggle)) && 'selected',
 			attributes.class,
 		]}
 	>
@@ -81,9 +79,7 @@
 			'np-icon-button',
 			variant,
 			'enabled',
-			selected &&
-				((variant !== 'outlined' && variant !== 'text') || toggle || selected) &&
-				'selected',
+			(selected || (variant !== 'outlined' && variant !== 'text' && !toggle)) && 'selected',
 			attributes.class,
 		]}
 	>
