@@ -403,7 +403,6 @@
 
 	.input-wrapper {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: baseline;
 		min-width: 0;
 	}
@@ -485,7 +484,7 @@
 		margin-bottom: var(--bottom-space, 0.5rem);
 	}
 	.content .input-wrapper .input {
-		min-width: 4rem;
+		min-width: 0;
 	}
 	:global(.content .input-wrapper .np-chip-set) {
 		margin-top: calc(var(--top-space, 1.5rem) - 4px);
