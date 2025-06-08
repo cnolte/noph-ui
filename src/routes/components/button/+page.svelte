@@ -428,7 +428,10 @@
 			<td><code>...attributes</code></td>
 			<td><code>HTMLButtonAttributes | HTMLAnchorAttributes</code></td>
 			<td></td>
-			<td>Use <code>HTMLButtonAttributes</code> for a plain button or <code>HTMLAnchorAttributes</code> for a link button (applied automatically when href is set).</td>
+			<td>
+				Use <code>HTMLButtonAttributes</code> for a plain button or
+				<code>HTMLAnchorAttributes</code> for a link button (applied automatically when href is set).
+			</td>
 		</tr>
 	</tbody>
 </table>

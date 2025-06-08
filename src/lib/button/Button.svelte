@@ -157,6 +157,8 @@
 	.text-disabled {
 		--button-height: var(--np-text-button-container-height, 2.5rem);
 		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
+		padding-left: calc((var(--button-height) - 1.5rem) / 2);
+		padding-right: calc((var(--button-height) - 1.5rem) / 2);
 	}
 	.enabled {
 		transition: background-color 0.3s ease;
