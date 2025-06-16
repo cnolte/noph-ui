@@ -367,7 +367,6 @@
 	style="position-anchor:--{uid};{clampMenuWidth || useVirtualList
 		? 'width'
 		: 'min-width'}:{clientWidth}px"
-	popover="manual"
 	role="listbox"
 	--np-menu-justify-self="none"
 	--np-menu-position-area="bottom span-right"
