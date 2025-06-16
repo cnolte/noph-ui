@@ -15,7 +15,19 @@
 		...attributes
 	}: TabProps = $props()
 	let activeTab: { value: string | number; node: HTMLElement } = getContext('activeTab')
-	let isActive = $derived(activeTab.value === value)
+	let element: HTMLElement | undefined = $state()
+	let isActive = $state(activeTab.value === value)
+
+	$effect(() => {
+		if (activeTab.value === value) {
+			if (element && element !== activeTab.node) {
+				setTabActive(element)
+			}
+			isActive = true
+		} else {
+			isActive = false
+		}
+	})
 
 	const setTabActive = (el: HTMLElement) => {
 		const oldTab = activeTab.node as HTMLElement | undefined
@@ -27,10 +39,12 @@
 				'--np-tab-indicator-start',
 				`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
 			)
+			newIndicator?.style.setProperty('--np-tab-indicator-width', `${oldIndicatorRect.width}px`)
 		}
 		activeTab.value = value
 		activeTab.node = el
 	}
+
 	const setActiveTab = (el: HTMLElement) => {
 		if (isActive) {
 			activeTab.node = el
@@ -83,6 +97,7 @@
 		{...attributes}
 		tabindex={isActive ? 0 : -1}
 		role="tab"
+		bind:this={element}
 		{href}
 		class={[
 			'np-tab',
@@ -101,6 +116,7 @@
 		{...attributes}
 		tabindex={isActive ? 0 : -1}
 		role="tab"
+		bind:this={element}
 		class={[
 			'np-tab',
 			variant === 'secondary' && 'np-tab-secondary',
@@ -177,9 +193,11 @@
 
 	@keyframes slide {
 		0% {
+			width: var(--np-tab-indicator-width, 100%);
 			transform: translateX(var(--np-tab-indicator-start));
 		}
 		100% {
+			width: 100%;
 			transform: translateX(0);
 		}
 	}

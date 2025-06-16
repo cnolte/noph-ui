@@ -13,6 +13,9 @@
 	$effect(() => {
 		value = active.value
 	})
+	$effect(() => {
+		active.value = value
+	})
 </script>
 
 <div {...attributes} class={[attributes.class]}>
