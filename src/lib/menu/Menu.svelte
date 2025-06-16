@@ -8,6 +8,7 @@
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
 		style,
+		popover = 'auto',
 		...attributes
 	}: MenuProps = $props()
 
@@ -119,7 +120,7 @@
 		menuOpen = newState === 'open'
 		attributes.ontoggle?.(event)
 	}}
-	popover="auto"
+	{popover}
 	class={['np-menu-container', attributes.class]}
 >
 	<div class="np-menu">

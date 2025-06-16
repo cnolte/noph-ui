@@ -24,6 +24,8 @@
 		children,
 		onfocus,
 		onblur,
+		clientWidth = $bindable(),
+		clientHeight = $bindable(),
 		...attributes
 	}: TextFieldProps = $props()
 
@@ -95,6 +97,7 @@
 	})
 </script>
 
+<!-- svelte-ignore a11y_click_events_have_key_events -->
 <div
 	style={(variant === 'outlined'
 		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
@@ -104,10 +107,15 @@
 				(children ? '--top-space:2rem;--bottom-space:1rem;' : '')) + style}
 	class={['text-field', attributes.class]}
 	bind:this={element}
+	bind:clientWidth
+	bind:clientHeight
 	role="button"
-	tabindex="-1"
+	tabindex="0"
 	onfocus={() => {
 		inputElement?.focus()
+	}}
+	onclick={() => {
+		inputElement?.click()
 	}}
 >
 	<div
@@ -403,6 +411,7 @@
 
 	.input-wrapper {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: baseline;
 		min-width: 0;
 	}
@@ -484,7 +493,7 @@
 		margin-bottom: var(--bottom-space, 0.5rem);
 	}
 	.content .input-wrapper .input {
-		min-width: 0;
+		min-width: 20px;
 	}
 	:global(.content .input-wrapper .np-chip-set) {
 		margin-top: calc(var(--top-space, 1.5rem) - 4px);

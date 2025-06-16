@@ -1,3 +1,4 @@
+export * from './autocomplete/types.js'
 export * from './button/types.ts'
 export * from './card/types.ts'
 export * from './checkbox/types.ts'

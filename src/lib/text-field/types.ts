@@ -17,6 +17,8 @@ interface FieldProps {
 	populated?: boolean
 	reportValidity?: () => boolean
 	checkValidity?: () => boolean
+	clientWidth?: number
+	clientHeight?: number
 }
 
 export interface InputFieldProps extends HTMLInputAttributes, FieldProps {
