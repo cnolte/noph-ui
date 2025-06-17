@@ -35,11 +35,16 @@
 		const oldIndicatorRect = oldIndicator?.getBoundingClientRect()
 		if (oldIndicatorRect) {
 			const newIndicator = el.querySelector<HTMLElement>('.np-indicator')
-			newIndicator?.style.setProperty(
-				'--np-tab-indicator-start',
-				`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
-			)
-			newIndicator?.style.setProperty('--np-tab-indicator-width', `${oldIndicatorRect.width}px`)
+			if (newIndicator) {
+				newIndicator.style.setProperty(
+					'--np-tab-indicator-start',
+					`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
+				)
+				newIndicator.style.setProperty(
+					'--np-tab-indicator-scale',
+					`${oldIndicatorRect.width / newIndicator.clientWidth}`,
+				)
+			}
 		}
 		activeTab.value = value
 		activeTab.node = el
@@ -99,12 +104,7 @@
 		role="tab"
 		bind:this={element}
 		{href}
-		class={[
-			'np-tab',
-			variant === 'secondary' && 'np-tab-secondary',
-			isActive && 'np-tab-content-active',
-			attributes.class,
-		]}
+		class={['np-tab', isActive && 'np-tab-content-active', attributes.class]}
 		onclick={onClick}
 		onkeydown={onKeyDown}
 	>
@@ -117,12 +117,7 @@
 		tabindex={isActive ? 0 : -1}
 		role="tab"
 		bind:this={element}
-		class={[
-			'np-tab',
-			variant === 'secondary' && 'np-tab-secondary',
-			isActive && 'np-tab-content-active',
-			attributes.class,
-		]}
+		class={['np-tab', isActive && 'np-tab-content-active', attributes.class]}
 		onclick={onClick}
 		onkeydown={onKeyDown}
 	>
@@ -188,17 +183,16 @@
 	}
 	.np-tab-content-active .np-indicator {
 		opacity: 1;
+		transform-origin: left center;
 		animation: slide 0.3s ease-in-out;
 	}
 
 	@keyframes slide {
 		0% {
-			width: var(--np-tab-indicator-width, 100%);
-			transform: translateX(var(--np-tab-indicator-start));
+			transform: translateX(var(--np-tab-indicator-start)) scaleX(var(--np-tab-indicator-scale, 1));
 		}
 		100% {
-			width: 100%;
-			transform: translateX(0);
+			transform: translateX(0) scaleX(1);
 		}
 	}
 

@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { HTMLAttributes } from 'svelte/elements'
 
 export interface TabProps extends HTMLAttributes<HTMLElement> {
 	variant?: 'primary' | 'secondary'

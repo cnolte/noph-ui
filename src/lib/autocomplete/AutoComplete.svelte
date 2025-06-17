@@ -2,7 +2,6 @@
 	import Item from '$lib/list/Item.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import VirtualList from '$lib/select/VirtualList.svelte'
-	import { tick } from 'svelte'
 	import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 	import TextField from '$lib/text-field/TextField.svelte'
 
@@ -11,56 +10,38 @@
 		value = $bindable(),
 		variant = 'filled',
 		element = $bindable(),
-		onchange,
-		oninput,
+		populated,
 		reportValidity = $bindable(),
 		checkValidity = $bindable(),
 		clampMenuWidth = false,
 		children,
-		optionsFilter = (option) => {
-			return !value || option.value.includes(value)
-		},
+		optionsFilter,
 		oncomplete = (option) => {
-			value = option.value
-			console.log(menuElement)
+			value = option.label
+			finalPopulated = populated
 			menuElement?.hidePopover()
 		},
-		onblur,
+		onkeydown,
 		onclick,
+		oninput,
 		...attributes
 	}: AutoCompleteProps = $props()
 
 	const uid = $props.id()
-	let displayOptions = $derived(options.filter(optionsFilter))
+	let defaultOptionsFilter = (option: AutoCompleteOption) => {
+		return !value || option.label.includes(value)
+	}
+	let displayOptions = $derived(options.filter(optionsFilter || defaultOptionsFilter))
 	let useVirtualList = $derived(displayOptions.length > 4000)
 	let clientWidth = $state(0)
-	let menuOpen = $state(false)
 	let menuElement: HTMLDivElement | undefined = $state()
-
-	const handleOptionSelect = (event: Event, option: AutoCompleteOption) => {
-		value = option.value
-		menuElement?.hidePopover()
-		event.preventDefault()
-		// tick().then(() => {
-		// 	if (checkValidity?.()) {
-		// 		errorRaw = error
-		// 		errorTextRaw = errorText
-		// 	}
-		// 	element?.dispatchEvent(new Event('change', { bubbles: true }))
-		// })
-	}
-	$effect(() => {
-		if (displayOptions.length) {
-			menuElement?.showPopover()
-		} else {
-			menuElement?.hidePopover()
-		}
-	})
+	let finalPopulated = $state(populated)
 </script>
 
 {#snippet item(option: AutoCompleteOption)}
 	<Item
-		onclick={() => {
+		onclick={(event) => {
+			event.preventDefault()
 			oncomplete(option)
 			element?.focus()
 		}}
@@ -78,44 +59,56 @@
 				oncomplete(option)
 			}
 			if (event.key === 'Tab') {
+				finalPopulated = populated
 				menuElement?.hidePopover()
 			}
 		}}
 		variant="button"
-		>{option.value}
+		>{option.label}
 	</Item>
 {/snippet}
 
 <TextField
 	{variant}
+	type="text"
+	populated={finalPopulated}
 	bind:clientWidth
 	bind:value
 	style="anchor-name:--{uid};"
-	onclick={async (
-		event: MouseEvent & {
-			currentTarget: EventTarget & HTMLInputElement
-		},
-	) => {
-		if (displayOptions.length) {
-			menuElement?.showPopover()
-		}
+	onclick={(event) => {
+		finalPopulated = true
+		menuElement?.showPopover()
 		onclick?.(event)
 	}}
-	onfocus={() => {
-		if (displayOptions.length) {
-			menuElement?.showPopover()
+	oninput={(event) => {
+		menuElement?.showPopover()
+		oninput?.(event)
+	}}
+	onkeydown={(event) => {
+		if (event.key === 'Tab' || event.key === 'Escape') {
+			menuElement?.hidePopover()
+		} else {
+			if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+				event.preventDefault()
+				finalPopulated = true
+				menuElement?.showPopover()
+				;(menuElement?.firstElementChild?.firstElementChild as HTMLElement)?.focus()
+			}
 		}
+		onkeydown?.(event)
 	}}
 	bind:reportValidity
 	bind:checkValidity
 	bind:element
-	{...attributes}>{@render children?.()}</TextField
->
+	{...attributes}
+	>{@render children?.()}
+</TextField>
 <Menu
 	style="position-anchor:--{uid};{clampMenuWidth || useVirtualList
 		? 'width'
 		: 'min-width'}:{clientWidth}px"
 	role="listbox"
+	class={[!displayOptions.length && 'np-auto-complete-empty']}
 	--np-menu-justify-self="none"
 	--np-menu-position-area="bottom span-right"
 	--np-menu-margin="2px 0"
@@ -123,13 +116,6 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={element}
-	ontoggle={({ newState }) => {
-		if (newState === 'open') {
-			menuOpen = true
-		} else {
-			menuOpen = false
-		}
-	}}
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
@@ -144,3 +130,10 @@
 		{/each}
 	{/if}
 </Menu>
+
+<style>
+	:global(.np-auto-complete-empty) {
+		display: none !important;
+		opacity: 0 !important;
+	}
+</style>

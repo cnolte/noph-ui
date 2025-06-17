@@ -48,7 +48,7 @@ export interface InputChipProps extends HTMLAttributes<HTMLDivElement> {
 	ariaLabelRemove?: string
 	element?: HTMLDivElement
 	name?: string
-	value?: string
+	value?: string | number
 	onremove?: (
 		event: MouseEvent & {
 			currentTarget: EventTarget & HTMLButtonElement

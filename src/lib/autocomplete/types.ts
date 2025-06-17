@@ -1,7 +1,8 @@
 import type { InputFieldProps } from '$lib/types.ts'
 
 export interface AutoCompleteOption {
-	value: string
+	value?: string | number
+	label: string
 	disabled?: boolean
 	selected?: boolean | undefined | null
 }
