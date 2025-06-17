@@ -110,7 +110,7 @@
 	bind:clientWidth
 	bind:clientHeight
 	role="button"
-	tabindex="0"
+	tabindex="-1"
 	onfocus={() => {
 		inputElement?.focus()
 	}}
