@@ -24,6 +24,7 @@
 		children,
 		onfocus,
 		onblur,
+		focused = $bindable(false),
 		clientWidth = $bindable(),
 		clientHeight = $bindable(),
 		...attributes
@@ -33,7 +34,6 @@
 	let errorTextRaw: string = $state(errorText)
 	let focusOnInvalid = $state(true)
 	let doValidity = $state(false)
-	let focused = $state(false)
 
 	reportValidity = () => {
 		if (inputElement) {

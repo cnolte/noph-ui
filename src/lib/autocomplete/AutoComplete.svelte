@@ -24,6 +24,7 @@
 		onkeydown,
 		onclick,
 		oninput,
+		focused = $bindable(false),
 		...attributes
 	}: AutoCompleteProps = $props()
 
@@ -74,6 +75,7 @@
 	populated={finalPopulated}
 	bind:clientWidth
 	bind:value
+	bind:focused
 	style="anchor-name:--{uid};"
 	onclick={(event) => {
 		finalPopulated = true

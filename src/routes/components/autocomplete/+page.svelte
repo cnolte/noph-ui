@@ -14,8 +14,11 @@
 		{ value: 5, label: 'Pineapple' },
 		{ value: 6, label: 'Strawberry' },
 		{ value: 7, label: 'Mango' },
+		{ value: 8, label: 'Melon' },
 	]
 	let fruits: AutoCompleteOption[] = $state([{ value: 1, label: 'Apple' }])
+	let fruitValue = $state('')
+	let focused = $state(false)
 </script>
 
 <svelte:head>
@@ -49,28 +52,37 @@
 		label="Fruits"
 		name="fruit"
 		populated={fruits.length > 0}
+		bind:value={fruitValue}
+		bind:focused
 		oncomplete={(option) => {
 			fruits.push(option)
 		}}
 		optionsFilter={(option) => {
-			return !fruits.find((f) => f.value === option.value)
+			return (
+				(fruitValue === '' || option.label.includes(fruitValue)) &&
+				!fruits.find((f) => f.value === option.value)
+			)
 		}}
-		onkeydown={async (e) => {
+		onkeydown={(e) => {
 			if (e.currentTarget && e.key === 'Enter') {
 				e.preventDefault()
-				const newFruit = fruitOption.find((f) => f.label === e.currentTarget.value)
+				const newFruit = fruitOption.find((f) => f.label === fruitValue)
 				if (newFruit) {
 					fruits.push(newFruit)
 				}
-				e.currentTarget.value = ''
+				fruitValue = ''
 			}
 		}}
-		onblur={(e) => {
-			const newFruit = fruitOption.find((f) => f.label === e.currentTarget.value)
+		onblur={() => {
+			const newFruit = fruitOption.find((f) => f.label === fruitValue)
 			if (newFruit) {
 				fruits.push(newFruit)
 			}
-			e.currentTarget.value = ''
+			setTimeout(() => {
+				if (!focused) {
+					fruitValue = ''
+				}
+			}, 300)
 		}}
 	>
 		<ChipSet>
