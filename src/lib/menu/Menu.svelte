@@ -78,6 +78,10 @@
 		return window
 	}
 
+	const onScroll = () => {
+		refreshValues()
+	}
+
 	$effect(() => {
 		if (anchor && element) {
 			if (style) {
@@ -89,13 +93,7 @@
 					element?.style.setProperty(key, value)
 				})
 			}
-			getScrollableParent(element).addEventListener(
-				'scroll',
-				() => {
-					refreshValues()
-				},
-				{ passive: true },
-			)
+			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
 			if (
 				'anchorName' in document.documentElement.style &&
 				!anchor.style.getPropertyValue('anchor-name')
@@ -103,6 +101,11 @@
 				const generatedId = `--${crypto.randomUUID()}`
 				element.style.setProperty('position-anchor', generatedId)
 				anchor.style.setProperty('anchor-name', generatedId)
+			}
+		}
+		return () => {
+			if (element) {
+				getScrollableParent(element).removeEventListener('scroll', onScroll)
 			}
 		}
 	})

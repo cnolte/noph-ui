@@ -60,39 +60,56 @@
 		inputElement?.setCustomValidity(error ? errorText : '')
 	})
 
+	const onReset = () => {
+		errorRaw = error
+		value = ''
+	}
+
+	const onInput = () => {
+		doValidity = true
+	}
+
+	const onInvalid = (event: Event) => {
+		event.preventDefault()
+		const { currentTarget } = event as Event & {
+			currentTarget: HTMLInputElement | HTMLTextAreaElement
+		}
+		errorRaw = true
+		if (errorText === '') {
+			errorTextRaw = currentTarget.validationMessage
+		}
+		if (focusOnInvalid && isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+			currentTarget.focus()
+		}
+	}
+
+	const onBlur = () => {
+		queueMicrotask(() => {
+			if (doValidity && inputElement) {
+				focusOnInvalid = false
+				if (checkValidity()) {
+					errorRaw = error
+					errorTextRaw = errorText
+				}
+				focusOnInvalid = true
+			}
+		})
+	}
+
 	$effect(() => {
 		if (inputElement) {
-			inputElement.form?.addEventListener('reset', () => {
-				errorRaw = error
-				value = ''
-			})
-			inputElement.addEventListener('input', () => {
-				doValidity = true
-			})
-			inputElement.addEventListener('invalid', (event) => {
-				event.preventDefault()
-				const { currentTarget } = event as Event & {
-					currentTarget: HTMLInputElement | HTMLTextAreaElement
-				}
-				errorRaw = true
-				if (errorText === '') {
-					errorTextRaw = currentTarget.validationMessage
-				}
-				if (focusOnInvalid && isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-					currentTarget.focus()
-				}
-			})
-
-			inputElement.addEventListener('blur', () => {
-				if (doValidity) {
-					focusOnInvalid = false
-					if (checkValidity()) {
-						errorRaw = error
-						errorTextRaw = errorText
-					}
-					focusOnInvalid = true
-				}
-			})
+			inputElement.form?.addEventListener('reset', onReset)
+			inputElement.addEventListener('input', onInput)
+			inputElement.addEventListener('invalid', onInvalid)
+			inputElement.addEventListener('blur', onBlur)
+		}
+		return () => {
+			if (inputElement) {
+				inputElement.removeEventListener('reset', onReset)
+				inputElement.removeEventListener('input', onInput)
+				inputElement.removeEventListener('invalid', onInvalid)
+				inputElement.removeEventListener('blur', onBlur)
+			}
 		}
 	})
 </script>

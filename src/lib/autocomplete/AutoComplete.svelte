@@ -30,7 +30,7 @@
 
 	const uid = $props.id()
 	let defaultOptionsFilter = (option: AutoCompleteOption) => {
-		return !value || option.label.includes(value)
+		return !value || option.label.toLocaleLowerCase().includes(value.toLocaleLowerCase())
 	}
 	let displayOptions = $derived(options.filter(optionsFilter || defaultOptionsFilter))
 	let useVirtualList = $derived(displayOptions.length > 4000)

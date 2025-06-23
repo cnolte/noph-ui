@@ -102,11 +102,17 @@
 		errorTextRaw = errorText
 		selectElement?.setCustomValidity(error ? errorText : '')
 	})
+	const onReset = () => {
+		errorRaw = error
+	}
 	$effect(() => {
 		if (selectElement) {
-			selectElement.form?.addEventListener('reset', () => {
-				errorRaw = error
-			})
+			selectElement.form?.addEventListener('reset', onReset)
+		}
+		return () => {
+			if (selectElement) {
+				selectElement.form?.removeEventListener('reset', onReset)
+			}
 		}
 	})
 	const handleOptionSelect = (event: Event, option: SelectOption) => {

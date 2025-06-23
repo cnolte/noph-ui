@@ -41,6 +41,24 @@
 		return event.pointerType === 'touch'
 	}
 
+	const onPointerenter = (event: PointerEvent) => {
+		if (!isTouch(event)) {
+			element?.showPopover()
+		}
+	}
+
+	const onPointerleave = (event: PointerEvent) => {
+		if (!isTouch(event)) {
+			element?.hidePopover()
+		}
+	}
+
+	const onPointerup = (event: PointerEvent) => {
+		if (!isTouch(event)) {
+			element?.hidePopover()
+		}
+	}
+
 	$effect(() => {
 		if (anchor && element) {
 			if ('anchorName' in document.documentElement.style) {
@@ -51,22 +69,17 @@
 					anchor.style.setProperty('anchor-name', generatedId)
 				}
 			}
-			anchor.addEventListener('pointerenter', (event: PointerEvent) => {
-				if (!isTouch(event)) {
-					element?.showPopover()
-				}
-			})
-			anchor.addEventListener('pointerleave', (event: PointerEvent) => {
-				if (!isTouch(event)) {
-					element?.hidePopover()
-				}
-			})
+			anchor.addEventListener('pointerenter', onPointerenter)
+			anchor.addEventListener('pointerleave', onPointerleave)
 			if (!keepTooltipOnClick) {
-				anchor.addEventListener('pointerup', (event: PointerEvent) => {
-					if (!isTouch(event)) {
-						element?.hidePopover()
-					}
-				})
+				anchor.addEventListener('pointerup', onPointerup)
+			}
+		}
+		return () => {
+			if (anchor) {
+				anchor.removeEventListener('pointerenter', onPointerenter)
+				anchor.removeEventListener('pointerleave', onPointerleave)
+				anchor.removeEventListener('pointerup', onPointerup)
 			}
 		}
 	})

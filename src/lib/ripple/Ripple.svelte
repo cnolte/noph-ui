@@ -258,7 +258,7 @@
 		endPressAnimation()
 	}
 
-	const addEvents = (el: HTMLElement) => {
+	const removeEvents = (el: HTMLElement) => {
 		el.removeEventListener('click', handleClick)
 		el.removeEventListener('contextmenu', handleContextmenu)
 		el.removeEventListener('pointercancel', handlePointercancel)
@@ -266,6 +266,10 @@
 		el.removeEventListener('pointerenter', handlePointerenter)
 		el.removeEventListener('pointerleave', handlePointerleave)
 		el.removeEventListener('pointerup', handlePointerup)
+	}
+
+	const addEvents = (el: HTMLElement) => {
+		removeEvents(el)
 
 		el.addEventListener('click', handleClick)
 		el.addEventListener('contextmenu', handleContextmenu)
@@ -283,6 +287,14 @@
 		} else {
 			if (!forcedColors.matches && element) {
 				addEvents(element)
+			}
+		}
+		return () => {
+			if (forElement) {
+				removeEvents(forElement)
+			}
+			if (element) {
+				removeEvents(element)
 			}
 		}
 	})
