@@ -55,3 +55,7 @@ export interface InputChipProps extends HTMLAttributes<HTMLDivElement> {
 		},
 	) => void
 }
+
+export interface ChipSetContext {
+	chips: { label: string; name: string | undefined; value: string | number | undefined }[]
+}

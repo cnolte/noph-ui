@@ -59,7 +59,8 @@
 		}}
 		optionsFilter={(option) => {
 			return (
-				(fruitValue === '' || option.label.includes(fruitValue)) &&
+				(fruitValue === '' ||
+					option.label.toLocaleLowerCase().includes(fruitValue.toLocaleLowerCase())) &&
 				!fruits.find((f) => f.value === option.value)
 			)
 		}}

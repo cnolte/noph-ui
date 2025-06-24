@@ -2,8 +2,8 @@
 	import IconButton from '$lib/button/IconButton.svelte'
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { onMount } from 'svelte'
-	import type { InputChipProps } from './types.ts'
+	import { getContext, onMount } from 'svelte'
+	import type { ChipSetContext, InputChipProps } from './types.ts'
 
 	let {
 		selected = $bindable(),
@@ -20,6 +20,7 @@
 
 	let chipLabel: HTMLDivElement | undefined = $state()
 	let visible = $state(false)
+	let chipSet: ChipSetContext = getContext('chipSet')
 
 	onMount(() => {
 		const observer = new IntersectionObserver((entries) => {
@@ -34,8 +35,15 @@
 		if (element) {
 			observer.observe(element)
 		}
+		chipSet.chips.push({ label: label, name: name, value: value })
 
-		return () => observer.disconnect()
+		return () => {
+			observer.disconnect()
+			const index = chipSet.chips.findIndex((chip) => chip.value === value)
+			if (index !== -1) {
+				chipSet.chips.splice(index, 1)
+			}
+		}
 	})
 </script>
 

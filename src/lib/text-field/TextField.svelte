@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import type { FocusEventHandler } from 'svelte/elements'
+	import type { FocusEventHandler, EventHandler } from 'svelte/elements'
 	import type { TextFieldProps } from './types.ts'
 
 	let {
@@ -22,6 +22,8 @@
 		reportValidity = $bindable(),
 		checkValidity = $bindable(),
 		children,
+		oninput,
+		oninvalid,
 		onfocus,
 		onblur,
 		focused = $bindable(false),
@@ -65,15 +67,22 @@
 		value = ''
 	}
 
-	const onInput = () => {
+	const onInputEvent = (
+		event: Event & {
+			currentTarget: (EventTarget & HTMLInputElement) | HTMLTextAreaElement
+		},
+	) => {
 		doValidity = true
+		;(oninput as EventHandler)?.(event)
 	}
 
-	const onInvalid = (event: Event) => {
-		event.preventDefault()
-		const { currentTarget } = event as Event & {
+	const onInvalidEvent = (
+		event: Event & {
 			currentTarget: HTMLInputElement | HTMLTextAreaElement
-		}
+		},
+	) => {
+		event.preventDefault()
+		const { currentTarget } = event
 		errorRaw = true
 		if (errorText === '') {
 			errorTextRaw = currentTarget.validationMessage
@@ -81,34 +90,43 @@
 		if (focusOnInvalid && isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
 			currentTarget.focus()
 		}
+		;(oninvalid as EventHandler)?.(event)
 	}
 
-	const onBlur = () => {
-		queueMicrotask(() => {
-			if (doValidity && inputElement) {
-				focusOnInvalid = false
-				if (checkValidity()) {
-					errorRaw = error
-					errorTextRaw = errorText
-				}
-				focusOnInvalid = true
+	const onFocusEvent = (
+		event: FocusEvent & {
+			currentTarget: EventTarget & (HTMLInputElement | HTMLTextAreaElement)
+		},
+	) => {
+		focused = true
+		;(onfocus as FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>)?.(event)
+	}
+
+	const onBlurEvent = (
+		event: FocusEvent & {
+			currentTarget: EventTarget & (HTMLInputElement | HTMLTextAreaElement)
+		},
+	) => {
+		focused = false
+		if (doValidity) {
+			focusOnInvalid = false
+			if (checkValidity()) {
+				errorRaw = error
+				errorTextRaw = errorText
 			}
-		})
+		} else {
+			focusOnInvalid = true
+		}
+		;(onblur as FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>)?.(event)
 	}
 
 	$effect(() => {
 		if (inputElement) {
 			inputElement.form?.addEventListener('reset', onReset)
-			inputElement.addEventListener('input', onInput)
-			inputElement.addEventListener('invalid', onInvalid)
-			inputElement.addEventListener('blur', onBlur)
 		}
 		return () => {
 			if (inputElement) {
-				inputElement.removeEventListener('reset', onReset)
-				inputElement.removeEventListener('input', onInput)
-				inputElement.removeEventListener('invalid', onInvalid)
-				inputElement.removeEventListener('blur', onBlur)
+				inputElement.form?.removeEventListener('reset', onReset)
 			}
 		}
 	})
@@ -192,14 +210,10 @@
 							<textarea
 								aria-label={label}
 								{...attributes}
-								onfocus={(event) => {
-									focused = true
-									;(onfocus as FocusEventHandler<HTMLTextAreaElement>)?.(event)
-								}}
-								onblur={(event) => {
-									focused = false
-									;(onblur as FocusEventHandler<HTMLTextAreaElement>)?.(event)
-								}}
+								oninput={onInputEvent}
+								oninvalid={onInvalidEvent}
+								onfocus={onFocusEvent}
+								onblur={onBlurEvent}
 								bind:value
 								bind:this={inputElement}
 								class="input"
@@ -218,14 +232,10 @@
 									{...attributes}
 									bind:value
 									bind:this={inputElement}
-									onfocus={(event) => {
-										focused = true
-										;(onfocus as FocusEventHandler<HTMLInputElement>)?.(event)
-									}}
-									onblur={(event) => {
-										focused = false
-										;(onblur as FocusEventHandler<HTMLInputElement>)?.(event)
-									}}
+									oninput={onInputEvent}
+									oninvalid={onInvalidEvent}
+									onfocus={onFocusEvent}
+									onblur={onBlurEvent}
 									class="input"
 									aria-invalid={errorRaw}
 								/>
@@ -514,7 +524,6 @@
 	}
 	:global(.content .input-wrapper .np-chip-set) {
 		margin-top: calc(var(--top-space, 1.5rem) - 4px);
-		margin-right: 0.5rem;
 	}
 
 	.prefix {
