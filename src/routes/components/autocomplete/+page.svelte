@@ -86,7 +86,7 @@
 			}, 300)
 		}}
 	>
-		<ChipSet>
+		<ChipSet chipsCount={fruits.length}>
 			{#each fruits as fruit, index (index)}
 				<InputChip
 					name="fruit"

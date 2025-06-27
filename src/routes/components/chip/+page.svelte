@@ -133,7 +133,7 @@
 			}
 		}}
 	>
-		<ChipSet>
+		<ChipSet chipsCount={emails.length}>
 			{#each emails as email, index (index)}
 				<InputChip
 					name="email"

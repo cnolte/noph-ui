@@ -1,17 +1,12 @@
 <script lang="ts">
-	import { setContext } from 'svelte'
-	import type { ChipSetContext, ChipSetProps } from './types.ts'
+	import type { ChipSetProps } from './types.ts'
 
-	let { children, ...attributes }: ChipSetProps = $props()
-	let chipSet: ChipSetContext = $state({
-		chips: [],
-	})
-	setContext('chipSet', chipSet)
+	let { children, chipsCount, ...attributes }: ChipSetProps = $props()
 </script>
 
 {#if children}
 	<div
-		class={['np-chip-set', chipSet.chips.length > 0 && 'np-chip-set-has-chips', attributes.class]}
+		class={['np-chip-set', (chipsCount ?? 0) > 0 && 'np-chip-set-has-chips', attributes.class]}
 		style={attributes.style}
 		role="toolbar"
 	>

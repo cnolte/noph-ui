@@ -1,7 +1,9 @@
 import type { Snippet } from 'svelte'
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-export type ChipSetProps = HTMLAttributes<HTMLDivElement>
+export interface ChipSetProps extends HTMLAttributes<HTMLDivElement> {
+	chipsCount?: number
+}
 
 interface AssistChipButtonProps extends HTMLButtonAttributes {
 	elevated?: boolean

@@ -3,8 +3,7 @@
 	import CheckIcon from '$lib/icons/CheckIcon.svelte'
 	import CloseIcon from '$lib/icons/CloseIcon.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { getContext, onMount } from 'svelte'
-	import type { ChipSetContext, FilterChipProps } from './types.ts'
+	import type { FilterChipProps } from './types.ts'
 
 	let {
 		selected = $bindable(),
@@ -24,17 +23,6 @@
 	}: FilterChipProps = $props()
 
 	let chipLabel: HTMLLabelElement | undefined = $state()
-	let chipSet: ChipSetContext = getContext('chipSet')
-
-	onMount(() => {
-		chipSet.chips.push({ label: label, name: name, value: value })
-		return () => {
-			const index = chipSet.chips.findIndex((chip) => chip.value === value)
-			if (index !== -1) {
-				chipSet.chips.splice(index, 1)
-			}
-		}
-	})
 
 	$effect(() => {
 		if (group && value) {
