@@ -2,13 +2,13 @@
 	import type { MenuProps } from './types.ts'
 
 	let {
-		anchor,
 		children,
 		element = $bindable(),
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
 		style,
 		popover = 'auto',
+		anchor,
 		...attributes
 	}: MenuProps = $props()
 
@@ -24,8 +24,10 @@
 	hidePopover = () => {
 		element?.hidePopover()
 	}
-
 	const refreshValues = () => {
+		if ('anchorName' in document.documentElement.style) {
+			return
+		}
 		if (element && anchor && menuOpen) {
 			const anchorRect = anchor.getBoundingClientRect()
 			let maxHeight: number
@@ -83,28 +85,11 @@
 	}
 
 	$effect(() => {
-		if (anchor && element) {
-			if (style) {
-				const styleEntries = style
-					.split(';')
-					.filter(Boolean)
-					.map((entry) => entry.split(':').map((str) => str.trim()))
-				styleEntries.forEach(([key, value]) => {
-					element?.style.setProperty(key, value)
-				})
-			}
+		if (element && !('anchorName' in document.documentElement.style)) {
 			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
-			if (
-				'anchorName' in document.documentElement.style &&
-				!anchor.style.getPropertyValue('anchor-name')
-			) {
-				const generatedId = `--${crypto.randomUUID()}`
-				element.style.setProperty('position-anchor', generatedId)
-				anchor.style.setProperty('anchor-name', generatedId)
-			}
 		}
 		return () => {
-			if (element) {
+			if (element && !('anchorName' in document.documentElement.style)) {
 				getScrollableParent(element).removeEventListener('scroll', onScroll)
 			}
 		}
@@ -125,6 +110,7 @@
 	}}
 	{popover}
 	class={['np-menu-container', attributes.class]}
+	{style}
 >
 	<div class="np-menu">
 		{@render children()}
