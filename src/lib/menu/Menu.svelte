@@ -25,9 +25,6 @@
 		element?.hidePopover()
 	}
 	const refreshValues = () => {
-		if ('anchorName' in document.documentElement.style) {
-			return
-		}
 		if (element && anchor && menuOpen) {
 			const anchorRect = anchor.getBoundingClientRect()
 			let maxHeight: number
@@ -85,7 +82,7 @@
 	}
 
 	$effect(() => {
-		if (element && !('anchorName' in document.documentElement.style)) {
+		if (element) {
 			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
 		}
 		return () => {
