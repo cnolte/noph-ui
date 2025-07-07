@@ -835,5 +835,6 @@
 
 	input:-webkit-autofill {
 		-webkit-background-clip: text;
+		-webkit-text-fill-color: var(--np-color-on-surface);
 	}
 </style>
