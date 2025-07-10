@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import type { IconButtonProps } from './types.ts'
@@ -15,6 +16,8 @@
 		title,
 		element = $bindable(),
 		disabled,
+		loading = false,
+		loadingAriaLabel,
 		selected = $bindable(false),
 		selectedIcon,
 		keepTooltipOnClick,
@@ -34,9 +37,14 @@
 </script>
 
 {#snippet content()}
-	{#if !disabled}
+	{#if !disabled && !loading}
 		<Ripple forElement={touchEl} />
 		<span class="np-touch" bind:this={touchEl}></span>
+	{/if}
+	{#if loading}
+		<div class="circular-progress">
+			<CircularProgress aria-label={loadingAriaLabel} indeterminate />
+		</div>
 	{/if}
 	{#if selectedIcon && selected}
 		{@render selectedIcon()}
@@ -45,13 +53,13 @@
 	{/if}
 {/snippet}
 
-{#if isButton(attributes) || disabled}
+{#if isButton(attributes) || disabled || loading}
 	<button
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		aria-pressed={selected}
 		{...attributes as HTMLButtonAttributes}
-		{disabled}
+		disabled={disabled || loading}
 		bind:this={element}
 		onclick={(event) => {
 			if (toggle) {
@@ -61,7 +69,7 @@
 		}}
 		class={[
 			'np-icon-button',
-			disabled ? `${variant}-disabled disabled` : `${variant} enabled`,
+			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
 			toggle && 'toggle',
 			(selected || (variant !== 'outlined' && variant !== 'text' && !toggle)) && 'selected',
 			attributes.class,
@@ -260,5 +268,11 @@
 		position: absolute;
 		height: max(calc(var(--_button-height, 40px) + 8px), 100%);
 		width: max(calc(var(--_button-width, 40px) + 8px), 100%);
+	}
+
+	.circular-progress {
+		--np-circular-progress-size: calc(var(--button-height) * 0.75);
+		--np-circular-progress-color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
+		position: absolute;
 	}
 </style>

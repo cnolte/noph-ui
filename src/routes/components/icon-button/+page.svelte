@@ -128,6 +128,28 @@
 	<IconButton {selectedIcon} variant="outlined" toggle selected><Icon>close</Icon></IconButton>
 </div>`}
 />
+<h2>Loading</h2>
+<DemoContainer>
+	<IconButton loading loadingAriaLabel="Loading text"><Icon>check</Icon></IconButton>
+	<IconButton loading loadingAriaLabel="Loading filles" variant="filled"
+		><Icon>check</Icon></IconButton
+	>
+	<IconButton loading loadingAriaLabel="Loading tonal" variant="tonal"
+		><Icon>check</Icon></IconButton
+	>
+	<IconButton loading loadingAriaLabel="Loading outlined" variant="outlined"
+		><Icon>check</Icon></IconButton
+	>
+</DemoContainer>
+<Code
+	value={`<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
+<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
+<Button loading loadingAriaLabel="Loading text" variant="text">Text</Button>`}
+/>
+<blockquote>
+	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
+	when using the loading state.
+</blockquote>
 <h2>Tooltip</h2>
 <DemoContainer>
 	<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>
@@ -438,6 +460,18 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td>Disables the button.</td>
+		</tr>
+		<tr>
+			<td><code>loading</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Sets the button to a loading state.</td>
+		</tr>
+		<tr>
+			<td><code>loadingAriaLabel</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Provides an accessibility label for the loading state.</td>
 		</tr>
 		<tr>
 			<td><code>title</code></td>

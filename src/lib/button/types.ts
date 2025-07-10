@@ -27,6 +27,8 @@ interface IconButtonButtonProps extends HTMLButtonAttributes {
 	element?: HTMLElement
 	toggle?: boolean
 	selected?: boolean
+	loading?: boolean
+	loadingAriaLabel?: string
 	keepTooltipOnClick?: boolean
 	selectedIcon?: Snippet
 }
@@ -34,6 +36,8 @@ interface IconButtonAnchorProps extends HTMLAnchorAttributes {
 	variant?: 'text' | 'filled' | 'outlined' | 'tonal'
 	element?: HTMLElement
 	disabled?: boolean
+	loading?: boolean
+	loadingAriaLabel?: string
 	toggle?: boolean
 	selected?: boolean
 	keepTooltipOnClick?: boolean
