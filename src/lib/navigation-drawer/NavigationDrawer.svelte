@@ -80,7 +80,7 @@
 	}
 	.np-navigation-drawer {
 		display: flex;
-		padding: 0.75rem;
+		padding: 1.25rem;
 		flex-direction: column;
 	}
 	.np-navigation-drawer-shade {
