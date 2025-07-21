@@ -24,7 +24,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
-		overflow: auto;
 		align-items: center;
 		min-width: 0;
 	}
