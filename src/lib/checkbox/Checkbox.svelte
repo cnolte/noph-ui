@@ -8,6 +8,7 @@
 		element = $bindable(),
 		group = $bindable(),
 		style,
+		onpointerup,
 		...attributes
 	}: CheckboxProps = $props()
 
@@ -33,22 +34,24 @@
 			}
 		}
 	})
+	let inputEl: HTMLInputElement | undefined = $state()
 </script>
 
 <div {style} class={['np-host', attributes.class]} bind:this={element}>
 	<div class="np-container">
 		<label class="np-input-wrapper">
+			{#if !attributes.disabled}
+				<Ripple forElement={inputEl} />
+			{/if}
 			<input
 				{...attributes}
 				class="np-input"
 				type="checkbox"
 				bind:indeterminate
 				bind:checked
+				bind:this={inputEl}
 				aria-checked={indeterminate ? 'mixed' : undefined}
 			/>
-			{#if !attributes.disabled}
-				<Ripple />
-			{/if}
 		</label>
 
 		<div class="np-outline"></div>

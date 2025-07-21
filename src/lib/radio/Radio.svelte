@@ -11,18 +11,13 @@
 		...attributes
 	}: RadioProps = $props()
 
-	let touchEl: HTMLSpanElement | undefined = $state()
+	let inputEl: HTMLSpanElement | undefined = $state()
 </script>
 
 <label {style} class={['np-host', attributes.class]} bind:this={element}>
-	{#if group !== undefined}
-		<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} bind:group />
-	{:else}
-		<input {...attributes} type="radio" class="np-input" {checked} {defaultChecked} />
-	{/if}
 	<div class="np-container" aria-hidden="true">
 		{#if !attributes.disabled}
-			<Ripple forElement={touchEl} class="np-radio-ripple" />
+			<Ripple forElement={inputEl} class="np-radio-ripple" />
 		{/if}
 		<svg class="np-radio-icon" viewBox="0 0 20 20">
 			<mask id="1">
@@ -32,7 +27,26 @@
 			<circle class="outer circle" cx="10" cy="10" r="10" mask="url(#1)" />
 			<circle class="inner circle" cx="10" cy="10" r="5" />
 		</svg>
-		<span class="np-touch" bind:this={touchEl}></span>
+		{#if group !== undefined}
+			<input
+				{...attributes}
+				bind:this={inputEl}
+				type="radio"
+				class="np-input"
+				{checked}
+				{defaultChecked}
+				bind:group
+			/>
+		{:else}
+			<input
+				{...attributes}
+				bind:this={inputEl}
+				type="radio"
+				class="np-input"
+				{checked}
+				{defaultChecked}
+			/>
+		{/if}
 	</div>
 </label>
 
@@ -45,9 +59,11 @@
 	}
 	.np-input {
 		opacity: 0;
-		inset: 0;
+		margin: 0;
 		position: absolute;
 		cursor: inherit;
+		height: 48px;
+		width: 48px;
 	}
 	.np-host {
 		margin: max(0px, (48px - var(--np-radio-icon-size, 20px))/2);
@@ -91,11 +107,6 @@
 		place-content: center;
 		place-items: center;
 		width: 100%;
-	}
-	.np-touch {
-		height: 48px;
-		position: absolute;
-		width: 48px;
 	}
 	.np-radio-icon {
 		fill: var(--np-radio-icon-color, var(--np-color-on-surface-variant));
