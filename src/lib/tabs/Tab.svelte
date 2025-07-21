@@ -212,7 +212,7 @@
 
 	.np-tab:focus-visible .focus-area {
 		outline-style: solid;
-		outline-color: var(--np-color-primary);
+		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
 		animation: focusAnimation 0.3s ease forwards;

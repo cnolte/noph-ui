@@ -158,7 +158,7 @@
 
 	.np-item:focus-visible {
 		outline-style: solid;
-		outline-color: var(--np-color-primary);
+		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
 		border-radius: var(--np-shape-corner-extra-small);

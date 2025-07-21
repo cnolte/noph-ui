@@ -55,7 +55,7 @@
 	}
 	.np-navigation-action:focus-visible {
 		outline-style: solid;
-		outline-color: var(--np-color-primary);
+		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
 		border-radius: 1rem;

@@ -52,7 +52,6 @@
 
 <style>
 	:global(.np-radio-ripple) {
-		border-radius: 50% !important;
 		height: 40px;
 		inset: unset !important;
 		width: 40px;
@@ -79,7 +78,7 @@
 
 	.np-host:has(input:focus-visible) .np-container {
 		outline-style: solid;
-		outline-color: var(--np-color-primary);
+		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 12px;
 		border-radius: 50%;
@@ -104,6 +103,7 @@
 	.np-container {
 		display: flex;
 		height: 100%;
+		border-radius: var(--np-shape-corner-full);
 		place-content: center;
 		place-items: center;
 		width: 100%;

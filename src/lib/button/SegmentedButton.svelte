@@ -215,7 +215,7 @@
 
 	.np-segmented-buttons:has(input:focus-visible) {
 		outline-style: solid;
-		outline-color: var(--np-color-primary);
+		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
 		animation: focusAnimation 0.3s ease forwards;

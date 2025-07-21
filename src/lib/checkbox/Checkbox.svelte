@@ -92,16 +92,20 @@
 	}
 	.np-input {
 		height: 48px;
+		width: 48px;
 		margin: 0;
 		opacity: 0;
+		inset: 0;
+		top: -4px;
+		left: -4px;
+		position: absolute;
 		outline: none;
-		width: 48px;
 		cursor: inherit;
 	}
 	.np-input-wrapper {
-		height: 48px;
+		height: 40px;
 		position: absolute;
-		width: 48px;
+		width: 40px;
 		z-index: 1;
 		border-radius: var(--np-shape-corner-full);
 		cursor: inherit;
@@ -109,7 +113,7 @@
 
 	.np-input-wrapper:has(input:focus-visible) {
 		outline-style: solid;
-		outline-color: var(--np-color-primary);
+		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
 		animation: focusAnimation 0.3s ease forwards;
