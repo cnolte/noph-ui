@@ -4,21 +4,29 @@
 	let { children, chipsCount, ...attributes }: ChipSetProps = $props()
 </script>
 
-{#if children}
-	<div
-		class={['np-chip-set', (chipsCount ?? 0) > 0 && 'np-chip-set-has-chips', attributes.class]}
-		style={attributes.style}
-		role="toolbar"
-	>
-		{@render children()}
-	</div>
-{/if}
+<div
+	class={[
+		'np-chip-set-wrapper',
+		(chipsCount ?? 0) > 0 && 'np-chip-set-has-chips',
+		attributes.class,
+	]}
+	style={attributes.style}
+>
+	{#if children}
+		<div class={['np-chip-set']} role="toolbar">
+			{@render children()}
+		</div>
+	{/if}
+</div>
 
 <style>
+	.np-chip-set-wrapper {
+		overflow: auto;
+		padding: 0.5rem;
+		margin: -0.5rem;
+	}
 	.np-chip-set-has-chips {
-		margin-right: 0.5rem;
-		padding-block: 2px;
-		padding-right: 2px;
+		margin-right: 0;
 	}
 	.np-chip-set {
 		display: flex;

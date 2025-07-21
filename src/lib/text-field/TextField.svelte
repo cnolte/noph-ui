@@ -522,8 +522,9 @@
 	.content .input-wrapper .input {
 		min-width: 20px;
 	}
-	:global(.content .input-wrapper .np-chip-set) {
-		margin-top: calc(var(--top-space, 1.5rem) - 4px);
+	:global(.content .input-wrapper .np-chip-set-wrapper) {
+		padding-top: calc(var(--top-space, 1.5rem) - 3px);
+		margin-top: 0;
 	}
 
 	.prefix {
