@@ -110,14 +110,39 @@
 </blockquote>
 <h2>Size</h2>
 <DemoContainer>
-	<Button>Default: 40px</Button>
-	<Button --np-outlined-button-container-height="48px">Height: 48px</Button>
-	<Button --np-outlined-button-container-height="56px">Height: 56px</Button>
+	<Button size="xs">{#snippet start()} <Icon>add</Icon>{/snippet}Extra small</Button>
+	<Button size="s">{#snippet start()} <Icon>add</Icon>{/snippet}Small</Button>
+	<Button size="m">{#snippet start()} <Icon>add</Icon>{/snippet}Medium</Button>
+	<Button size="l">{#snippet start()} <Icon>add</Icon>{/snippet}Large</Button>
+	<Button size="xl">{#snippet start()} <Icon>add</Icon>{/snippet}Extra large</Button>
 </DemoContainer>
 <Code
-	value={`<Button>Default: 40px</Button>
-<Button --np-outlined-button-container-height="48px">Height: 48px</Button>
-<Button --np-outlined-button-container-height="56px">Height: 56px</Button>`}
+	value={`<Button size="xs">Extra small</Button>
+<Button size="s">Small</Button>
+<Button size="m">Medium</Button>
+<Button size="l">Large</Button>
+<Button size="xl">Extra large</Button>`}
+/>
+<h2>Toggle</h2>
+<DemoContainer style="flex-direction: column">
+	<div class="button-list">
+		<Button toggle variant="elevated">Elevated</Button>
+		<Button toggle variant="filled">Filled</Button>
+		<Button toggle variant="tonal">Tonal</Button>
+		<Button toggle variant="outlined">Outlined</Button>
+	</div>
+	<div class="button-list">
+		<Button toggle selected variant="elevated">Elevated</Button>
+		<Button toggle selected variant="filled">Filled</Button>
+		<Button toggle selected variant="tonal">Tonal</Button>
+		<Button toggle selected variant="outlined">Outlined</Button>
+	</div>
+</DemoContainer>
+<Code
+	value={`<Button toggle selected variant="elevated">Elevated</Button>
+<Button toggle selected variant="filled">Filled</Button>
+<Button toggle selected variant="tonal">Tonal</Button>
+<Button toggle selected variant="outlined">Outlined</Button>`}
 />
 <h2>Theming</h2>
 
@@ -135,14 +160,6 @@
 			<td><code>--np-color-surface-container-low</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-elevated-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-elevated-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
 			<td><code>--np-elevated-button-label-text-color</code></td>
 			<td><code>--np-color-on-primary</code></td>
 		</tr>
@@ -150,12 +167,7 @@
 </table>
 <h3>Elevated button example</h3>
 <DemoContainer>
-	<Button
-		variant="elevated"
-		--np-elevated-button-label-text-color="var(--np-color-tertiary)"
-		--np-elevated-button-container-shape="4px"
-		--np-elevated-button-container-height="48px"
-	>
+	<Button variant="elevated" --np-elevated-button-label-text-color="var(--np-color-tertiary)">
 		Custom button
 	</Button>
 </DemoContainer>
@@ -163,8 +175,6 @@
 	value={`<Button
 	variant="elevated"
 	--np-elevated-button-label-text-color="var(--np-color-tertiary)"
-	--np-elevated-button-container-shape="4px"
-	--np-elevated-button-container-height="48px"
 >
 	Custom button
 </Button>`}
@@ -184,14 +194,6 @@
 			<td><code>--np-color-primary</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-filled-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-filled-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
 			<td><code>--np-filled-button-label-text-color</code></td>
 			<td><code>--np-color-on-primary</code></td>
 		</tr>
@@ -203,8 +205,6 @@
 		variant="filled"
 		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
 		--np-filled-button-container-color="var(--np-color-tertiary)"
-		--np-filled-button-container-shape="4px"
-		--np-filled-button-container-height="48px"
 	>
 		Custom button
 	</Button>
@@ -215,8 +215,6 @@
 		variant="filled"
 		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
 		--np-filled-button-container-color="var(--np-color-tertiary)"
-		--np-filled-button-container-shape="4px"
-		--np-filled-button-container-height="48px"
 	>
 		Custom button
 	</Button>`}
@@ -236,14 +234,6 @@
 			<td><code>--np-color-secondary-container</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-tonal-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-tonal-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
 			<td><code>--np-tonal-button-label-text-color</code></td>
 			<td><code>--np-color-on-secondary-container</code></td>
 		</tr>
@@ -255,8 +245,6 @@
 		variant="tonal"
 		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
 		--np-tonal-button-container-color="var(--np-color-tertiary-fixed)"
-		--np-tonal-button-container-shape="4px"
-		--np-tonal-button-container-height="48px"
 	>
 		Custom button
 	</Button>
@@ -266,8 +254,6 @@
 		variant="tonal"
 		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
 		--np-tonal-button-container-color="var(--np-color-tertiary-fixed)"
-		--np-tonal-button-container-shape="4px"
-		--np-tonal-button-container-height="48px"
 	>
 		Custom button
 	</Button>`}
@@ -286,14 +272,6 @@
 			<td><code>--np-color-outline</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-outlined-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-outlined-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
 			<td><code>--np-outlined-button-label-text-color</code></td>
 			<td><code>--np-color-primary</code></td>
 		</tr>
@@ -301,12 +279,7 @@
 </table>
 <h3>Outlined button example</h3>
 <DemoContainer>
-	<Button
-		variant="outlined"
-		--np-outlined-button-label-text-color="var(--np-color-tertiary)"
-		--np-outlined-button-container-shape="4px"
-		--np-outlined-button-container-height="48px"
-	>
+	<Button variant="outlined" --np-outlined-button-label-text-color="var(--np-color-tertiary)">
 		Custom button
 	</Button>
 </DemoContainer>
@@ -314,8 +287,6 @@
 	value={`<Button
 	variant="outlined"
 	--np-outlined-button-label-text-color="var(--np-color-tertiary)"
-	--np-outlined-button-container-shape="4px"
-	--np-outlined-button-container-height="48px"
 >
 	Custom button
 </Button>`}
@@ -333,24 +304,11 @@
 			<td><code>--np-text-button-label-text-color</code></td>
 			<td><code>--np-color-primary</code></td>
 		</tr>
-		<tr>
-			<td><code>--np-text-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-text-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
 	</tbody>
 </table>
 <h3>Text button example</h3>
 <DemoContainer>
-	<Button
-		variant="text"
-		--np-text-button-label-text-color="var(--np-color-tertiary)"
-		--np-text-button-container-shape="4px"
-		--np-text-button-container-height="48px"
-	>
+	<Button variant="text" --np-text-button-label-text-color="var(--np-color-tertiary)">
 		Custom button
 	</Button>
 </DemoContainer>
@@ -358,8 +316,6 @@
 	value={`<Button
 	variant="text"
 	--np-text-button-label-text-color="var(--np-color-tertiary)"
-	--np-text-button-container-shape="4px"
-	--np-text-button-container-height="48px"
 >
 	Custom button
 </Button>`}
@@ -425,6 +381,31 @@
 			<td>Specifies the tooltip text.</td>
 		</tr>
 		<tr>
+			<td><code>size</code></td>
+			<td><code>'xs' | 's' | 'm' | 'l' | 'xl'</code></td>
+			<td><code>'s'</code></td>
+			<td>Button size</td>
+		</tr>
+		<tr>
+			<td><code>shape</code></td>
+			<td><code>'round' | 'square'</code></td>
+			<td><code>'round'</code></td>
+			<td>Button shape</td>
+		</tr>
+		<tr>
+			<td><code>toggle</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td><code>false</code></td>
+			<td>Enables toggle behavior, allowing the button to act as a toggleable (on/off) button.</td>
+		</tr>
+		<tr>
+			<td><code>selected</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td><code>false</code></td>
+			<td>Indicates whether the button is currently selected (used with toggle buttons).</td>
+		</tr>
+
+		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLButtonAttributes | HTMLAnchorAttributes</code></td>
 			<td></td>
@@ -458,3 +439,11 @@
 		</tr>
 	</tbody>
 </table>
+
+<style>
+	.button-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+</style>

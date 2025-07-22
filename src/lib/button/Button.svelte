@@ -1,7 +1,11 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type {
+		HTMLAnchorAttributes,
+		HTMLButtonAttributes,
+		MouseEventHandler,
+	} from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'
 	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 
@@ -16,6 +20,11 @@
 		loading = false,
 		keepTooltipOnClick,
 		loadingAriaLabel,
+		size = 's',
+		shape = 'round',
+		toggle = false,
+		selected = $bindable(false),
+		onclick,
 		...attributes
 	}: ButtonProps = $props()
 
@@ -38,21 +47,21 @@
 			<CircularProgress aria-label={loadingAriaLabel} indeterminate />
 		</div>
 	{/if}
-	<div class="button-icon">
-		{#if start}
+	{#if start}
+		<div class="button-icon">
 			{@render start()}
-		{/if}
-	</div>
+		</div>
+	{/if}
 	{#if children}
 		<div class="children-wrapper">
 			{@render children()}
 		</div>
 	{/if}
-	<div class="button-icon">
-		{#if end}
+	{#if end}
+		<div class="button-icon">
 			{@render end()}
-		{/if}
-	</div>
+		</div>
+	{/if}
 {/snippet}
 
 {#if isButton(attributes) || disabled || loading}
@@ -61,9 +70,20 @@
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		disabled={disabled || loading}
+		aria-pressed={selected}
 		bind:this={element}
+		onclick={(event) => {
+			if (toggle) {
+				selected = !selected
+			}
+			;(onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
+		}}
 		class={[
 			'np-button',
+			size,
+			selected ? 'square' : shape,
+			toggle ? 'toggle' : '',
+			selected ? 'selected' : '',
 			loading ? 'np-loading' : '',
 			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
 			attributes.class,
@@ -77,7 +97,7 @@
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class={['np-button', 'enabled', variant, attributes.class]}
+		class={['np-button', size, selected ? 'square' : 'round', 'enabled', variant, attributes.class]}
 	>
 		{@render content()}
 	</a>
@@ -95,7 +115,6 @@
 		text-wrap: nowrap;
 	}
 	.circular-progress {
-		--np-circular-progress-size: calc(var(--button-height) * 0.75);
 		--np-circular-progress-color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 		position: absolute;
 		top: 50%;
@@ -121,11 +140,95 @@
 		overflow: hidden;
 		font-weight: 500;
 		text-decoration: none;
-		font-size: var(--np-button-label-text-font-size, calc(var(--button-height) * 0.35));
-		height: var(--button-height);
-		padding-left: var(--np-button-padding-left, calc((var(--button-height) - 0.5rem) / 2));
-		padding-right: var(--np-button-padding-right, calc((var(--button-height) - 0.5rem) / 2));
-		gap: var(--np-button-gap, calc((var(--button-height) - 1.5rem) / 2));
+		transition:
+			background-color 150ms linear,
+			border-radius 150ms ease-in-out,
+			box-shadow 150ms linear;
+	}
+	.xs {
+		font-size: 0.875rem;
+		height: 2rem;
+		padding-inline: var(--np-button-padding, 0.75rem);
+		gap: var(--np-button-gap, 0.25rem);
+		--_icon-size: var(--np-button-icon-size, 1.25rem);
+		--np-circular-progress-size: 1.75rem;
+	}
+	.xs.round {
+		border-radius: 1rem;
+	}
+	.xs.square {
+		border-radius: var(--np-button-shape, 0.75rem);
+	}
+	.xs:active {
+		border-radius: 0.5rem;
+	}
+	.s {
+		font-size: 0.875rem;
+		height: 2.5rem;
+		padding-inline: var(--np-button-padding, 1rem);
+		gap: var(--np-button-gap, 0.5rem);
+		--_icon-size: var(--np-button-icon-size, 1.25rem);
+		--np-circular-progress-size: 2rem;
+	}
+	.s.round {
+		border-radius: 1.25rem;
+	}
+	.s.square {
+		border-radius: var(--np-button-shape, 0.75rem);
+	}
+	.s:active {
+		border-radius: 0.5rem;
+	}
+	.m {
+		font-size: 1rem;
+		height: 3.5rem;
+		padding-inline: var(--np-button-padding, 1.5rem);
+		gap: var(--np-button-gap, 0.5rem);
+		--_icon-size: var(--np-button-icon-size, 1.5rem);
+		--np-circular-progress-size: 3rem;
+	}
+	.m.round {
+		border-radius: 1.75rem;
+	}
+	.m.square {
+		border-radius: var(--np-button-shape, 1rem);
+	}
+	.m:active {
+		border-radius: 0.75rem;
+	}
+	.l {
+		font-size: 1.5rem;
+		height: 6rem;
+		padding-inline: var(--np-button-padding, 3rem);
+		gap: var(--np-button-gap, 0.75rem);
+		--_icon-size: var(--np-button-icon-size, 2rem);
+		--np-circular-progress-size: 5rem;
+	}
+	.l.round {
+		border-radius: 3rem;
+	}
+	.l.square {
+		border-radius: var(--np-button-shape, 1.75rem);
+	}
+	.l:active {
+		border-radius: 1rem;
+	}
+	.xl {
+		font-size: 2rem;
+		height: 8.5rem;
+		padding-inline: var(--np-button-padding, 4rem);
+		gap: var(--np-button-gap, 1rem);
+		--_icon-size: var(--np-button-icon-size, 2.5rem);
+		--np-circular-progress-size: 7rem;
+	}
+	.xl.round {
+		border-radius: 4.25rem;
+	}
+	.xl.square {
+		border-radius: var(--np-button-shape, 1.75rem);
+	}
+	.xl:active {
+		border-radius: 1rem;
 	}
 	.disabled {
 		pointer-events: none;
@@ -136,32 +239,11 @@
 	.elevated-disabled {
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
-	.filled-disabled {
-		--button-height: var(--np-filled-button-container-height, 2.5rem);
-		border-radius: var(--np-filled-button-container-shape, var(--np-shape-corner-full));
-	}
-	.tonal-disabled {
-		--button-height: var(--np-tonal-button-container-height, 2.5rem);
-		border-radius: var(--np-tonal-button-container-shape, var(--np-shape-corner-full));
-	}
-	.elevated-disabled {
-		--button-height: var(--np-elevated-button-container-height, 2.5rem);
-		border-radius: var(--np-elevated-button-container-shape, var(--np-shape-corner-full));
-	}
 	.outlined-disabled {
-		border: 1px solid;
-		--button-height: var(--np-outlined-button-container-height, 2.5rem);
-		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
-		border-radius: var(--np-outlined-button-container-shape, var(--np-shape-corner-full));
-	}
-	.text-disabled {
-		--button-height: var(--np-text-button-container-height, 2.5rem);
-		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
-		padding-left: calc((var(--button-height) - 1.5rem) / 2);
-		padding-right: calc((var(--button-height) - 1.5rem) / 2);
-	}
-	.enabled {
-		transition: background-color 0.3s ease;
+		outline-style: solid;
+		outline-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+		outline-width: 1px;
+		outline-offset: -1px;
 	}
 	.enabled:focus-visible {
 		outline-style: solid;
@@ -182,25 +264,24 @@
 		}
 	}
 	.text {
-		--button-height: var(--np-text-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		color: var(--np-text-button-label-text-color, var(--np-color-primary));
-		border-radius: var(--np-text-button-container-shape, var(--np-shape-corner-full));
-		padding-left: calc((var(--button-height) - 1.5rem) / 2);
-		padding-right: calc((var(--button-height) - 1.5rem) / 2);
 	}
 	.filled {
-		--button-height: var(--np-filled-button-container-height, 2.5rem);
 		--np-ripple-hover-opacity: 0.12;
 		--np-ripple-hover-color: var(--np-color-surface);
 		--np-ripple-pressed-color: var(--np-color-surface);
-		transition:
-			background-color 150ms linear,
-			box-shadow 150ms linear;
 		color: var(--np-filled-button-label-text-color, var(--np-color-on-primary));
 		background-color: var(--np-filled-button-container-color, var(--np-color-primary));
-		border-radius: var(--np-filled-button-container-shape, var(--np-shape-corner-full));
+	}
+	.filled.toggle {
+		background-color: var(--np-color-surface-container);
+		color: var(--np-color-on-surface-variant);
+	}
+	.filled.selected {
+		background-color: var(--np-color-primary);
+		color: var(--np-color-on-primary);
 	}
 	@media (hover: hover) {
 		.filled:hover {
@@ -216,15 +297,14 @@
 	}
 
 	.tonal {
-		transition:
-			background-color 150ms linear,
-			box-shadow 150ms linear;
-		--button-height: var(--np-tonal-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
 		color: var(--np-tonal-button-label-text-color, var(--np-color-on-secondary-container));
 		background-color: var(--np-tonal-button-container-color, var(--np-color-secondary-container));
-		border-radius: var(--np-tonal-button-container-shape, var(--np-shape-corner-full));
+	}
+	.tonal.selected {
+		background-color: var(--np-color-secondary);
+		color: var(--np-color-on-secondary);
 	}
 
 	@media (hover: hover) {
@@ -241,10 +321,6 @@
 	}
 
 	.elevated {
-		transition:
-			background-color 150ms linear,
-			box-shadow 150ms linear;
-		--button-height: var(--np-elevated-button-container-height, 2.5rem);
 		--np-ripple-hover-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
 		color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
@@ -253,7 +329,10 @@
 			var(--np-color-surface-container-low)
 		);
 		box-shadow: var(--np-elevation-1);
-		border-radius: var(--np-elevated-button-container-shape, var(--np-shape-corner-full));
+	}
+	.elevated.selected {
+		background-color: var(--np-color-primary);
+		color: var(--np-color-on-primary);
 	}
 
 	@media (hover: hover) {
@@ -266,13 +345,19 @@
 	}
 	.outlined {
 		background-color: var(--np-outlined-button-container-color, transparent);
-		border: 1px solid;
-		--button-height: var(--np-outlined-button-container-height, 2.5rem);
+		outline-style: solid;
+		outline-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
+		outline-width: 1px;
+		outline-offset: -1px;
 		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
-		border-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
-		border-radius: var(--np-outlined-button-container-shape, var(--np-shape-corner-full));
+	}
+
+	.outlined.selected {
+		background-color: var(--np-color-inverse-surface);
+		color: var(--np-color-inverse-on-surface);
+		outline-style: none;
 	}
 	.button-icon {
 		display: inline-flex;
@@ -281,7 +366,6 @@
 	}
 
 	:global(.np-button .button-icon) {
-		--_icon-size: var(--np-button-icon-size, calc((var(--button-height) - 0.375rem) / 2));
 		--_icon-color: var(--np-button-icon-color, inherit);
 	}
 

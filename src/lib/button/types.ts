@@ -10,6 +10,10 @@ interface ButtonButtonProps extends HTMLButtonAttributes {
 	loading?: boolean
 	loadingAriaLabel?: string
 	keepTooltipOnClick?: boolean
+	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
+	toggle?: boolean
+	shape?: 'round' | 'square'
+	selected?: boolean
 }
 interface ButtonAnchorProps extends HTMLAnchorAttributes {
 	variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
@@ -20,6 +24,10 @@ interface ButtonAnchorProps extends HTMLAnchorAttributes {
 	disabled?: boolean
 	loading?: boolean
 	loadingAriaLabel?: string
+	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
+	toggle?: boolean
+	shape?: 'round' | 'square'
+	selected?: boolean
 }
 
 interface IconButtonButtonProps extends HTMLButtonAttributes {

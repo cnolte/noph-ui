@@ -9,12 +9,7 @@
 <div class="hero">
 	<h1 class="header">Noph UI</h1>
 	<div class="sub-header">The Ultimate Material 3 UI Library for Svelte 5</div>
-	<Button
-		variant="elevated"
-		--np-elevated-button-container-height="3.5rem"
-		href="/about/quick-start"
-		style="width:fit-content">Get started</Button
-	>
+	<Button variant="elevated" size="m" href="/about/quick-start">Get started</Button>
 </div>
 
 <p>
