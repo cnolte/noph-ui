@@ -54,7 +54,7 @@
 		populated={fruits.length > 0}
 		bind:value={fruitValue}
 		bind:focused
-		oncomplete={(option) => {
+		onoptionselect={(option) => {
 			fruits.push(option)
 		}}
 		optionsFilter={(option) => {

@@ -16,7 +16,9 @@
 		clampMenuWidth = false,
 		children,
 		optionsFilter,
-		oncomplete = (option) => {
+		showPopover = $bindable(),
+		hidePopover = $bindable(),
+		onoptionselect = (option) => {
 			value = option.label
 			finalPopulated = populated
 			menuElement?.hidePopover()
@@ -28,6 +30,13 @@
 		...attributes
 	}: AutoCompleteProps = $props()
 
+	showPopover = () => {
+		menuElement?.showPopover()
+	}
+
+	hidePopover = () => {
+		menuElement?.hidePopover()
+	}
 	const uid = $props.id()
 	let defaultOptionsFilter = (option: AutoCompleteOption) => {
 		return !value || option.label.toLocaleLowerCase().includes(value.toLocaleLowerCase())
@@ -43,7 +52,7 @@
 	<Item
 		onclick={(event) => {
 			event.preventDefault()
-			oncomplete(option)
+			onoptionselect(option)
 			element?.focus()
 		}}
 		disabled={option.disabled}
@@ -57,7 +66,7 @@
 				event.preventDefault()
 			}
 			if (event.key === 'Enter') {
-				oncomplete(option)
+				onoptionselect(option)
 			}
 			if (event.key === 'Tab') {
 				finalPopulated = populated
