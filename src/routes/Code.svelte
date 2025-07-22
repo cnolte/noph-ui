@@ -4,6 +4,7 @@
 
 	let { value }: { value: string } = $props()
 	let title = $state('Copy Code')
+	let selected = $state(false)
 </script>
 
 <div class="code-wrapper">
@@ -12,6 +13,8 @@
 			{title}
 			keepTooltipOnClick
 			style="position:absolute;right:0.4rem;top:0.4rem;"
+			toggle
+			bind:selected
 			onclick={() => {
 				navigator.clipboard.writeText(value)
 				title = 'Copied!'
@@ -19,9 +22,13 @@
 			onmouseleave={() => {
 				setTimeout(() => {
 					title = 'Copy Code'
-				}, 200)
+					selected = false
+				}, 700)
 			}}
 		>
+			{#snippet selectedIcon()}
+				<Icon>check</Icon>
+			{/snippet}
 			<Icon>content_copy</Icon></IconButton
 		>
 		<pre><code>{value}</code></pre>

@@ -43,13 +43,15 @@
 <h2>Tonal icon button</h2>
 <DemoContainer>
 	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>check</Icon></IconButton>
-	<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled
-		><Icon>check</Icon></IconButton
-	>
+	<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled>
+		<Icon>check</Icon>
+	</IconButton>
 </DemoContainer>
 <Code
-	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
-<IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
+	value={`<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>check</Icon></IconButton>
+<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled>
+	<Icon>check</Icon>
+</IconButton>`}
 />
 <h2>Outlined icon button</h2>
 <DemoContainer>
@@ -62,52 +64,48 @@
 	value={`<IconButton variant="outlined"><Icon>check</Icon></IconButton>
 <IconButton variant="outlined" disabled><Icon>check</Icon></IconButton>`}
 />
+<h2>Size</h2>
+<DemoContainer>
+	<IconButton variant="outlined" aria-label="Extra small" size="xs"><Icon>add</Icon></IconButton>
+	<IconButton variant="outlined" aria-label="Small" size="s"><Icon>add</Icon></IconButton>
+	<IconButton variant="outlined" aria-label="Medium" size="m"><Icon>add</Icon></IconButton>
+	<IconButton variant="outlined" aria-label="Large" size="l"><Icon>add</Icon></IconButton>
+	<IconButton variant="outlined" aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>
+</DemoContainer>
+<Code
+	value={`<IconButton aria-label="Extra small" size="xs"><Icon>add</Icon></IconButton>
+<IconButton aria-label="Small" size="s"><Icon>add</Icon></IconButton>
+<IconButton aria-label="Medium" size="m"><Icon>add</Icon></IconButton>
+<IconButton aria-label="Large" size="l"><Icon>add</Icon></IconButton>
+<IconButton aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>`}
+/>
 <h2>Toggle</h2>
 {#snippet selectedIcon()}
-	<Icon>check</Icon>
+	<Icon>settings</Icon>
 {/snippet}
 <DemoContainer style="flex-direction: column">
 	<div class="icon-list">
-		<IconButton {selectedIcon} aria-label="Unselected Icon Button" toggle
-			><Icon>close</Icon></IconButton
+		<IconButton aria-label="Unselected Icon Button" toggle><Icon>settings</Icon></IconButton>
+		<IconButton aria-label="Unselected Filled Icon Button" variant="filled" toggle
+			><Icon>settings</Icon></IconButton
 		>
-		<IconButton {selectedIcon} aria-label="Unselected Filled Icon Button" variant="filled" toggle
-			><Icon>close</Icon></IconButton
+		<IconButton aria-label="Unselected Tonal Icon Button" variant="tonal" toggle
+			><Icon>settings</Icon></IconButton
 		>
-		<IconButton {selectedIcon} aria-label="Unselected Tonal Icon Button" variant="tonal" toggle
-			><Icon>close</Icon></IconButton
-		>
-		<IconButton
-			{selectedIcon}
-			aria-label="Unselected Outlined Icon Button"
-			variant="outlined"
-			toggle><Icon>close</Icon></IconButton
+		<IconButton aria-label="Unselected Outlined Icon Button" variant="outlined" toggle
+			><Icon>settings</Icon></IconButton
 		>
 	</div>
 	<div class="icon-list">
-		<IconButton {selectedIcon} aria-label="Selected Icon Button" toggle selected
-			><Icon>close</Icon></IconButton
+		<IconButton aria-label="Selected Icon Button" toggle selected><Icon>settings</Icon></IconButton>
+		<IconButton aria-label="Selected Filled Icon Button" variant="filled" toggle selected
+			><Icon>settings</Icon></IconButton
 		>
-		<IconButton
-			{selectedIcon}
-			aria-label="Selected Filled Icon Button"
-			variant="filled"
-			toggle
-			selected><Icon>close</Icon></IconButton
+		<IconButton aria-label="Selected Tonal Icon Button" variant="tonal" toggle selected
+			><Icon>settings</Icon></IconButton
 		>
-		<IconButton
-			{selectedIcon}
-			aria-label="Selected Tonal Icon Button"
-			variant="tonal"
-			toggle
-			selected><Icon>close</Icon></IconButton
-		>
-		<IconButton
-			{selectedIcon}
-			aria-label="Selected Outlined Icon Button"
-			variant="outlined"
-			toggle
-			selected><Icon>close</Icon></IconButton
+		<IconButton aria-label="Selected Outlined Icon Button" variant="outlined" toggle selected
+			><Icon>settings</Icon></IconButton
 		>
 	</div>
 </DemoContainer>
@@ -173,18 +171,6 @@
 			<td><code>--np-color-on-surface-variant</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-icon-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-icon-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-icon-button-container-width</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
 			<td><code>--np-icon-button-icon-size</code></td>
 			<td><code>1.5rem</code></td>
 		</tr>
@@ -194,28 +180,21 @@
 <h3>Icon button example</h3>
 <DemoContainer>
 	<IconButton
-		{selectedIcon}
 		aria-label="Custom Icon Button"
 		--np-icon-button-icon-color="var(--np-color-tertiary)"
-		--np-icon-button-container-shape="2px"
-		--np-icon-button-icon-size="48px"
-		toggle
-		selected
+		--np-icon-button-icon-size="32px"
 	>
 		<Icon>close</Icon>
 	</IconButton>
 </DemoContainer>
 <Code
 	value={`<IconButton
-		{selectedIcon}
-		--np-icon-button-icon-color="var(--np-color-tertiary)"
-		--np-icon-button-container-shape="2px"
-		--np-icon-button-icon-size="48px"
-		toggle
-		selected
-	>
-		<Icon>close</Icon>
-	</IconButton>`}
+	aria-label="Custom Icon Button"
+	--np-icon-button-icon-color="var(--np-color-tertiary)"
+	--np-icon-button-icon-size="32px"
+>
+	<Icon>close</Icon>
+</IconButton>`}
 />
 <h3>Filled icon button tokens</h3>
 <table>
@@ -235,19 +214,7 @@
 			<td><code>--np-color-primary</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-filled-icon-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-filled-icon-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-filled-icon-button-container-width</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-filled-icon-button-icon-size</code></td>
+			<td><code>--np-icon-button-icon-size</code></td>
 			<td><code>1.5rem</code></td>
 		</tr>
 	</tbody>
@@ -256,14 +223,10 @@
 <h3>Filled icon button example</h3>
 <DemoContainer>
 	<IconButton
-		{selectedIcon}
 		aria-label="Custom Filled Icon Button"
 		--np-filled-icon-button-container-color="var(--np-color-tertiary)"
 		--np-filled-icon-button-icon-color="var(--np-color-on-tertiary)"
-		--np-filled-icon-button-container-shape="2px"
-		--np-filled-icon-button-icon-size="48px"
-		toggle
-		selected
+		--np-icon-button-icon-size="32px"
 		variant="filled"
 	>
 		<Icon>close</Icon>
@@ -271,14 +234,10 @@
 </DemoContainer>
 <Code
 	value={`<IconButton
-{selectedIcon}
 	aria-label="Custom Filled Icon Button"
 	--np-filled-icon-button-container-color="var(--np-color-tertiary)"
 	--np-filled-icon-button-icon-color="var(--np-color-on-tertiary)"
-	--np-filled-icon-button-container-shape="2px"
-	--np-filled-icon-button-icon-size="48px"
-	toggle
-	selected
+	--np-icon-button-icon-size="32px"
 	variant="filled"
 >
 	<Icon>close</Icon>
@@ -302,19 +261,7 @@
 			<td><code>--np-color-secondary-container</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-tonal-icon-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-tonal-icon-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-tonal-icon-button-container-width</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-tonal-icon-button-icon-size</code></td>
+			<td><code>--np-icon-button-icon-size</code></td>
 			<td><code>1.5rem</code></td>
 		</tr>
 	</tbody>
@@ -323,14 +270,10 @@
 <h3>Tonal icon button example</h3>
 <DemoContainer>
 	<IconButton
-		{selectedIcon}
 		aria-label="Custom Tonal Icon Button"
 		--np-tonal-icon-button-container-color="var(--np-color-tertiary-container)"
 		--np-tonal-icon-button-icon-color="var(--np-color-on-tertiary)"
-		--np-tonal-icon-button-container-shape="2px"
-		--np-tonal-icon-button-icon-size="48px"
-		toggle
-		selected
+		--np-icon-button-icon-size="32px"
 		variant="tonal"
 	>
 		<Icon>close</Icon>
@@ -338,16 +281,14 @@
 </DemoContainer>
 <Code
 	value={`<IconButton
-		{selectedIcon}
-		aria-label="Custom Tonal Icon Button"
-		--np-tonal-icon-button-container-color="var(--np-color-tertiary-container)"
-		--np-tonal-icon-button-icon-color="var(--np-color-on-tertiary)"
-		--np-tonal-icon-button-container-shape="2px"
-		--np-tonal-icon-button-icon-size="48px"
-		toggle
-		selected
-		variant="tonal"
-	>`}
+	aria-label="Custom Tonal Icon Button"
+	--np-tonal-icon-button-container-color="var(--np-color-tertiary-container)"
+	--np-tonal-icon-button-icon-color="var(--np-color-on-tertiary)"
+	--np-icon-button-icon-size="32px"
+	variant="tonal"
+>
+	<Icon>close</Icon>
+</IconButton>`}
 />
 <h3>Outlined icon button tokens</h3>
 <table>
@@ -363,24 +304,8 @@
 			<td><code>--np-color-outline</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-outlined-icon-button-container-shape</code></td>
-			<td><code>--np-shape-corner-full</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-outlined-icon-button-container-height</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-outlined-icon-button-container-width</code></td>
-			<td><code>2.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-outlined-icon-button-icon-size</code></td>
+			<td><code>--np-icon-button-icon-size</code></td>
 			<td><code>1.5rem</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-outlined-icon-button-outline-width</code></td>
-			<td><code>1px</code></td>
 		</tr>
 	</tbody>
 </table>
@@ -388,13 +313,9 @@
 <h3>Outlined icon button example</h3>
 <DemoContainer>
 	<IconButton
-		{selectedIcon}
 		aria-label="Custom Outlined Icon Button"
 		--np-outlined-icon-button-outline-color="var(--np-color-tertiary)"
-		--np-outlined-icon-button-container-shape="2px"
-		--np-outlined-icon-button-icon-size="48px"
-		--np-outlined-icon-button-outline-width="3px"
-		toggle
+		--np-icon-button-icon-size="32px"
 		variant="outlined"
 	>
 		<Icon>close</Icon>
@@ -402,16 +323,13 @@
 </DemoContainer>
 <Code
 	value={`<IconButton
-		{selectedIcon}
-		aria-label="Custom Tonal Icon Button"
-		--np-tonal-icon-button-container-color="var(--np-color-tertiary-container)"
-		--np-tonal-icon-button-icon-color="var(--np-color-on-tertiary)"
-		--np-tonal-icon-button-container-shape="2px"
-		--np-tonal-icon-button-icon-size="48px"
-		toggle
-		selected
-		variant="tonal"
-	>`}
+	aria-label="Custom Outlined Icon Button"
+	--np-outlined-icon-button-outline-color="var(--np-color-tertiary)"
+	--np-icon-button-icon-size="32px"
+	variant="outlined"
+>
+	<Icon>close</Icon>
+</IconButton>`}
 />
 <h2>API</h2>
 <h3>Props</h3>

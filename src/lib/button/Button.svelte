@@ -346,7 +346,7 @@
 	.outlined {
 		background-color: var(--np-outlined-button-container-color, transparent);
 		outline-style: solid;
-		outline-color: var(--np-outlined-button-outline-color, var(--np-color-outline));
+		outline-color: var(--np-outlined-button-outline-color, var(--np-color-outline-variant));
 		outline-width: 1px;
 		outline-offset: -1px;
 		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));

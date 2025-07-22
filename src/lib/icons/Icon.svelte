@@ -15,7 +15,7 @@
 			font-family: 'Material Symbols Outlined';
 			font-weight: normal;
 			font-style: normal;
-			font-size: var(--np-icon-size, 1.5rem);
+			font-size: var(--np-icon-size, var(--_icon-size, 1.5rem));
 			line-height: 1;
 			letter-spacing: normal;
 			text-transform: none;
@@ -37,7 +37,6 @@
 			display: inline-flex;
 			fill: currentColor;
 			color: var(--_icon-color);
-			font-size: var(--np-icon-size, var(--_icon-size));
 			inline-size: var(--np-icon-size, var(--_icon-size));
 			block-size: var(--np-icon-size, var(--_icon-size));
 			flex-shrink: 0;

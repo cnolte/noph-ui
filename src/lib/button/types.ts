@@ -39,6 +39,9 @@ interface IconButtonButtonProps extends HTMLButtonAttributes {
 	loadingAriaLabel?: string
 	keepTooltipOnClick?: boolean
 	selectedIcon?: Snippet
+	shape?: 'round' | 'square'
+	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
+	width?: 'narrow' | 'wide' | 'default'
 }
 interface IconButtonAnchorProps extends HTMLAnchorAttributes {
 	variant?: 'text' | 'filled' | 'outlined' | 'tonal'
@@ -50,6 +53,9 @@ interface IconButtonAnchorProps extends HTMLAnchorAttributes {
 	selected?: boolean
 	keepTooltipOnClick?: boolean
 	selectedIcon?: Snippet
+	shape?: 'round' | 'square'
+	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
+	width?: 'narrow' | 'wide' | 'default'
 }
 
 export type IconButtonProps = IconButtonButtonProps | IconButtonAnchorProps
