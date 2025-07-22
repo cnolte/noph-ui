@@ -8,7 +8,6 @@
 		element = $bindable(),
 		group = $bindable(),
 		style,
-		onpointerup,
 		...attributes
 	}: CheckboxProps = $props()
 

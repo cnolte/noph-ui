@@ -79,6 +79,8 @@
 {/snippet}
 
 <TextField
+	autocomplete="off"
+	{...attributes}
 	{variant}
 	type="text"
 	populated={finalPopulated}
@@ -111,7 +113,6 @@
 	bind:reportValidity
 	bind:checkValidity
 	bind:element
-	{...attributes}
 	>{@render children?.()}
 </TextField>
 <Menu
@@ -127,6 +128,11 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={element}
+	ontoggle={(e) => {
+		if (e.newState === 'closed' && !populated && finalPopulated && !value) {
+			finalPopulated = false
+		}
+	}}
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
