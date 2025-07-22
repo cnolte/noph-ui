@@ -80,9 +80,6 @@
 <IconButton aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>`}
 />
 <h2>Toggle</h2>
-{#snippet selectedIcon()}
-	<Icon>settings</Icon>
-{/snippet}
 <DemoContainer style="flex-direction: column">
 	<div class="icon-list">
 		<IconButton aria-label="Unselected Icon Button" toggle><Icon>settings</Icon></IconButton>
