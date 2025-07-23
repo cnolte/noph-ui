@@ -15,8 +15,6 @@
 <Button
 	size="xs"
 	shape="square"
-	--np-elevated-button-container-shape="var(--np-assist-chip-container-shape, var(--np-shape-corner-small))"
-	--np-outlined-button-container-shape="var(--np-assist-chip-container-shape, var(--np-shape-corner-small))"
 	--np-elevated-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface-variant))"
 	--np-outlined-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface-variant))"
 	--np-outlined-button-outline-color="var(--np-assist-chip-outline-color, var(--np-color-outline-variant))"

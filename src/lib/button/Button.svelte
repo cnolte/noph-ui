@@ -100,7 +100,7 @@
 		class={[
 			'np-button',
 			size,
-			selected ? 'square' : 'round',
+			selected || loading ? 'square' : shape,
 			toggle ? 'toggle' : '',
 			'enabled',
 			variant,
