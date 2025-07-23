@@ -132,6 +132,8 @@
 
 	:global(.np-icon-button svg) {
 		fill: currentColor;
+		height: var(--_icon-size, 1.25rem);
+		width: var(--_icon-size, 1.25rem);
 	}
 
 	.xs {

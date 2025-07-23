@@ -86,8 +86,7 @@
 		<IconButton
 			{disabled}
 			type="button"
-			--np-icon-button-container-height="1.75rem"
-			--np-icon-button-container-width="1.75rem"
+			size="xs"
 			--np-icon-button-icon-size="1.125rem"
 			aria-label={ariaLabelRemove}
 			onclick={(
@@ -158,10 +157,10 @@
 		padding-left: 0.5rem;
 	}
 	.np-filter-chip-removable {
-		padding-right: 2px;
+		padding-right: 1px;
 	}
 	.np-filter-chip-removable .np-filter-chip-label {
-		padding-right: 2px;
+		padding-right: 1px;
 	}
 	.np-chip-label {
 		line-height: 1.25rem;
@@ -179,12 +178,13 @@
 		pointer-events: none;
 	}
 	.np-filter-chip-default::before {
-		border-width: 1px;
-		border-style: solid;
-		border-color: var(--np-filter-chip-outline-color, var(--np-color-outline-variant));
+		outline-style: solid;
+		outline-color: var(--np-filter-chip-outline-color, var(--np-color-outline-variant));
+		outline-width: 1px;
+		outline-offset: -1px;
 	}
 	.np-filter-chip:has(input:checked)::before {
-		border-width: 0;
+		outline-style: none;
 		background-color: var(--np-color-secondary-container);
 	}
 	.np-filter-chip-elevated {

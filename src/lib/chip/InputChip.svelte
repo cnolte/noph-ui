@@ -71,8 +71,7 @@
 		<IconButton
 			{disabled}
 			type="button"
-			--np-icon-button-container-height="1.75rem"
-			--np-icon-button-container-width="1.75rem"
+			size="xs"
 			--np-icon-button-icon-size="1.125rem"
 			aria-label={ariaLabelRemove}
 			onclick={(
@@ -116,7 +115,7 @@
 		border-radius: var(--np-input-chip-container-shape, var(--np-shape-corner-small));
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
-		padding-right: 2px;
+		padding-right: 1px;
 		min-width: 0;
 	}
 	.np-input-chip-label input {
@@ -135,7 +134,6 @@
 		gap: 0.5rem;
 		z-index: 1;
 		padding-left: 1rem;
-		padding-right: 2px;
 		overflow: hidden;
 	}
 	.np-chip-icon {
@@ -149,7 +147,7 @@
 		line-height: 1.25rem;
 		font-size: 0.875rem;
 		font-weight: 500;
-		padding-right: 2px;
+		padding-right: 1px;
 		white-space: pre;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -160,12 +158,13 @@
 		inset: 0;
 		border-radius: inherit;
 		pointer-events: none;
-		border-width: 1px;
-		border-style: solid;
-		border-color: var(--np-input-chip-outline-color, var(--np-color-outline-variant));
+		outline-style: solid;
+		outline-color: var(--np-input-chip-outline-color, var(--np-color-outline-variant));
+		outline-width: 1px;
+		outline-offset: -1px;
 	}
 	.np-input-chip-selected::before {
-		border-width: 0;
+		outline-style: none;
 		background-color: var(--np-color-secondary-container);
 	}
 	.np-input-chip-selected {
