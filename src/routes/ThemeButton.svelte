@@ -12,6 +12,7 @@
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
 	let copyTitle = $state('Copy Theme')
+	let selected = $state(false)
 
 	const getScheme = () => {
 		const hct = Hct.fromInt(argbFromHex(value))
@@ -187,6 +188,8 @@
 			<IconButton
 				title={copyTitle}
 				keepTooltipOnClick
+				toggle
+				bind:selected
 				onclick={() => {
 					copyTheme()
 					copyTitle = 'Copied!'
@@ -194,9 +197,15 @@
 				onmouseleave={() => {
 					setTimeout(() => {
 						copyTitle = 'Copy Theme'
-					}, 200)
-				}}><Icon>content_copy</Icon></IconButton
+						selected = false
+					}, 1000)
+				}}
 			>
+				{#snippet selectedIcon()}
+					<Icon>check</Icon>
+				{/snippet}
+				<Icon>content_copy</Icon>
+			</IconButton>
 		</div>
 		<div class="card">
 			<label class="hex-label">

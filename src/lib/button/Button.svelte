@@ -97,7 +97,15 @@
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
-		class={['np-button', size, selected ? 'square' : 'round', 'enabled', variant, attributes.class]}
+		class={[
+			'np-button',
+			size,
+			selected ? 'square' : 'round',
+			toggle ? 'toggle' : '',
+			'enabled',
+			variant,
+			attributes.class,
+		]}
 	>
 		{@render content()}
 	</a>
@@ -140,6 +148,7 @@
 		overflow: hidden;
 		font-weight: 500;
 		text-decoration: none;
+		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 		transition:
 			background-color 150ms linear,
 			border-radius 150ms ease-in-out,
@@ -229,6 +238,12 @@
 	}
 	.xl:active {
 		border-radius: 1rem;
+	}
+	.toggle {
+		--np-icon-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+	}
+	.selected {
+		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 	}
 	.disabled {
 		pointer-events: none;

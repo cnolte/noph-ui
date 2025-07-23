@@ -96,6 +96,7 @@
 			variant,
 			selected || loading ? 'square' : shape,
 			'enabled',
+			toggle && 'toggle',
 			selected ? 'selected' : '',
 			attributes.class,
 		]}

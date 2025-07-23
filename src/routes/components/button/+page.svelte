@@ -126,7 +126,11 @@
 <h2>Toggle</h2>
 <DemoContainer style="flex-direction: column">
 	<div class="button-list">
-		<Button toggle variant="elevated">Elevated</Button>
+		<Button toggle variant="elevated"
+			>{#snippet start()}
+				<Icon>send</Icon>
+			{/snippet}Elevated</Button
+		>
 		<Button toggle variant="filled">Filled</Button>
 		<Button toggle variant="tonal">Tonal</Button>
 		<Button toggle variant="outlined">Outlined</Button>
