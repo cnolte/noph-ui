@@ -94,6 +94,9 @@
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
+		onclick={(event) => {
+			;(onclick as MouseEventHandler<HTMLAnchorElement>)?.(event)
+		}}
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}

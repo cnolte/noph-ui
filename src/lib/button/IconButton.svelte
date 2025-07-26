@@ -86,6 +86,9 @@
 {:else if isLink(attributes)}
 	<a
 		{...attributes}
+		onclick={(event) => {
+			;(onclick as MouseEventHandler<HTMLAnchorElement>)?.(event)
+		}}
 		aria-describedby={title ? uid : undefined}
 		aria-label={title}
 		bind:this={element}
