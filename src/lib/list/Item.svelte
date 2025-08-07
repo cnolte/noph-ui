@@ -19,23 +19,24 @@
 	let focused = $state(false)
 	let visible = $state(false)
 	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
+	let observer = $state<IntersectionObserver>()
 	onMount(() => {
-		const observer = new IntersectionObserver((entries) => {
+		observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
 					visible = true
-					observer.disconnect()
+					observer?.disconnect()
 				}
 			})
 		})
 
-		if (element) {
-			observer.observe(element)
-		}
-
-		return () => observer.disconnect()
+		return () => observer?.disconnect()
 	})
-	$inspect(visible)
+	$effect(() => {
+		if (element) {
+			observer?.observe(element)
+		}
+	})
 </script>
 
 {#snippet content()}

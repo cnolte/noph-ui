@@ -22,7 +22,6 @@
 	}: SnackbarProps = $props()
 
 	let timeoutId: number | undefined = $state()
-	let buttonHeight = $derived(supportingText ? '4.25rem' : '3rem')
 
 	showPopover = () => {
 		element?.showPopover()
