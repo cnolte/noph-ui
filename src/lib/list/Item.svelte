@@ -19,7 +19,7 @@
 	let focused = $state(false)
 	let visible = $state(false)
 	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
-	let observer = $state<IntersectionObserver>()
+	let observer: IntersectionObserver | undefined
 	onMount(() => {
 		observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
