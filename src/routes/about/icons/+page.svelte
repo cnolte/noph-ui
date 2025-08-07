@@ -52,7 +52,7 @@
 <DemoContainer>
 	<IconButton onclick={() => (toggleFilled = !toggleFilled)}>
 		<Icon
-			--np-icon-settings={toggleFilled ? "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" : undefined}
+			--np-icon-settings={toggleFilled ? "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" : undefined}
 		>
 			favorite
 		</Icon>
@@ -61,7 +61,7 @@
 <Code
 	value={`<IconButton onclick={() => (toggleFilled = !toggleFilled)}>
   <Icon
-    --np-icon-settings={toggleFilled ? "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" : undefined}
+    --np-icon-settings={toggleFilled ? "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" : undefined}
   >
     favorite
   </Icon>

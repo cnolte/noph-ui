@@ -18,7 +18,7 @@
 
 	let focused = $state(false)
 	let visible = $state(false)
-	let element: HTMLButtonElement | HTMLAnchorElement | undefined = $state()
+	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
 	onMount(() => {
 		const observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
@@ -35,6 +35,7 @@
 
 		return () => observer.disconnect()
 	})
+	$inspect(visible)
 </script>
 
 {#snippet content()}
@@ -64,8 +65,10 @@
 {/snippet}
 
 {#if disabled}
-	<div aria-disabled="true" class={['np-item disabled', attributes.class]}>
-		{@render content()}
+	<div bind:this={element} aria-disabled="true" class={['np-item disabled', attributes.class]}>
+		{#if visible}
+			{@render content()}
+		{/if}
 	</div>
 {:else if attributes.variant === 'text' || attributes.variant === undefined}
 	<div {...attributes} class={['np-item', selected && 'selected', attributes.class]}>
