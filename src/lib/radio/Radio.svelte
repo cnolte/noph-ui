@@ -15,7 +15,7 @@
 </script>
 
 <label {style} class={['np-host', attributes.class]} bind:this={element}>
-	<div class="np-container" aria-hidden="true">
+	<div class="np-container">
 		{#if !attributes.disabled}
 			<Ripple forElement={inputEl} class="np-radio-ripple" />
 		{/if}
