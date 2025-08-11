@@ -151,9 +151,10 @@
 		text-align: start;
 		overflow: hidden;
 		width: 100%;
-		padding: 0.75rem 1rem;
-		min-height: 3.5rem;
-		gap: 1rem;
+		padding-block: 0.75rem;
+		padding-inline: 1rem;
+		min-height: 3rem;
+		gap: 0.75rem;
 		text-decoration: none;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		color: var(--np-item-label-text-color, var(--np-color-on-surface));

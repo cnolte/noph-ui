@@ -27,6 +27,7 @@
 		position: relative;
 		vertical-align: top;
 		width: 18px;
+		padding: 3px;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		cursor: pointer;
 	}

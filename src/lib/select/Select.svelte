@@ -336,37 +336,64 @@
 </div>
 
 {#snippet item(option: SelectOption)}
-	<Item
-		onclick={(event) => {
-			handleOptionSelect(event, option)
-			field?.focus()
-		}}
-		disabled={option.disabled}
-		onkeydown={(event) => {
-			if (event.key === 'ArrowDown') {
-				;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
-				event.preventDefault()
-			}
-			if (event.key === 'ArrowUp') {
-				;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
-				event.preventDefault()
-			}
-			if (event.key === 'Enter') {
+	{#if Array.isArray(value) && multiple}
+		<Item
+			onclick={(event) => {
 				handleOptionSelect(event, option)
-			}
-			if (event.key === 'Tab') {
-				menuElement?.hidePopover()
-			}
-		}}
-		variant="button"
-		selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
-		>{option.label}
-		{#snippet start()}
-			{#if Array.isArray(value) && multiple}
+				field?.focus()
+			}}
+			disabled={option.disabled}
+			onkeydown={(event) => {
+				if (event.key === 'ArrowDown') {
+					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
+					event.preventDefault()
+				}
+				if (event.key === 'ArrowUp') {
+					;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
+					event.preventDefault()
+				}
+				if (event.key === 'Enter') {
+					handleOptionSelect(event, option)
+				}
+				if (event.key === 'Tab') {
+					menuElement?.hidePopover()
+				}
+			}}
+			variant="button"
+			selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
+			>{option.label}
+			{#snippet start()}
 				<Check disabled={option.disabled} checked={value.includes(option.value)} />
-			{/if}
-		{/snippet}
-	</Item>
+			{/snippet}
+		</Item>
+	{:else}
+		<Item
+			onclick={(event) => {
+				handleOptionSelect(event, option)
+				field?.focus()
+			}}
+			disabled={option.disabled}
+			onkeydown={(event) => {
+				if (event.key === 'ArrowDown') {
+					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
+					event.preventDefault()
+				}
+				if (event.key === 'ArrowUp') {
+					;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
+					event.preventDefault()
+				}
+				if (event.key === 'Enter') {
+					handleOptionSelect(event, option)
+				}
+				if (event.key === 'Tab') {
+					menuElement?.hidePopover()
+				}
+			}}
+			variant="button"
+			selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
+			>{option.label}
+		</Item>
+	{/if}
 {/snippet}
 
 <Menu
@@ -391,7 +418,7 @@
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
-		<VirtualList height="250px" itemHeight={56} items={options}>
+		<VirtualList height="250px" itemHeight={48} items={options}>
 			{#snippet row(option)}
 				{@render item(option)}
 			{/snippet}
