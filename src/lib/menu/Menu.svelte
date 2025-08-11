@@ -123,6 +123,9 @@
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 	}
+	:global(.np-menu .np-divider) {
+		margin-block: 0.5rem;
+	}
 	.np-menu-container[popover] {
 		color: var(--np-menu-text-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
