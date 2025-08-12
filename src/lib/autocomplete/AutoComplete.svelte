@@ -4,6 +4,7 @@
 	import VirtualList from '$lib/select/VirtualList.svelte'
 	import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 	import TextField from '$lib/text-field/TextField.svelte'
+	import { on } from 'svelte/events'
 
 	let {
 		options = [],
@@ -26,6 +27,8 @@
 		onkeydown,
 		onclick,
 		oninput,
+		onblur,
+		onfocusout,
 		focused = $bindable(false),
 		...attributes
 	}: AutoCompleteProps = $props()
@@ -46,22 +49,25 @@
 	let clientWidth = $state(0)
 	let menuElement: HTMLDivElement | undefined = $state()
 	let finalPopulated = $state(populated)
+	let blockEvent = $state(false)
 </script>
 
 {#snippet item(option: AutoCompleteOption)}
 	<Item
 		onclick={(event) => {
 			event.preventDefault()
-			onoptionselect(option)
 			element?.focus()
+			onoptionselect(option)
 		}}
 		disabled={option.disabled}
 		onkeydown={(event) => {
 			if (event.key === 'ArrowDown') {
+				blockEvent = true
 				;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
 				event.preventDefault()
 			}
 			if (event.key === 'ArrowUp') {
+				blockEvent = true
 				;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
 				event.preventDefault()
 			}
@@ -70,7 +76,8 @@
 			}
 			if (event.key === 'Tab') {
 				finalPopulated = populated
-				menuElement?.hidePopover()
+				blockEvent = false
+				hidePopover?.()
 			}
 		}}
 		variant="button"
@@ -90,25 +97,37 @@
 	style="anchor-name:--{uid};"
 	onclick={(event) => {
 		finalPopulated = true
-		menuElement?.showPopover()
+		showPopover()
 		onclick?.(event)
 	}}
 	oninput={(event) => {
-		menuElement?.showPopover()
+		showPopover()
 		oninput?.(event)
 	}}
 	onkeydown={(event) => {
 		if (event.key === 'Tab' || event.key === 'Escape') {
-			menuElement?.hidePopover()
+			blockEvent = false
+			hidePopover()
 		} else {
 			if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
 				event.preventDefault()
 				finalPopulated = true
-				menuElement?.showPopover()
+				blockEvent = true
+				showPopover()
 				;(menuElement?.firstElementChild?.firstElementChild as HTMLElement)?.focus()
 			}
 		}
 		onkeydown?.(event)
+	}}
+	onblur={(event) => {
+		if (!blockEvent) {
+			onblur?.(event)
+		}
+	}}
+	onfocusout={(event) => {
+		if (!blockEvent) {
+			onfocusout?.(event)
+		}
 	}}
 	bind:reportValidity
 	bind:checkValidity
@@ -128,9 +147,25 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={element}
+	onbeforetoggle={(e) => {
+		if (e.newState !== 'closed') {
+			blockEvent = true
+		}
+	}}
 	ontoggle={(e) => {
-		if (e.newState === 'closed' && !populated && finalPopulated && !value) {
-			finalPopulated = false
+		if (e.newState === 'closed') {
+			blockEvent = false
+			if (!populated && finalPopulated && !value) {
+				finalPopulated = false
+			}
+		}
+		if (!focused) {
+			const event = {
+				...new FocusEvent('blur', { relatedTarget: element }),
+				currentTarget: element as EventTarget & HTMLInputElement,
+			} as FocusEvent & { currentTarget: EventTarget & HTMLInputElement }
+			onblur?.(event)
+			onfocusout?.(event)
 		}
 	}}
 	bind:element={menuElement}
