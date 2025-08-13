@@ -4,7 +4,6 @@
 	import VirtualList from '$lib/select/VirtualList.svelte'
 	import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 	import TextField from '$lib/text-field/TextField.svelte'
-	import { on } from 'svelte/events'
 
 	let {
 		options = [],

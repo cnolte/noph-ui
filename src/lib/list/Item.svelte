@@ -78,6 +78,7 @@
 {:else if attributes.variant === 'button'}
 	<button
 		{...attributes}
+		type="button"
 		onfocus={(event) => {
 			focused = true
 			;(onfocus as FocusEventHandler<HTMLButtonElement>)?.(event)
