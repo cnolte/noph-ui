@@ -113,6 +113,8 @@
 			if (checkValidity()) {
 				errorRaw = error
 				errorTextRaw = errorText
+			} else {
+				focusOnInvalid = true
 			}
 		} else {
 			focusOnInvalid = true
