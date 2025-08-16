@@ -32,6 +32,8 @@
 		...attributes
 	}: TextFieldProps = $props()
 
+	const uid = $props.id()
+
 	let errorRaw: boolean = $state(error)
 	let errorTextRaw: string = $state(errorText)
 	let focusOnInvalid = $state(true)
@@ -134,8 +136,7 @@
 	})
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<div
+<label
 	style={(variant === 'outlined'
 		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
 		: !label?.length
@@ -146,14 +147,6 @@
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
-	role="button"
-	tabindex="-1"
-	onfocus={() => {
-		inputElement?.focus()
-	}}
-	onclick={() => {
-		inputElement?.click()
-	}}
 >
 	<div
 		class="field"
@@ -211,6 +204,9 @@
 						{#if attributes.type === 'textarea'}
 							<textarea
 								aria-label={label}
+								aria-describedby={supportingText || (errorTextRaw && errorRaw)
+									? `supporting-text-${uid}`
+									: undefined}
 								{...attributes}
 								oninput={onInputEvent}
 								oninvalid={onInvalidEvent}
@@ -231,6 +227,9 @@
 								{@render children?.()}
 								<input
 									aria-label={label}
+									aria-describedby={supportingText || (errorTextRaw && errorRaw)
+										? `supporting-text-${uid}`
+										: undefined}
 									{...attributes}
 									bind:value
 									bind:this={inputElement}
@@ -259,7 +258,7 @@
 		</div>
 		{#if supportingText || (errorTextRaw && errorRaw) || attributes.maxlength}
 			<div class="supporting-text" role={errorRaw ? 'alert' : undefined}>
-				<span>
+				<span id="supporting-text-{uid}">
 					{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
 				</span>
 				{#if attributes.maxlength}
@@ -268,7 +267,7 @@
 			</div>
 		{/if}
 	</div>
-</div>
+</label>
 
 <style>
 	.active-indicator {
