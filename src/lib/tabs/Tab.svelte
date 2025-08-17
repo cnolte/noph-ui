@@ -2,6 +2,7 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import { getContext } from 'svelte'
 	import type { TabProps } from './types.ts'
+	import Badge from '$lib/badge/Badge.svelte'
 
 	let {
 		children,
@@ -12,6 +13,8 @@
 		value,
 		href,
 		variant = 'primary',
+		badge = false,
+		badgeLabel,
 		...attributes
 	}: TabProps = $props()
 	let activeTab: { value: string | number; node: HTMLElement } = getContext('activeTab')
@@ -82,8 +85,23 @@
 				!inlineIcon && variant === 'primary' && children && icon && 'np-tab-no-inline',
 			]}
 		>
-			{@render icon?.()}
-			{@render children?.()}
+			{#if icon}
+				{#if badge && variant === 'primary' && !inlineIcon}
+					<div class="np-tab-icon-badge">
+						<Badge label={badgeLabel} />
+						{@render icon?.()}
+					</div>
+				{:else}
+					{@render icon?.()}
+				{/if}
+			{/if}
+			{#if badge && (!icon || variant === 'secondary' || inlineIcon)}
+				<div style="--np-badge-position:static;">
+					<span class="np-tab-label-badge">{@render children?.()}</span><Badge label={badgeLabel} />
+				</div>
+			{:else}
+				{@render children?.()}
+			{/if}
 			{#if variant === 'primary'}
 				<div class="np-indicator"></div>
 			{/if}
@@ -159,6 +177,15 @@
 		gap: 0.5rem;
 		text-wrap: nowrap;
 		min-width: 1.5rem;
+	}
+	.np-tab-label-badge {
+		margin-right: 4px;
+	}
+	.np-tab-icon-badge {
+		height: 1.5rem;
+		width: 1.5rem;
+		position: relative;
+		--np-badge-left: 1.125rem;
 	}
 
 	.np-tab-no-inline {

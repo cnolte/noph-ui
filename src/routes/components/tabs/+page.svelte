@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Badge from '$lib/badge/Badge.svelte'
 	import { Icon } from '$lib/icons/index.ts'
 	import Tab from '$lib/tabs/Tab.svelte'
 	import Tabs from '$lib/tabs/Tabs.svelte'
@@ -21,42 +22,76 @@
 <h3>Primary Tabs</h3>
 <DemoContainer>
 	<Tabs value="videos">
-		<Tab value="videos">{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos</Tab>
+		<Tab badge badgeLabel="2" value="videos">
+			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
+		</Tab>
 		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-		<Tab value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
 	value={`<Tabs value="videos">
-	<Tab value="videos">{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos</Tab>
+	<Tab badge badgeLabel="2" value="videos">
+		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
+	</Tab>
 	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-	<Tab value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+</Tabs>`}
+/>
+<DemoContainer>
+	<Tabs value="videos">
+		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+		<Tab value="theme">Theme</Tab>
+		<Tab badge value="settings">Setttings</Tab>
+	</Tabs>
+</DemoContainer>
+<Code
+	value={`<Tabs value="videos">
+	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+	<Tab value="theme">Theme</Tab>
+	<Tab badge value="settings">Setttings</Tab>
 </Tabs>`}
 />
 <h3>Secondary Tabs</h3>
 <DemoContainer>
 	<Tabs value="videos">
-		<Tab variant="secondary" value="videos"
-			>{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos</Tab
-		>
-		<Tab variant="secondary" value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab
-		>
-		<Tab variant="secondary" value="settings"
-			>{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab
-		>
+		<Tab badge badgeLabel="2" variant="secondary" value="videos">
+			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
+		</Tab>
+		<Tab variant="secondary" value="theme"
+			>{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme
+		</Tab>
+		<Tab badge variant="secondary" value="settings"
+			>{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings
+		</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
 	value={`<Tabs value="videos">
-	<Tab variant="secondary" value="videos">
+	<Tab badge badgeLabel="2" variant="secondary" value="videos">
 		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 	</Tab>
-	<Tab variant="secondary" value="theme">
-		{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme
+	<Tab variant="secondary" value="theme"
+		>{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme
 	</Tab>
-	<Tab variant="secondary" value="settings">
-		{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings
+	<Tab badge variant="secondary" value="settings"
+		>{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings
 	</Tab>
+</Tabs>`}
+/>
+
+<DemoContainer>
+	<Tabs value="videos">
+		<Tab badge badgeLabel="2" variant="secondary" value="videos">Videos</Tab>
+		<Tab variant="secondary" value="theme">Theme</Tab>
+		<Tab badge variant="secondary" value="settings">Setttings</Tab>
+	</Tabs>
+</DemoContainer>
+<Code
+	value={`<Tabs value="videos">
+	<Tab badge badgeLabel="2" variant="secondary" value="videos">Videos</Tab>
+	<Tab variant="secondary" value="theme">Theme</Tab>
+	<Tab badge variant="secondary" value="settings">Setttings</Tab>
 </Tabs>`}
 />
 <h3>Selection</h3>
@@ -144,6 +179,18 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td>Only affects the <code>primary</code> variant.</td>
+		</tr>
+		<tr>
+			<td><code>badge</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><code>badgeLabel</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>A string representing the label to be displayed inside a badge element.</td>
 		</tr>
 		<tr>
 			<td><code>value</code></td>
