@@ -8,9 +8,6 @@
 		label === undefined ? 'np-badge-container-no-label' : 'np-badge-container-label',
 	]}
 >
-	{#if label === 0}
-		<div class="np-badge-label">0</div>
-	{/if}
 	{#if label !== undefined}
 		<div class="np-badge-label">
 			{label}
@@ -20,7 +17,7 @@
 
 <style>
 	.np-badge-container {
-		display: flex;
+		display: inline-flex;
 		justify-content: center;
 		background-color: var(--np-color-error);
 		border-radius: var(--np-shape-corner-full);
