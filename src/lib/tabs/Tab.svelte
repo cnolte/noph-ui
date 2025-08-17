@@ -122,7 +122,12 @@
 		role="tab"
 		bind:this={element}
 		{href}
-		class={['np-tab', isActive && 'np-tab-content-active', attributes.class]}
+		class={[
+			'np-tab',
+			isActive && 'np-tab-content-active',
+			variant === 'primary' ? 'primary' : 'secondary',
+			attributes.class,
+		]}
 		onclick={onClick}
 		onkeydown={onKeyDown}
 	>
@@ -135,7 +140,12 @@
 		tabindex={isActive ? 0 : -1}
 		role="tab"
 		bind:this={element}
-		class={['np-tab', isActive && 'np-tab-content-active', attributes.class]}
+		class={[
+			'np-tab',
+			isActive && 'np-tab-content-active',
+			variant === 'primary' ? 'primary' : 'secondary',
+			attributes.class,
+		]}
 		onclick={onClick}
 		onkeydown={onKeyDown}
 	>
@@ -157,10 +167,16 @@
 		padding: 0 1rem;
 		color: var(--np-color-on-surface-variant);
 		height: 3rem;
+		transition: color 0.3s ease;
 	}
 	.np-tab-content-active {
-		color: var(--np-color-primary);
 		--_focus-bottom: 4px;
+	}
+	.np-tab-content-active.primary {
+		color: var(--np-color-primary);
+	}
+	.np-tab-content-active.secondary {
+		color: var(--np-color-on-surface);
 	}
 	.np-tab-content {
 		height: 100%;
