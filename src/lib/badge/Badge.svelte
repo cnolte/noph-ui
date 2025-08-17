@@ -3,7 +3,7 @@
 </script>
 
 <div class="np-badge-container">
-	{#if label}
+	{#if label !== undefined}
 		<div class="np-badge-label">
 			{label}
 		</div>
