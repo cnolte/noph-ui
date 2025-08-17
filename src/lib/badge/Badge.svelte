@@ -2,41 +2,47 @@
 	let { label }: { label?: string | number } = $props()
 </script>
 
-<div class="np-badge-container">
+<div
+	class={[
+		'np-badge-container',
+		label === undefined ? 'np-badge-container-no-label' : 'np-badge-container-label',
+	]}
+>
+	{#if label === 0}
+		<div class="np-badge-label">0</div>
+	{/if}
 	{#if label !== undefined}
 		<div class="np-badge-label">
 			{label}
 		</div>
-	{:else}
-		<div class="np-badge-no-label"></div>
 	{/if}
 </div>
 
 <style>
 	.np-badge-container {
-		display: inline-block;
+		display: flex;
+		justify-content: center;
 		background-color: var(--np-color-error);
 		border-radius: var(--np-shape-corner-full);
-		text-align: center;
 		position: var(--np-badge-position, absolute);
 		top: var(--np-badge-top, 0);
 		left: var(--np-badge-left, auto);
 		right: var(--np-badge-right, auto);
 	}
-	.np-badge-no-label {
+	.np-badge-container-label {
+		height: 1rem;
+		min-width: 1rem;
+	}
+	.np-badge-container-no-label {
 		width: 0.375rem;
 		height: 0.375rem;
 	}
 	.np-badge-label {
 		color: var(--np-color-on-error);
 		padding-inline: 0.25rem;
-		min-width: 0.5rem;
 		font-weight: 500;
 		font-size: 0.6875rem;
-		height: 1rem;
 		display: flex;
 		align-items: center;
-		text-align: center;
-		justify-content: center;
 	}
 </style>
