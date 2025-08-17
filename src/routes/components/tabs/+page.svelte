@@ -188,7 +188,7 @@
 		</tr>
 		<tr>
 			<td><code>badgeLabel</code></td>
-			<td><code>string | undefined</code></td>
+			<td><code>string | number | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>A string representing the label to be displayed inside a badge element.</td>
 		</tr>

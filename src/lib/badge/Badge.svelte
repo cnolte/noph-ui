@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { label }: { label?: string } = $props()
+	let { label }: { label?: string | number } = $props()
 </script>
 
 <div class="np-badge-container">
