@@ -53,6 +53,11 @@
 			onkeydown(event)
 		}
 	}
+	const setCheckInitialState = (el: HTMLElement) => {
+		if (parentElement?.getAttribute('data-value') === value) {
+			selected = true
+		}
+	}
 </script>
 
 {#snippet content()}
@@ -97,6 +102,7 @@
 
 {#if href}
 	<a
+		{@attach setCheckInitialState}
 		{...attributes}
 		{id}
 		tabindex={selected ? 0 : -1}
@@ -118,6 +124,7 @@
 	</a>
 {:else}
 	<div
+		{@attach setCheckInitialState}
 		{...attributes}
 		{id}
 		tabindex={selected ? 0 : -1}
