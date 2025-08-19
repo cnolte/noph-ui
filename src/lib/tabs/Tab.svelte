@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { getContext } from 'svelte'
+	import { onMount } from 'svelte'
 	import type { TabProps } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
 
@@ -15,49 +15,30 @@
 		variant = 'primary',
 		badge = false,
 		badgeLabel,
+		selected = $bindable(false),
 		...attributes
 	}: TabProps = $props()
-	let activeTab: { value: string | number; node: HTMLElement } = getContext('activeTab')
 	let element: HTMLElement | undefined = $state()
-	let isActive = $state(activeTab.value === value)
+	let id = $props.id()
+	let parentElement = $derived(element?.parentElement)
 
-	$effect(() => {
-		if (activeTab.value === value) {
-			if (element && element !== activeTab.node) {
-				setTabActive(element)
-			}
-			isActive = true
-		} else {
-			isActive = false
+	const onChange = (event: Event) => {
+		const { detail } = event as CustomEvent<{ id: string }>
+		selected = detail.id === id
+	}
+
+	onMount(() => {
+		element?.addEventListener('change', onChange)
+		return () => {
+			element?.removeEventListener('change', onChange)
 		}
 	})
 
 	const setTabActive = (el: HTMLElement) => {
-		const oldTab = activeTab.node as HTMLElement | undefined
-		const oldIndicator = oldTab?.querySelector('.np-indicator') as HTMLElement
-		const oldIndicatorRect = oldIndicator?.getBoundingClientRect()
-		if (oldIndicatorRect) {
-			const newIndicator = el.querySelector<HTMLElement>('.np-indicator')
-			if (newIndicator) {
-				newIndicator.style.setProperty(
-					'--np-tab-indicator-start',
-					`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
-				)
-				newIndicator.style.setProperty(
-					'--np-tab-indicator-scale',
-					`${oldIndicatorRect.width / newIndicator.clientWidth}`,
-				)
-			}
-		}
-		activeTab.value = value
-		activeTab.node = el
+		parentElement?.dispatchEvent(new CustomEvent('change', { detail: { id: el.id, value } }))
+		selected = true
 	}
 
-	const setActiveTab = (el: HTMLElement) => {
-		if (isActive) {
-			activeTab.node = el
-		}
-	}
 	const onClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		setTabActive(event.currentTarget)
 		if (onclick) {
@@ -116,15 +97,17 @@
 
 {#if href}
 	<a
-		{@attach setActiveTab}
 		{...attributes}
-		tabindex={isActive ? 0 : -1}
+		{id}
+		tabindex={selected ? 0 : -1}
 		role="tab"
+		aria-selected={selected}
+		data-value={value}
 		bind:this={element}
 		{href}
 		class={[
 			'np-tab',
-			isActive && 'np-tab-content-active',
+			selected && 'np-tab-content-active',
 			variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}
@@ -135,14 +118,16 @@
 	</a>
 {:else}
 	<div
-		{@attach setActiveTab}
 		{...attributes}
-		tabindex={isActive ? 0 : -1}
+		{id}
+		tabindex={selected ? 0 : -1}
 		role="tab"
+		aria-selected={selected}
+		data-value={value}
 		bind:this={element}
 		class={[
 			'np-tab',
-			isActive && 'np-tab-content-active',
+			selected && 'np-tab-content-active',
 			variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}

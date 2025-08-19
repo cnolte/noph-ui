@@ -1,20 +1,55 @@
 <script lang="ts">
 	import Divider from '$lib/divider/Divider.svelte'
-	import { setContext } from 'svelte'
+	import { onMount } from 'svelte'
 	import type { TabsProps } from './types.ts'
 
 	let { children, element = $bindable(), value = $bindable(), ...attributes }: TabsProps = $props()
-	let active = $state({
-		value: value,
-		node: element?.firstChild as HTMLElement | undefined,
-	})
-	setContext('activeTab', active)
+	let tabs = $derived(
+		element ? Array.from(element.querySelectorAll<HTMLElement>('.np-tab')) : undefined,
+	)
+	let activeTab = $derived(
+		tabs && tabs.length > 0
+			? (tabs.find((t) => {
+					return t.getAttribute('data-value') === value
+				}) ?? tabs[0])
+			: undefined,
+	)
 
 	$effect(() => {
-		value = active.value
+		if (value === undefined) {
+			value = activeTab?.getAttribute('data-value') ?? undefined
+		}
 	})
-	$effect(() => {
-		active.value = value
+
+	onMount(() => {
+		element?.addEventListener('change', (event) => {
+			const { detail } = event as CustomEvent<{ id: string; value: string | number }>
+			const oldTab = activeTab
+			const newTab = tabs?.find((tab) => tab.id === detail.id)
+			if (newTab && oldTab) {
+				const oldIndicator = oldTab.querySelector('.np-indicator') as HTMLElement
+				const oldIndicatorRect = oldIndicator.getBoundingClientRect()
+				if (oldIndicatorRect) {
+					const newIndicator = newTab.querySelector<HTMLElement>('.np-indicator')
+					if (newIndicator) {
+						newIndicator.style.setProperty(
+							'--np-tab-indicator-start',
+							`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
+						)
+						newIndicator.style.setProperty(
+							'--np-tab-indicator-scale',
+							`${oldIndicatorRect.width / newIndicator.clientWidth}`,
+						)
+					}
+				}
+				value = detail.value
+				activeTab = newTab
+				tabs?.forEach((tab) => {
+					tab.dispatchEvent(new CustomEvent('change', { detail }))
+				})
+			}
+		})
+		activeTab?.dispatchEvent(new CustomEvent('change', { detail: { id: activeTab.id } }))
 	})
 </script>
 
@@ -25,8 +60,7 @@
 		tabindex="-1"
 		bind:this={element}
 		onkeydown={(event) => {
-			if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-				const tabs: HTMLElement[] = Array.from(event.currentTarget.querySelectorAll('.np-tab'))
+			if (tabs && tabs.length > 0 && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
 				const focusedTab = event.currentTarget.querySelector('.np-tab:focus') as HTMLElement
 				const currentIndex = tabs.indexOf(focusedTab)
 				const index = currentIndex + (event.key === 'ArrowRight' ? 1 : -1)

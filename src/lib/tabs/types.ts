@@ -9,9 +9,10 @@ export interface TabProps extends HTMLAttributes<HTMLElement> {
 	icon?: Snippet
 	badge?: boolean
 	badgeLabel?: string | number
+	selected?: boolean
 }
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
-	value: string | number
+	value?: string | number
 	element?: HTMLElement
 }
