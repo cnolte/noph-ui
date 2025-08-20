@@ -36,7 +36,6 @@
 
 	const setTabActive = (el: HTMLElement) => {
 		parentElement?.dispatchEvent(new CustomEvent('change', { detail: { id: el.id, value } }))
-		selected = true
 	}
 
 	const onClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
