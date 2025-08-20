@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Badge from '$lib/badge/Badge.svelte'
 	import { Icon } from '$lib/icons/index.ts'
 	import Tab from '$lib/tabs/Tab.svelte'
 	import Tabs from '$lib/tabs/Tabs.svelte'

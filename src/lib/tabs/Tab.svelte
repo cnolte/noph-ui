@@ -53,7 +53,7 @@
 			onkeydown(event)
 		}
 	}
-	const setCheckInitialState = (el: HTMLElement) => {
+	const setCheckInitialState = () => {
 		if (parentElement?.getAttribute('data-value') === value) {
 			selected = true
 		}
