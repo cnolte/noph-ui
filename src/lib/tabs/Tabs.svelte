@@ -1,94 +1,38 @@
 <script lang="ts">
 	import Divider from '$lib/divider/Divider.svelte'
-	import { onMount } from 'svelte'
-	import type { TabsProps } from './types.ts'
+	import { setContext } from 'svelte'
+	import type { TabsContext, TabsProps } from './types.ts'
 
-	let { children, element = $bindable(), value = $bindable(), ...attributes }: TabsProps = $props()
-	const initialValue = value
+	let {
+		children,
+		element = $bindable(),
+		value = $bindable(),
+		variant = 'primary',
+		...attributes
+	}: TabsProps = $props()
 
-	const getCurrentTabs = () => {
-		if (!element) {
-			return []
-		}
-		return Array.from(element.querySelectorAll<HTMLElement>('.np-tab'))
-	}
+	let uid = $props.id()
+
+	let tabsContext = $state<TabsContext>({
+		value,
+		variant,
+		id: uid,
+	})
+	$effect(() => {
+		value = tabsContext.value
+	})
 
 	$effect(() => {
-		if (value) {
-			const tabs = getCurrentTabs()
-			const newTab = tabs?.find((tab) => tab.getAttribute('data-value') === value)
-			if (newTab) {
-				selectTab(newTab, tabs, { id: newTab.id, value })
-			}
-		}
+		tabsContext.value = value
+		tabsContext.variant = variant
 	})
-
-	const selectTab = (
-		newTab: HTMLElement,
-		tabs: HTMLElement[],
-		detail: { id: string; value: string | number },
-	) => {
-		const oldTab = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true')
-		if (!oldTab || oldTab === newTab) {
-			return
-		}
-		const oldIndicator = oldTab.querySelector<HTMLElement>('.np-indicator')
-		const oldIndicatorRect = oldIndicator?.getBoundingClientRect()
-		if (oldIndicatorRect) {
-			const newIndicator = newTab.querySelector<HTMLElement>('.np-indicator')
-			if (newIndicator) {
-				newIndicator.style.setProperty(
-					'--np-tab-indicator-start',
-					`${oldIndicatorRect.x - newIndicator.getBoundingClientRect().x}px`,
-				)
-				newIndicator.style.setProperty(
-					'--np-tab-indicator-scale',
-					`${oldIndicatorRect.width / newIndicator.clientWidth}`,
-				)
-			}
-		}
-		value = detail.value
-		tabs?.forEach((tab) => {
-			tab.dispatchEvent(new CustomEvent('change', { detail }))
-		})
-	}
-
-	const onChange = (event: Event) => {
-		const { detail } = event as CustomEvent<{ id: string; value: string | number }>
-		const tabs = getCurrentTabs()
-		const newTab = tabs?.find((tab) => tab.id === detail.id)
-		if (newTab) {
-			selectTab(newTab, tabs, detail)
-		}
-	}
-
-	onMount(() => {
-		element?.addEventListener('change', onChange)
-		return () => {
-			element?.removeEventListener('change', onChange)
-		}
-	})
-	const initialSetup = (el: HTMLElement) => {
-		const tabs = Array.from(el.querySelectorAll<HTMLElement>('.np-tab'))
-		const activeTab =
-			tabs && tabs.length > 0
-				? (tabs.find((t) => {
-						return t.getAttribute('data-value') === initialValue
-					}) ?? tabs[0])
-				: undefined
-		if (initialValue === undefined) {
-			value = activeTab?.getAttribute('data-value') ?? undefined
-		} else {
-			value = initialValue
-		}
-	}
+	setContext('np-tabs', tabsContext)
 </script>
 
-<div {@attach initialSetup} {...attributes} class={[attributes.class]}>
+<nav {...attributes}>
 	<div
 		class={['np-tabs']}
 		role="tablist"
-		data-value={value}
 		tabindex="-1"
 		bind:this={element}
 		onkeydown={(event) => {
@@ -106,10 +50,15 @@
 		{@render children?.()}
 	</div>
 	<Divider />
-</div>
+</nav>
 
 <style>
+	:global(.np-tabs .np-tab-content-active .np-indicator) {
+		anchor-name: --np-tab-indicator;
+	}
 	.np-tabs {
+		padding: 0;
+		margin: 0;
 		display: flex;
 		align-items: end;
 		width: 100%;
@@ -118,5 +67,20 @@
 		scroll-behavior: smooth;
 		overflow: auto;
 		background-color: var(--np-color-surface);
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			height: 3px;
+			left: anchor(left);
+			right: anchor(right);
+			bottom: anchor(bottom);
+			background-color: var(--np-color-primary);
+			border-top-left-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			border-top-right-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			position-anchor: --np-tab-indicator;
+			transition: cubic-bezier(0.42, 1.67, 0.21, 0.9) 0.35s;
+		}
 	}
 </style>

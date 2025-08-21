@@ -2,17 +2,22 @@ import type { Snippet } from 'svelte'
 import type { HTMLAttributes } from 'svelte/elements'
 
 export interface TabProps extends HTMLAttributes<HTMLElement> {
-	variant?: 'primary' | 'secondary'
 	inlineIcon?: boolean
 	value: string | number
 	href?: string
 	icon?: Snippet
 	badge?: boolean
 	badgeLabel?: string | number
-	selected?: boolean
 }
 
-export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
-	value?: string | number
+export interface TabsProps extends HTMLAttributes<HTMLElement> {
+	variant?: 'primary' | 'secondary'
+	value: string | number
 	element?: HTMLElement
+}
+
+export interface TabsContext {
+	value: string | number
+	variant: 'primary' | 'secondary'
+	id: string
 }

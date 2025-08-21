@@ -20,8 +20,8 @@
 
 <h3>Primary Tabs</h3>
 <DemoContainer>
-	<Tabs>
-		<Tab selected badge badgeLabel="2" value="videos">
+	<Tabs value="videos">
+		<Tab badge badgeLabel="2" value="videos">
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 		</Tab>
 		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
@@ -29,8 +29,8 @@
 	</Tabs>
 </DemoContainer>
 <Code
-	value={`<Tabs>
-	<Tab selected badge badgeLabel="2" value="videos">
+	value={`<Tabs value="videos">
+	<Tab badge badgeLabel="2" value="videos">
 		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 	</Tab>
 	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
@@ -38,59 +38,51 @@
 </Tabs>`}
 />
 <DemoContainer>
-	<Tabs>
-		<Tab selected badge badgeLabel="2" value="videos">Videos</Tab>
+	<Tabs value="videos">
+		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
 		<Tab value="theme">Theme</Tab>
 		<Tab badge value="settings">Setttings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
-	value={`<Tabs>
-	<Tab selected badge badgeLabel="2" value="videos">Videos</Tab>
+	value={`<Tabs value="videos">
+	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
 	<Tab value="theme">Theme</Tab>
 	<Tab badge value="settings">Setttings</Tab>
 </Tabs>`}
 />
 <h3>Secondary Tabs</h3>
 <DemoContainer>
-	<Tabs>
-		<Tab selected badge badgeLabel="2" variant="secondary" value="videos">
+	<Tabs variant="secondary" value="videos">
+		<Tab badge badgeLabel="2" value="videos">
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 		</Tab>
-		<Tab variant="secondary" value="theme"
-			>{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme
-		</Tab>
-		<Tab badge variant="secondary" value="settings"
-			>{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings
-		</Tab>
+		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
+		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
-	value={`<Tabs>
-	<Tab selected badge badgeLabel="2" variant="secondary" value="videos">
+	value={`<Tabs variant="secondary" value="videos">
+	<Tab badge badgeLabel="2" value="videos">
 		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 	</Tab>
-	<Tab variant="secondary" value="theme"
-		>{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme
-	</Tab>
-	<Tab badge variant="secondary" value="settings"
-		>{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings
-	</Tab>
+	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
+	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
 </Tabs>`}
 />
 
 <DemoContainer>
-	<Tabs>
-		<Tab selected badge badgeLabel="2" variant="secondary" value="videos">Videos</Tab>
-		<Tab variant="secondary" value="theme">Theme</Tab>
-		<Tab badge variant="secondary" value="settings">Setttings</Tab>
+	<Tabs variant="secondary" value="videos">
+		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+		<Tab value="theme">Theme</Tab>
+		<Tab badge value="settings">Setttings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
-	value={`<Tabs>
-	<Tab selected badge badgeLabel="2" variant="secondary" value="videos">Videos</Tab>
-	<Tab variant="secondary" value="theme">Theme</Tab>
-	<Tab badge variant="secondary" value="settings">Setttings</Tab>
+	value={`<Tabs variant="secondary" value="videos">
+	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+	<Tab value="theme">Theme</Tab>
+	<Tab badge value="settings">Setttings</Tab>
 </Tabs>`}
 />
 <h3>Selection</h3>
@@ -106,7 +98,7 @@
 <DemoContainer>
 	<div>
 		<Tabs bind:value>
-			<Tab selected value="videos">Videos</Tab>
+			<Tab value="videos">Videos</Tab>
 			<Tab value="theme">Theme</Tab>
 			<Tab value="settings">Setttings</Tab>
 		</Tabs>
@@ -190,15 +182,6 @@
 			<td><code>string | number | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>A string representing the label to be displayed inside a badge element.</td>
-		</tr>
-		<tr>
-			<td><code>selected</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td
-				>Marks the tab as selected. When set to <code>true</code>, the tab is visually highlighted
-				as active.</td
-			>
 		</tr>
 		<tr>
 			<td><code>value</code></td>

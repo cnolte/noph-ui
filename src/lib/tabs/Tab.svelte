@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { onMount } from 'svelte'
-	import type { TabProps } from './types.ts'
+	import { getContext, onMount } from 'svelte'
+	import type { TabProps, TabsContext } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
 
 	let {
@@ -12,49 +12,26 @@
 		onkeydown,
 		value,
 		href,
-		variant = 'primary',
 		badge = false,
 		badgeLabel,
-		selected = $bindable(false),
 		...attributes
 	}: TabProps = $props()
 	let element: HTMLElement | undefined = $state()
-	let id = $props.id()
-	let parentElement = $derived(element?.parentElement)
 
-	const onChange = (event: Event) => {
-		const { detail } = event as CustomEvent<{ id: string }>
-		selected = detail.id === id
-	}
-
-	onMount(() => {
-		element?.addEventListener('change', onChange)
-		return () => {
-			element?.removeEventListener('change', onChange)
-		}
-	})
-
-	const setTabActive = (el: HTMLElement) => {
-		parentElement?.dispatchEvent(new CustomEvent('change', { detail: { id: el.id, value } }))
-	}
+	const tabsContext = getContext<TabsContext>('np-tabs')
 
 	const onClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
-		setTabActive(event.currentTarget)
+		tabsContext.value = value
 		if (onclick) {
 			onclick(event)
 		}
 	}
 	const onKeyDown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		if (event.key === 'Enter' || event.key === ' ') {
-			setTabActive(event.currentTarget)
+			tabsContext.value = value
 		}
 		if (onkeydown) {
 			onkeydown(event)
-		}
-	}
-	const setCheckInitialState = () => {
-		if (parentElement?.getAttribute('data-value') === value) {
-			selected = true
 		}
 	}
 </script>
@@ -62,16 +39,18 @@
 {#snippet content()}
 	<div
 		class="np-tab-content"
-		style={variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : ''}
+		style={tabsContext.variant === 'secondary'
+			? '--np-indicator-radius: 0;--_indicator-gap: 0'
+			: ''}
 	>
 		<div
 			class={[
 				'np-tab-label',
-				!inlineIcon && variant === 'primary' && children && icon && 'np-tab-no-inline',
+				!inlineIcon && tabsContext.variant === 'primary' && children && icon && 'np-tab-no-inline',
 			]}
 		>
 			{#if icon}
-				{#if badge && variant === 'primary' && !inlineIcon}
+				{#if badge && tabsContext.variant === 'primary' && !inlineIcon}
 					<div class="np-tab-icon-badge">
 						<Badge label={badgeLabel} />
 						{@render icon?.()}
@@ -80,18 +59,18 @@
 					{@render icon?.()}
 				{/if}
 			{/if}
-			{#if badge && (!icon || variant === 'secondary' || inlineIcon)}
+			{#if badge && (!icon || tabsContext.variant === 'secondary' || inlineIcon)}
 				<div style="--np-badge-position:static;">
 					<span class="np-tab-label-badge">{@render children?.()}</span><Badge label={badgeLabel} />
 				</div>
 			{:else}
 				{@render children?.()}
 			{/if}
-			{#if variant === 'primary'}
+			{#if tabsContext.variant === 'primary'}
 				<div class="np-indicator"></div>
 			{/if}
 		</div>
-		{#if variant === 'secondary'}
+		{#if tabsContext.variant === 'secondary'}
 			<div class="np-indicator"></div>
 		{/if}
 	</div>
@@ -101,52 +80,48 @@
 
 {#if href}
 	<a
-		{@attach setCheckInitialState}
 		{...attributes}
-		{id}
-		tabindex={selected ? 0 : -1}
-		role="tab"
-		aria-selected={selected}
-		data-value={value}
 		bind:this={element}
+		role="tab"
+		aria-selected={tabsContext.value === value}
+		tabindex={tabsContext.value === value ? 0 : -1}
 		{href}
 		class={[
 			'np-tab',
-			selected && 'np-tab-content-active',
-			variant === 'primary' ? 'primary' : 'secondary',
+			tabsContext.value === value && 'np-tab-content-active',
+			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}
-		onclick={onClick}
-		onkeydown={onKeyDown}
 	>
 		{@render content()}
 	</a>
 {:else}
-	<div
-		{@attach setCheckInitialState}
+	<button
 		{...attributes}
-		{id}
-		tabindex={selected ? 0 : -1}
-		role="tab"
-		aria-selected={selected}
-		data-value={value}
 		bind:this={element}
+		role="tab"
+		aria-selected={tabsContext.value === value}
+		tabindex={tabsContext.value === value ? 0 : -1}
 		class={[
 			'np-tab',
-			selected && 'np-tab-content-active',
-			variant === 'primary' ? 'primary' : 'secondary',
+			tabsContext.value === value && 'np-tab-content-active',
+			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}
 		onclick={onClick}
 		onkeydown={onKeyDown}
 	>
 		{@render content()}
-	</div>
+	</button>
 {/if}
 
 <style>
 	.np-tab {
 		flex: 1;
+		font-family: inherit;
+		background-color: transparent;
+		border-width: 0;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -210,24 +185,6 @@
 		left: var(--_indicator-gap, 2px);
 		right: var(--_indicator-gap, 2px);
 		height: 3px;
-		background-color: var(--np-color-primary);
-		border-top-left-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-		border-top-right-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-		opacity: 0;
-	}
-	.np-tab-content-active .np-indicator {
-		opacity: 1;
-		transform-origin: left center;
-		animation: slide 0.3s ease-in-out;
-	}
-
-	@keyframes slide {
-		0% {
-			transform: translateX(var(--np-tab-indicator-start)) scaleX(var(--np-tab-indicator-scale, 1));
-		}
-		100% {
-			transform: translateX(0) scaleX(1);
-		}
 	}
 
 	.focus-area {
