@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { getContext, onMount } from 'svelte'
+	import { getContext } from 'svelte'
 	import type { TabProps, TabsContext } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
 
@@ -92,6 +92,8 @@
 			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}
+		{onclick}
+		{onkeydown}
 	>
 		{@render content()}
 	</a>

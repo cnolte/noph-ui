@@ -12,7 +12,6 @@
 	}: TabsProps = $props()
 
 	let uid = $props.id()
-
 	let tabsContext = $state<TabsContext>({
 		value,
 		variant,
@@ -44,6 +43,7 @@
 				const newTab =
 					index < 0 ? tabs[tabs.length - 1] : index >= tabs.length ? tabs[0] : tabs[index]
 				newTab.focus()
+				event.preventDefault()
 			}
 		}}
 	>
