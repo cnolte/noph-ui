@@ -26,26 +26,36 @@
 		tabsContext.variant = variant
 	})
 	setContext('np-tabs', tabsContext)
+
+	const handleKeydown = (
+		event: KeyboardEvent & {
+			currentTarget: EventTarget & HTMLDivElement
+		},
+	) => {
+		const tabs = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('.np-tab'))
+		if (tabs && tabs.length > 0 && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
+			const focusedTab = event.currentTarget.querySelector<HTMLElement>('.np-tab:focus')
+			const currentIndex = focusedTab ? tabs.indexOf(focusedTab) : 0
+			const index = currentIndex + (event.key === 'ArrowRight' ? 1 : -1)
+			const newTab =
+				index < 0 ? tabs[tabs.length - 1] : index >= tabs.length ? tabs[0] : tabs[index]
+			newTab.focus()
+			event.preventDefault()
+		}
+	}
 </script>
 
-<nav {...attributes}>
+<nav
+	{...attributes}
+	bind:this={element}
+	style={tabsContext.variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : ''}
+>
 	<div
 		class={['np-tabs']}
 		role="tablist"
+		aria-orientation="horizontal"
 		tabindex="-1"
-		bind:this={element}
-		onkeydown={(event) => {
-			const tabs = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('.np-tab'))
-			if (tabs && tabs.length > 0 && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
-				const focusedTab = event.currentTarget.querySelector<HTMLElement>('.np-tab:focus')
-				const currentIndex = focusedTab ? tabs.indexOf(focusedTab) : 0
-				const index = currentIndex + (event.key === 'ArrowRight' ? 1 : -1)
-				const newTab =
-					index < 0 ? tabs[tabs.length - 1] : index >= tabs.length ? tabs[0] : tabs[index]
-				newTab.focus()
-				event.preventDefault()
-			}
-		}}
+		onkeydown={handleKeydown}
 	>
 		{@render children?.()}
 	</div>
@@ -80,7 +90,7 @@
 			border-top-left-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			border-top-right-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			position-anchor: --np-tab-indicator;
-			transition: cubic-bezier(0.42, 1.67, 0.21, 0.9) 0.35s;
+			transition: cubic-bezier(0.33, 1, 0.68, 1) 0.3s;
 		}
 	}
 </style>

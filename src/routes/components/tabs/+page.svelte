@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state'
 	import { Icon } from '$lib/icons/index.ts'
 	import Tab from '$lib/tabs/Tab.svelte'
 	import Tabs from '$lib/tabs/Tabs.svelte'
@@ -14,13 +15,30 @@
 <h1>Tabs</h1>
 <h2>Usage</h2>
 <p>
-	Tabs let you switch between different sections. Use only one type of tab (primary or secondary) in
-	each tab bar.
+	Tabs provide a user interface for navigating between distinct sections or pages within an
+	application. Each <code>&lt;Tabs&gt;</code> component contains multiple <code>&lt;Tab&gt;</code>
+	children, and the <code>&lt;Tabs&gt;</code> component itself can be styled as either primary or secondary
+	variants to suit different use cases.
 </p>
 
 <h3>Primary Tabs</h3>
 <DemoContainer>
 	<Tabs value="videos">
+		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+		<Tab value="theme">Theme</Tab>
+		<Tab badge value="settings">Setttings</Tab>
+	</Tabs>
+</DemoContainer>
+<Code
+	value={`<Tabs value="videos">
+	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+	<Tab value="theme">Theme</Tab>
+	<Tab badge value="settings">Setttings</Tab>
+</Tabs>`}
+/>
+<h4>Icons</h4>
+<DemoContainer>
+	<Tabs value="videos">
 		<Tab badge badgeLabel="2" value="videos">
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 		</Tab>
@@ -35,25 +53,26 @@
 	</Tab>
 	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
 	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
-</Tabs>`}
-/>
-<DemoContainer>
-	<Tabs value="videos">
-		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-		<Tab value="theme">Theme</Tab>
-		<Tab badge value="settings">Setttings</Tab>
-	</Tabs>
-</DemoContainer>
-<Code
-	value={`<Tabs value="videos">
-	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-	<Tab value="theme">Theme</Tab>
-	<Tab badge value="settings">Setttings</Tab>
 </Tabs>`}
 />
 <h3>Secondary Tabs</h3>
 <DemoContainer>
 	<Tabs variant="secondary" value="videos">
+		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+		<Tab value="theme">Theme</Tab>
+		<Tab badge value="settings">Setttings</Tab>
+	</Tabs>
+</DemoContainer>
+<Code
+	value={`<Tabs variant="secondary" value="videos">
+	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
+	<Tab value="theme">Theme</Tab>
+	<Tab badge value="settings">Setttings</Tab>
+</Tabs>`}
+/>
+<h4>Icons</h4>
+<DemoContainer>
+	<Tabs variant="secondary" value="videos">
 		<Tab badge badgeLabel="2" value="videos">
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 		</Tab>
@@ -68,21 +87,6 @@
 	</Tab>
 	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
 	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
-</Tabs>`}
-/>
-
-<DemoContainer>
-	<Tabs variant="secondary" value="videos">
-		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-		<Tab value="theme">Theme</Tab>
-		<Tab badge value="settings">Setttings</Tab>
-	</Tabs>
-</DemoContainer>
-<Code
-	value={`<Tabs variant="secondary" value="videos">
-	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-	<Tab value="theme">Theme</Tab>
-	<Tab badge value="settings">Setttings</Tab>
 </Tabs>`}
 />
 <h3>Selection</h3>
@@ -107,21 +111,49 @@
 </DemoContainer>
 <Code
 	value={`<Tabs bind:value>
-	<Tab selected value="videos">Videos</Tab>
+	<Tab value="videos">Videos</Tab>
 	<Tab value="theme">Theme</Tab>
 	<Tab value="settings">Setttings</Tab>
 </Tabs>
 <div>Selected Tab: {value}</div>`}
 />
 
+<h3>Links</h3>
+<p>
+	To enable navigation between pages or routes, use the <code>href</code> attribute on
+	<code>&lt;Tab&gt;</code>. This renders the tab as a link, allowing users to navigate to different
+	routes when a tab is clicked. The <code>href</code> attribute works seamlessly with the
+	<code>value</code> prop, so you can track which tab is selected even when navigating between pages.
+	This approach is especially useful for SSR and deep linking.
+</p>
+<DemoContainer>
+	<div>
+		<Tabs variant="secondary" value={page.url.searchParams.get('tab') || 'videos'}>
+			<Tab data-sveltekit-noscroll href="/components/tabs?tab=videos" value="videos">Videos</Tab>
+			<Tab data-sveltekit-noscroll href="/components/tabs?tab=theme" value="theme">Theme</Tab>
+			<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">
+				Setttings
+			</Tab>
+		</Tabs>
+	</div>
+</DemoContainer>
+<Code
+	value={`<Tabs variant="secondary" value={page.url.searchParams.get('tab') || 'videos'}>
+	<Tab data-sveltekit-noscroll href="/components/tabs?tab=videos" value="videos">Videos</Tab>
+	<Tab data-sveltekit-noscroll href="/components/tabs?tab=theme" value="theme">Theme</Tab>
+	<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">Setttings</Tab>
+</Tabs>`}
+/>
+
 <h2>API</h2>
 <h3>Tabs</h3>
-<h4>Bindables</h4>
+<h4>Attributes</h4>
 <table>
 	<thead>
 		<tr>
 			<th>Attribute</th>
 			<th>Type</th>
+			<th>Default</th>
 			<th>Description</th>
 		</tr>
 	</thead>
@@ -129,17 +161,23 @@
 		<tr>
 			<td><code>value</code></td>
 			<td><code>number | string</code></td>
+			<td></td>
 			<td>Value of the current tab.</td>
 		</tr>
 		<tr>
-			<td><code>element</code></td>
-			<td><code>HTMLSpanElement</code></td>
+			<td><code>variant</code></td>
+			<td><code>'primary' | 'secondary'</code></td>
+			<td><code>undefined</code></td>
 			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
+				>Sets the visual style of the tab. Use <code>'primary'</code> for the default appearance or
+				<code>'secondary'</code> for an alternative style.</td
 			>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td></td>
+			<td>A reference to the root DOM element of the component. </td>
 		</tr>
 	</tbody>
 </table>
@@ -156,15 +194,6 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			<td><code>variant</code></td>
-			<td><code>'primary' | 'secondary'</code></td>
-			<td><code>undefined</code></td>
-			<td
-				>Sets the visual style of the tab. Use <code>'primary'</code> for the default appearance or
-				<code>'secondary'</code> for an alternative style.</td
-			>
-		</tr>
 		<tr>
 			<td><code>inlineIcon</code></td>
 			<td><code>boolean</code></td>
@@ -206,6 +235,12 @@
 				When set, the tab will render as a link using the provided URL. This allows navigation to
 				other pages or routes when the tab is clicked.
 			</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLElement</code></td>
+			<td></td>
+			<td>A reference to the root DOM element of the component.</td>
 		</tr>
 	</tbody>
 </table>

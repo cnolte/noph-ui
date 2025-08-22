@@ -8,6 +8,7 @@ export interface TabProps extends HTMLAttributes<HTMLElement> {
 	icon?: Snippet
 	badge?: boolean
 	badgeLabel?: string | number
+	element?: HTMLElement
 }
 
 export interface TabsProps extends HTMLAttributes<HTMLElement> {

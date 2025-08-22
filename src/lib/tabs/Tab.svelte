@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { getContext } from 'svelte'
+	import { getContext, onMount } from 'svelte'
 	import type { TabProps, TabsContext } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
 
@@ -14,19 +14,20 @@
 		href,
 		badge = false,
 		badgeLabel,
+		element = $bindable(),
 		...attributes
 	}: TabProps = $props()
-	let element: HTMLElement | undefined = $state()
 
 	const tabsContext = getContext<TabsContext>('np-tabs')
+	let fallbackIndicator = $state(false)
 
-	const onClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
+	const handleClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		tabsContext.value = value
 		if (onclick) {
 			onclick(event)
 		}
 	}
-	const onKeyDown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
+	const handleKeyDown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		if (event.key === 'Enter' || event.key === ' ') {
 			tabsContext.value = value
 		}
@@ -34,15 +35,15 @@
 			onkeydown(event)
 		}
 	}
+	onMount(() => {
+		if (!('anchorName' in document.documentElement.style)) {
+			fallbackIndicator = true
+		}
+	})
 </script>
 
 {#snippet content()}
-	<div
-		class="np-tab-content"
-		style={tabsContext.variant === 'secondary'
-			? '--np-indicator-radius: 0;--_indicator-gap: 0'
-			: ''}
-	>
+	<div class={['np-tab-content', tabsContext.value === value && fallbackIndicator && 'fallback']}>
 		<div
 			class={[
 				'np-tab-label',
@@ -110,8 +111,8 @@
 			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}
-		onclick={onClick}
-		onkeydown={onKeyDown}
+		onclick={handleClick}
+		onkeydown={handleKeyDown}
 	>
 		{@render content()}
 	</button>
@@ -127,7 +128,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-family: inherit;
 		box-sizing: border-box;
 		text-decoration: none;
 		position: relative;
@@ -135,7 +135,7 @@
 		padding: 0 1rem;
 		color: var(--np-color-on-surface-variant);
 		height: 3rem;
-		transition: color 0.3s ease;
+		transition: color 0.3s cubic-bezier(0.33, 1, 0.68, 1);
 	}
 	.np-tab-content-active {
 		--_focus-bottom: 4px;
@@ -187,6 +187,12 @@
 		left: var(--_indicator-gap, 2px);
 		right: var(--_indicator-gap, 2px);
 		height: 3px;
+	}
+
+	.fallback .np-indicator {
+		background-color: var(--np-color-primary);
+		border-top-left-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+		border-top-right-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 	}
 
 	.focus-area {
