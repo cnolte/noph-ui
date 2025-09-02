@@ -74,7 +74,7 @@
 			size="xs"
 			--np-icon-button-icon-size="1.125rem"
 			aria-label={ariaLabelRemove}
-			onclick={(
+			onpointerup={(
 				event: MouseEvent & {
 					currentTarget: EventTarget & HTMLButtonElement
 				},
