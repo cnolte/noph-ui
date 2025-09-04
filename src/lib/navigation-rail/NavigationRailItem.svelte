@@ -42,7 +42,7 @@
 <style>
 	.np-navigation-action {
 		cursor: pointer;
-		font-family: inherit;
+		font: inherit;
 		border: 0;
 		background: none;
 		align-items: center;

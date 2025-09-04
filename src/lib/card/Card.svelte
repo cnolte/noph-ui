@@ -166,7 +166,7 @@
 		--background-color: none;
 	}
 	.np-card-container {
-		font-family: inherit;
+		font: inherit;
 		box-sizing: border-box;
 		text-align: start;
 		display: inline-flex;

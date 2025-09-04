@@ -203,7 +203,6 @@
 					<div class="content">
 						{#if attributes.type === 'textarea'}
 							<textarea
-								aria-label={label}
 								aria-describedby={supportingText || (errorTextRaw && errorRaw)
 									? `supporting-text-${uid}`
 									: undefined}
@@ -226,7 +225,6 @@
 								{/if}
 								{@render children?.()}
 								<input
-									aria-label={label}
 									aria-describedby={supportingText || (errorTextRaw && errorRaw)
 										? `supporting-text-${uid}`
 										: undefined}

@@ -57,7 +57,7 @@
 <style>
 	.np-navigation-drawer-item {
 		cursor: pointer;
-		font-family: inherit;
+		font: inherit;
 		color: var(--np-color-on-surface);
 		text-decoration: none;
 		border: 0;

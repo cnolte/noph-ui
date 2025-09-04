@@ -121,7 +121,7 @@
 <style>
 	.np-tab {
 		flex: 1;
-		font-family: inherit;
+		font: inherit;
 		background-color: transparent;
 		border-width: 0;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);

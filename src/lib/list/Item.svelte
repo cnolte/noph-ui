@@ -139,7 +139,7 @@
 	}
 
 	.np-item {
-		font-family: inherit;
+		font: inherit;
 		background-color: transparent;
 		border-width: 0;
 		position: relative;
