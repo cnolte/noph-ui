@@ -373,6 +373,7 @@
 				field?.focus()
 			}}
 			disabled={option.disabled}
+			role="option"
 			onkeydown={(event) => {
 				if (event.key === 'ArrowDown') {
 					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
