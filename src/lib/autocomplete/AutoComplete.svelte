@@ -58,6 +58,7 @@
 			element?.focus()
 			onoptionselect(option)
 		}}
+		role="option"
 		disabled={option.disabled}
 		onkeydown={(event) => {
 			if (event.key === 'ArrowDown') {

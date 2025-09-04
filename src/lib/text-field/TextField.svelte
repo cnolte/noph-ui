@@ -171,14 +171,16 @@
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="label-wrapper">
-							<span class="label" aria-disabled={attributes.disabled}
-								>{label}{noAsterisk || !attributes.required ? '' : '*'}
+							<span
+								class={['label', !noAsterisk && attributes.required && 'required']}
+								aria-disabled={attributes.disabled}
+								>{label}
 							</span>
 						</div>
 						<div class="outline-notch">
-							<span class="notch np-hidden" aria-hidden="true"
-								>{label}{noAsterisk || !attributes.required ? '' : '*'}</span
-							>
+							<span class="notch np-hidden" aria-hidden="true">
+								{label}{noAsterisk || !attributes.required ? '' : '*'}
+							</span>
 						</div>
 					{/if}
 					<div class="outline-end"></div>
@@ -194,8 +196,10 @@
 					{#if variant === 'filled'}
 						<div class="label-wrapper">
 							{#if label?.length}
-								<span class="label" aria-disabled={attributes.disabled}
-									>{label}{noAsterisk || !attributes.required ? '' : '*'}
+								<span
+									class={['label', !noAsterisk && attributes.required && 'required']}
+									aria-disabled={attributes.disabled}
+									>{label}
 								</span>
 							{/if}
 						</div>
@@ -624,6 +628,10 @@
 
 	.label.np-hidden {
 		opacity: 0;
+	}
+
+	.label.required::after {
+		content: '*';
 	}
 
 	.field:not(.populated) .label {

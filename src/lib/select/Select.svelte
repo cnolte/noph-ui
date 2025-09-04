@@ -173,6 +173,7 @@
 		class:disabled
 		class:outlined={variant === 'outlined'}
 		role="combobox"
+		aria-haspopup="listbox"
 		tabindex={disabled ? -1 : tabindex}
 		aria-controls="listbox"
 		aria-expanded={menuOpen}
@@ -218,7 +219,7 @@
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="label-wrapper">
-							<span class="label">{label}{noAsterisk || !required ? '' : '*'} </span>
+							<span class={['label', !noAsterisk && required && 'required']}>{label}</span>
 						</div>
 						<div class="outline-notch">
 							<span class="notch np-hidden" aria-hidden="true"
@@ -239,7 +240,7 @@
 					{#if variant === 'filled'}
 						<div class="label-wrapper">
 							{#if label?.length}
-								<span class="label">{label}{noAsterisk || !required ? '' : '*'} </span>
+								<span class={['label', !noAsterisk && required && 'required']}>{label}</span>
 							{/if}
 						</div>
 					{/if}
@@ -341,6 +342,7 @@
 				field?.focus()
 			}}
 			disabled={option.disabled}
+			role="option"
 			onkeydown={(event) => {
 				if (event.key === 'ArrowDown') {
 					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
@@ -767,6 +769,10 @@
 
 	.label.np-hidden {
 		opacity: 0;
+	}
+
+	.label.required::after {
+		content: '*';
 	}
 
 	.field:not(.menu-open):not(:focus) .label {
