@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Button from '$lib/button/Button.svelte'
 </script>
 
@@ -9,7 +10,7 @@
 <div class="hero">
 	<h1 class="header">Noph UI</h1>
 	<div class="sub-header">The Ultimate Material 3 UI Library for Svelte 5</div>
-	<Button variant="elevated" size="m" href="/about/quick-start">Get started</Button>
+	<Button variant="elevated" size="m" href={resolve('/about/quick-start')}>Get started</Button>
 </div>
 
 <p>
@@ -56,7 +57,7 @@
 </p>
 
 <p>
-	<a class="link" href="/about/quick-start">Get Started Now!</a> Build lightning-fast, customizable,
+	<a class="link" href={resolve('/about/quick-start')}>Get Started Now!</a> Build lightning-fast, customizable,
 	and visually appealing Svelte applications with Noph UI and take advantage of modern Material Design.
 </p>
 

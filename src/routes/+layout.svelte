@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import IconButton from '$lib/button/IconButton.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import NavigationDrawer from '$lib/navigation-drawer/NavigationDrawer.svelte'
@@ -25,7 +26,7 @@
 		<IconButton popovertarget="mobile-drawer" variant="text" title="Open" class="menu-btn"
 			><Icon>menu</Icon></IconButton
 		>
-		<a href="/" class="logo">
+		<a href={resolve('/')} class="logo">
 			<Logo />
 			<div class="logo-label">Noph UI</div>
 		</a>
