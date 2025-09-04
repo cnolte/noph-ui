@@ -247,7 +247,6 @@
 						{#if multiple}
 							<select
 								tabindex="-1"
-								aria-label={attributes['aria-label'] || label}
 								aria-invalid={errorRaw}
 								{disabled}
 								{required}
@@ -280,7 +279,6 @@
 						{:else}
 							<select
 								tabindex="-1"
-								aria-label={attributes['aria-label'] || label}
 								{disabled}
 								{required}
 								{name}
