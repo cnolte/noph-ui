@@ -37,6 +37,8 @@
 	{popover}
 	class={['np-snackbar', attributes.class]}
 	bind:this={element}
+	role="alert"
+	aria-label={label}
 	onbeforetoggle={(event) => {
 		let { newState } = event
 		if (newState === 'closed') {
@@ -52,7 +54,7 @@
 >
 	<div class="np-snackbar-inner">
 		<div class="np-snackbar-label-container">
-			<div role="alert" class="np-snackbar-label">{label}</div>
+			<div class="np-snackbar-label">{label}</div>
 			{#if supportingText}
 				<div class="np-snackbar-supporting-text">{supportingText}</div>
 			{/if}
