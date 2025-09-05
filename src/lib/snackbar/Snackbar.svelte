@@ -51,8 +51,8 @@
 	}}
 >
 	<div class="np-snackbar-inner">
-		<div role="alert" class="np-snackbar-label-container">
-			<div class="np-snackbar-label">{label}</div>
+		<div class="np-snackbar-label-container">
+			<div role="alert" class="np-snackbar-label">{label}</div>
 			{#if supportingText}
 				<div class="np-snackbar-supporting-text">{supportingText}</div>
 			{/if}
