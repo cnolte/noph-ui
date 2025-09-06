@@ -13,10 +13,11 @@
 		disabled = false,
 		onfocus,
 		onblur,
+		softFocus = false,
 		...attributes
 	}: ItemProps = $props()
 
-	let focused = $state(false)
+	let focused = $derived(softFocus)
 	let visible = $state(false)
 	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
 	let observer: IntersectionObserver | undefined

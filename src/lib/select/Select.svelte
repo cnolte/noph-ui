@@ -457,14 +457,15 @@
 	</div>
 </div>
 
-{#snippet item(option: SelectOption, index?: number)}
+{#snippet item(option: SelectOption, index: number)}
 	{#if Array.isArray(value) && multiple}
 		<Item
-			id={typeof index === 'number' ? `${uid}-opt-${index}` : undefined}
+			id="{uid}-opt-{index}"
 			onclick={(event) => {
 				handleOptionSelect(event, option)
 				field?.focus()
 			}}
+			tabindex={-1}
 			disabled={option.disabled}
 			aria-disabled={option.disabled}
 			role="option"
@@ -501,11 +502,12 @@
 		</Item>
 	{:else}
 		<Item
-			id={typeof index === 'number' ? `${uid}-opt-${index}` : undefined}
+			id="{uid}-opt-{index}"
 			onclick={(event) => {
 				handleOptionSelect(event, option)
 				field?.focus()
 			}}
+			tabindex={-1}
 			disabled={option.disabled}
 			aria-disabled={option.disabled}
 			role="option"
@@ -554,11 +556,28 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={anchorElement}
-	ontoggle={({ newState }) => {
+	ontoggle={async ({ newState }) => {
 		if (newState === 'open') {
 			menuOpen = true
+			let idx = -1
+			if (multiple) {
+				if (Array.isArray(value) && value.length) {
+					idx = options.findIndex((o) => value.includes(o.value) && !o.disabled)
+				}
+			} else {
+				idx = options.findIndex((o) => o.value === value && !o.disabled)
+			}
+			if (idx < 0) {
+				idx = options.findIndex((o) => !o.disabled)
+			}
+			if (idx < 0) idx = 0
+			focusIndex = idx
+			await tick()
+			const el = document.getElementById(`${uid}-opt-${focusIndex}`)
+			;(el as HTMLElement | null)?.focus?.()
 		} else {
 			menuOpen = false
+			focusIndex = -1
 		}
 	}}
 	bind:element={menuElement}

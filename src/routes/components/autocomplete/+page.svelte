@@ -6,7 +6,7 @@
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 
-	const fruitOption: AutoCompleteOption[] = [
+	const fruitOptions: AutoCompleteOption[] = [
 		{ value: 1, label: 'Apple' },
 		{ value: 2, label: 'Banana' },
 		{ value: 3, label: 'Orange' },
@@ -18,7 +18,6 @@
 	]
 	let fruits: AutoCompleteOption[] = $state([{ value: 1, label: 'Apple' }])
 	let fruitValue = $state('')
-	let focused = $state(false)
 </script>
 
 <svelte:head>
@@ -45,7 +44,7 @@
 />
 <DemoContainer>
 	<AutoComplete
-		options={fruitOption}
+		options={fruitOptions}
 		variant="outlined"
 		placeholder="Add fruit..."
 		style="width:340px"
@@ -53,45 +52,24 @@
 		name="fruit"
 		populated={fruits.length > 0}
 		bind:value={fruitValue}
-		bind:focused
 		onoptionselect={(option) => {
 			fruits.push(option)
 		}}
 		optionsFilter={(option) => {
 			return (
-				(fruitValue === '' ||
+				(!fruitValue ||
 					option.label.toLocaleLowerCase().includes(fruitValue.toLocaleLowerCase())) &&
 				!fruits.find((f) => f.value === option.value)
 			)
 		}}
-		onkeydown={(e) => {
-			if (e.currentTarget && e.key === 'Enter') {
-				e.preventDefault()
-				const newFruit = fruitOption.find((f) => f.label === fruitValue)
-				if (newFruit) {
-					fruits.push(newFruit)
-				}
-				fruitValue = ''
-			}
-		}}
-		onblur={() => {
-			const newFruit = fruitOption.find((f) => f.label === fruitValue)
-			if (newFruit) {
-				fruits.push(newFruit)
-			}
-			setTimeout(() => {
-				if (!focused) {
-					fruitValue = ''
-				}
-			}, 300)
-		}}
 	>
 		<ChipSet chipsCount={fruits.length}>
-			{#each fruits as fruit, index (index)}
+			{#each fruits as fruit, index (fruit.value)}
 				<InputChip
 					name="fruit"
 					value={fruit.value}
 					label={fruit.label}
+					ariaLabelRemove="Remove {fruit.label}"
 					onremove={() => {
 						if (index > -1) {
 							fruits.splice(index, 1)
@@ -102,3 +80,41 @@
 		</ChipSet>
 	</AutoComplete>
 </DemoContainer>
+<Code
+	value={`<AutoComplete
+	options={fruitOptions}
+	variant="outlined"
+	placeholder="Add fruit..."
+	style="width:340px"
+	label="Fruits"
+	name="fruit"
+	populated={fruits.length > 0}
+	bind:value={fruitValue}
+	onoptionselect={(option) => {
+		fruits.push(option)
+	}}
+	optionsFilter={(option) => {
+		return (
+			(!fruitValue ||
+				option.label.toLocaleLowerCase().includes(fruitValue.toLocaleLowerCase())) &&
+			!fruits.find((f) => f.value === option.value)
+		)
+	}}
+>
+	<ChipSet chipsCount={fruits.length}>
+		{#each fruits as fruit, index (fruit.value)}
+			<InputChip
+				name="fruit"
+				value={fruit.value}
+				label={fruit.label}
+				ariaLabelRemove="Remove {fruit.label}"
+				onremove={() => {
+					if (index > -1) {
+						fruits.splice(index, 1)
+					}
+				}}
+			/>
+		{/each}
+	</ChipSet>
+</AutoComplete>`}
+/>

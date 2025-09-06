@@ -3,8 +3,6 @@ import type { InputFieldProps } from '$lib/types.ts'
 export interface AutoCompleteOption {
 	value?: string | number
 	label: string
-	disabled?: boolean
-	selected?: boolean | undefined | null
 }
 
 export interface AutoCompleteProps extends Omit<InputFieldProps, 'clientWidth' | 'clientHeight'> {

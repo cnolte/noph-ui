@@ -71,6 +71,7 @@ Beta (No breaking changes expected)
 
 In progress (Breaking changes expected)
 
+- Auto complete
 - Chips (Docs missing)
 - Dialogs (Fullscreen + Docs missing)
 - Menus (Positioning missing + Docs missing)

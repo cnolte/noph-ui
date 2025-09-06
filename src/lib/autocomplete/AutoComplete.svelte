@@ -26,9 +26,6 @@
 		onkeydown,
 		onclick,
 		oninput,
-		onblur,
-		onfocusout,
-		focused = $bindable(false),
 		...attributes
 	}: AutoCompleteProps = $props()
 
@@ -40,45 +37,60 @@
 		menuElement?.hidePopover()
 	}
 	const uid = $props.id()
-	let defaultOptionsFilter = (option: AutoCompleteOption) => {
+	const defaultOptionsFilter = (option: AutoCompleteOption) => {
 		return !value || option.label.toLocaleLowerCase().includes(value.toLocaleLowerCase())
 	}
 	let displayOptions = $derived(options.filter(optionsFilter || defaultOptionsFilter))
 	let useVirtualList = $derived(displayOptions.length > 4000)
 	let clientWidth = $state(0)
-	let menuElement: HTMLDivElement | undefined = $state()
+	let menuElement = $state<HTMLDivElement>()
+	let menuOpen = $state(false)
 	let finalPopulated = $state(populated)
-	let blockEvent = $state(false)
+	let activeIndex = $state(-1)
+
+	function setActive(index: number) {
+		if (index < 0 || index >= displayOptions.length) {
+			activeIndex = -1
+			return
+		}
+		activeIndex = index
+	}
+
+	function moveActive(delta: number) {
+		if (!displayOptions.length) {
+			activeIndex = -1
+			return
+		}
+		const next =
+			activeIndex === -1
+				? delta > 0
+					? 0
+					: displayOptions.length - 1
+				: (activeIndex + delta + displayOptions.length) % displayOptions.length
+		setActive(next)
+	}
+
+	$effect(() => {
+		if (activeIndex >= displayOptions.length) {
+			activeIndex = -1
+		}
+	})
 </script>
 
-{#snippet item(option: AutoCompleteOption)}
+{#snippet item(option: AutoCompleteOption, index: number)}
 	<Item
+		id="{uid}-opt-{index}"
+		softFocus={index === activeIndex}
+		aria-selected={index === activeIndex}
+		role="option"
+		onmousedown={(e) => {
+			e.preventDefault()
+		}}
+		onmouseenter={() => setActive(index)}
 		onclick={(event) => {
 			event.preventDefault()
-			element?.focus()
+			setActive(index)
 			onoptionselect(option)
-		}}
-		role="option"
-		disabled={option.disabled}
-		onkeydown={(event) => {
-			if (event.key === 'ArrowDown') {
-				blockEvent = true
-				;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
-				event.preventDefault()
-			}
-			if (event.key === 'ArrowUp') {
-				blockEvent = true
-				;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
-				event.preventDefault()
-			}
-			if (event.key === 'Enter') {
-				onoptionselect(option)
-			}
-			if (event.key === 'Tab') {
-				finalPopulated = populated
-				blockEvent = false
-				hidePopover?.()
-			}
 		}}
 		variant="button"
 		>{option.label}
@@ -86,15 +98,20 @@
 {/snippet}
 
 <TextField
-	autocomplete="off"
 	{...attributes}
+	autocomplete="off"
 	{variant}
 	type="text"
 	populated={finalPopulated}
 	bind:clientWidth
 	bind:value
-	bind:focused
 	style="anchor-name:--{uid};"
+	role="combobox"
+	aria-controls="listbox-{uid}"
+	aria-expanded={menuOpen}
+	aria-autocomplete="list"
+	aria-activedescendant={activeIndex >= 0 ? `${uid}-opt-${activeIndex}` : undefined}
+	aria-haspopup="listbox"
 	onclick={(event) => {
 		finalPopulated = true
 		showPopover()
@@ -102,32 +119,42 @@
 	}}
 	oninput={(event) => {
 		showPopover()
+		activeIndex = -1
 		oninput?.(event)
 	}}
 	onkeydown={(event) => {
-		if (event.key === 'Tab' || event.key === 'Escape') {
-			blockEvent = false
+		if (event.key === 'Tab') {
+			return
+		}
+		if (event.key === 'Escape') {
 			hidePopover()
-		} else {
-			if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-				event.preventDefault()
-				finalPopulated = true
-				blockEvent = true
-				showPopover()
-				;(menuElement?.firstElementChild?.firstElementChild as HTMLElement)?.focus()
+			activeIndex = -1
+			event.preventDefault()
+			return
+		}
+		if (event.key === 'ArrowDown') {
+			finalPopulated = true
+			showPopover()
+			moveActive(1)
+			event.preventDefault()
+			return
+		}
+		if (event.key === 'ArrowUp') {
+			finalPopulated = true
+			showPopover()
+			moveActive(-1)
+			event.preventDefault()
+			return
+		}
+		if (event.key === 'Enter' && activeIndex >= 0) {
+			const opt = displayOptions[activeIndex]
+			if (opt) {
+				onoptionselect(opt)
 			}
+			event.preventDefault()
+			return
 		}
 		onkeydown?.(event)
-	}}
-	onblur={(event) => {
-		if (!blockEvent) {
-			onblur?.(event)
-		}
-	}}
-	onfocusout={(event) => {
-		if (!blockEvent) {
-			onfocusout?.(event)
-		}
 	}}
 	bind:reportValidity
 	bind:checkValidity
@@ -135,6 +162,7 @@
 	>{@render children?.()}
 </TextField>
 <Menu
+	id="listbox-{uid}"
 	style="position-anchor:--{uid};{clampMenuWidth || useVirtualList
 		? 'width'
 		: 'min-width'}:{clientWidth}px"
@@ -147,38 +175,32 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={element}
-	onbeforetoggle={(e) => {
-		if (e.newState !== 'closed') {
-			blockEvent = true
-		}
-	}}
 	ontoggle={(e) => {
 		if (e.newState === 'closed') {
-			blockEvent = false
+			menuOpen = false
+			activeIndex = -1
 			if (!populated && finalPopulated && !value) {
 				finalPopulated = false
 			}
-		}
-		if (!focused) {
-			const event = {
-				...new FocusEvent('blur', { relatedTarget: element }),
-				currentTarget: element as EventTarget & HTMLInputElement,
-			} as FocusEvent & { currentTarget: EventTarget & HTMLInputElement }
-			onblur?.(event)
-			onfocusout?.(event)
+		} else {
+			menuOpen = true
+			// Ensure activeIndex valid when opening
+			if (activeIndex >= displayOptions.length) {
+				activeIndex = -1
+			}
 		}
 	}}
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
 		<VirtualList height="250px" itemHeight={48} items={displayOptions}>
-			{#snippet row(option)}
-				{@render item(option)}
+			{#snippet row(option, index)}
+				{@render item(option, index)}
 			{/snippet}
 		</VirtualList>
 	{:else}
 		{#each displayOptions as option, index (index)}
-			{@render item(option)}
+			{@render item(option, index)}
 		{/each}
 	{/if}
 </Menu>

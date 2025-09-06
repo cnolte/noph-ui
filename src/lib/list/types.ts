@@ -7,6 +7,7 @@ interface ButtonProps extends HTMLButtonAttributes {
 	end?: Snippet
 	variant: 'button'
 	supportingText?: Snippet
+	softFocus?: boolean
 }
 
 interface AnchorProps extends HTMLAnchorAttributes {
@@ -16,6 +17,7 @@ interface AnchorProps extends HTMLAnchorAttributes {
 	disabled?: boolean
 	variant: 'link'
 	supportingText?: Snippet
+	softFocus?: boolean
 }
 interface TextProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
@@ -24,6 +26,7 @@ interface TextProps extends HTMLAttributes<HTMLDivElement> {
 	disabled?: boolean
 	variant?: 'text'
 	supportingText?: Snippet
+	softFocus?: boolean
 }
 
 export type ItemProps = ButtonProps | AnchorProps | TextProps

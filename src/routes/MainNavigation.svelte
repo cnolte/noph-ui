@@ -26,6 +26,12 @@
 <div class="header">Components</div>
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Auto complete"
+	href="/components/autocomplete"
+	selected={page.url.pathname === '/components/autocomplete'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Buttons"
 	href="/components/button"
 	selected={page.url.pathname === '/components/button'}
