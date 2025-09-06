@@ -3,11 +3,7 @@
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import type { IconButtonProps } from './types.ts'
-	import type {
-		HTMLAnchorAttributes,
-		HTMLButtonAttributes,
-		MouseEventHandler,
-	} from 'svelte/elements'
+	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
 
 	let {
 		variant = 'text',
@@ -15,7 +11,7 @@
 		children,
 		title,
 		element = $bindable(),
-		disabled,
+		disabled = false,
 		loading = false,
 		loadingAriaLabel,
 		selected = $bindable(false),
@@ -30,13 +26,6 @@
 
 	const uid = $props.id()
 	let touchEl: HTMLSpanElement | undefined = $state()
-
-	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
-		return (obj as HTMLAnchorAttributes).href === undefined
-	}
-	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
-		return (obj as HTMLAnchorAttributes).href !== undefined
-	}
 </script>
 
 {#snippet content()}
@@ -56,12 +45,37 @@
 	{/if}
 {/snippet}
 
-{#if isButton(attributes) || disabled || loading}
+{#if 'href' in attributes && !disabled && !loading}
+	<a
+		{...attributes}
+		onclick={(event) => {
+			;(onclick as MouseEventHandler<HTMLAnchorElement>)?.(event)
+		}}
+		aria-describedby={title ? uid : undefined}
+		aria-label={title}
+		bind:this={element}
+		class={[
+			'np-icon-button',
+			size,
+			width,
+			variant,
+			selected ? 'square' : shape,
+			'enabled',
+			toggle && 'toggle',
+			selected && 'selected',
+			attributes.class,
+		].filter(Boolean)}
+	>
+		{@render content()}
+	</a>
+{:else}
 	<button
+		{...attributes as HTMLButtonAttributes}
 		aria-describedby={title ? uid : attributes['aria-describedby']}
 		aria-label={title || attributes['aria-label']}
-		aria-pressed={selected}
-		{...attributes as HTMLButtonAttributes}
+		aria-pressed={toggle ? selected : undefined}
+		aria-busy={loading}
+		type={(attributes['type'] as 'button' | 'submit' | 'reset' | undefined) ?? 'button'}
 		disabled={disabled || loading}
 		bind:this={element}
 		onclick={(event) => {
@@ -77,38 +91,15 @@
 			selected || loading ? 'square' : shape,
 			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
 			toggle && 'toggle',
-			selected ? 'selected' : '',
+			selected && 'selected',
 			attributes.class,
 		]}
 	>
 		{@render content()}
 	</button>
-{:else if isLink(attributes)}
-	<a
-		{...attributes}
-		onclick={(event) => {
-			;(onclick as MouseEventHandler<HTMLAnchorElement>)?.(event)
-		}}
-		aria-describedby={title ? uid : undefined}
-		aria-label={title}
-		bind:this={element}
-		class={[
-			'np-icon-button',
-			size,
-			width,
-			variant,
-			selected || loading ? 'square' : shape,
-			'enabled',
-			toggle && 'toggle',
-			selected ? 'selected' : '',
-			attributes.class,
-		]}
-	>
-		{@render content()}
-	</a>
 {/if}
 
-{#if title}
+{#if title && !disabled && !loading}
 	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
 {/if}
 
@@ -343,16 +334,26 @@
 	}
 
 	.outlined {
-		outline-style: solid;
-		outline-color: var(--np-outlined-icon-button-outline-color, var(--np-color-outline-variant));
-		outline-width: 1px;
-		outline-offset: -1px;
+		--_outlined-border-color: var(
+			--np-outlined-icon-button-outline-color,
+			var(--np-color-outline-variant)
+		);
 		--np-ripple-hover-color: var(--np-color-on-surface-variant);
 		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
 		color: var(--np-color-on-surface-variant);
 	}
+
+	.outlined:not(.selected)::after,
+	.outlined-disabled::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border: 1px solid var(--_outlined-border-color);
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
 	.outlined.selected {
-		outline-style: none;
 		--np-ripple-hover-color: var(--np-color-on-surface-variant);
 		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
 		color: var(--np-color-inverse-on-surface);

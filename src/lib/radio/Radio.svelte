@@ -11,7 +11,8 @@
 		...attributes
 	}: RadioProps = $props()
 
-	let inputEl: HTMLSpanElement | undefined = $state()
+	let inputEl = $state<HTMLInputElement>()
+	const uid = $props.id()
 </script>
 
 <label {style} class={['np-host', attributes.class]} bind:this={element}>
@@ -20,11 +21,11 @@
 			<Ripple forElement={inputEl} class="np-radio-ripple" />
 		{/if}
 		<svg class="np-radio-icon" viewBox="0 0 20 20">
-			<mask id="1">
+			<mask id="{uid}-mask">
 				<rect width="100%" height="100%" fill="white" />
 				<circle cx="10" cy="10" r="8" fill="black" />
 			</mask>
-			<circle class="outer circle" cx="10" cy="10" r="10" mask="url(#1)" />
+			<circle class="outer circle" cx="10" cy="10" r="10" mask="url(#{uid}-mask)" />
 			<circle class="inner circle" cx="10" cy="10" r="5" />
 		</svg>
 		{#if group !== undefined}

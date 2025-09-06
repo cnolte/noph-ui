@@ -1,17 +1,10 @@
 <script lang="ts">
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationRailItemProps } from './types.ts'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 
 	let { selected, icon, label, ...attributes }: NavigationRailItemProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
-
-	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
-		return (obj as HTMLAnchorAttributes).href === undefined
-	}
-	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
-		return (obj as HTMLAnchorAttributes).href !== undefined
-	}
 </script>
 
 {#snippet content()}
@@ -23,20 +16,20 @@
 	<span class="np-touch" bind:this={touchEl}></span>
 {/snippet}
 
-{#if isButton(attributes)}
-	<button
-		{...attributes as HTMLButtonAttributes}
-		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
-	>
-		{@render content()}
-	</button>
-{:else if isLink(attributes)}
+{#if 'href' in attributes}
 	<a
 		{...attributes}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
 	>
 		{@render content()}
 	</a>
+{:else}
+	<button
+		{...attributes as HTMLButtonAttributes}
+		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
+	>
+		{@render content()}
+	</button>
 {/if}
 
 <style>

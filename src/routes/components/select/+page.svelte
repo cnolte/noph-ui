@@ -23,6 +23,10 @@
 			{ value: 'apple', label: 'Apple', selected: true },
 			{ value: 'apricot', label: 'Apricot' },
 			{ value: 'banana', label: 'Banana' },
+			{ value: 'cherry', label: 'Cherry' },
+			{ value: 'elderberry', label: 'Elderberry', disabled: true },
+			{ value: 'fig', label: 'Fig' },
+			{ value: 'grape', label: 'Grape' },
 		]}
 	/>
 	<Select
@@ -33,6 +37,10 @@
 			{ value: 'apple', label: 'Apple' },
 			{ value: 'apricot', label: 'Apricot' },
 			{ value: 'banana', label: 'Banana' },
+			{ value: 'cherry', label: 'Cherry' },
+			{ value: 'elderberry', label: 'Elderberry', disabled: true },
+			{ value: 'fig', label: 'Fig' },
+			{ value: 'grape', label: 'Grape' },
 		]}
 	/>
 </DemoContainer>

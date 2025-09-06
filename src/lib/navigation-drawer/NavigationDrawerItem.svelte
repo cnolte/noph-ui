@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationDrawerItemProps } from './types.ts'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 
@@ -10,13 +10,6 @@
 		icon,
 		...attributes
 	}: NavigationDrawerItemProps = $props()
-
-	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
-		return (obj as HTMLAnchorAttributes).href === undefined
-	}
-	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
-		return (obj as HTMLAnchorAttributes).href !== undefined
-	}
 </script>
 
 {#snippet content()}
@@ -30,18 +23,7 @@
 	<div class="np-navigation-drawer-item-badge">{badgeLabelText}</div>
 {/snippet}
 
-{#if isButton(attributes)}
-	<button
-		{...attributes as HTMLButtonAttributes}
-		class={[
-			'np-navigation-drawer-item',
-			selected && 'np-navigation-drawer-item-selected',
-			attributes.class,
-		]}
-	>
-		{@render content()}
-	</button>
-{:else if isLink(attributes)}
+{#if 'href' in attributes}
 	<a
 		{...attributes}
 		class={[
@@ -52,6 +34,17 @@
 	>
 		{@render content()}
 	</a>
+{:else}
+	<button
+		{...attributes as HTMLButtonAttributes}
+		class={[
+			'np-navigation-drawer-item',
+			selected && 'np-navigation-drawer-item-selected',
+			attributes.class,
+		]}
+	>
+		{@render content()}
+	</button>
 {/if}
 
 <style>

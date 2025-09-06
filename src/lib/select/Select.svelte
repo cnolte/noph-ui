@@ -45,12 +45,12 @@
 			value = options.find((option) => option.selected)?.value
 		}
 	}
-	let selectedOption: SelectOption[] = $state(
+	let selectedOption: SelectOption[] = $derived(
 		options
-			.filter((option) =>
-				option.selected || Array.isArray(value)
-					? value.includes(option.value)
-					: value === option.value || false,
+			.filter(
+				(option) =>
+					option.selected ||
+					(Array.isArray(value) ? value.includes(option.value) : value === option.value),
 			)
 			.map((option) => ({ ...option, selected: true })),
 	)
@@ -59,13 +59,27 @@
 
 	let errorTextRaw: string = $state(errorText)
 	let errorRaw = $state(error)
-	let selectElement: HTMLSelectElement | undefined = $state()
-	let menuElement: HTMLDivElement | undefined = $state()
-	let anchorElement: HTMLDivElement | undefined = $state()
-	let field: HTMLDivElement | undefined = $state()
+	let selectElement = $state<HTMLSelectElement>()
+	let menuElement = $state<HTMLDivElement>()
+	let anchorElement = $state<HTMLDivElement>()
+	let field = $state<HTMLDivElement>()
 	let clientWidth = $state(0)
 	let menuOpen = $state(false)
-	let selectedLabel = $derived.by<string | string[]>(() => {
+	let focusIndex = $state(-1)
+	let typeBuffer = ''
+	let lastTypeTime = 0
+
+	let activeDescendantId = $derived.by<string | undefined>(() => {
+		if (!menuOpen) return undefined
+		if (focusIndex >= 0 && focusIndex < options.length) return `${uid}-opt-${focusIndex}`
+		const fallbackIdx = multiple
+			? Array.isArray(value) && value.length
+				? options.findIndex((o) => o.value === value[0])
+				: -1
+			: options.findIndex((o) => o.value === value)
+		return fallbackIdx >= 0 ? `${uid}-opt-${fallbackIdx}` : undefined
+	})
+	let selectedLabel = $derived.by<string>(() => {
 		if (multiple) {
 			if (value && Array.isArray(value)) {
 				return value
@@ -143,6 +157,82 @@
 			selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
 		})
 	}
+
+	const openMenuAndFocus = async (index: number) => {
+		if (!menuOpen) {
+			menuElement?.showPopover()
+		}
+		focusIndex = Math.min(Math.max(index, 0), options.length - 1)
+		await tick()
+		const el = document.getElementById(`${uid}-opt-${focusIndex}`)
+		;(el as HTMLElement | null)?.focus?.()
+	}
+
+	const moveFocus = (delta: number) => {
+		if (!options.length) return
+		let next = focusIndex
+		if (next < 0) {
+			const selIdx = Array.isArray(value)
+				? options.findIndex((o) => value.includes(o.value) && !o.disabled)
+				: options.findIndex((o) => o.value === value && !o.disabled)
+			next = selIdx >= 0 ? selIdx : 0
+		}
+		let attempts = 0
+		while (attempts < options.length) {
+			next = (next + delta + options.length) % options.length
+			if (!options[next].disabled) {
+				openMenuAndFocus(next)
+				return
+			}
+			attempts++
+		}
+	}
+
+	const focusEdge = (start: boolean) => {
+		if (!options.length) {
+			return
+		}
+		if (start) {
+			for (let i = 0; i < options.length; i++) {
+				if (!options[i].disabled) {
+					openMenuAndFocus(i)
+					return
+				}
+			}
+		} else {
+			for (let i = options.length - 1; i >= 0; i--) {
+				if (!options[i].disabled) {
+					openMenuAndFocus(i)
+					return
+				}
+			}
+		}
+	}
+
+	const performTypeahead = (char: string) => {
+		const now = performance.now()
+		if (now - lastTypeTime > 700) typeBuffer = ''
+		lastTypeTime = now
+		typeBuffer += char.toLowerCase()
+		if (!options.length) {
+			return
+		}
+		const startIdx = focusIndex >= 0 ? (focusIndex + 1) % options.length : 0
+		for (let i = 0; i < options.length; i++) {
+			const idx = (startIdx + i) % options.length
+			const label = options[idx].label?.toLowerCase?.() || ''
+			if (label.startsWith(typeBuffer) && !options[idx].disabled) {
+				openMenuAndFocus(idx)
+				return
+			}
+		}
+
+		if (typeBuffer.length > 1) {
+			const last = typeBuffer[typeBuffer.length - 1]
+			typeBuffer = last
+			performTypeahead('')
+		}
+	}
 </script>
 
 {#snippet arrows()}
@@ -175,10 +265,11 @@
 		role="combobox"
 		aria-haspopup="listbox"
 		tabindex={disabled ? -1 : tabindex}
-		aria-controls="listbox"
+		aria-controls="listbox-{uid}"
 		aria-expanded={menuOpen}
 		aria-label={attributes['aria-label'] || label}
 		aria-disabled={disabled}
+		aria-activedescendant={activeDescendantId}
 		data-testid={attributes['data-testid']}
 		bind:this={field}
 		bind:clientWidth
@@ -192,19 +283,51 @@
 			}
 		}}
 		onkeydown={(event) => {
-			if (event.key === 'Tab' || event.key === 'Escape') {
+			const key = event.key
+			if (key === 'Tab') {
 				menuElement?.hidePopover()
-			} else {
+				return
+			}
+			if (key === 'Escape') {
+				menuElement?.hidePopover()
+				return
+			}
+			if (key === 'ArrowDown') {
 				event.preventDefault()
-				if (
-					event.key === 'ArrowDown' ||
-					event.key === 'ArrowUp' ||
-					event.key === 'Enter' ||
-					event.key === ' '
-				) {
-					menuElement?.showPopover()
-					;(menuElement?.firstElementChild?.firstElementChild as HTMLElement)?.focus()
+				moveFocus(1)
+				return
+			}
+			if (key === 'ArrowUp') {
+				event.preventDefault()
+				moveFocus(-1)
+				return
+			}
+			if (key === 'Home') {
+				event.preventDefault()
+				focusEdge(true)
+				return
+			}
+			if (key === 'End') {
+				event.preventDefault()
+				focusEdge(false)
+				return
+			}
+			if (key === 'Enter' || key === ' ') {
+				event.preventDefault()
+				if (!menuOpen) {
+					openMenuAndFocus(focusIndex >= 0 ? focusIndex : 0)
+				} else if (focusIndex >= 0) {
+					const opt = options[focusIndex]
+					if (opt && !opt.disabled) {
+						handleOptionSelect(event, opt)
+					}
 				}
+				return
+			}
+			// Printable character for typeahead
+			if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+				performTypeahead(key)
+				return
 			}
 		}}
 	>
@@ -222,7 +345,7 @@
 							<span class={['label', !noAsterisk && required && 'required']}>{label}</span>
 						</div>
 						<div class="outline-notch">
-							<span class="notch np-hidden" aria-hidden="true"
+							<span class="notch" aria-hidden="true"
 								>{label}{noAsterisk || !required ? '' : '*'}</span
 							>
 						</div>
@@ -334,33 +457,43 @@
 	</div>
 </div>
 
-{#snippet item(option: SelectOption)}
+{#snippet item(option: SelectOption, index?: number)}
 	{#if Array.isArray(value) && multiple}
 		<Item
+			id={typeof index === 'number' ? `${uid}-opt-${index}` : undefined}
 			onclick={(event) => {
 				handleOptionSelect(event, option)
 				field?.focus()
 			}}
 			disabled={option.disabled}
+			aria-disabled={option.disabled}
 			role="option"
 			onkeydown={(event) => {
-				if (event.key === 'ArrowDown') {
-					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
+				const key = event.key
+				if (key === 'ArrowDown') {
 					event.preventDefault()
-				}
-				if (event.key === 'ArrowUp') {
-					;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
+					moveFocus(1)
+				} else if (key === 'ArrowUp') {
 					event.preventDefault()
-				}
-				if (event.key === 'Enter') {
+					moveFocus(-1)
+				} else if (key === 'Home') {
+					event.preventDefault()
+					focusEdge(true)
+				} else if (key === 'End') {
+					event.preventDefault()
+					focusEdge(false)
+				} else if (key === 'Enter' || key === ' ') {
+					event.preventDefault()
 					handleOptionSelect(event, option)
-				}
-				if (event.key === 'Tab') {
+				} else if (key === 'Tab') {
 					menuElement?.hidePopover()
+				} else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+					performTypeahead(key)
 				}
 			}}
 			variant="button"
 			selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
+			aria-selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
 			>{option.label}
 			{#snippet start()}
 				<Check disabled={option.disabled} checked={value.includes(option.value)} />
@@ -368,40 +501,52 @@
 		</Item>
 	{:else}
 		<Item
+			id={typeof index === 'number' ? `${uid}-opt-${index}` : undefined}
 			onclick={(event) => {
 				handleOptionSelect(event, option)
 				field?.focus()
 			}}
 			disabled={option.disabled}
+			aria-disabled={option.disabled}
 			role="option"
 			onkeydown={(event) => {
-				if (event.key === 'ArrowDown') {
-					;(event.currentTarget?.nextElementSibling as HTMLElement)?.focus()
+				const key = event.key
+				if (key === 'ArrowDown') {
 					event.preventDefault()
-				}
-				if (event.key === 'ArrowUp') {
-					;(event.currentTarget?.previousElementSibling as HTMLElement)?.focus()
+					moveFocus(1)
+				} else if (key === 'ArrowUp') {
 					event.preventDefault()
-				}
-				if (event.key === 'Enter') {
+					moveFocus(-1)
+				} else if (key === 'Home') {
+					event.preventDefault()
+					focusEdge(true)
+				} else if (key === 'End') {
+					event.preventDefault()
+					focusEdge(false)
+				} else if (key === 'Enter' || key === ' ') {
+					event.preventDefault()
 					handleOptionSelect(event, option)
-				}
-				if (event.key === 'Tab') {
+				} else if (key === 'Tab') {
 					menuElement?.hidePopover()
+				} else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+					performTypeahead(key)
 				}
 			}}
 			variant="button"
 			selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
+			aria-selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
 			>{option.label}
 		</Item>
 	{/if}
 {/snippet}
 
 <Menu
+	id="listbox-{uid}"
 	style="position-anchor:--{uid};{clampMenuWidth || useVirtualList
 		? 'width'
 		: 'min-width'}:{clientWidth}px"
 	role="listbox"
+	aria-multiselectable={multiple}
 	--np-menu-justify-self="none"
 	--np-menu-position-area="bottom span-right"
 	--np-menu-margin="2px 0"
@@ -420,13 +565,13 @@
 >
 	{#if useVirtualList}
 		<VirtualList height="250px" itemHeight={48} items={options}>
-			{#snippet row(option)}
-				{@render item(option)}
+			{#snippet row(option, index)}
+				{@render item(option, index)}
 			{/snippet}
 		</VirtualList>
 	{:else}
 		{#each options as option, index (index)}
-			{@render item(option)}
+			{@render item(option, index)}
 		{/each}
 	{/if}
 </Menu>
@@ -763,12 +908,6 @@
 	.notch {
 		font-size: 0.75rem;
 		line-height: 1rem;
-	}
-	.notch.np-hidden {
-		opacity: 0;
-	}
-
-	.label.np-hidden {
 		opacity: 0;
 	}
 
@@ -828,7 +967,7 @@
 	.disabled .label {
 		color: var(--np-color-on-surface);
 	}
-	.disabled .label:not(.np-hidden) {
+	.disabled {
 		opacity: 0.38;
 	}
 	.resizable:not(.disabled) .np-container {

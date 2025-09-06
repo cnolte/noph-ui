@@ -1,11 +1,7 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
-	import type {
-		HTMLAnchorAttributes,
-		HTMLButtonAttributes,
-		MouseEventHandler,
-	} from 'svelte/elements'
+	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'
 	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 
@@ -29,13 +25,6 @@
 	}: ButtonProps = $props()
 
 	const uid = $props.id()
-
-	const isButton = (obj: unknown): obj is HTMLButtonAttributes => {
-		return (obj as HTMLAnchorAttributes).href === undefined
-	}
-	const isLink = (obj: unknown): obj is HTMLAnchorAttributes => {
-		return (obj as HTMLAnchorAttributes).href !== undefined
-	}
 </script>
 
 {#snippet content()}
@@ -64,34 +53,7 @@
 	{/if}
 {/snippet}
 
-{#if isButton(attributes) || disabled || loading}
-	<button
-		{...attributes as HTMLButtonAttributes}
-		aria-describedby={title ? uid : attributes['aria-describedby']}
-		aria-label={title || attributes['aria-label']}
-		disabled={disabled || loading}
-		aria-pressed={selected}
-		bind:this={element}
-		onclick={(event) => {
-			if (toggle) {
-				selected = !selected
-			}
-			;(onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
-		}}
-		class={[
-			'np-button',
-			size,
-			selected || loading ? 'square' : shape,
-			toggle ? 'toggle' : '',
-			selected ? 'selected' : '',
-			loading ? 'np-loading' : '',
-			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
-			attributes.class,
-		]}
-	>
-		{@render content()}
-	</button>
-{:else if isLink(attributes)}
+{#if 'href' in attributes && !disabled && !loading}
 	<a
 		{...attributes}
 		onclick={(event) => {
@@ -103,8 +65,8 @@
 		class={[
 			'np-button',
 			size,
-			selected || loading ? 'square' : shape,
-			toggle ? 'toggle' : '',
+			selected ? 'square' : shape,
+			toggle && 'toggle',
 			'enabled',
 			variant,
 			attributes.class,
@@ -112,9 +74,38 @@
 	>
 		{@render content()}
 	</a>
+{:else}
+	<button
+		{...attributes as HTMLButtonAttributes}
+		aria-describedby={title ? uid : attributes['aria-describedby']}
+		aria-label={title || attributes['aria-label']}
+		disabled={disabled || loading}
+		aria-pressed={toggle ? selected : undefined}
+		aria-busy={loading}
+		type={(attributes['type'] as 'button' | 'submit' | 'reset' | undefined) ?? 'button'}
+		bind:this={element}
+		onclick={(event) => {
+			if (toggle) {
+				selected = !selected
+			}
+			;(onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
+		}}
+		class={[
+			'np-button',
+			size,
+			selected || loading ? 'square' : shape,
+			toggle && 'toggle',
+			selected && 'selected',
+			loading && 'np-loading',
+			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
+			attributes.class,
+		]}
+	>
+		{@render content()}
+	</button>
 {/if}
 
-{#if title}
+{#if title && !disabled && !loading}
 	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
 {/if}
 
@@ -258,10 +249,8 @@
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.outlined-disabled {
-		outline-style: solid;
-		outline-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
-		outline-width: 1px;
-		outline-offset: -1px;
+		/* Variant outline now rendered via pseudo-element; keep token for color */
+		--_outlined-border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.enabled:focus-visible {
 		outline-style: solid;
@@ -363,19 +352,28 @@
 	}
 	.outlined {
 		background-color: var(--np-outlined-button-container-color, transparent);
-		outline-style: solid;
-		outline-color: var(--np-outlined-button-outline-color, var(--np-color-outline-variant));
-		outline-width: 1px;
-		outline-offset: -1px;
+		--_outlined-border-color: var(
+			--np-outlined-button-outline-color,
+			var(--np-color-outline-variant)
+		);
 		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		--np-ripple-pressed-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 		color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
 	}
 
+	.outlined:not(.selected)::after,
+	.outlined-disabled::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border: 1px solid var(--_outlined-border-color);
+		border-radius: inherit;
+		pointer-events: none;
+	}
+
 	.outlined.selected {
 		background-color: var(--np-color-inverse-surface);
 		color: var(--np-color-inverse-on-surface);
-		outline-style: none;
 	}
 	.button-icon {
 		display: inline-flex;

@@ -22,6 +22,7 @@
 	}: SnackbarProps = $props()
 
 	let timeoutId: number | undefined = $state()
+	const uid = $props.id()
 
 	showPopover = () => {
 		element?.showPopover()
@@ -38,7 +39,7 @@
 	class={['np-snackbar', attributes.class]}
 	bind:this={element}
 	role="alert"
-	aria-label={label}
+	aria-labelledby="np-snackbar-label-{uid}"
 	onbeforetoggle={(event) => {
 		let { newState } = event
 		if (newState === 'closed') {
@@ -54,7 +55,7 @@
 >
 	<div class="np-snackbar-inner">
 		<div class="np-snackbar-label-container">
-			<div class="np-snackbar-label">{label}</div>
+			<div id="np-snackbar-label-{uid}" class="np-snackbar-label">{label}</div>
 			{#if supportingText}
 				<div class="np-snackbar-supporting-text">{supportingText}</div>
 			{/if}

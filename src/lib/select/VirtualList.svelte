@@ -2,13 +2,14 @@
 	import { onMount, tick, type Snippet } from 'svelte'
 	import type { HTMLAttributes } from 'svelte/elements'
 
-	interface VitualListProps extends HTMLAttributes<HTMLDivElement> {
+	interface VirtualListProps extends HTMLAttributes<HTMLDivElement> {
 		items: T[]
 		height?: string
 		itemHeight?: number
 		start?: number
 		end?: number
-		row: Snippet<[T]>
+		row: Snippet<[T, number]>
+		overscan?: number
 	}
 
 	let {
@@ -18,7 +19,8 @@
 		start = $bindable(0),
 		end = $bindable(0),
 		row,
-	}: VitualListProps = $props()
+		overscan = 4,
+	}: VirtualListProps = $props()
 
 	let height_map: number[] = []
 	// eslint-disable-next-line no-undef
@@ -30,7 +32,7 @@
 
 	let top = $state(0)
 	let bottom = $state(0)
-	let average_height: number = $state(0)
+	let average_height: number = $state(itemHeight || 0)
 
 	$effect(() => {
 		if (mounted) {
@@ -38,9 +40,10 @@
 		}
 	})
 	let visible = $derived(
-		items.slice(start, end).map((data, i) => {
-			return { index: i + start, data }
-		}),
+		items.slice(Math.max(0, start - overscan), end).map((data, i) => ({
+			index: i + Math.max(0, start - overscan),
+			data,
+		})),
 	)
 
 	async function refresh(items: T[], viewport_height: number, itemHeight?: number) {
@@ -68,10 +71,11 @@
 			i += 1
 		}
 
+		i = Math.min(i + overscan, items.length)
 		end = i
 
 		const remaining = items.length - end
-		average_height = (top + content_height) / end
+		average_height = end ? (top + content_height) / end : average_height || itemHeight || 0
 
 		bottom = remaining * average_height
 		height_map.length = items.length
@@ -98,12 +102,22 @@
 			if (y + row_height > scrollTop) {
 				start = i
 				top = y
-
 				break
 			}
-
 			y += row_height
 			i += 1
+		}
+
+		if (start > 0 && overscan > 0) {
+			let back = 0
+			let s = start
+			while (s > 0 && back < overscan) {
+				s -= 1
+				const h = height_map[s] || average_height
+				back += 1
+				top -= h
+			}
+			start = s
 		}
 
 		while (i < items.length) {
@@ -116,7 +130,7 @@
 		end = i
 
 		const remaining = items.length - end
-		average_height = y / end
+		average_height = end ? y / end : average_height || itemHeight || 0
 
 		height_map.fill(average_height, i, items.length)
 		bottom = remaining * average_height
@@ -137,13 +151,8 @@
 			const d = actual_height - expected_height
 			viewport.scrollTo(0, scrollTop + d)
 		}
-
-		// TODO if we overestimated the space these
-		// rows would occupy we may need to add some
-		// more. maybe we can just call handle_scroll again?
 	}
 
-	// trigger initial refresh
 	onMount(() => {
 		// eslint-disable-next-line no-undef
 		rows = contents?.children as HTMLCollectionOf<HTMLElement>
@@ -159,7 +168,7 @@
 >
 	<div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">
 		{#each visible as entry (entry.index)}
-			{@render row(entry.data)}
+			{@render row(entry.data, entry.index)}
 		{/each}
 	</div>
 </svelte-virtual-list-viewport>
