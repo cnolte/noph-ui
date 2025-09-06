@@ -82,7 +82,7 @@
 		disabled={disabled || loading}
 		aria-pressed={toggle ? selected : undefined}
 		aria-busy={loading}
-		type={(attributes['type'] as 'button' | 'submit' | 'reset' | undefined) ?? 'button'}
+		type={(attributes['type'] as 'button' | 'submit' | 'reset' | 'button') ?? undefined}
 		bind:this={element}
 		onclick={(event) => {
 			if (toggle) {
