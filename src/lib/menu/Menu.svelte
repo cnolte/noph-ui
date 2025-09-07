@@ -82,7 +82,7 @@
 	}
 
 	$effect(() => {
-		if (element) {
+		if (element && !('anchorName' in document.documentElement.style)) {
 			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
 		}
 		return () => {

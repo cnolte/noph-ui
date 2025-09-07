@@ -31,12 +31,7 @@
 		label="Fruits"
 		variant="outlined"
 		name="fruit"
-		options={[
-			...Array.from({ length: 4001 }, (_, i) => ({
-				value: `option${i + 1}`,
-				label: `Option ${i + 1}`,
-			})),
-		]}
+		options={[{ label: 'Apple' }, { label: 'Banana' }]}
 	/>
 </DemoContainer>
 <Code
@@ -75,7 +70,8 @@
 					value={fruit.value}
 					label={fruit.label}
 					ariaLabelRemove="Remove {fruit.label}"
-					onremove={() => {
+					onremove={(event) => {
+						event.preventDefault()
 						if (index > -1) {
 							fruits.splice(index, 1)
 						}

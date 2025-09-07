@@ -22,4 +22,5 @@ export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autoco
 	clampMenuWidth?: boolean
 	reportValidity?: () => boolean
 	checkValidity?: () => boolean
+	virtualThreshold?: number
 }

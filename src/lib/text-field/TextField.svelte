@@ -222,12 +222,11 @@
 							></textarea>
 						{:else}
 							<div class="input-wrapper">
-								{#if prefixText}
-									<span class="prefix">
-										{prefixText}
+								{#if suffixText}
+									<span class="suffix">
+										{suffixText}
 									</span>
 								{/if}
-								{@render children?.()}
 								<input
 									aria-describedby={supportingText || (errorTextRaw && errorRaw)
 										? `supporting-text-${uid}`
@@ -242,9 +241,10 @@
 									class="input"
 									aria-invalid={errorRaw}
 								/>
-								{#if suffixText}
-									<span class="suffix">
-										{suffixText}
+								{@render children?.()}
+								{#if prefixText}
+									<span class="prefix">
+										{prefixText}
 									</span>
 								{/if}
 							</div>
@@ -444,6 +444,7 @@
 		flex-wrap: wrap;
 		align-items: baseline;
 		min-width: 0;
+		flex-direction: row-reverse;
 	}
 
 	.input-wrapper > * {

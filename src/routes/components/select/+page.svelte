@@ -180,8 +180,8 @@
 <h3>Virtual list</h3>
 <p>
 	An <code>option</code> uses the Intersection Observer API to improve performance. This enables
-	lists of up to 4000 options. If there are more than 4000 options, the <code>Select</code> component
-	uses a virtual list to render the options. The virtual list has the limitation of having a fixed height.
+	lists of up to 300 options. If there are more than 300 options, the <code>Select</code> component uses
+	a virtual list to render the options. The virtual list has the limitation of having a fixed height.
 </p>
 <DemoContainer>
 	<Select

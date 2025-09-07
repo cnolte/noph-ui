@@ -12,4 +12,5 @@ export interface AutoCompleteProps extends Omit<InputFieldProps, 'clientWidth' |
 	clampMenuWidth?: boolean
 	showPopover?: () => void
 	hidePopover?: () => void
+	virtualThreshold?: number
 }

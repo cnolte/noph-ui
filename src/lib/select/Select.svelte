@@ -32,6 +32,7 @@
 		reportValidity = $bindable(),
 		checkValidity = $bindable(),
 		multiple,
+		virtualThreshold = 300,
 		clampMenuWidth = false,
 		...attributes
 	}: SelectProps = $props()
@@ -45,17 +46,18 @@
 			value = options.find((option) => option.selected)?.value
 		}
 	}
+
+	let valueArray = $derived<unknown[]>(
+		Array.isArray(value) ? value : value === undefined || value === null ? [] : [value],
+	)
+	let selectedSet = $derived.by<Set<unknown>>(() => new Set(valueArray))
 	let selectedOption: SelectOption[] = $derived(
-		options
-			.filter(
-				(option) =>
-					option.selected ||
-					(Array.isArray(value) ? value.includes(option.value) : value === option.value),
-			)
-			.map((option) => ({ ...option, selected: true })),
+		options.filter((o) => selectedSet.has(o.value)).map((o) => ({ ...o, selected: true })),
 	)
 
-	let useVirtualList = $derived(options.length > 4000)
+	let useVirtualList = $derived(options.length > virtualThreshold)
+
+	let widthProp = $derived(clampMenuWidth || useVirtualList ? 'width' : 'min-width')
 
 	let errorTextRaw: string = $state(errorText)
 	let errorRaw = $state(error)
@@ -129,64 +131,70 @@
 			}
 		}
 	})
-	const handleOptionSelect = (event: Event, option: SelectOption) => {
-		if (multiple) {
-			if (Array.isArray(value)) {
-				if (value.includes(option.value)) {
-					selectedOption = selectedOption.filter((v) => v.value !== option.value)
-					value = value.filter((v) => v !== option.value)
-				} else {
-					selectedOption = [...selectedOption, option]
-					value = [...value, option.value]
-				}
-			} else {
-				selectedOption = [option]
-				value = [option.value]
-			}
-		} else {
-			selectedOption = [option]
-			value = option.value
-			menuElement?.hidePopover()
-		}
-		event.preventDefault()
-		tick().then(() => {
-			if (doValidity && checkValidity()) {
-				errorRaw = error
-				errorTextRaw = errorText
-			}
-			selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
-		})
-	}
 
-	const openMenuAndFocus = async (index: number) => {
-		if (!menuOpen) {
-			menuElement?.showPopover()
-		}
-		focusIndex = Math.min(Math.max(index, 0), options.length - 1)
-		await tick()
-		const el = document.getElementById(`${uid}-opt-${focusIndex}`)
-		if (el) {
-			el.focus()
-		} else if (useVirtualList && menuElement) {
+	let cachedRowHeight = 0
+	const ensureRowHeight = () => {
+		if (!cachedRowHeight && menuElement) {
 			const viewport = menuElement.querySelector(
 				'svelte-virtual-list-viewport',
 			) as HTMLElement | null
 			if (viewport) {
-				let rowHeight = 48
 				const firstRow = viewport.querySelector('[id^="' + uid + '-opt-"]') as HTMLElement | null
-				if (firstRow) {
-					rowHeight = firstRow.offsetHeight || rowHeight
-				}
-				const top = focusIndex * rowHeight
-				const bottom = top + rowHeight
-				const { scrollTop, clientHeight } = viewport
-				if (top < scrollTop) {
-					viewport.scrollTop = top
-				} else if (bottom > scrollTop + clientHeight) {
-					viewport.scrollTop = bottom - clientHeight
-				}
+				cachedRowHeight = firstRow?.offsetHeight || 48
 			}
 		}
+		if (!cachedRowHeight) cachedRowHeight = 48
+		return cachedRowHeight
+	}
+	const scrollOptionIntoView = (index: number) => {
+		if (!useVirtualList || !menuElement) return
+		const viewport = menuElement.querySelector('svelte-virtual-list-viewport') as HTMLElement | null
+		if (!viewport) return
+		const rowHeight = ensureRowHeight()
+		const top = index * rowHeight
+		const bottom = top + rowHeight
+		const { scrollTop, clientHeight } = viewport
+		if (top < scrollTop) viewport.scrollTop = top
+		else if (bottom > scrollTop + clientHeight) viewport.scrollTop = bottom - clientHeight
+	}
+
+	const finalizeSelection = async () => {
+		await tick()
+		if (doValidity && checkValidity()) {
+			errorRaw = error
+			errorTextRaw = errorText
+		}
+		selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
+	}
+	const toggleValue = (option: SelectOption) => {
+		if (multiple) {
+			let arr = Array.isArray(value) ? [...value] : []
+			const idx = arr.indexOf(option.value)
+			if (idx !== -1) {
+				arr.splice(idx, 1)
+			} else {
+				arr.push(option.value)
+			}
+			value = arr
+		} else {
+			value = option.value
+		}
+	}
+	const handleOptionSelect = async (event: Event, option: SelectOption) => {
+		if (option.disabled) return
+		toggleValue(option)
+		if (!multiple) menuElement?.hidePopover()
+		event.preventDefault()
+		await finalizeSelection()
+	}
+
+	const openMenuAndFocus = async (index: number) => {
+		if (!menuOpen) menuElement?.showPopover()
+		focusIndex = Math.min(Math.max(index, 0), options.length - 1)
+		await tick()
+		const el = document.getElementById(`${uid}-opt-${focusIndex}`)
+		if (el) el.focus()
+		else scrollOptionIntoView(focusIndex)
 	}
 
 	const moveFocus = (delta: number) => {
@@ -252,6 +260,23 @@
 			const last = typeBuffer[typeBuffer.length - 1]
 			typeBuffer = last
 			performTypeahead('')
+		}
+	}
+
+	const handleInvalid = (
+		event: Event & {
+			currentTarget: EventTarget & HTMLSelectElement
+		},
+	) => {
+		event.preventDefault()
+		const { currentTarget } = event
+		errorRaw = true
+		doValidity = true
+		if (errorText === '') {
+			errorTextRaw = currentTarget.validationMessage
+		}
+		if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
+			field?.focus()
 		}
 	}
 </script>
@@ -345,7 +370,6 @@
 				}
 				return
 			}
-			// Printable character for typeahead
 			if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
 				performTypeahead(key)
 				return
@@ -400,18 +424,7 @@
 								multiple
 								{onchange}
 								{oninput}
-								oninvalid={(event) => {
-									event.preventDefault()
-									const { currentTarget } = event
-									errorRaw = true
-									doValidity = true
-									if (errorText === '') {
-										errorTextRaw = currentTarget.validationMessage
-									}
-									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-										field?.focus()
-									}
-								}}
+								oninvalid={handleInvalid}
 								bind:value
 								bind:this={selectElement}
 							>
@@ -430,18 +443,7 @@
 								{form}
 								{onchange}
 								{oninput}
-								oninvalid={(event) => {
-									event.preventDefault()
-									const { currentTarget } = event
-									errorRaw = true
-									doValidity = true
-									if (errorText === '') {
-										errorTextRaw = currentTarget.validationMessage
-									}
-									if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-										field?.focus()
-									}
-								}}
+								oninvalid={handleInvalid}
 								bind:value
 								bind:this={selectElement}
 							>
@@ -565,9 +567,7 @@
 
 <Menu
 	id="listbox-{uid}"
-	style="position-anchor:--{uid};{clampMenuWidth || useVirtualList
-		? 'width'
-		: 'min-width'}:{clientWidth}px"
+	style={`position-anchor:--${uid};${widthProp}:${clientWidth}px`}
 	role="listbox"
 	aria-multiselectable={multiple}
 	--np-menu-justify-self="none"
@@ -608,7 +608,8 @@
 			rendered={({ start, end }) => {
 				if (focusIndex >= start && focusIndex < end) {
 					const el = document.getElementById(`${uid}-opt-${focusIndex}`)
-					el?.focus()
+					if (el) el.focus()
+					else scrollOptionIntoView(focusIndex)
 				}
 			}}
 		>
