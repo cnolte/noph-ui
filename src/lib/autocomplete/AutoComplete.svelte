@@ -74,6 +74,33 @@
 		if (activeIndex >= displayOptions.length) {
 			activeIndex = -1
 		}
+
+		if (menuOpen && activeIndex >= 0) {
+			const id = `${uid}-opt-${activeIndex}`
+			const optEl = document.getElementById(id)
+			if (optEl) {
+				optEl.scrollIntoView({ block: 'nearest' })
+			} else if (useVirtualList && menuElement) {
+				const viewport = menuElement.querySelector(
+					'svelte-virtual-list-viewport',
+				) as HTMLElement | null
+				if (viewport) {
+					let rowHeight = 48
+					const firstRow = viewport.querySelector('[id^="' + uid + '-opt-"]') as HTMLElement | null
+					if (firstRow) {
+						rowHeight = firstRow.offsetHeight || rowHeight
+					}
+					const top = activeIndex * rowHeight
+					const bottom = top + rowHeight
+					const { scrollTop, clientHeight } = viewport
+					if (top < scrollTop) {
+						viewport.scrollTop = top
+					} else if (bottom > scrollTop + clientHeight) {
+						viewport.scrollTop = bottom - clientHeight
+					}
+				}
+			}
+		}
 	})
 </script>
 
@@ -83,6 +110,7 @@
 		softFocus={index === activeIndex}
 		aria-selected={index === activeIndex}
 		role="option"
+		tabindex={-1}
 		onmousedown={(e) => {
 			e.preventDefault()
 		}}

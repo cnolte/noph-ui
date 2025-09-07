@@ -165,7 +165,28 @@
 		focusIndex = Math.min(Math.max(index, 0), options.length - 1)
 		await tick()
 		const el = document.getElementById(`${uid}-opt-${focusIndex}`)
-		;(el as HTMLElement | null)?.focus?.()
+		if (el) {
+			el.focus()
+		} else if (useVirtualList && menuElement) {
+			const viewport = menuElement.querySelector(
+				'svelte-virtual-list-viewport',
+			) as HTMLElement | null
+			if (viewport) {
+				let rowHeight = 48
+				const firstRow = viewport.querySelector('[id^="' + uid + '-opt-"]') as HTMLElement | null
+				if (firstRow) {
+					rowHeight = firstRow.offsetHeight || rowHeight
+				}
+				const top = focusIndex * rowHeight
+				const bottom = top + rowHeight
+				const { scrollTop, clientHeight } = viewport
+				if (top < scrollTop) {
+					viewport.scrollTop = top
+				} else if (bottom > scrollTop + clientHeight) {
+					viewport.scrollTop = bottom - clientHeight
+				}
+			}
+		}
 	}
 
 	const moveFocus = (delta: number) => {
@@ -572,9 +593,6 @@
 			}
 			if (idx < 0) idx = 0
 			focusIndex = idx
-			await tick()
-			const el = document.getElementById(`${uid}-opt-${focusIndex}`)
-			;(el as HTMLElement | null)?.focus?.()
 		} else {
 			menuOpen = false
 			focusIndex = -1
@@ -583,7 +601,17 @@
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
-		<VirtualList height="250px" itemHeight={48} items={options}>
+		<VirtualList
+			height="250px"
+			itemHeight={48}
+			items={options}
+			rendered={({ start, end }) => {
+				if (focusIndex >= start && focusIndex < end) {
+					const el = document.getElementById(`${uid}-opt-${focusIndex}`)
+					el?.focus()
+				}
+			}}
+		>
 			{#snippet row(option, index)}
 				{@render item(option, index)}
 			{/snippet}

@@ -10,6 +10,7 @@
 		end?: number
 		row: Snippet<[T, number]>
 		overscan?: number
+		rendered?: (event: { start: number; end: number }) => void
 	}
 
 	let {
@@ -19,7 +20,8 @@
 		start = $bindable(0),
 		end = $bindable(0),
 		row,
-		overscan = 4,
+		overscan = 0,
+		rendered,
 	}: VirtualListProps = $props()
 
 	let height_map: number[] = []
@@ -79,6 +81,8 @@
 
 		bottom = remaining * average_height
 		height_map.length = items.length
+
+		rendered?.({ start, end })
 	}
 
 	async function handle_scroll() {
@@ -151,6 +155,8 @@
 			const d = actual_height - expected_height
 			viewport.scrollTo(0, scrollTop + d)
 		}
+		await tick()
+		rendered?.({ start, end })
 	}
 
 	onMount(() => {

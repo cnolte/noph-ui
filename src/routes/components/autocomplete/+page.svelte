@@ -31,7 +31,12 @@
 		label="Fruits"
 		variant="outlined"
 		name="fruit"
-		options={[{ label: 'Apple' }, { label: 'Banana' }]}
+		options={[
+			...Array.from({ length: 4001 }, (_, i) => ({
+				value: `option${i + 1}`,
+				label: `Option ${i + 1}`,
+			})),
+		]}
 	/>
 </DemoContainer>
 <Code
