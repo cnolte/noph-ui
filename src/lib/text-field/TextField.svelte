@@ -441,7 +441,7 @@
 
 	.input-wrapper {
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: wrap-reverse;
 		align-items: baseline;
 		min-width: 0;
 		flex-direction: row-reverse;
