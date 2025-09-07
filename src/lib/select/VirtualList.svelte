@@ -170,6 +170,7 @@
 	bind:this={viewport}
 	bind:offsetHeight={viewport_height}
 	onscroll={handle_scroll}
+	tabindex="-1"
 	style="height: {height};"
 >
 	<div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">

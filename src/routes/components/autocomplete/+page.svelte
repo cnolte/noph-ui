@@ -70,8 +70,7 @@
 					value={fruit.value}
 					label={fruit.label}
 					ariaLabelRemove="Remove {fruit.label}"
-					onremove={(event) => {
-						event.preventDefault()
+					onremove={() => {
 						if (index > -1) {
 							fruits.splice(index, 1)
 						}
