@@ -30,7 +30,7 @@
 
 {#snippet content()}
 	{#if !disabled && !loading}
-		<Ripple forElement={touchEl} />
+		<!-- <Ripple forElement={touchEl} /> -->
 		<span class="np-touch" bind:this={touchEl}></span>
 	{/if}
 	{#if loading}
@@ -100,7 +100,7 @@
 {/if}
 
 {#if title && !disabled && !loading}
-	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
+	<!-- <Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip> -->
 {/if}
 
 <style>
