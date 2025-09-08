@@ -136,8 +136,9 @@
 		margin: var(--np-menu-margin, 2px);
 		inset: auto;
 		transition:
+			opacity 0.2s ease,
 			display 0.2s allow-discrete,
-			opacity 0.2s linear;
+			overlay 0.2s allow-discrete;
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
@@ -145,9 +146,8 @@
 		z-index: 1000;
 	}
 
-	.np-menu-container:popover-open {
+	.np-menu-container[popover]:popover-open {
 		opacity: 1;
-		display: flex;
 		@starting-style {
 			opacity: 0;
 		}

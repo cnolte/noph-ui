@@ -53,7 +53,7 @@
 	<div
 		{...attributes}
 		{@attach (element) => {
-			if (id) {
+			if (id && 'positionArea' in document.documentElement.style) {
 				anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
 
 				if ('anchorName' in document.documentElement.style) {
