@@ -7,6 +7,7 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 	showPopover?: () => void
 	hidePopover?: () => void
 	element?: HTMLDivElement
+	quick?: boolean
 }
 
 interface ButtonProps extends HTMLButtonAttributes {

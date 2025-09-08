@@ -6,6 +6,7 @@
 		element = $bindable(),
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		quick = false,
 		style,
 		popover = 'auto',
 		anchor,
@@ -106,7 +107,7 @@
 		attributes.ontoggle?.(event)
 	}}
 	{popover}
-	class={['np-menu-container', attributes.class]}
+	class={['np-menu-container', !quick && 'np-animate', attributes.class]}
 	{style}
 >
 	<div class="np-menu">
@@ -115,18 +116,8 @@
 </div>
 
 <style>
-	.np-menu {
-		overflow-y: auto;
-		overflow-x: hidden;
-		flex: 1;
-		padding: 0.5rem 0;
-		scrollbar-color: var(--np-color-on-surface-variant) transparent;
-		scrollbar-width: thin;
-	}
-	:global(.np-menu .np-divider) {
-		margin-block: 0.5rem;
-	}
-	.np-menu-container[popover] {
+	.np-menu-container {
+		background: transparent;
 		color: var(--np-menu-text-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
 		border: none;
@@ -138,18 +129,31 @@
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
-		/* z-index: 1000;
+		z-index: 1000;
+	}
+
+	.np-animate[popover] {
 		transition:
 			opacity 0.25s ease,
 			display 0.25s allow-discrete,
 			overlay 0.25s allow-discrete;
-		opacity: 0; */
+		opacity: 0;
 	}
-
-	/* .np-menu-container[popover]:popover-open {
+	.np-animate[popover]:popover-open {
 		opacity: 1;
 		@starting-style {
 			opacity: 0;
 		}
-	} */
+	}
+	.np-menu {
+		overflow-y: auto;
+		overflow-x: hidden;
+		flex: 1;
+		padding: 0.5rem 0;
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
+	}
+	:global(.np-menu .np-divider) {
+		margin-block: 0.5rem;
+	}
 </style>
