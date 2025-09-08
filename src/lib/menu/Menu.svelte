@@ -130,8 +130,6 @@
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
 		inset: auto;
-		position: fixed;
-		bottom: anchor(bottom);
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
