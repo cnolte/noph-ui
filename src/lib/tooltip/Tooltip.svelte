@@ -13,26 +13,26 @@
 	let innerHeight = $state(0)
 	let anchor: HTMLElement | undefined = $state()
 
-	const refreshValues = () => {
-		if (element && anchor && !('positionArea' in document.documentElement.style)) {
-			const docClientWidth = document.documentElement.clientWidth
-			const anchorRect = anchor.getBoundingClientRect()
-			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
-				element.style.top = `${anchorRect.top - clientHeight - 8}px`
-			} else {
-				element.style.top = `${anchorRect.bottom}px`
-			}
-			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-			if (left < 2) {
-				element.style.left = '2px'
-			} else if (left > docClientWidth - clientWidth) {
-				element.style.left = `${docClientWidth - clientWidth - 2}px`
-			} else {
-				element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
-			}
-		}
-	}
-	$effect(refreshValues)
+	// const refreshValues = () => {
+	// 	if (element && anchor && !('positionArea' in document.documentElement.style)) {
+	// 		const docClientWidth = document.documentElement.clientWidth
+	// 		const anchorRect = anchor.getBoundingClientRect()
+	// 		if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
+	// 			element.style.top = `${anchorRect.top - clientHeight - 8}px`
+	// 		} else {
+	// 			element.style.top = `${anchorRect.bottom}px`
+	// 		}
+	// 		const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+	// 		if (left < 2) {
+	// 			element.style.left = '2px'
+	// 		} else if (left > docClientWidth - clientWidth) {
+	// 			element.style.left = `${docClientWidth - clientWidth - 2}px`
+	// 		} else {
+	// 			element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+	// 		}
+	// 	}
+	// }
+	// $effect(refreshValues)
 	let setAnchor = (document: Document) => {
 		anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
 	}
@@ -59,33 +59,33 @@
 		}
 	}
 
-	$effect(() => {
-		if (anchor && element) {
-			if ('anchorName' in document.documentElement.style) {
-				const anchorName = anchor.style.getPropertyValue('anchor-name')
-				const generatedId = anchorName || `--${crypto.randomUUID()}`
-				element.style.setProperty('position-anchor', generatedId)
-				if (!anchorName) {
-					anchor.style.setProperty('anchor-name', generatedId)
-				}
-			}
-			anchor.addEventListener('pointerenter', onPointerenter)
-			anchor.addEventListener('pointerleave', onPointerleave)
-			if (!keepTooltipOnClick) {
-				anchor.addEventListener('pointerup', onPointerup)
-			}
-		}
-		return () => {
-			if (anchor) {
-				anchor.removeEventListener('pointerenter', onPointerenter)
-				anchor.removeEventListener('pointerleave', onPointerleave)
-				anchor.removeEventListener('pointerup', onPointerup)
-			}
-		}
-	})
+	// $effect(() => {
+	// 	if (anchor && element) {
+	// 		if ('anchorName' in document.documentElement.style) {
+	// 			const anchorName = anchor.style.getPropertyValue('anchor-name')
+	// 			const generatedId = anchorName || `--${crypto.randomUUID()}`
+	// 			element.style.setProperty('position-anchor', generatedId)
+	// 			if (!anchorName) {
+	// 				anchor.style.setProperty('anchor-name', generatedId)
+	// 			}
+	// 		}
+	// 		anchor.addEventListener('pointerenter', onPointerenter)
+	// 		anchor.addEventListener('pointerleave', onPointerleave)
+	// 		if (!keepTooltipOnClick) {
+	// 			anchor.addEventListener('pointerup', onPointerup)
+	// 		}
+	// 	}
+	// 	return () => {
+	// 		if (anchor) {
+	// 			anchor.removeEventListener('pointerenter', onPointerenter)
+	// 			anchor.removeEventListener('pointerleave', onPointerleave)
+	// 			anchor.removeEventListener('pointerup', onPointerup)
+	// 		}
+	// 	}
+	// })
 </script>
 
-<svelte:document use:setAnchor />
+<!-- <svelte:document use:setAnchor /> -->
 <svelte:window bind:innerHeight />
 
 <div
