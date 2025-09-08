@@ -135,21 +135,21 @@
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
 		inset: auto;
-		transition:
-			opacity 0.2s ease,
-			display 0.2s allow-discrete,
-			overlay 0.2s allow-discrete;
-		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
-		z-index: 1000;
+		/* z-index: 1000;
+		transition:
+			opacity 0.25s ease,
+			display 0.25s allow-discrete,
+			overlay 0.25s allow-discrete;
+		opacity: 0; */
 	}
 
-	.np-menu-container[popover]:popover-open {
+	/* .np-menu-container[popover]:popover-open {
 		opacity: 1;
 		@starting-style {
 			opacity: 0;
 		}
-	}
+	} */
 </style>
