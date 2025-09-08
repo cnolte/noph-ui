@@ -60,10 +60,10 @@
 	backdrop
 	modal
 >
-	<!-- <IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
+	<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
 		<Icon>menu_open</Icon>
 	</IconButton>
-	<MainNavigation
+	<!--<MainNavigation
 		onclose={() => {
 			popover?.hidePopover()
 		}}
