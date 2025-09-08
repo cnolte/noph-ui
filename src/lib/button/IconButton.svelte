@@ -30,11 +30,11 @@
 
 {#snippet content()}
 	{#if !disabled && !loading}
-		<!-- <Ripple forElement={touchEl} /> -->
+		<Ripple forElement={touchEl} />
 		<span class="np-touch" bind:this={touchEl}></span>
 	{/if}
 	{#if loading}
-		<div class="circular-progress">
+		<div class="np-icon-button-circular-progress">
 			<CircularProgress aria-label={loadingAriaLabel} indeterminate />
 		</div>
 	{/if}
@@ -365,7 +365,7 @@
 		width: max(calc(var(--_button-width, 40px) + 8px), 100%);
 	}
 
-	.circular-progress {
+	.np-icon-button-circular-progress {
 		--np-circular-progress-color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 		position: absolute;
 	}
