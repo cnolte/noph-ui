@@ -49,7 +49,7 @@
 	--np-navigation-drawer-background="var(--np-color-surface-container)"
 	class={['main-nav', 'scroll-wrapper']}
 >
-	<MainNavigation />
+	<!-- <MainNavigation /> -->
 </NavigationDrawer>
 <NavigationDrawer
 	--np-navigation-drawer-item-font-size="1rem"
@@ -60,14 +60,14 @@
 	backdrop
 	modal
 >
-	<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
+	<!-- <IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
 		<Icon>menu_open</Icon>
 	</IconButton>
 	<MainNavigation
 		onclose={() => {
 			popover?.hidePopover()
 		}}
-	/>
+	/> -->
 </NavigationDrawer>
 <div class="paper"></div>
 <main class="main">
