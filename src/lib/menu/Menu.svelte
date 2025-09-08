@@ -8,7 +8,6 @@
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
 		open = $bindable(),
-		quick = false,
 		style,
 		popover = 'auto',
 		anchor,
@@ -112,7 +111,7 @@
 		attributes.ontoggle?.(event)
 	}}
 	{popover}
-	class={['np-menu-container', !quick && 'np-animate', attributes.class]}
+	class={['np-menu-container', attributes.class]}
 	{style}
 >
 	<div class="np-menu">
@@ -121,35 +120,6 @@
 </div>
 
 <style>
-	.np-menu-container {
-		color: var(--np-menu-text-color, var(--np-color-on-surface));
-		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
-		border: none;
-		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
-		padding: 0;
-		box-shadow: var(--np-elevation-2);
-		margin: var(--np-menu-margin, 2px);
-		inset: auto;
-		justify-self: var(--np-menu-justify-self, anchor-center);
-		position-area: var(--np-menu-position-area, bottom center);
-		position-try: normal flip-block;
-		z-index: 1000;
-	}
-
-	.np-animate[popover]:popover-open {
-		opacity: 1;
-		animation: fadeIn 0.2s linear;
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-
 	.np-menu {
 		overflow-y: auto;
 		overflow-x: hidden;
@@ -160,5 +130,31 @@
 	}
 	:global(.np-menu .np-divider) {
 		margin-block: 0.5rem;
+	}
+	.np-menu-container[popover] {
+		color: var(--np-menu-text-color, var(--np-color-on-surface));
+		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
+		border: none;
+		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
+		padding: 0;
+		box-shadow: var(--np-elevation-2);
+		margin: var(--np-menu-margin, 2px);
+		inset: auto;
+		transition:
+			display 0.2s allow-discrete,
+			opacity 0.2s linear;
+		opacity: 0;
+		justify-self: var(--np-menu-justify-self, anchor-center);
+		position-area: var(--np-menu-position-area, bottom center);
+		position-try: normal flip-block;
+		z-index: 1000;
+	}
+
+	.np-menu-container:popover-open {
+		opacity: 1;
+		display: flex;
+		@starting-style {
+			opacity: 0;
+		}
 	}
 </style>
