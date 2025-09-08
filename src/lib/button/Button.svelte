@@ -106,7 +106,7 @@
 {/if}
 
 {#if title && !disabled && !loading}
-	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
+	<!-- <Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip> -->
 {/if}
 
 <style>
