@@ -17,7 +17,7 @@
 	class={[
 		'np-navigation-drawer-container',
 		modal && 'np-navigation-drawer-container-modal',
-		backdrop && 'np-navigation-drawer-backdrop',
+		// backdrop && 'np-navigation-drawer-backdrop',
 		attributes.class,
 	]}
 >
@@ -56,12 +56,12 @@
 		border-top-right-radius: var(--np-shape-corner-large);
 		border-bottom-right-radius: var(--np-shape-corner-large);
 		width: var(--np-navigation-drawer-width, 22.5rem);
-		height: var(--np-navigation-drawer-height, 100dvh);
+		height: var(--np-navigation-drawer-height, 100px);
 		overflow-y: auto;
-		scrollbar-width: thin;
+		/* scrollbar-width: thin; */
 	}
 
-	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
+	/* .np-navigation-drawer-container[popover] .np-navigation-wrapper {
 		transform: translateX(-100%);
 		transition: transform 0.25s ease;
 	}
@@ -77,7 +77,7 @@
 		@starting-style {
 			transform: translateX(-100%);
 		}
-	}
+	} */
 	.np-navigation-drawer {
 		display: flex;
 		padding: 1.25rem;

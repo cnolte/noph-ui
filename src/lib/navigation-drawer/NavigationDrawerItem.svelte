@@ -31,6 +31,7 @@
 			selected && 'np-navigation-drawer-item-selected',
 			attributes.class,
 		]}
+		aria-current={selected ? 'page' : undefined}
 	>
 		{@render content()}
 	</a>
@@ -42,6 +43,8 @@
 			selected && 'np-navigation-drawer-item-selected',
 			attributes.class,
 		]}
+		type="button"
+		aria-pressed={selected ? 'true' : undefined}
 	>
 		{@render content()}
 	</button>
