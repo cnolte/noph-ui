@@ -32,9 +32,9 @@
 	{/if}
 	<div class={['np-navigation-wrapper', modal && 'np-navigation-drawer-shade']}>
 		<div class="np-navigation-drawer">
-			{#if children}
+			<!-- {#if children}
 				{@render children()}
-			{/if}
+			{/if} -->
 		</div>
 	</div>
 </nav>
@@ -48,9 +48,9 @@
 		padding: 0;
 		background-color: transparent;
 	}
-	.np-navigation-drawer-container-modal {
+	/* .np-navigation-drawer-container-modal {
 		z-index: 1000;
-	}
+	} */
 	.np-navigation-wrapper {
 		background-color: var(--np-navigation-drawer-background, var(--np-color-surface-container-low));
 		border-top-right-radius: var(--np-shape-corner-large);
