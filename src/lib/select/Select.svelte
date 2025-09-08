@@ -577,9 +577,9 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={anchorElement}
+	bind:open={menuOpen}
 	ontoggle={async ({ newState }) => {
 		if (newState === 'open') {
-			menuOpen = true
 			let idx = -1
 			if (multiple) {
 				if (Array.isArray(value) && value.length) {
@@ -594,7 +594,6 @@
 			if (idx < 0) idx = 0
 			focusIndex = idx
 		} else {
-			menuOpen = false
 			focusIndex = -1
 		}
 	}}

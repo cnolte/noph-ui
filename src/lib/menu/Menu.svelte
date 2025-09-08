@@ -6,6 +6,7 @@
 		element = $bindable(),
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		open = $bindable(),
 		quick = false,
 		style,
 		popover = 'auto',
@@ -16,7 +17,6 @@
 	let clientWidth = $state(0)
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
-	let menuOpen = $state(false)
 
 	showPopover = () => {
 		element?.showPopover()
@@ -26,7 +26,7 @@
 		element?.hidePopover()
 	}
 	const refreshValues = () => {
-		if (element && anchor && menuOpen) {
+		if (element && anchor && open) {
 			const anchorRect = anchor.getBoundingClientRect()
 			let maxHeight: number
 			if (innerHeight - anchorRect.bottom > anchorRect.top) {
@@ -58,40 +58,40 @@
 	}
 	$effect(refreshValues)
 
-	// const getScrollableParent = (start: HTMLElement) => {
-	// 	let el: HTMLElement | null = start
-	// 	while (el) {
-	// 		const style = getComputedStyle(el)
-	// 		const overflowY = style.overflowY
-	// 		const overflowX = style.overflowX
-	// 		const isScrollableY =
-	// 			(overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight
-	// 		const isScrollableX =
-	// 			(overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth
+	const getScrollableParent = (start: HTMLElement) => {
+		let el: HTMLElement | null = start
+		while (el) {
+			const style = getComputedStyle(el)
+			const overflowY = style.overflowY
+			const overflowX = style.overflowX
+			const isScrollableY =
+				(overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight
+			const isScrollableX =
+				(overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth
 
-	// 		if (isScrollableY || isScrollableX) {
-	// 			return el
-	// 		}
+			if (isScrollableY || isScrollableX) {
+				return el
+			}
 
-	// 		el = el.parentElement
-	// 	}
-	// 	return window
-	// }
+			el = el.parentElement
+		}
+		return window
+	}
 
-	// const onScroll = () => {
-	// 	refreshValues()
-	// }
+	const onScroll = () => {
+		refreshValues()
+	}
 
-	// $effect(() => {
-	// 	if (element && !('anchorName' in document.documentElement.style)) {
-	// 		getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
-	// 	}
-	// 	return () => {
-	// 		if (element && !('anchorName' in document.documentElement.style)) {
-	// 			getScrollableParent(element).removeEventListener('scroll', onScroll)
-	// 		}
-	// 	}
-	// })
+	$effect(() => {
+		if (element && !('anchorName' in document.documentElement.style)) {
+			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
+		}
+		return () => {
+			if (element && !('anchorName' in document.documentElement.style)) {
+				getScrollableParent(element).removeEventListener('scroll', onScroll)
+			}
+		}
+	})
 </script>
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
@@ -103,11 +103,11 @@
 	bind:clientHeight
 	ontoggle={(event) => {
 		let { newState } = event
-		menuOpen = newState === 'open'
+		open = newState === 'open'
 		attributes.ontoggle?.(event)
 	}}
 	{popover}
-	class={['np-menu-container', !quick && 'np-animate', attributes.class]}
+	class={['np-menu-container', !quick && 'np-animate', open && 'np-menu-open', attributes.class]}
 	{style}
 >
 	<div class="np-menu">
@@ -132,17 +132,13 @@
 	}
 
 	.np-animate[popover] {
-		transition:
-			opacity 0.25s ease,
-			display 0.25s allow-discrete,
-			overlay 0.25s allow-discrete;
 		opacity: 0;
+		transition: opacity 0.25s ease;
+		pointer-events: none;
 	}
-	.np-animate[popover]:popover-open {
+	.np-animate[popover].np-menu-open {
 		opacity: 1;
-		@starting-style {
-			opacity: 0;
-		}
+		pointer-events: auto;
 	}
 	.np-menu {
 		overflow-y: auto;

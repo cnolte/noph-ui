@@ -212,15 +212,14 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={element}
+	bind:open={menuOpen}
 	ontoggle={(e) => {
 		if (e.newState === 'closed') {
-			menuOpen = false
 			activeIndex = NO_INDEX
 			if (!populated && finalPopulated && !value) {
 				finalPopulated = false
 			}
 		} else {
-			menuOpen = true
 			if (activeIndex >= displayOptions.length) {
 				activeIndex = NO_INDEX
 			}
