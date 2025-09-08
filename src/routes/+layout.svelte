@@ -57,7 +57,6 @@
 	popover="auto"
 	id="mobile-drawer"
 	class={['scroll-wrapper']}
-	backdrop
 	modal
 >
 	<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
