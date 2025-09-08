@@ -3,25 +3,21 @@
 	import Icon from '$lib/icons/Icon.svelte'
 
 	let { value }: { value: string } = $props()
-	let title = $state('Copy Code')
 	let selected = $state(false)
 </script>
 
 <div class="code-wrapper">
 	<div class="code-container">
 		<IconButton
-			{title}
-			keepTooltipOnClick
+			title="Copy Code"
 			style="position:absolute;right:0.4rem;top:0.4rem;"
 			toggle
 			bind:selected
 			onclick={() => {
 				navigator.clipboard.writeText(value)
-				title = 'Copied!'
 			}}
 			onmouseleave={() => {
 				setTimeout(() => {
-					title = 'Copy Code'
 					selected = false
 				}, 700)
 			}}

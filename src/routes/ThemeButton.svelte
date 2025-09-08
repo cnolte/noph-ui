@@ -11,7 +11,6 @@
 	let value = $state<string>('#5fb9e9')
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
-	let copyTitle = $state('Copy Theme')
 	let selected = $state(false)
 
 	const getScheme = () => {
@@ -181,22 +180,20 @@
 	anchor={menuBtn}
 	id="palette-menu"
 	class="theme-menu"
+	style="position-anchor:--palette-menu"
 >
 	<div class="theme-menu-container">
 		<div class="head">
 			<div class="headline">Theme Controls</div>
 			<IconButton
-				title={copyTitle}
-				keepTooltipOnClick
+				title="Copy Theme"
 				toggle
 				bind:selected
 				onclick={() => {
 					copyTheme()
-					copyTitle = 'Copied!'
 				}}
 				onmouseleave={() => {
 					setTimeout(() => {
-						copyTitle = 'Copy Theme'
 						selected = false
 					}, 1000)
 				}}
@@ -254,9 +251,6 @@
 </Menu>
 
 <style>
-	:global(.theme-menu) {
-		position-anchor: --palette-menu;
-	}
 	.theme-menu-container {
 		padding: 1rem;
 	}

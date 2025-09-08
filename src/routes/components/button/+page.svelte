@@ -373,12 +373,6 @@
 			<td>Provides an accessibility label for the loading state.</td>
 		</tr>
 		<tr>
-			<td><code>keepTooltipOnClick</code></td>
-			<td><code>boolean | undefined</code></td>
-			<td><code>false</code></td>
-			<td>Keeps the tooltip visible after the button is clicked.</td>
-		</tr>
-		<tr>
 			<td><code>title</code></td>
 			<td><code>string | null | undefined</code></td>
 			<td><code>undefined</code></td>

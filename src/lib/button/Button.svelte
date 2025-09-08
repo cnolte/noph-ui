@@ -14,7 +14,6 @@
 		element = $bindable(),
 		disabled = false,
 		loading = false,
-		keepTooltipOnClick,
 		loadingAriaLabel,
 		size = 's',
 		shape = 'round',
@@ -106,7 +105,7 @@
 {/if}
 
 {#if title && !disabled && !loading}
-	<Tooltip {keepTooltipOnClick} id={uid}>{title}</Tooltip>
+	<Tooltip id={uid}>{title}</Tooltip>
 {/if}
 
 <style>

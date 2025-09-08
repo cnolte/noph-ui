@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
 	import type { MenuProps } from './types.ts'
 
 	let {
@@ -82,10 +83,13 @@
 		refreshValues()
 	}
 
-	$effect(() => {
-		if (element && !('anchorName' in document.documentElement.style)) {
-			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
+	const attachScrollableParent = (el: HTMLDivElement) => {
+		if (!('anchorName' in document.documentElement.style)) {
+			getScrollableParent(el).addEventListener('scroll', onScroll, { passive: true })
 		}
+	}
+
+	onMount(() => {
 		return () => {
 			if (element && !('anchorName' in document.documentElement.style)) {
 				getScrollableParent(element).removeEventListener('scroll', onScroll)
@@ -98,6 +102,7 @@
 <div
 	role="menu"
 	{...attributes}
+	{@attach attachScrollableParent}
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
@@ -125,23 +130,25 @@
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
 		inset: auto;
+		position: fixed;
+		bottom: anchor(bottom);
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
 		z-index: 1000;
 	}
 
-	.np-animate[popover] {
-		transition:
-			opacity 0.2s ease,
-			display 0.2s allow-discrete,
-			overlay 0.2s allow-discrete;
-		opacity: 0;
-	}
 	.np-animate[popover]:popover-open {
 		opacity: 1;
-		@starting-style {
+		animation: fadeIn 0.2s linear;
+	}
+
+	@keyframes fadeIn {
+		from {
 			opacity: 0;
+		}
+		to {
+			opacity: 1;
 		}
 	}
 

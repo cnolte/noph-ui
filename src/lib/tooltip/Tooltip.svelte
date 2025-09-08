@@ -1,82 +1,97 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity'
-	import type { TooltipProps } from './types.ts'
 	import { onMount } from 'svelte'
+	import type { TooltipProps } from './types.ts'
+	import { MediaQuery } from 'svelte/reactivity'
 
 	let {
 		children,
+		open = $bindable(),
 		element = $bindable(),
 		id,
-		keepTooltipOnClick = false,
 		...attributes
 	}: TooltipProps = $props()
+	let clientWidth = $state(0)
+	let clientHeight = $state(0)
+	let innerHeight = $state(0)
+	let anchor: HTMLElement | undefined = $state()
+	const uid = $props.id()
 
-	const anchorNameFallback = $props.id()
+	let isTouch = new MediaQuery('(hover: none) and (pointer: coarse)', false)
 
-	let touch = new MediaQuery('(pointer: coarse) and (hover: none)', false)
-	let anchor = $state<HTMLElement>()
-
-	const isTouch = (event: PointerEvent) => {
-		return event.pointerType === 'touch'
-	}
-
-	const onPointerenter = (event: PointerEvent) => {
-		if (!isTouch(event)) {
-			element?.showPopover()
+	const refreshValues = () => {
+		if (element && anchor && open && !('positionArea' in document.documentElement.style)) {
+			const docClientWidth = document.documentElement.clientWidth
+			const anchorRect = anchor.getBoundingClientRect()
+			if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
+				element.style.top = `${anchorRect.top - clientHeight - 8}px`
+			} else {
+				element.style.top = `${anchorRect.bottom}px`
+			}
+			const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
+			if (left < 2) {
+				element.style.left = '2px'
+			} else if (left > docClientWidth - clientWidth) {
+				element.style.left = `${docClientWidth - clientWidth - 2}px`
+			} else {
+				element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
+			}
 		}
 	}
-
-	const onPointerleave = (event: PointerEvent) => {
-		if (!isTouch(event)) {
-			element?.hidePopover()
+	$effect(refreshValues)
+	let attachAnchor = (el: HTMLDivElement) => {
+		anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
+		if (!anchor) return
+		if ('anchorName' in document.documentElement.style) {
+			const anchorName = anchor.style.getPropertyValue('anchor-name')
+			const generatedId = anchorName || `--${uid}`
+			el.style.setProperty('position-anchor', generatedId)
+			if (!anchorName) {
+				anchor.style.setProperty('anchor-name', generatedId)
+			}
 		}
+		anchor.addEventListener('pointerenter', showPopover)
+		anchor.addEventListener('pointerleave', hidePopover)
+		anchor.addEventListener('focus', showPopover)
+		anchor.addEventListener('blur', hidePopover)
 	}
 
-	const onPointerup = (event: PointerEvent) => {
-		if (!isTouch(event)) {
-			element?.hidePopover()
-		}
+	const showPopover = () => {
+		element?.showPopover()
 	}
+
+	const hidePopover = () => {
+		element?.hidePopover()
+	}
+
 	onMount(() => {
 		return () => {
 			if (anchor) {
-				anchor.style.removeProperty('anchor-name')
-				anchor.removeEventListener('pointerenter', onPointerenter)
-				anchor.removeEventListener('pointerleave', onPointerleave)
-				anchor.removeEventListener('pointerup', onPointerup)
+				anchor.removeEventListener('pointerenter', showPopover)
+				anchor.removeEventListener('pointerleave', hidePopover)
+				anchor.removeEventListener('focus', showPopover)
+				anchor.removeEventListener('blur', hidePopover)
 			}
 		}
 	})
 </script>
 
-{#if !touch.current}
+<svelte:window bind:innerHeight />
+
+{#if !isTouch.current}
 	<div
 		{...attributes}
-		{@attach (element) => {
-			if (id && 'positionArea' in document.documentElement.style) {
-				anchor = (document.querySelector(`[aria-describedby="${id}"]`) as HTMLElement) ?? undefined
-
-				if ('anchorName' in document.documentElement.style) {
-					const anchorName = anchor.style.getPropertyValue('anchor-name')
-					const generatedId = anchorName || `--${anchorNameFallback}`
-					element.style.setProperty('position-anchor', generatedId)
-					if (!anchorName) {
-						anchor.style.setProperty('anchor-name', generatedId)
-					}
-				}
-				anchor.addEventListener('pointerenter', onPointerenter)
-				anchor.addEventListener('pointerleave', onPointerleave)
-				if (!keepTooltipOnClick) {
-					anchor.addEventListener('pointerup', onPointerup)
-				}
-			}
-		}}
 		{id}
+		{@attach attachAnchor}
 		class={['np-tooltip', attributes.class]}
 		role="tooltip"
-		aria-live="polite"
 		popover="manual"
 		bind:this={element}
+		bind:clientWidth
+		bind:clientHeight
+		ontoggle={(event) => {
+			let { newState } = event
+			open = newState === 'open'
+		}}
 	>
 		{#if children}{@render children()}{/if}
 	</div>

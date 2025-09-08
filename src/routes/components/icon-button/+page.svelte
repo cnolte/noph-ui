@@ -365,12 +365,6 @@
 			<td>Icon to display when the button is selected.</td>
 		</tr>
 		<tr>
-			<td><code>keepTooltipOnClick</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td>Keeps the tooltip visible after clicking the button.</td>
-		</tr>
-		<tr>
 			<td><code>disabled</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>

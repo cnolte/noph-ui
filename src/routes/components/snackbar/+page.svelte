@@ -4,9 +4,6 @@
 	import Snackbar from '$lib/snackbar/Snackbar.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let showPopover: () => void
-	let hidePopover: () => void
 </script>
 
 <svelte:head>
@@ -66,33 +63,14 @@
 />
 <h2>Manual control</h2>
 <DemoContainer>
-	<Button onclick={showPopover}>Show Snackbar</Button>
-	<Button onclick={hidePopover}>Hide Snackbar</Button>
-	<Snackbar
-		timeout={0}
-		popover="manual"
-		bind:showPopover
-		bind:hidePopover
-		label="Manual controlled snackbar"
-	/>
+	<Button popovertarget="manual-snackbar" popovertargetaction="show">Show Snackbar</Button>
+	<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide Snackbar</Button>
+	<Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />
 </DemoContainer>
 <Code
-	value={`<script lang="ts">
-	import { Button, Snackbar } from 'noph-ui'
-
-	let showPopover: () => void
-	let hidePopover: () => void
-</` +
-		`script>
-<Button onclick={showPopover}>Show Snackbar</Button>
-<Button onclick={hidePopover}>Hide Snackbar</Button>
-<Snackbar
-	timeout={0}
-	popover="manual"
-		bind:showPopover
-		bind:hidePopover
-	label="Manual controlled snackbar"
-/>`}
+	value={`<Button popovertarget="manual-snackbar" popovertargetaction="show">Show Snackbar</Button>
+<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide Snackbar</Button>
+<Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />`}
 />
 
 <h2>Theming</h2>
