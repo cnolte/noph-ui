@@ -58,40 +58,40 @@
 	}
 	$effect(refreshValues)
 
-	const getScrollableParent = (start: HTMLElement) => {
-		let el: HTMLElement | null = start
-		while (el) {
-			const style = getComputedStyle(el)
-			const overflowY = style.overflowY
-			const overflowX = style.overflowX
-			const isScrollableY =
-				(overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight
-			const isScrollableX =
-				(overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth
+	// const getScrollableParent = (start: HTMLElement) => {
+	// 	let el: HTMLElement | null = start
+	// 	while (el) {
+	// 		const style = getComputedStyle(el)
+	// 		const overflowY = style.overflowY
+	// 		const overflowX = style.overflowX
+	// 		const isScrollableY =
+	// 			(overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight
+	// 		const isScrollableX =
+	// 			(overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth
 
-			if (isScrollableY || isScrollableX) {
-				return el
-			}
+	// 		if (isScrollableY || isScrollableX) {
+	// 			return el
+	// 		}
 
-			el = el.parentElement
-		}
-		return window
-	}
+	// 		el = el.parentElement
+	// 	}
+	// 	return window
+	// }
 
-	const onScroll = () => {
-		refreshValues()
-	}
+	// const onScroll = () => {
+	// 	refreshValues()
+	// }
 
-	$effect(() => {
-		if (element && !('anchorName' in document.documentElement.style)) {
-			getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
-		}
-		return () => {
-			if (element && !('anchorName' in document.documentElement.style)) {
-				getScrollableParent(element).removeEventListener('scroll', onScroll)
-			}
-		}
-	})
+	// $effect(() => {
+	// 	if (element && !('anchorName' in document.documentElement.style)) {
+	// 		getScrollableParent(element).addEventListener('scroll', onScroll, { passive: true })
+	// 	}
+	// 	return () => {
+	// 		if (element && !('anchorName' in document.documentElement.style)) {
+	// 			getScrollableParent(element).removeEventListener('scroll', onScroll)
+	// 		}
+	// 	}
+	// })
 </script>
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
@@ -117,7 +117,6 @@
 
 <style>
 	.np-menu-container {
-		background: transparent;
 		color: var(--np-menu-text-color, var(--np-color-on-surface));
 		background-color: var(--np-menu-container-color, var(--np-color-surface-container));
 		border: none;
