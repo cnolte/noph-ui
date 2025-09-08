@@ -107,7 +107,7 @@
 		attributes.ontoggle?.(event)
 	}}
 	{popover}
-	class={['np-menu-container', !quick && 'np-animate', open && 'np-menu-open', attributes.class]}
+	class={['np-menu-container', !quick && 'np-animate', attributes.class]}
 	{style}
 >
 	<div class="np-menu">
@@ -132,14 +132,19 @@
 	}
 
 	.np-animate[popover] {
+		transition:
+			opacity 0.2s ease,
+			display 0.2s allow-discrete,
+			overlay 0.2s allow-discrete;
 		opacity: 0;
-		transition: opacity 0.25s ease;
-		pointer-events: none;
 	}
-	.np-animate[popover].np-menu-open {
+	.np-animate[popover]:popover-open {
 		opacity: 1;
-		pointer-events: auto;
+		@starting-style {
+			opacity: 0;
+		}
 	}
+
 	.np-menu {
 		overflow-y: auto;
 		overflow-x: hidden;
