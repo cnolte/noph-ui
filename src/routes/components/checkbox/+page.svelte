@@ -20,14 +20,21 @@
 <Checkbox checked />
 <Checkbox indeterminate />`}
 />
+<h2>Disabled</h2>
+<DemoContainer>
+	<Checkbox aria-label="Unchecked" disabled />
+	<Checkbox aria-label="Checked" disabled checked />
+	<Checkbox aria-label="Indeterminate" disabled indeterminate />
+</DemoContainer>
+<Code
+	value={`<Checkbox disabled />
+<Checkbox checked disabled />
+<Checkbox indeterminate disabled />`}
+/>
 <h3>Label</h3>
 <DemoContainer>
-	<label style="display: flex; align-items: center"
-		><Checkbox aria-label="Checkbox one" />Checkbox one</label
-	>
-	<label style="display: flex; align-items: center"
-		><Checkbox aria-label="Checkbox two" />Checkbox two</label
-	>
+	<label style="display: flex; align-items: center"><Checkbox />Checkbox one</label>
+	<label style="display: flex; align-items: center"><Checkbox />Checkbox two</label>
 </DemoContainer>
 <Code
 	value={`<label><Checkbox />Checkbox one</label>

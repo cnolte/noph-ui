@@ -8,21 +8,22 @@
 		element = $bindable(),
 		group = $bindable(),
 		style,
+		value,
 		...attributes
 	}: CheckboxProps = $props()
 
 	$effect(() => {
-		if (group && attributes.value) {
-			checked = group.includes(attributes.value)
+		if (group && value) {
+			checked = group.includes(value)
 		}
 	})
 
 	$effect(() => {
-		if (attributes.value && group) {
-			const index = group.indexOf(attributes.value)
+		if (value && group) {
+			const index = group.indexOf(value)
 			if (checked) {
 				if (index < 0) {
-					group?.push(attributes.value)
+					group?.push(value)
 					group = group
 				}
 			} else {
@@ -36,58 +37,47 @@
 	let inputEl: HTMLInputElement | undefined = $state()
 </script>
 
-<div {style} class={['np-host', attributes.class]} bind:this={element}>
-	<div class="np-container">
-		<label class="np-input-wrapper">
-			{#if !attributes.disabled}
-				<Ripple forElement={inputEl} />
-			{/if}
-			<input
-				{...attributes}
-				class="np-input"
-				type="checkbox"
-				bind:indeterminate
-				bind:checked
-				bind:this={inputEl}
-				aria-checked={indeterminate ? 'mixed' : undefined}
-			/>
-		</label>
-
-		<div class="np-outline"></div>
-		<div class="np-background"></div>
-		<svg class="np-icon" viewBox="0 0 18 18" aria-hidden="true">
-			<rect class="mark short" />
-			<rect class="mark long" />
-		</svg>
+<div {style} class={['np-container', attributes.class]} bind:this={element}>
+	<div class="np-input-wrapper">
+		{#if !attributes.disabled}
+			<Ripple forElement={inputEl} />
+		{/if}
+		<input
+			{...attributes}
+			{value}
+			class="np-input"
+			type="checkbox"
+			bind:indeterminate
+			bind:checked
+			bind:this={inputEl}
+			aria-checked={indeterminate ? 'mixed' : undefined}
+		/>
 	</div>
+	<div class="np-outline"></div>
+	<div class="np-background"></div>
+	<svg class="np-icon" viewBox="0 0 18 18" aria-hidden="true">
+		<rect class="mark short" />
+		<rect class="mark long" />
+	</svg>
 </div>
 
 <style>
-	.np-host {
-		border-start-start-radius: var(--np-checkbox-container-shape, 2px);
-		border-start-end-radius: var(--np-checkbox-container-shape, 2px);
-		border-end-end-radius: var(--np-checkbox-container-shape, 2px);
-		border-end-start-radius: var(--np-checkbox-container-shape, 2px);
+	.np-container {
+		border-radius: var(--np-checkbox-container-shape, 2px);
 		display: inline-flex;
+		place-content: center;
+		place-items: center;
+		position: relative;
 		height: 18px;
 		position: relative;
 		vertical-align: top;
 		width: 18px;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		cursor: pointer;
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		margin: var(--np-checkbox-margin, max(0px, (48px - 18px)/2));
 	}
-	.np-host:has(input:disabled) {
+	.np-container:has(input:disabled) {
 		cursor: default;
-	}
-	.np-container {
-		border-radius: inherit;
-		display: flex;
-		height: 100%;
-		place-content: center;
-		place-items: center;
-		position: relative;
-		width: 100%;
 	}
 	.np-input {
 		height: 48px;
@@ -144,11 +134,8 @@
 		border-width: 2px;
 		box-sizing: border-box;
 	}
-	:where(:hover) .np-outline {
-		border-color: var(--np-color-on-surface);
-		border-width: 2px;
-	}
-	:where(:focus-within) .np-outline {
+	.np-container:focus-within .np-outline,
+	.np-container:hover .np-outline {
 		border-color: var(--np-color-on-surface);
 		border-width: 2px;
 	}
