@@ -51,8 +51,15 @@
 		}
 		anchor.addEventListener('pointerenter', showPopover)
 		anchor.addEventListener('pointerleave', hidePopover)
-		anchor.addEventListener('focus', showPopover)
+		anchor.addEventListener('focus', onAnchorFocus)
 		anchor.addEventListener('blur', hidePopover)
+	}
+
+	const onAnchorFocus = (e: FocusEvent) => {
+		const target = e.currentTarget as HTMLElement
+		if (target.matches(':focus-visible')) {
+			showPopover()
+		}
 	}
 
 	const showPopover = () => {
@@ -68,7 +75,7 @@
 			if (anchor) {
 				anchor.removeEventListener('pointerenter', showPopover)
 				anchor.removeEventListener('pointerleave', hidePopover)
-				anchor.removeEventListener('focus', showPopover)
+				anchor.removeEventListener('focus', onAnchorFocus)
 				anchor.removeEventListener('blur', hidePopover)
 			}
 		}
