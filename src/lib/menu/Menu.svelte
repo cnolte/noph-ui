@@ -147,6 +147,7 @@
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
+		position-try: normal flip-block;
 	}
 
 	.np-menu-container[popover]:popover-open {
