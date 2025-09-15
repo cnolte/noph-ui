@@ -48,9 +48,6 @@
 		padding: 0;
 		background-color: transparent;
 	}
-	.np-navigation-drawer-container-modal {
-		z-index: 1000;
-	}
 	.np-navigation-wrapper {
 		background-color: var(--np-navigation-drawer-background, var(--np-color-surface-container-low));
 		border-top-right-radius: var(--np-shape-corner-large);

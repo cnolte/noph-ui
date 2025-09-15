@@ -158,7 +158,7 @@
 <IconButton
 	style="anchor-name:--palette-menu"
 	popovertarget="palette-menu"
-	title="Change theme"
+	title="Change Theme"
 	bind:element={menuBtn}
 >
 	<Icon>palette</Icon>

@@ -142,19 +142,24 @@
 		inset: auto;
 		transition:
 			display 0.2s allow-discrete,
+			overlay 0.2s allow-discrete,
 			opacity 0.2s linear;
 		opacity: 0;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
-		z-index: 1000;
 	}
 
-	.np-menu-container:popover-open {
+	.np-menu-container[popover]:popover-open {
 		opacity: 1;
-		display: flex;
-		@starting-style {
+		animation: fadeIn 0.2s linear;
+	}
+	@keyframes fadeIn {
+		0% {
 			opacity: 0;
+		}
+		100% {
+			opacity: 1;
 		}
 	}
 </style>

@@ -49,8 +49,8 @@
 				anchor.style.setProperty('anchor-name', generatedId)
 			}
 		}
-		anchor.addEventListener('pointerenter', showPopover)
-		anchor.addEventListener('pointerleave', hidePopover)
+		anchor.addEventListener('mouseenter', showPopover)
+		anchor.addEventListener('mouseleave', onLeave)
 		anchor.addEventListener('focus', onAnchorFocus)
 		anchor.addEventListener('blur', hidePopover)
 	}
@@ -70,11 +70,19 @@
 		element?.hidePopover()
 	}
 
+	const onLeave = () => {
+		hidePopover()
+		// TODO Use delay as soons as popover="hint" is supported in all browsers
+		// setTimeout(() => {
+		// 	hidePopover()
+		// }, 500)
+	}
+
 	onMount(() => {
 		return () => {
 			if (anchor) {
-				anchor.removeEventListener('pointerenter', showPopover)
-				anchor.removeEventListener('pointerleave', hidePopover)
+				anchor.removeEventListener('mouseenter', showPopover)
+				anchor.removeEventListener('mouseleave', onLeave)
 				anchor.removeEventListener('focus', onAnchorFocus)
 				anchor.removeEventListener('blur', hidePopover)
 			}
@@ -91,7 +99,7 @@
 		{@attach attachAnchor}
 		class={['np-tooltip', attributes.class]}
 		role="tooltip"
-		popover="manual"
+		popover="hint"
 		bind:this={element}
 		bind:clientWidth
 		bind:clientHeight
@@ -117,9 +125,9 @@
 		line-height: 1rem;
 		font-size: 0.75rem;
 		opacity: 0;
-		z-index: 1000;
 		transition:
 			display 0.3s allow-discrete,
+			overlay 0.2s allow-discrete,
 			opacity 0.3s ease;
 		justify-self: var(--np-tooltip-justify-self, anchor-center);
 		position-area: var(--np-tooltip-position-area, top);

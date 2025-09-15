@@ -1,6 +1,6 @@
 {
 	"name": "noph-ui",
-	"version": "0.25.2",
+	"version": "0.25.3",
 	"license": "MIT",
 	"homepage": "https://noph.dev",
 	"repository": {
@@ -72,8 +72,8 @@
 		"@material/material-color-utilities": "^0.3.0",
 		"@playwright/test": "^1.55.0",
 		"@sveltejs/adapter-vercel": "^5.10.2",
-		"@sveltejs/kit": "^2.39.0",
-		"@sveltejs/package": "^2.5.0",
+		"@sveltejs/kit": "^2.39.1",
+		"@sveltejs/package": "^2.5.1",
 		"@sveltejs/vite-plugin-svelte": "^6.2.0",
 		"@types/eslint": "^9.6.1",
 		"eslint": "^9.35.0",
