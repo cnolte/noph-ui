@@ -124,7 +124,6 @@
 			display 0.2s allow-discrete,
 			opacity 0.2s linear;
 		opacity: 0;
-		z-index: 1;
 	}
 
 	.np-snackbar:popover-open {

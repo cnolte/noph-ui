@@ -11,6 +11,7 @@
 		style,
 		popover = 'auto',
 		anchor,
+		ontoggle,
 		...attributes
 	}: MenuProps = $props()
 
@@ -108,7 +109,7 @@
 	ontoggle={(event) => {
 		let { newState } = event
 		open = newState === 'open'
-		attributes.ontoggle?.(event)
+		ontoggle?.(event)
 	}}
 	{popover}
 	class={['np-menu-container', attributes.class]}
@@ -139,7 +140,6 @@
 		padding: 0;
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
-		inset: auto;
 		transition:
 			display 0.2s allow-discrete,
 			overlay 0.2s allow-discrete,

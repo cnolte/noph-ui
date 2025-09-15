@@ -38,6 +38,12 @@
 </script>
 
 <div {style} class={['np-container', attributes.class]} bind:this={element}>
+	<div class="np-outline"></div>
+	<div class="np-background"></div>
+	<svg class="np-icon" viewBox="0 0 18 18" aria-hidden="true">
+		<rect class="mark short" />
+		<rect class="mark long" />
+	</svg>
 	<div class="np-input-wrapper">
 		{#if !attributes.disabled}
 			<Ripple forElement={inputEl} />
@@ -53,12 +59,6 @@
 			aria-checked={indeterminate ? 'mixed' : undefined}
 		/>
 	</div>
-	<div class="np-outline"></div>
-	<div class="np-background"></div>
-	<svg class="np-icon" viewBox="0 0 18 18" aria-hidden="true">
-		<rect class="mark short" />
-		<rect class="mark long" />
-	</svg>
 </div>
 
 <style>
@@ -95,7 +95,6 @@
 		height: 40px;
 		position: absolute;
 		width: 40px;
-		z-index: 1;
 		border-radius: var(--np-shape-corner-full);
 		cursor: inherit;
 	}
