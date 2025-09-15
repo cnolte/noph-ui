@@ -145,7 +145,6 @@
 			opacity 0.2s linear;
 		opacity: 0;
 		position-area: var(--np-menu-position-area, bottom center);
-		position-try: normal flip-block;
 	}
 
 	.np-menu-container[popover]:popover-open {
