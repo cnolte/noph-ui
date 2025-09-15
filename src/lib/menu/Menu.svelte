@@ -102,6 +102,7 @@
 <div
 	role="menu"
 	{...attributes}
+	{@attach attachScrollableParent}
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
