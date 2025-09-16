@@ -98,7 +98,7 @@
 	})
 </script>
 
-<svelte:window bind:innerHeight onresize={refreshValues} />
+<!-- <svelte:window bind:innerHeight onresize={refreshValues} /> -->
 <div
 	role="menu"
 	{...attributes}
@@ -140,19 +140,14 @@
 		padding: 0;
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
-		transition:
-			display 0.2s allow-discrete,
-			overlay 0.2s allow-discrete,
-			opacity 0.2s linear;
-		opacity: 0;
-		justify-self: var(--np-menu-justify-self, anchor-center);
-		position-area: var(--np-menu-position-area, bottom center);
-		position-try: normal flip-block;
 	}
 
 	.np-menu-container[popover]:popover-open {
 		opacity: 1;
 		animation: fadeIn 0.2s linear;
+		justify-self: var(--np-menu-justify-self, anchor-center);
+		position-area: var(--np-menu-position-area, bottom center);
+		position-try: normal flip-block;
 	}
 	@keyframes fadeIn {
 		0% {
