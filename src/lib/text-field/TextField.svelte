@@ -66,7 +66,6 @@
 
 	const onReset = () => {
 		errorRaw = error
-		value = ''
 	}
 
 	const onInputEvent = (
