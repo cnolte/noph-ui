@@ -8,7 +8,7 @@
 	let {
 		options = [],
 		value = $bindable(),
-		variant = 'filled',
+		variant = 'outlined',
 		element = $bindable(),
 		populated,
 		reportValidity = $bindable(),

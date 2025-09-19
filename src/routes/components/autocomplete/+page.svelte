@@ -27,17 +27,11 @@
 <h1>Auto complete</h1>
 
 <DemoContainer>
-	<AutoComplete
-		label="Fruits"
-		variant="outlined"
-		name="fruit"
-		options={[{ label: 'Apple' }, { label: 'Banana' }]}
-	/>
+	<AutoComplete label="Fruits" name="fruit" options={[{ label: 'Apple' }, { label: 'Banana' }]} />
 </DemoContainer>
 <Code
 	value={`<AutoComplete
 	label="Fruits"
-	variant="outlined"
 	name="fruit"
 	options={[{ label: 'Apple' }, { label: 'Banana' }]}
 />`}
@@ -45,7 +39,6 @@
 <DemoContainer>
 	<AutoComplete
 		options={fruitOptions}
-		variant="outlined"
 		placeholder="Add fruit..."
 		style="width:340px"
 		label="Fruits"
@@ -83,7 +76,6 @@
 <Code
 	value={`<AutoComplete
 	options={fruitOptions}
-	variant="outlined"
 	placeholder="Add fruit..."
 	style="width:340px"
 	label="Fruits"

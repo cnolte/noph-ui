@@ -25,11 +25,11 @@
 </p>
 <DemoContainer>
 	<TextField label="Label" value="Value" />
-	<TextField label="Label" value="Value" variant="outlined" />
+	<TextField label="Label" value="Value" variant="filled" />
 </DemoContainer>
 <Code
 	value={`<TextField label="Label" value="Value" />
-<TextField label="Label" value="Value" variant="outlined" />`}
+<TextField label="Label" value="Value" variant="filled" />`}
 />
 <h3>Input type</h3>
 <p>
@@ -47,38 +47,38 @@
 	<li><code>type="textarea"</code></li>
 </ul>
 <DemoContainer>
-	<TextField label="Email" type="email" variant="outlined" />
-	<TextField label="Password" type="password" variant="outlined" />
+	<TextField label="Email" type="email" />
+	<TextField label="Password" type="password" />
 </DemoContainer>
 <Code
-	value={`<TextField label="Email" type="email" variant="outlined" />
-<TextField label="Password" type="password" variant="outlined" />`}
+	value={`<TextField label="Email" type="email" />
+<TextField label="Password" type="password" />`}
 />
 <h3>Disabled</h3>
 <DemoContainer>
 	<TextField label="Label" disabled value="Value" />
-	<TextField label="Label" disabled value="Value" variant="outlined" />
+	<TextField label="Label" disabled value="Value" variant="filled" />
 </DemoContainer>
 <Code
 	value={`<TextField label="Label" disabled value="Value" />
-<TextField label="Label" disabled value="Value" variant="outlined" />`}
+<TextField label="Label" disabled value="Value" variant="filled" />`}
 />
 
 <h3>Labels</h3>
 <DemoContainer>
-	<TextField label="Country" variant="outlined" />
-	<TextField placeholder="email@domain.com" variant="outlined" />
+	<TextField label="Country" />
+	<TextField placeholder="email@domain.com" />
 	<label id="city-label">
 		City
-		<TextField variant="outlined" aria-labelledby="city-label" />
+		<TextField aria-labelledby="city-label" />
 	</label>
 </DemoContainer>
 <Code
-	value={`<TextField label="Country" variant="outlined" />
-<TextField placeholder="email@domain.com" variant="outlined" />
+	value={`<TextField label="Country" />
+<TextField placeholder="email@domain.com" />
 <label id="city-label">
 	City
-	<TextField variant="outlined" aria-labelledby="city-label" />
+	<TextField aria-labelledby="city-label" />
 </label>`}
 />
 <blockquote>
@@ -88,19 +88,19 @@
 <h3>Textarea</h3>
 <DemoContainer>
 	<TextField label="Resize" type="textarea" />
-	<TextField label="Resize" type="textarea" variant="outlined" />
+	<TextField label="Resize" type="textarea" variant="filled" />
 </DemoContainer>
 <Code
 	value={`<TextField label="Resize" type="textarea" />
-<TextField label="Resize" type="textarea" variant="outlined" />`}
+<TextField label="Resize" type="textarea" variant="filled" />`}
 />
 
 <h3>Icons</h3>
 <DemoContainer style="align-items:baseline">
-	<TextField placeholder="Search" type="search" inputmode="search" variant="outlined">
+	<TextField placeholder="Search" type="search" inputmode="search">
 		{#snippet start()}<Icon>search</Icon>{/snippet}
 	</TextField>
-	<TextField label="Password" type="password" variant="outlined">
+	<TextField label="Password" type="password">
 		{#snippet end()}
 			<IconButton toggle title="Toggle visibility">
 				{#snippet selectedIcon()}
@@ -110,17 +110,17 @@
 			</IconButton>
 		{/snippet}
 	</TextField>
-	<TextField label="Username" variant="outlined" error errorText="Username not available">
+	<TextField label="Username" error errorText="Username not available">
 		{#snippet end()}
 			<Icon>error</Icon>
 		{/snippet}
 	</TextField>
 </DemoContainer>
 <Code
-	value={`<TextField placeholder="Search" type="search" variant="outlined">
+	value={`<TextField placeholder="Search" type="search">
 	{#snippet start()}<Icon>search</Icon>{/snippet}
 </TextField>
-<TextField label="Password" type="password" variant="outlined">
+<TextField label="Password" type="password">
 	{#snippet end()}
 		<IconButton toggle title="Toggle visibility">
 			{#snippet selectedIcon()}
@@ -130,7 +130,7 @@
 		</IconButton>
 	{/snippet}
 </TextField>
-<TextField label="Username" variant="outlined" error>
+<TextField label="Username" error>
 	{#snippet end()}
 		<Icon>error</Icon>
 	{/snippet}
@@ -146,7 +146,6 @@
 		prefixText="$"
 		suffixText=".00"
 		type="number"
-		variant="outlined"
 	/>
 </DemoContainer>
 
@@ -157,7 +156,6 @@
 	prefixText="$"
 	suffixText=".00"
 	type="number"
-	variant="outlined"
 />`}
 />
 <h3>Supporting text</h3>
@@ -316,7 +314,6 @@
 <h3>Outlined text field example</h3>
 <DemoContainer>
 	<TextField
-		variant="outlined"
 		label="Outlined"
 		--np-outlined-text-field-container-shape="0"
 		--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
@@ -325,7 +322,6 @@
 </DemoContainer>
 <Code
 	value={`<TextField
-	variant="outlined"
 	label="Outlined"
 	--np-outlined-text-field-container-shape="0"
 	--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"

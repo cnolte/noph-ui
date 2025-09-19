@@ -15,7 +15,7 @@
 		label,
 		style,
 		noAsterisk = false,
-		variant = 'filled',
+		variant = 'outlined',
 		element = $bindable(),
 		populated = false,
 		inputElement = $bindable(),

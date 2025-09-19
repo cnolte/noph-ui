@@ -13,10 +13,44 @@
 <h1>Select</h1>
 <h2>Usage</h2>
 
+<!-- <form style="display: flex;gap: 0.5rem;" method="POST">
+	<NativeSelect
+		disabled
+		error
+		supportingText="Demo text ob das geht"
+		label="Fruit"
+		name={demo.field('fruit')}
+	>
+		<Option value=""></Option>
+		<Option value="apple" selected>Apple</Option>
+		<Option value="apricot">Apricot</Option>
+		<Option value="banana">Banana</Option>
+		<Option value="cherry">Cherry</Option>
+		<Option value="elderberry" disabled>Elderberry</Option>
+		<Option value="fig">Fig</Option>
+		<Option value="grape">Grape</Option>
+	</NativeSelect>
+	<NativeSelect
+		variant="filled"
+		supportingText="Demo text ob das geht"
+		label="Fruit"
+		name={demo.field('fruit')}
+	>
+		<Option value=""></Option>
+		<Option value="apple" selected>Apple</Option>
+		<Option value="apricot">Apricot</Option>
+		<Option value="banana">Banana</Option>
+		<Option value="cherry">Cherry</Option>
+		<Option value="elderberry" disabled>Elderberry</Option>
+		<Option value="fig">Fig</Option>
+		<Option value="grape">Grape</Option>
+	</NativeSelect>
+	<Button type="submit">Send</Button>
+</form> -->
+
 <DemoContainer>
 	<Select
 		label="Fruit"
-		variant="outlined"
 		name="fruit"
 		options={[
 			{ value: '', label: '' },
@@ -31,6 +65,7 @@
 	/>
 	<Select
 		label="Fruit"
+		variant="filled"
 		name="fruit"
 		options={[
 			{ value: '', label: '', selected: true },
@@ -47,7 +82,6 @@
 <Code
 	value={`<Select
 	label="Fruit"
-	variant="outlined"
 	name="fruit"
 	options={[
 		{ value: '', label: '' },
@@ -58,6 +92,7 @@
 />
 <Select
 	label="Fruit"
+	variant="filled"
 	name="fruit"
 	options={[
 		{ value: '', label: '', selected: true },
@@ -70,15 +105,10 @@
 
 <h3>Disabled</h3>
 <DemoContainer>
+	<Select label="Fruit" name="fruit" disabled options={[{ value: '', label: '' }]} />
 	<Select
 		label="Fruit"
-		variant="outlined"
-		name="fruit"
-		disabled
-		options={[{ value: '', label: '' }]}
-	/>
-	<Select
-		label="Fruit"
+		variant="filled"
 		name="fruit"
 		disabled
 		options={[{ value: '', label: '', selected: true }]}
@@ -87,13 +117,13 @@
 <Code
 	value={`<Select
 	label="Fruit"
-	variant="outlined"
 	name="fruit"
 	disabled
 	options={[{ value: '', label: '' }]}
 />
 <Select
 	label="Fruit"
+	variant="filled"
 	name="fruit"
 	disabled
 	options={[{ value: '', label: '', selected: true }]}
@@ -105,7 +135,6 @@
 	<form>
 		<Select
 			label="Genre"
-			variant="outlined"
 			name="genre"
 			required
 			options={[
@@ -125,7 +154,6 @@
 	value={`<form>
 	<Select
 		label="Genre"
-		variant="outlined"
 		name="genre"
 		required
 		options={[
@@ -145,7 +173,6 @@
 <DemoContainer>
 	<Select
 		label="Favorite fruit"
-		variant="outlined"
 		name="fruit"
 		style="max-width: 300px"
 		multiple
@@ -162,7 +189,6 @@
 <Code
 	value={`<Select
 		label="Favorite fruit"
-		variant="outlined"
 		name="fruit"
 		style="max-width: 300px"
 		multiple
@@ -186,7 +212,6 @@
 <DemoContainer>
 	<Select
 		label="Virtual list"
-		variant="outlined"
 		name="virtual_list"
 		style="max-width: 300px"
 		options={[
@@ -200,7 +225,6 @@
 <Code
 	value={`<Select
 	label="Virtual list"
-	variant="outlined"
 	name="virtual_list"
 	style="max-width: 300px"
 	options={[
@@ -216,7 +240,6 @@
 <DemoContainer>
 	<Select
 		label="Favorite fruit"
-		variant="outlined"
 		name="fruit"
 		options={[
 			{ value: '', label: '' },
@@ -231,7 +254,6 @@
 	</Select>
 	<Select
 		label="Favorite car"
-		variant="outlined"
 		name="car"
 		options={[
 			{ value: '', label: '' },
@@ -249,7 +271,6 @@
 <Code
 	value={`<Select
 	label="Favorite fruit"
-	variant="outlined"
 	name="fruit"
 	options={[
 		{ value: '', label: '' },
@@ -264,7 +285,6 @@
 </Select>
 <Select
 	label="Favorite car"
-	variant="outlined"
 	name="car"
 	options={[
 		{ value: '', label: '' },
@@ -350,7 +370,6 @@
 <h3>Outlined text field example</h3>
 <DemoContainer>
 	<Select
-		variant="outlined"
 		options={[
 			{ value: '', label: '', selected: true },
 			{ value: 'apple', label: 'Apple' },
@@ -364,7 +383,6 @@
 </DemoContainer>
 <Code
 	value={`<Select
-	variant="outlined"
 	options={[
 		{ value: '', label: '', selected: true },
 		{ value: 'apple', label: 'Apple' },
