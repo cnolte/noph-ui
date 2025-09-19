@@ -14,13 +14,7 @@
 <h2>Usage</h2>
 
 <!-- <form style="display: flex;gap: 0.5rem;" method="POST">
-	<NativeSelect
-		disabled
-		error
-		supportingText="Demo text ob das geht"
-		label="Fruit"
-		name={demo.field('fruit')}
-	>
+	<NativeSelect required supportingText="Demo text ob das geht" label="Fruit" name="fruit">
 		<Option value=""></Option>
 		<Option value="apple" selected>Apple</Option>
 		<Option value="apricot">Apricot</Option>
@@ -30,12 +24,7 @@
 		<Option value="fig">Fig</Option>
 		<Option value="grape">Grape</Option>
 	</NativeSelect>
-	<NativeSelect
-		variant="filled"
-		supportingText="Demo text ob das geht"
-		label="Fruit"
-		name={demo.field('fruit')}
-	>
+	<NativeSelect variant="filled" supportingText="Demo text ob das geht" label="Fruit" name="fruit">
 		<Option value=""></Option>
 		<Option value="apple" selected>Apple</Option>
 		<Option value="apricot">Apricot</Option>

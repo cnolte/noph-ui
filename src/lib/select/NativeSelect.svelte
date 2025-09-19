@@ -18,6 +18,8 @@
 		value = $bindable(),
 		label,
 		disabled,
+		required,
+		noAsterisk,
 		children,
 		onchange,
 		oninvalid,
@@ -27,8 +29,8 @@
 	const selectId = id ?? `select-${uid}`
 
 	let animateLabel = $state(false)
-	let errorTextRaw = $state(errorText)
-	let errorRaw = $state(error)
+	let errorTextRaw = $derived(errorText)
+	let errorRaw = $derived(error)
 </script>
 
 <div
@@ -37,6 +39,7 @@
 		variant,
 		errorRaw && 'error',
 		disabled && 'disabled',
+		required && !noAsterisk && 'asterisk',
 		(value === undefined || value === '' || value === null) && 'is-empty',
 		animateLabel && 'label-animate',
 	]}
@@ -78,6 +81,7 @@
 			oninvalid?.(event)
 		}}
 		{disabled}
+		{required}
 		id={selectId}
 		aria-invalid={error}
 		bind:value
@@ -275,6 +279,10 @@
 		padding-inline: 0.25rem;
 		overflow: hidden;
 		font-size: 0.75rem;
+	}
+
+	.asterisk label::after {
+		content: '*';
 	}
 
 	.np-select-outline label {

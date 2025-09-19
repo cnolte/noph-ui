@@ -24,6 +24,7 @@
 
 <style>
 	option {
+		all: unset;
 		cursor: pointer;
 		position: relative;
 		display: flex;
@@ -31,6 +32,7 @@
 		gap: 0.75rem;
 		height: 2rem;
 		background: var(--np-surface);
+		align-items: center;
 
 		&:checked {
 			background-color: var(--np-color-secondary-container);
