@@ -40,7 +40,7 @@
 		errorRaw && 'error',
 		disabled && 'disabled',
 		required && !noAsterisk && 'asterisk',
-		!value && 'is-empty',
+		(value === null || value === undefined || value === '') && 'is-empty',
 		animateLabel && 'animate-label',
 		attributes.class,
 	]}
@@ -69,7 +69,12 @@
 	</svg>
 	<select
 		oninput={(event) => {
-			if ((!value && event.currentTarget.value) || (value && !event.currentTarget.value)) {
+			if (
+				(!animateLabel &&
+					(value === null || value === undefined || value === '') &&
+					event.currentTarget.value) ||
+				(value !== null && value !== undefined && value !== '' && !event.currentTarget.value)
+			) {
 				animateLabel = true
 			}
 			onchange?.(event)
