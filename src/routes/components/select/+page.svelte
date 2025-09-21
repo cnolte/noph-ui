@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
-	import Select from '$lib/select/Select.svelte'
+	import { Select, NativeSelect, Option, Button } from '$lib/index.ts'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>
@@ -13,10 +12,10 @@
 <h1>Select</h1>
 <h2>Usage</h2>
 
-<!-- <form style="display: flex;gap: 0.5rem;" method="POST">
-	<NativeSelect required supportingText="Demo text ob das geht" label="Fruit" name="fruit">
+<!-- <form>
+	<NativeSelect value="" required supportingText="Demo text ob das geht" label="Fruit" name="fruit">
 		<Option value=""></Option>
-		<Option value="apple" selected>Apple</Option>
+		<Option value="apple">Apple</Option>
 		<Option value="apricot">Apricot</Option>
 		<Option value="banana">Banana</Option>
 		<Option value="cherry">Cherry</Option>
@@ -24,9 +23,15 @@
 		<Option value="fig">Fig</Option>
 		<Option value="grape">Grape</Option>
 	</NativeSelect>
-	<NativeSelect variant="filled" supportingText="Demo text ob das geht" label="Fruit" name="fruit">
+	<NativeSelect
+		value="apple"
+		variant="filled"
+		supportingText="Demo text ob das geht"
+		label="Fruit"
+		name="fruit"
+	>
 		<Option value=""></Option>
-		<Option value="apple" selected>Apple</Option>
+		<Option value="apple">Apple</Option>
 		<Option value="apricot">Apricot</Option>
 		<Option value="banana">Banana</Option>
 		<Option value="cherry">Cherry</Option>

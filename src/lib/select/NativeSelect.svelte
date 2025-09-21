@@ -64,7 +64,7 @@
 		</div>
 		<div class="np-select-state-layer"></div>
 	{/if}
-	<svg class="arrow" height="5" viewBox="7 10 10 5" focusable="false">
+	<svg class="arrow" height="6" viewBox="7 10 10 5" focusable="false">
 		<polygon stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
 	</svg>
 	<select
@@ -148,13 +148,15 @@
 	}
 
 	.outlined select {
-		padding: 1rem;
+		padding-inline-start: 1rem;
+		padding-block: 1rem;
+		padding-inline-end: 3.25rem;
 	}
 
 	.filled select {
-		padding-inline: 1rem;
+		padding-inline-start: 1rem;
 		padding-block-start: 1.5rem;
-		padding-block-end: 0.5rem;
+		padding-inline-end: 3.25rem;
 	}
 
 	.np-select-outline {
@@ -200,11 +202,13 @@
 	}
 
 	.arrow {
+		padding-inline: 0.375rem;
+		padding-block: 0.5625rem;
 		fill: currentColor;
 		position: absolute;
 		pointer-events: none;
 		inset-inline-end: 0.75rem;
-		inset-block-start: calc(1.75rem - 3px);
+		inset-block-start: 1rem;
 		transition: rotate var(--easing-fast);
 	}
 

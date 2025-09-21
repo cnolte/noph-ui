@@ -25,7 +25,6 @@
 <style>
 	option {
 		all: unset;
-		cursor: pointer;
 		position: relative;
 		display: flex;
 		padding: 0.5rem 1rem;
