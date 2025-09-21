@@ -403,7 +403,7 @@
 		<tr>
 			<td><code>variant</code></td>
 			<td><code>'outlined' | 'filled'</code></td>
-			<td><code>'filled'</code></td>
+			<td><code>'outlined'</code></td>
 			<td>Defines the visual style of the select component.</td>
 		</tr>
 		<tr>

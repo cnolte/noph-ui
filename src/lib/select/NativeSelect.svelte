@@ -394,12 +394,22 @@
 	.error:focus-within label {
 		color: var(--np-color-error);
 	}
+
+	.error:hover label,
+	.error:hover .arrow {
+		color: var(--np-color-on-error-container);
+	}
+
 	.error .np-select-outline,
-	.error:hover .np-select-outline,
 	.error:focus-within .np-select-outline,
 	.error .np-select-filled,
 	.error:focus-within .np-select-filled {
 		border-color: var(--np-color-error);
+	}
+
+	.error:hover .np-select-outline,
+	.error:hover .np-select-filled {
+		border-color: var(--np-color-on-error-container);
 	}
 
 	.disabled .np-select-filled {

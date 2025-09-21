@@ -354,7 +354,7 @@
 		<tr>
 			<td><code>variant</code></td>
 			<td><code>'outlined' | 'filled'</code></td>
-			<td><code>'filled'</code></td>
+			<td><code>'outlined'</code></td>
 			<td>Visual appearance</td>
 		</tr>
 		<tr>
