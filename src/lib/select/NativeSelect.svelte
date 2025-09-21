@@ -108,7 +108,6 @@
 <style>
 	.np-select-container {
 		--easing-fast: ease-out 150ms;
-		all: unset;
 		position: relative;
 		font-size: 1rem;
 		display: inline-block;
