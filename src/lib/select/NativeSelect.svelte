@@ -40,8 +40,9 @@
 		errorRaw && 'error',
 		disabled && 'disabled',
 		required && !noAsterisk && 'asterisk',
-		(value === undefined || value === '' || value === null) && 'is-empty',
-		animateLabel && 'label-animate',
+		!value && 'is-empty',
+		animateLabel && 'animate-label',
+		attributes.class,
 	]}
 	aria-disabled={disabled}
 >
@@ -67,8 +68,10 @@
 		<polygon stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
 	</svg>
 	<select
-		onchange={(event) => {
-			animateLabel = true
+		oninput={(event) => {
+			if ((!value && event.currentTarget.value) || (value && !event.currentTarget.value)) {
+				animateLabel = true
+			}
 			onchange?.(event)
 		}}
 		oninvalid={(event) => {
@@ -86,6 +89,7 @@
 		aria-invalid={error}
 		bind:value
 		{...attributes}
+		class="np-select"
 	>
 		{@render children?.()}
 	</select>
@@ -103,11 +107,10 @@
 		position: relative;
 		font-size: 1rem;
 		display: inline-block;
-		min-width: 200px;
 		color: var(--np-color-on-surface-variant);
 	}
 
-	select {
+	.np-select {
 		all: unset;
 		&,
 		&::picker(select) {
@@ -294,7 +297,7 @@
 		transform: translateY(0.5rem);
 	}
 
-	.label-animate label {
+	.animate-label label {
 		transition-property: font-size;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 150ms;
@@ -304,7 +307,7 @@
 		color: var(--np-color-primary);
 	}
 
-	.label-animate:not(.is-empty) .np-select-outline label {
+	.animate-label:not(.is-empty) .np-select-outline label {
 		animation: slideUpOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
@@ -317,7 +320,7 @@
 		}
 	}
 
-	.label-animate:not(.is-empty) .np-select-filled label {
+	.animate-label:not(.is-empty) .np-select-filled label {
 		animation: slideUpFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
@@ -337,7 +340,7 @@
 		position: absolute;
 	}
 
-	.is-empty.label-animate .np-select-outline label {
+	.is-empty.animate-label .np-select-outline label {
 		animation: slideDownOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
@@ -355,7 +358,7 @@
 		transform: translateY(1.25rem);
 	}
 
-	.is-empty.label-animate .np-select-filled label {
+	.is-empty.animate-label .np-select-filled label {
 		animation: slideDownFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
