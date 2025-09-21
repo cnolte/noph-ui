@@ -204,6 +204,9 @@
 	.arrow {
 		padding-inline: 0.375rem;
 		padding-block: 0.5625rem;
+		box-sizing: border-box;
+		width: 24px;
+		height: 24px;
 		fill: currentColor;
 		position: absolute;
 		pointer-events: none;
