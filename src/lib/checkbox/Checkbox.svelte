@@ -86,7 +86,7 @@
 		opacity: 0;
 		inset: 0;
 		top: -4px;
-		left: -4px;
+		inset-inline-start: -4px;
 		position: absolute;
 		outline: none;
 		cursor: inherit;

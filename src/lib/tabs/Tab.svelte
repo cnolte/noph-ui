@@ -163,13 +163,13 @@
 		min-width: 1.5rem;
 	}
 	.np-tab-label-badge {
-		margin-right: 4px;
+		margin-inline-end: 4px;
 	}
 	.np-tab-icon-badge {
 		height: 1.5rem;
 		width: 1.5rem;
 		position: relative;
-		--np-badge-left: 1.125rem;
+		--np-badge-start: 1.125rem;
 	}
 
 	.np-tab-no-inline {
@@ -184,22 +184,20 @@
 	.np-indicator {
 		position: absolute;
 		bottom: 0;
-		left: var(--_indicator-gap, 2px);
-		right: var(--_indicator-gap, 2px);
+		inset-inline: var(--_indicator-gap, 2px);
 		height: 3px;
 	}
 
 	.fallback .np-indicator {
 		background-color: var(--np-color-primary);
-		border-top-left-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-		border-top-right-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+		border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+		border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 	}
 
 	.focus-area {
 		position: absolute;
 		top: 0;
-		left: 0;
-		right: 0;
+		inset-inline: 0;
 		bottom: var(--_focus-bottom, 0);
 		border-radius: var(--np-shape-corner-medium);
 		transition: height 0.3s ease;

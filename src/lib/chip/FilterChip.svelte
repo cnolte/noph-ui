@@ -131,8 +131,7 @@
 		fill: currentColor;
 		gap: 0.5rem;
 		z-index: 1;
-		padding-left: 1rem;
-		padding-right: 1rem;
+		padding-inline: 1rem;
 		overflow: hidden;
 	}
 	.np-chip-icon-checked {
@@ -154,13 +153,13 @@
 	}
 	.np-filter-chip:has(input:checked) .np-filter-chip-label,
 	.np-filter-chip-icon .np-filter-chip-label {
-		padding-left: 0.5rem;
+		padding-inline-start: 0.5rem;
 	}
 	.np-filter-chip-removable {
-		padding-right: 1px;
+		padding-inline-end: 1px;
 	}
 	.np-filter-chip-removable .np-filter-chip-label {
-		padding-right: 1px;
+		padding-inline-end: 1px;
 	}
 	.np-chip-label {
 		line-height: 1.25rem;

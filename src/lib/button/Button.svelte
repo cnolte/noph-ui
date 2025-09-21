@@ -119,7 +119,7 @@
 		--np-circular-progress-color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 		position: absolute;
 		top: 50%;
-		left: 50%;
+		inset-inline-start: 50%;
 		transform: translate(-50%, -50%);
 	}
 	.np-loading .button-icon,
@@ -137,7 +137,7 @@
 		display: inline-flex;
 		user-select: none;
 		align-items: center;
-		text-align: left;
+		text-align: start;
 		overflow: hidden;
 		font-weight: 500;
 		text-decoration: none;

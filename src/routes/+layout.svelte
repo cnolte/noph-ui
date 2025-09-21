@@ -60,7 +60,12 @@
 	backdrop
 	modal
 >
-	<IconButton style="margin-left: 1rem" popovertarget="mobile-drawer" variant="text" title="Close">
+	<IconButton
+		style="margin-inline-start: 1rem"
+		popovertarget="mobile-drawer"
+		variant="text"
+		title="Close"
+	>
 		<Icon>menu_open</Icon>
 	</IconButton>
 	<MainNavigation
@@ -80,7 +85,7 @@
 <style>
 	.logo-label {
 		font-weight: 600;
-		margin-left: 0.25rem;
+		margin-inline-start: 0.25rem;
 		font-size: 1.25rem;
 		line-height: 1.75rem;
 	}
@@ -92,8 +97,8 @@
 		align-items: center;
 		border-radius: var(--np-shape-corner-large);
 		gap: 0.5rem;
-		padding-right: 1rem;
-		margin-left: 1rem;
+		padding-inline-end: 1rem;
+		margin-inline-start: 1rem;
 		color: var(--np-color-primary);
 	}
 
@@ -117,8 +122,7 @@
 	}
 	.main-content {
 		max-width: min(100%, 980px);
-		margin-left: auto;
-		margin-right: auto;
+		margin-inline: auto;
 	}
 	.main {
 		margin-top: 4.5rem;
@@ -133,8 +137,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
+		padding-inline: 0.5rem;
 	}
 	.bottom-bar {
 		display: none;
@@ -159,8 +162,7 @@
 	header {
 		background: var(--np-color-surface-container);
 		position: fixed;
-		left: 0px;
-		right: 0;
+		inset-inline: 0;
 		top: 0;
 		z-index: 10;
 		display: grid;
@@ -172,20 +174,20 @@
 			line-height: 2rem;
 		}
 		.inner-header {
-			padding-right: 1rem;
+			padding-inline-end: 1rem;
 		}
 		.main {
-			margin-left: 16rem;
+			margin-inline-start: 16rem;
 			padding: 0 3rem 4rem 3rem;
 		}
 		.paper {
 			width: calc(100% - 18rem);
-			margin-left: 17rem;
+			margin-inline-start: 17rem;
 			height: calc(100dvh - 5.5rem);
 		}
 		.bottom-bar {
 			display: block;
-			margin-left: 16rem;
+			margin-inline-start: 16rem;
 			width: calc(100% - 16rem);
 		}
 		:global(.main-nav) {

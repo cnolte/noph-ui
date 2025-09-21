@@ -137,7 +137,7 @@
 
 <label
 	style={(variant === 'outlined'
-		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-left:-2.25rem;--_focus-outline-width:3px;'
+		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-inline-start:-2.25rem;--_focus-outline-width:3px;'
 		: !label?.length
 			? '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline);--top-space:1rem;--bottom-space:1rem; '
 			: '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline); ' +
@@ -306,6 +306,9 @@
 	}
 	.error .active-indicator::after {
 		border-bottom-color: var(--np-color-error);
+	}
+	.error:hover .active-indicator::after {
+		border-bottom-color: var(--np-color-on-error-container);
 	}
 	.disabled .active-indicator::before {
 		border-bottom-color: var(--np-color-on-surface);
@@ -548,17 +551,20 @@
 	}
 	.start {
 		color: var(--np-color-on-surface-variant);
-		margin-left: 0.75rem;
-		margin-right: 1rem;
+		margin-inline-start: 0.75rem;
+		margin-inline-end: 1rem;
 	}
 	.end {
 		color: var(--np-color-on-surface-variant);
-		margin-left: 1rem;
-		margin-right: 0.75rem;
+		margin-inline-start: 1rem;
+		margin-inline-end: 0.75rem;
 	}
-	.error .start,
 	.error .end {
 		color: var(--np-color-error);
+	}
+
+	.error:hover .end {
+		color: var(--np-color-on-error-container);
 	}
 	.disabled .start,
 	.disabled .end {
@@ -604,14 +610,14 @@
 		margin-inline-start: 1rem;
 	}
 	.with-start .np-outline .label-wrapper {
-		left: 3.25rem;
+		inset-inline-start: 3.25rem;
 	}
 	.with-end .np-outline .label-wrapper {
 		margin-inline-end: 3.25rem;
 	}
 	.with-start.populated .with-start:has(input:focus-visible) .label-wrapper,
 	.with-start:has(textarea:focus-visible) .label-wrapper {
-		right: -2.25rem;
+		inset-inline-end: -2.25rem;
 	}
 
 	.with-end.populated .with-end:has(input:focus-visible) .label-wrapper,
@@ -637,7 +643,7 @@
 	.field:not(.populated) .label {
 		position: absolute;
 		top: 1rem;
-		left: 0rem;
+		inset-inline-start: 0rem;
 	}
 	.field.populated .label,
 	.field:has(input:focus-visible) .label,
@@ -651,7 +657,7 @@
 	.with-start.populated .label,
 	.with-start:has(input:focus-visible) .label,
 	.with-start:has(textarea:focus-visible) .label {
-		left: var(--floating-label-left, 0);
+		inset-inline-start: var(--floating-label-inline-start, 0);
 	}
 	.label {
 		transition-property: all;
@@ -677,6 +683,12 @@
 	.error:has(textarea:focus-visible) .label {
 		color: var(--np-color-error);
 	}
+	.error:hover .label,
+	.error:has(input:focus-visible):hover .label,
+	.error:has(textarea:focus-visible):hover .label {
+		color: var(--np-color-on-error-container);
+	}
+
 	.disabled .label {
 		color: var(--np-color-on-surface);
 	}
@@ -826,11 +838,24 @@
 		border-color: var(--np-outlined-text-field-focus-outline-color, var(--np-color-primary));
 		color: var(--np-color-primary);
 	}
+
+	.field:hover .np-outline {
+		border-color: var(--np-color-on-surface);
+		color: var(--np-color-on-surface);
+	}
+
 	.error .np-outline,
 	.error:has(input:focus-visible) .np-outline,
 	.error:has(textarea:focus-visible) .np-outline {
 		border-color: var(--np-color-error);
 	}
+
+	.error:hover .np-outline,
+	.error:has(input:focus-visible):hover .np-outline,
+	.error:has(textarea:focus-visible):hover .np-outline {
+		border-color: var(--np-color-on-error-container);
+	}
+
 	.disabled .np-outline {
 		border-color: var(--np-color-on-surface);
 		color: var(--np-color-on-surface);

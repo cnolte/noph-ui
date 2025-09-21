@@ -104,8 +104,8 @@
 		opacity: 0;
 		display: flex;
 		align-items: center;
-		padding-left: 1rem;
-		padding-right: 2rem;
+		padding-inline-start: 1rem;
+		padding-inline-end: 2rem;
 	}
 	.np-input-chip {
 		position: relative;
@@ -115,7 +115,7 @@
 		border-radius: var(--np-input-chip-container-shape, var(--np-shape-corner-small));
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
-		padding-right: 1px;
+		padding-inline-end: 1px;
 		min-width: 0;
 	}
 	.np-input-chip-label input {
@@ -133,7 +133,7 @@
 		fill: currentColor;
 		gap: 0.5rem;
 		z-index: 1;
-		padding-left: 1rem;
+		padding-inline-start: 1rem;
 		overflow: hidden;
 	}
 	.np-chip-icon {
@@ -141,13 +141,13 @@
 		display: flex;
 	}
 	.np-input-chip-icon .np-input-chip-label {
-		padding-left: 0.5rem;
+		padding-inline-start: 0.5rem;
 	}
 	.np-chip-label {
 		line-height: 1.25rem;
 		font-size: 0.875rem;
 		font-weight: 500;
-		padding-right: 1px;
+		padding-inline-end: 1px;
 		white-space: pre;
 		overflow: hidden;
 		text-overflow: ellipsis;

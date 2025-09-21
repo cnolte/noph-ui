@@ -15,8 +15,7 @@
 
 <style>
 	.demo-container {
-		margin-left: auto;
-		margin-right: auto;
+		margin-inline: auto;
 		padding: 1.75rem 0;
 		width: fit-content;
 	}

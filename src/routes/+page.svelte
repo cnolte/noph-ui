@@ -86,8 +86,7 @@
 	.hero {
 		display: grid;
 		border-radius: var(--np-shape-corner-extra-large);
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
+		padding-inline: 1.5rem;
 		padding-top: 4rem;
 		margin-top: 1rem;
 		padding-bottom: 4rem;
@@ -104,8 +103,7 @@
 	@media (min-width: 768px) {
 		.hero {
 			margin-top: 2rem;
-			padding-left: 6rem;
-			padding-right: 6rem;
+			padding-inline: 6rem;
 		}
 	}
 </style>

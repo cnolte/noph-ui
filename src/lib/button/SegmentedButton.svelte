@@ -119,7 +119,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border-right: 1px solid var(--np-color-outline);
+		border-inline-end: 1px solid var(--np-color-outline);
 		position: relative;
 		transition: all 0.15s linear;
 	}
@@ -140,7 +140,7 @@
 	}
 
 	.np-segmented-button:last-child {
-		border-right: none;
+		border-inline-end: none;
 	}
 
 	.np-segmented-button input {

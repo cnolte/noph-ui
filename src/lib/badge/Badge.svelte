@@ -23,8 +23,8 @@
 		border-radius: var(--np-shape-corner-full);
 		position: var(--np-badge-position, absolute);
 		top: var(--np-badge-top, 0);
-		left: var(--np-badge-left, auto);
-		right: var(--np-badge-right, auto);
+		inset-inline-start: var(--np-badge-start, auto);
+		inset-inline-end: var(--np-badge-end, auto);
 	}
 	.np-badge-container-label {
 		height: 1rem;

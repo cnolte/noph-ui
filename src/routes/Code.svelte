@@ -10,7 +10,7 @@
 	<div class="code-container">
 		<IconButton
 			title="Copy Code"
-			style="position:absolute;right:0.4rem;top:0.4rem;"
+			style="position:absolute;inset-inline-end:0.4rem;top:0.4rem;"
 			toggle
 			bind:selected
 			onclick={() => {

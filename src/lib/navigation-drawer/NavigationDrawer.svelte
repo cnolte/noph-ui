@@ -50,8 +50,8 @@
 	}
 	.np-navigation-wrapper {
 		background-color: var(--np-navigation-drawer-background, var(--np-color-surface-container-low));
-		border-top-right-radius: var(--np-shape-corner-large);
-		border-bottom-right-radius: var(--np-shape-corner-large);
+		border-start-end-radius: var(--np-shape-corner-large);
+		border-end-end-radius: var(--np-shape-corner-large);
 		width: var(--np-navigation-drawer-width, 22.5rem);
 		height: var(--np-navigation-drawer-height, 100dvh);
 		overflow-y: auto;

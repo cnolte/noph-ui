@@ -87,8 +87,8 @@
 			right: anchor(right);
 			bottom: anchor(bottom);
 			background-color: var(--np-color-primary);
-			border-top-left-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-			border-top-right-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			position-anchor: --np-tab-indicator;
 			transition: cubic-bezier(0.33, 1, 0.68, 1) 0.3s;
 		}

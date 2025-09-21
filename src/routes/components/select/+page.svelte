@@ -12,8 +12,15 @@
 <h1>Select</h1>
 <h2>Usage</h2>
 
-<!-- <form>
-	<NativeSelect value="" required supportingText="Demo text ob das geht" label="Fruit" name="fruit">
+<form>
+	<NativeSelect
+		error
+		value=""
+		required
+		supportingText="Demo text ob das geht"
+		label="Fruit"
+		name="fruit"
+	>
 		<Option value=""></Option>
 		<Option value="apple">Apple</Option>
 		<Option value="apricot">Apricot</Option>
@@ -40,7 +47,7 @@
 		<Option value="grape">Grape</Option>
 	</NativeSelect>
 	<Button type="submit">Send</Button>
-</form> -->
+</form>
 
 <DemoContainer>
 	<Select

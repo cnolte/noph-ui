@@ -72,7 +72,7 @@
 	.np-navigation-drawer-item::before {
 		content: '';
 		position: absolute;
-		left: 0;
+		inset-inline-start: 0;
 		width: 100%;
 		height: 100%;
 		opacity: 0;
@@ -128,7 +128,7 @@
 		line-height: 1.25rem;
 		font-weight: var(--np-navigation-drawer-item-font-weight, 500);
 		flex: 1;
-		text-align: left;
+		text-align: start;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		text-wrap: nowrap;

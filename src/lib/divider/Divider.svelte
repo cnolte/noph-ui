@@ -10,12 +10,11 @@
 <style>
 	.inset {
 		width: calc(100% - 1rem);
-		margin-left: 1rem;
+		margin-inline-start: 1rem;
 	}
 	.inset-middle {
 		width: calc(100% - 2rem);
-		margin-left: 1rem;
-		margin-right: 1rem;
+		margin-inline: 1rem;
 	}
 	.full {
 		width: 100%;
