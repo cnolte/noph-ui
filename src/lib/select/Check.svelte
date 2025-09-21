@@ -23,13 +23,14 @@
 		border-end-end-radius: var(--np-checkbox-container-shape, 2px);
 		border-end-start-radius: var(--np-checkbox-container-shape, 2px);
 		display: inline-flex;
-		height: 18px;
+		height: 24px;
 		position: relative;
 		vertical-align: top;
-		width: 18px;
+		width: 24px;
 		padding: 3px;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		cursor: pointer;
+		box-sizing: border-box;
 	}
 	.np-container {
 		border-radius: inherit;
