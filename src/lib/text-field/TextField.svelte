@@ -674,6 +674,11 @@
 		line-height: 1.5rem;
 		width: min-content;
 	}
+
+	.field:hover .label {
+		color: var(--np-color-on-surface);
+	}
+
 	.field:has(input:focus-visible) .label,
 	.field:has(textarea:focus-visible) .label {
 		color: var(--_label-text-color, var(--np-color-primary));
