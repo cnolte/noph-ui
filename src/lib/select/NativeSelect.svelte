@@ -92,6 +92,9 @@
 		{required}
 		id={selectId}
 		aria-invalid={error}
+		aria-describedby={supportingText || (errorTextRaw && errorRaw)
+			? `supporting-text-${uid}`
+			: undefined}
 		bind:value
 		{...attributes}
 		class="np-select"
@@ -99,7 +102,7 @@
 		{@render children?.()}
 	</select>
 	{#if supportingText || (errorTextRaw && errorRaw)}
-		<div class="supporting-text" role={errorRaw ? 'alert' : undefined}>
+		<div id="supporting-text-{uid}" class="supporting-text" role={errorRaw ? 'alert' : undefined}>
 			{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
 		</div>
 	{/if}
