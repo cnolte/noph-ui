@@ -92,7 +92,8 @@
 		{required}
 		id={selectId}
 		aria-invalid={error}
-		aria-describedby={supportingText || (errorTextRaw && errorRaw)
+		aria-errormessage={errorTextRaw && errorRaw ? `supporting-text-${uid}` : undefined}
+		aria-describedby={supportingText && (!errorTextRaw || !errorRaw)
 			? `supporting-text-${uid}`
 			: undefined}
 		bind:value

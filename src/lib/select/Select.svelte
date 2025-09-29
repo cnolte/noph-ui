@@ -878,13 +878,13 @@
 
 	.start {
 		color: var(--np-color-on-surface-variant);
-		margin-left: 0.75rem;
-		margin-right: 1rem;
+		margin-inline-start: 0.75rem;
+		margin-inline-end: 1rem;
 	}
 	.end {
 		color: var(--np-color-on-surface-variant);
-		margin-left: 1rem;
-		margin-right: 0.75rem;
+		margin-inline-start: 1rem;
+		margin-inline-end: 0.75rem;
 	}
 	.error .start,
 	.error .end {
@@ -934,7 +934,7 @@
 		margin-inline-start: 1rem;
 	}
 	.with-start .np-outline .label-wrapper {
-		left: 3.25rem;
+		inset-inline-start: 3.25rem;
 	}
 	.with-end .np-outline .label-wrapper {
 		margin-inline-end: 3.25rem;
@@ -944,7 +944,7 @@
 	.with-start:has(select:focus-visible option:checked:not([value=''])) .label-wrapper,
 	.with-start:has(select option:checked:not([value=''])) .label-wrapper,
 	.with-start:has(select:focus-visible) .label-wrapper {
-		right: -2.25rem;
+		inset-inline-end: -2.25rem;
 	}
 
 	.with-end.menu-open .label-wrapper,
@@ -965,7 +965,7 @@
 	.field:not(.menu-open):not(:focus) .label {
 		position: absolute;
 		top: 1rem;
-		left: 0rem;
+		inset-inline-start: 0rem;
 	}
 
 	.field.menu-open .label,
@@ -984,7 +984,7 @@
 	.with-start:has(select:focus-visible option:checked:not([value=''])) .label,
 	.with-start:has(select option:checked:not([value=''])) .label,
 	.with-start:has(select:focus-visible) .label {
-		left: var(--floating-label-left, 0);
+		inset-inline-start: var(--floating-label-left, 0);
 	}
 	.label {
 		transition-property: all;

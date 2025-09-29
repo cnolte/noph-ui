@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '$lib/icons/Icon.svelte'
-	import { Select, NativeSelect, Option, Button } from '$lib/index.ts'
+	import { Select, Button } from '$lib/index.ts'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>
@@ -12,7 +12,7 @@
 <h1>Select</h1>
 <h2>Usage</h2>
 
-<form>
+<!-- <form>
 	<NativeSelect
 		error
 		value=""
@@ -47,7 +47,7 @@
 		<Option value="grape">Grape</Option>
 	</NativeSelect>
 	<Button type="submit">Send</Button>
-</form>
+</form> -->
 
 <DemoContainer>
 	<Select

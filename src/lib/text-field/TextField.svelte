@@ -206,10 +206,12 @@
 					<div class="content">
 						{#if attributes.type === 'textarea'}
 							<textarea
-								aria-describedby={supportingText || (errorTextRaw && errorRaw)
+								aria-errormessage={errorTextRaw && errorRaw ? `supporting-text-${uid}` : undefined}
+								aria-describedby={supportingText && (!errorTextRaw || !errorRaw)
 									? `supporting-text-${uid}`
 									: undefined}
 								{...attributes}
+								aria-invalid={errorRaw}
 								oninput={onInputEvent}
 								oninvalid={onInvalidEvent}
 								onfocus={onFocusEvent}
@@ -227,18 +229,21 @@
 									</span>
 								{/if}
 								<input
-									aria-describedby={supportingText || (errorTextRaw && errorRaw)
+									aria-errormessage={errorTextRaw && errorRaw
+										? `supporting-text-${uid}`
+										: undefined}
+									aria-describedby={supportingText && (!errorTextRaw || !errorRaw)
 										? `supporting-text-${uid}`
 										: undefined}
 									{...attributes}
 									bind:value
 									bind:this={inputElement}
+									aria-invalid={errorRaw}
 									oninput={onInputEvent}
 									oninvalid={onInvalidEvent}
 									onfocus={onFocusEvent}
 									onblur={onBlurEvent}
 									class="input"
-									aria-invalid={errorRaw}
 								/>
 								{@render children?.()}
 								{#if prefixText}
