@@ -98,7 +98,7 @@
 	})
 </script>
 
-<!-- <svelte:window bind:innerHeight onresize={refreshValues} /> -->
+<svelte:window bind:innerHeight onresize={refreshValues} />
 <div
 	role="menu"
 	{...attributes}
