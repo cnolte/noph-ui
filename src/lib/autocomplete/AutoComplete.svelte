@@ -14,10 +14,10 @@
 		clampMenuWidth = false,
 		children,
 		optionsFilter,
-		onoptionselect = (option: AutoCompleteOption) => {
+		onoptionselect = (option, menuElement) => {
 			value = option.label
 			finalPopulated = populated
-			menuElement?.hidePopover()
+			menuElement.hidePopover()
 		},
 		onkeydown,
 		onclick,
@@ -65,7 +65,9 @@
 	}
 
 	const selectOption = (option: AutoCompleteOption) => {
-		onoptionselect(option)
+		if (menuElement) {
+			onoptionselect(option, menuElement)
+		}
 	}
 
 	$effect(() => {

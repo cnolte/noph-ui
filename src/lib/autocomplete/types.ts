@@ -8,7 +8,7 @@ export interface AutoCompleteOption {
 export interface AutoCompleteProps extends Omit<InputFieldProps, 'clientWidth' | 'clientHeight'> {
 	options: AutoCompleteOption[]
 	optionsFilter?: (option: AutoCompleteOption) => boolean
-	onoptionselect?: (option: AutoCompleteOption) => void
+	onoptionselect?: (option: AutoCompleteOption, menuElement: HTMLDivElement) => void
 	clampMenuWidth?: boolean
 	showPopover?: () => void
 	hidePopover?: () => void

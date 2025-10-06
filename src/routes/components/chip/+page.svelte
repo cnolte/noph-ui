@@ -24,7 +24,6 @@
 		},
 	])
 
-	let reportEmailValidity: (() => boolean) | undefined = $state()
 	let emails: string[] = $state(['info@noph.dev'])
 	let email = $state('')
 </script>
