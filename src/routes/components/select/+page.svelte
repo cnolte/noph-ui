@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Icon from '$lib/icons/Icon.svelte'
 	import { Select, Button } from '$lib/index.ts'
+	import NativeSelect from '$lib/select/NativeSelect.svelte'
+	import Option from '$lib/select/Option.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>
@@ -12,14 +14,13 @@
 <h1>Select</h1>
 <h2>Usage</h2>
 
-<!-- <form>
+<!-- <form {...demo} oninput={() => demo.validate()} novalidate>
 	<NativeSelect
-		error
-		value=""
 		required
 		supportingText="Demo text ob das geht"
 		label="Fruit"
-		name="fruit"
+		{...demo.fields.fruitOutlined.as('select')}
+		issues={demo.fields.fruitOutlined.issues()}
 	>
 		<Option value=""></Option>
 		<Option value="apple">Apple</Option>
@@ -31,12 +32,35 @@
 		<Option value="grape">Grape</Option>
 	</NativeSelect>
 	<NativeSelect
-		value="apple"
 		variant="filled"
 		supportingText="Demo text ob das geht"
 		label="Fruit"
-		name="fruit"
+		{...demo.fields.fruitFilled.as('select')}
+		issues={demo.fields.fruitFilled.issues()}
 	>
+		<Option value=""></Option>
+		<Option value="apple">Apple</Option>
+		<Option value="apricot">Apricot</Option>
+		<Option value="banana">Banana</Option>
+		<Option value="cherry">Cherry</Option>
+		<Option value="elderberry" disabled>Elderberry</Option>
+		<Option value="fig">Fig</Option>
+		<Option value="grape">Grape</Option>
+	</NativeSelect>
+	<Button type="submit">Send</Button>
+</form>
+<form>
+	<NativeSelect required supportingText="Demo text ob das geht" label="Fruit" name="fruit">
+		<Option value=""></Option>
+		<Option value="apple">Apple</Option>
+		<Option value="apricot">Apricot</Option>
+		<Option value="banana">Banana</Option>
+		<Option value="cherry">Cherry</Option>
+		<Option value="elderberry" disabled>Elderberry</Option>
+		<Option value="fig">Fig</Option>
+		<Option value="grape">Grape</Option>
+	</NativeSelect>
+	<NativeSelect supportingText="Demo text ob das geht" label="Fruit" name="fruit">
 		<Option value=""></Option>
 		<Option value="apple">Apple</Option>
 		<Option value="apricot">Apricot</Option>
