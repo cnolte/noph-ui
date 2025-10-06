@@ -5,11 +5,6 @@
 	import TextField from '$lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	const reportValidity = (event: Event) => {
-		const textField = event.target as HTMLInputElement
-		textField.reportValidity()
-	}
 </script>
 
 <svelte:head>
@@ -110,7 +105,7 @@
 			</IconButton>
 		{/snippet}
 	</TextField>
-	<TextField label="Username" error errorText="Username not available">
+	<TextField label="Username" aria-invalid issues={[{ message: 'Username not available' }]}>
 		{#snippet end()}
 			<Icon>error</Icon>
 		{/snippet}
@@ -130,7 +125,7 @@
 		</IconButton>
 	{/snippet}
 </TextField>
-<TextField label="Username" error>
+<TextField label="Username" aria-invalid issues={[{ message: 'Username not available' }]}>
 	{#snippet end()}
 		<Icon>error</Icon>
 	{/snippet}
@@ -194,14 +189,8 @@
 <DemoContainer>
 	<form>
 		<div style="display:flex;gap:1rem;flex-wrap: wrap;align-items: baseline;">
-			<TextField label="First name" required onchange={reportValidity} />
-			<TextField
-				label="Last name"
-				required
-				pattern="[a-zA-Z]+"
-				supportingText="Characters only"
-				onchange={reportValidity}
-			/>
+			<TextField label="First name" required />
+			<TextField label="Last name" required pattern="[a-zA-Z]+" supportingText="Characters only" />
 		</div>
 		<div class="button-footer">
 			<Button variant="filled">Submit</Button>
@@ -209,21 +198,14 @@
 	</form>
 </DemoContainer>
 <Code
-	value={`<script>
-	const reportValidity = (event: Event) => {
-		const textField = event.target as HTMLInputElement
-		textField.reportValidity()
-	}
-</` +
-		`script>
+	value={`
 <form>
-	<TextField label="First name" required onchange={reportValidity} />
+	<TextField label="First name" required />
 	<TextField
 		label="Last name"
 		required
 		pattern="[a-zA-Z]+"
 		supportingText="Characters only"
-		onchange={reportValidity}
 	/>
 	<Button>Submit</Button>
 </form>`}
@@ -232,10 +214,20 @@
 <h4>Manual validation</h4>
 
 <DemoContainer>
-	<TextField label="Username" error value="eric20" errorText="Username is not available" />
+	<TextField
+		label="Username"
+		aria-invalid
+		issues={[{ message: 'Username not available' }]}
+		value="eric20"
+	/>
 </DemoContainer>
 <Code
-	value="<TextField label=&quot;Username&quot; error value=&quot;eric20&quot; errorText=&quot;Username is not available&quot; />"
+	value={`<TextField
+	label="Username"
+	aria-invalid
+	issues={[{ message: 'Username not available' }]}
+	value="eric20"
+/>`}
 />
 
 <h2>Theming</h2>
@@ -394,19 +386,10 @@
 			<td>Disables the asterisk on the floating label when the text field is required.</td>
 		</tr>
 		<tr>
-			<td><code>error</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td>Gets or sets whether or not the text field is in a visually invalid state.</td>
-		</tr>
-		<tr>
-			<td><code>errorText</code></td>
-			<td><code>string</code></td>
-			<td><code>''</code></td>
-			<td
-				>The error message that replaces supporting text when <code>error</code> is true. If
-				<code>errorText</code> is an empty string, then the supporting text will continue to show.</td
-			>
+			<td><code>issues</code></td>
+			<td><code>&#123; message: string &#125;[]</code></td>
+			<td><code>undefined</code></td>
+			<td>Optimized to use with remote form field issues.</td>
 		</tr>
 		<tr>
 			<td><code>prefixText</code></td>

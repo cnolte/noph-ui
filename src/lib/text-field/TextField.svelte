@@ -1,12 +1,9 @@
 <script lang="ts">
-	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
-	import type { FocusEventHandler, EventHandler } from 'svelte/elements'
 	import type { TextFieldProps } from './types.ts'
 
 	let {
 		value = $bindable(),
-		error = false,
-		errorText = '',
+		issues,
 		prefixText = '',
 		suffixText = '',
 		supportingText = '',
@@ -19,13 +16,8 @@
 		element = $bindable(),
 		populated = false,
 		inputElement = $bindable(),
-		reportValidity = $bindable(),
-		checkValidity = $bindable(),
+		placeholder = ' ',
 		children,
-		oninput,
-		oninvalid,
-		onfocus,
-		onblur,
 		focused = $bindable(false),
 		clientWidth = $bindable(),
 		clientHeight = $bindable(),
@@ -33,106 +25,7 @@
 	}: TextFieldProps = $props()
 
 	const uid = $props.id()
-
-	let errorRaw: boolean = $state(error)
-	let errorTextRaw: string = $state(errorText)
-	let focusOnInvalid = $state(true)
-	let doValidity = $state(false)
-
-	reportValidity = () => {
-		if (inputElement) {
-			const valid = inputElement.reportValidity()
-			if (valid) {
-				errorRaw = error
-				errorTextRaw = errorText
-			}
-			return valid
-		}
-		return false
-	}
-
-	checkValidity = () => {
-		if (inputElement) {
-			return inputElement.checkValidity()
-		}
-		return false
-	}
-
-	$effect(() => {
-		errorRaw = error
-		errorTextRaw = errorText
-		inputElement?.setCustomValidity(error ? errorText : '')
-	})
-
-	const onReset = () => {
-		errorRaw = error
-	}
-
-	const onInputEvent = (
-		event: Event & {
-			currentTarget: (EventTarget & HTMLInputElement) | HTMLTextAreaElement
-		},
-	) => {
-		doValidity = true
-		;(oninput as EventHandler)?.(event)
-	}
-
-	const onInvalidEvent = (
-		event: Event & {
-			currentTarget: HTMLInputElement | HTMLTextAreaElement
-		},
-	) => {
-		event.preventDefault()
-		const { currentTarget } = event
-		errorRaw = true
-		if (errorText === '') {
-			errorTextRaw = currentTarget.validationMessage
-		}
-		if (focusOnInvalid && isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-			currentTarget.focus()
-		}
-		;(oninvalid as EventHandler)?.(event)
-	}
-
-	const onFocusEvent = (
-		event: FocusEvent & {
-			currentTarget: EventTarget & (HTMLInputElement | HTMLTextAreaElement)
-		},
-	) => {
-		focused = true
-		;(onfocus as FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>)?.(event)
-	}
-
-	const onBlurEvent = (
-		event: FocusEvent & {
-			currentTarget: EventTarget & (HTMLInputElement | HTMLTextAreaElement)
-		},
-	) => {
-		focused = false
-		if (doValidity) {
-			focusOnInvalid = false
-			if (checkValidity()) {
-				errorRaw = error
-				errorTextRaw = errorText
-			} else {
-				focusOnInvalid = true
-			}
-		} else {
-			focusOnInvalid = true
-		}
-		;(onblur as FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>)?.(event)
-	}
-
-	$effect(() => {
-		if (inputElement) {
-			inputElement.form?.addEventListener('reset', onReset)
-		}
-		return () => {
-			if (inputElement) {
-				inputElement.form?.removeEventListener('reset', onReset)
-			}
-		}
-	})
+	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))
 </script>
 
 <label
@@ -149,14 +42,12 @@
 >
 	<div
 		class="field"
-		class:error={errorRaw}
 		class:resizable={attributes.type === 'textarea'}
 		class:no-label={!label?.length}
 		class:with-start={start}
 		class:with-end={end}
 		class:disabled={attributes.disabled}
-		class:populated={(value !== '' && value !== undefined && value !== null) || populated}
-		class:focused
+		class:populated
 		class:outlined={variant === 'outlined'}
 	>
 		<div class="container-overflow">
@@ -206,16 +97,13 @@
 					<div class="content">
 						{#if attributes.type === 'textarea'}
 							<textarea
-								aria-errormessage={errorTextRaw && errorRaw ? `supporting-text-${uid}` : undefined}
-								aria-describedby={supportingText && (!errorTextRaw || !errorRaw)
+								aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
+								aria-describedby={supportingText && !errorText
 									? `supporting-text-${uid}`
 									: undefined}
 								{...attributes}
-								aria-invalid={errorRaw}
-								oninput={onInputEvent}
-								oninvalid={onInvalidEvent}
-								onfocus={onFocusEvent}
-								onblur={onBlurEvent}
+								{placeholder}
+								bind:focused
 								bind:value
 								bind:this={inputElement}
 								class="input"
@@ -229,20 +117,14 @@
 									</span>
 								{/if}
 								<input
-									aria-errormessage={errorTextRaw && errorRaw
-										? `supporting-text-${uid}`
-										: undefined}
-									aria-describedby={supportingText && (!errorTextRaw || !errorRaw)
+									aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
+									aria-describedby={supportingText && !errorText
 										? `supporting-text-${uid}`
 										: undefined}
 									{...attributes}
+									{placeholder}
 									bind:value
 									bind:this={inputElement}
-									aria-invalid={errorRaw}
-									oninput={onInputEvent}
-									oninvalid={onInvalidEvent}
-									onfocus={onFocusEvent}
-									onblur={onBlurEvent}
 									class="input"
 								/>
 								{@render children?.()}
@@ -262,10 +144,10 @@
 				{/if}
 			</div>
 		</div>
-		{#if supportingText || (errorTextRaw && errorRaw) || attributes.maxlength}
-			<div class="supporting-text" role={errorRaw ? 'alert' : undefined}>
+		{#if supportingText || errorText || attributes.maxlength}
+			<div class="supporting-text" role={errorText ? 'alert' : undefined}>
 				<span id="supporting-text-{uid}">
-					{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
+					{errorText ?? supportingText}
 				</span>
 				{#if attributes.maxlength}
 					<span>{value?.length || 0}/{attributes.maxlength}</span>
@@ -306,13 +188,16 @@
 		);
 		border-bottom-width: 3px;
 	}
-	.error .active-indicator::before {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .active-indicator::before,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .active-indicator::before {
 		border-bottom-color: var(--np-color-error);
 	}
-	.error .active-indicator::after {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .active-indicator::after,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .active-indicator::after {
 		border-bottom-color: var(--np-color-error);
 	}
-	.error:hover .active-indicator::after {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .active-indicator::after,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .active-indicator::after {
 		border-bottom-color: var(--np-color-on-error-container);
 	}
 	.disabled .active-indicator::before {
@@ -412,7 +297,8 @@
 		justify-content: space-between;
 		padding: 0.25rem 1rem 0;
 	}
-	.error .supporting-text {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .supporting-text,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .supporting-text {
 		color: var(--np-color-error);
 	}
 	.disabled .supporting-text {
@@ -494,7 +380,10 @@
 	.no-label .content,
 	.field:has(input:focus-visible) .content,
 	.field:has(textarea:focus-visible) .content,
-	.field.populated .content {
+	.field:has(input:-webkit-autofill) .content,
+	.field.populated .content,
+	.field:has(input:not(:placeholder-shown)) .content,
+	.field:has(textarea:not(:placeholder-shown)) .content {
 		opacity: 1;
 	}
 
@@ -564,11 +453,13 @@
 		margin-inline-start: 1rem;
 		margin-inline-end: 0.75rem;
 	}
-	.error .end {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .end,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .end {
 		color: var(--np-color-error);
 	}
 
-	.error:hover .end {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .end,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .end {
 		color: var(--np-color-on-error-container);
 	}
 	.disabled .start,
@@ -620,11 +511,21 @@
 	.with-end .np-outline .label-wrapper {
 		margin-inline-end: 3.25rem;
 	}
+	.with-start:has(input:-webkit-autofill) .with-start:has(input:focus-visible) .label-wrapper,
+	.with-start:has(input:not(:placeholder-shown))
+		.with-start:has(input:focus-visible)
+		.label-wrapper,
+	.with-start:has(textarea:not(:placeholder-shown))
+		.with-start:has(input:focus-visible)
+		.label-wrapper,
 	.with-start.populated .with-start:has(input:focus-visible) .label-wrapper,
 	.with-start:has(textarea:focus-visible) .label-wrapper {
 		inset-inline-end: -2.25rem;
 	}
 
+	.with-end:has(input:-webkit-autofill) .with-end:has(input:focus-visible) .label-wrapper,
+	.with-end:has(input:not(:placeholder-shown)) .with-end:has(input:focus-visible) .label-wrapper,
+	.with-end:has(textarea:not(:placeholder-shown)) .with-end:has(input:focus-visible) .label-wrapper,
 	.with-end.populated .with-end:has(input:focus-visible) .label-wrapper,
 	.with-end:has(textarea:focus-visible) .label-wrapper {
 		margin-inline-end: 1rem;
@@ -650,7 +551,10 @@
 		top: 1rem;
 		inset-inline-start: 0rem;
 	}
+	.field:has(input:-webkit-autofill) .label,
 	.field.populated .label,
+	.field:has(input:not(:placeholder-shown)) .label,
+	.field:has(textarea:not(:placeholder-shown)) .label,
 	.field:has(input:focus-visible) .label,
 	.field:has(textarea:focus-visible) .label {
 		font-size: 0.75rem;
@@ -659,7 +563,10 @@
 		position: absolute;
 		top: var(--floating-label-top, 0.5rem);
 	}
+	.with-start:has(input:-webkit-autofill) .label,
 	.with-start.populated .label,
+	.with-start:has(input:not(:placeholder-shown)) .label,
+	.with-start:has(textarea:not(:placeholder-shown)) .label,
 	.with-start:has(input:focus-visible) .label,
 	.with-start:has(textarea:focus-visible) .label {
 		inset-inline-start: var(--floating-label-inline-start, 0);
@@ -688,14 +595,16 @@
 	.field:has(textarea:focus-visible) .label {
 		color: var(--_label-text-color, var(--np-color-primary));
 	}
-	.error .label,
-	.error:has(input:focus-visible) .label,
-	.error:has(textarea:focus-visible) .label {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .label,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .label,
+	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible) .label,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible) .label {
 		color: var(--np-color-error);
 	}
-	.error:hover .label,
-	.error:has(input:focus-visible):hover .label,
-	.error:has(textarea:focus-visible):hover .label {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .label,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .label,
+	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .label,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .label {
 		color: var(--np-color-on-error-container);
 	}
 
@@ -710,6 +619,9 @@
 		overflow: hidden;
 	}
 	.disabled.no-label .content,
+	.disabled:has(input:-webkit-autofill) .content,
+	.disabled:has(input:not(:placeholder-shown)) .content,
+	.disabled:has(textarea:not(:placeholder-shown)) .content,
 	.disabled.populated .content {
 		opacity: 0.38;
 	}
@@ -786,6 +698,9 @@
 	}
 	.field:has(input:focus-visible) .outline-notch::before,
 	.field:has(textarea:focus-visible) .outline-notch::before,
+	.field:has(input:-webkit-autofill) .outline-notch::before,
+	.field:has(input:not(:placeholder-shown)) .outline-notch::before,
+	.field:has(textarea:not(:placeholder-shown)) .outline-notch::before,
 	.field.populated .outline-notch::before {
 		border-top-style: none;
 	}
@@ -854,9 +769,10 @@
 		color: var(--np-color-on-surface);
 	}
 
-	.error .np-outline,
-	.error:has(input:focus-visible) .np-outline,
-	.error:has(textarea:focus-visible) .np-outline {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .np-outline,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .np-outline,
+	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible) .np-outline,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible) .np-outline {
 		border-color: var(--np-color-error);
 	}
 
@@ -874,10 +790,5 @@
 	.disabled .outline-end,
 	.disabled .outline-notch {
 		opacity: 0.12;
-	}
-
-	input:-webkit-autofill {
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: var(--np-color-on-surface);
 	}
 </style>

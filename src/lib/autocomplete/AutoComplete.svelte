@@ -11,8 +11,6 @@
 		variant = 'outlined',
 		element = $bindable(),
 		populated,
-		reportValidity = $bindable(),
-		checkValidity = $bindable(),
 		clampMenuWidth = false,
 		children,
 		optionsFilter,
@@ -195,8 +193,6 @@
 		}
 		onkeydown?.(event)
 	}}
-	bind:reportValidity
-	bind:checkValidity
 	bind:element
 	>{@render children?.()}
 </TextField>

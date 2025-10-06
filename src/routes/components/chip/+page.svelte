@@ -115,19 +115,18 @@
 		placeholder="Add email..."
 		style="width:340px"
 		bind:value={email}
-		bind:reportValidity={reportEmailValidity}
 		populated={emails.length > 0}
 		onkeydown={(e) => {
 			if (e.key === 'Enter') {
 				e.preventDefault()
-				if (e.currentTarget.value && reportEmailValidity?.()) {
+				if (e.currentTarget.value && e.currentTarget.reportValidity()) {
 					emails.push(e.currentTarget.value)
 					email = ''
 				}
 			}
 		}}
 		onblur={(e) => {
-			if (e.currentTarget.value && reportEmailValidity?.()) {
+			if (e.currentTarget.value && e.currentTarget.reportValidity()) {
 				emails.push(e.currentTarget.value)
 				email = ''
 			}

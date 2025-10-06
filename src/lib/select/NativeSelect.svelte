@@ -4,16 +4,18 @@
 		label?: string
 		noAsterisk?: boolean
 		supportingText?: string
-		error?: boolean
-		errorText?: string
+		issues?:
+			| {
+					message: string
+			  }[]
+			| undefined
 		variant?: 'outlined' | 'filled'
 		element?: HTMLSpanElement
 	}
 	let {
 		id,
 		supportingText,
-		error,
-		errorText,
+		issues,
 		variant = 'outlined',
 		value = $bindable(),
 		label,
@@ -21,30 +23,26 @@
 		required,
 		noAsterisk,
 		children,
-		onchange,
-		oninvalid,
+		oninput,
 		...attributes
 	}: SelectProps = $props()
 	const uid = $props.id()
 	const selectId = id ?? `select-${uid}`
 
 	let animateLabel = $state(false)
-	let errorTextRaw = $derived(errorText)
-	let errorRaw = $derived(error)
+	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))
 </script>
 
 <div
 	class={[
 		'np-select-container',
 		variant,
-		errorRaw && 'error',
 		disabled && 'disabled',
 		required && !noAsterisk && 'asterisk',
 		(value === null || value === undefined || value === '') && 'is-empty',
 		animateLabel && 'animate-label',
 		attributes.class,
 	]}
-	aria-disabled={disabled}
 >
 	{#if variant === 'outlined'}
 		<div class="np-select-outline">
@@ -77,34 +75,22 @@
 			) {
 				animateLabel = true
 			}
-			onchange?.(event)
-		}}
-		oninvalid={(event) => {
-			event.preventDefault()
-			const { currentTarget } = event
-			errorRaw = true
-			if (errorText === undefined) {
-				errorTextRaw = currentTarget.validationMessage
-			}
-			oninvalid?.(event)
+			oninput?.(event)
 		}}
 		{disabled}
 		{required}
 		id={selectId}
-		aria-invalid={error}
-		aria-errormessage={errorTextRaw && errorRaw ? `supporting-text-${uid}` : undefined}
-		aria-describedby={supportingText && (!errorTextRaw || !errorRaw)
-			? `supporting-text-${uid}`
-			: undefined}
+		aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
+		aria-describedby={supportingText && !errorText ? `supporting-text-${uid}` : undefined}
 		bind:value
 		{...attributes}
 		class="np-select"
 	>
 		{@render children?.()}
 	</select>
-	{#if supportingText || (errorTextRaw && errorRaw)}
-		<div id="supporting-text-{uid}" class="supporting-text" role={errorRaw ? 'alert' : undefined}>
-			{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
+	{#if supportingText || errorText}
+		<div id="supporting-text-{uid}" class="supporting-text" role={errorText ? 'alert' : undefined}>
+			{errorText ?? supportingText}
 		</div>
 	{/if}
 </div>
@@ -392,27 +378,31 @@
 		padding: 0.25rem 1rem 0;
 	}
 
-	.error .supporting-text,
-	.error label,
-	.error .arrow,
-	.error:focus-within label {
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .supporting-text,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) label,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .arrow,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):focus-within label {
 		color: var(--np-color-error);
 	}
 
-	.error:hover label,
-	.error:hover .arrow {
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover label,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover .arrow {
 		color: var(--np-color-on-error-container);
 	}
 
-	.error .np-select-outline,
-	.error:focus-within .np-select-outline,
-	.error .np-select-filled,
-	.error:focus-within .np-select-filled {
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .np-select-outline,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):focus-within
+		.np-select-outline,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .np-select-filled,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):focus-within
+		.np-select-filled {
 		border-color: var(--np-color-error);
 	}
 
-	.error:hover .np-select-outline,
-	.error:hover .np-select-filled {
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover
+		.np-select-outline,
+	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover
+		.np-select-filled {
 		border-color: var(--np-color-on-error-container);
 	}
 

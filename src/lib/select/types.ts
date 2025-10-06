@@ -11,8 +11,9 @@ export interface SelectOption {
 export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autocomplete'> {
 	label?: string
 	supportingText?: string
-	error?: boolean
-	errorText?: string
+	issues?: {
+		message: string
+	}[]
 	variant?: 'outlined' | 'filled'
 	start?: Snippet
 	end?: Snippet
@@ -20,7 +21,5 @@ export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autoco
 	element?: HTMLSpanElement
 	options: SelectOption[]
 	clampMenuWidth?: boolean
-	reportValidity?: () => boolean
-	checkValidity?: () => boolean
 	virtualThreshold?: number
 }

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Menu from '$lib/menu/Menu.svelte'
-	import { isFirstInvalidControlInForm } from '$lib/text-field/report-validity.js'
 	import type { SelectOption, SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
 	import { tick } from 'svelte'
@@ -10,8 +9,7 @@
 	let {
 		options = [],
 		value = $bindable(),
-		error = false,
-		errorText = '',
+		issues,
 		supportingText = '',
 		tabindex = 0,
 		start,
@@ -29,8 +27,6 @@
 		autofocus,
 		onchange,
 		oninput,
-		reportValidity = $bindable(),
-		checkValidity = $bindable(),
 		multiple,
 		virtualThreshold = 300,
 		clampMenuWidth = false,
@@ -38,7 +34,6 @@
 	}: SelectProps = $props()
 
 	const uid = $props.id()
-	let doValidity = $state(false)
 	if (value === undefined) {
 		if (multiple) {
 			value = options.filter((option) => option.selected).map((option) => option.value)
@@ -59,8 +54,7 @@
 
 	let widthProp = $derived(clampMenuWidth || useVirtualList ? 'width' : 'min-width')
 
-	let errorTextRaw: string = $state(errorText)
-	let errorRaw = $state(error)
+	let errorText = $derived(issues?.map((i) => i.message).join(', '))
 	let selectElement = $state<HTMLSelectElement>()
 	let menuElement = $state<HTMLDivElement>()
 	let anchorElement = $state<HTMLDivElement>()
@@ -94,44 +88,6 @@
 		return options.find((option) => option.value === value)?.label || ''
 	})
 
-	reportValidity = () => {
-		if (selectElement) {
-			const valid = selectElement.reportValidity()
-			if (valid) {
-				errorRaw = error
-				errorTextRaw = errorText
-			}
-			return valid
-		}
-		return false
-	}
-
-	checkValidity = () => {
-		if (selectElement) {
-			return selectElement.checkValidity()
-		}
-		return false
-	}
-
-	$effect(() => {
-		errorRaw = error
-		errorTextRaw = errorText
-		selectElement?.setCustomValidity(error ? errorText : '')
-	})
-	const onReset = () => {
-		errorRaw = error
-	}
-	$effect(() => {
-		if (selectElement) {
-			selectElement.form?.addEventListener('reset', onReset)
-		}
-		return () => {
-			if (selectElement) {
-				selectElement.form?.removeEventListener('reset', onReset)
-			}
-		}
-	})
-
 	let cachedRowHeight = 0
 	const ensureRowHeight = () => {
 		if (!cachedRowHeight && menuElement) {
@@ -158,14 +114,6 @@
 		else if (bottom > scrollTop + clientHeight) viewport.scrollTop = bottom - clientHeight
 	}
 
-	const finalizeSelection = async () => {
-		await tick()
-		if (doValidity && checkValidity()) {
-			errorRaw = error
-			errorTextRaw = errorText
-		}
-		selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
-	}
 	const toggleValue = (option: SelectOption) => {
 		if (multiple) {
 			let arr = Array.isArray(value) ? [...value] : []
@@ -185,7 +133,8 @@
 		toggleValue(option)
 		if (!multiple) menuElement?.hidePopover()
 		event.preventDefault()
-		await finalizeSelection()
+		await tick()
+		selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
 	}
 
 	const openMenuAndFocus = async (index: number) => {
@@ -262,23 +211,6 @@
 			performTypeahead('')
 		}
 	}
-
-	const handleInvalid = (
-		event: Event & {
-			currentTarget: EventTarget & HTMLSelectElement
-		},
-	) => {
-		event.preventDefault()
-		const { currentTarget } = event
-		errorRaw = true
-		doValidity = true
-		if (errorText === '') {
-			errorTextRaw = currentTarget.validationMessage
-		}
-		if (isFirstInvalidControlInForm(currentTarget.form, currentTarget)) {
-			field?.focus()
-		}
-	}
 </script>
 
 {#snippet arrows()}
@@ -301,7 +233,6 @@
 	<div
 		{id}
 		class="field"
-		class:error={errorRaw}
 		class:no-label={!label?.length}
 		class:with-start={start}
 		class:menu-open={menuOpen}
@@ -416,7 +347,7 @@
 						{#if multiple}
 							<select
 								tabindex="-1"
-								aria-invalid={errorRaw}
+								aria-invalid={attributes['aria-invalid']}
 								{disabled}
 								{required}
 								{name}
@@ -424,7 +355,6 @@
 								multiple
 								{onchange}
 								{oninput}
-								oninvalid={handleInvalid}
 								bind:value
 								bind:this={selectElement}
 							>
@@ -437,13 +367,13 @@
 						{:else}
 							<select
 								tabindex="-1"
+								aria-invalid={attributes['aria-invalid']}
 								{disabled}
 								{required}
 								{name}
 								{form}
 								{onchange}
 								{oninput}
-								oninvalid={handleInvalid}
 								bind:value
 								bind:this={selectElement}
 							>
@@ -470,10 +400,10 @@
 				</div>
 			</div>
 		</div>
-		{#if supportingText || (errorTextRaw && errorRaw)}
-			<div class="supporting-text" role={errorRaw ? 'alert' : undefined}>
+		{#if supportingText || errorText}
+			<div class="supporting-text" role={errorText ? 'alert' : undefined}>
 				<span>
-					{errorRaw && errorTextRaw ? errorTextRaw : supportingText}
+					{errorText ?? supportingText}
 				</span>
 			</div>
 		{/if}
@@ -651,10 +581,10 @@
 		border-bottom-color: var(--np-color-primary);
 		border-bottom-width: 3px;
 	}
-	.error .active-indicator::before {
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .active-indicator::before {
 		border-bottom-color: var(--np-color-error);
 	}
-	.error .active-indicator::after {
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .active-indicator::after {
 		border-bottom-color: var(--np-color-error);
 	}
 	.disabled .active-indicator::before {
@@ -752,7 +682,7 @@
 		justify-content: space-between;
 		padding: 0.25rem 1rem 0;
 	}
-	.error .supporting-text {
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .supporting-text {
 		color: var(--np-color-error);
 	}
 	.disabled .supporting-text {
@@ -840,8 +770,8 @@
 		opacity: 1;
 	}
 
-	.field:not(.error).menu-open .down,
-	.field:not(.error):focus .down {
+	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))).menu-open .down,
+	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))):focus .down {
 		color: var(--np-color-primary);
 	}
 	.icon .down {
@@ -886,8 +816,8 @@
 		margin-inline-start: 1rem;
 		margin-inline-end: 0.75rem;
 	}
-	.error .start,
-	.error .end {
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .start,
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .end {
 		color: var(--np-color-error);
 	}
 	.disabled .start,
@@ -1006,9 +936,9 @@
 	.field:focus .label {
 		color: var(--np-color-primary);
 	}
-	.error .label,
-	.error.menu-open .label,
-	.error:focus .label {
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .label,
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])).menu-open .label,
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])):focus .label {
 		color: var(--np-color-error);
 	}
 	.disabled .label {
@@ -1162,9 +1092,9 @@
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
 	}
-	.error .np-outline,
-	.error.menu-open .np-outline,
-	.error:focus .np-outline {
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .np-outline,
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])).menu-open .np-outline,
+	.field:has(select:is(:user-invalid, [aria-invalid='true'])):focus .np-outline {
 		border-color: var(--np-color-error);
 	}
 	.disabled .np-outline {

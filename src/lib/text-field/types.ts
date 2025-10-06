@@ -4,8 +4,9 @@ import type { HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/element
 interface FieldProps {
 	label?: string
 	supportingText?: string
-	error?: boolean
-	errorText?: string
+	issues?: {
+		message: string
+	}[]
 	prefixText?: string
 	suffixText?: string
 	variant?: 'outlined' | 'filled'
@@ -15,8 +16,6 @@ interface FieldProps {
 	element?: HTMLSpanElement
 	inputElement?: HTMLInputElement | HTMLTextAreaElement
 	populated?: boolean
-	reportValidity?: () => boolean
-	checkValidity?: () => boolean
 	clientWidth?: number
 	clientHeight?: number
 	focused?: boolean
