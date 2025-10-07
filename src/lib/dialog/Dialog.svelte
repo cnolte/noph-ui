@@ -16,6 +16,8 @@
 		...attributes
 	}: DialogProps = $props()
 
+	const uid = $props.id()
+
 	showPopover = () => {
 		element?.showPopover()
 	}
@@ -38,15 +40,27 @@
 			hidePopover()
 		}}
 	></div>
-	<div class="np-dialog" role="dialog">
+	<div
+		class="np-dialog"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="{uid}-dialog-headline"
+		aria-describedby="{uid}-dialog-supporting-text"
+	>
 		{#if icon}
 			<div class="np-dialog-icon">
 				{@render icon()}
 			</div>
 		{/if}
-		<h1 class="np-dialog-headline" style={icon ? 'text-align: center' : ''}>{headline}</h1>
+		<h1
+			id="{uid}-dialog-headline"
+			class="np-dialog-headline"
+			style={icon ? 'text-align: center' : ''}
+		>
+			{headline}
+		</h1>
 		{#if supportingText}
-			<p class="np-dialog-supporting-text">{supportingText}</p>
+			<p id="{uid}-dialog-supporting-text" class="np-dialog-supporting-text">{supportingText}</p>
 		{/if}
 		{#if divider}
 			<Divider style="margin-top: 1rem" --np-divider-color="var(--np-color-outline)" />
@@ -69,7 +83,6 @@
 		background: transparent;
 		border: none;
 		margin: auto;
-		padding: 9px 14px 20px 14px;
 		padding: 2rem 1rem;
 	}
 	.np-dialog {
