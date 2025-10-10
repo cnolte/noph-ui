@@ -12,7 +12,6 @@
 		element = $bindable(),
 		populated,
 		clampMenuWidth = false,
-		children,
 		optionsFilter,
 		onoptionselect = (option, menuElement) => {
 			value = option.label
@@ -196,8 +195,7 @@
 		onkeydown?.(event)
 	}}
 	bind:element
-	>{@render children?.()}
-</TextField>
+/>
 <Menu
 	id="listbox-{uid}"
 	style="position-anchor:--{uid};{widthProp}:{clientWidth}px"

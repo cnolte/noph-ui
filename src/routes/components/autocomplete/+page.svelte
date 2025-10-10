@@ -27,10 +27,16 @@
 <h1>Auto complete</h1>
 
 <DemoContainer>
-	<AutoComplete label="Fruits" name="fruit" options={[{ label: 'Apple' }, { label: 'Banana' }]} />
+	<AutoComplete
+		variant="filled"
+		label="Fruits"
+		name="fruit"
+		options={[{ label: 'Apple' }, { label: 'Banana' }]}
+	/>
 </DemoContainer>
 <Code
 	value={`<AutoComplete
+	variant="filled"
 	label="Fruits"
 	name="fruit"
 	options={[{ label: 'Apple' }, { label: 'Banana' }]}
