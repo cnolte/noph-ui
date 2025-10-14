@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { getContext, onMount } from 'svelte'
-	import type { TabProps, TabsContext } from './types.ts'
+	import { onMount } from 'svelte'
+	import type { TabProps } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
-	import { getTabsContext } from './index.ts'
+	import { getTabsContext } from './context.ts'
 
 	let {
 		children,
