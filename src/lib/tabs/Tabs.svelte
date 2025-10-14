@@ -2,6 +2,7 @@
 	import Divider from '$lib/divider/Divider.svelte'
 	import { setContext } from 'svelte'
 	import type { TabsContext, TabsProps } from './types.ts'
+	import { setTabsContext } from './index.ts'
 
 	let {
 		children,
@@ -25,7 +26,7 @@
 		tabsContext.value = value
 		tabsContext.variant = variant
 	})
-	setContext('np-tabs', tabsContext)
+	setTabsContext(tabsContext)
 
 	const handleKeydown = (
 		event: KeyboardEvent & {

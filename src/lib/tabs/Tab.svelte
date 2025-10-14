@@ -3,6 +3,7 @@
 	import { getContext, onMount } from 'svelte'
 	import type { TabProps, TabsContext } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
+	import { getTabsContext } from './index.ts'
 
 	let {
 		children,
@@ -18,7 +19,7 @@
 		...attributes
 	}: TabProps = $props()
 
-	const tabsContext = getContext<TabsContext>('np-tabs')
+	const tabsContext = getTabsContext()
 	let fallbackIndicator = $state(false)
 
 	const handleClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
