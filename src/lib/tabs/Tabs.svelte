@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Divider from '$lib/divider/Divider.svelte'
 	import type { TabsContext, TabsProps } from './types.ts'
-	import { setTabsContext } from './index.ts'
+	import { setTabsContext } from './context.js'
 
 	let {
 		children,
