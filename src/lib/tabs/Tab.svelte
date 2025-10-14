@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte'
 	import type { TabProps } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
-	import { getTabsContext } from './context.ts'
+	import { getTabsContext } from './index.ts'
 
 	let {
 		children,
