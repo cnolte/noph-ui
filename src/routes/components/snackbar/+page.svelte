@@ -170,7 +170,7 @@
 		<tr>
 			<td><code>timeout</code></td>
 			<td><code>number</code></td>
-			<td><code>3000</code></td>
+			<td><code>4000</code></td>
 			<td
 				>Time in milliseconds before the snackbar closes. If set to <code>&lt;= 0</code>, the
 				snackbar will stay open until another action triggers it.

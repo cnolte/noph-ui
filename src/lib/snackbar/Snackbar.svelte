@@ -15,7 +15,7 @@
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
 		onbeforetoggle,
-		timeout = 3000,
+		timeout = 4000,
 		element = $bindable(),
 		popover = 'auto',
 		...attributes
