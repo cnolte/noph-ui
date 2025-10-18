@@ -14,6 +14,7 @@
 		},
 		showPopover = $bindable(),
 		hidePopover = $bindable(),
+		open = $bindable(false),
 		onbeforetoggle,
 		timeout = 4000,
 		element = $bindable(),
@@ -42,10 +43,10 @@
 	aria-labelledby="np-snackbar-label-{uid}"
 	onbeforetoggle={(event) => {
 		let { newState } = event
-		if (newState === 'closed') {
+		open = newState === 'open'
+		if (!open) {
 			clearTimeout(timeoutId)
-		}
-		if (newState === 'open' && timeout > 0) {
+		} else if (timeout > 0) {
 			timeoutId = setTimeout(() => {
 				element?.hidePopover()
 			}, timeout)

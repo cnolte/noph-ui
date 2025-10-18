@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'svelte/elements'
 
 export interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
 	label: string
+	open?: boolean
 	supportingText?: string | undefined
 	actionLabel?: string | undefined
 	onActionClick?: (event: Event) => void
