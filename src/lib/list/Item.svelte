@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Ripple from '$lib/ripple/Ripple.svelte'
+	import { onMount } from 'svelte'
 	import type { FocusEventHandler } from 'svelte/elements'
 	import type { ItemProps } from './types.ts'
-	import { onMount } from 'svelte'
 
 	let {
 		selected = false,
@@ -14,14 +14,18 @@
 		onfocus,
 		onblur,
 		softFocus = false,
+		lazy = false,
 		...attributes
 	}: ItemProps = $props()
 
 	let focused = $derived(softFocus)
-	let visible = $state(false)
+	let visible = $state(!lazy)
 	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
 	let observer: IntersectionObserver | undefined
 	onMount(() => {
+		if (!lazy) {
+			return
+		}
 		observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
@@ -34,7 +38,7 @@
 		return () => observer?.disconnect()
 	})
 	$effect(() => {
-		if (element) {
+		if (element && lazy) {
 			observer?.observe(element)
 		}
 	})

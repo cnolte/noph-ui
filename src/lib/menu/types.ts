@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes, HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 	children: Snippet
@@ -15,6 +15,7 @@ interface ButtonProps extends HTMLButtonAttributes {
 	start?: Snippet
 	end?: Snippet
 	supportingText?: Snippet
+	lazy?: boolean
 }
 interface AnchorProps extends HTMLAnchorAttributes {
 	selected?: boolean
@@ -22,5 +23,6 @@ interface AnchorProps extends HTMLAnchorAttributes {
 	end?: Snippet
 	disabled?: boolean
 	supportingText?: Snippet
+	lazy?: boolean
 }
 export type MenuItemProps = ButtonProps | AnchorProps

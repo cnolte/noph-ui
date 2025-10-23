@@ -8,6 +8,7 @@ interface ButtonProps extends HTMLButtonAttributes {
 	variant: 'button'
 	supportingText?: Snippet
 	softFocus?: boolean
+	lazy?: boolean
 }
 
 interface AnchorProps extends HTMLAnchorAttributes {
@@ -18,6 +19,7 @@ interface AnchorProps extends HTMLAnchorAttributes {
 	variant: 'link'
 	supportingText?: Snippet
 	softFocus?: boolean
+	lazy?: boolean
 }
 interface TextProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
@@ -27,6 +29,7 @@ interface TextProps extends HTMLAttributes<HTMLDivElement> {
 	variant?: 'text'
 	supportingText?: Snippet
 	softFocus?: boolean
+	lazy?: boolean
 }
 
 export type ItemProps = ButtonProps | AnchorProps | TextProps
