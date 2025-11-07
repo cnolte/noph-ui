@@ -8,6 +8,7 @@
 		...attributes
 	}: RippleProps = $props()
 	let pressed = $state(false)
+	let hovered = $state(false)
 
 	const PRESS_GROW_MS = 450
 	const MINIMUM_PRESS_MS = 225
@@ -150,10 +151,9 @@
 			return
 		}
 
-		// TODO This is buggy in async svelte
-		// await new Promise((resolve) => {
-		// 	setTimeout(resolve, MINIMUM_PRESS_MS - pressAnimationPlayState)
-		// })
+		await new Promise((resolve) => {
+			setTimeout(resolve, MINIMUM_PRESS_MS - pressAnimationPlayState)
+		})
 
 		if (growAnimation !== animation) {
 			return
@@ -166,11 +166,20 @@
 		return x >= left && x <= right && y >= top && y <= bottom
 	}
 
+	const handlePointerenter = (event: PointerEvent) => {
+		if (!shouldReactToEvent(event)) {
+			return
+		}
+
+		hovered = true
+	}
+
 	const handlePointerleave = (event: PointerEvent) => {
 		if (!shouldReactToEvent(event)) {
 			return
 		}
 
+		hovered = false
 		if (step !== 'INACTIVE') {
 			endPressAnimation()
 		}
@@ -254,6 +263,7 @@
 		el.removeEventListener('contextmenu', handleContextmenu)
 		el.removeEventListener('pointercancel', handlePointercancel)
 		el.removeEventListener('pointerdown', handlePointerdown)
+		el.removeEventListener('pointerenter', handlePointerenter)
 		el.removeEventListener('pointerleave', handlePointerleave)
 		el.removeEventListener('pointerup', handlePointerup)
 	}
@@ -265,6 +275,7 @@
 		el.addEventListener('contextmenu', handleContextmenu)
 		el.addEventListener('pointercancel', handlePointercancel)
 		el.addEventListener('pointerdown', handlePointerdown)
+		el.addEventListener('pointerenter', handlePointerenter)
 		el.addEventListener('pointerleave', handlePointerleave)
 		el.addEventListener('pointerup', handlePointerup)
 	}
@@ -294,7 +305,7 @@
 	{...attributes}
 	class={[
 		pressed && 'np-ripple-pressed',
-		forceHover && 'np-ripple-hovered',
+		(hovered || forceHover) && 'np-ripple-hovered',
 		'np-ripple-surface',
 		attributes.class,
 	]}
