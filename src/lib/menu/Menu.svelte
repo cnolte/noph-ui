@@ -140,14 +140,14 @@
 		padding: 0;
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
-	}
-
-	.np-menu-container[popover]:popover-open {
-		opacity: 1;
-		animation: fadeIn 0.2s linear;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
+	}
+
+	.np-menu-container:popover-open {
+		opacity: 1;
+		animation: fadeIn 0.2s linear;
 	}
 	@keyframes fadeIn {
 		0% {

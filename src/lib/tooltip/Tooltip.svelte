@@ -123,13 +123,13 @@
 		border-radius: 0.25rem;
 		line-height: 1rem;
 		font-size: 0.75rem;
+		justify-self: var(--np-tooltip-justify-self, anchor-center);
+		position-area: var(--np-tooltip-position-area, top);
+		position-try: normal flip-block;
 	}
 	.np-tooltip:popover-open {
 		opacity: 1;
 		animation: scaleIn 0.3s ease;
-		justify-self: var(--np-tooltip-justify-self, anchor-center);
-		position-area: var(--np-tooltip-position-area, top);
-		position-try: normal flip-block;
 	}
 
 	@keyframes scaleIn {
