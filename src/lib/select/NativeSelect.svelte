@@ -27,7 +27,7 @@
 		...attributes
 	}: SelectProps = $props()
 	const uid = $props.id()
-	const selectId = id ?? `select-${uid}`
+	const selectId = $derived(id ?? `select-${uid}`)
 
 	let animateLabel = $state(false)
 	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))

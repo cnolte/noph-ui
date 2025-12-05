@@ -19,7 +19,7 @@
 	}: ItemProps = $props()
 
 	let focused = $derived(softFocus)
-	let visible = $state(!lazy)
+	let visible = $derived(!lazy)
 	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
 	let observer: IntersectionObserver | undefined
 	onMount(() => {

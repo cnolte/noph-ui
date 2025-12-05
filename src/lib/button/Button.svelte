@@ -1,9 +1,9 @@
 <script lang="ts">
+	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'
-	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 
 	let {
 		variant = 'outlined',

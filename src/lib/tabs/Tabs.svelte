@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Divider from '$lib/divider/Divider.svelte'
-	import type { TabsContext, TabsProps } from './types.ts'
 	import { setTabsContext } from './context.js'
+	import type { TabsContext, TabsProps } from './types.ts'
 
 	let {
 		children,
@@ -12,6 +12,8 @@
 	}: TabsProps = $props()
 
 	let uid = $props.id()
+
+	// svelte-ignore state_referenced_locally
 	let tabsContext = $state<TabsContext>({
 		value,
 		variant,

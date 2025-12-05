@@ -2,8 +2,8 @@
 	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
-	import type { IconButtonProps } from './types.ts'
 	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
+	import type { IconButtonProps } from './types.ts'
 
 	let {
 		variant = 'text',

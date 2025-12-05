@@ -2,8 +2,8 @@
 	import Item from '$lib/list/Item.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
 	import VirtualList from '$lib/select/VirtualList.svelte'
-	import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 	import TextField from '$lib/text-field/TextField.svelte'
+	import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 
 	let {
 		options = [],
@@ -38,7 +38,7 @@
 	let clientWidth = $state(0)
 	let menuElement = $state<HTMLDivElement>()
 	let menuOpen = $state(false)
-	let finalPopulated = $state(populated)
+	let finalPopulated = $derived(populated)
 	let activeIndex = $state(NO_INDEX)
 
 	const setActive = (index: number) => {

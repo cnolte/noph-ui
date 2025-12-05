@@ -34,7 +34,7 @@
 
 	let top = $state(0)
 	let bottom = $state(0)
-	let average_height: number = $state(itemHeight || 0)
+	let average_height: number = $derived(itemHeight || 0)
 
 	$effect(() => {
 		if (mounted) {

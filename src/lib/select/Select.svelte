@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Menu from '$lib/menu/Menu.svelte'
-	import type { SelectOption, SelectProps } from './types.ts'
 	import Item from '$lib/list/Item.svelte'
-	import { tick } from 'svelte'
+	import Menu from '$lib/menu/Menu.svelte'
 	import Check from '$lib/select/Check.svelte'
 	import VirtualList from '$lib/select/VirtualList.svelte'
+	import { tick } from 'svelte'
+	import type { SelectOption, SelectProps } from './types.ts'
 
 	let {
 		options = [],
@@ -34,13 +34,15 @@
 	}: SelectProps = $props()
 
 	const uid = $props.id()
-	if (value === undefined) {
-		if (multiple) {
-			value = options.filter((option) => option.selected).map((option) => option.value)
-		} else {
-			value = options.find((option) => option.selected)?.value
+	$effect(() => {
+		if (value === undefined) {
+			if (multiple) {
+				value = options.filter((option) => option.selected).map((option) => option.value)
+			} else {
+				value = options.find((option) => option.selected)?.value
+			}
 		}
-	}
+	})
 
 	let valueArray = $derived<unknown[]>(
 		Array.isArray(value) ? value : value === undefined || value === null ? [] : [value],
