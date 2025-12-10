@@ -126,8 +126,6 @@
 		overflow-x: hidden;
 		flex: 1;
 		padding: 0.5rem 0;
-		scrollbar-color: var(--np-color-on-surface-variant) transparent;
-		scrollbar-width: thin;
 	}
 	:global(.np-menu .np-divider) {
 		margin-block: 0.5rem;
@@ -140,6 +138,8 @@
 		padding: 0;
 		box-shadow: var(--np-elevation-2);
 		margin: var(--np-menu-margin, 2px);
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
 		position-try: normal flip-block;
