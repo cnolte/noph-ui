@@ -2,6 +2,7 @@
 	import CircularProgress from '$lib/progress/CircularProgress.svelte'
 	import Ripple from '$lib/ripple/Ripple.svelte'
 	import Tooltip from '$lib/tooltip/Tooltip.svelte'
+	import { onMount } from 'svelte'
 	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
 	import type { IconButtonProps } from './types.ts'
 
@@ -19,12 +20,28 @@
 		width = 'default',
 		size = 's',
 		shape = 'round',
-		onclick,
 		...attributes
 	}: IconButtonProps = $props()
 
 	const uid = $props.id()
 	let touchEl: HTMLSpanElement | undefined = $state()
+
+	let pressed = $state(false)
+	let pressedTimeout: ReturnType<typeof setTimeout>
+
+	const handlePress = () => {
+		if (disabled || loading) return
+		pressed = true
+		pressedTimeout = setTimeout(() => {
+			pressed = false
+		}, 100)
+	}
+
+	onMount(() => {
+		return () => {
+			clearTimeout(pressedTimeout)
+		}
+	})
 </script>
 
 {#snippet content()}
@@ -48,7 +65,10 @@
 	<a
 		{...attributes}
 		onclick={(event) => {
-			;(onclick as MouseEventHandler<HTMLAnchorElement>)?.(event)
+			if (!toggle) {
+				handlePress()
+			}
+			attributes.onclick?.(event)
 		}}
 		aria-describedby={title ? uid : undefined}
 		aria-label={title}
@@ -62,6 +82,7 @@
 			'enabled',
 			toggle && 'toggle',
 			selected && 'selected',
+			pressed && 'pressed',
 			attributes.class,
 		].filter(Boolean)}
 	>
@@ -80,8 +101,11 @@
 		onclick={(event) => {
 			if (toggle) {
 				selected = !selected
+			} else {
+				handlePress()
 			}
-			;(onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
+			// prettier-ignore
+			;(attributes.onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
 		}}
 		class={[
 			'np-icon-button',
@@ -91,6 +115,7 @@
 			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
 			toggle && 'toggle',
 			selected && 'selected',
+			pressed && 'pressed',
 			attributes.class,
 		]}
 	>
@@ -120,7 +145,7 @@
 		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 		transition:
 			background-color 150ms linear,
-			border-radius 150ms ease-in-out;
+			border-radius 100ms linear;
 	}
 
 	:global(.np-icon-button svg) {
@@ -141,7 +166,8 @@
 	.xs.square {
 		border-radius: var(--np-icon-button-shape, 0.75rem);
 	}
-	.xs:active {
+	.xs:active,
+	.xs.pressed {
 		border-radius: 0.5rem;
 	}
 	.xs.narrow {
@@ -168,7 +194,8 @@
 	.s.wide {
 		width: 3.25rem;
 	}
-	.s:active {
+	.s:active,
+	.s.pressed {
 		border-radius: 0.5rem;
 	}
 	.m {
@@ -189,7 +216,8 @@
 	.m.wide {
 		width: 4.5rem;
 	}
-	.m:active {
+	.m:active,
+	.m.pressed {
 		border-radius: 0.75rem;
 	}
 	.l {
@@ -210,7 +238,8 @@
 	.l.wide {
 		width: 8rem;
 	}
-	.l:active {
+	.l:active,
+	.l.pressed {
 		border-radius: 1rem;
 	}
 	.xl {
@@ -231,7 +260,8 @@
 	.xl.wide {
 		width: 11.5rem;
 	}
-	.xl:active {
+	.xl:active,
+	.xl.pressed {
 		border-radius: 1rem;
 	}
 

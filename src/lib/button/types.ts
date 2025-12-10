@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes, HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
 interface ButtonButtonProps extends HTMLButtonAttributes {
 	variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
