@@ -1,7 +1,7 @@
 <script lang="ts">
+	import Ripple from '$lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationRailItemProps } from './types.ts'
-	import Ripple from '$lib/ripple/Ripple.svelte'
 
 	let { selected, icon, label, ...attributes }: NavigationRailItemProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
@@ -107,7 +107,7 @@
 	}
 
 	.np-navigation-action-selected .np-navigation-action-label {
-		font-weight: var(--np-navigation-rail-item-selected-font-weight, 700);
+		font-weight: var(--np-navigation-rail-item-selected-font-weight, 500);
 		color: var(--np-color-secondary);
 	}
 	.np-touch {

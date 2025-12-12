@@ -1,7 +1,7 @@
 <script lang="ts">
+	import Ripple from '$lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationDrawerItemProps } from './types.ts'
-	import Ripple from '$lib/ripple/Ripple.svelte'
 
 	let {
 		selected = false,
@@ -136,7 +136,7 @@
 	}
 
 	.np-navigation-drawer-item-selected .np-navigation-drawer-item-label {
-		font-weight: var(--np-navigation-drawer-item-selected-font-weight, 700);
+		font-weight: var(--np-navigation-drawer-item-selected-font-weight, 500);
 		color: var(--np-color-on-secondary-container);
 	}
 
