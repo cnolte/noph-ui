@@ -1,8 +1,11 @@
 import type { InputFieldProps } from '$lib/types.ts'
+import type { Snippet } from 'svelte'
 
 export interface AutoCompleteOption {
 	value?: string | number
 	label: string
+	start?: Snippet
+	end?: Snippet
 }
 
 export interface AutoCompleteProps extends Omit<InputFieldProps, 'clientWidth' | 'clientHeight'> {
