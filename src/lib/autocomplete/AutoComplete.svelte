@@ -10,6 +10,7 @@
 		value = $bindable(),
 		variant = 'outlined',
 		element = $bindable(),
+		menuOpen = $bindable(false),
 		populated,
 		clampMenuWidth = false,
 		optionsFilter,
@@ -37,7 +38,6 @@
 	let widthProp = $derived(clampMenuWidth || useVirtualList ? 'width' : 'min-width')
 	let clientWidth = $state(0)
 	let menuElement = $state<HTMLDivElement>()
-	let menuOpen = $state(false)
 	let finalPopulated = $derived(populated)
 	let activeIndex = $state(NO_INDEX)
 
