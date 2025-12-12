@@ -120,17 +120,9 @@
 			selectOption(option)
 		}}
 		variant="button"
+		start={option.start}
+		end={option.end}
 		>{option.label}
-		{#snippet start()}
-			{#if option.start}
-				{@render option.start()}
-			{/if}
-		{/snippet}
-		{#snippet end()}
-			{#if option.end}
-				{@render option.end()}
-			{/if}
-		{/snippet}
 	</Item>
 {/snippet}
 
