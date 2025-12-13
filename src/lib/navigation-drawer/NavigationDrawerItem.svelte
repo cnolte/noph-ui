@@ -63,7 +63,7 @@
 		height: 3.5rem;
 		display: inline-flex;
 		position: relative;
-		padding: 0 1.5rem 0 1rem;
+		padding: 0 1rem 0 1rem;
 		border-radius: var(--np-navigation-drawer-item-container-shape, var(--np-shape-corner-full));
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		z-index: 1;
@@ -144,6 +144,7 @@
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 		font-weight: 500;
+		padding-inline-end: 0.5rem;
 		color: var(--np-color-on-surface-variant);
 	}
 </style>

@@ -1,6 +1,6 @@
 {
 	"name": "noph-ui",
-	"version": "0.30.11",
+	"version": "0.30.12",
 	"license": "MIT",
 	"homepage": "https://noph.dev",
 	"repository": {
@@ -68,7 +68,7 @@
 		"svelte": "^5.40.0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.1",
+		"@eslint/js": "^9.39.2",
 		"@material/material-color-utilities": "^0.3.0",
 		"@playwright/test": "^1.57.0",
 		"@sveltejs/adapter-auto": "^7.0.0",
@@ -76,14 +76,14 @@
 		"@sveltejs/package": "^2.5.7",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/eslint": "^9.6.1",
-		"eslint": "^9.39.1",
+		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.13.1",
 		"globals": "^16.5.0",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.0",
 		"publint": "^0.3.16",
-		"svelte": "^5.45.8",
+		"svelte": "^5.46.0",
 		"svelte-check": "^4.3.4",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.49.0",
