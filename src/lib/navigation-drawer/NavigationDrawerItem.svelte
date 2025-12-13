@@ -20,7 +20,9 @@
 		{/if}
 	</div>
 	<div class="np-navigation-drawer-item-label">{label}</div>
-	<div class="np-navigation-drawer-item-badge">{badgeLabelText}</div>
+	{#if badgeLabelText}
+		<div class="np-navigation-drawer-item-badge">{badgeLabelText}</div>
+	{/if}
 {/snippet}
 
 {#if 'href' in attributes}
