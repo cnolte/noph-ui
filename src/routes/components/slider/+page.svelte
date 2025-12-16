@@ -88,7 +88,86 @@
 
 <h2>API</h2>
 <h3>Slider</h3>
+
 <h4>Attributes</h4>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>min</code></td>
+			<td><code>number</code></td>
+			<td>The minimum value allowed for the slider</td>
+		</tr>
+		<tr>
+			<td><code>max</code></td>
+			<td><code>number</code></td>
+			<td>The maximum value allowed for the slider</td>
+		</tr>
+		<tr>
+			<td><code>step</code></td>
+			<td><code>number | 'any'</code></td>
+			<td
+				>Specifies the interval between valid values. The value will snap to multiples of this step
+				(starting from the minimum). If you set a step size you probably also want to show the
+				individual stops by setting<code>stops={true}</code></td
+			>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td>If true, the slider interaction is disabled (defaults to false)</td>
+		</tr>
+		<tr>
+			<td><code>showValue</code></td>
+			<td><code>boolean</code></td>
+			<td>Displays the current value near the slider (defaults to true)</td>
+		</tr>
+		<tr>
+			<td><code>size</code></td>
+			<td><code>SliderSize</code></td>
+			<td
+				>The size of the slider component as defined in the measurement table <a
+					href="https://m3.material.io/components/sliders/specs">here</a
+				></td
+			>
+		</tr>
+		<tr>
+			<td><code>stops</code></td>
+			<td><code>boolean</code></td>
+			<td
+				>Render visual stops (ticks) along the slider track. (only useful in combination with
+				"steps")</td
+			>
+		</tr>
+		<tr>
+			<td><code>endStop</code></td>
+			<td><code>boolean</code></td>
+			<td>Show a stop specifically at the end of the slider</td>
+		</tr>
+		<tr>
+			<td><code>vertical</code></td>
+			<td><code>boolean</code></td>
+			<td>Displayed the slider vertically instead of horizontally</td>
+		</tr>
+		<tr>
+			<td><code>label</code></td>
+			<td><code>string</code></td>
+			<td>An accessible label or text associated with the slider</td>
+		</tr>
+		<tr>
+			<td><code>format</code></td>
+			<td><code>(n: number) =&gt; string</code></td>
+			<td>A function to format the displayed value (e.g. for adding units)</td>
+		</tr>
+	</tbody>
+</table>
+
 <h3>Bindables</h3>
 <table>
 	<thead>
@@ -101,12 +180,12 @@
 	<tbody>
 		<tr>
 			<td><code>value</code></td>
-			<td><code>any</code></td>
-			<td>Value of the input or textarea.</td>
+			<td><code>number</code></td>
+			<td>The current value of the slider</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
-			<td><code>HTMLSpanElement</code></td>
+			<td><code>HTMLDivElement</code></td>
 			<td
 				>A reference to the root DOM element of the component. This variable is bound using <code
 					>bind:this</code
