@@ -125,7 +125,7 @@
 		font: inherit;
 		background-color: transparent;
 		border-width: 0;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		display: flex;
 		align-items: center;
 		justify-content: center;

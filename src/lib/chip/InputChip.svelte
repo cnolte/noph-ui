@@ -91,7 +91,7 @@
 		display: inline-flex;
 		align-items: center;
 		height: 2rem;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		color: var(--np-color-on-surface-variant);
 		fill: currentColor;
 		gap: 0.5rem;

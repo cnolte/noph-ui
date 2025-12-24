@@ -131,7 +131,7 @@
 	.np-icon-button {
 		font: inherit;
 		box-sizing: border-box;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		background-color: transparent;
 		border-width: 0;
 		position: relative;

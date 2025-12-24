@@ -67,7 +67,7 @@
 		position: relative;
 		padding: 0 1rem 0 1rem;
 		border-radius: var(--np-navigation-drawer-item-container-shape, var(--np-shape-corner-full));
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		z-index: 1;
 	}
 

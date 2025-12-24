@@ -28,7 +28,7 @@
 		vertical-align: top;
 		width: 24px;
 		padding: 3px;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		cursor: pointer;
 		box-sizing: border-box;
 	}

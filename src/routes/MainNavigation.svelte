@@ -134,6 +134,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Switch"
+	href="/components/switch"
+	selected={page.url.pathname === '/components/switch'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Text fields"
 	href="/components/text-field"
 	selected={page.url.pathname === '/components/text-field'}

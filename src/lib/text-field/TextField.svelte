@@ -776,9 +776,10 @@
 		border-color: var(--np-color-error);
 	}
 
-	.error:hover .np-outline,
-	.error:has(input:focus-visible):hover .np-outline,
-	.error:has(textarea:focus-visible):hover .np-outline {
+	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .np-outline,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .np-outline,
+	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .np-outline,
+	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .np-outline {
 		border-color: var(--np-color-on-error-container);
 	}
 

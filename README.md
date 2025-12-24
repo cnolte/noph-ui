@@ -66,6 +66,7 @@ Beta (No breaking changes expected)
 - Segmented buttons
 - Select
 - Snackbar
+- Switch
 - Text fields
 - Tabs
 

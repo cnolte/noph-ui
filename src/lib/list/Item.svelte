@@ -162,7 +162,7 @@
 		min-height: 3rem;
 		gap: 0.75rem;
 		text-decoration: none;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		color: var(--np-item-label-text-color, var(--np-color-on-surface));
 		box-sizing: border-box;
 	}

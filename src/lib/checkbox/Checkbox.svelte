@@ -73,7 +73,7 @@
 		vertical-align: top;
 		width: 18px;
 		cursor: pointer;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		margin: var(--np-checkbox-margin, max(0px, (48px - 18px)/2));
 	}
 	.np-container:has(input:disabled) {

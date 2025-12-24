@@ -69,7 +69,7 @@
 		margin: max(0px, (40px - var(--np-radio-icon-size, 20px))/2);
 		display: inline-flex;
 		vertical-align: top;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		border-radius: var(--np-shape-corner-full);
 		place-content: center;
 		place-items: center;

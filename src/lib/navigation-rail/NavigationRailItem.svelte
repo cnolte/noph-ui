@@ -44,7 +44,7 @@
 		flex-direction: column;
 		color: var(--np-color-on-surface);
 		text-decoration: none;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 	}
 	.np-navigation-action:focus-visible {
 		outline-style: solid;

@@ -4,7 +4,14 @@
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
-	import { argbFromHex, Hct, hexFromArgb, SchemeContent } from '@material/material-color-utilities'
+	import {
+		argbFromHex,
+		Hct,
+		hexFromArgb,
+		DynamicScheme,
+		SpecVersion,
+		Variant,
+	} from '@materialx/material-color-utilities'
 	import { onMount } from 'svelte'
 
 	let theme: string | null = $state(null)
@@ -15,8 +22,20 @@
 
 	const getScheme = () => {
 		const hct = Hct.fromInt(argbFromHex(value))
-		const lightContent = new SchemeContent(hct, false, contrastLevel)
-		const darkContent = new SchemeContent(hct, true, contrastLevel)
+		const lightContent = DynamicScheme.from({
+			sourceColorHct: hct,
+			isDark: false,
+			contrastLevel,
+			variant: Variant.CONTENT,
+			specVersion: SpecVersion.SPEC_2025,
+		})
+		const darkContent = DynamicScheme.from({
+			sourceColorHct: hct,
+			isDark: true,
+			contrastLevel,
+			variant: Variant.CONTENT,
+			specVersion: SpecVersion.SPEC_2025,
+		})
 
 		return {
 			background: [lightContent.background, darkContent.background],

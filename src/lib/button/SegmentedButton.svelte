@@ -113,7 +113,7 @@
 		cursor: pointer;
 		font-size: 0.875rem;
 		font-weight: 500;
-		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		-webkit-tap-highlight-color: transparent;
 		white-space: nowrap;
 		user-select: none;
 		display: flex;
