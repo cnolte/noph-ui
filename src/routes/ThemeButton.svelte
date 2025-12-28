@@ -4,6 +4,9 @@
 	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
 	import Icon from '$lib/icons/Icon.svelte'
 	import Menu from '$lib/menu/Menu.svelte'
+	import Radio from '$lib/radio/Radio.svelte'
+	import NativeSelect from '$lib/select/NativeSelect.svelte'
+	import Option from '$lib/select/Option.svelte'
 	import {
 		argbFromHex,
 		Hct,
@@ -19,6 +22,8 @@
 	let menuBtn = $state<HTMLElement>()
 	let contrastLevel = $state(0.0)
 	let selected = $state(false)
+	let specVersion = $state(SpecVersion.SPEC_2025)
+	let variant = $state(Variant.CONTENT)
 
 	const getScheme = () => {
 		const hct = Hct.fromInt(argbFromHex(value))
@@ -26,15 +31,15 @@
 			sourceColorHct: hct,
 			isDark: false,
 			contrastLevel,
-			variant: Variant.CONTENT,
-			specVersion: SpecVersion.SPEC_2025,
+			variant: variant,
+			specVersion: specVersion,
 		})
 		const darkContent = DynamicScheme.from({
 			sourceColorHct: hct,
 			isDark: true,
 			contrastLevel,
-			variant: Variant.CONTENT,
-			specVersion: SpecVersion.SPEC_2025,
+			variant: variant,
+			specVersion: specVersion,
 		})
 
 		return {
@@ -233,6 +238,40 @@
 				</div>
 			</label>
 		</div>
+		<fieldset class="spec-version-radio-group">
+			<legend>Spec Version</legend>
+			<div class="radio-option">
+				<Radio
+					bind:group={specVersion}
+					name="specVersion"
+					value={SpecVersion.SPEC_2021}
+					id="theme-spec-2021"
+					onchange={changeTheme}
+				/>
+				<label for="theme-spec-2021">2021</label>
+			</div>
+			<div class="radio-option">
+				<Radio
+					bind:group={specVersion}
+					name="specVersion"
+					value={SpecVersion.SPEC_2025}
+					id="theme-spec-2025"
+					onchange={changeTheme}
+				/>
+				<label for="theme-spec-2025">2025</label>
+			</div>
+		</fieldset>
+		<NativeSelect style="width:100%" label="Variant" bind:value={variant} onchange={changeTheme}>
+			<Option value={Variant.CONTENT}>Content</Option>
+			<Option value={Variant.EXPRESSIVE} selected>Expressive</Option>
+			<Option value={Variant.FIDELITY} selected>Fidelity</Option>
+			<Option value={Variant.FRUIT_SALAD} selected>Fruit Salad</Option>
+			<Option value={Variant.MONOCHROME} selected>Monochrome</Option>
+			<Option value={Variant.NEUTRAL} selected>Neutral</Option>
+			<Option value={Variant.RAINBOW} selected>Rainbow</Option>
+			<Option value={Variant.TONAL_SPOT} selected>Tonal Spot</Option>
+			<Option value={Variant.VIBRANT} selected>Vibrant</Option>
+		</NativeSelect>
 		<SegmentedButton
 			style="margin-top: 1rem;"
 			name="theme-picker"
@@ -332,5 +371,24 @@
 	.input {
 		min-width: 200%;
 		min-height: 200%;
+	}
+
+	.spec-version-radio-group {
+		border-radius: var(--np-shape-corner-large);
+		border-color: var(--np-color-outline-variant);
+		border-width: 1px;
+		border-style: solid;
+		display: flex;
+		align-items: center;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		gap: 1rem;
+	}
+	.spec-version-radio-group legend {
+		font-size: 0.875rem;
+	}
+	.radio-option {
+		display: flex;
+		align-items: center;
 	}
 </style>

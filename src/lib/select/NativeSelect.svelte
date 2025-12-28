@@ -24,6 +24,7 @@
 		noAsterisk,
 		children,
 		oninput,
+		style,
 		...attributes
 	}: SelectProps = $props()
 	const uid = $props.id()
@@ -43,6 +44,7 @@
 		animateLabel && 'animate-label',
 		attributes.class,
 	]}
+	{style}
 >
 	{#if variant === 'outlined'}
 		<div class="np-select-outline">
