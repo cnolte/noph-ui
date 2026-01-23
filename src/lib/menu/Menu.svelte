@@ -142,7 +142,7 @@
 		scrollbar-width: thin;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom center);
-		position-try: normal flip-block;
+		position-try-fallbacks: flip-block;
 	}
 
 	.np-menu-container:popover-open {
