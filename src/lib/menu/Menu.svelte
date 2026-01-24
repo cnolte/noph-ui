@@ -141,7 +141,7 @@
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 		justify-self: var(--np-menu-justify-self, anchor-center);
-		position-area: var(--np-menu-position-area, bottom center);
+		position-area: var(--np-menu-position-area, bottom);
 		position-try-fallbacks: flip-block;
 	}
 
