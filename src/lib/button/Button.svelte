@@ -45,7 +45,7 @@
 
 {#snippet content()}
 	{#if !disabled && !loading}
-		<Ripple />
+		<Ripple forElement={element} />
 	{/if}
 	{#if loading}
 		<div class="circular-progress">

@@ -24,7 +24,6 @@
 	}: IconButtonProps = $props()
 
 	const uid = $props.id()
-	let touchEl: HTMLSpanElement | undefined = $state()
 
 	let pressed = $state(false)
 	let pressedTimeout: ReturnType<typeof setTimeout>
@@ -46,8 +45,8 @@
 
 {#snippet content()}
 	{#if !disabled && !loading}
-		<Ripple forElement={touchEl} />
-		<span class="np-touch" bind:this={touchEl}></span>
+		<Ripple forElement={element} />
+		<span class="np-touch"></span>
 	{/if}
 	{#if loading}
 		<div class="np-icon-button-circular-progress">
