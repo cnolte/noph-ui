@@ -11,8 +11,6 @@
 		...attributes
 	}: LinearProgressProps = $props()
 
-	let progressStyles = $derived(`transform: scaleX(${(indeterminate ? 1 : value / max) * 100}%)`)
-
 	let bufferValue = $derived(buffer ?? 0)
 	let hasBuffer = $derived(bufferValue > 0)
 
@@ -34,7 +32,10 @@
 	>
 		<div class="dots" hidden={hideDots}></div>
 		<div class="inactive-track" style={dotStyles}></div>
-		<div class="bar primary-bar" style={progressStyles}>
+		<div
+			class="bar primary-bar"
+			style={`transform: scaleX(${(indeterminate ? 1 : value / max) * 100}%)`}
+		>
 			<div class="bar-inner"></div>
 		</div>
 		<div class="bar secondary-bar">

@@ -9,8 +9,6 @@
 		element = $bindable(),
 		...attributes
 	}: CircularProgressProps = $props()
-
-	let dashOffset = $derived((1 - value / max) * 100)
 </script>
 
 <div class="np-container" bind:this={element}>
@@ -34,7 +32,8 @@
 		{:else}
 			<svg viewBox="0 0 4800 4800">
 				<circle class="track" pathLength="100"></circle>
-				<circle class="active-track" pathLength="100" stroke-dashoffset={dashOffset}></circle>
+				<circle class="active-track" pathLength="100" stroke-dashoffset={(1 - value / max) * 100}
+				></circle>
 			</svg>
 		{/if}
 	</div>
