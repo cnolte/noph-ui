@@ -7,7 +7,6 @@
 		indeterminate = false,
 		fourColor = false,
 		buffer = 0,
-		element = $bindable(),
 		...attributes
 	}: LinearProgressProps = $props()
 
@@ -21,7 +20,7 @@
 	let hideDots = $derived(indeterminate || !hasBuffer || bufferValue >= max || value >= max)
 </script>
 
-<div class="np-container" bind:this={element}>
+<div class="np-container">
 	<div
 		{...attributes}
 		class={['progress', indeterminate && 'indeterminate', fourColor && 'four-color']}

@@ -200,28 +200,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Circular progress bindables</h3>
-<table>
-	<thead>
-		<tr>
-			<th>Attribute</th>
-			<th>Type</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>element</code></td>
-			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
-		</tr>
-	</tbody>
-</table>
+
 <h3>Linear progress attributes</h3>
 <table>
 	<thead>
@@ -267,28 +246,6 @@
 			<td
 				>Buffer amount to display, a fraction between 0 and <code>max</code>. If the value is 0 or
 				negative, the buffer is not displayed.</td
-			>
-		</tr>
-	</tbody>
-</table>
-<h3>Linear progress bindables</h3>
-<table>
-	<thead>
-		<tr>
-			<th>Attribute</th>
-			<th>Type</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>element</code></td>
-			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
 			>
 		</tr>
 	</tbody>

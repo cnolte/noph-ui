@@ -6,12 +6,11 @@
 		max = 1,
 		indeterminate = false,
 		fourColor = false,
-		element = $bindable(),
 		...attributes
 	}: CircularProgressProps = $props()
 </script>
 
-<div class="np-container" bind:this={element}>
+<div class="np-container">
 	<div
 		{...attributes}
 		class={['progress', indeterminate && 'indeterminate', fourColor && 'four-color']}

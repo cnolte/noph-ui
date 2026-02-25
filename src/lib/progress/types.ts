@@ -4,7 +4,6 @@ export interface CircularProgressProps {
 	indeterminate?: boolean
 	fourColor?: boolean
 	'aria-label'?: string | undefined | null
-	element?: HTMLDivElement
 }
 
 export interface LinearProgressProps extends CircularProgressProps {
