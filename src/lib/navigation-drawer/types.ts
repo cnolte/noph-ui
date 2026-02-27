@@ -5,6 +5,7 @@ export interface NavigationDrawerProps extends HTMLAttributes<HTMLElement> {
 	modal?: boolean
 	backdrop?: boolean
 	element?: HTMLElement
+	direction?: 'rtl' | 'ltr'
 }
 
 interface NavigationDrawerItemButton extends HTMLButtonAttributes {

@@ -4,6 +4,7 @@
 		modal = false,
 		backdrop = false,
 		element = $bindable(),
+		direction = 'ltr',
 		popover,
 		children,
 		...attributes
@@ -14,6 +15,9 @@
 	{...attributes}
 	bind:this={element}
 	popover={modal ? popover || 'auto' : undefined}
+	style="--np-navigation-drawer-start: {direction === 'ltr'
+		? 'translateX(-100%)'
+		: 'translateX(100%)'}"
 	class={[
 		'np-navigation-drawer-container',
 		modal && 'np-navigation-drawer-container-modal',
@@ -59,7 +63,7 @@
 	}
 
 	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
-		transform: translateX(-100%);
+		transform: var(--np-navigation-drawer-start, translateX(-100%));
 		transition: transform 0.25s ease;
 	}
 
@@ -72,7 +76,7 @@
 	.np-navigation-drawer-container:popover-open .np-navigation-wrapper {
 		transform: translateX(0);
 		@starting-style {
-			transform: translateX(-100%);
+			transform: var(--np-navigation-drawer-start, translateX(-100%));
 		}
 	}
 	.np-navigation-drawer {
