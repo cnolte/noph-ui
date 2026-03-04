@@ -6,6 +6,7 @@ export interface AutoCompleteOption {
 	label: string
 	start?: Snippet
 	end?: Snippet
+	supportingText?: string
 }
 
 export interface AutoCompleteProps extends Omit<InputFieldProps, 'clientWidth' | 'clientHeight'> {

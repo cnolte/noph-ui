@@ -104,6 +104,9 @@
 </script>
 
 {#snippet item(option: AutoCompleteOption, index: number)}
+	{#snippet supportingText()}
+		{option.supportingText}
+	{/snippet}
 	<Item
 		id="{uid}-opt-{index}"
 		softFocus={index === activeIndex}
@@ -122,6 +125,7 @@
 		variant="button"
 		start={option.start}
 		end={option.end}
+		supportingText={option.supportingText ? supportingText : undefined}
 		>{option.label}
 	</Item>
 {/snippet}
