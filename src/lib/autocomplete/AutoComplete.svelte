@@ -230,7 +230,11 @@
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
-		<VirtualList height="250px" itemHeight={48} items={displayOptions}>
+		<VirtualList
+			height="250px"
+			itemHeight={displayOptions.some(({ supportingText }) => supportingText) ? 68 : 48}
+			items={displayOptions}
+		>
 			{#snippet row(option, index)}
 				{@render item(option, index)}
 			{/snippet}
