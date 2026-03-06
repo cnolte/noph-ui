@@ -13,6 +13,7 @@
 		supportingText,
 		actions,
 		divider,
+		class: className,
 		...attributes
 	}: DialogProps = $props()
 
@@ -31,7 +32,7 @@
 	bind:this={element}
 	popover="auto"
 	{...attributes}
-	class={['np-dialog-container', !quick && 'np-animate']}
+	class={['np-dialog-container', !quick && 'np-animate', className]}
 >
 	<div
 		role="none"
@@ -84,11 +85,13 @@
 		border: none;
 		margin: auto;
 		padding: 2rem 1rem;
+		box-sizing: border-box;
+		min-width: 19.5rem;
+		width: 37rem;
+		max-width: 100%;
 	}
 	.np-dialog {
 		border: 0;
-		min-width: 280px;
-		max-width: 560px;
 		background-color: var(--np-color-surface);
 		color: var(--np-color-on-surface);
 		padding: 1.5rem;

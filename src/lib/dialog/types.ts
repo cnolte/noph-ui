@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte'
 import type { HTMLAttributes } from 'svelte/elements'
 
-export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'class' | 'popover'> {
+export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'popover'> {
 	icon?: Snippet
 	headline: string
 	supportingText?: string
