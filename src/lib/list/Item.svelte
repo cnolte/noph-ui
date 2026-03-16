@@ -46,7 +46,7 @@
 
 {#snippet content()}
 	{#if start}
-		<div class="np-item-start {selected ? 'selected ' : ''}">
+		<div class={['np-item-start', selected && 'selected', disabled && 'disabled']}>
 			{@render start()}
 		</div>
 	{/if}
@@ -64,7 +64,7 @@
 	</div>
 
 	{#if end}
-		<div class={['np-item-end', selected && 'selected']}>
+		<div class={['np-item-end', selected && 'selected', disabled && 'disabled']}>
 			{@render end()}
 		</div>
 	{/if}
@@ -135,6 +135,11 @@
 
 	.np-item-end.selected,
 	.np-item-start.selected {
+		color: inherit;
+	}
+
+	.np-item-end.disabled,
+	.np-item-start.disabled {
 		color: inherit;
 	}
 
