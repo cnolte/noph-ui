@@ -115,6 +115,9 @@
 <style>
 	.np-tooltip[popover] {
 		width: max-content;
+		max-width: 12.5rem;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
 		margin: 4px 0;
 		background: var(--np-color-inverse-surface);
 		color: var(--np-color-inverse-on-surface);
