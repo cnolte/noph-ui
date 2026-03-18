@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { on } from 'svelte/events'
 	import type { RippleProps } from './types.ts'
 
 	let {
@@ -258,43 +259,32 @@
 		endPressAnimation()
 	}
 
-	const removeEvents = (el: HTMLElement) => {
-		el.removeEventListener('click', handleClick)
-		el.removeEventListener('contextmenu', handleContextmenu)
-		el.removeEventListener('pointercancel', handlePointercancel)
-		el.removeEventListener('pointerdown', handlePointerdown)
-		el.removeEventListener('pointerenter', handlePointerenter)
-		el.removeEventListener('pointerleave', handlePointerleave)
-		el.removeEventListener('pointerup', handlePointerup)
-	}
-
 	const addEvents = (el: HTMLElement) => {
-		removeEvents(el)
-
-		el.addEventListener('click', handleClick)
-		el.addEventListener('contextmenu', handleContextmenu)
-		el.addEventListener('pointercancel', handlePointercancel)
-		el.addEventListener('pointerdown', handlePointerdown)
-		el.addEventListener('pointerenter', handlePointerenter)
-		el.addEventListener('pointerleave', handlePointerleave)
-		el.addEventListener('pointerup', handlePointerup)
+		const click = on(el, 'click', handleClick)
+		const contextmenu = on(el, 'contextmenu', handleContextmenu)
+		const pointercancel = on(el, 'pointercancel', handlePointercancel)
+		const pointerdown = on(el, 'pointerdown', handlePointerdown)
+		const pointerenter = on(el, 'pointerenter', handlePointerenter)
+		const pointerleave = on(el, 'pointerleave', handlePointerleave)
+		const pointerup = on(el, 'pointerup', handlePointerup)
+		return () => {
+			click()
+			contextmenu()
+			pointercancel()
+			pointerdown()
+			pointerenter()
+			pointerleave()
+			pointerup()
+		}
 	}
 
 	$effect(() => {
 		const forcedColors = window?.matchMedia('(forced-colors: active)')
 		if (!forcedColors.matches && forElement) {
-			addEvents(forElement)
+			return addEvents(forElement)
 		} else {
 			if (!forcedColors.matches && element) {
-				addEvents(element)
-			}
-		}
-		return () => {
-			if (forElement) {
-				removeEvents(forElement)
-			}
-			if (element) {
-				removeEvents(element)
+				return addEvents(element)
 			}
 		}
 	})

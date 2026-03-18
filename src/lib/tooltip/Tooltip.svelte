@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte'
 	import type { TooltipProps } from './types.ts'
 	import { MediaQuery } from 'svelte/reactivity'
+	import { on } from 'svelte/events'
 
 	let {
 		children,
@@ -49,10 +49,16 @@
 				anchor.style.setProperty('anchor-name', generatedId)
 			}
 		}
-		anchor.addEventListener('mouseenter', showPopover)
-		anchor.addEventListener('mouseleave', onLeave)
-		anchor.addEventListener('focus', onAnchorFocus)
-		anchor.addEventListener('blur', hidePopover)
+		const mouseEnter = on(anchor, 'mouseenter', showPopover)
+		const mouseLeave = on(anchor, 'mouseleave', onLeave)
+		const focus = on(anchor, 'focus', onAnchorFocus)
+		const blur = on(anchor, 'blur', hidePopover)
+		return () => {
+			mouseEnter()
+			mouseLeave()
+			focus()
+			blur()
+		}
 	}
 
 	const onAnchorFocus = (e: FocusEvent) => {
@@ -77,17 +83,6 @@
 		// 	hidePopover()
 		// }, 500)
 	}
-
-	onMount(() => {
-		return () => {
-			if (anchor) {
-				anchor.removeEventListener('mouseenter', showPopover)
-				anchor.removeEventListener('mouseleave', onLeave)
-				anchor.removeEventListener('focus', onAnchorFocus)
-				anchor.removeEventListener('blur', hidePopover)
-			}
-		}
-	})
 </script>
 
 <svelte:window bind:innerHeight />

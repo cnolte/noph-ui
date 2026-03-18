@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { onMount } from 'svelte'
 	import type { MenuProps } from './types.ts'
+	import { on } from 'svelte/events'
 
 	let {
 		children,
@@ -79,23 +79,12 @@
 		return window
 	}
 
-	const onScroll = () => {
-		refreshValues()
-	}
-
 	const attachScrollableParent = (el: HTMLDivElement) => {
 		if (!('anchorName' in document.documentElement.style)) {
-			getScrollableParent(el).addEventListener('scroll', onScroll, { passive: true })
+			const parent = getScrollableParent(el)
+			return on(parent, 'scroll', refreshValues, { passive: true })
 		}
 	}
-
-	onMount(() => {
-		return () => {
-			if (element && !('anchorName' in document.documentElement.style)) {
-				getScrollableParent(element).removeEventListener('scroll', onScroll)
-			}
-		}
-	})
 </script>
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
