@@ -13,7 +13,6 @@
 		supportingText,
 		actions,
 		divider,
-		class: className,
 		...attributes
 	}: DialogProps = $props()
 
@@ -32,7 +31,7 @@
 	bind:this={element}
 	popover="auto"
 	{...attributes}
-	class={['np-dialog-container', !quick && 'np-animate', className]}
+	class={['np-dialog-container', !quick && 'np-animate', attributes.class]}
 >
 	<div
 		role="none"
@@ -46,7 +45,7 @@
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="{uid}-dialog-headline"
-		aria-describedby="{uid}-dialog-supporting-text"
+		aria-describedby={supportingText ? '{uid}-dialog-supporting-text' : undefined}
 	>
 		{#if icon}
 			<div class="np-dialog-icon">

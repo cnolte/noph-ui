@@ -25,25 +25,14 @@
 	let chipLabel: HTMLLabelElement | undefined = $state()
 
 	$effect(() => {
-		if (group && value) {
-			selected = group.includes(value)
-		}
-	})
-
-	$effect(() => {
-		if (value && group) {
-			const index = group.indexOf(value)
-			if (selected) {
-				if (index < 0) {
-					group?.push(value)
-					group = group
-				}
-			} else {
-				if (index >= 0) {
-					group.splice(index, 1)
-					group = group
-				}
-			}
+		if (!group || !value) return
+		const included = group.includes(value)
+		if (selected && !included) {
+			group = [...group, value]
+		} else if (!selected && included) {
+			group = group.filter((v) => v !== value)
+		} else if (included !== selected) {
+			selected = included
 		}
 	})
 </script>

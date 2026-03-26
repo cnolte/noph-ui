@@ -21,16 +21,15 @@
 	let focused = $state(false)
 
 	$effect(() => {
-		if (disabled && element) {
-			// eslint-disable-next-line no-undef
-			const formElements: NodeListOf<
-				HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-			> = element.querySelectorAll('input, button, select, textarea')
+		if (!element) return
+		// eslint-disable-next-line no-undef
+		const formElements: NodeListOf<
+			HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+		> = element.querySelectorAll('input, button, select, textarea')
 
-			formElements.forEach((element) => {
-				element.disabled = disabled
-			})
-		}
+		formElements.forEach((el) => {
+			el.disabled = disabled
+		})
 	})
 </script>
 
@@ -167,7 +166,6 @@
 	}
 	.np-card-container {
 		font: inherit;
-		box-sizing: border-box;
 		text-align: start;
 		display: inline-flex;
 		flex-direction: column;
@@ -210,10 +208,8 @@
 		width: 100%;
 		height: 200px;
 		overflow: hidden;
-		justify-content: center;
 		background-size: cover;
 		background-position: 50%;
-		align-items: center;
 		border-radius: var(--border-radius);
 	}
 	.np-card-content {

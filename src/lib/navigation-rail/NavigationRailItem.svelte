@@ -20,6 +20,7 @@
 	<a
 		{...attributes}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
+		aria-current={selected ? 'page' : undefined}
 	>
 		{@render content()}
 	</a>
@@ -27,6 +28,7 @@
 	<button
 		{...attributes as HTMLButtonAttributes}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
+		aria-pressed={selected ? 'true' : undefined}
 	>
 		{@render content()}
 	</button>

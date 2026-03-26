@@ -3,6 +3,7 @@
 </script>
 
 <div
+	aria-hidden="true"
 	class={[
 		'np-badge-container',
 		label === undefined ? 'np-badge-container-no-label' : 'np-badge-container-label',

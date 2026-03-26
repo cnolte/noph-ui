@@ -59,17 +59,6 @@
 </div>
 
 <style>
-	.np-skeleton {
-		height: 2rem;
-		line-height: 1.25rem;
-		font-size: 0.875rem;
-		font-weight: 500;
-		opacity: 0;
-		display: flex;
-		align-items: center;
-		padding-inline-start: 1rem;
-		padding-inline-end: 2rem;
-	}
 	.np-input-chip {
 		position: relative;
 		display: inline-flex;
