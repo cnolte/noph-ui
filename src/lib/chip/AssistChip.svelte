@@ -15,22 +15,22 @@
 <Button
 	size="xs"
 	shape="square"
-	--np-elevated-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface-variant))"
-	--np-outlined-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface-variant))"
+	--np-elevated-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface))"
+	--np-outlined-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface))"
 	--np-outlined-button-outline-color="var(--np-assist-chip-outline-color, var(--np-color-outline-variant))"
 	--np-button-icon-size="1.125rem"
-	--np-button-padding="0.5rem 1rem"
+	--np-button-padding={icon ? '0.5rem 1rem' : '1rem'}
 	--np-button-gap="0.5rem"
 	--np-button-shape="0.5rem"
-	--np-button-icon-color="var(--np-color-primary)"
-	--np-outlined-button-container-color="var(--np-color-surface-container-low)"
+	--np-button-icon-color={disabled
+		? 'color-mix(in srgb, var(--np-color-on-surface) 38%, transparent)'
+		: 'var(--np-color-primary)'}
+	style="letter-spacing: 0.006rem"
 	bind:element
 	variant={elevated ? 'elevated' : 'outlined'}
 	{disabled}
 	{...attributes}
+	start={icon}
 >
-	{#snippet start()}
-		{@render icon?.()}
-	{/snippet}
 	{label}
 </Button>

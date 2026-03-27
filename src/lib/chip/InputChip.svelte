@@ -67,6 +67,7 @@
 		border-radius: var(--np-input-chip-container-shape, var(--np-shape-corner-small));
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
+		--np-ripple-pressed-opacity: 0.1;
 		padding-inline-end: 1px;
 		min-width: 0;
 	}
@@ -85,12 +86,15 @@
 		fill: currentColor;
 		gap: 0.5rem;
 		z-index: 1;
-		padding-inline-start: 1rem;
+		padding-inline-start: 0.75rem;
 		overflow: hidden;
 	}
 	.np-chip-icon {
-		color: var(--np-color-primary);
+		color: var(--np-color-on-surface-variant);
 		display: flex;
+	}
+	.np-input-chip-selected .np-chip-icon {
+		color: var(--np-color-primary);
 	}
 	.np-input-chip-icon .np-input-chip-label {
 		padding-inline-start: 0.5rem;
@@ -99,6 +103,7 @@
 		line-height: 1.25rem;
 		font-size: 0.875rem;
 		font-weight: 500;
+		letter-spacing: 0.006rem;
 		padding-inline-end: 1px;
 		white-space: pre;
 		overflow: hidden;
@@ -114,9 +119,12 @@
 		outline-color: var(--np-input-chip-outline-color, var(--np-color-outline-variant));
 		outline-width: 1px;
 		outline-offset: -1px;
+		transition:
+			background-color 150ms linear,
+			outline-color 150ms linear;
 	}
 	.np-input-chip-selected::before {
-		outline-style: none;
+		outline-color: transparent;
 		background-color: var(--np-color-secondary-container);
 	}
 	.np-input-chip-selected {

@@ -23,6 +23,16 @@
 	}: FilterChipProps = $props()
 
 	let chipLabel: HTMLLabelElement | undefined = $state()
+	let pressed = $state(false)
+
+	const handlePointerDown = () => {
+		if (disabled) return
+		pressed = true
+	}
+
+	const handlePointerUp = () => {
+		pressed = false
+	}
 
 	$effect(() => {
 		if (!group || !value) return
@@ -46,10 +56,17 @@
 		icon ? 'np-filter-chip-icon' : '',
 		removable ? 'np-filter-chip-removable' : '',
 		disabled ? 'np-filter-chip-disabled' : '',
+		pressed && 'np-filter-chip-pressed',
 		attributes.class,
 	]}
 >
-	<label bind:this={chipLabel} class="np-filter-chip-label">
+	<label
+		bind:this={chipLabel}
+		class="np-filter-chip-label"
+		onpointerdown={handlePointerDown}
+		onpointerup={handlePointerUp}
+		onpointerleave={handlePointerUp}
+	>
 		{#if icon}
 			<div class="np-chip-icon">
 				{@render icon()}
@@ -94,7 +111,9 @@
 		border-radius: var(--np-filter-chip-container-shape, var(--np-shape-corner-small));
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
+		--np-ripple-pressed-opacity: 0.1;
 		min-width: 0;
+		transition: box-shadow 150ms linear;
 	}
 	.np-filter-chip-label input {
 		opacity: 0;
@@ -113,12 +132,24 @@
 		z-index: 1;
 		padding-inline: 1rem;
 		overflow: hidden;
+		transition: padding 200ms ease;
 	}
 	.np-chip-icon-checked {
-		display: none;
+		display: flex;
+		width: 0;
+		min-width: 0;
+		margin-inline-end: -0.5rem;
+		overflow: hidden;
+		transition:
+			width 200ms ease,
+			margin 200ms ease;
 	}
 	.np-filter-chip:has(input:checked) .np-chip-icon-checked {
-		display: flex;
+		width: 18px;
+		margin-inline-end: 0;
+	}
+	.np-filter-chip-icon .np-chip-icon-checked {
+		transition: none;
 	}
 	.np-filter-chip:has(input:checked) .np-chip-icon {
 		display: none;
@@ -145,6 +176,7 @@
 		line-height: 1.25rem;
 		font-size: 0.875rem;
 		font-weight: 500;
+		letter-spacing: 0.006rem;
 		white-space: pre;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -155,6 +187,9 @@
 		inset: 0;
 		border-radius: inherit;
 		pointer-events: none;
+		transition:
+			background-color 150ms linear,
+			outline-color 150ms linear;
 	}
 	.np-filter-chip-default::before {
 		outline-style: solid;
@@ -163,7 +198,7 @@
 		outline-offset: -1px;
 	}
 	.np-filter-chip:has(input:checked)::before {
-		outline-style: none;
+		outline-color: transparent;
 		background-color: var(--np-color-secondary-container);
 	}
 	.np-filter-chip-elevated {
@@ -171,6 +206,20 @@
 	}
 	.np-filter-chip-elevated::before {
 		background-color: var(--np-color-surface-container-low);
+	}
+	@media (hover: hover) {
+		.np-filter-chip-elevated:not(.np-filter-chip-disabled):hover {
+			box-shadow: var(--np-elevation-2);
+		}
+		.np-filter-chip-default:not(.np-filter-chip-disabled):has(input:checked):hover {
+			box-shadow: var(--np-elevation-1);
+		}
+	}
+	.np-filter-chip-elevated:not(.np-filter-chip-disabled).np-filter-chip-pressed {
+		box-shadow: var(--np-elevation-1);
+	}
+	.np-filter-chip-default:not(.np-filter-chip-disabled):has(input:checked).np-filter-chip-pressed {
+		box-shadow: none;
 	}
 	.np-filter-chip:has(input:checked) {
 		--np-icon-button-icon-color: var(--np-color-on-secondary-container);
@@ -207,9 +256,6 @@
 	}
 	.np-filter-chip-disabled.np-filter-chip-elevated {
 		box-shadow: none;
-	}
-	.np-filter-chip-disabled:has(input:checked)::before {
-		opacity: 0.12;
 	}
 	.np-filter-chip-disabled:has(input:not(:checked)).np-filter-chip-default::after {
 		content: '';
