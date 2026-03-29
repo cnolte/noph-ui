@@ -113,7 +113,7 @@
 		--np-icon-size: 1.125rem;
 		--np-ripple-pressed-opacity: 0.1;
 		min-width: 0;
-		transition: box-shadow 150ms linear;
+		transition: box-shadow var(--np-motion-expressive-slow-effects);
 	}
 	.np-filter-chip-label input {
 		opacity: 0;
@@ -132,7 +132,7 @@
 		z-index: 1;
 		padding-inline: 1rem;
 		overflow: hidden;
-		transition: padding 200ms ease;
+		transition: padding var(--np-motion-expressive-default-effects);
 	}
 	.np-chip-icon-checked {
 		display: flex;
@@ -141,8 +141,8 @@
 		margin-inline-end: -0.5rem;
 		overflow: hidden;
 		transition:
-			width 200ms ease,
-			margin 200ms ease;
+			width var(--np-motion-expressive-default-effects),
+			margin var(--np-motion-expressive-default-effects);
 	}
 	.np-filter-chip:has(input:checked) .np-chip-icon-checked {
 		width: 18px;

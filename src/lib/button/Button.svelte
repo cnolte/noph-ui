@@ -168,9 +168,9 @@
 		text-decoration: none;
 		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 		transition:
-			background-color 150ms linear,
-			border-radius 100ms linear,
-			box-shadow 150ms linear;
+			background-color var(--np-motion-expressive-default-effects),
+			border-radius var(--np-motion-expressive-default-effects),
+			box-shadow var(--np-motion-expressive-default-effects);
 	}
 	.xs {
 		font-size: 0.875rem;

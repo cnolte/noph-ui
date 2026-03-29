@@ -64,13 +64,13 @@
 
 	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
 		transform: var(--np-navigation-drawer-start, translateX(-100%));
-		transition: transform 0.25s ease;
+		transition: transform var(--np-motion-expressive-slow-effects);
 	}
 
 	.np-navigation-drawer-container[popover] {
 		transition:
-			overlay 0.25s allow-discrete,
-			display 0.25s allow-discrete;
+			overlay 0.3s allow-discrete,
+			display 0.3s allow-discrete;
 	}
 
 	.np-navigation-drawer-container:popover-open .np-navigation-wrapper {

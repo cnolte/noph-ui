@@ -98,8 +98,8 @@
 		height: 1rem;
 		margin: 0.5rem;
 		transition:
-			transform 0.2s,
-			background-color 0.2s;
+			transform var(--np-motion-expressive-fast-spatial),
+			background-color var(--np-motion-expressive-default-effects);
 		background-color: var(--np-comp-switch-unselected-handle-color, var(--np-color-outline));
 		border-radius: var(--np-comp-switch-handle-shape, var(--np-shape-corner-full));
 	}
@@ -114,7 +114,7 @@
 		height: var(--np-comp-switch-state-layer-size, 2.5rem);
 		margin-block-start: -0.25rem;
 		margin-inline-start: -0.25rem;
-		transition: transform 0.2s;
+		transition: var(--np-motion-expressive-fast-spatial);
 		border-radius: var(--np-comp-switch-state-layer-shape, var(--np-shape-corner-full));
 	}
 

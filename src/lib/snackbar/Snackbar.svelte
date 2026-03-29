@@ -123,13 +123,13 @@
 		transition:
 			overlay 0.2s allow-discrete,
 			display 0.2s allow-discrete,
-			opacity 0.2s linear;
+			opacity var(--np-motion-expressive-default-effects);
 		opacity: 0;
 	}
 
 	.np-snackbar:popover-open {
 		opacity: 1;
-		animation: slideIn 0.2s linear;
+		animation: slideIn var(--np-motion-expressive-default-spatial);
 	}
 
 	@keyframes slideIn {

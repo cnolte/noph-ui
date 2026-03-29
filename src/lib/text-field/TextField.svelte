@@ -171,7 +171,7 @@
 	}
 	.active-indicator::after {
 		opacity: 0;
-		transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+		transition: opacity var(--np-motion-expressive-fast-effects);
 	}
 	.active-indicator::before,
 	.active-indicator::after {
@@ -572,9 +572,7 @@
 		inset-inline-start: var(--floating-label-inline-start, 0);
 	}
 	.label {
-		transition-property: all;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 150ms;
+		transition: all var(--np-motion-expressive-fast-effects);
 		box-sizing: border-box;
 		color: var(--np-color-on-surface-variant);
 		overflow: hidden;
@@ -737,7 +735,7 @@
 	.outline-end::after,
 	.outline-notch::after {
 		opacity: 0;
-		transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+		transition: opacity var(--np-motion-expressive-fast-effects);
 	}
 	.field:has(input:focus-visible) .outline-start::after,
 	.field:has(input:focus-visible) .outline-end::after,

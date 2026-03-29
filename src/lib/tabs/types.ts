@@ -19,6 +19,6 @@ export interface TabsProps extends HTMLAttributes<HTMLElement> {
 
 export interface TabsContext {
 	value: string | number
+	indicatorValue: string | number
 	variant: 'primary' | 'secondary'
-	id: string
 }

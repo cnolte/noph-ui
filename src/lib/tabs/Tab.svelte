@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Ripple from '$lib/ripple/Ripple.svelte'
-	import { onMount } from 'svelte'
-	import type { TabProps } from './types.ts'
 	import Badge from '$lib/badge/Badge.svelte'
+	import Ripple from '$lib/ripple/Ripple.svelte'
+	import { onMount, tick } from 'svelte'
 	import { getTabsContext } from './context.js'
+	import type { TabProps } from './types.ts'
 
 	let {
 		children,
@@ -22,20 +22,17 @@
 	const tabsContext = getTabsContext()
 	let fallbackIndicator = $state(false)
 
-	const handleClick = (event: MouseEvent & { currentTarget: EventTarget & HTMLElement }) => {
-		tabsContext.value = value
-		if (onclick) {
-			onclick(event)
+	$effect(() => {
+		if (tabsContext.value === value) {
+			tabsContext.indicatorValue = value
 		}
+	})
+
+	const setIndicatorValue = async () => {
+		await tick()
+		tabsContext.indicatorValue = value
 	}
-	const handleKeyDown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
-		if (event.key === 'Enter' || event.key === ' ') {
-			tabsContext.value = value
-		}
-		if (onkeydown) {
-			onkeydown(event)
-		}
-	}
+
 	onMount(() => {
 		if (!('anchorName' in document.documentElement.style)) {
 			fallbackIndicator = true
@@ -69,11 +66,15 @@
 				{@render children?.()}
 			{/if}
 			{#if tabsContext.variant === 'primary'}
-				<div class="np-indicator"></div>
+				<div
+					class={['np-indicator', tabsContext.indicatorValue === value && 'np-indicator-anchor']}
+				></div>
 			{/if}
 		</div>
 		{#if tabsContext.variant === 'secondary'}
-			<div class="np-indicator"></div>
+			<div
+				class={['np-indicator', tabsContext.indicatorValue === value && 'np-indicator-anchor']}
+			></div>
 		{/if}
 	</div>
 	<div class="focus-area"></div>
@@ -112,8 +113,18 @@
 			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
 			attributes.class,
 		]}
-		onclick={handleClick}
-		onkeydown={handleKeyDown}
+		onclick={(event) => {
+			tabsContext.value = value
+			setIndicatorValue()
+			onclick?.(event)
+		}}
+		onkeydown={(event) => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				tabsContext.value = value
+				setIndicatorValue()
+			}
+			onkeydown?.(event)
+		}}
 	>
 		{@render content()}
 	</button>

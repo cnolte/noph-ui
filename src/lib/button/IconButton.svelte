@@ -143,8 +143,8 @@
 		justify-content: center;
 		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 		transition:
-			background-color 150ms linear,
-			border-radius 100ms linear;
+			background-color var(--np-motion-expressive-default-effects),
+			border-radius var(--np-motion-expressive-default-effects);
 	}
 
 	:global(.np-icon-button svg) {

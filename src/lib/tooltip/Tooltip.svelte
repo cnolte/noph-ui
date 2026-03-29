@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { TooltipProps } from './types.ts'
-	import { MediaQuery } from 'svelte/reactivity'
 	import { on } from 'svelte/events'
+	import { MediaQuery } from 'svelte/reactivity'
+	import type { TooltipProps } from './types.ts'
 
 	let {
 		children,
@@ -127,7 +127,7 @@
 	}
 	.np-tooltip:popover-open {
 		opacity: 1;
-		animation: scaleIn 0.3s ease;
+		animation: scaleIn var(--np-motion-expressive-fast-spatial);
 	}
 
 	@keyframes scaleIn {

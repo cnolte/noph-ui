@@ -11,13 +11,11 @@
 		...attributes
 	}: TabsProps = $props()
 
-	let uid = $props.id()
-
 	// svelte-ignore state_referenced_locally
 	let tabsContext = $state<TabsContext>({
 		value,
+		indicatorValue: value,
 		variant,
-		id: uid,
 	})
 	$effect(() => {
 		value = tabsContext.value
@@ -28,6 +26,10 @@
 		tabsContext.variant = variant
 	})
 	setTabsContext(tabsContext)
+
+	const secondaryStyle = $derived(
+		tabsContext.variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : '',
+	)
 
 	const handleKeydown = (
 		event: KeyboardEvent & {
@@ -47,11 +49,7 @@
 	}
 </script>
 
-<nav
-	{...attributes}
-	bind:this={element}
-	style={tabsContext.variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : ''}
->
+<nav {...attributes} bind:this={element} style={secondaryStyle}>
 	<div
 		class={['np-tabs']}
 		role="tablist"
@@ -65,7 +63,7 @@
 </nav>
 
 <style>
-	:global(.np-tabs .np-tab-content-active .np-indicator) {
+	:global(.np-tabs .np-indicator-anchor) {
 		anchor-name: --np-tab-indicator;
 	}
 	.np-tabs {
@@ -92,7 +90,7 @@
 			border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			position-anchor: --np-tab-indicator;
-			transition: cubic-bezier(0.33, 1, 0.68, 1) 0.3s;
+			transition: var(--np-motion-expressive-fast-spatial);
 		}
 	}
 </style>
