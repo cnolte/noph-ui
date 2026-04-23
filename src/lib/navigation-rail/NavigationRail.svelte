@@ -1,10 +1,24 @@
 <script lang="ts">
+	import { arrowKeyNav, rovingTabindex } from '$lib/keyboard-nav.ts'
 	import type { NavigationRailProps } from './types.ts'
 
-	let { children, ...attributes }: NavigationRailProps = $props()
+	let { children, onkeydown: userKeydown, ...attributes }: NavigationRailProps = $props()
+
+	const attach = rovingTabindex('.np-navigation-action')
+	const arrowHandler = arrowKeyNav('.np-navigation-action')
+
+	const handleKeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
+		userKeydown?.(event)
+		if (!event.defaultPrevented) arrowHandler(event)
+	}
 </script>
 
-<nav {...attributes} class="navigation-rail {attributes.class}">
+<nav
+	{...attributes}
+	{@attach attach}
+	class="navigation-rail {attributes.class}"
+	onkeydown={handleKeydown}
+>
 	{#if children}
 		{@render children()}
 	{/if}

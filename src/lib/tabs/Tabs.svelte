@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Divider from '$lib/divider/Divider.svelte'
+	import { arrowKeyNav, rovingTabindex } from '$lib/keyboard-nav.ts'
 	import { setTabsContext } from './context.js'
 	import type { TabsContext, TabsProps } from './types.ts'
 
@@ -31,31 +32,18 @@
 		tabsContext.variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : '',
 	)
 
-	const handleKeydown = (
-		event: KeyboardEvent & {
-			currentTarget: EventTarget & HTMLDivElement
-		},
-	) => {
-		const tabs = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('.np-tab'))
-		if (tabs && tabs.length > 0 && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
-			const focusedTab = event.currentTarget.querySelector<HTMLElement>('.np-tab:focus')
-			const currentIndex = focusedTab ? tabs.indexOf(focusedTab) : 0
-			const index = currentIndex + (event.key === 'ArrowRight' ? 1 : -1)
-			const newTab =
-				index < 0 ? tabs[tabs.length - 1] : index >= tabs.length ? tabs[0] : tabs[index]
-			newTab.focus()
-			event.preventDefault()
-		}
-	}
+	const attach = rovingTabindex('.np-tab', { currentAttr: 'aria-selected', currentValue: 'true' })
+	const onkeydown = arrowKeyNav('.np-tab', 'horizontal')
 </script>
 
 <nav {...attributes} bind:this={element} style={secondaryStyle}>
 	<div
+		{@attach attach}
 		class={['np-tabs']}
 		role="tablist"
 		aria-orientation="horizontal"
 		tabindex="-1"
-		onkeydown={handleKeydown}
+		{onkeydown}
 	>
 		{@render children?.()}
 	</div>

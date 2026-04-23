@@ -28,12 +28,14 @@
 {#if 'href' in attributes}
 	<a
 		{...attributes}
+		href={attributes.href}
 		class={[
 			'np-navigation-drawer-item',
 			selected && 'np-navigation-drawer-item-selected',
 			attributes.class,
 		]}
 		aria-current={selected ? 'page' : undefined}
+		tabindex={selected ? 0 : -1}
 	>
 		{@render content()}
 	</a>
@@ -46,7 +48,8 @@
 			attributes.class,
 		]}
 		type="button"
-		aria-pressed={selected ? 'true' : undefined}
+		aria-current={selected ? 'page' : undefined}
+		tabindex={selected ? 0 : -1}
 	>
 		{@render content()}
 	</button>
@@ -97,7 +100,11 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
-		animation: focusAnimation 0.3s ease forwards;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.np-navigation-drawer-item:focus-visible {
+			animation: focusAnimation 0.3s ease forwards;
+		}
 	}
 	@keyframes focusAnimation {
 		0% {

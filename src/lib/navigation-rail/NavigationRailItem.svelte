@@ -19,8 +19,10 @@
 {#if 'href' in attributes}
 	<a
 		{...attributes}
+		href={attributes.href}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
 		aria-current={selected ? 'page' : undefined}
+		tabindex={selected ? 0 : -1}
 	>
 		{@render content()}
 	</a>
@@ -28,7 +30,8 @@
 	<button
 		{...attributes as HTMLButtonAttributes}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
-		aria-pressed={selected ? 'true' : undefined}
+		aria-current={selected ? 'page' : undefined}
+		tabindex={selected ? 0 : -1}
 	>
 		{@render content()}
 	</button>
@@ -54,7 +57,11 @@
 		outline-width: 3px;
 		outline-offset: 2px;
 		border-radius: 1rem;
-		animation: focusAnimation 0.3s ease forwards;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.np-navigation-action:focus-visible {
+			animation: focusAnimation 0.3s ease forwards;
+		}
 	}
 	@keyframes focusAnimation {
 		0% {

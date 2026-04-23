@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { arrowKeyNav, rovingTabindex } from '$lib/keyboard-nav.ts'
 	import type { NavigationDrawerProps } from './types.ts'
 	let {
 		modal = false,
@@ -7,12 +8,22 @@
 		direction = 'ltr',
 		popover,
 		children,
+		onkeydown: userKeydown,
 		...attributes
 	}: NavigationDrawerProps = $props()
+
+	const attach = rovingTabindex('.np-navigation-drawer-item')
+	const arrowHandler = arrowKeyNav('.np-navigation-drawer-item')
+
+	const handleKeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
+		userKeydown?.(event)
+		if (!event.defaultPrevented) arrowHandler(event)
+	}
 </script>
 
 <nav
 	{...attributes}
+	{@attach attach}
 	bind:this={element}
 	popover={modal ? popover || 'auto' : undefined}
 	style="--np-navigation-drawer-start: {direction === 'ltr'
@@ -24,6 +35,7 @@
 		backdrop && 'np-navigation-drawer-backdrop',
 		attributes.class,
 	]}
+	onkeydown={handleKeydown}
 >
 	{#if backdrop}
 		<div
