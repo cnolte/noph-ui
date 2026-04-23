@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { arrowKeyNav, rovingTabindex } from '$lib/keyboard-nav.ts'
+	import { arrowKeyNav, rovingTabindex } from '$lib/keyboard-nav.js'
 	import type { NavigationRailProps } from './types.ts'
 
 	let { children, onkeydown: userKeydown, ...attributes }: NavigationRailProps = $props()
