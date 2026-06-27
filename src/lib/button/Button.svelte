@@ -86,6 +86,7 @@
 			size,
 			selected ? 'square' : shape,
 			toggle && 'toggle',
+			selected && 'selected',
 			'enabled',
 			variant,
 			pressed && 'pressed',
