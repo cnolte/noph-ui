@@ -2,7 +2,8 @@
 	import type { TextFieldProps } from './types.ts'
 
 	let {
-		value = $bindable(),
+		defaultValue,
+		value = $bindable(defaultValue),
 		issues,
 		prefixText = '',
 		suffixText = '',
@@ -103,6 +104,7 @@
 									: undefined}
 								{...attributes}
 								{placeholder}
+								{defaultValue}
 								bind:focused
 								bind:value
 								bind:this={inputElement}
@@ -122,6 +124,7 @@
 										: undefined}
 									{...attributes}
 									{placeholder}
+									{defaultValue}
 									bind:value
 									bind:this={inputElement}
 									class="input"

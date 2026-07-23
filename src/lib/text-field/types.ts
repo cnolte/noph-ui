@@ -57,5 +57,6 @@ export interface TextFieldProps
 		>,
 		FieldProps {
 	type?: TextFieldType | 'textarea'
-	value?: string | number | boolean | null
+	value?: string | number | null
+	defaultValue?: string | number | null
 }
