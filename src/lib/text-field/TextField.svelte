@@ -3,7 +3,7 @@
 
 	let {
 		defaultValue,
-		value = $bindable(defaultValue),
+		value = $bindable(),
 		issues,
 		prefixText = '',
 		suffixText = '',
