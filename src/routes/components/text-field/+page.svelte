@@ -423,7 +423,7 @@
 	<tbody>
 		<tr>
 			<td><code>value</code></td>
-			<td><code>string | number | null</code></td>
+			<td><code>string | number | boolean | null</code></td>
 			<td>Value of the input or textarea.</td>
 		</tr>
 		<tr>

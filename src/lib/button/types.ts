@@ -9,7 +9,7 @@ interface BaseButtonProps
 		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
 		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
 	element?: HTMLElement
-	disabled?: boolean
+	disabled?: boolean | null
 	loading?: boolean
 	loadingAriaLabel?: string
 	toggle?: boolean
