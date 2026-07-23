@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconButton from '$lib/button/IconButton.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
 
 	let { value }: { value: string } = $props()
 	let selected = $state(false)

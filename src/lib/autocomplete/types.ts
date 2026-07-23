@@ -1,4 +1,4 @@
-import type { InputFieldProps } from '$lib/types.ts'
+import type { InputFieldProps } from '#lib/types.ts'
 import type { Snippet } from 'svelte'
 
 export interface AutoCompleteOption {

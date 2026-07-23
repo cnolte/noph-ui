@@ -1,5 +1,5 @@
 <script>
-	import DockedDatePicker from '$lib/date-picker/DockedDatePicker.svelte'
+	import DockedDatePicker from '#lib/date-picker/DockedDatePicker.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>
 

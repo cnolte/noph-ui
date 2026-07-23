@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Icon from '$lib/icons/Icon.svelte'
-	import { Select, Button } from '$lib/index.ts'
+	import Icon from '#lib/icons/Icon.svelte'
+	import { Select, Button } from '#lib/index.ts'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

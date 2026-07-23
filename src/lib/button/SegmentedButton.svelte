@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CheckIcon from '$lib/icons/CheckIcon.svelte'
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import CheckIcon from '#lib/icons/CheckIcon.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { SegmentedButtonProps } from './types.ts'
 
 	let {

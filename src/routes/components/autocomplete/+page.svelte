@@ -1,8 +1,8 @@
 <script lang="ts">
-	import AutoComplete from '$lib/autocomplete/AutoComplete.svelte'
-	import ChipSet from '$lib/chip/ChipSet.svelte'
-	import InputChip from '$lib/chip/InputChip.svelte'
-	import type { AutoCompleteOption } from '$lib/types.ts'
+	import AutoComplete from '#lib/autocomplete/AutoComplete.svelte'
+	import ChipSet from '#lib/chip/ChipSet.svelte'
+	import InputChip from '#lib/chip/InputChip.svelte'
+	import type { AutoCompleteOption } from '#lib/types.ts'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { AssistChipProps } from './types.ts'
-	import Button from '$lib/button/Button.svelte'
+	import Button from '#lib/button/Button.svelte'
 
 	let {
 		elevated = false,

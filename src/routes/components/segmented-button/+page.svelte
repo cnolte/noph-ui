@@ -1,6 +1,6 @@
 <script lang="ts">
-	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
+	import SegmentedButton from '#lib/button/SegmentedButton.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

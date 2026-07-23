@@ -1,6 +1,6 @@
 <script>
-	import CircularProgress from '$lib/progress/CircularProgress.svelte'
-	import LinearProgress from '$lib/progress/LinearProgress.svelte'
+	import CircularProgress from '#lib/progress/CircularProgress.svelte'
+	import LinearProgress from '#lib/progress/LinearProgress.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

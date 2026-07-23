@@ -1,9 +1,9 @@
 <script lang="ts">
 	import DemoContainer from '../../DemoContainer.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	import NavigationRail from '$lib/navigation-rail/NavigationRail.svelte'
-	import NavigationRailItem from '$lib/navigation-rail/NavigationRailItem.svelte'
+	import NavigationRail from '#lib/navigation-rail/NavigationRail.svelte'
+	import NavigationRailItem from '#lib/navigation-rail/NavigationRailItem.svelte'
 	let selection = $state(1)
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Switch from '$lib/switch/Switch.svelte'
+	import Switch from '#lib/switch/Switch.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

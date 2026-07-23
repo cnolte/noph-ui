@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state'
-	import { Icon } from '$lib/icons/index.ts'
-	import Tab from '$lib/tabs/Tab.svelte'
-	import Tabs from '$lib/tabs/Tabs.svelte'
+	import { Icon } from '#lib/icons/index.ts'
+	import Tab from '#lib/tabs/Tab.svelte'
+	import Tabs from '#lib/tabs/Tabs.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	let value = $state('videos')

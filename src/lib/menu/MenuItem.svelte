@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Item from '$lib/list/Item.svelte'
+	import Item from '#lib/list/Item.svelte'
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements'
 	import type { MenuItemProps } from './types.ts'
 

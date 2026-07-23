@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
-	import Button from '$lib/button/Button.svelte'
+	import Button from '#lib/button/Button.svelte'
 </script>
 
 <svelte:head>

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
-	import IconButton from '$lib/button/IconButton.svelte'
+	import Button from '#lib/button/Button.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
 	import type { SnackbarProps } from './types.ts'
 
 	let {

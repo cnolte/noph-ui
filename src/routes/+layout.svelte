@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
-	import IconButton from '$lib/button/IconButton.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
-	import NavigationDrawer from '$lib/navigation-drawer/NavigationDrawer.svelte'
-	import '$lib/themes/defaultTheme.css'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
+	import NavigationDrawer from '#lib/navigation-drawer/NavigationDrawer.svelte'
+	import '#lib/themes/defaultTheme.css'
 	import '../app.css'
 	import GitHubMark from './GitHubMark.svelte'
 	import Logo from './Logo.svelte'

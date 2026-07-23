@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Item from '$lib/list/Item.svelte'
-	import Menu from '$lib/menu/Menu.svelte'
-	import Check from '$lib/select/Check.svelte'
-	import VirtualList from '$lib/select/VirtualList.svelte'
+	import Item from '#lib/list/Item.svelte'
+	import Menu from '#lib/menu/Menu.svelte'
+	import Check from '#lib/select/Check.svelte'
+	import VirtualList from '#lib/select/VirtualList.svelte'
 	import { tick } from 'svelte'
 	import type { SelectOption, SelectProps } from './types.ts'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Divider from '$lib/divider/Divider.svelte'
+	import Divider from '#lib/divider/Divider.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

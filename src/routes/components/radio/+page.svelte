@@ -1,5 +1,5 @@
 <script>
-	import Radio from '$lib/radio/Radio.svelte'
+	import Radio from '#lib/radio/Radio.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

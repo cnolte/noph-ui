@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Badge from '$lib/badge/Badge.svelte'
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Badge from '#lib/badge/Badge.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { onMount, tick } from 'svelte'
 	import { getTabsContext } from './context.js'
 	import type { TabProps } from './types.ts'

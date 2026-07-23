@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { RadioProps } from './types.ts'
 
 	let {

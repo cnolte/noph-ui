@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Divider from '$lib/divider/Divider.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
-	import List from '$lib/list/List.svelte'
-	import ListItem from '$lib/list/ListItem.svelte'
+	import Divider from '#lib/divider/Divider.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
+	import List from '#lib/list/List.svelte'
+	import ListItem from '#lib/list/ListItem.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

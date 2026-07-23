@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment'
-	import IconButton from '$lib/button/IconButton.svelte'
-	import SegmentedButton from '$lib/button/SegmentedButton.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
-	import Menu from '$lib/menu/Menu.svelte'
-	import Radio from '$lib/radio/Radio.svelte'
-	import NativeSelect from '$lib/select/NativeSelect.svelte'
-	import Option from '$lib/select/Option.svelte'
+	import { browser } from '$app/env'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import SegmentedButton from '#lib/button/SegmentedButton.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
+	import Menu from '#lib/menu/Menu.svelte'
+	import Radio from '#lib/radio/Radio.svelte'
+	import NativeSelect from '#lib/select/NativeSelect.svelte'
+	import Option from '#lib/select/Option.svelte'
 	import {
 		argbFromHex,
 		Hct,

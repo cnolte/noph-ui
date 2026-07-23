@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconButton from '$lib/button/IconButton.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

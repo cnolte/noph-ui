@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
-	import IconButton from '$lib/button/IconButton.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
-	import TextField from '$lib/text-field/TextField.svelte'
+	import Button from '#lib/button/Button.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
+	import TextField from '#lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

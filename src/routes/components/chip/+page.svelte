@@ -1,11 +1,11 @@
 <script lang="ts">
-	import ChipSet from '$lib/chip/ChipSet.svelte'
-	import FilterChip from '$lib/chip/FilterChip.svelte'
-	import InputChip from '$lib/chip/InputChip.svelte'
-	import { Icon } from '$lib/icons/index.ts'
-	import { AssistChip } from '$lib/index.ts'
-	import Snackbar from '$lib/snackbar/Snackbar.svelte'
-	import TextField from '$lib/text-field/TextField.svelte'
+	import ChipSet from '#lib/chip/ChipSet.svelte'
+	import FilterChip from '#lib/chip/FilterChip.svelte'
+	import InputChip from '#lib/chip/InputChip.svelte'
+	import { Icon } from '#lib/icons/index.ts'
+	import { AssistChip } from '#lib/index.ts'
+	import Snackbar from '#lib/snackbar/Snackbar.svelte'
+	import TextField from '#lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 

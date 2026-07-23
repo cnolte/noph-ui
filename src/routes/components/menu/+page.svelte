@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
-	import Menu from '$lib/menu/Menu.svelte'
-	import MenuItem from '$lib/menu/MenuItem.svelte'
+	import Button from '#lib/button/Button.svelte'
+	import Menu from '#lib/menu/Menu.svelte'
+	import MenuItem from '#lib/menu/MenuItem.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	let menuBtn: HTMLElement

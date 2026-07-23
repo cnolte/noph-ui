@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Button from '$lib/button/Button.svelte'
-	import Card from '$lib/card/Card.svelte'
+	import Button from '#lib/button/Button.svelte'
+	import Card from '#lib/card/Card.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

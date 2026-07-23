@@ -107,8 +107,7 @@
 								bind:value
 								bind:this={inputElement}
 								class="input"
-								rows={attributes.rows || 2}
-							></textarea>
+								rows={attributes.rows || 2}></textarea>
 						{:else}
 							<div class="input-wrapper">
 								{#if suffixText}

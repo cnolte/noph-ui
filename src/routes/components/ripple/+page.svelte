@@ -1,5 +1,5 @@
 <script>
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 </script>

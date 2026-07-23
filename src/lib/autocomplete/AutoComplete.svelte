@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Item from '$lib/list/Item.svelte'
-	import Menu from '$lib/menu/Menu.svelte'
-	import VirtualList from '$lib/select/VirtualList.svelte'
-	import TextField from '$lib/text-field/TextField.svelte'
+	import Item from '#lib/list/Item.svelte'
+	import Menu from '#lib/menu/Menu.svelte'
+	import VirtualList from '#lib/select/VirtualList.svelte'
+	import TextField from '#lib/text-field/TextField.svelte'
 	import type { AutoCompleteOption, AutoCompleteProps } from './types.ts'
 
 	let {

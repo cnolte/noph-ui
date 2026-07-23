@@ -1,10 +1,10 @@
 <script lang="ts">
 	import DemoContainer from '../../DemoContainer.svelte'
-	import Icon from '$lib/icons/Icon.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	import NavigationDrawer from '$lib/navigation-drawer/NavigationDrawer.svelte'
-	import NavigationDrawerItem from '$lib/navigation-drawer/NavigationDrawerItem.svelte'
-	import Button from '$lib/button/Button.svelte'
+	import NavigationDrawer from '#lib/navigation-drawer/NavigationDrawer.svelte'
+	import NavigationDrawerItem from '#lib/navigation-drawer/NavigationDrawerItem.svelte'
+	import Button from '#lib/button/Button.svelte'
 	let selection = $state(1)
 </script>
 

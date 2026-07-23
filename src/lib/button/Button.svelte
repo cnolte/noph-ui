@@ -1,7 +1,7 @@
 <script lang="ts">
-	import CircularProgress from '$lib/progress/CircularProgress.svelte'
-	import Ripple from '$lib/ripple/Ripple.svelte'
-	import Tooltip from '$lib/tooltip/Tooltip.svelte'
+	import CircularProgress from '#lib/progress/CircularProgress.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
+	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import { onMount } from 'svelte'
 	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'

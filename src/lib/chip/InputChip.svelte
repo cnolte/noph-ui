@@ -1,7 +1,7 @@
 <script lang="ts">
-	import IconButton from '$lib/button/IconButton.svelte'
-	import CloseIcon from '$lib/icons/CloseIcon.svelte'
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import CloseIcon from '#lib/icons/CloseIcon.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { InputChipProps } from './types.ts'
 
 	let {

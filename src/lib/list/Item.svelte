@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { onMount } from 'svelte'
 	import type { FocusEventHandler } from 'svelte/elements'
 	import type { ItemProps } from './types.ts'

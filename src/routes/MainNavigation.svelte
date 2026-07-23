@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state'
-	import Divider from '$lib/divider/Divider.svelte'
-	import NavigationDrawerItem from '$lib/navigation-drawer/NavigationDrawerItem.svelte'
+	import Divider from '#lib/divider/Divider.svelte'
+	import NavigationDrawerItem from '#lib/navigation-drawer/NavigationDrawerItem.svelte'
 	let {
 		onclose,
 	}: {

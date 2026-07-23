@@ -1,8 +1,8 @@
 <script lang="ts">
-	import IconButton from '$lib/button/IconButton.svelte'
-	import CheckIcon from '$lib/icons/CheckIcon.svelte'
-	import CloseIcon from '$lib/icons/CloseIcon.svelte'
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import CheckIcon from '#lib/icons/CheckIcon.svelte'
+	import CloseIcon from '#lib/icons/CloseIcon.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { FilterChipProps } from './types.ts'
 
 	let {

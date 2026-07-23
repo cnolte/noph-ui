@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Ripple from '$lib/ripple/Ripple.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationDrawerItemProps } from './types.ts'
 
