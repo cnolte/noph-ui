@@ -134,7 +134,6 @@
 	{...attributes}
 	autocomplete="off"
 	{variant}
-	type="text"
 	populated={finalPopulated}
 	bind:clientWidth
 	bind:value

@@ -9,7 +9,7 @@
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 
-	let showPopover: (() => void) | undefined = $state()
+	let snackbar: ReturnType<typeof Snackbar> | undefined = $state()
 
 	let filterGroup = $state<string[]>([])
 
@@ -161,12 +161,12 @@
 <h3>Removable</h3>
 <DemoContainer>
 	<ChipSet>
-		<FilterChip label="Removable" removable onremove={() => showPopover?.()} />
-		<FilterChip label="Selected" removable selected onremove={() => showPopover?.()} />
-		<FilterChip elevated label="Elevated" removable onremove={() => showPopover?.()} />
+		<FilterChip label="Removable" removable onremove={() => snackbar?.showPopover()} />
+		<FilterChip label="Selected" removable selected onremove={() => snackbar?.showPopover()} />
+		<FilterChip elevated label="Elevated" removable onremove={() => snackbar?.showPopover()} />
 	</ChipSet>
 </DemoContainer>
-<Snackbar bind:showPopover label="Remove was clicked" />
+<Snackbar bind:this={snackbar} label="Remove was clicked" />
 <Code
 	value={`<ChipSet>
 	<FilterChip label="Removable" removable onremove={() => {}} />

@@ -401,12 +401,15 @@
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>
-			<td><code>HTMLButtonAttributes | HTMLAnchorAttributes</code></td>
+			<td><code>HTMLButtonAttributes &amp; HTMLAnchorAttributes</code></td>
 			<td></td>
 			<td
-				>Use <code>HTMLButtonAttributes</code> for a plain icon button and
-				<code>HTMLAnchorAttributes</code>
-				(automatically applied when href is set) for a link icon button.</td
+				>A single, unified set of <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> attributes.
+				Setting <code>href</code> renders an <code>&lt;a&gt;</code>, otherwise a
+				<code>&lt;button&gt;</code>. Event handlers such as <code>onclick</code> receive
+				<code>event.currentTarget</code> typed as
+				<code>HTMLButtonElement | HTMLAnchorElement</code>, so you no longer need to set
+				<code>href</code> to get correctly typed events.</td
 			>
 		</tr>
 	</tbody>

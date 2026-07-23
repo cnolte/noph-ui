@@ -4,8 +4,6 @@
 
 	let {
 		element = $bindable(),
-		showPopover = $bindable(),
-		hidePopover = $bindable(),
 		quick = false,
 		children,
 		headline,
@@ -18,11 +16,11 @@
 
 	const uid = $props.id()
 
-	showPopover = () => {
+	export function showPopover() {
 		element?.showPopover()
 	}
 
-	hidePopover = () => {
+	export function hidePopover() {
 		element?.hidePopover()
 	}
 </script>

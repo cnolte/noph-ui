@@ -5,8 +5,6 @@
 	let {
 		children,
 		element = $bindable(),
-		showPopover = $bindable(),
-		hidePopover = $bindable(),
 		open = $bindable(),
 		style,
 		popover = 'auto',
@@ -19,11 +17,11 @@
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
 
-	showPopover = () => {
+	export function showPopover() {
 		element?.showPopover()
 	}
 
-	hidePopover = () => {
+	export function hidePopover() {
 		element?.hidePopover()
 	}
 	const refreshValues = () => {

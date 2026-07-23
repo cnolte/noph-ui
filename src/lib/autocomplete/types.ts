@@ -1,4 +1,4 @@
-import type { InputFieldProps } from '#lib/types.ts'
+import type { TextFieldProps } from '#lib/types.ts'
 import type { Snippet } from 'svelte'
 
 export interface AutoCompleteOption {
@@ -9,13 +9,11 @@ export interface AutoCompleteOption {
 	supportingText?: string
 }
 
-export interface AutoCompleteProps extends Omit<InputFieldProps, 'clientWidth' | 'clientHeight'> {
+export interface AutoCompleteProps extends Omit<TextFieldProps, 'clientWidth' | 'clientHeight'> {
 	options: AutoCompleteOption[]
 	optionsFilter?: (option: AutoCompleteOption) => boolean
 	onoptionselect?: (option: AutoCompleteOption, menuElement: HTMLDivElement) => void
 	clampMenuWidth?: boolean
-	showPopover?: () => void
-	hidePopover?: () => void
 	virtualThreshold?: number
 	menuOpen?: boolean
 }

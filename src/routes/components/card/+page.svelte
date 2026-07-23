@@ -317,16 +317,17 @@
 			<td><code>...attributes</code></td>
 			<td
 				><code
-					>HTMLButtonAttributes | HTMLAnchorAttributes | HTMLAttributes&lt;HTMLDivElement&gt;</code
+					>HTMLButtonAttributes &amp; HTMLAnchorAttributes &amp;
+					HTMLAttributes&lt;HTMLDivElement&gt;</code
 				></td
 			>
 			<td></td>
 			<td
-				><code>HTMLButtonAttributes</code> for type = <code>button</code>,
-				<code>HTMLAttributes&lt;HTMLDivElement&gt;</code>
-				for type = <code>text</code>, and
-				<code>HTMLAnchorAttributes</code>
-				for type = <code>link</code>.</td
+				>A single, unified set of attributes for the element chosen by <code>type</code>
+				(<code>div</code>, <code>button</code> or <code>a</code>). Event handlers such as
+				<code>onclick</code> receive <code>event.currentTarget</code> typed as
+				<code>HTMLDivElement | HTMLButtonElement | HTMLAnchorElement</code>, so you no longer need
+				to set <code>type</code> to get correctly typed events.</td
 			>
 		</tr>
 	</tbody>

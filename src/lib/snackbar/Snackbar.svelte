@@ -12,8 +12,6 @@
 		onIconClick = () => {
 			element?.hidePopover()
 		},
-		showPopover = $bindable(),
-		hidePopover = $bindable(),
 		open = $bindable(false),
 		onbeforetoggle,
 		timeout = 4000,
@@ -25,11 +23,11 @@
 	let timeoutId: number | undefined = $state()
 	const uid = $props.id()
 
-	showPopover = () => {
+	export function showPopover() {
 		element?.showPopover()
 	}
 
-	hidePopover = () => {
+	export function hidePopover() {
 		element?.hidePopover()
 	}
 </script>

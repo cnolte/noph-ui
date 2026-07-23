@@ -222,15 +222,31 @@
 				the component's logic.</td
 			>
 		</tr>
+	</tbody>
+</table>
+<h3>Methods</h3>
+<p>
+	Access these by binding a reference to the component with <code>bind:this</code>, e.g.
+	<code>&lt;Snackbar bind:this={`{snackbar}`} /&gt;</code> then <code>snackbar.showPopover()</code>.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Method</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
 		<tr>
 			<td><code>showPopover</code></td>
 			<td><code>() =&gt; void</code></td>
-			<td>Function to show the snackbar</td>
+			<td>Shows the snackbar.</td>
 		</tr>
 		<tr>
 			<td><code>hidePopover</code></td>
 			<td><code>() =&gt; void</code></td>
-			<td>Function to hide the snackbar</td>
+			<td>Hides the snackbar.</td>
 		</tr>
 	</tbody>
 </table>

@@ -136,7 +136,7 @@
 <DemoContainer>
 	<TextField
 		label="Amount"
-		value={0}
+		value="0"
 		inputmode="numeric"
 		prefixText="$"
 		suffixText=".00"
@@ -147,7 +147,7 @@
 <Code
 	value={`<TextField
 	label="Amount"
-	value={0}
+	value="0"
 	prefixText="$"
 	suffixText=".00"
 	type="number"
@@ -418,7 +418,7 @@
 	<tbody>
 		<tr>
 			<td><code>value</code></td>
-			<td><code>any</code></td>
+			<td><code>string</code></td>
 			<td>Value of the input or textarea.</td>
 		</tr>
 		<tr>

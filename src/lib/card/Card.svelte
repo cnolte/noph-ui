@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { FocusEventHandler } from 'svelte/elements'
 	import type { CardProps } from './types.ts'
 
 	let {
@@ -15,6 +14,7 @@
 		children,
 		onfocus,
 		onblur,
+		type,
 		...attributes
 	}: CardProps = $props()
 
@@ -60,12 +60,12 @@
 			<div class="np-card-action">{@render action()}</div>
 		{/if}
 	</div>
-	{#if !disabled && attributes.type !== 'text'}
+	{#if !disabled && type !== 'text'}
 		<Ripple forceHover={focused} />
 	{/if}
 {/snippet}
 
-{#if attributes.type === 'text'}
+{#if type === 'text'}
 	<div
 		{...attributes}
 		bind:this={element}
@@ -79,18 +79,19 @@
 	>
 		{@render content()}
 	</div>
-{:else if attributes.type === 'button'}
+{:else if type === 'button'}
 	<button
 		aria-disabled={disabled}
 		{...attributes}
+		type="button"
 		bind:this={element}
 		onfocus={(event) => {
 			focused = true
-			;(onfocus as FocusEventHandler<HTMLButtonElement>)?.(event)
+			onfocus?.(event)
 		}}
 		onblur={(event) => {
 			focused = false
-			;(onblur as FocusEventHandler<HTMLButtonElement>)?.(event)
+			onblur?.(event)
 		}}
 		{disabled}
 		class={[
@@ -102,7 +103,7 @@
 	>
 		{@render content()}
 	</button>
-{:else if attributes.type === 'link'}
+{:else if type === 'link'}
 	<a
 		{...attributes}
 		bind:this={element}
@@ -111,11 +112,11 @@
 		role="link"
 		onfocus={(event) => {
 			focused = true
-			;(onfocus as FocusEventHandler<HTMLAnchorElement>)?.(event)
+			onfocus?.(event)
 		}}
 		onblur={(event) => {
 			focused = false
-			;(onblur as FocusEventHandler<HTMLAnchorElement>)?.(event)
+			onblur?.(event)
 		}}
 		class={[
 			'np-card-container',

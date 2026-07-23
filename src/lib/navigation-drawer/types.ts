@@ -8,18 +8,16 @@ export interface NavigationDrawerProps extends HTMLAttributes<HTMLElement> {
 	direction?: 'rtl' | 'ltr'
 }
 
-interface NavigationDrawerItemButton extends HTMLButtonAttributes {
+export type NavigationDrawerItemElement = HTMLButtonElement | HTMLAnchorElement
+
+export interface NavigationDrawerItemProps
+	extends
+		HTMLAttributes<NavigationDrawerItemElement>,
+		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
+		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
 	icon?: Snippet
 	label: string
 	selected?: boolean
 	badgeLabelText?: string
+	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 }
-
-interface NavigationDrawerItemLink extends HTMLAnchorAttributes {
-	icon?: Snippet
-	label: string
-	selected?: boolean
-	badgeLabelText?: string
-}
-
-export type NavigationDrawerItemProps = NavigationDrawerItemButton | NavigationDrawerItemLink

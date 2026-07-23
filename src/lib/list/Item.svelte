@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { onMount } from 'svelte'
-	import type { FocusEventHandler } from 'svelte/elements'
 	import type { ItemProps } from './types.ts'
 
 	let {
@@ -86,11 +85,11 @@
 		type={attributes.type ?? 'button'}
 		onfocus={(event) => {
 			focused = true
-			;(onfocus as FocusEventHandler<HTMLButtonElement>)?.(event)
+			onfocus?.(event)
 		}}
 		onblur={(event) => {
 			focused = false
-			;(onblur as FocusEventHandler<HTMLButtonElement>)?.(event)
+			onblur?.(event)
 		}}
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}
@@ -105,11 +104,11 @@
 		{...attributes}
 		onfocus={(event) => {
 			focused = true
-			;(onfocus as FocusEventHandler<HTMLAnchorElement>)?.(event)
+			onfocus?.(event)
 		}}
 		onblur={(event) => {
 			focused = false
-			;(onblur as FocusEventHandler<HTMLAnchorElement>)?.(event)
+			onblur?.(event)
 		}}
 		class={['np-item', selected && 'selected', attributes.class]}
 		bind:this={element}

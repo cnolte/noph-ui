@@ -1,26 +1,21 @@
+import type { ButtonElement, ButtonProps } from '#lib/button/types.ts'
 import type { Snippet } from 'svelte'
-import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { HTMLAttributes, MouseEventHandler } from 'svelte/elements'
 
 export interface ChipSetProps extends HTMLAttributes<HTMLDivElement> {
 	chipsCount?: number
 }
 
-interface AssistChipButtonProps extends HTMLButtonAttributes {
+export interface AssistChipProps extends Omit<
+	ButtonProps,
+	'variant' | 'start' | 'end' | 'element'
+> {
 	elevated?: boolean
 	disabled?: boolean
 	label?: string
 	icon?: Snippet
 	element?: HTMLDivElement
 }
-interface AssistChipAnchorProps extends HTMLAnchorAttributes {
-	elevated?: boolean
-	disabled?: boolean
-	label?: string
-	icon?: Snippet
-	element?: HTMLDivElement
-}
-
-export type AssistChipProps = AssistChipButtonProps | AssistChipAnchorProps
 
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
@@ -35,11 +30,7 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	value?: string
 	group?: (string | number)[] | null
 	defaultSelected?: boolean | null
-	onremove?: (
-		event: MouseEvent & {
-			currentTarget: EventTarget & HTMLButtonElement
-		},
-	) => void
+	onremove?: MouseEventHandler<ButtonElement>
 }
 
 export interface InputChipProps extends HTMLAttributes<HTMLDivElement> {
@@ -51,11 +42,7 @@ export interface InputChipProps extends HTMLAttributes<HTMLDivElement> {
 	element?: HTMLDivElement
 	name?: string
 	value?: string | number
-	onremove?: (
-		event: MouseEvent & {
-			currentTarget: EventTarget & HTMLButtonElement
-		},
-	) => void
+	onremove?: MouseEventHandler<ButtonElement>
 }
 
 export interface ChipSetContext {

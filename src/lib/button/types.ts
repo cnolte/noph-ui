@@ -1,61 +1,35 @@
 import type { Snippet } from 'svelte'
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-interface ButtonButtonProps extends HTMLButtonAttributes {
-	variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
-	start?: Snippet | undefined
-	end?: Snippet | undefined
+export type ButtonElement = HTMLButtonElement | HTMLAnchorElement
+
+interface BaseButtonProps
+	extends
+		HTMLAttributes<ButtonElement>,
+		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
+		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
 	element?: HTMLElement
 	disabled?: boolean
 	loading?: boolean
 	loadingAriaLabel?: string
-	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
 	toggle?: boolean
-	shape?: 'round' | 'square'
 	selected?: boolean
+	shape?: 'round' | 'square'
+	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
+	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 }
-interface ButtonAnchorProps extends HTMLAnchorAttributes {
+
+export interface ButtonProps extends BaseButtonProps {
 	variant?: 'text' | 'filled' | 'outlined' | 'elevated' | 'tonal'
 	start?: Snippet
 	end?: Snippet
-	element?: HTMLElement
-	disabled?: boolean
-	loading?: boolean
-	loadingAriaLabel?: string
-	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
-	toggle?: boolean
-	shape?: 'round' | 'square'
-	selected?: boolean
 }
 
-interface IconButtonButtonProps extends HTMLButtonAttributes {
+export interface IconButtonProps extends BaseButtonProps {
 	variant?: 'text' | 'filled' | 'outlined' | 'tonal'
-	element?: HTMLElement
-	toggle?: boolean
-	selected?: boolean
-	loading?: boolean
-	loadingAriaLabel?: string
 	selectedIcon?: Snippet
-	shape?: 'round' | 'square'
-	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
 	width?: 'narrow' | 'wide' | 'default'
 }
-interface IconButtonAnchorProps extends HTMLAnchorAttributes {
-	variant?: 'text' | 'filled' | 'outlined' | 'tonal'
-	element?: HTMLElement
-	disabled?: boolean
-	loading?: boolean
-	loadingAriaLabel?: string
-	toggle?: boolean
-	selected?: boolean
-	selectedIcon?: Snippet
-	shape?: 'round' | 'square'
-	size?: 'xs' | 's' | 'm' | 'l' | 'xl'
-	width?: 'narrow' | 'wide' | 'default'
-}
-
-export type IconButtonProps = IconButtonButtonProps | IconButtonAnchorProps
-export type ButtonProps = ButtonButtonProps | ButtonAnchorProps
 
 export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
 	name: string

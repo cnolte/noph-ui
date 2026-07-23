@@ -1,39 +1,25 @@
 import type { Snippet } from 'svelte'
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-interface ButtonProps extends HTMLButtonAttributes {
-	selected?: boolean
-	start?: Snippet
-	end?: Snippet
-	variant: 'button'
-	supportingText?: Snippet
-	softFocus?: boolean
-	lazy?: boolean
-}
+export type ItemElement = HTMLButtonElement | HTMLAnchorElement | HTMLDivElement
 
-interface AnchorProps extends HTMLAnchorAttributes {
+export interface ItemProps
+	extends
+		HTMLAttributes<ItemElement>,
+		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
+		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
 	selected?: boolean
 	start?: Snippet
 	end?: Snippet
 	disabled?: boolean
-	variant: 'link'
+	variant?: 'button' | 'link' | 'text'
 	supportingText?: Snippet
 	softFocus?: boolean
 	lazy?: boolean
-}
-interface TextProps extends HTMLAttributes<HTMLDivElement> {
-	selected?: boolean
-	start?: Snippet
-	end?: Snippet
-	disabled?: boolean
-	variant?: 'text'
-	supportingText?: Snippet
-	softFocus?: boolean
-	lazy?: boolean
+	type?: 'submit' | 'reset' | 'button' | null
 }
 
-export type ItemProps = ButtonProps | AnchorProps | TextProps
-export type ListItemProps = ButtonProps | AnchorProps | TextProps
+export type ListItemProps = ItemProps
 
 export interface ListProps extends HTMLAttributes<HTMLUListElement> {
 	element?: HTMLUListElement

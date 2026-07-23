@@ -4,7 +4,7 @@
 	import Button from '#lib/button/Button.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	let hidePopover: () => void
+	let dialog: ReturnType<typeof Dialog> | undefined = $state()
 </script>
 
 <svelte:head>
@@ -16,7 +16,7 @@
 <DemoContainer>
 	<Button popovertarget="simple-dialog">Show Dialog</Button>
 	<Dialog
-		bind:hidePopover
+		bind:this={dialog}
 		headline="Reset settings?"
 		supportingText="This will reset you app preferences back to their default settings."
 		id="simple-dialog"
@@ -28,13 +28,13 @@
 		{#snippet actions()}
 			<Button
 				onclick={() => {
-					hidePopover()
+					dialog?.hidePopover()
 				}}
 				variant="text">Cancel</Button
 			>
 			<Button
 				onclick={() => {
-					hidePopover()
+					dialog?.hidePopover()
 				}}
 				variant="text">Accept</Button
 			>
@@ -42,9 +42,14 @@
 	</Dialog>
 </DemoContainer>
 <Code
-	value={`<Button popovertarget="simple-dialog">Show Dialog</Button>
+	value={`<script lang="ts">
+	let dialog: ReturnType<typeof Dialog> | undefined = $state()
+</` +
+		`script>
+
+<Button popovertarget="simple-dialog">Show Dialog</Button>
 <Dialog
-	bind:hidePopover
+	bind:this={dialog}
 	headline="Reset settings?"
 	supportingText="This will reset you app preferences back to their default settings."
 	id="simple-dialog"
@@ -56,16 +61,44 @@
 	{#snippet actions()}
 		<Button
 			onclick={() => {
-				hidePopover()
+				dialog?.hidePopover()
 			}}
 			variant="text">Cancel</Button
 		>
 		<Button
 			onclick={() => {
-				hidePopover()
+				dialog?.hidePopover()
 			}}
 			variant="text">Accept</Button
 		>
 	{/snippet}
 </Dialog>`}
 />
+
+<h2>Methods</h2>
+<p>
+	Bind a reference to the dialog with <code>bind:this</code> to call its methods imperatively. Type
+	the reference with <code>ReturnType&lt;typeof Dialog&gt;</code>; it is <code>undefined</code>
+	until the component has mounted, so call through <code>?.</code>.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Method</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>showPopover</code></td>
+			<td><code>() =&gt; void</code></td>
+			<td>Shows the dialog.</td>
+		</tr>
+		<tr>
+			<td><code>hidePopover</code></td>
+			<td><code>() =&gt; void</code></td>
+			<td>Hides the dialog.</td>
+		</tr>
+	</tbody>
+</table>

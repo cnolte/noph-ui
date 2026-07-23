@@ -3,7 +3,7 @@
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import { onMount } from 'svelte'
-	import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements'
+	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { IconButtonProps } from './types.ts'
 
 	let {
@@ -103,8 +103,7 @@
 			} else {
 				handlePress()
 			}
-			// prettier-ignore
-			;(attributes.onclick as MouseEventHandler<HTMLButtonElement>)?.(event)
+			attributes.onclick?.(event)
 		}}
 		class={[
 			'np-icon-button',

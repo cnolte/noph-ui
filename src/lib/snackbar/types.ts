@@ -9,8 +9,6 @@ export interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
 	onActionClick?: (event: Event) => void
 	icon?: Snippet | undefined
 	onIconClick?: (event: Event) => void
-	showPopover?: () => void
-	hidePopover?: () => void
 	timeout?: number
 	element?: HTMLElement
 	popover?: 'auto' | 'manual'

@@ -9,6 +9,4 @@ export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'popov
 	actions?: Snippet
 	quick?: boolean
 	element?: HTMLElement
-	showPopover?: () => void
-	hidePopover?: () => void
 }
