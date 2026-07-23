@@ -251,7 +251,7 @@
 	name="virtual_list"
 	style="max-width: 300px"
 	options={[
-		...Array.from({ length: 5001 }, (_, i) => ({
+		...Array.from({ length: 4001 }, (_, i) => ({
 			value: \`option\${i + 1}\`,
 			label: \`Option \${i + 1}\`,
 		})),
@@ -343,7 +343,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Filled text field example</h3>
+<h3>Filled select example</h3>
 <DemoContainer>
 	<Select
 		variant="filled"
@@ -390,7 +390,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Outlined text field example</h3>
+<h3>Outlined select example</h3>
 <DemoContainer>
 	<Select
 		options={[
@@ -460,16 +460,12 @@
 			<td>Provides additional information below the select, such as usage instructions.</td>
 		</tr>
 		<tr>
-			<td><code>error</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td>Manually set the select to error</td>
-		</tr>
-		<tr>
-			<td><code>errorText</code></td>
-			<td><code>string</code></td>
-			<td><code>''</code></td>
-			<td>Manually defined error text</td>
+			<td><code>issues</code></td>
+			<td><code>&#123; message: string &#125;[]</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Displays error messages below the select. Optimized to use with remote form field issues.</td
+			>
 		</tr>
 		<tr>
 			<td><code>required</code></td>

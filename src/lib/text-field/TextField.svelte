@@ -149,7 +149,7 @@
 					{errorText ?? supportingText}
 				</span>
 				{#if attributes.maxlength}
-					<span>{value?.length || 0}/{attributes.maxlength}</span>
+					<span>{`${value ?? ''}`.length}/{attributes.maxlength}</span>
 				{/if}
 			</div>
 		{/if}

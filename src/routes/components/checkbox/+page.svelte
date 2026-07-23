@@ -56,11 +56,11 @@
 		</tr>
 		<tr>
 			<td><code>--np-checkbox-outline-color</code></td>
-			<td><code>--np-color-primary</code></td>
+			<td><code>--np-color-on-surface-variant</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-checkbox-selected-container-color</code></td>
-			<td><code>--np-color-on-surface-variant</code></td>
+			<td><code>--np-color-primary</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-checkbox-selected-icon-color</code></td>
@@ -130,7 +130,7 @@
 		</tr>
 		<tr>
 			<td><code>group</code></td>
-			<td><code>string | number | undefined</code></td>
+			<td><code>(string | number)[] | null</code></td>
 			<td>Input property</td>
 		</tr>
 		<tr>

@@ -26,14 +26,14 @@
 	<Tabs value="videos">
 		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
 		<Tab value="theme">Theme</Tab>
-		<Tab badge value="settings">Setttings</Tab>
+		<Tab badge value="settings">Settings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
 	value={`<Tabs value="videos">
 	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
 	<Tab value="theme">Theme</Tab>
-	<Tab badge value="settings">Setttings</Tab>
+	<Tab badge value="settings">Settings</Tab>
 </Tabs>`}
 />
 <h4>Icons</h4>
@@ -43,7 +43,7 @@
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 		</Tab>
 		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
@@ -52,7 +52,7 @@
 		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 	</Tab>
 	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 </Tabs>`}
 />
 <h3>Secondary Tabs</h3>
@@ -60,14 +60,14 @@
 	<Tabs variant="secondary" value="videos">
 		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
 		<Tab value="theme">Theme</Tab>
-		<Tab badge value="settings">Setttings</Tab>
+		<Tab badge value="settings">Settings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
 	value={`<Tabs variant="secondary" value="videos">
 	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
 	<Tab value="theme">Theme</Tab>
-	<Tab badge value="settings">Setttings</Tab>
+	<Tab badge value="settings">Settings</Tab>
 </Tabs>`}
 />
 <h4>Icons</h4>
@@ -77,7 +77,7 @@
 			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 		</Tab>
 		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 	</Tabs>
 </DemoContainer>
 <Code
@@ -86,7 +86,7 @@
 		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
 	</Tab>
 	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Setttings</Tab>
+	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 </Tabs>`}
 />
 <h3>Selection</h3>
@@ -104,7 +104,7 @@
 		<Tabs bind:value>
 			<Tab value="videos">Videos</Tab>
 			<Tab value="theme">Theme</Tab>
-			<Tab value="settings">Setttings</Tab>
+			<Tab value="settings">Settings</Tab>
 		</Tabs>
 		<div style="margin-top:1rem;font-size:0.825rem">Selected Tab: {value}</div>
 	</div>
@@ -113,7 +113,7 @@
 	value={`<Tabs bind:value>
 	<Tab value="videos">Videos</Tab>
 	<Tab value="theme">Theme</Tab>
-	<Tab value="settings">Setttings</Tab>
+	<Tab value="settings">Settings</Tab>
 </Tabs>
 <div>Selected Tab: {value}</div>`}
 />
@@ -132,7 +132,7 @@
 			<Tab data-sveltekit-noscroll href="/components/tabs?tab=videos" value="videos">Videos</Tab>
 			<Tab data-sveltekit-noscroll href="/components/tabs?tab=theme" value="theme">Theme</Tab>
 			<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">
-				Setttings
+				Settings
 			</Tab>
 		</Tabs>
 	</div>
@@ -141,7 +141,7 @@
 	value={`<Tabs variant="secondary" value={page.url.searchParams.get('tab') || 'videos'}>
 	<Tab data-sveltekit-noscroll href="/components/tabs?tab=videos" value="videos">Videos</Tab>
 	<Tab data-sveltekit-noscroll href="/components/tabs?tab=theme" value="theme">Theme</Tab>
-	<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">Setttings</Tab>
+	<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">Settings</Tab>
 </Tabs>`}
 />
 
@@ -167,7 +167,7 @@
 		<tr>
 			<td><code>variant</code></td>
 			<td><code>'primary' | 'secondary'</code></td>
-			<td><code>undefined</code></td>
+			<td><code>'primary'</code></td>
 			<td
 				>Sets the visual style of the tab. Use <code>'primary'</code> for the default appearance or
 				<code>'secondary'</code> for an alternative style.</td

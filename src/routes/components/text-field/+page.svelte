@@ -39,6 +39,10 @@
 	<li><code>type="number"</code></li>
 	<li><code>type="search"</code></li>
 	<li><code>type="tel"</code></li>
+	<li><code>type="date"</code></li>
+	<li><code>type="time"</code></li>
+	<li><code>type="datetime-local"</code></li>
+	<li><code>type="datetime"</code></li>
 	<li><code>type="textarea"</code></li>
 </ul>
 <DemoContainer>
@@ -337,7 +341,8 @@
 			<td><code>type</code></td>
 			<td
 				><code
-					>'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url' | 'textarea'</code
+					>'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url' | 'date' | 'time' |
+					'datetime-local' | 'datetime' | 'textarea'</code
 				></td
 			>
 			<td><code>'text'</code></td>
@@ -418,7 +423,7 @@
 	<tbody>
 		<tr>
 			<td><code>value</code></td>
-			<td><code>string</code></td>
+			<td><code>string | number | null</code></td>
 			<td>Value of the input or textarea.</td>
 		</tr>
 		<tr>

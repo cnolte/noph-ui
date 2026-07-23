@@ -18,7 +18,7 @@
 	<Dialog
 		bind:this={dialog}
 		headline="Reset settings?"
-		supportingText="This will reset you app preferences back to their default settings."
+		supportingText="This will reset your app preferences back to their default settings."
 		id="simple-dialog"
 		divider
 	>
@@ -51,7 +51,7 @@
 <Dialog
 	bind:this={dialog}
 	headline="Reset settings?"
-	supportingText="This will reset you app preferences back to their default settings."
+	supportingText="This will reset your app preferences back to their default settings."
 	id="simple-dialog"
 	divider
 >

@@ -27,7 +27,7 @@
 	}: AutoCompleteProps = $props()
 
 	const uid = $props.id()
-	const query = $derived(value ? value.toLocaleLowerCase() : '')
+	const query = $derived(value ? `${value}`.toLocaleLowerCase() : '')
 	const filterFn = $derived(
 		optionsFilter ||
 			((option: AutoCompleteOption) => !query || option.label.toLocaleLowerCase().includes(query)),

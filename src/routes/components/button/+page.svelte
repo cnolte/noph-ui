@@ -165,7 +165,7 @@
 		</tr>
 		<tr>
 			<td><code>--np-elevated-button-label-text-color</code></td>
-			<td><code>--np-color-on-primary</code></td>
+			<td><code>--np-color-primary</code></td>
 		</tr>
 	</tbody>
 </table>
@@ -273,7 +273,7 @@
 	<tbody>
 		<tr>
 			<td><code>--np-outlined-button-outline-color</code></td>
-			<td><code>--np-color-outline</code></td>
+			<td><code>--np-color-outline-variant</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-outlined-button-label-text-color</code></td>

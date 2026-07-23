@@ -53,9 +53,9 @@
 		</tr>
 		<tr>
 			<td><code>icons</code></td>
-			<td><code>'checked' | 'both' | undefined</code></td>
+			<td><code>'selected' | 'both' | undefined</code></td>
 			<td>
-				Controls the visibility of icons. Determines if only one icon is shown when checked, if both
+				Controls the visibility of icons. Determines if only one icon is shown when selected, if
 				both are shown (which also increases the size of the indicator when unchecked) or none for
 				never showing an icon.</td
 			>

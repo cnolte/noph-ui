@@ -23,8 +23,11 @@ whose event handlers share one `currentTarget`.
   `event.currentTarget` typed as `HTMLButtonElement | HTMLAnchorElement`.
 - **TextField** — `TextFieldProps` is no longer an `input | textarea` discriminated
   union. Event handlers now receive `event.currentTarget` typed as
-  `HTMLInputElement | HTMLTextAreaElement`. The `value` prop is now typed `string`
-  (was `any`); `bind:value` remains permissive.
+  `HTMLInputElement | HTMLTextAreaElement`. The `value` prop is now typed
+  `string | number | null` (was `any`); `bind:value` remains permissive. The
+  `number` member keeps SvelteKit remote form fields spreadable
+  (`<TextField {...form.fields.x.as('text')} />`), whose `value` is
+  `string | number`.
 - **Card** — `CardProps` is no longer a `div | button | a` union. Event handlers
   now receive `event.currentTarget` typed as
   `HTMLDivElement | HTMLButtonElement | HTMLAnchorElement`.

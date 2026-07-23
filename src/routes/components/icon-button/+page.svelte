@@ -126,7 +126,7 @@
 <h2>Loading</h2>
 <DemoContainer>
 	<IconButton loading loadingAriaLabel="Loading text"><Icon>check</Icon></IconButton>
-	<IconButton loading loadingAriaLabel="Loading filles" variant="filled"
+	<IconButton loading loadingAriaLabel="Loading filled" variant="filled"
 		><Icon>check</Icon></IconButton
 	>
 	<IconButton loading loadingAriaLabel="Loading tonal" variant="tonal"
@@ -137,9 +137,16 @@
 	>
 </DemoContainer>
 <Code
-	value={`<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
-<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
-<Button loading loadingAriaLabel="Loading text" variant="text">Text</Button>`}
+	value={`<IconButton loading loadingAriaLabel="Loading text"><Icon>check</Icon></IconButton>
+<IconButton loading loadingAriaLabel="Loading filled" variant="filled">
+	<Icon>check</Icon>
+</IconButton>
+<IconButton loading loadingAriaLabel="Loading tonal" variant="tonal">
+	<Icon>check</Icon>
+</IconButton>
+<IconButton loading loadingAriaLabel="Loading outlined" variant="outlined">
+	<Icon>check</Icon>
+</IconButton>`}
 />
 <blockquote>
 	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
@@ -298,7 +305,7 @@
 	<tbody>
 		<tr>
 			<td><code>--np-outlined-icon-button-outline-color</code></td>
-			<td><code>--np-color-outline</code></td>
+			<td><code>--np-color-outline-variant</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-icon-button-icon-size</code></td>
@@ -345,6 +352,24 @@
 			<td><code>'text' | 'filled' | 'outlined' | 'tonal'</code></td>
 			<td><code>'text'</code></td>
 			<td>Defines the visual style of the button.</td>
+		</tr>
+		<tr>
+			<td><code>size</code></td>
+			<td><code>'xs' | 's' | 'm' | 'l' | 'xl'</code></td>
+			<td><code>'s'</code></td>
+			<td>Defines the size of the button.</td>
+		</tr>
+		<tr>
+			<td><code>shape</code></td>
+			<td><code>'round' | 'square'</code></td>
+			<td><code>'round'</code></td>
+			<td>Defines the shape of the button.</td>
+		</tr>
+		<tr>
+			<td><code>width</code></td>
+			<td><code>'narrow' | 'wide' | 'default'</code></td>
+			<td><code>'default'</code></td>
+			<td>Defines the width of the button.</td>
 		</tr>
 		<tr>
 			<td><code>toggle</code></td>
