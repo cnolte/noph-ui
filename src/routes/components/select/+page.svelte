@@ -229,8 +229,9 @@
 <h3>Virtual list</h3>
 <p>
 	An <code>option</code> uses the Intersection Observer API to improve performance. This enables
-	lists of up to 300 options. If there are more than 300 options, the <code>Select</code> component uses
-	a virtual list to render the options. The virtual list has the limitation of having a fixed height.
+	lists of up to 300 options. Beyond that the <code>Select</code> component uses a virtual list to
+	render the options, which has the limitation of having a fixed height. The switchover point is
+	<code>virtualThreshold</code>; lower it when your options are expensive to render.
 </p>
 <DemoContainer>
 	<Select
@@ -390,6 +391,26 @@
 		</tr>
 	</tbody>
 </table>
+<h3>Sizing tokens</h3>
+<p>These apply to both variants and control how wide the select is allowed to get.</p>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-select-min-width</code></td>
+			<td><code>210px</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-select-max-width</code></td>
+			<td><code>100%</code></td>
+		</tr>
+	</tbody>
+</table>
 <h3>Outlined select example</h3>
 <DemoContainer>
 	<Select
@@ -429,6 +450,12 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td><code>options</code></td>
+			<td><code>SelectOption[]</code></td>
+			<td><code>[]</code></td>
+			<td>Required. The options to choose from. See the table below for their shape.</td>
+		</tr>
 		<tr>
 			<td><code>variant</code></td>
 			<td><code>'outlined' | 'filled'</code></td>
@@ -498,10 +525,48 @@
 			<td>Restricts the menu width to match the width of the select component.</td>
 		</tr>
 		<tr>
+			<td><code>virtualThreshold</code></td>
+			<td><code>number</code></td>
+			<td><code>300</code></td>
+			<td>Number of options from which on the menu renders as a virtual list.</td>
+		</tr>
+		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLAttributes&lt;HTMLDivElement&gt;</code></td>
 			<td></td>
 			<td>Attributes are passed to the component container.</td>
+		</tr>
+	</tbody>
+</table>
+<h3>SelectOption</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>value</code></td>
+			<td><code>string | number</code></td>
+			<td>Required. Value submitted with the form.</td>
+		</tr>
+		<tr>
+			<td><code>label</code></td>
+			<td><code>string</code></td>
+			<td>Required. Text shown for the option.</td>
+		</tr>
+		<tr>
+			<td><code>selected</code></td>
+			<td><code>boolean | null | undefined</code></td>
+			<td>Preselects the option, and is the state a form reset returns it to.</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td>Makes the option non-selectable.</td>
 		</tr>
 	</tbody>
 </table>

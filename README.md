@@ -52,30 +52,30 @@ body {
 
 ## Roadmap
 
-Beta (No breaking changes expected)
+Beta
 
+- Auto complete
+- Badges
 - Buttons
 - Cards
 - Checkbox
+- Chips
+- Dialogs
 - Divider
 - Icon buttons
-- Lists (Docs missing)
+- Lists
+- Loading indicator
+- Menus
+- Navigation Drawer
+- Navigation Rail
 - Progress indicators
 - Radio
 - Ripple
 - Segmented buttons
 - Select
+- Slider
 - Snackbar
 - Switch
-- Text fields
 - Tabs
-
-In progress (Breaking changes expected)
-
-- Auto complete
-- Chips (Docs missing)
-- Dialogs (Fullscreen + Docs missing)
-- Menus (Positioning missing + Docs missing)
-- Navigation Drawer (Docs missing)
-- Navigation Rail (Badge is missing + Docs missing)
-- Tooltips (Positioning missing)
+- Text fields
+- Tooltips

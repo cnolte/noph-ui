@@ -82,9 +82,9 @@
 <h2>Wavy</h2>
 <p>
 	The Material 3 expressive variant. Only the active indicator waves, the track stays smooth, and
-	the wave travels one wavelength per second. Determinate indicators flatten the wave below 10% and
-	above 95% progress so the ends stay readable. Drag the slider above past those points to see it
-	happen.
+	the wave travels one wavelength per second. A determinate <code>LinearProgress</code> flattens the wave
+	at 10% and below and at 95% and above, so the ends stay readable. Drag the slider above past those points
+	to see it happen.
 </p>
 <DemoContainer>
 	<div class="controls">
@@ -229,8 +229,8 @@
 <p>
 	<code>--np-circular-progress-active-indicator-width</code> is a unitless percentage of the
 	indicator size, so the stroke scales along with <code>--np-circular-progress-size</code>. The gap
-	between the two lanes is derived from that width, which keeps it at 4dp however thick the stroke
-	gets.
+	between the two lanes is derived from that width, which keeps it constant however thick the stroke
+	gets: 4.8dp, and 4dp for the <code>wavy</code> variant.
 </p>
 <h3>Circular progress example</h3>
 <DemoContainer>

@@ -114,6 +114,15 @@
 				effect is only applied through actual user interaction.</td
 			>
 		</tr>
+		<tr>
+			<td><code>forElement</code></td>
+			<td><code>HTMLElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Element the ripple listens on, instead of its own parent. Use it when the touch target is
+				larger than the surface the ripple is drawn on.</td
+			>
+		</tr>
 	</tbody>
 </table>
 <h3>Bindables</h3>

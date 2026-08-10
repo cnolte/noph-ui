@@ -171,3 +171,121 @@
 	{/snippet}
 </ListItem>`}
 />
+
+<h2>Accessibility</h2>
+<p>
+	<code>List</code> renders a plain <code>&lt;ul&gt;</code>, so anything you put inside becomes a
+	list item for assistive technology. Pick the <code>variant</code> that matches what the item does:
+	<code>text</code> for content that is only read, <code>button</code> for something that acts on
+	the current page, and <code>link</code> for navigation. That choice decides the element that ends up
+	in the DOM, and with it the role, the keyboard behaviour and whether the item is focusable at all.
+</p>
+<p>
+	A disabled item renders as a <code>&lt;div&gt;</code> with <code>aria-disabled</code> instead of a disabled
+	control, which keeps it readable but takes it out of the tab order.
+</p>
+
+<h2>API</h2>
+<h3>List attributes</h3>
+<p>
+	Everything else you pass is forwarded to the <code>&lt;ul&gt;</code> element, so
+	<code>class</code>, <code>style</code> and the usual event handlers work as expected.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLUListElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable reference to the underlying <code>&lt;ul&gt;</code>.</td>
+		</tr>
+	</tbody>
+</table>
+<h3>ListItem attributes</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>variant</code></td>
+			<td><code>'text' | 'button' | 'link'</code></td>
+			<td><code>'text'</code></td>
+			<td
+				>Element the item renders as: a <code>&lt;div&gt;</code>, a <code>&lt;button&gt;</code> or
+				an
+				<code>&lt;a&gt;</code>. The interactive variants add a ripple.</td
+			>
+		</tr>
+		<tr>
+			<td><code>selected</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Whether the item is shown as selected.</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td
+				>Renders the item as non-interactive with <code>aria-disabled</code>, whatever the
+				<code>variant</code> is.</td
+			>
+		</tr>
+		<tr>
+			<td><code>supportingText</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Second line below the label. An item with supporting text is taller.</td>
+		</tr>
+		<tr>
+			<td><code>start</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading content, typically an icon or an avatar.</td>
+		</tr>
+		<tr>
+			<td><code>end</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Trailing content, typically an icon, a switch or a checkbox.</td>
+		</tr>
+		<tr>
+			<td><code>softFocus</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td
+				>Shows the hover state without the item being hovered. Use it to mark the active option in a
+				list that is driven by the arrow keys.</td
+			>
+		</tr>
+		<tr>
+			<td><code>lazy</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Skips rendering the item while it is off screen, for very long lists.</td>
+		</tr>
+		<tr>
+			<td><code>type</code></td>
+			<td><code>'submit' | 'reset' | 'button' | null</code></td>
+			<td><code>'button'</code></td>
+			<td
+				>Only for <code>variant="button"</code>. Set it to <code>submit</code> to have the item submit
+				the surrounding form.</td
+			>
+		</tr>
+	</tbody>
+</table>

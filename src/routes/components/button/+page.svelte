@@ -310,6 +310,45 @@
 		</tr>
 	</tbody>
 </table>
+<h3>Shared tokens</h3>
+<p>
+	These apply to every variant. Their defaults come from <code>size</code>, so setting one overrides
+	the sizing for whatever size the button is.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-button-shape</code></td>
+			<td>per size, <code>0.75rem</code> at <code>s</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-button-padding</code></td>
+			<td>per size, <code>1rem</code> at <code>s</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-button-gap</code></td>
+			<td>per size, <code>0.5rem</code> at <code>s</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-button-icon-size</code></td>
+			<td>per size, <code>1.25rem</code> at <code>s</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-button-icon-color</code></td>
+			<td><code>inherit</code>, so the icon follows the label colour</td>
+		</tr>
+		<tr>
+			<td><code>--np-outlined-button-container-color</code></td>
+			<td><code>transparent</code></td>
+		</tr>
+	</tbody>
+</table>
 <h3>Text button example</h3>
 <DemoContainer>
 	<Button variant="text" --np-text-button-label-text-color="var(--np-color-tertiary)">

@@ -86,7 +86,7 @@
 		transition-property: transform, opacity;
 		transition-timing-function: linear;
 		background-color: var(--np-color-secondary-container);
-		border-radius: var(--np-shape-corner-full);
+		border-radius: var(--np-navigation-drawer-item-container-shape, var(--np-shape-corner-full));
 		z-index: -1;
 	}
 

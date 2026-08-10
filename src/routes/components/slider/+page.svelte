@@ -309,8 +309,36 @@
 			<td><code>--np-slider-length</code></td>
 			<td><code>12rem</code>, vertical only</td>
 		</tr>
+		<tr>
+			<td><code>--np-slider-icon-color</code></td>
+			<td><code>--np-color-on-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-slider-icon-padding</code></td>
+			<td><code>0.625rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-slider-handle-width-focus</code></td>
+			<td><code>0.125rem</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-slider-disabled-active-track-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-slider-disabled-inactive-track-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-slider-disabled-handle-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
 	</tbody>
 </table>
+<p>
+	The handle narrows to <code>--np-slider-handle-width-focus</code> while it is pressed or focused. The
+	disabled colours are blended with an opacity of their own, so they take a colour, not a pre-faded one.
+</p>
 <h3>Example</h3>
 <DemoContainer>
 	<div class="stack">

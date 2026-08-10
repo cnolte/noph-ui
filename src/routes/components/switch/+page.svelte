@@ -79,11 +79,33 @@
 			<td><code>--np-comp-switch-state-layer-size</code></td>
 			<td><code>2.5rem</code></td>
 		</tr>
+		<tr>
+			<td><code>--np-comp-switch-disabled-unselected-track-color</code></td>
+			<td><code>--np-color-surface-container-highest</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-disabled-selected-track-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-disabled-track-opacity</code></td>
+			<td><code>0.12</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-disabled-unselected-handle-opacity</code></td>
+			<td><code>0.38</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-disabled-selected-handle-opacity</code></td>
+			<td><code>1</code></td>
+		</tr>
 	</tbody>
 </table>
 <p>
 	<code>--np-comp-switch-selected-icon-color</code> colors the icon inside the handle, which only
-	shows with <code>icons="selected"</code> or <code>icons="both"</code>.
+	shows with <code>icons="selected"</code> or <code>icons="both"</code>. The
+	<code>disabled</code> tokens take a colour and an opacity separately, because the disabled switch is
+	drawn by fading the same colours rather than by swapping in pre-faded ones.
 </p>
 <h3>Example</h3>
 <DemoContainer>

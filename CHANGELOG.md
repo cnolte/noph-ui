@@ -5,6 +5,43 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.0] - 2026-08-10
+
+The headline of this release is the new `LoadingIndicator`, the Material 3
+Expressive take on a spinner that morphs through a sequence of shapes instead of
+sweeping an arc. Next to that, this release is mostly about the documentation:
+every component that was still missing a page or an API table has one now, and a
+pass over the existing pages against the actual component sources turned up a
+number of props and tokens that were undocumented or documented wrongly. There
+are no breaking changes.
+
+### Added
+
+- **LoadingIndicator** (new component): an indeterminate variant that loops
+  through seven Material shapes, a new morph every 650ms on a
+  `spring(dampingRatio 0.6, stiffness 200)` and one full turn every 4666ms, and
+  a determinate variant that morphs from a circle into a soft burst as `value`
+  grows while rotating half a turn counterclockwise. Pass `contained` to draw
+  the shape on a filled circle. The container is 48dp with the active indicator
+  at 38dp, scaled down so that no shape clips as it rotates. It renders
+  `role="progressbar"` and keeps `aria-valuenow` and `aria-valuemax` in sync
+  with `value` and `max`, and leaves out `aria-valuenow` when `indeterminate` is
+  set. The shape outlines are generated from
+  `androidx.compose.material3.MaterialShapes`.
+- New CSS custom properties: `--np-loading-indicator-color`,
+  `--np-loading-indicator-container-color` and `--np-loading-indicator-size`.
+
+### Fixed
+
+- **NavigationDrawerItem**: `--np-navigation-drawer-item-container-shape` only
+  changed the `border-radius` of the item itself, while the pill drawn behind a
+  selected item was hardcoded to `--np-shape-corner-full`. Setting the token
+  therefore had no visible effect. Both now follow the token.
+- **Option**: dropped a `background: var(--np-surface)` declaration. There is no
+  such custom property, so the declaration was invalid at computed value time
+  and the option fell back to a transparent background, which is what it should
+  be over the picker anyway. Nothing changes visually.
+
 ## [0.35.0] - 2026-08-10
 
 The headline of this release is the new `Slider` component and a rewrite of both

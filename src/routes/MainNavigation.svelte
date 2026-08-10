@@ -86,6 +86,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Loading indicator"
+	href="/components/loading-indicator"
+	selected={page.url.pathname === '/components/loading-indicator'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Menus"
 	href="/components/menu"
 	selected={page.url.pathname === '/components/menu'}

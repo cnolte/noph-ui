@@ -307,6 +307,26 @@
 		</tr>
 	</tbody>
 </table>
+<h3>Shared tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-picker-indicator-display</code></td>
+			<td><code>none</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	A <code>date</code>, <code>time</code> or <code>datetime-local</code> field hides the browser's
+	own picker button, since it clashes with the field's own trailing content. Set
+	<code>--np-picker-indicator-display</code> to <code>block</code> to bring it back.
+</p>
 <h3>Outlined text field example</h3>
 <DemoContainer>
 	<TextField
@@ -408,6 +428,24 @@
 			<td><code>''</code></td>
 			<td>An optional suffix to display after the input value.</td>
 		</tr>
+		<tr>
+			<td><code>defaultValue</code></td>
+			<td><code>string | number | null | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Value the field starts with and that a form reset returns it to, without taking control of
+				<code>value</code>.</td
+			>
+		</tr>
+		<tr>
+			<td><code>populated</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td
+				>Keeps the label in its floating position even while the input is empty. Set it when
+				something other than the value fills the field, such as chips.</td
+			>
+		</tr>
 	</tbody>
 </table>
 
@@ -423,8 +461,13 @@
 	<tbody>
 		<tr>
 			<td><code>value</code></td>
-			<td><code>string | number | boolean | null</code></td>
+			<td><code>string | number | null | undefined</code></td>
 			<td>Value of the input or textarea.</td>
+		</tr>
+		<tr>
+			<td><code>focused</code></td>
+			<td><code>boolean</code></td>
+			<td>Whether the input currently has focus. Defaults to <code>false</code>.</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
@@ -440,6 +483,14 @@
 			<td><code>inputElement</code></td>
 			<td><code>HTMLInputElement | HTMLTextAreaElement | undefined</code></td>
 			<td>Allows access to the input element</td>
+		</tr>
+		<tr>
+			<td><code>clientWidth</code>, <code>clientHeight</code></td>
+			<td><code>number | undefined</code></td>
+			<td>
+				Measurements of the field, for laying something out against it. <code>AutoComplete</code> uses
+				them to size its menu.
+			</td>
 		</tr>
 	</tbody>
 </table>

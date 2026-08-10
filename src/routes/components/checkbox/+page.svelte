@@ -66,8 +66,16 @@
 			<td><code>--np-checkbox-selected-icon-color</code></td>
 			<td><code>--np-color-on-primary</code></td>
 		</tr>
+		<tr>
+			<td><code>--np-checkbox-margin</code></td>
+			<td><code>max(0px, (48px - 18px) / 2)</code></td>
+		</tr>
 	</tbody>
 </table>
+<p>
+	<code>--np-checkbox-margin</code> is the space that grows the 18dp box into a 48dp touch target. Only
+	shrink it where the checkbox already sits inside a large enough target of its own, such as a list item.
+</p>
 <h3>Example</h3>
 <DemoContainer>
 	<Checkbox

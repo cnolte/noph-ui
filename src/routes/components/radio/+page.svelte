@@ -147,8 +147,10 @@
 	<tbody>
 		<tr>
 			<td><code>group</code></td>
-			<td><code>string | number | undefined</code></td>
-			<td>Input property</td>
+			<td><code>string | number | null | undefined</code></td>
+			<td>
+				The <code>value</code> of the selected radio. Bind the same variable to every radio of a group.
+			</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>

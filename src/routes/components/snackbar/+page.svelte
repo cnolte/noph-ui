@@ -217,6 +217,14 @@
 	</thead>
 	<tbody>
 		<tr>
+			<td><code>open</code></td>
+			<td><code>boolean</code></td>
+			<td
+				>Whether the snackbar is currently shown. Defaults to <code>false</code>. Setting it does
+				not open the snackbar; use <code>showPopover()</code>.</td
+			>
+		</tr>
+		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
 			<td

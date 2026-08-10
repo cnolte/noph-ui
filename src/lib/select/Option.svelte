@@ -30,7 +30,6 @@
 		padding: 0.5rem 1rem;
 		gap: 0.75rem;
 		height: 2rem;
-		background: var(--np-surface);
 		align-items: center;
 
 		&:checked {

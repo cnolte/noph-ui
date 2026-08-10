@@ -414,3 +414,347 @@
 	</ChipSet>
 </TextField>`}
 />
+
+<h2>Accessibility</h2>
+<p>
+	Every chip type renders the element that matches what it does. An assist chip is a
+	<code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> when you pass an <code>href</code>. A
+	filter chip is a checkbox with a label, so it reports its selected state to assistive technology
+	on its own. An input chip is a button with a second button for removing it.
+</p>
+<p>
+	Wrap chips in a <code>ChipSet</code> to give them a single tab stop: <kbd>Tab</kbd> moves into and
+	out of the set, <kbd>←</kbd> and <kbd>→</kbd> move between the chips and wrap around at the ends,
+	and <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and the last one.
+</p>
+<p>
+	A remove button carries no text of its own, so give it one through
+	<code>ariaLabelRemove</code>. The default is the bare <code>"Remove"</code>, which does not say
+	what is being removed, so name the chip in it.
+</p>
+<Code
+	value={`<InputChip
+	label={email}
+	ariaLabelRemove="Remove {email}"
+	onremove={() => remove(email)}
+/>`}
+/>
+
+<h2>Theming</h2>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-assist-chip-label-text-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-assist-chip-outline-color</code></td>
+			<td><code>--np-color-outline-variant</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filter-chip-container-shape</code></td>
+			<td><code>--np-shape-corner-small</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filter-chip-outline-color</code></td>
+			<td><code>--np-color-outline-variant</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-input-chip-container-shape</code></td>
+			<td><code>--np-shape-corner-small</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-input-chip-outline-color</code></td>
+			<td><code>--np-color-outline-variant</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	The colours of a filter and an input chip come from the theme's
+	<code>secondary-container</code> and <code>on-secondary-container</code> roles while they are
+	selected, and from <code>on-surface-variant</code> while they are not. An elevated chip takes its shadow
+	from the elevation roles.
+</p>
+<h3>Example</h3>
+<DemoContainer>
+	<ChipSet>
+		<FilterChip
+			label="Tertiary"
+			--np-filter-chip-container-shape="var(--np-shape-corner-full)"
+			--np-filter-chip-outline-color="var(--np-color-tertiary)"
+		/>
+		<AssistChip
+			label="Tertiary"
+			--np-assist-chip-outline-color="var(--np-color-tertiary)"
+			--np-assist-chip-label-text-color="var(--np-color-tertiary)"
+		/>
+	</ChipSet>
+</DemoContainer>
+<Code
+	value={`<FilterChip
+	label="Tertiary"
+	--np-filter-chip-container-shape="var(--np-shape-corner-full)"
+	--np-filter-chip-outline-color="var(--np-color-tertiary)"
+/>`}
+/>
+
+<h2>API</h2>
+<h3>ChipSet attributes</h3>
+<p>
+	Everything you pass is forwarded to the wrapping <code>&lt;div&gt;</code>, so
+	<code>class</code>, <code>style</code> and <code>aria-label</code> work as expected.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>chipsCount</code></td>
+			<td><code>number | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>
+				Number of chips in the set. Pass it when the set lives inside a text field, so the field can
+				make room for the chips.
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>AssistChip attributes</h3>
+<p>
+	An assist chip takes the <a href="/components/button">Button</a> attributes apart from
+	<code>variant</code>, <code>start</code> and <code>end</code>, which the chip sets itself. That
+	includes <code>href</code>, <code>onclick</code> and <code>type</code>.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>label</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td>Text of the chip.</td>
+		</tr>
+		<tr>
+			<td><code>icon</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading icon.</td>
+		</tr>
+		<tr>
+			<td><code>elevated</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Drops the outline and gives the chip a shadow instead.</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Makes the chip non-interactive.</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLDivElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable reference to the chip element.</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>FilterChip attributes</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>label</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td>Text of the chip.</td>
+		</tr>
+		<tr>
+			<td><code>selected</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable. Whether the filter is on.</td>
+		</tr>
+		<tr>
+			<td><code>group</code></td>
+			<td><code>(string | number)[] | null | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>
+				Bindable. Bind several chips that share a <code>name</code> to one array and their
+				<code>value</code>s are added and removed as they are toggled.
+			</td>
+		</tr>
+		<tr>
+			<td><code>name</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Form field name of the underlying checkbox.</td>
+		</tr>
+		<tr>
+			<td><code>value</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Value submitted with the form, and the entry used in <code>group</code>.</td>
+		</tr>
+		<tr>
+			<td><code>defaultSelected</code></td>
+			<td><code>boolean | null | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Selected state a form reset returns the chip to.</td>
+		</tr>
+		<tr>
+			<td><code>removable</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Adds a trailing remove button.</td>
+		</tr>
+		<tr>
+			<td><code>onremove</code></td>
+			<td><code>MouseEventHandler | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Called when the remove button is clicked.</td>
+		</tr>
+		<tr>
+			<td><code>ariaLabelRemove</code></td>
+			<td><code>string</code></td>
+			<td><code>'Remove'</code></td>
+			<td>Accessible name of the remove button.</td>
+		</tr>
+		<tr>
+			<td><code>icon</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading icon, shown while the chip is not selected.</td>
+		</tr>
+		<tr>
+			<td><code>elevated</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Drops the outline and gives the chip a shadow instead.</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Makes the chip non-interactive.</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLDivElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable reference to the chip element.</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>InputChip attributes</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>label</code></td>
+			<td><code>string</code></td>
+			<td><code>''</code></td>
+			<td>Text of the chip. Falls back to <code>value</code> when it is empty.</td>
+		</tr>
+		<tr>
+			<td><code>selected</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>
+				Bindable. Highlights the chip, for instance to show which one <kbd>Backspace</kbd> would remove
+				next.
+			</td>
+		</tr>
+		<tr>
+			<td><code>name</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Form field name. The value is submitted through a hidden input.</td>
+		</tr>
+		<tr>
+			<td><code>value</code></td>
+			<td><code>string | number | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Value submitted with the form.</td>
+		</tr>
+		<tr>
+			<td><code>onclick</code></td>
+			<td><code>MouseEventHandler | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Called when the chip itself is clicked, not the remove button.</td>
+		</tr>
+		<tr>
+			<td><code>onremove</code></td>
+			<td><code>MouseEventHandler | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Called when the remove button is clicked.</td>
+		</tr>
+		<tr>
+			<td><code>ariaLabelRemove</code></td>
+			<td><code>string</code></td>
+			<td><code>'Remove'</code></td>
+			<td>Accessible name of the remove button.</td>
+		</tr>
+		<tr>
+			<td><code>icon</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading icon or avatar.</td>
+		</tr>
+		<tr>
+			<td><code>disabled</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td>Makes the chip non-interactive.</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLDivElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable reference to the chip element.</td>
+		</tr>
+		<tr>
+			<td><code>actionElement</code></td>
+			<td><code>HTMLButtonElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable reference to the chip's own button.</td>
+		</tr>
+	</tbody>
+</table>

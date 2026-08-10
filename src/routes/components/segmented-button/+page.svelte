@@ -274,8 +274,11 @@
 	<tbody>
 		<tr>
 			<td><code>group</code></td>
-			<td><code>string | number | undefined</code></td>
-			<td>Input property</td>
+			<td><code>string | number | (string | number)[] | null | undefined</code></td>
+			<td>
+				The selected value, or an array of them with <code>multiSelect</code>. Bind it to read and
+				set the selection.
+			</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
