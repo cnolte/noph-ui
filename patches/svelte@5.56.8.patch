@@ -1,0 +1,15 @@
+diff --git a/src/internal/server/renderer.js b/src/internal/server/renderer.js
+index 35aac64721ff9b064b457d455d7abbe37efb9ac0..1d6caa2b946ec807ce30981328499d5d08e7f682 100644
+--- a/src/internal/server/renderer.js
++++ b/src/internal/server/renderer.js
+@@ -451,6 +451,10 @@ export class Renderer {
+ 	 */
+ 	copy() {
+ 		const copy = new Renderer(this.global, this.#parent);
++		// the constructor derives `type` from the parent, which is wrong for `head`
++		// renderers — without this, `subsume` writes the parent's type back onto the
++		// original and `<svelte:head>` markers get emitted into the body
++		copy.type = this.type;
+ 		copy.#out = this.#out.map((item) => (item instanceof Renderer ? item.copy() : item));
+ 		copy.promise = this.promise;
+ 		return copy;
