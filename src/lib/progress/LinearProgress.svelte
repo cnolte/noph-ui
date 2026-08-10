@@ -22,9 +22,8 @@
 	let wave = $derived(wavy && !reducedMotion.current)
 
 	let wavelength = $derived(indeterminate ? INDETERMINATE_WAVELENGTH : DETERMINATE_WAVELENGTH)
-	let amplitude = $derived(
-		!wave ? 0 : indeterminate || (value / max > 0.1 && value / max < 0.95) ? 1 : 0,
-	)
+	const amplitudeFor = (fraction: number) =>
+		!wave ? 0 : indeterminate || (fraction > 0.1 && fraction < 0.95) ? 1 : 0
 
 	const cubicBezier = (x1: number, y1: number, x2: number, y2: number) => {
 		const A = (a: number, b: number) => 1 - 3 * b + 3 * a
@@ -112,6 +111,10 @@
 		const len = wavelength
 		const width = containerWidth
 		const host = wavePathA?.closest('.progress') as HTMLElement | null
+		// Live declaration: --np-lp-percent is a registered custom property that carries
+		// the same transition as the track, so reading it each frame gives the wave the
+		// eased position instead of jumping straight to the new value.
+		const hostStyles = host && getComputedStyle(host)
 		let raf = 0
 		let last = 0
 		const frame = (now: number) => {
@@ -119,7 +122,12 @@
 			const dt = last ? Math.min(64, now - last) : 16
 			last = now
 			const phase = ((now / 1000) % 1) * len
-			renderedAmplitude += (amplitude - renderedAmplitude) * Math.min(1, dt / 500)
+			const eased =
+				hostStyles && !indeterminate
+					? parseFloat(hostStyles.getPropertyValue('--np-lp-percent'))
+					: percent
+			const shown = Number.isFinite(eased) ? eased : percent
+			renderedAmplitude += (amplitudeFor(shown / 100) - renderedAmplitude) * Math.min(1, dt / 500)
 			const wave = buildWave(width, len, renderedAmplitude, phase)
 			if (indeterminate) {
 				const t = now % CYCLE
@@ -131,7 +139,7 @@
 				trim(wavePathA, wave, t1 * width, h1 * width)
 				trim(wavePathB, wave, t2 * width, h2 * width)
 			} else {
-				trim(wavePathA, wave, 0, (percent / 100) * width)
+				trim(wavePathA, wave, 0, (shown / 100) * width)
 			}
 		}
 		raf = requestAnimationFrame(frame)
@@ -148,7 +156,7 @@
 	let gapOn = $derived(percent > 0 ? 1 : 0)
 
 	let trackStyles = $derived(
-		`--_percent:${percent}%;--_buffer-percent:${bufferPercent}%;--_gap-on:${gapOn}`,
+		`--_percent:${percent}%;--np-lp-percent:${percent}%;--_buffer-percent:${bufferPercent}%;--_gap-on:${gapOn}`,
 	)
 
 	let hideDots = $derived(indeterminate || !hasBuffer || bufferValue >= max || value >= max)
@@ -327,6 +335,18 @@
 		syntax: '<percentage>';
 		inherits: true;
 		initial-value: 0%;
+	}
+	@property --np-lp-percent {
+		syntax: '<percentage>';
+		inherits: true;
+		initial-value: 0%;
+	}
+
+	/* The wave is trimmed in script, so it cannot transition the way the track does.
+	   Transitioning the value it is trimmed from on the same token keeps the two in
+	   lockstep: same start, same duration, same curve. */
+	.progress.wavy:not(.indeterminate) {
+		transition: --np-lp-percent var(--np-motion-expressive-default-effects);
 	}
 
 	.progress.indeterminate {

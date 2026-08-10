@@ -99,8 +99,32 @@
 	const isActive = (t: number) => t >= activeFrom && t <= activeTo
 
 	let dragging = $state<'start' | 'end' | null>(null)
+	let tracking = $state(false)
 	let trackElement = $state<HTMLDivElement>()
+	let activeLaneElement = $state<HTMLDivElement>()
+	let iconElement = $state<HTMLSpanElement>()
+	let iconFits = $state(true)
 	let pointerFocused = $state(false)
+	let pointerOrigin: { x: number; y: number } | null = null
+
+	const DRAG_THRESHOLD = 3
+
+	$effect(() => {
+		if (!icon || !activeLaneElement) return
+		const lane = activeLaneElement
+		const inlineOf = (r: DOMRect) => (orientation === 'vertical' ? r.height : r.width)
+		const measure = () => {
+			if (!iconElement) return
+			const padding = parseFloat(getComputedStyle(iconElement).insetInlineStart) || 0
+			iconFits =
+				inlineOf(lane.getBoundingClientRect()) >=
+				inlineOf(iconElement.getBoundingClientRect()) + 2 * padding
+		}
+		const observer = new ResizeObserver(measure)
+		observer.observe(lane)
+		measure()
+		return () => observer.disconnect()
+	})
 
 	const fractionFromEvent = (e: PointerEvent) => {
 		if (!trackElement) return 0
@@ -131,9 +155,23 @@
 		}
 	}
 
+	const onpointermove = (e: PointerEvent) => {
+		if (!dragging) return
+		if (!tracking) {
+			const d = pointerOrigin
+				? Math.hypot(e.clientX - pointerOrigin.x, e.clientY - pointerOrigin.y)
+				: Infinity
+			if (d <= DRAG_THRESHOLD) return
+			tracking = true
+		}
+		moveTo(e)
+	}
+
 	const onpointerdown = (e: PointerEvent) => {
 		if (disabled || e.button !== 0) return
 		const v = min + clamp(fractionFromEvent(e), 0, 1) * span
+		pointerOrigin = { x: e.clientX, y: e.clientY }
+		tracking = false
 		dragging = !range
 			? 'start'
 			: lo === hi
@@ -154,6 +192,8 @@
 		if (!dragging) return
 		const input = dragging === 'start' ? inputElement : endInputElement
 		dragging = null
+		tracking = false
+		pointerOrigin = null
 		element?.releasePointerCapture(e.pointerId)
 		input?.dispatchEvent(new Event('change', { bubbles: true }))
 	}
@@ -173,12 +213,13 @@
 		labeled && 'np-labeled',
 		disabled && 'np-disabled',
 		dragging && 'np-dragging',
+		tracking && 'np-tracking',
 		pointerFocused && 'np-pointer-focused',
 		attributes.class,
 	]}
 	role="presentation"
 	{onpointerdown}
-	onpointermove={moveTo}
+	{onpointermove}
 	onpointerup={endDrag}
 	onpointercancel={endDrag}
 	onkeydown={() => (pointerFocused = false)}
@@ -190,12 +231,15 @@
 				<span class="np-slider-stop np-slider-stop-start"></span>
 			</div>
 		{/if}
-		<div class="np-slider-lane np-slider-active">
-			{#if icon}
-				<span class="np-slider-icon">{@render icon()}</span>
+		<div class="np-slider-lane np-slider-active" bind:this={activeLaneElement}>
+			{#if icon && iconFits}
+				<span class="np-slider-icon" bind:this={iconElement}>{@render icon()}</span>
 			{/if}
 		</div>
 		<div class="np-slider-lane np-slider-inactive-end">
+			{#if icon && !iconFits}
+				<span class="np-slider-icon np-on-inactive" bind:this={iconElement}>{@render icon()}</span>
+			{/if}
 			<span class="np-slider-stop np-slider-stop-end"></span>
 		</div>
 
@@ -266,6 +310,8 @@
 		--_inside: var(--np-slider-track-inside-shape, 0.125rem);
 		--_stop: var(--np-slider-stop-indicator-size, 0.25rem);
 		--_gap: calc(var(--_hw) / 2 + 0.375rem);
+		--_ring: 3px;
+		--_ring-gap: 0.4rem;
 
 		position: relative;
 		display: block;
@@ -320,8 +366,7 @@
 			inset-inline-end var(--np-motion-expressive-fast-effects);
 	}
 
-	.np-dragging .np-slider-lane,
-	.np-dragging .np-slider-handle {
+	.np-tracking .np-slider-lane {
 		transition: none;
 	}
 
@@ -372,6 +417,10 @@
 		writing-mode: horizontal-tb;
 	}
 
+	.np-slider-icon.np-on-inactive {
+		color: var(--np-slider-icon-inactive-color, var(--np-color-on-secondary-container));
+	}
+
 	.np-slider-icon :global(svg) {
 		inline-size: var(--_icon-size);
 		block-size: var(--_icon-size);
@@ -387,6 +436,7 @@
 		border-radius: var(--np-shape-corner-full);
 		background: var(--np-slider-inactive-stop-color, var(--np-color-on-secondary-container));
 		pointer-events: none;
+		transition: background-color var(--np-motion-expressive-fast-effects);
 	}
 
 	.np-slider-stop-end {
@@ -408,15 +458,21 @@
 	}
 
 	.np-slider-handle {
+		/* The current handle box drives both size and offset, so a handle that
+		   narrows or shortens stays centred on the value it points at. */
+		--_cw: var(--_hw);
+		--_ch: var(--_handle-height);
+
 		position: absolute;
-		inset-inline-start: calc(var(--_p) - var(--_hw) / 2);
-		inset-block-start: calc((var(--_track-height) - var(--_handle-height)) / 2);
-		inline-size: var(--_hw);
-		block-size: var(--_handle-height);
+		inset-inline-start: calc(var(--_p) - var(--_cw) / 2);
+		inset-block-start: calc((var(--_track-height) - var(--_ch)) / 2);
+		inline-size: var(--_cw);
+		block-size: var(--_ch);
 		border-radius: var(--np-slider-handle-shape, var(--np-shape-corner-full));
 		background: var(--np-slider-handle-color, var(--np-color-primary));
 		transition:
 			inset-inline-start var(--np-motion-expressive-fast-effects),
+			inset-block-start var(--np-motion-expressive-fast-effects),
 			inline-size var(--np-motion-expressive-fast-effects),
 			block-size var(--np-motion-expressive-fast-effects);
 	}
@@ -429,18 +485,25 @@
 		--_p: var(--_p2);
 	}
 
+	/* Focus narrows the handle the same way a press does and keeps its full height;
+	   the ring stands clear of it instead of hugging it. */
 	.np-slider:not(.np-disabled, .np-pointer-focused):has(.np-slider-input-start:focus-visible)
 		.np-slider-handle-start,
 	.np-slider:not(.np-disabled, .np-pointer-focused):has(.np-slider-input-end:focus-visible)
 		.np-slider-handle-end {
-		inline-size: var(--np-slider-handle-width-focus, 0.125rem);
-		block-size: calc(var(--_handle-height) - 0.375rem);
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 0.125rem;
+		--_cw: var(--np-slider-handle-width-focus, 0.125rem);
+		outline: var(--_ring) solid var(--np-color-secondary);
+		outline-offset: var(--_ring-gap);
 	}
 
 	.np-dragging .np-slider-handle {
-		inline-size: var(--np-slider-handle-width-focus, 0.125rem);
+		--_cw: var(--np-slider-handle-width-focus, 0.125rem);
+	}
+
+	.np-tracking .np-slider-handle {
+		transition:
+			inline-size var(--np-motion-expressive-fast-effects),
+			block-size var(--np-motion-expressive-fast-effects);
 	}
 
 	.np-slider-label-anchor {
@@ -530,10 +593,15 @@
 		color: var(--np-color-surface);
 	}
 
+	.np-slider.np-disabled .np-slider-icon.np-on-inactive {
+		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
-		.np-slider-lane,
-		.np-slider-handle,
-		.np-slider-label {
+		.np-slider .np-slider-lane,
+		.np-slider .np-slider-handle,
+		.np-slider .np-slider-tick,
+		.np-slider .np-slider-label {
 			transition: none;
 		}
 	}

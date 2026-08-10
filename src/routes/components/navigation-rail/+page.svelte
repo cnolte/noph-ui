@@ -201,13 +201,13 @@
 		<tr>
 			<td><code>icon</code></td>
 			<td><code>Snippet</code></td>
-			<td>—</td>
+			<td></td>
 			<td>Required. The destination's icon.</td>
 		</tr>
 		<tr>
 			<td><code>label</code></td>
 			<td><code>string</code></td>
-			<td>—</td>
+			<td></td>
 			<td>Required. Text below the icon.</td>
 		</tr>
 		<tr>

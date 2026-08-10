@@ -6,6 +6,8 @@
 	import DemoContainer from '../../DemoContainer.svelte'
 
 	const sizes: SliderSize[] = ['xs', 's', 'm', 'l', 'xl']
+
+	let volume = $state(40)
 </script>
 
 <svelte:head>
@@ -188,14 +190,22 @@
 
 <h2>Inset icon</h2>
 <p>
-	The <code>icon</code> snippet is drawn inside the leading end of the active track and clipped as
-	the track shrinks. It needs room, so it is meant for <code>m</code> and larger.
+	The <code>icon</code> snippet is drawn inside the leading end of the active track. Once the active
+	track runs out of room for it, which happens at a low value or between the handles of a
+	<code>range</code> slider, the icon moves over to the inactive track instead of sitting there half
+	clipped, and takes the inactive track's colour with it. It needs room either way, so it is meant
+	for
+	<code>m</code> and larger.
+</p>
+<p>
+	The snippet is yours to render, so a slider at zero can show a different icon: drag the volume
+	slider below to the start and the icon becomes <code>volume_off</code>.
 </p>
 <DemoContainer>
 	<div class="stack">
-		<Slider size="m" value={40} aria-label="Volume">
+		<Slider size="m" bind:value={volume} aria-label="Volume">
 			{#snippet icon()}
-				<Icon>volume_up</Icon>
+				<Icon>{volume === 0 ? 'volume_off' : 'volume_up'}</Icon>
 			{/snippet}
 		</Slider>
 		<Slider size="xl" value={60} aria-label="Brightness">
@@ -206,9 +216,9 @@
 	</div>
 </DemoContainer>
 <Code
-	value={`<Slider size="m" value={40} aria-label="Volume">
+	value={`<Slider size="m" bind:value={volume} aria-label="Volume">
 	{#snippet icon()}
-		<Icon>volume_up</Icon>
+		<Icon>{volume === 0 ? 'volume_off' : 'volume_up'}</Icon>
 	{/snippet}
 </Slider>`}
 />
@@ -314,6 +324,10 @@
 			<td><code>--np-color-on-primary</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-slider-icon-inactive-color</code></td>
+			<td><code>--np-color-on-secondary-container</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-slider-icon-padding</code></td>
 			<td><code>0.625rem</code></td>
 		</tr>
@@ -336,8 +350,9 @@
 	</tbody>
 </table>
 <p>
-	The handle narrows to <code>--np-slider-handle-width-focus</code> while it is pressed or focused. The
-	disabled colours are blended with an opacity of their own, so they take a colour, not a pre-faded one.
+	The handle narrows to <code>--np-slider-handle-width-focus</code> while it is pressed or focused, and
+	keeps its full height either way. The disabled colours are blended with an opacity of their own, so
+	they take a colour, not a pre-faded one.
 </p>
 <h3>Example</h3>
 <DemoContainer>

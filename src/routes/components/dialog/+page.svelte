@@ -219,7 +219,7 @@
 		<tr>
 			<td><code>headline</code></td>
 			<td><code>string</code></td>
-			<td>—</td>
+			<td></td>
 			<td>Required. Title of the dialog, and its accessible name.</td>
 		</tr>
 		<tr>

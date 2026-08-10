@@ -340,7 +340,7 @@
 		<tr>
 			<td><code>label</code></td>
 			<td><code>string</code></td>
-			<td>—</td>
+			<td></td>
 			<td>Required. Text of the destination.</td>
 		</tr>
 		<tr>

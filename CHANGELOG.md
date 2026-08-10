@@ -5,6 +5,46 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.1] - 2026-08-10
+
+### Added
+
+- **Slider**: the inset `icon` follows Material's guidance and changes track with
+  the handle. It rides the leading end of the active track while there is room for
+  it. Once the active track is narrower than the icon and its padding, the icon
+  moves to the inactive track instead of sitting there half clipped, where it
+  takes `--np-slider-icon-inactive-color`, defaulting to
+  `--np-color-on-secondary-container`. The room is measured from the active track
+  itself, so it also covers the space between the handles of a `range` slider and
+  both sides of a `centered` one.
+
+### Fixed
+
+- **Slider**: a focused handle changed size in both directions, and the ring
+  around it stood a hair away, which read as a hollow capsule rather than a
+  handle. Focus now narrows the handle the way a press does, keeps its full
+  height, and gives the ring a wider gap. A handle that narrows also stays
+  centred: width and height drive the insets, so the pressed handle no longer
+  sits 1px beside the value it points at and 3px above the track's centre line.
+- **Slider**: pressing the track away from the current value snapped the handle
+  there instead of animating it. `np-dragging` was applied on `pointerdown`, one
+  step before the first value was committed, and its `transition: none` therefore
+  also covered the jump from the old value to the pressed position. The class is
+  split in two: `np-dragging` still marks the press (thin handle, visible label),
+  while the new `np-tracking`, set only once the pointer travels more than 3px, is
+  what suppresses the position transition so a real drag keeps following the
+  pointer 1:1. Tick marks crossfade between their active and inactive color
+  instead of flipping while the active track animates past them.
+- **LinearProgress**: the `wavy` determinate wave snapped to a new `value` while
+  the track around it eased into place. The wave is trimmed from script, because
+  mapping a position on the bar to a length along the wave is not linear, and the
+  trim read `value` directly. It now reads it from `--np-lp-percent`, a registered
+  custom property that carries the same
+  `--np-motion-expressive-default-effects` transition as the track, so both start
+  together and share one duration and curve. The wave also keeps its amplitude
+  while it travels and only flattens once it actually reaches the 10% and 95%
+  marks, rather than flattening the moment the value is set.
+
 ## [0.36.0] - 2026-08-10
 
 The headline of this release is the new `LoadingIndicator`, the Material 3
