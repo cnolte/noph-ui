@@ -11,7 +11,6 @@
 		group = $bindable(),
 		...attributes
 	}: SegmentedButtonProps = $props()
-	let hoverState = $state(-1)
 </script>
 
 <div
@@ -21,6 +20,7 @@
 	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"
 >
 	{#each options as option, i (i)}
+		{@const optionLabel = option.label ?? `${name}-${i}`}
 		<label class={['np-segmented-button', option.icon && 'width-icon']}>
 			<div class="check-icon-wrapper">
 				<div class="check-icon">
@@ -42,7 +42,7 @@
 				{option.label}
 			{/if}
 			{#if !option.disabled}
-				<Ripple forceHover={i === hoverState} />
+				<Ripple />
 			{/if}
 			{#if group !== undefined}
 				{#if multiSelect}
@@ -50,13 +50,9 @@
 						type="checkbox"
 						onclick={option.onclick}
 						bind:group
-						onfocus={(event) => {
-							if (event) hoverState = i
-						}}
-						onblur={() => (hoverState = -1)}
 						{name}
-						aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
-						value={option.label}
+						aria-label={optionLabel}
+						value={optionLabel}
 						disabled={option.disabled}
 						checked={option.selected}
 					/>
@@ -65,13 +61,9 @@
 						type="radio"
 						onclick={option.onclick}
 						bind:group
-						onfocus={(event) => {
-							if (event) hoverState = i
-						}}
-						onblur={() => (hoverState = -1)}
 						{name}
-						aria-label={typeof option.label === 'function' ? `${name}-${i}` : option.label}
-						value={option.label}
+						aria-label={optionLabel}
+						value={optionLabel}
 						disabled={option.disabled}
 						checked={option.selected}
 					/>
@@ -80,13 +72,9 @@
 				<input
 					type={multiSelect ? 'checkbox' : 'radio'}
 					onclick={option.onclick}
-					onfocus={(event) => {
-						if (event) hoverState = i
-					}}
-					onblur={() => (hoverState = -1)}
 					{name}
-					aria-label={option.label ?? `${name}-${i}`}
-					value={option.label}
+					aria-label={optionLabel}
+					value={optionLabel}
 					disabled={option.disabled}
 					checked={option.selected}
 				/>
@@ -108,7 +96,7 @@
 
 	.np-segmented-button {
 		flex: 1;
-		padding: 0.5rem 2rem;
+		padding: 0.5rem 1.75rem;
 		text-align: center;
 		cursor: pointer;
 		font-size: 0.875rem;
@@ -136,7 +124,7 @@
 
 	.np-segmented-button:has(input:disabled) {
 		cursor: unset;
-		opacity: 0.5;
+		opacity: 0.38;
 	}
 
 	.np-segmented-button:last-child {
@@ -159,7 +147,7 @@
 	}
 	.width-icon,
 	.np-segmented-button:has(input:checked) {
-		padding: 0.5rem 1rem;
+		padding: 0.5rem 0.75rem;
 	}
 	.np-segmented-button:has(input:checked) {
 		color: var(--np-color-on-secondary-container);
@@ -168,6 +156,7 @@
 		opacity: 1;
 	}
 	.check-icon {
+		display: flex;
 		width: 0;
 		overflow: hidden;
 		fill: currentColor;
@@ -182,6 +171,7 @@
 		transition: width 0.15s linear;
 	}
 	.alternate-icon {
+		display: flex;
 		width: 1.5rem;
 		overflow: hidden;
 		fill: currentColor;
@@ -213,21 +203,28 @@
 		width: 1.5rem;
 	}
 
-	.np-segmented-buttons:has(input:focus-visible) {
+	.np-segmented-button:has(input:focus-visible) :global(.np-ripple-surface)::before {
+		opacity: var(--np-ripple-focus-opacity, 0.1);
+	}
+
+	.np-segmented-button:has(input:focus-visible) {
 		outline-style: solid;
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
-		outline-offset: 2px;
+		outline-offset: -3px;
 		animation: focusAnimation 0.3s ease forwards;
 	}
 	@keyframes focusAnimation {
 		0% {
+			outline-offset: -3px;
 			outline-width: 3px;
 		}
 		50% {
+			outline-offset: -6px;
 			outline-width: 6px;
 		}
 		100% {
+			outline-offset: -3px;
 			outline-width: 3px;
 		}
 	}

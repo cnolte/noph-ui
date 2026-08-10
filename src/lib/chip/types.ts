@@ -33,15 +33,17 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	onremove?: MouseEventHandler<ButtonElement>
 }
 
-export interface InputChipProps extends HTMLAttributes<HTMLDivElement> {
+export interface InputChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onclick'> {
 	selected?: boolean
 	disabled?: boolean
 	label?: string
 	icon?: Snippet
 	ariaLabelRemove?: string
 	element?: HTMLDivElement
+	actionElement?: HTMLButtonElement
 	name?: string
 	value?: string | number
+	onclick?: MouseEventHandler<HTMLButtonElement>
 	onremove?: MouseEventHandler<ButtonElement>
 }
 

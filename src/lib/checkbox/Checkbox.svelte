@@ -7,37 +7,41 @@
 		checked = $bindable(),
 		element = $bindable(),
 		group = $bindable(),
+		error = false,
 		style,
 		value,
 		...attributes
 	}: CheckboxProps = $props()
 
-	$effect(() => {
-		if (group && value) {
-			checked = group.includes(value)
-		}
-	})
-
-	$effect(() => {
-		if (value && group) {
-			const index = group.indexOf(value)
-			if (checked) {
-				if (index < 0) {
-					group?.push(value)
-					group = group
-				}
-			} else {
-				if (index >= 0) {
-					group.splice(index, 1)
-					group = group
-				}
-			}
-		}
-	})
 	let inputEl: HTMLInputElement | undefined = $state()
+
+	let groupValue = $derived(
+		typeof value === 'string' || typeof value === 'number' ? value : undefined,
+	)
+	let grouped = $derived(Array.isArray(group) && groupValue !== undefined)
+	let groupChecked = $derived(
+		Array.isArray(group) && groupValue !== undefined ? group.includes(groupValue) : false,
+	)
+
+	const onchange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+		const next = event.currentTarget.checked
+		if (Array.isArray(group) && groupValue !== undefined) {
+			group = next
+				? group.includes(groupValue)
+					? group
+					: [...group, groupValue]
+				: group.filter((entry) => entry !== groupValue)
+		}
+		checked = next
+		attributes.onchange?.(event)
+	}
 </script>
 
-<div {style} class={['np-container', attributes.class]} bind:this={element}>
+<div
+	{style}
+	class={['np-container', error && !attributes.disabled && 'np-error', attributes.class]}
+	bind:this={element}
+>
 	<div class="np-outline"></div>
 	<div class="np-background"></div>
 	<svg class="np-icon" viewBox="0 0 18 18" aria-hidden="true">
@@ -48,16 +52,32 @@
 		{#if !attributes.disabled}
 			<Ripple forElement={inputEl} />
 		{/if}
-		<input
-			{...attributes}
-			{value}
-			class="np-input"
-			type="checkbox"
-			bind:indeterminate
-			bind:checked
-			bind:this={inputEl}
-			aria-checked={indeterminate ? 'mixed' : undefined}
-		/>
+		{#if grouped}
+			<input
+				{...attributes}
+				{value}
+				class="np-input"
+				type="checkbox"
+				bind:indeterminate
+				bind:this={inputEl}
+				checked={groupChecked}
+				{onchange}
+				aria-invalid={error ? 'true' : undefined}
+				aria-checked={indeterminate ? 'mixed' : undefined}
+			/>
+		{:else}
+			<input
+				{...attributes}
+				{value}
+				class="np-input"
+				type="checkbox"
+				bind:indeterminate
+				bind:checked
+				bind:this={inputEl}
+				aria-invalid={error ? 'true' : undefined}
+				aria-checked={indeterminate ? 'mixed' : undefined}
+			/>
+		{/if}
 	</div>
 </div>
 
@@ -171,6 +191,22 @@
 	.np-container:has(input:disabled:indeterminate) .np-background {
 		background: var(--np-color-on-surface);
 		opacity: 0.38;
+	}
+
+	.np-error .np-outline,
+	.np-error:hover .np-outline,
+	.np-error:focus-within .np-outline {
+		border-color: var(--np-color-error);
+	}
+	.np-error .np-background {
+		background-color: var(--np-color-error);
+	}
+	.np-error .np-icon {
+		fill: var(--np-color-on-error);
+	}
+	.np-error {
+		--np-ripple-hover-color: var(--np-color-error);
+		--np-ripple-pressed-color: var(--np-color-error);
 	}
 	.np-icon {
 		fill: var(--np-checkbox-selected-icon-color, var(--np-color-on-primary));

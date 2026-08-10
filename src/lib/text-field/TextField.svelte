@@ -98,6 +98,7 @@
 					<div class="content">
 						{#if attributes.type === 'textarea'}
 							<textarea
+								aria-invalid={errorText ? 'true' : undefined}
 								aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
 								aria-describedby={supportingText && !errorText
 									? `supporting-text-${uid}`
@@ -118,6 +119,7 @@
 									</span>
 								{/if}
 								<input
+									aria-invalid={errorText ? 'true' : undefined}
 									aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
 									aria-describedby={supportingText && !errorText
 										? `supporting-text-${uid}`

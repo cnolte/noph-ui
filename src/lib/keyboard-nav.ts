@@ -1,12 +1,21 @@
 import type { Attachment } from 'svelte/attachments'
 
+const focusable = (items: HTMLElement[]) => items.filter((item) => !item.matches(':disabled'))
+
+const focusedItem = (node: HTMLElement, itemSelector: string, items: HTMLElement[]) => {
+	const active = document.activeElement
+	if (!(active instanceof HTMLElement) || !node.contains(active)) return null
+	const item = active.closest<HTMLElement>(itemSelector)
+	return item && items.includes(item) ? item : null
+}
+
 export const rovingTabindex = (
 	itemSelector: string,
 	options: { currentAttr?: string; currentValue?: string } = {},
 ): Attachment<HTMLElement> => {
 	const { currentAttr = 'aria-current', currentValue = 'page' } = options
 	return (node) => {
-		const getItems = () => Array.from(node.querySelectorAll<HTMLElement>(itemSelector))
+		const getItems = () => focusable(Array.from(node.querySelectorAll<HTMLElement>(itemSelector)))
 
 		const setTabstop = (target: HTMLElement) => {
 			for (const i of getItems()) {
@@ -18,7 +27,7 @@ export const rovingTabindex = (
 		const sync = () => {
 			const items = getItems()
 			if (items.length === 0) return
-			const focused = node.querySelector<HTMLElement>(`${itemSelector}:focus`)
+			const focused = focusedItem(node, itemSelector, items)
 			const current = items.find((i) => i.getAttribute(currentAttr) === currentValue)
 			setTabstop(focused ?? current ?? items[0])
 		}
@@ -56,10 +65,12 @@ export const arrowKeyNav =
 		const { key } = event
 		if (key !== prev && key !== next && key !== 'Home' && key !== 'End') return
 
-		const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(itemSelector))
+		const items = focusable(
+			Array.from(event.currentTarget.querySelectorAll<HTMLElement>(itemSelector)),
+		)
 		if (items.length === 0) return
 
-		const focused = event.currentTarget.querySelector<HTMLElement>(`${itemSelector}:focus`)
+		const focused = focusedItem(event.currentTarget, itemSelector, items)
 		if (!focused) return
 		const currentIndex = items.indexOf(focused)
 

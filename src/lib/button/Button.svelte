@@ -49,7 +49,7 @@
 	{/if}
 	{#if loading}
 		<div class="circular-progress">
-			<CircularProgress aria-label={loadingAriaLabel} indeterminate />
+			<CircularProgress aria-label={loadingAriaLabel} indeterminate track={false} />
 		</div>
 	{/if}
 	{#if start}
@@ -417,10 +417,8 @@
 	:global(.np-button .button-icon svg) {
 		fill: currentColor;
 		display: block;
-	}
-	:global(.np-button .button-icon svg) {
-		width: calc((var(--button-height) - 0.375rem) / 2);
-		height: calc((var(--button-height) - 0.375rem) / 2);
+		width: var(--_icon-size);
+		height: var(--_icon-size);
 	}
 
 	@media (forced-colors: active) {

@@ -50,7 +50,7 @@
 	{/if}
 	{#if loading}
 		<div class="np-icon-button-circular-progress">
-			<CircularProgress aria-label={loadingAriaLabel} indeterminate />
+			<CircularProgress aria-label={loadingAriaLabel} indeterminate track={false} />
 		</div>
 	{/if}
 	{#if selectedIcon && selected}
@@ -69,8 +69,8 @@
 			}
 			attributes.onclick?.(event)
 		}}
-		aria-describedby={title ? uid : undefined}
-		aria-label={title}
+		aria-describedby={title ? uid : attributes['aria-describedby']}
+		aria-label={title || attributes['aria-label']}
 		bind:this={element}
 		class={[
 			'np-icon-button',
@@ -184,7 +184,7 @@
 		border-radius: 1.25rem;
 	}
 	.s.square {
-		border-radius: var(--np-button-shape, 0.75rem);
+		border-radius: var(--np-icon-button-shape, 0.75rem);
 	}
 	.s.narrow {
 		width: 2rem;
@@ -206,7 +206,7 @@
 		border-radius: 1.75rem;
 	}
 	.m.square {
-		border-radius: var(--np-button-shape, 1rem);
+		border-radius: var(--np-icon-button-shape, 1rem);
 	}
 	.m.narrow {
 		width: 3rem;
@@ -228,7 +228,7 @@
 		border-radius: 3rem;
 	}
 	.l.square {
-		border-radius: var(--np-button-shape, 1.75rem);
+		border-radius: var(--np-icon-button-shape, 1.75rem);
 	}
 	.l.narrow {
 		width: 4rem;
@@ -250,7 +250,7 @@
 		border-radius: 4.25rem;
 	}
 	.xl.square {
-		border-radius: var(--np-button-shape, 1.75rem);
+		border-radius: var(--np-icon-button-shape, 1.75rem);
 	}
 	.xl.narrow {
 		width: 6.5rem;

@@ -213,6 +213,24 @@
 			<td>A string representing the label to be displayed inside a badge element.</td>
 		</tr>
 		<tr>
+			<td><code>badgeAriaLabel</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Announces the badge, for example <code>"2 new videos"</code>. Without it the badge is
+				<code>aria-hidden</code> and only the tab label is read out.</td
+			>
+		</tr>
+		<tr>
+			<td><code>controls</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>The <code>id</code> of the panel this tab controls, rendered as
+				<code>aria-controls</code>.</td
+			>
+		</tr>
+		<tr>
 			<td><code>value</code></td>
 			<td><code>number | string</code></td>
 			<td><code>undefined</code></td>

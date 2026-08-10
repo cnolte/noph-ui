@@ -1,7 +1,15 @@
 <script lang="ts">
+	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import type { ChipSetProps } from './types.ts'
 
 	let { children, chipsCount, ...attributes }: ChipSetProps = $props()
+
+	const CHIP_SELECTOR = "input:not([type='hidden']), button, a[href]"
+	const attach = rovingTabindex(CHIP_SELECTOR, {
+		currentAttr: 'aria-current',
+		currentValue: 'true',
+	})
+	const onkeydown = arrowKeyNav(CHIP_SELECTOR, 'horizontal')
 </script>
 
 <div
@@ -13,7 +21,7 @@
 	style={attributes.style}
 >
 	{#if children}
-		<div class={['np-chip-set']} role="toolbar">
+		<div {@attach attach} class={['np-chip-set']} role="toolbar" tabindex="-1" {onkeydown}>
 			{@render children()}
 		</div>
 	{/if}
@@ -26,7 +34,7 @@
 		margin: -0.5rem;
 	}
 	.np-chip-set-has-chips {
-		margin-right: 0;
+		margin-inline-end: 0;
 	}
 	.np-chip-set {
 		display: flex;

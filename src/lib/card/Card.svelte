@@ -12,25 +12,9 @@
 		supportingText,
 		action,
 		children,
-		onfocus,
-		onblur,
 		type,
 		...attributes
 	}: CardProps = $props()
-
-	let focused = $state(false)
-
-	$effect(() => {
-		if (!element) return
-		// eslint-disable-next-line no-undef
-		const formElements: NodeListOf<
-			HTMLButtonElement | HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-		> = element.querySelectorAll('input, button, select, textarea')
-
-		formElements.forEach((el) => {
-			el.disabled = disabled
-		})
-	})
 </script>
 
 {#snippet content()}
@@ -61,7 +45,7 @@
 		{/if}
 	</div>
 	{#if !disabled && type !== 'text'}
-		<Ripple forceHover={focused} />
+		<Ripple />
 	{/if}
 {/snippet}
 
@@ -85,14 +69,6 @@
 		{...attributes}
 		type="button"
 		bind:this={element}
-		onfocus={(event) => {
-			focused = true
-			onfocus?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			onblur?.(event)
-		}}
 		{disabled}
 		class={[
 			'np-card-container',
@@ -110,14 +86,6 @@
 		aria-disabled={disabled}
 		tabindex={disabled ? -1 : undefined}
 		role="link"
-		onfocus={(event) => {
-			focused = true
-			onfocus?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			onblur?.(event)
-		}}
 		class={[
 			'np-card-container',
 			`np-card-${variant}`,
@@ -162,8 +130,8 @@
 		--border-radius: var(--np-outlined-card-container-shape, var(--np-shape-corner-medium));
 	}
 	.np-card-outlined.np-card-disabled {
-		border-color: color-mix(in srgb, var(--np-color-outline) 32%, transparent);
-		--background-color: none;
+		border-color: color-mix(in srgb, var(--np-color-outline) 12%, transparent);
+		--background-color: transparent;
 	}
 	.np-card-container {
 		font: inherit;
@@ -179,6 +147,10 @@
 		border-radius: var(--border-radius);
 		background-color: var(--background-color);
 		cursor: pointer;
+	}
+
+	.np-card-container:focus-visible :global(.np-ripple-surface)::before {
+		opacity: var(--np-ripple-focus-opacity, 0.1);
 	}
 
 	.np-card-container:focus-visible {
@@ -211,6 +183,10 @@
 		overflow: hidden;
 		background-size: cover;
 		background-position: 50%;
+		border-start-start-radius: var(--border-radius);
+		border-start-end-radius: var(--border-radius);
+	}
+	.np-card-container:not(:has(.np-card-content:not(:empty))) .np-card-image {
 		border-radius: var(--border-radius);
 	}
 	.np-card-content {

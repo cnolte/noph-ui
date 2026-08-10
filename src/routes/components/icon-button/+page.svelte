@@ -178,8 +178,16 @@
 			<td><code>--np-icon-button-icon-size</code></td>
 			<td><code>1.5rem</code></td>
 		</tr>
+		<tr>
+			<td><code>--np-icon-button-shape</code></td>
+			<td><code>0.75rem</code> to <code>1.75rem</code>, per <code>size</code></td>
+		</tr>
 	</tbody>
 </table>
+<p>
+	<code>--np-icon-button-shape</code> is the corner radius of
+	<code>shape="square"</code>. A round icon button stays fully rounded.
+</p>
 
 <h3>Icon button example</h3>
 <DemoContainer>

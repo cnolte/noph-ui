@@ -9,6 +9,7 @@
 		popover,
 		children,
 		onkeydown: userKeydown,
+		ontoggle,
 		...attributes
 	}: NavigationDrawerProps = $props()
 
@@ -18,6 +19,32 @@
 	const handleKeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		userKeydown?.(event)
 		if (!event.defaultPrevented) arrowHandler(event)
+	}
+
+	let previouslyFocused: HTMLElement | undefined
+	let inerted: HTMLElement[] = []
+
+	const trapFocus = () => {
+		if (!element) return
+		previouslyFocused = document.activeElement as HTMLElement | undefined
+		for (let node: HTMLElement | null = element; node && node !== document.body;) {
+			const parent: HTMLElement | null = node.parentElement
+			if (!parent) break
+			for (const sibling of parent.children) {
+				if (sibling === node || !(sibling instanceof HTMLElement) || sibling.inert) continue
+				sibling.inert = true
+				inerted.push(sibling)
+			}
+			node = parent
+		}
+		element.querySelector<HTMLElement>('.np-navigation-drawer-item')?.focus()
+	}
+
+	const releaseFocus = () => {
+		for (const node of inerted) node.inert = false
+		inerted = []
+		previouslyFocused?.focus?.()
+		previouslyFocused = undefined
 	}
 </script>
 
@@ -36,6 +63,13 @@
 		attributes.class,
 	]}
 	onkeydown={handleKeydown}
+	ontoggle={(event) => {
+		if (modal) {
+			if (event.newState === 'open') trapFocus()
+			else releaseFocus()
+		}
+		ontoggle?.(event)
+	}}
 >
 	{#if backdrop}
 		<div
@@ -108,7 +142,7 @@
 		transition: opacity 0.25s ease;
 	}
 	.np-navigation-drawer-backdrop[popover]:popover-open .np-backdrop {
-		opacity: 0.38;
+		opacity: 0.32;
 		@starting-style {
 			opacity: 0;
 		}

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import { onMount } from 'svelte'
 	import type { ItemProps } from './types.ts'
 
 	let {
@@ -10,37 +9,11 @@
 		children,
 		supportingText,
 		disabled = false,
-		onfocus,
-		onblur,
 		softFocus = false,
 		lazy = false,
+		variant,
 		...attributes
 	}: ItemProps = $props()
-
-	let focused = $derived(softFocus)
-	let visible = $derived(!lazy)
-	let element: HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | undefined = $state()
-	let observer: IntersectionObserver | undefined
-	onMount(() => {
-		if (!lazy) {
-			return
-		}
-		observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					visible = true
-					observer?.disconnect()
-				}
-			})
-		})
-
-		return () => observer?.disconnect()
-	})
-	$effect(() => {
-		if (element && lazy) {
-			observer?.observe(element)
-		}
-	})
 </script>
 
 {#snippet content()}
@@ -70,53 +43,36 @@
 {/snippet}
 
 {#if disabled}
-	<div bind:this={element} aria-disabled="true" class={['np-item disabled', attributes.class]}>
-		{#if visible}
-			{@render content()}
-		{/if}
-	</div>
-{:else if attributes.variant === 'text' || attributes.variant === undefined}
-	<div {...attributes} class={['np-item', selected && 'selected', attributes.class]}>
+	<div
+		{...attributes}
+		aria-disabled="true"
+		class={['np-item disabled', lazy && 'np-item-lazy', attributes.class]}
+	>
 		{@render content()}
 	</div>
-{:else if attributes.variant === 'button'}
+{:else if variant === 'text' || variant === undefined}
+	<div
+		{...attributes}
+		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
+	>
+		{@render content()}
+	</div>
+{:else if variant === 'button'}
 	<button
 		{...attributes}
 		type={attributes.type ?? 'button'}
-		onfocus={(event) => {
-			focused = true
-			onfocus?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			onblur?.(event)
-		}}
-		class={['np-item', selected && 'selected', attributes.class]}
-		bind:this={element}
+		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
 	>
-		{#if visible}
-			{@render content()}
-			<Ripple forceHover={focused} />
-		{/if}
+		{@render content()}
+		<Ripple forceHover={softFocus} />
 	</button>
-{:else if attributes.variant === 'link'}
+{:else if variant === 'link'}
 	<a
 		{...attributes}
-		onfocus={(event) => {
-			focused = true
-			onfocus?.(event)
-		}}
-		onblur={(event) => {
-			focused = false
-			onblur?.(event)
-		}}
-		class={['np-item', selected && 'selected', attributes.class]}
-		bind:this={element}
+		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
 	>
-		{#if visible}
-			{@render content()}
-			<Ripple forceHover={focused} />
-		{/if}
+		{@render content()}
+		<Ripple forceHover={softFocus} />
 	</a>
 {/if}
 
@@ -161,14 +117,31 @@
 		text-align: start;
 		overflow: hidden;
 		width: 100%;
-		padding-block: 0.75rem;
+		padding-block: 0.625rem;
 		padding-inline: 1rem;
-		min-height: 3rem;
+		min-height: var(--np-item-container-height, 3.5rem);
 		gap: 0.75rem;
 		text-decoration: none;
 		-webkit-tap-highlight-color: transparent;
 		color: var(--np-item-label-text-color, var(--np-color-on-surface));
 		box-sizing: border-box;
+	}
+
+	.np-item:has(.np-item-supporting-text) {
+		min-height: var(--np-item-container-height, 4.5rem);
+	}
+
+	.np-item-lazy {
+		content-visibility: auto;
+		contain-intrinsic-block-size: auto var(--np-item-container-height, 3.5rem);
+	}
+
+	.np-item-lazy:has(.np-item-supporting-text) {
+		contain-intrinsic-block-size: auto var(--np-item-container-height, 4.5rem);
+	}
+
+	.np-item:focus-visible :global(.np-ripple-surface)::before {
+		opacity: var(--np-ripple-focus-opacity, 0.1);
 	}
 
 	.np-item:focus-visible {

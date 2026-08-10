@@ -5,6 +5,169 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.35.0] - 2026-08-10
+
+The headline of this release is the new `Slider` component and a rewrite of both
+progress indicators, which can now render the wavy Material 3 Expressive shape.
+Next to that, a lot of the work went into accessibility and keyboard behavior:
+modal dialogs and drawers trap and restore focus, menus and chip sets can be
+operated with the arrow keys, and several components replaced their state syncing
+effects with plain event handlers. There are a handful of breaking changes, so
+please read that section before upgrading.
+
+### Added
+
+- **Slider** (new component): sizes `xs` to `xl`, horizontal and vertical
+  orientation, `range` mode with two handles, a `centered` origin, `step` with
+  optional tick marks, value labels via `labeled` and `format`, and an `icon`
+  snippet that sits inside the active track. Every handle is a real
+  `<input type="range">`, so keyboard, screen reader and RTL support come from
+  the platform, and `format` feeds `aria-valuetext` so the formatted value is
+  announced instead of the raw number. Bind with `bind:value` and, in range mode,
+  `bind:endValue`. Pass `name` for form submission, and `endInputAttributes` to
+  name the second handle of a range.
+- **CircularProgress / LinearProgress**: new `wavy` prop for the expressive wave
+  shape, and a new `track` prop to hide the inactive track (`track={false}`).
+- **Checkbox**: new `error` prop. It paints the checkbox in the error color and
+  sets `aria-invalid` on the input.
+- **Tab**: new `controls` prop, which is forwarded as `aria-controls` so a tab
+  can point at its panel, and `badgeAriaLabel` to give the badge an accessible
+  name.
+- **Badge**: new `ariaLabel` prop. With a label the badge becomes
+  `role="status"` and is announced, without one it stays `aria-hidden` as
+  before.
+- New CSS custom properties: `--np-icon-button-shape`,
+  `--np-item-container-height`, `--np-comp-switch-selected-icon-color` and
+  `--np-ripple-focus-opacity`.
+
+### Changed (breaking)
+
+- **Snackbar**: `popover` now defaults to `"manual"` instead of `"auto"`. A
+  snackbar is no longer dismissed by a click somewhere else on the page or by
+  Escape, and opening a menu or dialog does not close it anymore. Pass
+  `popover="auto"` to get the old behavior back.
+- **Checkbox / FilterChip**: with a `group`, the array is the single source of
+  truth. The two effects that synced `group` against `checked` (respectively
+  `selected`) are gone, and a checkbox or chip that is rendered as `checked`
+  while it has a `group` no longer inserts its own value into that array. Put
+  the value in the array instead. Toggling still updates `bind:checked` and
+  `bind:selected` as before.
+- **Card**: a disabled card no longer writes `disabled` onto nested `input`,
+  `button`, `select` and `textarea` elements. It was reaching into markup it does
+  not own and overwrote whatever the app had set. Disable those elements
+  yourself.
+- **MenuItem**: renders a `div role="none"` wrapper instead of
+  `li role="menuitem"`, and `role="menuitem"` now sits on the item element
+  itself. A menu is no longer a list, so selectors like `.np-menu li` need to be
+  adjusted.
+- **InputChip**: the chip is built from two real buttons now, the chip body and
+  the trailing remove action, instead of a wrapper with `role="button"` and a
+  `tabindex`. That wrapper made the nested remove button presentational for
+  assistive tech and gave both actions the same hit target. As a result `onclick`
+  belongs to the chip body rather than to the container, so its
+  `event.currentTarget` is an `HTMLButtonElement`, and it no longer fires when
+  the remove icon is clicked. Bind `actionElement` to reach the body element.
+  The body is a tab stop, Enter and Space activate it, and it carries
+  `aria-pressed` while `selected` is set, which is what the spec asks for when a
+  chip is selected first and edited on a second interaction.
+- **SegmentedButton**: for an icon only option (no `label`), the submitted
+  `value` is now `${name}-${index}`. Such an option previously had no `value`
+  attribute at all and the browser submitted `on` for it. Set `label` on the
+  option if you rely on the submitted value.
+- **List `Item`**: the default height is 3.5rem, and 4.5rem for an item with
+  supporting text (was 3rem in both cases), which matches the one line and two
+  line heights of the baseline list. Override it with
+  `--np-item-container-height`. The vertical padding is 10dp per spec (was
+  12dp), which only becomes visible for items whose content is taller than the
+  minimum height.
+
+### Changed
+
+- **Dialog and modal NavigationDrawer**: while open, siblings outside the
+  surface are marked `inert`, focus moves into the dialog or to the first drawer
+  item, and it returns to the previously focused element on close.
+- **Menu**: arrow key navigation with a roving tabindex, so only the active item
+  is a tab stop.
+- **ChipSet**: same keyboard treatment, arrow keys move between chips.
+- **Tooltip**: hovering the tooltip itself keeps it open, leaving hides it after
+  a short delay, and Escape closes it.
+- **Snackbar**: the auto hide timer pauses while the snackbar is hovered or
+  contains focus, and the popover has a minimum and maximum width per spec.
+- **Progress indicators**: both are rendered with SVG paths now. The
+  indeterminate circular spinner is a single animated arc instead of two clipped
+  halves. `wavy` honors `prefers-reduced-motion`: the wave is dropped and the
+  indicator falls back to its plain shape, while the spinner and the bar keep
+  animating so they still read as busy.
+- **Ripple**: listens on its parent element instead of on its own overlay, and
+  the overlay is `pointer-events: none`. Hover and press therefore react to the
+  whole surface. `Card`, `List Item` and `SegmentedButton` show a focus state
+  layer on `:focus-visible`.
+- **List `Item`**: `lazy` is implemented with `content-visibility` instead of an
+  `IntersectionObserver`. The content stays in the DOM, so it is findable with
+  the browser search, and there is one less observer per item. The size estimate
+  for a skipped item follows `--np-item-container-height` and the two line
+  height.
+- **Theme**: `--np-elevation-1` to `--np-elevation-3` use the two layer M3
+  shadows, which are tighter and softer than the previous three layer values.
+  The scrim behind dialogs and modal drawers is 32% instead of 38%.
+- **Visual tweaks**: pressed ripple opacity is 0.1, disabled chips and cards use
+  the 12% on-surface outline and container colors from the spec, a `FilterChip`
+  icon is `on-surface-variant` instead of `primary`, the selected label of a
+  `NavigationRailItem` is `on-surface`, the secondary tab indicator is 2px, and
+  `SegmentedButton` has slightly tighter padding with the focus ring drawn
+  inside the segment.
+
+### Fixed
+
+- **Dialog**: `aria-describedby` pointed at the literal string
+  `{uid}-dialog-supporting-text`, so the supporting text was never associated
+  with the dialog. `headline` is optional now, and `aria-labelledby` is only set
+  when a headline is present.
+- **Select**: keyboard focus scrolls the active option into view in plain
+  (non virtualized) lists too, and the virtualized list only pulls focus when a
+  keyboard action asked for it instead of on every render.
+- **Tabs**: the fallback indicator for browsers without CSS anchor positioning
+  is a `@supports` rule now instead of a check on mount, which fixes the flash
+  after hydration.
+- **Keyboard navigation** (Tabs, Menu, ChipSet, NavigationDrawer): the focused
+  item is resolved through `document.activeElement` and `closest()`, so arrow
+  keys keep working when focus sits on a child element of the item. Disabled
+  items are skipped instead of swallowing the key press, which previously left
+  the arrow keys stuck in front of a disabled chip.
+- **IconButton**: `aria-label` and `aria-describedby` passed in as props are no
+  longer dropped when `title` is not set. The square shape reads
+  `--np-icon-button-shape` instead of `--np-button-shape`.
+- **List `Item` / MenuItem**: the `variant` prop is no longer forwarded to the
+  DOM, so items stop rendering a stray `variant="button"` or `variant="link"`
+  attribute.
+- **Card**: a card image no longer rounds its bottom corners when content
+  follows below it.
+- **Snackbar**: the auto hide timer is cleared when the component is destroyed.
+- **SegmentedButton**: focus and hover no longer get out of sync, the state is
+  driven by CSS instead of a focus tracking variable.
+
+### Migration
+
+**Grouped `Checkbox` and `FilterChip`.** Preselect through the array, not through
+`checked` or `selected`:
+
+```svelte
+<script lang="ts">
+	// Before: <Checkbox group={fruits} value="apple" checked /> also filled the array
+	let fruits = $state<string[]>(['apple'])
+</script>
+
+<Checkbox bind:group={fruits} value="apple" />
+<Checkbox bind:group={fruits} value="banana" />
+```
+
+**Snackbar dismissal.** If you relied on a click outside or Escape closing the
+snackbar, opt back into the light dismiss behavior:
+
+```svelte
+<Snackbar popover="auto" bind:open>Saved</Snackbar>
+```
+
 ## [0.34.0] - 2026-07-23
 
 This release makes event handlers type correctly on components that can render

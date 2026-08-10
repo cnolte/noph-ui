@@ -57,7 +57,11 @@
 		</tr>
 		<tr>
 			<td><code>--np-ripple-pressed-opacity</code></td>
-			<td><code>0.12</code></td>
+			<td><code>0.1</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-ripple-focus-opacity</code></td>
+			<td><code>0.1</code></td>
 		</tr>
 	</tbody>
 </table>

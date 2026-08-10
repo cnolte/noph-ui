@@ -89,7 +89,7 @@
 		font-size: 0.75rem;
 		line-height: 1rem;
 		font-weight: var(--np-navigation-rail-item-font-weight, 500);
-		transition: all;
+		transition: color var(--np-motion-expressive-default-effects);
 		color: var(--np-color-on-surface-variant);
 	}
 	.np-navigation-action-selected .np-navigation-action-icon {
@@ -117,7 +117,7 @@
 
 	.np-navigation-action-selected .np-navigation-action-label {
 		font-weight: var(--np-navigation-rail-item-selected-font-weight, 500);
-		color: var(--np-color-secondary);
+		color: var(--np-color-on-surface);
 	}
 	.np-touch {
 		height: 56px;

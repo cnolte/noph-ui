@@ -179,8 +179,12 @@
 		<tr>
 			<td><code>popover</code></td>
 			<td><code>'auto' | 'manual'</code></td>
-			<td><code>'auto'</code></td>
-			<td>Whether the snackbar should be controlled manually or automatically.</td>
+			<td><code>'manual'</code></td>
+			<td>
+				With <code>manual</code> the snackbar closes on its <code>timeout</code> or when you hide
+				it. Use <code>auto</code> to also let a click elsewhere or <kbd>Escape</kbd> dismiss it, at the
+				cost of other popovers closing it.
+			</td>
 		</tr>
 		<tr>
 			<td><code>onActionClick</code></td>

@@ -23,28 +23,23 @@
 	}: FilterChipProps = $props()
 
 	let chipLabel: HTMLLabelElement | undefined = $state()
-	let pressed = $state(false)
 
-	const handlePointerDown = () => {
-		if (disabled) return
-		pressed = true
-	}
+	let grouped = $derived(Array.isArray(group) && value !== undefined)
+	let groupChecked = $derived(
+		Array.isArray(group) && value !== undefined ? group.includes(value) : false,
+	)
 
-	const handlePointerUp = () => {
-		pressed = false
-	}
-
-	$effect(() => {
-		if (!group || !value) return
-		const included = group.includes(value)
-		if (selected && !included) {
-			group = [...group, value]
-		} else if (!selected && included) {
-			group = group.filter((v) => v !== value)
-		} else if (included !== selected) {
-			selected = included
+	const onchange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+		const next = event.currentTarget.checked
+		if (Array.isArray(group) && value !== undefined) {
+			group = next
+				? group.includes(value)
+					? group
+					: [...group, value]
+				: group.filter((entry) => entry !== value)
 		}
-	})
+		selected = next
+	}
 </script>
 
 <div
@@ -56,17 +51,10 @@
 		icon ? 'np-filter-chip-icon' : '',
 		removable ? 'np-filter-chip-removable' : '',
 		disabled ? 'np-filter-chip-disabled' : '',
-		pressed && 'np-filter-chip-pressed',
 		attributes.class,
 	]}
 >
-	<label
-		bind:this={chipLabel}
-		class="np-filter-chip-label"
-		onpointerdown={handlePointerDown}
-		onpointerup={handlePointerUp}
-		onpointerleave={handlePointerUp}
-	>
+	<label bind:this={chipLabel} class="np-filter-chip-label">
 		{#if icon}
 			<div class="np-chip-icon">
 				{@render icon()}
@@ -76,14 +64,26 @@
 			<CheckIcon width={18} height={18} />
 		</div>
 		<div class="np-chip-label">{label}</div>
-		<input
-			type="checkbox"
-			bind:checked={selected}
-			{value}
-			{name}
-			{disabled}
-			defaultChecked={defaultSelected}
-		/>
+		{#if grouped}
+			<input
+				type="checkbox"
+				checked={groupChecked}
+				{onchange}
+				{value}
+				{name}
+				{disabled}
+				defaultChecked={defaultSelected}
+			/>
+		{:else}
+			<input
+				type="checkbox"
+				bind:checked={selected}
+				{value}
+				{name}
+				{disabled}
+				defaultChecked={defaultSelected}
+			/>
+		{/if}
 	</label>
 	{#if !disabled}
 		<Ripple forElement={chipLabel} />
@@ -155,7 +155,7 @@
 		display: none;
 	}
 	.np-chip-icon {
-		color: var(--np-color-primary);
+		color: var(--np-color-on-surface-variant);
 		display: flex;
 	}
 
@@ -215,10 +215,12 @@
 			box-shadow: var(--np-elevation-1);
 		}
 	}
-	.np-filter-chip-elevated:not(.np-filter-chip-disabled).np-filter-chip-pressed {
+	.np-filter-chip-elevated:not(.np-filter-chip-disabled):has(.np-filter-chip-label:active) {
 		box-shadow: var(--np-elevation-1);
 	}
-	.np-filter-chip-default:not(.np-filter-chip-disabled):has(input:checked).np-filter-chip-pressed {
+	.np-filter-chip-default:not(.np-filter-chip-disabled):has(
+			.np-filter-chip-label:active input:checked
+		) {
 		box-shadow: none;
 	}
 	.np-filter-chip:has(input:checked) {
@@ -257,20 +259,14 @@
 	.np-filter-chip-disabled.np-filter-chip-elevated {
 		box-shadow: none;
 	}
-	.np-filter-chip-disabled:has(input:not(:checked)).np-filter-chip-default::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		pointer-events: none;
-		border-width: 1px;
-		border-style: solid;
-		border-color: var(--np-color-on-surface);
-		opacity: 0.12;
+	.np-filter-chip-disabled.np-filter-chip-default:has(input:not(:checked))::before {
+		outline-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+		background-color: transparent;
 	}
-	.np-filter-chip-disabled::before {
-		background-color: var(--np-color-on-surface) !important;
-		opacity: 0.12;
-		border-width: 0;
+
+	.np-filter-chip-disabled.np-filter-chip-elevated::before,
+	.np-filter-chip-disabled:has(input:checked)::before {
+		outline-color: transparent;
+		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 </style>

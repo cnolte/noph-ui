@@ -29,7 +29,9 @@
 	setTabsContext(tabsContext)
 
 	const secondaryStyle = $derived(
-		tabsContext.variant === 'secondary' ? '--np-indicator-radius: 0;--_indicator-gap: 0' : '',
+		tabsContext.variant === 'secondary'
+			? '--np-indicator-radius: 0;--_indicator-gap: 0;--_indicator-height: 2px'
+			: '',
 	)
 
 	const attach = rovingTabindex('.np-tab', { currentAttr: 'aria-selected', currentValue: 'true' })
@@ -70,7 +72,7 @@
 		&::after {
 			content: '';
 			position: absolute;
-			height: 3px;
+			height: var(--_indicator-height, 3px);
 			left: anchor(left);
 			right: anchor(right);
 			bottom: anchor(bottom);

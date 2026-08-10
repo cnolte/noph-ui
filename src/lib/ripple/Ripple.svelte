@@ -280,12 +280,10 @@
 
 	$effect(() => {
 		const forcedColors = window?.matchMedia('(forced-colors: active)')
-		if (!forcedColors.matches && forElement) {
-			return addEvents(forElement)
-		} else {
-			if (!forcedColors.matches && element) {
-				return addEvents(element)
-			}
+		if (forcedColors.matches) return
+		const target = forElement ?? element?.parentElement
+		if (target) {
+			return addEvents(target)
 		}
 	})
 </script>
@@ -314,6 +312,7 @@
 		position: absolute;
 		inset: 0;
 		overflow: hidden;
+		pointer-events: none;
 	}
 
 	.np-ripple-surface {
@@ -352,7 +351,7 @@
 	}
 
 	.np-ripple-pressed::after {
-		opacity: var(--np-ripple-pressed-opacity, 0.12);
+		opacity: var(--np-ripple-pressed-opacity, 0.1);
 		transition-duration: 105ms;
 	}
 </style>

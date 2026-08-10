@@ -134,6 +134,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Slider"
+	href="/components/slider"
+	selected={page.url.pathname === '/components/slider'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Snackbar"
 	href="/components/snackbar"
 	selected={page.url.pathname === '/components/snackbar'}

@@ -1,6 +1,11 @@
 <script lang="ts">
+	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import type { MenuProps } from './types.ts'
 	import { on } from 'svelte/events'
+
+	const MENU_ITEM_SELECTOR = '[role="menuitem"]'
+	const attach = rovingTabindex(MENU_ITEM_SELECTOR)
+	const arrowHandler = arrowKeyNav(MENU_ITEM_SELECTOR)
 
 	let {
 		children,
@@ -101,8 +106,12 @@
 	{popover}
 	class={['np-menu-container', attributes.class]}
 	{style}
+	onkeydown={(event) => {
+		attributes.onkeydown?.(event)
+		if (!event.defaultPrevented) arrowHandler(event)
+	}}
 >
-	<div class="np-menu">
+	<div {@attach attach} class="np-menu" role="none">
 		{@render children()}
 	</div>
 </div>

@@ -3,6 +3,8 @@ export interface CircularProgressProps {
 	max?: number
 	indeterminate?: boolean
 	fourColor?: boolean
+	track?: boolean
+	wavy?: boolean
 	'aria-label'?: string | undefined | null
 }
 

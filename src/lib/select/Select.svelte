@@ -64,6 +64,7 @@
 	let clientWidth = $state(0)
 	let menuOpen = $state(false)
 	let focusIndex = $state(-1)
+	let pendingFocus = false
 	let typeBuffer = ''
 	let lastTypeTime = 0
 
@@ -105,7 +106,11 @@
 		return cachedRowHeight
 	}
 	const scrollOptionIntoView = (index: number) => {
-		if (!useVirtualList || !menuElement) return
+		if (index < 0 || !menuElement) return
+		if (!useVirtualList) {
+			document.getElementById(`${uid}-opt-${index}`)?.scrollIntoView({ block: 'nearest' })
+			return
+		}
 		const viewport = menuElement.querySelector('svelte-virtual-list-viewport') as HTMLElement | null
 		if (!viewport) return
 		const rowHeight = ensureRowHeight()
@@ -114,6 +119,20 @@
 		const { scrollTop, clientHeight } = viewport
 		if (top < scrollTop) viewport.scrollTop = top
 		else if (bottom > scrollTop + clientHeight) viewport.scrollTop = bottom - clientHeight
+	}
+
+	const defaultActiveIndex = () => {
+		let idx = -1
+		if (multiple) {
+			if (Array.isArray(value) && value.length) {
+				idx = options.findIndex((o) => value.includes(o.value) && !o.disabled)
+			}
+		} else {
+			idx = options.findIndex((o) => o.value === value && !o.disabled)
+		}
+		if (idx < 0) idx = options.findIndex((o) => !o.disabled)
+		if (idx < 0) idx = 0
+		return idx
 	}
 
 	const toggleValue = (option: SelectOption) => {
@@ -139,13 +158,22 @@
 		selectElement?.dispatchEvent(new Event('change', { bubbles: true }))
 	}
 
+	const focusActiveOption = () => {
+		const el = document.getElementById(`${uid}-opt-${focusIndex}`)
+		if (el) {
+			el.focus()
+			pendingFocus = false
+		} else {
+			scrollOptionIntoView(focusIndex)
+		}
+	}
+
 	const openMenuAndFocus = async (index: number) => {
 		if (!menuOpen) menuElement?.showPopover()
 		focusIndex = Math.min(Math.max(index, 0), options.length - 1)
+		pendingFocus = true
 		await tick()
-		const el = document.getElementById(`${uid}-opt-${focusIndex}`)
-		if (el) el.focus()
-		else scrollOptionIntoView(focusIndex)
+		focusActiveOption()
 	}
 
 	const moveFocus = (delta: number) => {
@@ -512,21 +540,12 @@
 	bind:open={menuOpen}
 	ontoggle={async ({ newState }) => {
 		if (newState === 'open') {
-			let idx = -1
-			if (multiple) {
-				if (Array.isArray(value) && value.length) {
-					idx = options.findIndex((o) => value.includes(o.value) && !o.disabled)
-				}
-			} else {
-				idx = options.findIndex((o) => o.value === value && !o.disabled)
-			}
-			if (idx < 0) {
-				idx = options.findIndex((o) => !o.disabled)
-			}
-			if (idx < 0) idx = 0
-			focusIndex = idx
+			if (focusIndex < 0) focusIndex = defaultActiveIndex()
+			await tick()
+			scrollOptionIntoView(focusIndex)
 		} else {
 			focusIndex = -1
+			pendingFocus = false
 		}
 	}}
 	bind:element={menuElement}
@@ -537,10 +556,12 @@
 			itemHeight={48}
 			items={options}
 			rendered={({ start, end }) => {
-				if (focusIndex >= start && focusIndex < end) {
+				if (pendingFocus && focusIndex >= start && focusIndex < end) {
 					const el = document.getElementById(`${uid}-opt-${focusIndex}`)
-					if (el) el.focus()
-					else scrollOptionIntoView(focusIndex)
+					if (el) {
+						el.focus()
+						pendingFocus = false
+					}
 				}
 			}}
 		>

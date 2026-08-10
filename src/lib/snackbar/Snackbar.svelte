@@ -16,11 +16,11 @@
 		onbeforetoggle,
 		timeout = 4000,
 		element = $bindable(),
-		popover = 'auto',
+		popover = 'manual',
 		...attributes
 	}: SnackbarProps = $props()
 
-	let timeoutId: number | undefined = $state()
+	let timeoutId: ReturnType<typeof setTimeout> | undefined
 	const uid = $props.id()
 
 	export function showPopover() {
@@ -30,6 +30,18 @@
 	export function hidePopover() {
 		element?.hidePopover()
 	}
+
+	const startTimer = () => {
+		clearTimeout(timeoutId)
+		if (!open || timeout <= 0) return
+		timeoutId = setTimeout(() => {
+			element?.hidePopover()
+		}, timeout)
+	}
+
+	const pauseTimer = () => clearTimeout(timeoutId)
+
+	$effect(() => () => clearTimeout(timeoutId))
 </script>
 
 <div
@@ -39,16 +51,14 @@
 	bind:this={element}
 	role="alert"
 	aria-labelledby="np-snackbar-label-{uid}"
+	onpointerenter={pauseTimer}
+	onpointerleave={startTimer}
+	onfocusin={pauseTimer}
+	onfocusout={startTimer}
 	onbeforetoggle={(event) => {
 		let { newState } = event
 		open = newState === 'open'
-		if (!open) {
-			clearTimeout(timeoutId)
-		} else if (timeout > 0) {
-			timeoutId = setTimeout(() => {
-				element?.hidePopover()
-			}, timeout)
-		}
+		startTimer()
 		onbeforetoggle?.(event)
 	}}
 >
@@ -108,7 +118,8 @@
 	.np-snackbar[popover] {
 		border: none;
 		margin: auto auto 1rem;
-		max-width: calc(100% - 3rem);
+		min-width: min(21.5rem, calc(100% - 3rem));
+		max-width: min(42rem, calc(100% - 3rem));
 		color: var(--np-snackbar-text-color, var(--np-color-inverse-on-surface));
 		background-color: var(--np-snackbar-container-color, var(--np-color-inverse-surface));
 		line-height: 1.25rem;

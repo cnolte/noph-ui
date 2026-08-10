@@ -49,10 +49,10 @@
 				anchor.style.setProperty('anchor-name', generatedId)
 			}
 		}
-		const mouseEnter = on(anchor, 'mouseenter', showPopover)
-		const mouseLeave = on(anchor, 'mouseleave', onLeave)
+		const mouseEnter = on(anchor, 'mouseenter', onAnchorEnter)
+		const mouseLeave = on(anchor, 'mouseleave', onAnchorLeave)
 		const focus = on(anchor, 'focus', onAnchorFocus)
-		const blur = on(anchor, 'blur', hidePopover)
+		const blur = on(anchor, 'blur', onAnchorBlur)
 		return () => {
 			mouseEnter()
 			mouseLeave()
@@ -68,21 +68,62 @@
 		}
 	}
 
+	let hideTimeout: ReturnType<typeof setTimeout> | undefined
+	let overAnchor = false
+	let overTooltip = false
+
 	const showPopover = () => {
-		element?.showPopover()
+		clearTimeout(hideTimeout)
+		if (element && !element.matches(':popover-open')) element.showPopover()
 	}
 
 	const hidePopover = () => {
+		clearTimeout(hideTimeout)
 		element?.hidePopover()
 	}
 
-	const onLeave = () => {
-		hidePopover()
-		// TODO Use delay as soons as popover="hint" is supported in all browsers
-		// setTimeout(() => {
-		// 	hidePopover()
-		// }, 500)
+	const scheduleHide = () => {
+		clearTimeout(hideTimeout)
+		hideTimeout = setTimeout(() => {
+			if (!overAnchor && !overTooltip) hidePopover()
+		}, 500)
 	}
+
+	const onAnchorEnter = () => {
+		overAnchor = true
+		showPopover()
+	}
+
+	const onAnchorLeave = () => {
+		overAnchor = false
+		scheduleHide()
+	}
+
+	const onTooltipEnter = () => {
+		overTooltip = true
+		clearTimeout(hideTimeout)
+	}
+
+	const onTooltipLeave = () => {
+		overTooltip = false
+		scheduleHide()
+	}
+
+	const onAnchorBlur = () => {
+		if (!overAnchor && !overTooltip) hidePopover()
+	}
+
+	const onEscape = (event: KeyboardEvent) => {
+		if (event.key === 'Escape' && open) hidePopover()
+	}
+
+	$effect(() => {
+		const off = on(document, 'keydown', onEscape)
+		return () => {
+			off()
+			clearTimeout(hideTimeout)
+		}
+	})
 </script>
 
 <svelte:window bind:innerHeight />
@@ -98,6 +139,8 @@
 		bind:this={element}
 		bind:clientWidth
 		bind:clientHeight
+		onmouseenter={onTooltipEnter}
+		onmouseleave={onTooltipLeave}
 		ontoggle={(event) => {
 			let { newState } = event
 			open = newState === 'open'

@@ -119,5 +119,15 @@
 			<td><code>undefined</code></td>
 			<td>Content displayed inside the badge. When omitted, a small badge (dot) is shown.</td>
 		</tr>
+		<tr>
+			<td><code>ariaLabel</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Announces the badge. Set it when the badge carries information that is not already in the
+				surrounding text, for example <code>"3 unread messages"</code>. Without it the badge stays
+				<code>aria-hidden</code>, which is right when it only repeats what is already labelled.</td
+			>
+		</tr>
 	</tbody>
 </table>

@@ -10,22 +10,20 @@
 		label = '',
 		icon,
 		element = $bindable(),
+		actionElement = $bindable(),
 		ariaLabelRemove = 'Remove',
+		onclick,
 		onremove,
 		name,
 		value,
 		...attributes
 	}: InputChipProps = $props()
-
-	let chipLabel: HTMLDivElement | undefined = $state()
 </script>
 
 <div
 	{...attributes}
 	bind:this={element}
-	tabindex={disabled ? -1 : 0}
 	aria-disabled={disabled}
-	role="button"
 	class={[
 		'np-input-chip',
 		icon ? 'np-input-chip-icon' : '',
@@ -34,17 +32,24 @@
 		attributes.class,
 	]}
 >
-	<div bind:this={chipLabel} class={['np-input-chip-label']}>
+	<button
+		bind:this={actionElement}
+		type="button"
+		class="np-input-chip-label"
+		aria-pressed={selected === undefined ? undefined : selected}
+		{disabled}
+		{onclick}
+	>
 		{#if icon}
 			<div class="np-chip-icon">
 				{@render icon()}
 			</div>
 		{/if}
 		<div class="np-chip-label">{label || value}</div>
-		<input type="hidden" {value} {name} {disabled} />
-	</div>
+	</button>
+	<input type="hidden" {value} {name} {disabled} />
 	{#if !disabled}
-		<Ripple forElement={chipLabel} />
+		<Ripple forElement={actionElement} />
 	{/if}
 	<IconButton
 		{disabled}
@@ -71,12 +76,14 @@
 		padding-inline-end: 1px;
 		min-width: 0;
 	}
-	.np-input-chip-label input {
-		opacity: 0;
-		position: absolute;
-		pointer-events: none;
-	}
 	.np-input-chip-label {
+		appearance: none;
+		background: none;
+		border-width: 0;
+		font: inherit;
+		margin: 0;
+		padding-block: 0;
+		padding-inline-end: 0;
 		cursor: pointer;
 		display: inline-flex;
 		align-items: center;
@@ -88,6 +95,12 @@
 		z-index: 1;
 		padding-inline-start: 0.75rem;
 		overflow: hidden;
+		min-width: 0;
+	}
+	/* The chip container draws the focus ring, so the body keeps none of its own.
+	   `outline-width: 0` would not do, the UA ring is `outline-style: auto`. */
+	.np-input-chip-label:focus-visible {
+		outline: none;
 	}
 	.np-chip-icon {
 		color: var(--np-color-on-surface-variant);
@@ -133,7 +146,7 @@
 	.np-input-chip-selected .np-input-chip-label {
 		color: var(--np-color-on-secondary-container);
 	}
-	.np-input-chip:focus-visible {
+	.np-input-chip:has(:focus-visible) {
 		outline-style: solid;
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
@@ -157,24 +170,12 @@
 		color: var(--np-color-on-surface);
 		opacity: 0.38;
 	}
-	.np-input-chip-disabled.np-input-chip-selected::before {
-		opacity: 0.12;
-	}
-	.np-input-chip-disabled:not(.np-input-chip-selected).np-input-chip::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		pointer-events: none;
-		border-width: 1px;
-		border-style: solid;
-		border-color: var(--np-color-on-surface);
-		opacity: 0.12;
-	}
-	.np-input-chip-disabled::before {
-		opacity: 0.12;
+	.np-input-chip-disabled:not(.np-input-chip-selected)::before {
+		outline-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+		background-color: transparent;
 	}
 	.np-input-chip-selected.np-input-chip-disabled::before {
-		background-color: var(--np-color-on-surface);
+		outline-color: transparent;
+		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 </style>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Badge from '#lib/badge/Badge.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import { onMount, tick } from 'svelte'
+	import { tick } from 'svelte'
 	import { getTabsContext } from './context.js'
 	import type { TabProps } from './types.ts'
 
@@ -15,12 +15,13 @@
 		href,
 		badge = false,
 		badgeLabel,
+		badgeAriaLabel,
+		controls,
 		element = $bindable(),
 		...attributes
 	}: TabProps = $props()
 
 	const tabsContext = getTabsContext()
-	let fallbackIndicator = $state(false)
 
 	$effect(() => {
 		if (tabsContext.value === value) {
@@ -32,16 +33,10 @@
 		await tick()
 		tabsContext.indicatorValue = value
 	}
-
-	onMount(() => {
-		if (!('anchorName' in document.documentElement.style)) {
-			fallbackIndicator = true
-		}
-	})
 </script>
 
 {#snippet content()}
-	<div class={['np-tab-content', tabsContext.value === value && fallbackIndicator && 'fallback']}>
+	<div class="np-tab-content">
 		<div
 			class={[
 				'np-tab-label',
@@ -51,7 +46,7 @@
 			{#if icon}
 				{#if badge && tabsContext.variant === 'primary' && !inlineIcon}
 					<div class="np-tab-icon-badge">
-						<Badge label={badgeLabel} />
+						<Badge label={badgeLabel} ariaLabel={badgeAriaLabel} />
 						{@render icon?.()}
 					</div>
 				{:else}
@@ -60,7 +55,10 @@
 			{/if}
 			{#if badge && (!icon || tabsContext.variant === 'secondary' || inlineIcon)}
 				<div style="--np-badge-position:static;">
-					<span class="np-tab-label-badge">{@render children?.()}</span><Badge label={badgeLabel} />
+					<span class="np-tab-label-badge">{@render children?.()}</span><Badge
+						label={badgeLabel}
+						ariaLabel={badgeAriaLabel}
+					/>
 				</div>
 			{:else}
 				{@render children?.()}
@@ -87,6 +85,7 @@
 		bind:this={element}
 		role="tab"
 		aria-selected={tabsContext.value === value}
+		aria-controls={controls}
 		tabindex={tabsContext.value === value ? 0 : -1}
 		{href}
 		class={[
@@ -106,6 +105,7 @@
 		bind:this={element}
 		role="tab"
 		aria-selected={tabsContext.value === value}
+		aria-controls={controls}
 		tabindex={tabsContext.value === value ? 0 : -1}
 		class={[
 			'np-tab',
@@ -197,13 +197,15 @@
 		position: absolute;
 		bottom: 0;
 		inset-inline: var(--_indicator-gap, 2px);
-		height: 3px;
+		height: var(--_indicator-height, 3px);
 	}
 
-	.fallback .np-indicator {
-		background-color: var(--np-color-primary);
-		border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-		border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+	@supports not (anchor-name: --np-tab-indicator) {
+		.np-tab-content-active .np-indicator {
+			background-color: var(--np-color-primary);
+			border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+		}
 	}
 
 	.focus-area {

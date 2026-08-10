@@ -33,6 +33,77 @@
 	value={`<Switch icons="selected" />
 <Switch icons="both" />`}
 />
+<h2>Theming</h2>
+<h3>Tokens</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Default value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-comp-switch-selected-track-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-selected-handle-color</code></td>
+			<td><code>--np-color-on-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-selected-icon-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-unselected-track-color</code></td>
+			<td><code>--np-color-surface-container-highest</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-unselected-track-outline-color</code></td>
+			<td><code>--np-color-outline</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-unselected-handle-color</code></td>
+			<td><code>--np-color-outline</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-handle-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-state-layer-shape</code></td>
+			<td><code>--np-shape-corner-full</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-comp-switch-state-layer-size</code></td>
+			<td><code>2.5rem</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<code>--np-comp-switch-selected-icon-color</code> colors the icon inside the handle, which only
+	shows with <code>icons="selected"</code> or <code>icons="both"</code>.
+</p>
+<h3>Example</h3>
+<DemoContainer>
+	<Switch
+		selected
+		icons="both"
+		--np-comp-switch-selected-track-color="var(--np-color-tertiary)"
+		--np-comp-switch-selected-handle-color="var(--np-color-on-tertiary)"
+		--np-comp-switch-selected-icon-color="var(--np-color-tertiary)"
+	/>
+</DemoContainer>
+<Code
+	value={`<Switch
+	selected
+	icons="both"
+	--np-comp-switch-selected-track-color="var(--np-color-tertiary)"
+	--np-comp-switch-selected-handle-color="var(--np-color-on-tertiary)"
+	--np-comp-switch-selected-icon-color="var(--np-color-tertiary)"
+/>`}
+/>
 <h2>API</h2>
 <h3>Switch</h3>
 

@@ -11,10 +11,15 @@
 		supportingText,
 		actions,
 		divider,
+		ontoggle,
 		...attributes
 	}: DialogProps = $props()
 
 	const uid = $props.id()
+
+	let dialogEl: HTMLDivElement | undefined = $state()
+	let previouslyFocused: HTMLElement | undefined
+	let inerted: HTMLElement[] = []
 
 	export function showPopover() {
 		element?.showPopover()
@@ -23,12 +28,43 @@
 	export function hidePopover() {
 		element?.hidePopover()
 	}
+
+	const trapFocus = () => {
+		if (!element) return
+		previouslyFocused = document.activeElement as HTMLElement | undefined
+		for (let node: HTMLElement | null = element; node && node !== document.body;) {
+			const parent: HTMLElement | null = node.parentElement
+			if (!parent) break
+			for (const sibling of parent.children) {
+				if (sibling === node || !(sibling instanceof HTMLElement) || sibling.inert) continue
+				sibling.inert = true
+				inerted.push(sibling)
+			}
+			node = parent
+		}
+		dialogEl?.focus()
+	}
+
+	const releaseFocus = () => {
+		for (const node of inerted) node.inert = false
+		inerted = []
+		previouslyFocused?.focus?.()
+		previouslyFocused = undefined
+	}
 </script>
 
 <div
 	bind:this={element}
 	popover="auto"
 	{...attributes}
+	ontoggle={(event) => {
+		if (event.newState === 'open') {
+			trapFocus()
+		} else {
+			releaseFocus()
+		}
+		ontoggle?.(event)
+	}}
 	class={['np-dialog-container', !quick && 'np-animate', attributes.class]}
 >
 	<div
@@ -39,24 +75,28 @@
 		}}
 	></div>
 	<div
+		bind:this={dialogEl}
 		class="np-dialog"
 		role="dialog"
+		tabindex="-1"
 		aria-modal="true"
-		aria-labelledby="{uid}-dialog-headline"
-		aria-describedby={supportingText ? '{uid}-dialog-supporting-text' : undefined}
+		aria-labelledby={headline ? `${uid}-dialog-headline` : undefined}
+		aria-describedby={supportingText ? `${uid}-dialog-supporting-text` : undefined}
 	>
 		{#if icon}
 			<div class="np-dialog-icon">
 				{@render icon()}
 			</div>
 		{/if}
-		<h1
-			id="{uid}-dialog-headline"
-			class="np-dialog-headline"
-			style={icon ? 'text-align: center' : ''}
-		>
-			{headline}
-		</h1>
+		{#if headline}
+			<h1
+				id="{uid}-dialog-headline"
+				class="np-dialog-headline"
+				style={icon ? 'text-align: center' : ''}
+			>
+				{headline}
+			</h1>
+		{/if}
 		{#if supportingText}
 			<p id="{uid}-dialog-supporting-text" class="np-dialog-supporting-text">{supportingText}</p>
 		{/if}
@@ -126,7 +166,10 @@
 		inset: 0;
 		position: fixed;
 		background-color: var(--np-color-scrim);
-		opacity: 0.38;
+		opacity: 0.32;
+	}
+	.np-dialog:focus-visible {
+		outline: none;
 	}
 
 	.np-dialog-icon {

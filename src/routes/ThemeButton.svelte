@@ -16,6 +16,7 @@
 		Variant,
 	} from '@materialx/material-color-utilities'
 	import { onMount } from 'svelte'
+	import defaultThemeCss from '../lib/themes/defaultTheme.css?raw'
 
 	let theme: string | null = $state(null)
 	let value = $state<string>('#5fb9e9')
@@ -145,26 +146,21 @@
 			sessionStorage.setItem('sourceColor', value)
 		}
 	}
+
 	const copyTheme = () => {
 		const scheme = getScheme()
-		let schemeString = ':root {\ncolor-scheme: light dark;\n'
+		const colors: Record<string, string> = {}
 		for (const [key, value] of Object.entries(scheme)) {
 			const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 			const lightColor = hexFromArgb(value[0] as number)
 			const darkColor = hexFromArgb(value[1] as number)
-			schemeString += `--np-color-${token}: light-dark(${lightColor}, ${darkColor});\n`
+			colors[`--np-color-${token}`] = `light-dark(${lightColor}, ${darkColor})`
 		}
-		schemeString += `--np-elevation-1: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
---np-elevation-2: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px, rgba(0, 0, 0, 0.14) 0px 4px 5px 0px, rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
---np-elevation-3: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
---np-shape-corner-full: 9999px;
---np-shape-corner-extra-small: 0.25rem;
---np-shape-corner-small: 0.5rem;
---np-shape-corner-medium: 0.75rem;
---np-shape-corner-large: 1rem;
---np-shape-corner-extra-large: 1.75rem;
---np-shape-corner-none: 0;
-}`
+		const schemeString = defaultThemeCss.replace(
+			/(--np-color-[a-z-]+)(\s*):([^;]+);/g,
+			(match, name: string, gap: string) =>
+				name in colors ? `${name}${gap}: ${colors[name]};` : match,
+		)
 		navigator.clipboard.writeText(schemeString)
 	}
 	onMount(() => {
@@ -263,14 +259,14 @@
 		</fieldset>
 		<NativeSelect style="width:100%" label="Variant" bind:value={variant} onchange={changeTheme}>
 			<Option value={Variant.CONTENT}>Content</Option>
-			<Option value={Variant.EXPRESSIVE} selected>Expressive</Option>
-			<Option value={Variant.FIDELITY} selected>Fidelity</Option>
-			<Option value={Variant.FRUIT_SALAD} selected>Fruit Salad</Option>
-			<Option value={Variant.MONOCHROME} selected>Monochrome</Option>
-			<Option value={Variant.NEUTRAL} selected>Neutral</Option>
-			<Option value={Variant.RAINBOW} selected>Rainbow</Option>
-			<Option value={Variant.TONAL_SPOT} selected>Tonal Spot</Option>
-			<Option value={Variant.VIBRANT} selected>Vibrant</Option>
+			<Option value={Variant.EXPRESSIVE}>Expressive</Option>
+			<Option value={Variant.FIDELITY}>Fidelity</Option>
+			<Option value={Variant.FRUIT_SALAD}>Fruit Salad</Option>
+			<Option value={Variant.MONOCHROME}>Monochrome</Option>
+			<Option value={Variant.NEUTRAL}>Neutral</Option>
+			<Option value={Variant.RAINBOW}>Rainbow</Option>
+			<Option value={Variant.TONAL_SPOT}>Tonal Spot</Option>
+			<Option value={Variant.VIBRANT}>Vibrant</Option>
 		</NativeSelect>
 		<SegmentedButton
 			style="margin-top: 1rem;"

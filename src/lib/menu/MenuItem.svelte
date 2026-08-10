@@ -5,13 +5,13 @@
 	let { ...attributes }: MenuItemProps = $props()
 </script>
 
-<li class="np-menu-item" role="menuitem">
+<div class="np-menu-item" role="none">
 	{#if 'href' in attributes}
-		<Item {...attributes} variant="link" />
+		<Item role="menuitem" {...attributes} variant="link" />
 	{:else}
-		<Item {...attributes} variant="button" />
+		<Item role="menuitem" {...attributes} variant="button" />
 	{/if}
-</li>
+</div>
 
 <style>
 	.np-menu-item {

@@ -16,6 +16,9 @@
 	let emails: string[] = $state(['info@noph.dev'])
 	let email = $state('')
 	let pendingDeleteIndex: number | null = $state(null)
+
+	let editableLabel = $state('Fabian Reza')
+	let editableSelected = $state(false)
 </script>
 
 <svelte:head>
@@ -255,6 +258,35 @@
 		{#snippet icon()}<Icon>person</Icon>{/snippet}
 	</InputChip>
 </ChipSet>`}
+/>
+
+<h3>Separate actions</h3>
+<p>
+	The chip body is a button of its own, so it can be focused and activated with the keyboard. Use
+	<code>onclick</code> for the primary action, for example selecting the chip or switching it into
+	an edit mode, and <code>onremove</code> for the trailing icon.
+</p>
+<DemoContainer>
+	<ChipSet>
+		<InputChip
+			bind:selected={editableSelected}
+			label={editableLabel}
+			ariaLabelRemove="Remove {editableLabel}"
+			onclick={() => (editableSelected = !editableSelected)}
+			onremove={() => (editableLabel = 'Removed')}
+		>
+			{#snippet icon()}<Icon>person</Icon>{/snippet}
+		</InputChip>
+	</ChipSet>
+</DemoContainer>
+<Code
+	value={`<InputChip
+	bind:selected
+	label={label}
+	ariaLabelRemove="Remove {label}"
+	onclick={() => (selected = !selected)}
+	onremove={() => remove()}
+/>`}
 />
 
 <h3>Disabled</h3>

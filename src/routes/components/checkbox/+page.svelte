@@ -101,6 +101,15 @@
 	</thead>
 	<tbody>
 		<tr>
+			<td><code>error</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
+			<td
+				>Draws the checkbox in the error color and sets <code>aria-invalid</code> on the input. A disabled
+				checkbox keeps its disabled styling instead.</td
+			>
+		</tr>
+		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>Omit&lt;HTMLInputAttributes, 'type'&gt;</code></td>
 			<td></td>

@@ -147,7 +147,7 @@
 
 	.np-selected .np-handle {
 		transform: translateX(1.25rem) scale(1.5);
-		color: var(--np-color-primary);
+		color: var(--np-comp-switch-selected-icon-color, var(--np-color-primary));
 		background-color: var(--np-comp-switch-selected-handle-color, var(--np-color-on-primary));
 	}
 

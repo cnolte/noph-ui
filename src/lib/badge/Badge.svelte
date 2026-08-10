@@ -1,9 +1,11 @@
 <script lang="ts">
-	let { label }: { label?: string | number } = $props()
+	let { label, ariaLabel }: { label?: string | number; ariaLabel?: string } = $props()
 </script>
 
 <div
-	aria-hidden="true"
+	aria-hidden={ariaLabel ? undefined : 'true'}
+	role={ariaLabel ? 'status' : undefined}
+	aria-label={ariaLabel}
 	class={[
 		'np-badge-container',
 		label === undefined ? 'np-badge-container-no-label' : 'np-badge-container-label',
