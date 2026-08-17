@@ -5,6 +5,48 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.38.0] - 2026-08-17
+
+`DateRangePicker` shipped as a full screen surface at every window size. The
+specification only asks for that below 600dp, so from there up it is now an
+ordinary modal: a 360dp dialog sitting in the scrim with the month list scrolling
+inside it. Everything else about the picker is unchanged, and below 600dp it
+looks exactly as it did.
+
+### Added
+
+- **DateRangePicker**: from 600dp up the picker presents itself as a modal rather
+  than a full screen surface. The container is `fit-content` around a 360dp
+  content column, stands 32dp off the top and bottom of the window with
+  `--np-elevation-3` and an extra large corner, and takes
+  `--np-color-surface-container-high`. The month list still scrolls, bounded by
+  `--np-date-range-picker-months-max-height`, so the dialog is as tall as its
+  content instead of as tall as the window. The switch is a media query, so it
+  costs nothing to render and the server sends what the browser will show. Making
+  that possible moved the picker's `--np-dialog-*` overrides off the dialog
+  element and into its stylesheet, which is also where a media query can reach
+  them; a `--np-dialog-*` value set inline by the caller now wins over the
+  picker's own.
+- **DateRangePicker**: the confirm buttons follow the layout. The full screen
+  surface keeps the close icon and `Save` in its top bar. The modal hides that bar
+  and fills `Dialog`'s own action row instead, so `Cancel` and `Save` sit at the
+  bottom where a dialog puts them. Both sets are rendered and the breakpoint hides
+  one, so which buttons are live never depends on measuring the window in script.
+- **DateRangePicker**: `title` now appears above the headline as a label, which is
+  where the specification puts it. Before it was only the dialog's accessible
+  name.
+- **DateRangePicker**: `--np-date-range-picker-months-max-height` bounds the
+  scrolling month list of the modal, defaulting to `20rem` (320dp). It has no
+  effect on the full screen layout, where the list takes the space left over.
+
+### Fixed
+
+- **DateRangePicker**: `--np-date-range-picker-content-width` only narrowed the
+  header. The weekday row and the month list each carried a hardcoded `25.5rem`
+  that won over the property, so a narrower content width pulled the header in and
+  left the calendar under it at its old width. All three now read the property,
+  which defaults to 408dp full screen and 360dp as a modal.
+
 ## [0.37.0] - 2026-08-17
 
 The headline of this release is the date picker family: a docked picker that

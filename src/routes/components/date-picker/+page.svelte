@@ -1,5 +1,15 @@
 <script lang="ts">
-	import { Button, DatePickerDialog, DateRangePicker, DockedDatePicker } from '#lib/index.js'
+	import {
+		Button,
+		DatePickerDialog,
+		DateRangePicker,
+		DockedDatePicker,
+		formatDate,
+		IconButton,
+		parseISODate,
+		TextField,
+	} from '#lib/index.js'
+	import { CalendarToday } from '#lib/icons/index.js'
 	import type { DateRange } from '#lib/types.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
@@ -34,6 +44,14 @@
 
 	let rangeOpen = $state(false)
 	let range = $state<DateRange>({})
+
+	let stayOpen = $state(false)
+	let stay = $state<DateRange>({})
+
+	const asText = (iso?: string) => {
+		const date = parseISODate(iso)
+		return date ? formatDate(date) : ''
+	}
 
 	const today = new Date()
 	const thisYear = today.getFullYear()
@@ -437,6 +455,14 @@
 	needs. The seven grids share one tab stop, so the list is one stop in the tab order and the arrow
 	keys carry focus from one month into the next.
 </p>
+<p>
+	The picker takes the presentation the window allows. Below 600dp it fills the screen, square
+	cornered and flat, and confirms from the top bar. From 600dp up it is an ordinary modal instead: a
+	dialog the width of the calendar, sitting in the scrim with rounded corners, the month list
+	scrolling inside it and <code>Cancel</code> and <code>Save</code> at the bottom. The switch is a media
+	query, so it costs nothing to render and the server sends what the browser shows. Narrow the window
+	to see it change.
+</p>
 <DemoContainer>
 	<Button variant="filled" onclick={() => (rangeOpen = true)}>Pick a range</Button>
 	<DateRangePicker bind:open={rangeOpen} bind:value={range} title="Select stay" />
@@ -454,6 +480,99 @@
 
 <Button onclick={() => (rangeOpen = true)}>Pick a range</Button>
 <DateRangePicker bind:open={rangeOpen} bind:value={range} title="Select stay" />`}
+/>
+
+<h3>Two fields</h3>
+<p>
+	A booking form usually shows the range as two fields rather than a button, and the calendar is
+	what opens behind them. <code>DateRangePicker</code> is only the popup, so the pair of fields
+	stays yours: bind the same <code>&#123; start, end &#125;</code> to both, and the range is the single
+	place the two edges live.
+</p>
+<p>
+	The calendar is the only editor, so the fields are read-only and simply read the range back
+	through
+	<code>formatDate</code>. That is the whole example: nothing mirrors the text and nothing has to be
+	kept in sync, because the two edges only ever change in one place. Clicking a field opens the
+	picker, and the calendar button does the same for the keyboard.
+</p>
+{#snippet stayCalendarButton(edge: string)}
+	<IconButton
+		type="button"
+		aria-label="Open the calendar for the {edge} date"
+		aria-haspopup="dialog"
+		aria-expanded={stayOpen}
+		onclick={() => (stayOpen = true)}
+	>
+		<CalendarToday />
+	</IconButton>
+{/snippet}
+{#snippet stayStartButton()}{@render stayCalendarButton('start')}{/snippet}
+{#snippet stayEndButton()}{@render stayCalendarButton('end')}{/snippet}
+<DemoContainer>
+	<TextField
+		label="Start"
+		readonly
+		value={asText(stay.start)}
+		onclick={() => (stayOpen = true)}
+		end={stayStartButton}
+	/>
+	<TextField
+		label="End"
+		readonly
+		value={asText(stay.end)}
+		onclick={() => (stayOpen = true)}
+		end={stayEndButton}
+	/>
+	<DateRangePicker bind:open={stayOpen} bind:value={stay} title="Select stay" />
+</DemoContainer>
+<p>Value: <code>{stay.start ?? 'undefined'} → {stay.end ?? 'undefined'}</code></p>
+<Code
+	value={`<script lang="ts">
+	import { DateRangePicker, formatDate, IconButton, parseISODate, TextField } from 'noph-ui'
+	import { CalendarToday } from 'noph-ui/icons'
+	import type { DateRange } from 'noph-ui/types'
+
+	let open = $state(false)
+	let stay = $state<DateRange>({})
+
+	const asText = (iso?: string) => {
+		const date = parseISODate(iso)
+		return date ? formatDate(date) : ''
+	}
+</` +
+		`script>
+
+{#snippet calendarButton(edge: string)}
+	<IconButton
+		type="button"
+		aria-label="Open the calendar for the {edge} date"
+		aria-haspopup="dialog"
+		aria-expanded={open}
+		onclick={() => (open = true)}
+	>
+		<CalendarToday />
+	</IconButton>
+{/snippet}
+{#snippet startButton()}{@render calendarButton('start')}{/snippet}
+{#snippet endButton()}{@render calendarButton('end')}{/snippet}
+
+<TextField
+	label="Start"
+	readonly
+	value={asText(stay.start)}
+	onclick={() => (open = true)}
+	end={startButton}
+/>
+<TextField
+	label="End"
+	readonly
+	value={asText(stay.end)}
+	onclick={() => (open = true)}
+	end={endButton}
+/>
+
+<DateRangePicker bind:open bind:value={stay} title="Select stay" />`}
 />
 
 <h2>Theming</h2>
@@ -543,11 +662,25 @@
 		</tr>
 		<tr>
 			<td><code>--np-date-range-picker-container-color</code></td>
-			<td><code>--np-color-surface</code></td>
+			<td>
+				<code>--np-color-surface</code> full screen, <code>--np-color-surface-container-high</code>
+				as a modal
+			</td>
 		</tr>
 		<tr>
 			<td><code>--np-date-range-picker-container-shape</code></td>
-			<td><code>--np-shape-corner-none</code></td>
+			<td>
+				<code>--np-shape-corner-none</code> full screen,
+				<code>--np-shape-corner-extra-large</code> as a modal
+			</td>
+		</tr>
+		<tr>
+			<td><code>--np-date-range-picker-content-width</code></td>
+			<td><code>25.5rem</code> (408dp) full screen, <code>22.5rem</code> (360dp) as a modal</td>
+		</tr>
+		<tr>
+			<td><code>--np-date-range-picker-months-max-height</code></td>
+			<td><code>20rem</code> (320dp), the modal's scrolling month list</td>
 		</tr>
 	</tbody>
 </table>

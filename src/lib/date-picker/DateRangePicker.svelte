@@ -172,14 +172,6 @@
 	bind:element
 	aria-label={title}
 	class={['np-date-range-picker', attributes.class]}
-	--np-dialog-container-width="100%"
-	--np-dialog-container-min-width="0"
-	--np-dialog-inset="0"
-	--np-dialog-padding="0"
-	--np-dialog-max-height="100dvh"
-	--np-dialog-elevation="none"
-	--np-dialog-container-color="var(--np-date-range-picker-container-color, var(--np-color-surface))"
-	--np-dialog-container-shape="var(--np-date-range-picker-container-shape, var(--np-shape-corner-none))"
 	ontoggle={(event) => {
 		const nowOpen = event.newState === 'open'
 		open = nowOpen
@@ -198,7 +190,7 @@
 	{#if open}
 		<div class="np-date-range-picker-content">
 			<div class="np-date-range-picker-header">
-				<div class="np-date-range-picker-actions">
+				<div class="np-date-range-picker-top-bar">
 					<IconButton type="button" aria-label={cancelLabel} onclick={cancel}>
 						<CloseIcon />
 					</IconButton>
@@ -206,11 +198,14 @@
 						{confirmLabel}
 					</Button>
 				</div>
-				<h2 class="np-date-range-picker-headline">
-					<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
-					<span aria-hidden="true">–</span>
-					<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
-				</h2>
+				<div class="np-date-range-picker-header-text">
+					<span class="np-date-range-picker-title">{title}</span>
+					<h2 class="np-date-range-picker-headline">
+						<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
+						<span aria-hidden="true">–</span>
+						<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
+					</h2>
+				</div>
 			</div>
 			<Divider />
 
@@ -251,15 +246,45 @@
 			</div>
 		</div>
 	{/if}
+
+	{#snippet actions()}
+		{#if open}
+			<Button type="button" variant="text" onclick={cancel}>{cancelLabel}</Button>
+			<Button type="button" variant="text" disabled={!canConfirm} onclick={confirm}>
+				{confirmLabel}
+			</Button>
+		{/if}
+	{/snippet}
 </Dialog>
 
 <style>
+	:global(.np-date-range-picker) {
+		--np-dialog-container-width: 100%;
+		--np-dialog-container-min-width: 0;
+		--np-dialog-inset: 0;
+		--np-dialog-padding: 0;
+		--np-dialog-max-height: 100dvh;
+		--np-dialog-elevation: none;
+		--np-dialog-container-color: var(
+			--np-date-range-picker-container-color,
+			var(--np-color-surface)
+		);
+		--np-dialog-container-shape: var(
+			--np-date-range-picker-container-shape,
+			var(--np-shape-corner-none)
+		);
+	}
+
 	:global(.np-date-range-picker .np-dialog) {
 		height: 100dvh;
 	}
 
 	:global(.np-date-range-picker .np-dialog-scroller) {
 		overflow: hidden;
+	}
+
+	:global(.np-date-range-picker .np-dialog .np-dialog-actions) {
+		display: none;
 	}
 
 	.np-date-range-picker-content {
@@ -272,13 +297,18 @@
 	.np-date-range-picker-header,
 	.np-date-range-picker-weekdays,
 	.np-date-range-picker-months {
+		box-sizing: border-box;
 		max-width: var(--np-date-range-picker-content-width, 25.5rem);
 		margin-inline: auto;
 		width: 100%;
 	}
 
+	.np-date-range-picker-header,
+	.np-date-range-picker-weekdays {
+		flex: none;
+	}
+
 	.np-date-range-picker-header {
-		box-sizing: border-box;
 		min-height: 8rem;
 		display: flex;
 		flex-direction: column;
@@ -288,10 +318,22 @@
 		color: var(--np-color-on-surface-variant);
 	}
 
-	.np-date-range-picker-actions {
+	.np-date-range-picker-top-bar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+
+	.np-date-range-picker-header-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.np-date-range-picker-title {
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		font-weight: 500;
 	}
 
 	.np-date-range-picker-headline {
@@ -314,10 +356,6 @@
 		align-items: center;
 		height: 3rem;
 		padding-inline: 0.75rem;
-		max-width: 25.5rem;
-		margin-inline: auto;
-		width: 100%;
-		box-sizing: border-box;
 		font-size: 1rem;
 		line-height: 1.5rem;
 		color: var(--np-color-on-surface);
@@ -330,10 +368,6 @@
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		padding-inline: 0.75rem;
-		max-width: 25.5rem;
-		margin-inline: auto;
-		width: 100%;
-		box-sizing: border-box;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 	}
@@ -347,5 +381,51 @@
 		line-height: 1.25rem;
 		font-weight: 500;
 		color: var(--np-date-picker-range-month-subhead-color, var(--np-color-on-surface-variant));
+	}
+
+	@media (min-width: 37.5rem) {
+		:global(.np-date-range-picker) {
+			--np-dialog-container-width: fit-content;
+			--np-dialog-inset: 2rem 1rem;
+			--np-dialog-max-height: calc(100dvh - 3rem);
+			--np-dialog-elevation: var(--np-elevation-3);
+			--np-dialog-container-color: var(
+				--np-date-range-picker-container-color,
+				var(--np-color-surface-container-high)
+			);
+			--np-dialog-container-shape: var(
+				--np-date-range-picker-container-shape,
+				var(--np-shape-corner-extra-large)
+			);
+		}
+
+		:global(.np-date-range-picker .np-dialog) {
+			height: auto;
+		}
+
+		:global(.np-date-range-picker .np-dialog .np-dialog-actions) {
+			display: flex;
+			margin-top: 0;
+			padding: 0.5rem 0.75rem 0.75rem;
+		}
+
+		.np-date-range-picker-content {
+			width: var(--np-date-range-picker-content-width, 22.5rem);
+			max-width: 100%;
+		}
+
+		.np-date-range-picker-top-bar {
+			display: none;
+		}
+
+		.np-date-range-picker-header {
+			min-height: 7.5rem;
+			justify-content: flex-end;
+			padding: 1rem 0.75rem 0.75rem 1.5rem;
+		}
+
+		.np-date-range-picker-months {
+			max-height: var(--np-date-range-picker-months-max-height, 20rem);
+		}
 	}
 </style>

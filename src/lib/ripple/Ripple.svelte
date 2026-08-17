@@ -80,7 +80,6 @@
 
 	const getTranslationCoordinates = (positionEvent?: Event) => {
 		const { height, width } = element!.parentElement!.getBoundingClientRect()
-		// end in the center
 		const endPoint = {
 			x: (width - initialSize) / 2,
 			y: (height - initialSize) / 2,

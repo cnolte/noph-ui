@@ -111,9 +111,6 @@
 		const len = wavelength
 		const width = containerWidth
 		const host = wavePathA?.closest('.progress') as HTMLElement | null
-		// Live declaration: --np-lp-percent is a registered custom property that carries
-		// the same transition as the track, so reading it each frame gives the wave the
-		// eased position instead of jumping straight to the new value.
 		const hostStyles = host && getComputedStyle(host)
 		let raf = 0
 		let last = 0
