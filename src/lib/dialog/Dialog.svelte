@@ -12,6 +12,10 @@
 		actions,
 		divider,
 		ontoggle,
+		// Naming attributes belong on the element that carries role="dialog", not on the popover
+		// container the rest of the attributes are spread onto.
+		'aria-label': ariaLabel,
+		'aria-labelledby': ariaLabelledby,
 		...attributes
 	}: DialogProps = $props()
 
@@ -21,11 +25,11 @@
 	let previouslyFocused: HTMLElement | undefined
 	let inerted: HTMLElement[] = []
 
-	export function showPopover() {
+	export const showPopover = () => {
 		element?.showPopover()
 	}
 
-	export function hidePopover() {
+	export const hidePopover = () => {
 		element?.hidePopover()
 	}
 
@@ -80,7 +84,8 @@
 		role="dialog"
 		tabindex="-1"
 		aria-modal="true"
-		aria-labelledby={headline ? `${uid}-dialog-headline` : undefined}
+		aria-label={ariaLabel}
+		aria-labelledby={ariaLabelledby ?? (headline ? `${uid}-dialog-headline` : undefined)}
 		aria-describedby={supportingText ? `${uid}-dialog-supporting-text` : undefined}
 	>
 		{#if icon}
@@ -121,20 +126,20 @@
 		background: transparent;
 		border: none;
 		margin: auto;
-		padding: 2rem 1rem;
+		padding: var(--np-dialog-inset, 2rem 1rem);
 		box-sizing: border-box;
-		min-width: 19.5rem;
-		width: 37rem;
+		min-width: var(--np-dialog-container-min-width, 19.5rem);
+		width: var(--np-dialog-container-width, 37rem);
 		max-width: 100%;
 	}
 	.np-dialog {
 		border: 0;
-		background-color: var(--np-color-surface);
+		background-color: var(--np-dialog-container-color, var(--np-color-surface));
 		color: var(--np-color-on-surface);
-		padding: 1.5rem;
-		border-radius: var(--np-shape-corner-extra-large);
-		box-shadow: var(--np-elevation-3);
-		max-height: calc(100dvh - 3rem);
+		padding: var(--np-dialog-padding, 1.5rem);
+		border-radius: var(--np-dialog-container-shape, var(--np-shape-corner-extra-large));
+		box-shadow: var(--np-dialog-elevation, var(--np-elevation-3));
+		max-height: var(--np-dialog-max-height, calc(100dvh - 3rem));
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
 		position: relative;

@@ -1,0 +1,351 @@
+<script lang="ts">
+	import Button from '#lib/button/Button.svelte'
+	import IconButton from '#lib/button/IconButton.svelte'
+	import Dialog from '#lib/dialog/Dialog.svelte'
+	import Divider from '#lib/divider/Divider.svelte'
+	import CloseIcon from '#lib/icons/CloseIcon.svelte'
+	import { tick } from 'svelte'
+	import Calendar from './Calendar.svelte'
+	import {
+		clampDate,
+		compareDays,
+		DEFAULT_YEAR_RANGE,
+		formatDateMedium,
+		getFirstDayOfWeek,
+		getWeekdayLabels,
+		isWithin,
+		parseISODate,
+		startOfDay,
+		startOfMonth,
+		toISODate,
+		today as getToday,
+	} from './dateUtils.js'
+	import type { DateRange, DateRangePickerProps } from './types.ts'
+
+	let {
+		value = $bindable({}),
+		open = $bindable(false),
+		element = $bindable(),
+		locale,
+		firstDayOfWeek,
+		min,
+		max,
+		yearRange = DEFAULT_YEAR_RANGE,
+		isDateEnabled,
+		adjacentMonthDays = false,
+		title = 'Select range',
+		startLabel = 'Start date',
+		endLabel = 'End date',
+		cancelLabel = 'Cancel',
+		confirmLabel = 'Save',
+		selectedDateLabel = 'selected',
+		onchange,
+		onconfirm,
+		oncancel,
+		...attributes
+	}: DateRangePickerProps = $props()
+
+	const MONTHS_PER_PAGE = 4
+
+	let scroller = $state<HTMLDivElement>()
+	let pending = $state.raw<DateRange>({})
+	let focusedDay = $state<Date | undefined>(undefined)
+	let confirming = false
+
+	let todayValue = $derived(getToday())
+	let week = $derived(firstDayOfWeek ?? getFirstDayOfWeek(locale))
+	let minDate = $derived(parseISODate(min))
+	let maxDate = $derived(parseISODate(max))
+	let startDate = $derived(parseISODate(pending.start))
+	let endDate = $derived(parseISODate(pending.end))
+	let weekdayLabels = $derived(getWeekdayLabels(locale, week))
+
+	const monthIndex = (date: Date) => date.getFullYear() * 12 + date.getMonth()
+	const monthFromIndex = (index: number) => new Date(Math.floor(index / 12), index % 12, 1)
+
+	let lowerDate = $derived(minDate ?? new Date(yearRange[0], 0, 1))
+	let upperDate = $derived(maxDate ?? new Date(yearRange[1], 11, 31))
+	let lowerBound = $derived(monthIndex(lowerDate))
+	let upperBound = $derived(monthIndex(upperDate))
+
+	const isSelectable = (date: Date) =>
+		isWithin(date, minDate, maxDate) && (isDateEnabled?.(date) ?? true)
+
+	let canConfirm = $derived(
+		!!startDate && isSelectable(startDate) && (!endDate || isSelectable(endDate)),
+	)
+
+	let firstMonth = $state(0)
+	let lastMonth = $state(-1)
+
+	let months = $derived(
+		Array.from({ length: Math.max(0, lastMonth - firstMonth + 1) }, (_, index) =>
+			monthFromIndex(firstMonth + index),
+		),
+	)
+
+	let tabStopDate = $derived.by(() => {
+		const preferred = focusedDay ?? startDate ?? todayValue
+		const index = monthIndex(preferred)
+		if (index >= firstMonth && index <= lastMonth) return preferred
+		return monthFromIndex(Math.min(Math.max(index, firstMonth), lastMonth))
+	})
+
+	const anchorMonth = () => {
+		const anchor = monthIndex(startOfMonth(startDate ?? todayValue))
+		return Math.min(Math.max(anchor, lowerBound), upperBound)
+	}
+
+	const resetWindow = () => {
+		const anchor = anchorMonth()
+		firstMonth = Math.max(lowerBound, anchor - MONTHS_PER_PAGE)
+		lastMonth = Math.min(upperBound, anchor + MONTHS_PER_PAGE)
+	}
+
+	const scrollToAnchor = async () => {
+		await tick()
+		const target = scroller?.querySelector<HTMLElement>(`[data-month="${anchorMonth()}"]`)
+		if (target && scroller) scroller.scrollTop = target.offsetTop
+	}
+
+	const isOpen = () => !!element?.matches(':popover-open')
+
+	$effect(() => {
+		if (open && !isOpen()) element?.showPopover()
+		if (!open && isOpen()) element?.hidePopover()
+	})
+
+	let prepending = false
+
+	const handleScroll = () => {
+		if (!scroller || prepending) return
+		const { scrollTop, scrollHeight, clientHeight } = scroller
+		if (scrollTop < clientHeight && firstMonth > lowerBound) {
+			prepending = true
+			const previousHeight = scrollHeight
+			firstMonth = Math.max(lowerBound, firstMonth - MONTHS_PER_PAGE)
+			requestAnimationFrame(() => {
+				if (scroller) scroller.scrollTop += scroller.scrollHeight - previousHeight
+				prepending = false
+			})
+		} else if (scrollHeight - scrollTop - clientHeight < clientHeight && lastMonth < upperBound) {
+			lastMonth = Math.min(upperBound, lastMonth + MONTHS_PER_PAGE)
+		}
+	}
+
+	const selectDay = (date: Date) => {
+		const iso = toISODate(date)
+		if (!startDate || endDate || compareDays(date, startDate) < 0) {
+			pending = { start: iso }
+		} else {
+			pending = { start: pending.start, end: iso }
+		}
+		focusedDay = date
+	}
+
+	const focusDay = (date: Date) => {
+		const target = startOfDay(clampDate(date, lowerDate, upperDate))
+		focusedDay = target
+		const index = monthIndex(target)
+		if (index < firstMonth) firstMonth = index
+		if (index > lastMonth) lastMonth = index
+	}
+
+	const cancel = () => {
+		open = false
+	}
+
+	const confirm = () => {
+		confirming = true
+		value = pending
+		onchange?.(pending)
+		onconfirm?.(pending)
+		open = false
+	}
+
+	let headlineStart = $derived(startDate ? formatDateMedium(startDate, locale) : startLabel)
+	let headlineEnd = $derived(endDate ? formatDateMedium(endDate, locale) : endLabel)
+</script>
+
+<Dialog
+	{...attributes}
+	bind:element
+	aria-label={title}
+	class={['np-date-range-picker', attributes.class]}
+	--np-dialog-container-width="100%"
+	--np-dialog-container-min-width="0"
+	--np-dialog-inset="0"
+	--np-dialog-padding="0"
+	--np-dialog-max-height="100dvh"
+	--np-dialog-elevation="none"
+	--np-dialog-container-color="var(--np-date-range-picker-container-color, var(--np-color-surface))"
+	--np-dialog-container-shape="var(--np-date-range-picker-container-shape, var(--np-shape-corner-none))"
+	ontoggle={(event) => {
+		const nowOpen = event.newState === 'open'
+		open = nowOpen
+		if (nowOpen) {
+			confirming = false
+			pending = { ...value }
+			focusedDay = undefined
+			resetWindow()
+			scrollToAnchor()
+		} else {
+			if (!confirming) oncancel?.()
+			confirming = false
+		}
+	}}
+>
+	{#if open}
+		<div class="np-date-range-picker-content">
+			<div class="np-date-range-picker-header">
+				<div class="np-date-range-picker-actions">
+					<IconButton type="button" aria-label={cancelLabel} onclick={cancel}>
+						<CloseIcon />
+					</IconButton>
+					<Button type="button" variant="text" disabled={!canConfirm} onclick={confirm}>
+						{confirmLabel}
+					</Button>
+				</div>
+				<h2 class="np-date-range-picker-headline">
+					<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
+					<span aria-hidden="true">–</span>
+					<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
+				</h2>
+			</div>
+			<Divider />
+
+			<div class="np-date-range-picker-weekdays" aria-hidden="true">
+				{#each weekdayLabels as weekday (weekday.long)}
+					<span>{weekday.narrow}</span>
+				{/each}
+			</div>
+
+			<div class="np-date-range-picker-months" bind:this={scroller} onscroll={handleScroll}>
+				{#each months as month (month.getTime())}
+					<Calendar
+						{month}
+						data-month={monthIndex(month)}
+						rangeStart={startDate}
+						rangeEnd={endDate}
+						min={minDate}
+						max={maxDate}
+						{locale}
+						firstDayOfWeek={week}
+						{isDateEnabled}
+						{adjacentMonthDays}
+						weekdays={false}
+						dynamicRows
+						todayDate={todayValue}
+						focusedDate={focusedDay}
+						selectedLabel={selectedDateLabel}
+						{tabStopDate}
+						focusRoot={scroller}
+						onselect={selectDay}
+						onfocusday={focusDay}
+					>
+						{#snippet monthSubhead(monthName)}
+							<div class="np-date-range-picker-subhead">{monthName}</div>
+						{/snippet}
+					</Calendar>
+				{/each}
+			</div>
+		</div>
+	{/if}
+</Dialog>
+
+<style>
+	:global(.np-date-range-picker .np-dialog) {
+		height: 100dvh;
+	}
+
+	:global(.np-date-range-picker .np-dialog-scroller) {
+		overflow: hidden;
+	}
+
+	.np-date-range-picker-content {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		min-height: 0;
+	}
+
+	.np-date-range-picker-header,
+	.np-date-range-picker-weekdays,
+	.np-date-range-picker-months {
+		max-width: var(--np-date-range-picker-content-width, 25.5rem);
+		margin-inline: auto;
+		width: 100%;
+	}
+
+	.np-date-range-picker-header {
+		box-sizing: border-box;
+		min-height: 8rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding: 0.75rem 0.75rem 0.75rem 1rem;
+		color: var(--np-color-on-surface-variant);
+	}
+
+	.np-date-range-picker-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.np-date-range-picker-headline {
+		margin: 0;
+		display: flex;
+		gap: 0.5rem;
+		font-size: 1.375rem;
+		line-height: 1.75rem;
+		font-weight: 400;
+	}
+
+	.np-date-range-picker-headline .placeholder {
+		color: var(--np-color-on-surface-variant);
+	}
+
+	.np-date-range-picker-weekdays {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		justify-items: center;
+		align-items: center;
+		height: 3rem;
+		padding-inline: 0.75rem;
+		max-width: 25.5rem;
+		margin-inline: auto;
+		width: 100%;
+		box-sizing: border-box;
+		font-size: 1rem;
+		line-height: 1.5rem;
+		color: var(--np-color-on-surface);
+	}
+
+	.np-date-range-picker-months {
+		position: relative;
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding-inline: 0.75rem;
+		max-width: 25.5rem;
+		margin-inline: auto;
+		width: 100%;
+		box-sizing: border-box;
+		scrollbar-color: var(--np-color-on-surface-variant) transparent;
+		scrollbar-width: thin;
+	}
+
+	.np-date-range-picker-subhead {
+		display: flex;
+		align-items: center;
+		height: 3rem;
+		padding-inline: 0.75rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		font-weight: 500;
+		color: var(--np-date-picker-range-month-subhead-color, var(--np-color-on-surface-variant));
+	}
+</style>

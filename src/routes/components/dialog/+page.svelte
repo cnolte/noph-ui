@@ -129,7 +129,7 @@
 		headline="Terms of service"
 		id="scrolling-dialog"
 		divider
-		style="width:32rem"
+		--np-dialog-container-width="32rem"
 	>
 		{#each paragraphs as paragraph (paragraph)}
 			<p>
@@ -172,6 +172,12 @@
 	through <code>aria-describedby</code>, so both are announced when the dialog opens.
 </p>
 <p>
+	A dialog that brings its own heading can leave <code>headline</code> out and name itself with
+	<code>aria-label</code> or <code>aria-labelledby</code> instead. Both land on the
+	<code>role="dialog"</code> element rather than the popover around it, so the name reaches the screen
+	reader either way. The date pickers do exactly that.
+</p>
+<p>
 	While the dialog is open every other element on the page is marked <code>inert</code>, which keeps
 	both the keyboard and the screen reader cursor inside it. Focus moves to the dialog on open and
 	back to whatever was focused before on close. <kbd>Escape</kbd> and a click on the scrim close the dialog,
@@ -181,24 +187,80 @@
 
 <h2>Theming</h2>
 <p>
-	The dialog has no tokens of its own. It draws on the <code>surface</code> and
-	<code>on-surface</code> roles, uses <code>secondary</code> for the icon,
-	<code>on-surface-variant</code>
-	for the supporting text and <code>scrim</code> for the backdrop, so it follows the theme without further
-	configuration.
+	By default the dialog follows the theme without configuration: it draws on the
+	<code>surface</code>
+	and <code>on-surface</code> roles, uses <code>secondary</code> for the icon,
+	<code>on-surface-variant</code> for the supporting text and <code>scrim</code> for the backdrop. Every
+	one of those defaults is reachable through a custom property when a dialog needs to depart from them.
 </p>
+<table>
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Default</th>
+			<th>Affects</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-dialog-container-width</code></td>
+			<td><code>37rem</code></td>
+			<td>Dialog width. <code>fit-content</code> shrinks it to its contents.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-container-min-width</code></td>
+			<td><code>19.5rem</code></td>
+			<td>Lower bound on that width.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-inset</code></td>
+			<td><code>2rem 1rem</code></td>
+			<td>Space kept between the dialog and the viewport edge.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-padding</code></td>
+			<td><code>1.5rem</code></td>
+			<td>Padding inside the surface. <code>0</code> for edge-to-edge content.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-container-color</code></td>
+			<td><code>--np-color-surface</code></td>
+			<td>Surface colour.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-container-shape</code></td>
+			<td><code>--np-shape-corner-extra-large</code></td>
+			<td>Corner radius.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-elevation</code></td>
+			<td><code>--np-elevation-3</code></td>
+			<td>Shadow. <code>none</code> for a flat, full-screen surface.</td>
+		</tr>
+		<tr>
+			<td><code>--np-dialog-max-height</code></td>
+			<td><code>calc(100dvh - 3rem)</code></td>
+			<td>Height cap before the content scrolls.</td>
+		</tr>
+	</tbody>
+</table>
 <p>
-	The width is a plain CSS property: the container is <code>37rem</code> wide, at least
-	<code>19.5rem</code>, and never wider than the viewport. Override it with <code>style</code> or a
-	<code>class</code> when a dialog needs to be narrower or wider.
+	Setting the width to <code>fit-content</code> is worth knowing: the popover centres itself with
+	<code>margin: auto</code>, so a dialog whose content is narrower than the container would
+	otherwise sit against the container's leading edge rather than in the middle of the screen.
 </p>
 <Code
 	value={`<Dialog
 	headline="Rename file"
 	id="rename-dialog"
-	style="width:24rem"
+	--np-dialog-container-width="24rem"
 />`}
 />
+<p>
+	The date pickers use these to reshape the dialog completely. The modal picker sizes itself to its
+	content with no padding. The range picker becomes a flat, full-screen surface with
+	<code>--np-dialog-inset: 0</code> and <code>--np-dialog-elevation: none</code>.
+</p>
 
 <h2>API</h2>
 <h3>Attributes</h3>
@@ -218,9 +280,12 @@
 	<tbody>
 		<tr>
 			<td><code>headline</code></td>
-			<td><code>string</code></td>
-			<td></td>
-			<td>Required. Title of the dialog, and its accessible name.</td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>
+				Title of the dialog, and its accessible name. Leave it out for a dialog that brings its own
+				heading, and pass <code>aria-label</code> instead.
+			</td>
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>

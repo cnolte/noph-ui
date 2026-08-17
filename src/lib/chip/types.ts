@@ -1,4 +1,4 @@
-import type { ButtonElement, ButtonProps } from '#lib/button/types.ts'
+import type { ButtonElement, ButtonProps } from '#lib/button/types.js'
 import type { Snippet } from 'svelte'
 import type { HTMLAttributes, MouseEventHandler } from 'svelte/elements'
 

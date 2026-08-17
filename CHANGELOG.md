@@ -5,6 +5,123 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.37.0] - 2026-08-17
+
+The headline of this release is the date picker family: a docked picker that
+anchors a calendar under a text field, the same calendar as a modal, and a range
+picker for a start and an end day. The measurements come from the Material 3
+specification sheets and the layout constants from Google's own Compose
+implementation, so a docked container really is 360dp wide with 48dp date rows
+and a 40dp state layer inside each one. `Dialog` gained the custom properties the
+pickers needed to reshape it, and they are useful on their own. There are no
+breaking changes.
+
+### Added
+
+- **DockedDatePicker** (new component): a text field with a calendar docked below
+  it. `value` is bindable and holds an ISO `YYYY-MM-DD` string built from local
+  calendar fields, so it never slips a day across a timezone boundary. Selecting a
+  day is provisional until `OK` confirms it, and `Cancel` discards it. The header
+  carries month and year menus with steppers on either side. Opening a menu hides
+  the steppers without collapsing them, so the menu buttons keep their position.
+- **DockedDatePicker**: the container sizes itself to the month rather than
+  reserving a fixed grid. A month that spills into six week rows is 460dp tall and
+  every row it does not need takes 48dp off, with the height animating between
+  months. The selection menus take exactly the space the calendar occupied, so
+  switching views does not resize the container.
+- **DatePickerDialog** (new component): the same calendar as a modal, with the
+  selection echoed in a headline, a three column year grid behind the month
+  button, and an optional `modeToggle` that swaps the calendar for a text field.
+  Unlike the docked picker it keeps the fixed six row grid, matching Compose. It
+  opens with focus on the grid, so the arrow keys work straight away, names itself
+  with its `title`, and takes a `name` for form submission like the docked picker.
+  A `value` the picker would not offer itself, outside `min` and `max` or refused
+  by `isDateEnabled`, disables confirm rather than being handed back untouched.
+- **DateRangePicker** (new component): a full screen surface that scrolls through
+  months continuously and fills the days between the two ends. The first tap sets
+  the start, the second the end, and tapping before the start restarts the range.
+  The month list is windowed and grows as you scroll rather than rendering the
+  whole year range, each month is only as tall as the week rows it needs, and the
+  months share one tab stop, so the arrow keys carry focus from one into the next.
+- **Date pickers**: localisation runs through `Intl`. Month names, weekday names
+  and the numeric input order all follow the `locale` prop, so a German picker
+  asks for `DD.MM.YYYY` and parses `17.08.2025`. The first column is derived from
+  the locale through `Intl.Locale#getWeekInfo`, with `firstDayOfWeek` available to
+  pin it on engines that do not implement it.
+- **Date pickers**: `min` and `max` are inclusive ISO days, `isDateEnabled` runs
+  for every rendered day for rules a range cannot express, and `yearRange` bounds
+  the year menu, defaulting to `[1900, 2100]`.
+- **Date pickers**: the calendar shows only the days of the displayed month and
+  leaves the surrounding cells empty. The specification is inconsistent here, so
+  `adjacentMonthDays` fills the leading and trailing cells with the neighbouring
+  months instead. Keyboard navigation crosses the month boundary either way.
+- **Date pickers**: motion follows the Material 3 motion scheme through the theme
+  tokens. The grid slides in from the direction of travel on a month change, the
+  selection menus expand and fade in from 60% opacity, day colours cross fade, and
+  the modal slides the text field up from below when it swaps to keyboard entry.
+  Days inside a selected range change colour instantly, as Compose does. Every
+  transition sits behind `prefers-reduced-motion: no-preference`.
+- **Date pickers**: swipe horizontally across the calendar to move between months.
+  `touch-action: pan-y` keeps vertical page scrolling intact.
+- **Date pickers**: the grid is a `role="grid"` table named after the month it
+  shows, with the weekday names as column headers and a single roving tab stop, so
+  the calendar is one stop in the tab order rather than forty two. Arrow keys move
+  by day and week, `Home` and `End` by week edge, `Page Up` and `Page Down` by
+  month, with `Shift` for a year; a key that would leave the `min` and `max` window
+  stops on the bound. Today carries `aria-current="date"`, and the selected day is
+  `aria-selected` on its cell and names itself "…, selected" so the state reaches
+  the day that has focus. Every label string is a prop, including
+  `selectedDateLabel` for that suffix and `inputModeLabel` and `calendarModeLabel`
+  for the modal's entry toggle, so the whole control can be translated.
+- **Date pickers**: the month the calendar is browsed to is not kept when it
+  closes. A bound `displayMonth` is restored to what it was given, so a picker
+  reopens where it was parked rather than wherever the last visit ended.
+- **Date pickers**: `oncancel` fires on every dismissal that is not a confirm,
+  including `Escape`, a click on the scrim and setting `open` back to `false`.
+- **DockedDatePicker**: passing a `name` submits the ISO value through a hidden
+  input. The constraints stay on the visible field rather than that hidden one, so
+  a blocked submit reports against a control the browser can focus and point at.
+  `:user-invalid` therefore behaves like a native `<input type="date">`: it
+  switches on at a submit attempt, which browsers do even for a form marked
+  `novalidate`, and never while a date is still being typed. The field is
+  additionally marked on blur, which the platform only does in Firefox.
+  `invalidDateMessage` sets the reported text.
+- **Calendar** and **YearGrid** are exported as building blocks for a layout none
+  of the three pickers covers, such as a calendar sitting permanently on a page,
+  along with the date helpers behind the pickers: `toISODate`, `parseISODate`,
+  `parseDateInput`, `formatDate`, `formatDateMedium`, `formatDateLong`,
+  `formatMonthYear`, `getDatePattern`, `getWeekdayLabels`, `getMonthNames`,
+  `getFirstDayOfWeek`, `getWeekRowCount`, `getCalendarDays`, `addDays`,
+  `addMonths`, `startOfMonth`, `isSameDay`, `isSameMonth`, `isWithin` and
+  `compareDays`.
+- **Icons**: `ChevronLeftIcon`, `ChevronRightIcon`, `ArrowDropDownIcon` and
+  `EditCalendarIcon`.
+- **Dialog**: the hardcoded sizing and surface values are now custom properties
+  with the previous values as defaults, so nothing changes unless you set them.
+  `--np-dialog-container-width`, `--np-dialog-container-min-width`,
+  `--np-dialog-inset`, `--np-dialog-padding`, `--np-dialog-container-color`,
+  `--np-dialog-container-shape`, `--np-dialog-elevation` and
+  `--np-dialog-max-height`. Setting the width to `fit-content` is worth knowing:
+  the popover centres itself with `margin: auto`, so a dialog whose content is
+  narrower than the container would otherwise sit against the container's leading
+  edge rather than in the middle of the screen.
+- **Dialog**: `headline` is now optional, for a dialog that brings its own
+  heading. Such a dialog names itself with `aria-label` or `aria-labelledby`, and
+  both now land on the element carrying `role="dialog"` rather than on the popover
+  wrapped around it, where a name would have been ignored.
+
+### Changed
+
+- **Slider**: the gap between a focused handle and its ring narrows from `0.4rem`
+  to `0.25rem`, tightening the wider gap introduced in 0.36.1.
+
+### Fixed
+
+- **TextField**: `aria-errormessage` pointed at the `<span>` carrying the message
+  while `role="alert"` sat on the wrapping `<div>`. The referenced node has to be
+  announceable itself, so a validation message was never read out. The live region
+  now sits on the element the attribute points at.
+
 ## [0.36.1] - 2026-08-10
 
 ### Added

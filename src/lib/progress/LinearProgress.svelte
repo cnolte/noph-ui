@@ -342,9 +342,6 @@
 		initial-value: 0%;
 	}
 
-	/* The wave is trimmed in script, so it cannot transition the way the track does.
-	   Transitioning the value it is trimmed from on the same token keeps the two in
-	   lockstep: same start, same duration, same curve. */
 	.progress.wavy:not(.indeterminate) {
 		transition: --np-lp-percent var(--np-motion-expressive-default-effects);
 	}

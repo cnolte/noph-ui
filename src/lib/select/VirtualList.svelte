@@ -25,7 +25,7 @@
 	}: VirtualListProps = $props()
 
 	let height_map: number[] = []
-	// eslint-disable-next-line no-undef
+
 	let rows: HTMLCollectionOf<HTMLElement> | undefined = $state()
 	let viewport: HTMLElement | undefined = $state()
 	let contents: HTMLDivElement | undefined = $state()
@@ -48,7 +48,7 @@
 		})),
 	)
 
-	async function refresh(items: T[], viewport_height: number, itemHeight?: number) {
+	const refresh = async (items: T[], viewport_height: number, itemHeight?: number) => {
 		if (!viewport || !rows) {
 			return
 		}
@@ -85,7 +85,7 @@
 		rendered?.({ start, end })
 	}
 
-	async function handle_scroll() {
+	const handle_scroll = async () => {
 		if (!viewport || !rows) {
 			return
 		}
@@ -160,7 +160,6 @@
 	}
 
 	onMount(() => {
-		// eslint-disable-next-line no-undef
 		rows = contents?.children as HTMLCollectionOf<HTMLElement>
 		mounted = true
 	})

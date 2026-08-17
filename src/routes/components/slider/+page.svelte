@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '#lib/icons/Icon.svelte'
 	import Slider from '#lib/slider/Slider.svelte'
-	import type { SliderSize } from '#lib/slider/types.ts'
+	import type { SliderSize } from '#lib/slider/types.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 

@@ -62,6 +62,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Date pickers"
+	href="/components/date-picker"
+	selected={page.url.pathname === '/components/date-picker'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Dialogs"
 	href="/components/dialog"
 	selected={page.url.pathname === '/components/dialog'}

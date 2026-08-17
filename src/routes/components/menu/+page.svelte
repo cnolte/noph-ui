@@ -4,7 +4,7 @@
 	import MenuItem from '#lib/menu/MenuItem.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-	let menuBtn: HTMLElement
+	let menuBtn: HTMLElement | undefined = $state()
 </script>
 
 <svelte:head>

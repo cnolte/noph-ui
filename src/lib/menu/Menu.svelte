@@ -22,11 +22,11 @@
 	let clientHeight = $state(0)
 	let innerHeight = $state(0)
 
-	export function showPopover() {
+	export const showPopover = () => {
 		element?.showPopover()
 	}
 
-	export function hidePopover() {
+	export const hidePopover = () => {
 		element?.hidePopover()
 	}
 	const refreshValues = () => {

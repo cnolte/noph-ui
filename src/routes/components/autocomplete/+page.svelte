@@ -2,7 +2,7 @@
 	import AutoComplete from '#lib/autocomplete/AutoComplete.svelte'
 	import ChipSet from '#lib/chip/ChipSet.svelte'
 	import InputChip from '#lib/chip/InputChip.svelte'
-	import type { AutoCompleteOption } from '#lib/types.ts'
+	import type { AutoCompleteOption } from '#lib/types.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 

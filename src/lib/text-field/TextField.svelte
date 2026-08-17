@@ -149,8 +149,8 @@
 			</div>
 		</div>
 		{#if supportingText || errorText || attributes.maxlength}
-			<div class="supporting-text" role={errorText ? 'alert' : undefined}>
-				<span id="supporting-text-{uid}">
+			<div class="supporting-text">
+				<span id="supporting-text-{uid}" role={errorText ? 'alert' : undefined}>
 					{errorText ?? supportingText}
 				</span>
 				{#if attributes.maxlength}

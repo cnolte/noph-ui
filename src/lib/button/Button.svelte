@@ -278,7 +278,6 @@
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.outlined-disabled {
-		/* Variant outline now rendered via pseudo-element; keep token for color */
 		--_outlined-border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
 	.enabled:focus-visible {

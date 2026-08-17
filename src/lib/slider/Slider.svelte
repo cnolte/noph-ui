@@ -311,7 +311,7 @@
 		--_stop: var(--np-slider-stop-indicator-size, 0.25rem);
 		--_gap: calc(var(--_hw) / 2 + 0.375rem);
 		--_ring: 3px;
-		--_ring-gap: 0.4rem;
+		--_ring-gap: 0.25rem;
 
 		position: relative;
 		display: block;
@@ -458,8 +458,6 @@
 	}
 
 	.np-slider-handle {
-		/* The current handle box drives both size and offset, so a handle that
-		   narrows or shortens stays centred on the value it points at. */
 		--_cw: var(--_hw);
 		--_ch: var(--_handle-height);
 
@@ -485,8 +483,6 @@
 		--_p: var(--_p2);
 	}
 
-	/* Focus narrows the handle the same way a press does and keeps its full height;
-	   the ring stands clear of it instead of hugging it. */
 	.np-slider:not(.np-disabled, .np-pointer-focused):has(.np-slider-input-start:focus-visible)
 		.np-slider-handle-start,
 	.np-slider:not(.np-disabled, .np-pointer-focused):has(.np-slider-input-end:focus-visible)

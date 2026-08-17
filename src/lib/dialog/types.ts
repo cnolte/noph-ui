@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'svelte/elements'
 
 export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'popover'> {
 	icon?: Snippet
-	headline: string
+	headline?: string
 	supportingText?: string
 	divider?: boolean
 	actions?: Snippet

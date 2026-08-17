@@ -23,11 +23,11 @@
 	let timeoutId: ReturnType<typeof setTimeout> | undefined
 	const uid = $props.id()
 
-	export function showPopover() {
+	export const showPopover = () => {
 		element?.showPopover()
 	}
 
-	export function hidePopover() {
+	export const hidePopover = () => {
 		element?.hidePopover()
 	}
 

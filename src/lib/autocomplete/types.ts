@@ -1,4 +1,4 @@
-import type { TextFieldProps } from '#lib/types.ts'
+import type { TextFieldProps } from '#lib/types.js'
 import type { Snippet } from 'svelte'
 
 export interface AutoCompleteOption {

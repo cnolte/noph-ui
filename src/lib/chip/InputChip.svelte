@@ -97,8 +97,6 @@
 		overflow: hidden;
 		min-width: 0;
 	}
-	/* The chip container draws the focus ring, so the body keeps none of its own.
-	   `outline-width: 0` would not do, the UA ring is `outline-style: auto`. */
 	.np-input-chip-label:focus-visible {
 		outline: none;
 	}

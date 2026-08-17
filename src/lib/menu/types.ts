@@ -1,4 +1,4 @@
-import type { ItemProps } from '#lib/list/types.ts'
+import type { ItemProps } from '#lib/list/types.js'
 import type { Snippet } from 'svelte'
 import type { HTMLAttributes } from 'svelte/elements'
 
