@@ -60,6 +60,7 @@ Beta
 - Cards
 - Checkbox
 - Chips
+- DatePicker
 - Dialogs
 - Divider
 - Icon buttons
