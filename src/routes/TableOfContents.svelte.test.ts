@@ -27,20 +27,16 @@ test('renders the sections it is handed', async () => {
 	expect(document.querySelector('.toc ul')?.childElementCount).toBe(3)
 })
 
-test('gives every listed heading a link to itself', async () => {
+test('the anchor in a heading leaves its accessible name alone', async () => {
 	render(Harness)
-	await expect.poll(() => document.querySelectorAll('.heading-anchor').length).toBe(3)
 
-	const anchors = [...document.querySelectorAll<HTMLAnchorElement>('.heading-anchor')]
-	expect(anchors.map((anchor) => new URL(anchor.href).hash)).toEqual(['#usage', '#typing', '#api'])
 	await expect.element(page.getByRole('heading', { name: 'Usage', exact: true })).toBeVisible()
-	expect(anchors.every((anchor) => anchor.getAttribute('aria-hidden') === 'true')).toBe(true)
+	await expect.element(page.getByRole('heading', { name: 'API', exact: true })).toBeVisible()
+	expect(document.querySelectorAll('h2 > a[aria-hidden], h3 > a[aria-hidden]').length).toBe(3)
 })
 
 test('leaves the current section to the browser where :target-current works', async () => {
 	render(Harness)
-	await expect.poll(() => document.querySelectorAll('.heading-anchor').length).toBe(3)
-
 	document.querySelector('#api')!.scrollIntoView()
 	await expect.poll(marked).toBe(undefined)
 })
@@ -83,8 +79,7 @@ test('a click on an entry lands on the heading', async () => {
 	await expect.element(page.getByRole('heading', { name: 'Typing', exact: true })).toBeInViewport()
 })
 
-test('stays away when the page has no sections', async () => {
+test('stays away when the page has no sections', () => {
 	render(Harness, { sections: [] })
 	expect(document.querySelector('.toc')).toBe(null)
-	await expect.poll(() => document.querySelectorAll('.heading-anchor').length).toBe(0)
 })

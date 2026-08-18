@@ -25,7 +25,7 @@
 	menu can size itself to the space that is actually left on screen.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Button style="anchor-name:--city-menu" popovertarget="browser-menu" bind:element={menuBtn}>
 		Open Menu
@@ -53,7 +53,7 @@
 </Menu>`}
 />
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Besides the native <code>popovertarget</code> attribute, you can open and close the menu
 	imperatively. Bind a reference with <code>bind:this</code> and type it with
@@ -93,7 +93,7 @@
 	</tbody>
 </table>
 
-<h2 id="items">Items</h2>
+<h2 id="items">Items<a href="#items" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>MenuItem</code> is a list item with <code>role="menuitem"</code>. It takes the same
 	<code>start</code>, <code>end</code>, <code>supportingText</code>, <code>selected</code> and
@@ -112,7 +112,9 @@
 </Menu>`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The container renders <code>role="menu"</code> and every item <code>role="menuitem"</code>. The
 	items share a single tab stop: <kbd>Tab</kbd> moves into and out of the menu as a whole, while
@@ -125,7 +127,7 @@
 	menu”.
 </p>
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -166,7 +168,7 @@
 	when it would not fit. The items themselves are styled through the
 	<a href="/components/list">list tokens</a>.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <Code
 	value={`<Menu
 	anchor={menuBtn}
@@ -179,8 +181,10 @@
 </Menu>`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="menu-attributes">Menu attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="menu-attributes">
+	Menu attributes<a href="#menu-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	Everything else you pass is forwarded to the menu element, so <code>id</code>, <code>class</code>,
 	<code>style</code> and the usual event handlers work as expected.
@@ -227,7 +231,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="menuitem-attributes">MenuItem attributes</h3>
+<h3 id="menuitem-attributes">
+	MenuItem attributes<a href="#menuitem-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	<code>MenuItem</code> accepts the <a href="/components/list">ListItem</a> attributes apart from
 	<code>variant</code> and <code>softFocus</code>, which the menu sets itself.

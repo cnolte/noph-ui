@@ -16,7 +16,9 @@
 	There are two ways to use icons in Noph UI. You can either use the <code>Icon</code> component or custom
 	SVG icons.
 </p>
-<h2 id="icon-component">Icon component</h2>
+<h2 id="icon-component">
+	Icon component<a href="#icon-component" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The <code>Icon</code> component is a wrapper around the Material Symbols font. To use it, you need
 	to load the font in your <code>app.html</code> file. You can host the font on your own or load it
@@ -67,7 +69,7 @@
   </Icon>
 </IconButton>`}
 />
-<h2 id="svg-icons">SVG icons</h2>
+<h2 id="svg-icons">SVG icons<a href="#svg-icons" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>To use custom SVG icons, you can import them or use inline SVGs as shown below:</p>
 <Code
 	value={`<IconButton>

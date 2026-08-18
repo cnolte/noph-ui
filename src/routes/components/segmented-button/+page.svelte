@@ -10,7 +10,9 @@
 </svelte:head>
 
 <h1>Segmented buttons</h1>
-<h2 id="single-choice">Single choice</h2>
+<h2 id="single-choice">
+	Single choice<a href="#single-choice" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo"
@@ -45,7 +47,9 @@
 	]}
 />`}
 />
-<h2 id="multiple-choice">Multiple choice</h2>
+<h2 id="multiple-choice">
+	Multiple choice<a href="#multiple-choice" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo2"
@@ -93,7 +97,7 @@
 />`}
 />
 
-<h2 id="icons">Icons</h2>
+<h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
 
 {#snippet darkIcon()}
 	<Icon>dark_mode</Icon>
@@ -187,7 +191,7 @@
 	]}
 />`}
 />
-<h2 id="disabled">Disabled</h2>
+<h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo5"
@@ -225,8 +229,8 @@
 />`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="attributes">Attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>
@@ -262,7 +266,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

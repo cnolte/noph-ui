@@ -24,7 +24,7 @@
 	drawer with its height capped so it fits on this page.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer>
 	<Button popovertarget="demo-drawer">Open Nav</Button>
@@ -159,7 +159,9 @@
 </NavigationDrawer>`}
 />
 
-<h2 id="opening-a-modal-drawer">Opening a modal drawer</h2>
+<h2 id="opening-a-modal-drawer">
+	Opening a modal drawer<a href="#opening-a-modal-drawer" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	A modal drawer is a native popover. The simplest way to open it is <code>popovertarget</code> on the
 	trigger, as in the example above. When you need to open or close it from code, bind the element and
@@ -182,7 +184,9 @@
 	when it sits at the end of the layout or in a right-to-left context.
 </p>
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The drawer renders a <code>&lt;nav&gt;</code>, and the selected item gets
 	<code>aria-current="page"</code>. Give the <code>&lt;nav&gt;</code> an <code>aria-label</code>
@@ -199,7 +203,7 @@
 	to the trigger on close, and <kbd>Escape</kbd> closes the drawer.
 </p>
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -248,7 +252,7 @@
 	<code>secondary-container</code> and <code>on-secondary-container</code>, the rest with
 	<code>on-surface-variant</code>.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<NavigationDrawer
 		--np-navigation-drawer-height="200px"
@@ -276,8 +280,12 @@
 </NavigationDrawer>`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="navigationdrawer-attributes">NavigationDrawer attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="navigationdrawer-attributes">
+	NavigationDrawer attributes<a href="#navigationdrawer-attributes" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <p>
 	Everything else you pass is forwarded to the <code>&lt;nav&gt;</code> element, so
 	<code>id</code>, <code>aria-label</code>, <code>class</code>, <code>style</code> and
@@ -322,7 +330,13 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="navigationdraweritem-attributes">NavigationDrawerItem attributes</h3>
+<h3 id="navigationdraweritem-attributes">
+	NavigationDrawerItem attributes<a
+		href="#navigationdraweritem-attributes"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
 <p>
 	Everything else you pass is forwarded to the underlying <code>&lt;button&gt;</code> or
 	<code>&lt;a&gt;</code>, including <code>onclick</code> and <code>href</code>.

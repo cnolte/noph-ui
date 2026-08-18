@@ -20,7 +20,9 @@
 	<a href="/components/progress">progress indicators</a> instead.
 </p>
 
-<h2 id="indeterminate">Indeterminate</h2>
+<h2 id="indeterminate">
+	Indeterminate<a href="#indeterminate" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Pass <code>indeterminate</code> when you cannot say how long the wait will be. The indicator loops through
 	seven shapes, a new morph every 650ms, and completes a full turn every 4.7 seconds.
@@ -35,7 +37,7 @@
 />`}
 />
 
-<h2 id="determinate">Determinate</h2>
+<h2 id="determinate">Determinate<a href="#determinate" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	With a <code>value</code> the indicator morphs from a circle into a soft burst as it fills up,
 	turning half a rotation counterclockwise along the way. <code>value</code> is a fraction between
@@ -61,7 +63,7 @@
 </DemoContainer>
 <Code value={`<LoadingIndicator value={0.6} aria-label="Download progress" />`} />
 
-<h2 id="contained">Contained</h2>
+<h2 id="contained">Contained<a href="#contained" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>contained</code> puts the shape on a filled circle. Use it when the indicator floats over content,
 	where the container keeps it legible, and leave it off when the indicator sits on a surface of its own.
@@ -77,7 +79,9 @@
 <LoadingIndicator contained indeterminate aria-label="Loading" />`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The indicator renders <code>role="progressbar"</code> and keeps <code>aria-valuenow</code> and
 	<code>aria-valuemax</code>
@@ -93,7 +97,7 @@
 />`}
 />
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -142,7 +146,7 @@
 />`}
 />
 
-<h2 id="api">API</h2>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>

@@ -6,7 +6,7 @@ import {
 	ROOT_PAGE,
 	routeIdOf,
 	sectionsOf,
-	withIds,
+	withAnchors,
 } from '../../scripts/docHeadings.ts'
 import { tocSections } from './tocSections.ts'
 
@@ -20,7 +20,14 @@ test('there are pages to check', () => {
 describe.each(pages)('%s', (file) => {
 	test('every h2, h3 and h4 carries the id the generator would give it', () => {
 		const source = read(file)
-		expect(withIds(source)).toBe(source)
+		expect(withAnchors(source)).toBe(source)
+	})
+
+	test('every heading has an anchor pointing at its own id', () => {
+		const headings = headingsOf(read(file))
+		expect(headings.map((heading) => heading.anchorHref)).toEqual(
+			headings.map((heading) => `#${heading.id}`),
+		)
 	})
 
 	test('the ids are unique within the page', () => {

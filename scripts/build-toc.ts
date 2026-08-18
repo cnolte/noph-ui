@@ -6,7 +6,7 @@ import {
 	routeIdOf,
 	type Section,
 	sectionsOf,
-	withIds,
+	withAnchors,
 } from './docHeadings.ts'
 
 const changed: string[] = []
@@ -14,7 +14,7 @@ const sections = new Map<string, Section[]>()
 
 for (const file of docPages()) {
 	const source = readFileSync(file, 'utf8')
-	const next = withIds(source)
+	const next = withAnchors(source)
 	if (next !== source) {
 		writeFileSync(file, next)
 		changed.push(file)

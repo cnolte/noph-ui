@@ -24,7 +24,7 @@
 	the pill behind the icon.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<NavigationRail>
 		<NavigationRailItem
@@ -88,7 +88,7 @@
 </NavigationRail>`}
 />
 
-<h2 id="links">Links</h2>
+<h2 id="links">Links<a href="#links" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Pass an <code>href</code> and the item renders as an <code>&lt;a&gt;</code> instead of a
 	<code>&lt;button&gt;</code>. That is the right choice for real navigation: it gives the user a URL
@@ -115,7 +115,9 @@
 </NavigationRail>`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The rail renders a <code>&lt;nav&gt;</code>, and the selected item gets
 	<code>aria-current="page"</code>, so assistive technology announces which destination is the
@@ -129,7 +131,7 @@
 	be told apart.
 </p>
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -156,7 +158,7 @@
 	<code>--np-navigation-rail-item-selected-font-weight</code> when you want the current destination to
 	stand out more than the colour alone does.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<NavigationRail --np-navigation-rail-item-selected-font-weight="700">
 		<NavigationRailItem selected label="Videos">
@@ -175,15 +177,25 @@
 </NavigationRail>`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="navigationrail-attributes">NavigationRail attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="navigationrail-attributes">
+	NavigationRail attributes<a href="#navigationrail-attributes" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <p>
 	<code>NavigationRail</code> takes no attributes of its own. Everything you pass is forwarded to
 	the
 	<code>&lt;nav&gt;</code> element, so <code>aria-label</code>, <code>class</code> and
 	<code>style</code> work as expected.
 </p>
-<h3 id="navigationrailitem-attributes">NavigationRailItem attributes</h3>
+<h3 id="navigationrailitem-attributes">
+	NavigationRailItem attributes<a
+		href="#navigationrailitem-attributes"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
 <p>
 	Everything else you pass is forwarded to the underlying <code>&lt;button&gt;</code> or
 	<code>&lt;a&gt;</code>, including <code>onclick</code> and <code>href</code>.

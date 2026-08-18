@@ -26,18 +26,14 @@ h4 {
 	scroll-target-group: auto;
 }
 
-.heading-anchor {
+:is(h2, h3, h4) > a[aria-hidden] {
 	color: var(--np-color-on-surface-variant);
 	opacity: 0;
 	padding-inline: 0.5rem;
 	font-weight: 400;
 }
 
-.heading-anchor::before {
-	content: '#';
-}
-
-:is(h2, h3, h4):hover > .heading-anchor {
+:is(h2, h3, h4):hover > a[aria-hidden] {
 	opacity: 1;
 }
 

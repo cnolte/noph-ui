@@ -13,7 +13,7 @@
 </svelte:head>
 
 <h1>Tabs</h1>
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Tabs provide a user interface for navigating between distinct sections or pages within an
 	application. Each <code>&lt;Tabs&gt;</code> component contains multiple <code>&lt;Tab&gt;</code>
@@ -21,7 +21,9 @@
 	variants to suit different use cases.
 </p>
 
-<h3 id="primary-tabs">Primary Tabs</h3>
+<h3 id="primary-tabs">
+	Primary Tabs<a href="#primary-tabs" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Tabs value="videos">
 		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
@@ -36,7 +38,7 @@
 	<Tab badge value="settings">Settings</Tab>
 </Tabs>`}
 />
-<h4 id="icons">Icons</h4>
+<h4 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h4>
 <DemoContainer>
 	<Tabs value="videos">
 		<Tab badge badgeLabel="2" value="videos">
@@ -55,7 +57,9 @@
 	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 </Tabs>`}
 />
-<h3 id="secondary-tabs">Secondary Tabs</h3>
+<h3 id="secondary-tabs">
+	Secondary Tabs<a href="#secondary-tabs" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Tabs variant="secondary" value="videos">
 		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
@@ -70,7 +74,7 @@
 	<Tab badge value="settings">Settings</Tab>
 </Tabs>`}
 />
-<h4 id="icons-2">Icons</h4>
+<h4 id="icons-2">Icons<a href="#icons-2" aria-hidden="true" tabindex="-1">#</a></h4>
 <DemoContainer>
 	<Tabs variant="secondary" value="videos">
 		<Tab badge badgeLabel="2" value="videos">
@@ -89,7 +93,7 @@
 	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 </Tabs>`}
 />
-<h3 id="selection">Selection</h3>
+<h3 id="selection">Selection<a href="#selection" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	The <code>value</code> prop on <code>&lt;Tabs&gt;</code> determines which tab is currently
 	selected. Each <code>&lt;Tab&gt;</code> must have a unique <code>value</code> within the same
@@ -118,7 +122,7 @@
 <div>Selected Tab: {value}</div>`}
 />
 
-<h3 id="links">Links</h3>
+<h3 id="links">Links<a href="#links" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	To enable navigation between pages or routes, use the <code>href</code> attribute on
 	<code>&lt;Tab&gt;</code>. This renders the tab as a link, allowing users to navigate to different
@@ -145,9 +149,9 @@
 </Tabs>`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="tabs">Tabs</h3>
-<h4 id="attributes">Attributes</h4>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="tabs">Tabs<a href="#tabs" aria-hidden="true" tabindex="-1">#</a></h3>
+<h4 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 	<thead>
 		<tr>
@@ -182,8 +186,8 @@
 	</tbody>
 </table>
 
-<h3 id="tab">Tab</h3>
-<h4 id="attributes-2">Attributes</h4>
+<h3 id="tab">Tab<a href="#tab" aria-hidden="true" tabindex="-1">#</a></h3>
+<h4 id="attributes-2">Attributes<a href="#attributes-2" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 	<thead>
 		<tr>

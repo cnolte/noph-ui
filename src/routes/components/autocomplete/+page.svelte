@@ -35,7 +35,7 @@
 	<code>supportingText</code>, <code>required</code> and the rest work the same way here.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Pass an array of <code>options</code>. Each one needs a <code>label</code>; a
 	<code>value</code>, a <code>supportingText</code> and leading or trailing content are optional. By default
@@ -59,7 +59,9 @@
 />`}
 />
 
-<h2 id="multiple-values">Multiple values</h2>
+<h2 id="multiple-values">
+	Multiple values<a href="#multiple-values" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	To collect more than one value, keep the chosen options in your own state and render them as
 	<a href="/components/chip">input chips</a> inside the field. Two props do the work:
@@ -143,7 +145,9 @@
 </AutoComplete>`}
 />
 
-<h2 id="long-option-lists">Long option lists</h2>
+<h2 id="long-option-lists">
+	Long option lists<a href="#long-option-lists" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Once more than <code>virtualThreshold</code> options are visible at the same time, the menu
 	switches to a virtual list and only renders what is on screen, so a list of thousands of entries
@@ -160,7 +164,9 @@
 />`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The field is a combobox: it renders <code>role="combobox"</code> with
 	<code>aria-expanded</code>, <code>aria-controls</code> and <code>aria-activedescendant</code>, and
@@ -179,7 +185,7 @@
 	understandable before the menu ever opens.
 </p>
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Auto complete has no tokens of its own. The field follows the
 	<a href="/components/text-field">text field tokens</a> and the suggestion list follows the
@@ -195,8 +201,8 @@
 />`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="attributes">Attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	Auto complete takes every <a href="/components/text-field">TextField</a> attribute in addition to the
 	ones below.
@@ -259,7 +265,9 @@
 	</tbody>
 </table>
 
-<h3 id="autocompleteoption">AutoCompleteOption</h3>
+<h3 id="autocompleteoption">
+	AutoCompleteOption<a href="#autocompleteoption" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>

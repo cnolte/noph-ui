@@ -26,7 +26,7 @@
 	component itself, which is what lets a range slider grab the nearer of its two handles.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>value</code> is bindable and defaults to <code>0</code>; the range is
 	<code>min</code>/<code>max</code> (<code>0</code> to <code>100</code> unless you say otherwise).
@@ -38,7 +38,7 @@
 </DemoContainer>
 <Code value={`<Slider value={40} aria-label="Volume" />`} />
 
-<h2 id="variants">Variants</h2>
+<h2 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>Three ways to read the track, all sharing the same handle and gap anatomy:</p>
 <ul>
 	<li><strong>Standard</strong> fills from the start of the track to the handle.</li>
@@ -76,7 +76,7 @@
 />`}
 />
 
-<h2 id="sizes">Sizes</h2>
+<h2 id="sizes">Sizes<a href="#sizes" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Five sizes, from <code>xs</code> to <code>xl</code>. The size sets the track height, the handle
 	height and the track corner radius together. Bigger tracks get proportionally <em>less</em>
@@ -116,7 +116,7 @@
 	</tbody>
 </table>
 
-<h2 id="orientation">Orientation</h2>
+<h2 id="orientation">Orientation<a href="#orientation" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>orientation="vertical"</code> runs the track bottom to top. The length comes from
 	<code>--np-slider-length</code> (<code>12rem</code> by default), and the native input follows the
@@ -140,7 +140,11 @@
 <Slider orientation="vertical" size="l" --np-slider-length="9rem" value={60} />`}
 />
 
-<h2 id="steps-and-stop-indicators">Steps and stop indicators</h2>
+<h2 id="steps-and-stop-indicators">
+	Steps and stop indicators<a href="#steps-and-stop-indicators" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h2>
 <p>
 	Set <code>step</code> to make the slider discrete. Add <code>ticks</code> to draw a stop indicator on
 	every step; the tick under the handle is omitted so the gap around the handle stays clean, and the ticks
@@ -161,7 +165,9 @@
 <Slider step={10} ticks size="m" value={40} aria-label="Volume in tens" />`}
 />
 
-<h2 id="value-indicator">Value indicator</h2>
+<h2 id="value-indicator">
+	Value indicator<a href="#value-indicator" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	<code>labeled</code> shows a value indicator above the handle on hover, focus and drag. The
 	container grows with its content, so <code>format</code> is free to return whatever reads best.
@@ -188,7 +194,7 @@
 <Slider labeled size="m" value={60} format={(v) => \`\${Math.round(v)}%\`} aria-label="Brightness" />`}
 />
 
-<h2 id="inset-icon">Inset icon</h2>
+<h2 id="inset-icon">Inset icon<a href="#inset-icon" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	The <code>icon</code> snippet is drawn inside the leading end of the active track. Once the active
 	track runs out of room for it, which happens at a low value or between the handles of a
@@ -223,7 +229,7 @@
 </Slider>`}
 />
 
-<h2 id="disabled">Disabled</h2>
+<h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<div class="stack">
 		<Slider disabled value={40} aria-label="Disabled" />
@@ -232,7 +238,9 @@
 </DemoContainer>
 <Code value={`<Slider disabled value={40} aria-label="Disabled" />`} />
 
-<h2 id="right-to-left">Right-to-left</h2>
+<h2 id="right-to-left">
+	Right-to-left<a href="#right-to-left" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Horizontal sliders mirror themselves in a right-to-left context. The track fills from the right
 	and the stop indicator moves to the left edge. There is nothing to configure, since it follows the
@@ -246,7 +254,7 @@
 </DemoContainer>
 <Code value={`<div dir="rtl">\n\t<Slider value={60} />\n</div>`} />
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -354,7 +362,7 @@
 	keeps its full height either way. The disabled colours are blended with an opacity of their own, so
 	they take a colour, not a pre-faded one.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<div class="stack">
 		<Slider
@@ -377,7 +385,9 @@
 />`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The slider has no text of its own, so pass an <code>aria-label</code> (or
 	<code>aria-labelledby</code>) describing what it controls. A <code>range</code> slider has two
@@ -395,8 +405,8 @@
 	unit to make sense.
 </p>
 
-<h2 id="api">API</h2>
-<h3 id="attributes">Attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	Anything not listed here is forwarded to the underlying <code>&lt;input type="range"&gt;</code>.
 </p>
@@ -491,7 +501,7 @@
 	</tbody>
 </table>
 
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

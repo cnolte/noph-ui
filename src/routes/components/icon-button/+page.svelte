@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Icon buttons</h1>
-<h2 id="types">Types</h2>
+<h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<IconButton aria-label="Icon Button"><Icon>favorite</Icon></IconButton>
 	<IconButton aria-label="Icon Button" selected toggle><Icon>bookmark</Icon></IconButton>
@@ -20,7 +20,7 @@
 		><Icon>more_vert</Icon></IconButton
 	>
 </DemoContainer>
-<h2 id="icon-button">Icon button</h2>
+<h2 id="icon-button">Icon button<a href="#icon-button" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<IconButton aria-label="Icon Button"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Icon Button" disabled><Icon>check</Icon></IconButton>
@@ -29,7 +29,9 @@
 	value={`<IconButton><Icon>check</Icon></IconButton>
 <IconButton disabled><Icon>check</Icon></IconButton>`}
 />
-<h2 id="filled-icon-button">Filled icon button</h2>
+<h2 id="filled-icon-button">
+	Filled icon button<a href="#filled-icon-button" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<IconButton aria-label="Filled Icon Button" variant="filled"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Filled Icon Button" variant="filled" disabled
@@ -40,7 +42,9 @@
 	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
 <IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
 />
-<h2 id="tonal-icon-button">Tonal icon button</h2>
+<h2 id="tonal-icon-button">
+	Tonal icon button<a href="#tonal-icon-button" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<IconButton aria-label="Tonal Icon Button" variant="tonal"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Tonal Icon Button" variant="tonal" disabled>
@@ -53,7 +57,9 @@
 	<Icon>check</Icon>
 </IconButton>`}
 />
-<h2 id="outlined-icon-button">Outlined icon button</h2>
+<h2 id="outlined-icon-button">
+	Outlined icon button<a href="#outlined-icon-button" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<IconButton aria-label="Outlined Icon Button" variant="outlined"><Icon>check</Icon></IconButton>
 	<IconButton aria-label="Disabled Outlined Icon Button" variant="outlined" disabled
@@ -64,7 +70,7 @@
 	value={`<IconButton variant="outlined"><Icon>check</Icon></IconButton>
 <IconButton variant="outlined" disabled><Icon>check</Icon></IconButton>`}
 />
-<h2 id="size">Size</h2>
+<h2 id="size">Size<a href="#size" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<IconButton variant="outlined" aria-label="Extra small" size="xs"><Icon>add</Icon></IconButton>
 	<IconButton variant="outlined" aria-label="Small" size="s"><Icon>add</Icon></IconButton>
@@ -79,7 +85,7 @@
 <IconButton aria-label="Large" size="l"><Icon>add</Icon></IconButton>
 <IconButton aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>`}
 />
-<h2 id="toggle">Toggle</h2>
+<h2 id="toggle">Toggle<a href="#toggle" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer style="flex-direction: column">
 	<div class="icon-list">
 		<IconButton aria-label="Unselected Icon Button" toggle><Icon>settings</Icon></IconButton>
@@ -123,7 +129,7 @@
 	<IconButton {selectedIcon} variant="outlined" toggle selected><Icon>close</Icon></IconButton>
 </div>`}
 />
-<h2 id="loading">Loading</h2>
+<h2 id="loading">Loading<a href="#loading" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<IconButton loading loadingAriaLabel="Loading text"><Icon>check</Icon></IconButton>
 	<IconButton loading loadingAriaLabel="Loading filled" variant="filled"
@@ -152,7 +158,7 @@
 	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
 	when using the loading state.
 </blockquote>
-<h2 id="tooltip">Tooltip</h2>
+<h2 id="tooltip">Tooltip<a href="#tooltip" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>
 </DemoContainer>
@@ -160,8 +166,10 @@
 	value="<IconButton title=&quot;Icon button with tooltip&quot; variant=&quot;filled&quot;><Icon>check</Icon></IconButton>"
 />
 
-<h2 id="theming">Theming</h2>
-<h3 id="icon-button-tokens">Icon button Tokens</h3>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="icon-button-tokens">
+	Icon button Tokens<a href="#icon-button-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -189,7 +197,9 @@
 	<code>shape="square"</code>. A round icon button stays fully rounded.
 </p>
 
-<h3 id="icon-button-example">Icon button example</h3>
+<h3 id="icon-button-example">
+	Icon button example<a href="#icon-button-example" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<IconButton
 		aria-label="Custom Icon Button"
@@ -208,7 +218,11 @@
 	<Icon>close</Icon>
 </IconButton>`}
 />
-<h3 id="filled-icon-button-tokens">Filled icon button tokens</h3>
+<h3 id="filled-icon-button-tokens">
+	Filled icon button tokens<a href="#filled-icon-button-tokens" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -232,7 +246,11 @@
 	</tbody>
 </table>
 
-<h3 id="filled-icon-button-example">Filled icon button example</h3>
+<h3 id="filled-icon-button-example">
+	Filled icon button example<a href="#filled-icon-button-example" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <DemoContainer>
 	<IconButton
 		aria-label="Custom Filled Icon Button"
@@ -255,7 +273,11 @@
 	<Icon>close</Icon>
 </IconButton>`}
 />
-<h3 id="tonal-icon-buttons-tokens">Tonal icon buttons tokens</h3>
+<h3 id="tonal-icon-buttons-tokens">
+	Tonal icon buttons tokens<a href="#tonal-icon-buttons-tokens" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -279,7 +301,11 @@
 	</tbody>
 </table>
 
-<h3 id="tonal-icon-button-example">Tonal icon button example</h3>
+<h3 id="tonal-icon-button-example">
+	Tonal icon button example<a href="#tonal-icon-button-example" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <DemoContainer>
 	<IconButton
 		aria-label="Custom Tonal Icon Button"
@@ -302,7 +328,11 @@
 	<Icon>close</Icon>
 </IconButton>`}
 />
-<h3 id="outlined-icon-button-tokens">Outlined icon button tokens</h3>
+<h3 id="outlined-icon-button-tokens">
+	Outlined icon button tokens<a href="#outlined-icon-button-tokens" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -322,7 +352,13 @@
 	</tbody>
 </table>
 
-<h3 id="outlined-icon-button-example">Outlined icon button example</h3>
+<h3 id="outlined-icon-button-example">
+	Outlined icon button example<a
+		href="#outlined-icon-button-example"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
 <DemoContainer>
 	<IconButton
 		aria-label="Custom Outlined Icon Button"
@@ -343,8 +379,8 @@
 	<Icon>close</Icon>
 </IconButton>`}
 />
-<h2 id="api">API</h2>
-<h3 id="props">Props</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="props">Props<a href="#props" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

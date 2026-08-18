@@ -7,10 +7,10 @@
 </svelte:head>
 
 <h1>Quick Start</h1>
-<h2 id="install">Install</h2>
+<h2 id="install">Install<a href="#install" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>Install Noph UI components using npm and node.</p>
 <Code value="npm install noph-ui" />
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	The quickest way to get started with Noph UI is by using the default theme. You can import it into
 	your <code>+layout.svelte</code> file as shown below:
@@ -31,7 +31,13 @@
 	This will ensure that the background and text color for the entire app are set to match the
 	theme's color scheme.
 </p>
-<h3 id="dark-and-light-color-schemes">Dark and light color schemes</h3>
+<h3 id="dark-and-light-color-schemes">
+	Dark and light color schemes<a
+		href="#dark-and-light-color-schemes"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
 <p>
 	The theme includes color schemes for both dark and light modes. The selected theme is
 	automatically determined based on the user's system settings. Alternatively, you can enforce a
@@ -40,7 +46,7 @@
 </p>
 <Code value="<html lang=&quot;en&quot; data-theme=&quot;dark&quot;>" />
 
-<h2 id="typography">Typography</h2>
+<h2 id="typography">Typography<a href="#typography" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Define a font family in your <code>app.css</code>. You can load the default 'Roboto' font, for
 	example, from fonts.google.com.

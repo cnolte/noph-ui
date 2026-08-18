@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Cards</h1>
-<h2 id="types">Types</h2>
+<h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer style="width: calc(100% - 2rem)">
 	<div class="cards" style="width:100%;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));">
@@ -63,7 +63,9 @@
 {#snippet action()}
 	<Button variant="filled">Action</Button>
 {/snippet}
-<h2 id="elevated-card">Elevated card</h2>
+<h2 id="elevated-card">
+	Elevated card<a href="#elevated-card" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<div class="cards">
 		<Card
@@ -107,7 +109,7 @@
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2 id="filled-card">Filled card</h2>
+<h2 id="filled-card">Filled card<a href="#filled-card" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<div class="cards">
 		<Card
@@ -151,7 +153,9 @@
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2 id="outlined-card">Outlined card</h2>
+<h2 id="outlined-card">
+	Outlined card<a href="#outlined-card" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<div class="cards">
 		<Card
@@ -195,8 +199,10 @@
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2 id="theming">Theming</h2>
-<h3 id="elevated-card-tokens">Elevated card tokens</h3>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="elevated-card-tokens">
+	Elevated card tokens<a href="#elevated-card-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -215,7 +221,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="filled-card-tokens">Filled card tokens</h3>
+<h3 id="filled-card-tokens">
+	Filled card tokens<a href="#filled-card-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -234,7 +242,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="outlined-card-tokens">Outlined card tokens</h3>
+<h3 id="outlined-card-tokens">
+	Outlined card tokens<a href="#outlined-card-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -254,7 +264,7 @@
 	</tbody>
 </table>
 
-<h2 id="api">API</h2>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -332,7 +342,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

@@ -14,7 +14,9 @@ export interface Heading {
 	tag: string
 	text: string
 	id: string | undefined
+	anchorHref: string | undefined
 	insertAt: number
+	contentEnd: number
 }
 
 export const slugify = (text: string): string =>
@@ -59,17 +61,6 @@ const walk = (value: unknown, visit: (node: Node) => void): void => {
 
 const fragmentOf = (source: string) => parse(source, { modern: true }).fragment
 
-const staticText = (node: Node): string | undefined => {
-	const fragment = node.fragment
-	if (!isNode(fragment) || !Array.isArray(fragment.nodes)) return undefined
-	let text = ''
-	for (const child of fragment.nodes) {
-		if (!isNode(child) || child.type !== 'Text' || typeof child.data !== 'string') return undefined
-		text += child.data
-	}
-	return text.trim()
-}
-
 const attribute = (node: Node, name: string): { value: string | undefined } | undefined => {
 	if (!Array.isArray(node.attributes)) return undefined
 	for (const candidate of node.attributes) {
@@ -86,22 +77,50 @@ const attribute = (node: Node, name: string): { value: string | undefined } | un
 	return undefined
 }
 
+const isAnchor = (child: unknown): child is Node =>
+	isNode(child) &&
+	child.type === 'RegularElement' &&
+	child.name === 'a' &&
+	attribute(child, 'aria-hidden')?.value === 'true'
+
+const anchorOf = (node: Node): Node | undefined => {
+	const fragment = node.fragment
+	if (!isNode(fragment) || !Array.isArray(fragment.nodes)) return undefined
+	return fragment.nodes.find(isAnchor)
+}
+
+const staticText = (node: Node): string | undefined => {
+	const fragment = node.fragment
+	if (!isNode(fragment) || !Array.isArray(fragment.nodes)) return undefined
+	let text = ''
+	for (const child of fragment.nodes) {
+		if (isAnchor(child)) continue
+		if (!isNode(child) || child.type !== 'Text' || typeof child.data !== 'string') return undefined
+		text += child.data
+	}
+	return text.trim()
+}
+
 export const headingsOf = (source: string): Heading[] => {
 	const headings: Heading[] = []
 	walk(fragmentOf(source), (node) => {
 		if (node.type !== 'RegularElement' || typeof node.name !== 'string') return
-		if (!HEADING_TAGS.includes(node.name) || typeof node.start !== 'number') return
+		if (!HEADING_TAGS.includes(node.name)) return
+		if (typeof node.start !== 'number' || typeof node.end !== 'number') return
 		const text = staticText(node)
 		if (text === undefined) {
 			throw new Error(
 				`A <${node.name}> holds markup instead of plain text, so it needs its id by hand`,
 			)
 		}
+		const anchor = anchorOf(node)
 		headings.push({
 			tag: node.name,
 			text,
 			id: attribute(node, 'id')?.value,
+			anchorHref: anchor && attribute(anchor, 'href')?.value,
 			insertAt: node.start + 1 + node.name.length,
+			contentEnd: node.end - node.name.length - 3,
 		})
 	})
 	return headings
@@ -128,11 +147,19 @@ export const assignIds = (source: string): { heading: Heading; id: string }[] =>
 	})
 }
 
-export const withIds = (source: string): string => {
+export const anchorMarkup = (id: string): string =>
+	`<a href="#${id}" aria-hidden="true" tabindex="-1">#</a>`
+
+export const withAnchors = (source: string): string => {
 	let code = source
 	for (const { heading, id } of assignIds(source).reverse()) {
-		if (heading.id !== undefined) continue
-		code = `${code.slice(0, heading.insertAt)} id="${id}"${code.slice(heading.insertAt)}`
+		if (heading.anchorHref === undefined) {
+			const anchor = anchorMarkup(id)
+			code = code.slice(0, heading.contentEnd) + anchor + code.slice(heading.contentEnd)
+		}
+		if (heading.id === undefined) {
+			code = `${code.slice(0, heading.insertAt)} id="${id}"${code.slice(heading.insertAt)}`
+		}
 	}
 	return code
 }

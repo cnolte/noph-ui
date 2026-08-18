@@ -9,7 +9,7 @@
 </svelte:head>
 
 <h1>Radio button</h1>
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<form>
 		<Radio name="group" value="first" aria-label="First radio" checked defaultChecked={true} />
@@ -22,7 +22,7 @@
 <Radio name="group" value="second" aria-label="Second radio" />
 <Radio name="group" value="third" aria-label="Third radio" />`}
 />
-<h3 id="labels">Labels</h3>
+<h3 id="labels">Labels<a href="#labels" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<form style="display: flex; align-items: center;">
 		<Radio name="animals" value="cat" id="cat-radio" checked defaultChecked={true} />
@@ -44,7 +44,7 @@
 <label for="dog-radio">Dog</label>`}
 />
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -67,7 +67,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<Radio
 		--np-radio-icon-size="40px"
@@ -116,7 +116,7 @@
 />`}
 />
 
-<h2 id="api">API</h2>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -135,7 +135,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Select</h1>
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <!-- <form {...demo} oninput={() => demo.validate()} novalidate>
 	<NativeSelect
@@ -126,7 +126,7 @@
 />`}
 />
 
-<h3 id="disabled">Disabled</h3>
+<h3 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<Select label="Fruit" name="fruit" disabled options={[{ value: '', label: '' }]} />
 	<Select
@@ -153,7 +153,7 @@
 />`}
 />
 
-<h3 id="validation">Validation</h3>
+<h3 id="validation">Validation<a href="#validation" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<form>
 		<Select
@@ -192,7 +192,9 @@
 </form>`}
 />
 
-<h3 id="multiple-selection">Multiple selection</h3>
+<h3 id="multiple-selection">
+	Multiple selection<a href="#multiple-selection" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Select
 		label="Favorite fruit"
@@ -226,7 +228,9 @@
 	/>`}
 />
 
-<h3 id="virtual-list">Virtual list</h3>
+<h3 id="virtual-list">
+	Virtual list<a href="#virtual-list" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	An <code>option</code> uses the Intersection Observer API to improve performance. This enables
 	lists of up to 300 options. Beyond that the <code>Select</code> component uses a virtual list to
@@ -260,7 +264,7 @@
 />`}
 />
 
-<h3 id="icons">Icons</h3>
+<h3 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<Select
 		label="Favorite fruit"
@@ -324,8 +328,10 @@
 </Select>`}
 />
 
-<h2 id="theming">Theming</h2>
-<h3 id="filled-select-tokens">Filled select tokens</h3>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="filled-select-tokens">
+	Filled select tokens<a href="#filled-select-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -344,7 +350,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="filled-select-example">Filled select example</h3>
+<h3 id="filled-select-example">
+	Filled select example<a href="#filled-select-example" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Select
 		variant="filled"
@@ -376,7 +384,9 @@
 />`}
 />
 
-<h3 id="outlined-select-tokens">Outlined select tokens</h3>
+<h3 id="outlined-select-tokens">
+	Outlined select tokens<a href="#outlined-select-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -391,7 +401,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="sizing-tokens">Sizing tokens</h3>
+<h3 id="sizing-tokens">
+	Sizing tokens<a href="#sizing-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>These apply to both variants and control how wide the select is allowed to get.</p>
 <table>
 	<thead>
@@ -411,7 +423,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="outlined-select-example">Outlined select example</h3>
+<h3 id="outlined-select-example">
+	Outlined select example<a href="#outlined-select-example" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Select
 		options={[
@@ -438,8 +452,8 @@
 	--np-color-primary="var(--np-color-tertiary)"
 />`}
 />
-<h2 id="api">API</h2>
-<h3 id="attributes">Attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>
@@ -538,7 +552,9 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="selectoption">SelectOption</h3>
+<h3 id="selectoption">
+	SelectOption<a href="#selectoption" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -570,7 +586,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

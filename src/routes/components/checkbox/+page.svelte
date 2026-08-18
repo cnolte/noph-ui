@@ -9,7 +9,7 @@
 </svelte:head>
 
 <h1>Checkbox</h1>
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Checkbox aria-label="Unchecked" />
 	<Checkbox aria-label="Checked" checked />
@@ -20,7 +20,7 @@
 <Checkbox checked />
 <Checkbox indeterminate />`}
 />
-<h2 id="disabled">Disabled</h2>
+<h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Checkbox aria-label="Unchecked" disabled />
 	<Checkbox aria-label="Checked" disabled checked />
@@ -31,7 +31,7 @@
 <Checkbox checked disabled />
 <Checkbox indeterminate disabled />`}
 />
-<h3 id="label">Label</h3>
+<h3 id="label">Label<a href="#label" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<label style="display: flex; align-items: center"><Checkbox />Checkbox one</label>
 	<label style="display: flex; align-items: center"><Checkbox />Checkbox two</label>
@@ -41,7 +41,7 @@
 <label><Checkbox />Checkbox two</label>`}
 />
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -76,7 +76,7 @@
 	<code>--np-checkbox-margin</code> is the space that grows the 18dp box into a 48dp touch target. Only
 	shrink it where the checkbox already sits inside a large enough target of its own, such as a list item.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<Checkbox
 		checked
@@ -97,7 +97,7 @@
 />`}
 />
 
-<h2 id="api">API</h2>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -125,7 +125,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

@@ -27,9 +27,9 @@
 
 <h1>Chips</h1>
 
-<h2 id="assist-chip">Assist chip</h2>
+<h2 id="assist-chip">Assist chip<a href="#assist-chip" aria-hidden="true" tabindex="-1">#</a></h2>
 
-<h3 id="outlined">Outlined</h3>
+<h3 id="outlined">Outlined<a href="#outlined" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<AssistChip label="Assist chip" />
@@ -47,7 +47,7 @@
 </ChipSet>`}
 />
 
-<h3 id="elevated">Elevated</h3>
+<h3 id="elevated">Elevated<a href="#elevated" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<AssistChip elevated label="Assist chip" />
@@ -65,7 +65,7 @@
 </ChipSet>`}
 />
 
-<h3 id="disabled">Disabled</h3>
+<h3 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<AssistChip disabled label="Outlined" />
@@ -91,7 +91,7 @@
 </ChipSet>`}
 />
 
-<h3 id="as-link">As link</h3>
+<h3 id="as-link">As link<a href="#as-link" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<AssistChip label="Visit website" href="https://noph.dev" target="_blank" rel="noopener">
@@ -107,9 +107,9 @@
 </ChipSet>`}
 />
 
-<h2 id="filter-chip">Filter chip</h2>
+<h2 id="filter-chip">Filter chip<a href="#filter-chip" aria-hidden="true" tabindex="-1">#</a></h2>
 
-<h3 id="outlined-2">Outlined</h3>
+<h3 id="outlined-2">Outlined<a href="#outlined-2" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<FilterChip label="Filter chip" />
@@ -135,7 +135,7 @@
 </ChipSet>`}
 />
 
-<h3 id="elevated-2">Elevated</h3>
+<h3 id="elevated-2">Elevated<a href="#elevated-2" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<FilterChip elevated label="Filter chip" />
@@ -161,7 +161,7 @@
 </ChipSet>`}
 />
 
-<h3 id="removable">Removable</h3>
+<h3 id="removable">Removable<a href="#removable" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<FilterChip label="Removable" removable onremove={() => snackbar?.showPopover()} />
@@ -178,7 +178,7 @@
 </ChipSet>`}
 />
 
-<h3 id="disabled-2">Disabled</h3>
+<h3 id="disabled-2">Disabled<a href="#disabled-2" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<FilterChip disabled label="Outlined" />
@@ -202,7 +202,7 @@
 </ChipSet>`}
 />
 
-<h3 id="group">Group</h3>
+<h3 id="group">Group<a href="#group" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<FilterChip label="Running" value="running" bind:group={filterGroup} />
@@ -222,9 +222,9 @@
 </ChipSet>`}
 />
 
-<h2 id="input-chip">Input chip</h2>
+<h2 id="input-chip">Input chip<a href="#input-chip" aria-hidden="true" tabindex="-1">#</a></h2>
 
-<h3 id="default">Default</h3>
+<h3 id="default">Default<a href="#default" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<InputChip label="Input chip" />
@@ -242,7 +242,7 @@
 </ChipSet>`}
 />
 
-<h3 id="selected">Selected</h3>
+<h3 id="selected">Selected<a href="#selected" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<InputChip selected label="Selected" />
@@ -260,7 +260,9 @@
 </ChipSet>`}
 />
 
-<h3 id="separate-actions">Separate actions</h3>
+<h3 id="separate-actions">
+	Separate actions<a href="#separate-actions" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	The chip body is a button of its own, so it can be focused and activated with the keyboard. Use
 	<code>onclick</code> for the primary action, for example selecting the chip or switching it into
@@ -289,7 +291,7 @@
 />`}
 />
 
-<h3 id="disabled-3">Disabled</h3>
+<h3 id="disabled-3">Disabled<a href="#disabled-3" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<InputChip disabled label="Disabled" />
@@ -309,7 +311,9 @@
 </ChipSet>`}
 />
 
-<h3 id="chips-with-text-fields">Chips with text fields</h3>
+<h3 id="chips-with-text-fields">
+	Chips with text fields<a href="#chips-with-text-fields" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 
 <DemoContainer>
 	<TextField
@@ -415,7 +419,9 @@
 </TextField>`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Every chip type renders the element that matches what it does. An assist chip is a
 	<code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> when you pass an <code>href</code>. A
@@ -440,7 +446,7 @@
 />`}
 />
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
 		<tr>
@@ -481,7 +487,7 @@
 	selected, and from <code>on-surface-variant</code> while they are not. An elevated chip takes its shadow
 	from the elevation roles.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ChipSet>
 		<FilterChip
@@ -504,8 +510,10 @@
 />`}
 />
 
-<h2 id="api">API</h2>
-<h3 id="chipset-attributes">ChipSet attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="chipset-attributes">
+	ChipSet attributes<a href="#chipset-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	Everything you pass is forwarded to the wrapping <code>&lt;div&gt;</code>, so
 	<code>class</code>, <code>style</code> and <code>aria-label</code> work as expected.
@@ -532,7 +540,9 @@
 	</tbody>
 </table>
 
-<h3 id="assistchip-attributes">AssistChip attributes</h3>
+<h3 id="assistchip-attributes">
+	AssistChip attributes<a href="#assistchip-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	An assist chip takes the <a href="/components/button">Button</a> attributes apart from
 	<code>variant</code>, <code>start</code> and <code>end</code>, which the chip sets itself. That
@@ -581,7 +591,9 @@
 	</tbody>
 </table>
 
-<h3 id="filterchip-attributes">FilterChip attributes</h3>
+<h3 id="filterchip-attributes">
+	FilterChip attributes<a href="#filterchip-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -676,7 +688,9 @@
 	</tbody>
 </table>
 
-<h3 id="inputchip-attributes">InputChip attributes</h3>
+<h3 id="inputchip-attributes">
+	InputChip attributes<a href="#inputchip-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>

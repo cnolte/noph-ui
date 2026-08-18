@@ -25,7 +25,7 @@
 	use a <a href="/components/snackbar">snackbar</a> instead.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Button popovertarget="simple-dialog">Show Dialog</Button>
 	<Dialog
@@ -88,7 +88,7 @@
 </Dialog>`}
 />
 
-<h2 id="methods">Methods</h2>
+<h2 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Bind a reference to the dialog with <code>bind:this</code> to call its methods imperatively. Type
 	the reference with <code>ReturnType&lt;typeof Dialog&gt;</code>; it is <code>undefined</code>
@@ -116,7 +116,9 @@
 	</tbody>
 </table>
 
-<h2 id="scrollable-content">Scrollable content</h2>
+<h2 id="scrollable-content">
+	Scrollable content<a href="#scrollable-content" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Anything you pass as children goes into a scrolling area between the supporting text and the
 	actions, so the headline and the buttons stay in place while long content scrolls. The dialog
@@ -151,7 +153,9 @@
 </Dialog>`}
 />
 
-<h2 id="without-animation">Without animation</h2>
+<h2 id="without-animation">
+	Without animation<a href="#without-animation" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	A dialog fades in over 250ms. Pass <code>quick</code> to skip that, for example when the dialog opens
 	as a direct answer to a keystroke and the delay would get in the way.
@@ -164,7 +168,9 @@
 />`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The surface renders <code>role="dialog"</code> with <code>aria-modal="true"</code>. The
 	<code>headline</code>
@@ -185,7 +191,7 @@
 	not rely on the scrim alone.
 </p>
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	By default the dialog follows the theme without configuration: it draws on the
 	<code>surface</code>
@@ -262,8 +268,8 @@
 	<code>--np-dialog-inset: 0</code> and <code>--np-dialog-elevation: none</code>.
 </p>
 
-<h2 id="api">API</h2>
-<h3 id="attributes">Attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	Everything else you pass is forwarded to the popover element, so <code>id</code>,
 	<code>class</code>, <code>style</code> and event handlers such as <code>ontoggle</code> work as expected.

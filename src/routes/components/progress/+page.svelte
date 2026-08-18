@@ -29,7 +29,7 @@
 	</li>
 </ul>
 
-<h2 id="determinate">Determinate</h2>
+<h2 id="determinate">Determinate<a href="#determinate" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>value</code> is a fraction between <code>0</code> and <code>max</code>, which defaults to
 	<code>1</code>. Drag the slider below to see how the active indicator, the gap and the stop
@@ -61,7 +61,9 @@
 <CircularProgress value={0.6} aria-label="Download progress" />`}
 />
 
-<h2 id="indeterminate">Indeterminate</h2>
+<h2 id="indeterminate">
+	Indeterminate<a href="#indeterminate" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Use this while you wait for something whose duration you cannot predict. The indicator keeps
 	looping until you either remove it or give it a value.
@@ -79,7 +81,7 @@
 <CircularProgress indeterminate aria-label="Loading" />`}
 />
 
-<h2 id="wavy">Wavy</h2>
+<h2 id="wavy">Wavy<a href="#wavy" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	The Material 3 expressive variant. Only the active indicator waves, the track stays smooth, and
 	the wave travels one wavelength per second. A determinate <code>LinearProgress</code> flattens the wave
@@ -105,7 +107,7 @@
 <CircularProgress wavy indeterminate />`}
 />
 
-<h2 id="buffer">Buffer</h2>
+<h2 id="buffer">Buffer<a href="#buffer" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Linear only. <code>buffer</code> marks how much has already loaded ahead of the current position, as
 	a streaming video would. Everything beyond the buffer is drawn as dots.
@@ -128,7 +130,9 @@
 </DemoContainer>
 <Code value={`<LinearProgress value={0.4} buffer={0.85} />`} />
 
-<h2 id="without-a-track">Without a track</h2>
+<h2 id="without-a-track">
+	Without a track<a href="#without-a-track" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Set <code>track={false}</code> when the indicator sits on top of another component that already
 	provides a surface, such as a button's loading state. Both <code>Button</code> and
@@ -145,7 +149,7 @@
 <LinearProgress indeterminate track={false} />`}
 />
 
-<h2 id="four-colors">Four colors</h2>
+<h2 id="four-colors">Four colors<a href="#four-colors" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>fourColor</code> cycles the indicator through primary and tertiary tones instead of a single colour.
 	Use it on indeterminate indicators, where the shifting colour helps convey that something is still happening.
@@ -162,7 +166,9 @@
 <LinearProgress fourColor indeterminate />`}
 />
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Both components render <code>role="progressbar"</code> and keep <code>aria-valuenow</code> and
 	<code>aria-valuemax</code> in sync with <code>value</code> and <code>max</code>. Neither has any
@@ -182,7 +188,9 @@
 	animating so they still read as busy.
 </p>
 
-<h2 id="right-to-left">Right-to-left</h2>
+<h2 id="right-to-left">
+	Right-to-left<a href="#right-to-left" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	<code>LinearProgress</code> mirrors itself in a right-to-left context. The indicator grows from
 	the right and the stop indicator moves to the left edge. There is nothing to configure, since it
@@ -198,8 +206,10 @@
 </DemoContainer>
 <Code value={`<div dir="rtl">\n\t<LinearProgress value={0.6} />\n</div>`} />
 
-<h2 id="theming">Theming</h2>
-<h3 id="circular-progress-tokens">Circular progress tokens</h3>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="circular-progress-tokens">
+	Circular progress tokens<a href="#circular-progress-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -232,7 +242,11 @@
 	between the two lanes is derived from that width, which keeps it constant however thick the stroke
 	gets: 4.8dp, and 4dp for the <code>wavy</code> variant.
 </p>
-<h3 id="circular-progress-example">Circular progress example</h3>
+<h3 id="circular-progress-example">
+	Circular progress example<a href="#circular-progress-example" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <DemoContainer>
 	<CircularProgress
 		--np-circular-progress-color="var(--np-color-error)"
@@ -252,7 +266,9 @@
 	indeterminate
 />`}
 />
-<h3 id="linear-progress-tokens">Linear progress tokens</h3>
+<h3 id="linear-progress-tokens">
+	Linear progress tokens<a href="#linear-progress-tokens" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -295,7 +311,9 @@
 	<code>--np-linear-progress-wave-height</code> only applies to the <code>wavy</code> variant, which needs
 	a taller container to fit the crests.
 </p>
-<h3 id="linear-progress-example">Linear progress example</h3>
+<h3 id="linear-progress-example">
+	Linear progress example<a href="#linear-progress-example" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<div class="stack">
 		<LinearProgress
@@ -320,11 +338,17 @@
 />`}
 />
 
-<h2 id="api">API</h2>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Both components take the same attributes, apart from <code>buffer</code>, which is linear only.
 </p>
-<h3 id="circular-progress-attributes">Circular progress attributes</h3>
+<h3 id="circular-progress-attributes">
+	Circular progress attributes<a
+		href="#circular-progress-attributes"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
 <table>
 	<thead>
 		<tr>
@@ -380,7 +404,11 @@
 	</tbody>
 </table>
 
-<h3 id="linear-progress-attributes">Linear progress attributes</h3>
+<h3 id="linear-progress-attributes">
+	Linear progress attributes<a href="#linear-progress-attributes" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <table>
 	<thead>
 		<tr>

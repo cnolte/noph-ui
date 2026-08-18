@@ -9,21 +9,21 @@
 </svelte:head>
 
 <h1>Switch</h1>
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Switch />
 </DemoContainer>
 
 <Code value="<Switch />" />
 
-<h2 id="disable">Disable</h2>
+<h2 id="disable">Disable<a href="#disable" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Switch disabled />
 </DemoContainer>
 
 <Code value="<Switch disabled />" />
 
-<h2 id="icons">Icons</h2>
+<h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Switch icons="selected" />
 	<Switch icons="both" />
@@ -33,8 +33,8 @@
 	value={`<Switch icons="selected" />
 <Switch icons="both" />`}
 />
-<h2 id="theming">Theming</h2>
-<h3 id="tokens">Tokens</h3>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>
@@ -107,7 +107,7 @@
 	<code>disabled</code> tokens take a colour and an opacity separately, because the disabled switch is
 	drawn by fading the same colours rather than by swapping in pre-faded ones.
 </p>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<Switch
 		selected
@@ -126,10 +126,10 @@
 	--np-comp-switch-selected-icon-color="var(--np-color-tertiary)"
 />`}
 />
-<h2 id="api">API</h2>
-<h3 id="switch">Switch</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="switch">Switch<a href="#switch" aria-hidden="true" tabindex="-1">#</a></h3>
 
-<h4 id="attributes">Attributes</h4>
+<h4 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 	<thead>
 		<tr>
@@ -156,7 +156,7 @@
 	</tbody>
 </table>
 
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>

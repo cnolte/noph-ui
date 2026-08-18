@@ -5,24 +5,12 @@
 
 	let activeId = $state<string | undefined>(undefined)
 
-	const addAnchor = (heading: Element) => {
-		if (heading.querySelector('.heading-anchor')) return
-		const anchor = document.createElement('a')
-		anchor.className = 'heading-anchor'
-		anchor.href = `#${heading.id}`
-		anchor.tabIndex = -1
-		anchor.setAttribute('aria-hidden', 'true')
-		heading.append(anchor)
-	}
+	const trackReading = () => {
+		if (CSS.supports('selector(:target-current)')) return
 
-	$effect(() => {
 		const headings = sections
 			.map(({ id }) => document.getElementById(id))
 			.filter((heading): heading is HTMLElement => heading !== null)
-		for (const heading of headings) addAnchor(heading)
-
-		if (CSS.supports('selector(:target-current)')) return
-
 		const offset = parseFloat(getComputedStyle(document.documentElement).fontSize) * 5.5
 		let frame = 0
 
@@ -51,11 +39,11 @@
 			window.removeEventListener('resize', schedule)
 			if (frame) cancelAnimationFrame(frame)
 		}
-	})
+	}
 </script>
 
 {#if sections.length > 0}
-	<nav class="toc scroll-wrapper" aria-labelledby="toc-title">
+	<nav class="toc scroll-wrapper" aria-labelledby="toc-title" {@attach trackReading}>
 		<p id="toc-title">On this page</p>
 		<ul>
 			{#each sections as section (section.id)}

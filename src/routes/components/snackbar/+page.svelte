@@ -20,8 +20,10 @@
 		target="_blank">Popover API</a
 	> internally.
 </p>
-<h2 id="usage">Usage</h2>
-<h3 id="single-line-snackbar-2">Single-line snackbar</h3>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="single-line-snackbar-2">
+	Single-line snackbar<a href="#single-line-snackbar-2" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Button popovertarget="single-line-snackbar">Show Snackbar</Button>
 	<Snackbar
@@ -40,7 +42,9 @@
 	actionLabel="Action"
 />`}
 />
-<h3 id="two-line-snackbar">Two-line snackbar</h3>
+<h3 id="two-line-snackbar">
+	Two-line snackbar<a href="#two-line-snackbar" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <DemoContainer>
 	<Button popovertarget="two-single-line-snackbar">Show Snackbar</Button>
 	<Snackbar
@@ -61,7 +65,9 @@
 	actionLabel="Action"
 />`}
 />
-<h2 id="manual-control">Manual control</h2>
+<h2 id="manual-control">
+	Manual control<a href="#manual-control" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <DemoContainer>
 	<Button popovertarget="manual-snackbar" popovertargetaction="show">Show Snackbar</Button>
 	<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide Snackbar</Button>
@@ -73,8 +79,8 @@
 <Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />`}
 />
 
-<h2 id="theming">Theming</h2>
-<h3 id="tokens">Tokens</h3>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>
@@ -101,7 +107,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<Button popovertarget="themed-snackbar">Show Snackbar</Button>
 	<Snackbar
@@ -128,8 +134,8 @@
 	label="Themed snackbar"
 />`}
 />
-<h2 id="api">API</h2>
-<h3 id="attributes">Attributes</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>
@@ -206,7 +212,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="bindables">Bindables</h3>
+<h3 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr>
@@ -236,7 +242,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3 id="methods">Methods</h3>
+<h3 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	Access these by binding a reference to the component with <code>bind:this</code>, e.g.
 	<code>&lt;Snackbar bind:this={`{snackbar}`} /&gt;</code> then <code>snackbar.showPopover()</code>.

@@ -92,7 +92,7 @@
 	form.
 </p>
 
-<h2 id="usage">Usage</h2>
+<h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>value</code> is bindable. Typing in the field and picking a day stay in sync; inside the
 	calendar the selection is provisional until <code>OK</code> confirms it, and
@@ -119,7 +119,7 @@
 <DockedDatePicker bind:value={basic} label="Date" />`}
 />
 
-<h2 id="anatomy">Anatomy</h2>
+<h2 id="anatomy">Anatomy<a href="#anatomy" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	The docked container follows the Material 3 measurements exactly, so it lines up with the rest of
 	a Material layout without nudging. Its height is not fixed: a docked picker sizes itself to the
@@ -143,7 +143,9 @@
 	</tbody>
 </table>
 
-<h2 id="reacting-to-a-change">Reacting to a change</h2>
+<h2 id="reacting-to-a-change">
+	Reacting to a change<a href="#reacting-to-a-change" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	<code>onchange</code> fires whenever the committed value changes, whether it came from the
 	calendar or from typing. It receives the ISO string, or <code>undefined</code> when the field is cleared.
@@ -164,7 +166,9 @@
 />`}
 />
 
-<h2 id="text-field-variants">Text field variants</h2>
+<h2 id="text-field-variants">
+	Text field variants<a href="#text-field-variants" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The field is the library's <code>TextField</code>, so <code>variant</code> takes
 	<code>outlined</code> (the default) or <code>filled</code>.
@@ -178,7 +182,9 @@
 <DockedDatePicker bind:value label="Filled" variant="filled" />`}
 />
 
-<h2 id="localisation">Localisation</h2>
+<h2 id="localisation">
+	Localisation<a href="#localisation" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Month names, weekday names and the numeric input order all come from <code>Intl</code>. Without a
 	<code>locale</code> the runtime's own locale is used; pass one to pin it. The supporting text
@@ -194,7 +200,9 @@
 <DockedDatePicker bind:value label="日付" locale="ja-JP" />`}
 />
 
-<h3 id="first-day-of-the-week">First day of the week</h3>
+<h3 id="first-day-of-the-week">
+	First day of the week<a href="#first-day-of-the-week" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	The first column is derived from the locale through <code>Intl.Locale#getWeekInfo</code>. On an
 	engine that does not implement it the calendar falls back to Sunday, so set
@@ -205,7 +213,9 @@
 </DemoContainer>
 <Code value={`<DockedDatePicker bind:value label="Week starts Monday" firstDayOfWeek={1} />`} />
 
-<h2 id="bounding-the-selection">Bounding the selection</h2>
+<h2 id="bounding-the-selection">
+	Bounding the selection<a href="#bounding-the-selection" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	<code>min</code> and <code>max</code> are inclusive ISO days. They grey out the days outside the window,
 	stop the month and year steppers at the edge, and disable the months and years that fall entirely outside
@@ -228,7 +238,11 @@
 />`}
 />
 
-<h3 id="disabling-individual-days">Disabling individual days</h3>
+<h3 id="disabling-individual-days">
+	Disabling individual days<a href="#disabling-individual-days" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <p>
 	<code>isDateEnabled</code> runs for every rendered day; return <code>false</code> to disable it. Use
 	it for rules a range cannot express, such as weekends, public holidays or days already fully booked.
@@ -252,7 +266,11 @@
 />`}
 />
 
-<h3 id="restricting-the-year-menu">Restricting the year menu</h3>
+<h3 id="restricting-the-year-menu">
+	Restricting the year menu<a href="#restricting-the-year-menu" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h3>
 <p>
 	<code>yearRange</code> sets the years offered in the year menu, defaulting to
 	<code>[1900, 2100]</code>. Narrowing it keeps a long scroll from getting in the way. For a date of
@@ -275,7 +293,11 @@
 />`}
 />
 
-<h2 id="days-of-neighbouring-months">Days of neighbouring months</h2>
+<h2 id="days-of-neighbouring-months">
+	Days of neighbouring months<a href="#days-of-neighbouring-months" aria-hidden="true" tabindex="-1"
+		>#</a
+	>
+</h2>
 <p>
 	The calendar shows only the days of the displayed month and leaves the surrounding cells empty,
 	the way the Material calendar draws it. The docked specification sheets do fill those cells, so
@@ -293,7 +315,9 @@
 />`}
 />
 
-<h2 id="controlling-the-calendar">Controlling the calendar</h2>
+<h2 id="controlling-the-calendar">
+	Controlling the calendar<a href="#controlling-the-calendar" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	<code>displayMonth</code> is the month on screen. It follows the selection until the person navigates,
 	and binding it lets you park the calendar somewhere useful, such as the start of a booking season. You
@@ -334,7 +358,9 @@
 </Button>`}
 />
 
-<h3 id="opening-it-yourself">Opening it yourself</h3>
+<h3 id="opening-it-yourself">
+	Opening it yourself<a href="#opening-it-yourself" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	<code>open</code> is bindable, so the calendar can be opened from anywhere and read back when the person
 	dismisses it. Clicking outside still closes it, so drive it with a plain open button rather than a toggle.
@@ -349,7 +375,9 @@
 <Button onclick={() => (isOpen = true)}>Open the calendar</Button>`}
 />
 
-<h2 id="forms-and-validation">Forms and validation</h2>
+<h2 id="forms-and-validation">
+	Forms and validation<a href="#forms-and-validation" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Passing a <code>name</code> submits the ISO value with the surrounding form through a hidden
 	input, so no JavaScript is needed to read it back. The constraints stay on the visible field
@@ -395,7 +423,7 @@
 </form>`}
 />
 
-<h2 id="modal">Modal</h2>
+<h2 id="modal">Modal<a href="#modal" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>DatePickerDialog</code> is the same calendar in a modal, with the selection echoed in a headline
 	and a three-column year grid behind the month button. Prefer it on small screens, or when choosing the
@@ -411,7 +439,13 @@
 <DatePickerDialog bind:open={dialogOpen} bind:value={dialogValue} />`}
 />
 
-<h3 id="keyboard-entry-and-custom-wording">Keyboard entry and custom wording</h3>
+<h3 id="keyboard-entry-and-custom-wording">
+	Keyboard entry and custom wording<a
+		href="#keyboard-entry-and-custom-wording"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
 <p>
 	<code>modeToggle</code> adds the header button that swaps the calendar for a text field, for
 	people who would rather type. <code>title</code> replaces the supporting line above the headline,
@@ -443,7 +477,7 @@
 />`}
 />
 
-<h2 id="range">Range</h2>
+<h2 id="range">Range<a href="#range" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>DateRangePicker</code> scrolls through months continuously and fills the days between the
 	two ends. The first tap sets the start, the second the end; tapping before the start restarts the
@@ -482,7 +516,7 @@
 <DateRangePicker bind:open={rangeOpen} bind:value={range} title="Select stay" />`}
 />
 
-<h3 id="two-fields">Two fields</h3>
+<h3 id="two-fields">Two fields<a href="#two-fields" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	A booking form usually shows the range as two fields rather than a button, and the calendar is
 	what opens behind them. <code>DateRangePicker</code> is only the popup, so the pair of fields
@@ -575,7 +609,7 @@
 <DateRangePicker bind:open bind:value={stay} title="Select stay" />`}
 />
 
-<h2 id="theming">Theming</h2>
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Colours and shapes come from the theme, and every part exposes a custom property for the cases the
 	theme cannot reach. Set them on the picker itself; they inherit into the calendar.
@@ -685,7 +719,7 @@
 	</tbody>
 </table>
 
-<h3 id="example">Example</h3>
+<h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<DockedDatePicker
 		bind:value={themed}
@@ -709,7 +743,9 @@
 />`}
 />
 
-<h2 id="motion-and-gestures">Motion and gestures</h2>
+<h2 id="motion-and-gestures">
+	Motion and gestures<a href="#motion-and-gestures" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	Movement follows the Material 3 motion scheme, using the theme's own motion tokens: travel runs on
 	the spatial tokens, fades on the effects tokens.
@@ -757,7 +793,9 @@
 	instantly for anyone who has asked for less motion.
 </p>
 
-<h2 id="accessibility">Accessibility</h2>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
 <p>
 	The grid is a <code>role="grid"</code> table named after the month it shows, with the weekday
 	names as column headers and a single roving tab stop, so the calendar is one stop in the tab order
@@ -799,8 +837,10 @@
 	straight away, and it names itself with its <code>title</code>.
 </p>
 
-<h2 id="api">API</h2>
-<h3 id="dockeddatepicker">DockedDatePicker</h3>
+<h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="dockeddatepicker">
+	DockedDatePicker<a href="#dockeddatepicker" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>Anything not listed here is forwarded to the picker's root element.</p>
 <table>
 	<thead>
@@ -953,7 +993,7 @@
 	</tbody>
 </table>
 
-<h4 id="bindables">Bindables</h4>
+<h4 id="bindables">Bindables<a href="#bindables" aria-hidden="true" tabindex="-1">#</a></h4>
 <table>
 	<thead>
 		<tr>
@@ -989,7 +1029,9 @@
 	</tbody>
 </table>
 
-<h3 id="datepickerdialog">DatePickerDialog</h3>
+<h3 id="datepickerdialog">
+	DatePickerDialog<a href="#datepickerdialog" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	Takes the same <code>locale</code>, <code>firstDayOfWeek</code>, <code>min</code>,
 	<code>max</code>, <code>yearRange</code>, <code>isDateEnabled</code>,
@@ -1057,7 +1099,9 @@
 	given, or on the month of <code>value</code>.
 </p>
 
-<h3 id="daterangepicker">DateRangePicker</h3>
+<h3 id="daterangepicker">
+	DateRangePicker<a href="#daterangepicker" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	Takes the same <code>locale</code>, <code>firstDayOfWeek</code>, <code>min</code>,
 	<code>max</code>, <code>yearRange</code>, <code>isDateEnabled</code>,
@@ -1112,7 +1156,9 @@
 	<code>element</code>.
 </p>
 
-<h3 id="calendar-and-yeargrid">Calendar and YearGrid</h3>
+<h3 id="calendar-and-yeargrid">
+	Calendar and YearGrid<a href="#calendar-and-yeargrid" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	The two grids the pickers are built from are exported as well, for a layout none of the three
 	covers, such as a calendar sitting permanently on a page. They are lower level than the pickers:
@@ -1152,7 +1198,9 @@
 	</tbody>
 </table>
 
-<h3 id="date-helpers">Date helpers</h3>
+<h3 id="date-helpers">
+	Date helpers<a href="#date-helpers" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
 	The date maths behind the pickers is exported too, so an app can share the same timezone-safe
 	handling.
