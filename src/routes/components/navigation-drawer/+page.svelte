@@ -9,10 +9,10 @@
 </script>
 
 <svelte:head>
-	<title>Navigation Drawer - Noph UI</title>
+	<title>Navigation drawer - Noph UI</title>
 </svelte:head>
 
-<h1>Navigation Drawer</h1>
+<h1>Navigation drawer</h1>
 <p>
 	A navigation drawer is the top level navigation for wide screens, with room for labels, groups and
 	counts. It comes in two shapes. Without <code>modal</code> it is a standard drawer: part of the
@@ -27,7 +27,7 @@
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer>
-	<Button popovertarget="demo-drawer">Open Nav</Button>
+	<Button popovertarget="demo-drawer">Open nav</Button>
 	<NavigationDrawer id="demo-drawer" modal backdrop>
 		<NavigationDrawerItem
 			selected={selection === 1}
@@ -61,7 +61,7 @@
 </DemoContainer>
 
 <Code
-	value={`<Button popovertarget="demo-drawer">Open Nav</Button>
+	value={`<Button popovertarget="demo-drawer">Open nav</Button>
 <NavigationDrawer id="demo-drawer" modal backdrop>
 	<NavigationDrawerItem
 		selected={selection === 1}

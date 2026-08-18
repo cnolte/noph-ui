@@ -22,7 +22,7 @@
 </p>
 
 <h3 id="primary-tabs">
-	Primary Tabs<a href="#primary-tabs" aria-hidden="true" tabindex="-1">#</a>
+	Primary tabs<a href="#primary-tabs" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
 	<Tabs value="videos">
@@ -58,7 +58,7 @@
 </Tabs>`}
 />
 <h3 id="secondary-tabs">
-	Secondary Tabs<a href="#secondary-tabs" aria-hidden="true" tabindex="-1">#</a>
+	Secondary tabs<a href="#secondary-tabs" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
 	<Tabs variant="secondary" value="videos">
@@ -110,7 +110,7 @@
 			<Tab value="theme">Theme</Tab>
 			<Tab value="settings">Settings</Tab>
 		</Tabs>
-		<div style="margin-top:1rem;font-size:0.825rem">Selected Tab: {value}</div>
+		<div style="margin-top:1rem;font-size:0.825rem">Selected tab: {value}</div>
 	</div>
 </DemoContainer>
 <Code
@@ -119,7 +119,7 @@
 	<Tab value="theme">Theme</Tab>
 	<Tab value="settings">Settings</Tab>
 </Tabs>
-<div>Selected Tab: {value}</div>`}
+<div>Selected tab: {value}</div>`}
 />
 
 <h3 id="links">Links<a href="#links" aria-hidden="true" tabindex="-1">#</a></h3>

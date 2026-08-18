@@ -75,21 +75,21 @@
 		--np-radio-selected-icon-color="var(--np-color-tertiary)"
 		checked
 		defaultChecked={true}
-		aria-label="Themed Radio 1"
+		aria-label="Themed radio 1"
 		name="themed"
 	/>
 	<Radio
 		--np-radio-icon-size="40px"
 		--np-radio-icon-color="var(--np-color-secondary)"
 		--np-radio-selected-icon-color="var(--np-color-tertiary)"
-		aria-label="Themed Radio 2"
+		aria-label="Themed radio 2"
 		name="themed"
 	/>
 	<Radio
 		--np-radio-icon-size="40px"
 		--np-radio-icon-color="var(--np-color-secondary)"
 		--np-radio-selected-icon-color="var(--np-color-tertiary)"
-		aria-label="Themed Radio 3"
+		aria-label="Themed radio 3"
 		name="themed"
 	/>
 </DemoContainer>

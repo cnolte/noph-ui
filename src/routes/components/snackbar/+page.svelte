@@ -25,7 +25,7 @@
 	Single-line snackbar<a href="#single-line-snackbar-2" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button popovertarget="single-line-snackbar">Show Snackbar</Button>
+	<Button popovertarget="single-line-snackbar">Show snackbar</Button>
 	<Snackbar
 		{icon}
 		id="single-line-snackbar"
@@ -34,7 +34,7 @@
 	/>
 </DemoContainer>
 <Code
-	value={`<Button popovertarget="single-line-snackbar">Show Snackbar</Button>
+	value={`<Button popovertarget="single-line-snackbar">Show snackbar</Button>
 <Snackbar
 	{icon}
 	id="single-line-snackbar"
@@ -46,7 +46,7 @@
 	Two-line snackbar<a href="#two-line-snackbar" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button popovertarget="two-single-line-snackbar">Show Snackbar</Button>
+	<Button popovertarget="two-single-line-snackbar">Show snackbar</Button>
 	<Snackbar
 		{icon}
 		id="two-single-line-snackbar"
@@ -56,7 +56,7 @@
 	/>
 </DemoContainer>
 <Code
-	value={`<Button popovertarget="two-single-line-snackbar">Show Snackbar</Button>
+	value={`<Button popovertarget="two-single-line-snackbar">Show snackbar</Button>
 <Snackbar
 	{icon}
 	id="two-single-line-snackbar"
@@ -69,13 +69,13 @@
 	Manual control<a href="#manual-control" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<Button popovertarget="manual-snackbar" popovertargetaction="show">Show Snackbar</Button>
-	<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide Snackbar</Button>
+	<Button popovertarget="manual-snackbar" popovertargetaction="show">Show snackbar</Button>
+	<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide snackbar</Button>
 	<Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />
 </DemoContainer>
 <Code
-	value={`<Button popovertarget="manual-snackbar" popovertargetaction="show">Show Snackbar</Button>
-<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide Snackbar</Button>
+	value={`<Button popovertarget="manual-snackbar" popovertargetaction="show">Show snackbar</Button>
+<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide snackbar</Button>
 <Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />`}
 />
 
@@ -109,7 +109,7 @@
 </table>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<Button popovertarget="themed-snackbar">Show Snackbar</Button>
+	<Button popovertarget="themed-snackbar">Show snackbar</Button>
 	<Snackbar
 		id="themed-snackbar"
 		{icon}
@@ -122,7 +122,7 @@
 	/>
 </DemoContainer>
 <Code
-	value={`<Button popovertarget="themed-snackbar">Show Snackbar</Button>
+	value={`<Button popovertarget="themed-snackbar">Show snackbar</Button>
 <Snackbar
 	id="themed-snackbar"
 	{icon}

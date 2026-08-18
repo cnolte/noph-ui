@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>Date Pickers - Noph UI</title>
+	<title>Date pickers - Noph UI</title>
 </svelte:head>
 
 <h1>Date pickers</h1>

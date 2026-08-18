@@ -8,10 +8,10 @@
 </script>
 
 <svelte:head>
-	<title>Navigation Rail - Noph UI</title>
+	<title>Navigation rail - Noph UI</title>
 </svelte:head>
 
-<h1>Navigation Rail</h1>
+<h1>Navigation rail</h1>
 <p>
 	A navigation rail is the top level navigation for medium sized screens: a narrow vertical strip of
 	destinations that stays visible next to the content. Use it for three to seven destinations. Below

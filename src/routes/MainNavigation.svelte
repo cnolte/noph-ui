@@ -12,9 +12,15 @@
 <div class="header">About</div>
 <NavigationDrawerItem
 	onclick={onclose}
-	label="Quick Start"
+	label="Quick start"
 	href="/about/quick-start"
 	selected={page.url.pathname === '/about/quick-start'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
+	label="Theming"
+	href="/about/theming"
+	selected={page.url.pathname === '/about/theming'}
 />
 <NavigationDrawerItem
 	onclick={onclose}
@@ -104,13 +110,13 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
-	label="Navigation Drawer"
+	label="Navigation drawer"
 	href="/components/navigation-drawer"
 	selected={page.url.pathname === '/components/navigation-drawer'}
 />
 <NavigationDrawerItem
 	onclick={onclose}
-	label="Navigation Rail"
+	label="Navigation rail"
 	href="/components/navigation-rail"
 	selected={page.url.pathname === '/components/navigation-rail'}
 />

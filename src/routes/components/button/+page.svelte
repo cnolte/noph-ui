@@ -341,7 +341,9 @@
 </h3>
 <p>
 	These apply to every variant. Their defaults come from <code>size</code>, so setting one overrides
-	the sizing for whatever size the button is.
+	the sizing for whatever size the button is. <code>--np-button-shape</code> is the exception worth
+	knowing: it sets the radius of the square shape only, so pair it with <code>shape="square"</code>.
+	Round buttons stay pills, with a radius that follows their height.
 </p>
 <table>
 	<thead>

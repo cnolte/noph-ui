@@ -57,7 +57,7 @@
 	</ListItem>
 </List>`}
 />
-<h2 id="icon-item">Icon Item<a href="#icon-item" aria-hidden="true" tabindex="-1">#</a></h2>
+<h2 id="icon-item">Icon item<a href="#icon-item" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<List style="max-width:300px">
 		<ListItem>

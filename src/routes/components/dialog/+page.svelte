@@ -27,7 +27,7 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Button popovertarget="simple-dialog">Show Dialog</Button>
+	<Button popovertarget="simple-dialog">Show dialog</Button>
 	<Dialog
 		bind:this={dialog}
 		headline="Reset settings?"
@@ -60,7 +60,7 @@
 </` +
 		`script>
 
-<Button popovertarget="simple-dialog">Show Dialog</Button>
+<Button popovertarget="simple-dialog">Show dialog</Button>
 <Dialog
 	bind:this={dialog}
 	headline="Reset settings?"

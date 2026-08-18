@@ -24,14 +24,14 @@
 		<Card
 			type="button"
 			variant="filled"
-			headline="Filled Card"
+			headline="Filled card"
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 			image="/pollock2.avif"
 		></Card>
 		<Card
 			type="button"
 			variant="outlined"
-			headline="Outlined Card"
+			headline="Outlined card"
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 			image="/pollock3.avif"
 		></Card>
@@ -48,14 +48,14 @@
 <Card
 	type="button"
 	variant="filled"
-	headline="Filled Card"
+	headline="Filled card"
 	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 	image="/pollock2.avif"
 ></Card>
 <Card
 	type="button"
 	variant="outlined"
-	headline="Outlined Card"
+	headline="Outlined card"
 	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 	image="/pollock3.avif"
 ></Card>`}
@@ -80,7 +80,7 @@
 			type="text"
 			variant="elevated"
 			disabled
-			headline="Elevated Disabled"
+			headline="Elevated disabled"
 			subhead="Subhead"
 			{action}
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
@@ -103,7 +103,7 @@
   type="text"
   variant="elevated"
   disabled
-  headline="Elevated Disabled"
+  headline="Elevated disabled"
   subhead="Subhead"
   {action}
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
@@ -124,7 +124,7 @@
 			type="text"
 			variant="filled"
 			disabled
-			headline="Filled Disabled"
+			headline="Filled disabled"
 			subhead="Subhead"
 			{action}
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
@@ -147,7 +147,7 @@
   type="text"
   variant="filled"
   disabled
-  headline="Filled Disabled"
+  headline="Filled disabled"
   subhead="Subhead"
   {action}
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
@@ -170,7 +170,7 @@
 			type="text"
 			variant="outlined"
 			disabled
-			headline="Outlined Disabled"
+			headline="Outlined disabled"
 			subhead="Subhead"
 			{action}
 			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
@@ -193,7 +193,7 @@
   type="text"
   variant="outlined"
   disabled
-  headline="Outlined Disabled"
+  headline="Outlined disabled"
   subhead="Subhead"
   {action}
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."

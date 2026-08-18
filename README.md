@@ -1,8 +1,6 @@
 # Noph UI
 
-Noph UI is a modern, powerful UI library for Svelte 5, fully aligned with the Material 3
-guidelines. Build stunning, consistent user interfaces with the efficiency and flexibility of
-Svelte and Google’s Material Design framework.
+Noph UI is a modern, powerful UI library for Svelte, fully aligned with the Material 3 Expressive guidelines. Build stunning, consistent user interfaces with the efficiency and flexibility of Svelte and Google’s Material Design framework.
 
 ## Install
 
@@ -50,33 +48,42 @@ body {
 }
 ```
 
-## Roadmap
+## Components
 
-Beta
+Live demos and usage examples for every component are available on [noph.dev](https://noph.dev).
 
-- Auto complete
-- Badges
-- Buttons
-- Cards
-- Checkbox
-- Chips
-- DatePicker
-- Dialogs
-- Divider
-- Icon buttons
-- Lists
-- Loading indicator
-- Menus
-- Navigation Drawer
-- Navigation Rail
-- Progress indicators
-- Radio
-- Ripple
-- Segmented buttons
-- Select
-- Slider
-- Snackbar
-- Switch
-- Tabs
-- Text fields
-- Tooltips
+**Actions**
+[Buttons](https://noph.dev/components/button) &middot;
+[Icon buttons](https://noph.dev/components/icon-button) &middot;
+[Segmented buttons](https://noph.dev/components/segmented-button) &middot;
+[Ripple](https://noph.dev/components/ripple)
+
+**Inputs & selection**
+[Autocomplete](https://noph.dev/components/autocomplete) &middot;
+[Checkbox](https://noph.dev/components/checkbox) &middot;
+[Chips](https://noph.dev/components/chip) &middot;
+[DatePicker](https://noph.dev/components/date-picker) &middot;
+[Radio](https://noph.dev/components/radio) &middot;
+[Select](https://noph.dev/components/select) &middot;
+[Slider](https://noph.dev/components/slider) &middot;
+[Switch](https://noph.dev/components/switch) &middot;
+[Text fields](https://noph.dev/components/text-field)
+
+**Navigation**
+[Menus](https://noph.dev/components/menu) &middot;
+[Navigation Drawer](https://noph.dev/components/navigation-drawer) &middot;
+[Navigation Rail](https://noph.dev/components/navigation-rail) &middot;
+[Tabs](https://noph.dev/components/tabs)
+
+**Communication**
+[Badges](https://noph.dev/components/badge) &middot;
+[Dialogs](https://noph.dev/components/dialog) &middot;
+[Loading indicator](https://noph.dev/components/loading-indicator) &middot;
+[Progress indicators](https://noph.dev/components/progress) &middot;
+[Snackbar](https://noph.dev/components/snackbar) &middot;
+[Tooltips](https://noph.dev/components/tooltip)
+
+**Containment**
+[Cards](https://noph.dev/components/card) &middot;
+[Divider](https://noph.dev/components/divider) &middot;
+[Lists](https://noph.dev/components/list)

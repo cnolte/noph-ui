@@ -28,7 +28,7 @@
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Button style="anchor-name:--city-menu" popovertarget="browser-menu" bind:element={menuBtn}>
-		Open Menu
+		Open menu
 	</Button>
 	<Menu anchor={menuBtn} id="browser-menu" style="position-anchor:--city-menu;max-width: 300px">
 		<MenuItem>New York</MenuItem>
@@ -43,7 +43,7 @@
 </` +
 		`script>
 <Button style="anchor-name:--city-menu" popovertarget="browser-menu" bind:element={menuBtn}>
-	Open Menu
+	Open menu
 </Button>
 <Menu anchor={menuBtn} id="browser-menu" style="position-anchor:--city-menu;max-width: 300px">
 	<MenuItem>New York</MenuItem>
@@ -69,7 +69,7 @@
 <Menu bind:this={menu} anchor={menuBtn}>
 	<MenuItem>New York</MenuItem>
 </Menu>
-<Button onclick={() => menu?.showPopover()}>Open Menu</Button>`}
+<Button onclick={() => menu?.showPopover()}>Open menu</Button>`}
 />
 <table>
 	<thead>

@@ -5,7 +5,7 @@ test('the documented pickers survive server rendering and hydration', async ({ p
 	page.on('pageerror', (error) => errors.push(error.message))
 
 	await page.goto('/components/date-picker')
-	await expect(page).toHaveTitle('Date Pickers - Noph UI')
+	await expect(page).toHaveTitle('Date pickers - Noph UI')
 	await expect(page.getByRole('heading', { name: 'Date pickers', level: 1 })).toBeVisible()
 	await page.waitForLoadState('networkidle')
 
