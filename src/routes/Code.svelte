@@ -1,10 +1,12 @@
 <script lang="ts">
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
+	import { highlight } from './highlight.js'
 
 	let { value }: { value: string } = $props()
 	let selected = $state(false)
 	let announcement = $state('')
+	let highlighted = $derived(highlight(value))
 </script>
 
 <div class="code-wrapper">
@@ -30,7 +32,9 @@
 			<Icon>content_copy</Icon></IconButton
 		>
 		<span class="np-sr-only" aria-live="polite">{announcement}</span>
-		<pre><code>{value}</code></pre>
+		<pre><code
+				><!-- eslint-disable-line svelte/no-at-html-tags -- Prism.highlight escapes all text content, and `value` is always a hardcoded doc example, never user input -->{@html highlighted}</code
+			></pre>
 	</div>
 </div>
 
@@ -57,5 +61,53 @@
 		clip-path: inset(50%);
 		white-space: nowrap;
 		border-width: 0;
+	}
+
+	.code-container code {
+		color: var(--np-color-on-surface);
+	}
+
+	.code-container :global(.token.comment) {
+		color: var(--np-color-on-surface-variant);
+		font-style: italic;
+	}
+
+	.code-container :global(.token.punctuation),
+	.code-container :global(.token.operator) {
+		color: var(--np-color-on-surface-variant);
+	}
+
+	.code-container :global(.token.tag),
+	.code-container :global(.token.selector),
+	.code-container :global(.token.keyword),
+	.code-container :global(.token.svelte-block) {
+		color: var(--np-color-primary);
+	}
+
+	.code-container :global(.token.attr-name),
+	.code-container :global(.token.property),
+	.code-container :global(.token.atrule),
+	.code-container :global(.token.function),
+	.code-container :global(.token.class-name) {
+		color: var(--np-color-tertiary);
+	}
+
+	.code-container :global(.token.attr-value),
+	.code-container :global(.token.string),
+	.code-container :global(.token.char),
+	.code-container :global(.token.builtin),
+	.code-container :global(.token.svelte-expression) {
+		color: var(--np-color-secondary);
+	}
+
+	.code-container :global(.token.number),
+	.code-container :global(.token.boolean),
+	.code-container :global(.token.constant) {
+		color: var(--np-color-tertiary);
+	}
+
+	.code-container :global(.token.important),
+	.code-container :global(.token.regex) {
+		color: var(--np-color-error);
 	}
 </style>
