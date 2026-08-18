@@ -9,6 +9,7 @@ https://noph.dev/components/card
 https://noph.dev/components/checkbox
 https://noph.dev/components/chip
 https://noph.dev/components/date-picker
+https://noph.dev/components/date-time-picker
 https://noph.dev/components/dialog
 https://noph.dev/components/divider
 https://noph.dev/components/icon-button

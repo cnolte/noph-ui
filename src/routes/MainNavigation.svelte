@@ -74,6 +74,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Date time pickers"
+	href="/components/date-time-picker"
+	selected={page.url.pathname === '/components/date-time-picker'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Dialogs"
 	href="/components/dialog"
 	selected={page.url.pathname === '/components/dialog'}

@@ -112,6 +112,26 @@
 </Menu>`}
 />
 
+<h2 id="placement">Placement<a href="#placement" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	A menu opens on the side of the anchor you asked for, below it by default, and moves out of the
+	way on its own when that side is too small. It flips to the opposite side of the anchor when the
+	menu would not fit there, and to the other side of it along the inline axis when the menu would
+	run off the edge of the window. When neither side of the anchor is tall enough, the menu takes the
+	whole height of the window and sits over the anchor, so a tall menu is shown in full instead of
+	being squeezed into the larger of two small gaps. Only a menu longer than the window itself stays
+	on the roomier side and scrolls, since covering the anchor would not buy anything there.
+</p>
+<p>
+	The <code>anchor</code> prop is what makes this work: it is the element the menu measures the room against.
+	Without it the menu still opens, but at whatever height its content asks for.
+</p>
+<p>
+	Set <code>coverAnchor</code> to <code>false</code> where the anchor has to stay in sight, and the
+	menu skips that last step: it keeps to the roomier side and scrolls there instead.
+	<code>AutoComplete</code> does this, because a list over the field would hide what you are typing.
+</p>
+
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
@@ -160,12 +180,20 @@
 			<td><code>--np-menu-justify-self</code></td>
 			<td><code>anchor-center</code></td>
 		</tr>
+		<tr>
+			<td><code>--np-menu-over-anchor-position-area</code></td>
+			<td><code>span-all</code></td>
+		</tr>
 	</tbody>
 </table>
 <p>
 	<code>--np-menu-position-area</code> takes any CSS <code>position-area</code> value and decides
-	which side of the anchor the menu opens on. Whatever you pick, the menu flips to the opposite side
-	when it would not fit. The items themselves are styled through the
+	which side of the anchor the menu opens on. Whatever you pick, the menu still moves as
+	<a href="#placement">Placement</a> describes when that side is too small.
+	<code>--np-menu-over-anchor-position-area</code> is the area used for the last of those steps, the
+	one that spans the height over the anchor; keep <code>span-all</code> in the block axis and repeat
+	whatever the inline half of <code>--np-menu-position-area</code> says, so the menu stays lined up
+	the same way. The items themselves are styled through the
 	<a href="/components/list">list tokens</a>.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -204,8 +232,8 @@
 			<td><code>HTMLElement | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>The element the menu belongs to. It is used to cap the menu's height to the free space
-				above or below it, and to position the menu in browsers without CSS anchor positioning.</td
+				>The element the menu belongs to. It is what the room on screen is measured around, so it
+				decides how tall the menu may be and which way it moves when a side is too small.</td
 			>
 		</tr>
 		<tr>
@@ -213,6 +241,15 @@
 			<td><code>boolean | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Bindable. Reflects whether the menu is currently open.</td>
+		</tr>
+		<tr>
+			<td><code>coverAnchor</code></td>
+			<td><code>boolean</code></td>
+			<td><code>true</code></td>
+			<td
+				>Whether the menu may sit over its anchor when neither side of it is tall enough. With
+				<code>false</code> the menu stays on the roomier side and scrolls there.</td
+			>
 		</tr>
 		<tr>
 			<td><code>popover</code></td>

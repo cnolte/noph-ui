@@ -28,7 +28,6 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import { afterTwoFrames } from './enterAnimation.js'
 	import type { DockedDatePickerProps, ISODate } from './types.ts'
 
 	let {
@@ -76,6 +75,7 @@
 	let anchorElement = $state<HTMLDivElement>()
 	let menuElement = $state<HTMLDivElement>()
 	let mode = $state<'days' | 'months' | 'years'>('days')
+	let listMode = $state<'months' | 'years' | undefined>(undefined)
 	let pending = $state<ISODate | undefined>(undefined)
 	let focusedDay = $state<Date | undefined>(undefined)
 	let inputElement = $state<HTMLInputElement | HTMLTextAreaElement>()
@@ -105,15 +105,16 @@
 	let shortMonthNames = $derived(getMonthNames(locale, 'short'))
 	let rowCount = $derived(getWeekRowCount(monthDate, week))
 
-	let viewEnter = $state(false)
-	let cancelViewEnter: (() => void) | undefined
-
 	const setMode = (next: 'days' | 'months' | 'years') => {
 		if (mode === next) return
 		mode = next
-		cancelViewEnter?.()
-		viewEnter = true
-		cancelViewEnter = afterTwoFrames(() => (viewEnter = false))
+		if (next !== 'days') listMode = next
+	}
+
+	const leaveList = async () => {
+		setMode('days')
+		await tick()
+		focusCalendar()
 	}
 
 	const formatValue = () => {
@@ -254,14 +255,14 @@
 
 	const chooseMonth = (month: number) => {
 		setMonth(new Date(monthDate.getFullYear(), month, 1))
-		setMode('days')
+		leaveList()
 	}
 
 	const chooseYear = (year: number) => {
 		// A year is offered as soon as any of its days is in range, so keeping the month the list was
 		// opened from can land on a month where nothing at all is selectable.
 		setMonth(new Date(year, clampMonthInYear(year, monthDate.getMonth(), minDate, maxDate), 1))
-		setMode('days')
+		leaveList()
 	}
 </script>
 
@@ -319,6 +320,7 @@
 		style={`position-anchor:--${uid};`}
 		--np-menu-justify-self="none"
 		--np-menu-position-area="bottom span-right"
+		--np-menu-over-anchor-position-area="span-all span-right"
 		--np-menu-margin="0"
 		--np-menu-container-color="var(--np-docked-date-picker-container-color, var(--np-color-surface-container-high))"
 		--np-menu-container-shape="var(--np-docked-date-picker-container-shape, var(--np-shape-corner-large))"
@@ -333,16 +335,14 @@
 			}
 			if (newState === 'closed') {
 				setMode('days')
+				listMode = undefined
 				focusedDay = undefined
 				displayMonth = monthBeforeOpen
 			}
 		}}
 	>
 		{#if open}
-			<div
-				class={['np-docked-date-picker-container', mode !== 'days' && 'menu']}
-				style:--np-calendar-rows={rowCount}
-			>
+			<div class="np-docked-date-picker-container" style:--np-calendar-rows={rowCount}>
 				<CalendarHeader
 					{mode}
 					monthLabel={shortMonthNames[monthDate.getMonth()]}
@@ -367,8 +367,8 @@
 					ontoggleyears={() => setMode(mode === 'years' ? 'days' : 'years')}
 				/>
 
-				{#if mode === 'days'}
-					<div class={['np-docked-date-picker-body', viewEnter && 'entering']}>
+				<div class="np-docked-date-picker-views">
+					<div class="np-docked-date-picker-body" inert={mode !== 'days'}>
 						<Calendar
 							month={monthDate}
 							selected={pendingDate}
@@ -395,33 +395,37 @@
 							}}
 						/>
 					</div>
-					<div class="np-docked-date-picker-actions">
-						<Button type="button" variant="text" onclick={() => closePicker()}>{cancelLabel}</Button
-						>
-						<Button type="button" variant="text" onclick={confirm}>{confirmLabel}</Button>
-					</div>
-				{:else}
-					<div class={['np-docked-date-picker-menu-view', viewEnter && 'entering']}>
-						<Divider --np-divider-color="var(--np-color-outline-variant)" />
-						{#if mode === 'months'}
-							<SelectionList
-								id="{uid}-months"
-								aria-label={selectMonthLabel}
-								options={monthOptions}
-								value={monthDate.getMonth()}
-								onselect={chooseMonth}
-							/>
-						{:else}
-							<SelectionList
-								id="{uid}-years"
-								aria-label={selectYearLabel}
-								options={yearOptions}
-								value={monthDate.getFullYear()}
-								onselect={chooseYear}
-							/>
-						{/if}
-					</div>
-				{/if}
+
+					{#if listMode}
+						<div class={['np-docked-date-picker-menu-view', mode !== 'days' && 'open']}>
+							<div class="np-docked-date-picker-menu-shade">
+								<Divider --np-divider-color="var(--np-color-outline-variant)" />
+								{#if listMode === 'months'}
+									<SelectionList
+										id="{uid}-months"
+										aria-label={selectMonthLabel}
+										options={monthOptions}
+										value={monthDate.getMonth()}
+										onselect={chooseMonth}
+									/>
+								{:else}
+									<SelectionList
+										id="{uid}-years"
+										aria-label={selectYearLabel}
+										options={yearOptions}
+										value={monthDate.getFullYear()}
+										onselect={chooseYear}
+									/>
+								{/if}
+							</div>
+						</div>
+					{/if}
+				</div>
+
+				<div class="np-docked-date-picker-actions">
+					<Button type="button" variant="text" onclick={() => closePicker()}>{cancelLabel}</Button>
+					<Button type="button" variant="text" onclick={confirm}>{confirmLabel}</Button>
+				</div>
 			</div>
 		{/if}
 	</Menu>
@@ -456,8 +460,12 @@
 		margin-inline: 0.75rem;
 	}
 
+	.np-docked-date-picker-views {
+		position: relative;
+		margin-top: 1.875rem;
+	}
+
 	.np-docked-date-picker-body {
-		padding-top: 1.875rem;
 		padding-inline: 0.75rem;
 	}
 
@@ -476,16 +484,32 @@
 		height: 2.25rem;
 	}
 
-	.np-docked-date-picker-container.menu {
-		padding-bottom: 1.25rem;
+	.np-docked-date-picker-menu-view {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		visibility: hidden;
 	}
 
-	.np-docked-date-picker-menu-view {
+	.np-docked-date-picker-menu-view.open {
+		visibility: visible;
+	}
+
+	.np-docked-date-picker-menu-shade {
 		display: flex;
 		flex-direction: column;
-		overflow: hidden;
-		margin-top: 1.875rem;
-		height: calc(2.5rem + var(--np-calendar-rows) * 3rem);
+		height: 100%;
+		translate: 0 -100%;
+		opacity: 0.6;
+		background-color: var(
+			--np-docked-date-picker-container-color,
+			var(--np-color-surface-container-high)
+		);
+	}
+
+	.np-docked-date-picker-menu-view.open .np-docked-date-picker-menu-shade {
+		translate: 0 0;
+		opacity: 1;
 	}
 
 	.np-docked-date-picker-menu-view :global(.np-date-picker-selection-list) {
@@ -493,28 +517,28 @@
 		min-height: 0;
 	}
 
-	.np-docked-date-picker-menu-view.entering {
-		height: 0;
-		margin-top: 0;
-		opacity: 0.6;
-		transition: none;
-	}
-
-	.np-docked-date-picker-body.entering {
-		opacity: 0.6;
-		transition: none;
-	}
-
 	@media (prefers-reduced-motion: no-preference) {
 		.np-docked-date-picker-menu-view {
+			transition: visibility var(--np-motion-expressive-default-effects);
+		}
+
+		.np-docked-date-picker-menu-shade {
 			transition:
-				height var(--np-motion-expressive-default-effects),
-				margin-top var(--np-motion-expressive-default-effects),
+				translate var(--np-motion-expressive-default-effects),
+				opacity var(--np-motion-expressive-fast-effects);
+		}
+
+		.np-docked-date-picker-menu-view.open .np-docked-date-picker-menu-shade {
+			transition:
+				translate var(--np-motion-expressive-default-effects),
 				opacity var(--np-motion-expressive-default-effects);
 		}
 
-		.np-docked-date-picker-body {
-			transition: opacity var(--np-motion-expressive-default-effects);
+		@starting-style {
+			.np-docked-date-picker-menu-view.open .np-docked-date-picker-menu-shade {
+				translate: 0 -100%;
+				opacity: 0.6;
+			}
 		}
 	}
 

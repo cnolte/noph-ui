@@ -3,6 +3,8 @@ import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements'
 
 export type ISODate = string
 
+export type ISODateTime = string
+
 export interface DateRange {
 	start?: ISODate
 	end?: ISODate
@@ -61,6 +63,57 @@ export interface DockedDatePickerProps
 	openCalendarLabel?: string
 	invalidDateMessage?: string
 	onchange?: (value: ISODate | undefined) => void
+}
+
+export interface DockedDateTimePickerProps
+	extends
+		Omit<HTMLAttributes<HTMLDivElement>, 'onchange'>,
+		DatePickerLocaleProps,
+		Omit<DatePickerRangeProps, 'min' | 'max'>,
+		DatePickerCommonLabelProps,
+		MonthStepperLabelProps {
+	value?: ISODateTime | null
+	displayMonth?: ISODate
+	open?: boolean
+	element?: HTMLDivElement
+	min?: ISODate | ISODateTime
+	max?: ISODate | ISODateTime
+	name?: string
+	form?: string
+	required?: boolean
+	disabled?: boolean
+	readonly?: boolean
+	variant?: 'outlined' | 'filled'
+	issues?: { message: string }[]
+	noAsterisk?: boolean
+	autocomplete?: HTMLInputAttributes['autocomplete']
+	label?: string
+	supportingText?: string
+	minuteStep?: number
+	hour12?: boolean
+	defaultTime?: string
+	nextYearLabel?: string
+	previousYearLabel?: string
+	selectMonthLabel?: string
+	selectYearLabel?: string
+	openCalendarLabel?: string
+	invalidDateMessage?: string
+	hourLabel?: string
+	minuteLabel?: string
+	dayPeriodLabel?: string
+	onchange?: (value: ISODateTime | undefined) => void
+}
+
+export interface TimeOption {
+	value: number
+	label: string
+	disabled?: boolean
+}
+
+export interface TimeColumnProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onselect'> {
+	options: TimeOption[]
+	value?: number
+	onselect?: (value: number) => void
 }
 
 export interface DatePickerDialogProps

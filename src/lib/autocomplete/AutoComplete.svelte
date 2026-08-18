@@ -206,6 +206,7 @@
 	style="position-anchor:--{uid};{widthProp}:{clientWidth}px"
 	role="listbox"
 	class={[!displayOptions.length && 'np-auto-complete-empty']}
+	coverAnchor={false}
 	--np-menu-justify-self="none"
 	--np-menu-position-area="bottom span-right"
 	--np-menu-margin="2px 0"

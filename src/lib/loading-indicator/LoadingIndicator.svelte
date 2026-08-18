@@ -1,26 +1,12 @@
-<script lang="ts">
-	import {
-		DETERMINATE_SCALE,
-		DETERMINATE_SHAPES,
-		INDETERMINATE_SCALE,
-		INDETERMINATE_SHAPES,
-		VIEWBOX,
-		outlinePath,
-	} from './shapes.ts'
+<script module lang="ts">
+	import { SCALE, SHAPES, VIEWBOX, outlinePath } from './shapes.ts'
 	import type { LoadingIndicatorProps } from './types.ts'
 
-	let {
-		value = 0,
-		max = 1,
-		indeterminate = false,
-		contained = false,
-		...attributes
-	}: LoadingIndicatorProps = $props()
-
 	const MORPH_DURATION = 650
-	const ROTATION_DURATION = 4666
 	const QUARTER_TURN = 90
+	const TURN_SAMPLE_INTERVAL = 25
 	const CENTER = VIEWBOX / 2
+
 	const DAMPING_RATIO = 0.6
 	const NATURAL_FREQUENCY = Math.sqrt(200)
 	const DAMPED_FREQUENCY = NATURAL_FREQUENCY * Math.sqrt(1 - DAMPING_RATIO * DAMPING_RATIO)
@@ -31,66 +17,51 @@
 				((DAMPING_RATIO * NATURAL_FREQUENCY) / DAMPED_FREQUENCY) *
 					Math.sin(DAMPED_FREQUENCY * seconds))
 
-	const clamp = (n: number) => (n > 0 ? Math.min(n, 1) : 0)
-	const rotate = (degrees: number) => `rotate(${(degrees % 360).toFixed(2)} ${CENTER} ${CENTER})`
+	const MORPH_CYCLE = SHAPES.length * MORPH_DURATION
+	const FRAMES = [...SHAPES, SHAPES[0]].map((shape) => outlinePath(shape, shape, 0, SCALE))
+	const MORPH_VALUES = FRAMES.join(';')
+	const MORPH_KEY_TIMES = FRAMES.map((_, index) => (index / SHAPES.length).toFixed(4)).join(';')
+	const MORPH_KEY_SPLINES = SHAPES.map(() => '0.24 1 0.24 1').join(';')
 
-	const initialPath = outlinePath(
-		INDETERMINATE_SHAPES[0],
-		INDETERMINATE_SHAPES[1],
-		0,
-		INDETERMINATE_SCALE,
+	const TURN_CYCLE = 4 * MORPH_DURATION
+	const TURN_SAMPLES = Array.from(
+		{ length: TURN_CYCLE / TURN_SAMPLE_INTERVAL + 1 },
+		(_, index) => index * TURN_SAMPLE_INTERVAL,
 	)
-
-	let progress = $derived(clamp(value / max))
-	let determinatePath = $derived(
-		outlinePath(DETERMINATE_SHAPES[0], DETERMINATE_SHAPES[1], progress, DETERMINATE_SCALE),
-	)
-
-	let indicator = $state<SVGPathElement>()
-
-	$effect(() => {
-		if (!indicator) return
-		const path = indicator
-		const start = performance.now()
-		let raf = 0
-		const frame = (now: number) => {
-			raf = requestAnimationFrame(frame)
-			const elapsed = Math.max(0, now - start)
-			const index = Math.floor(elapsed / MORPH_DURATION)
-			const morph = springValue((elapsed % MORPH_DURATION) / 1000)
-			path.setAttribute(
-				'd',
-				outlinePath(
-					INDETERMINATE_SHAPES[index % INDETERMINATE_SHAPES.length],
-					INDETERMINATE_SHAPES[(index + 1) % INDETERMINATE_SHAPES.length],
-					clamp(morph),
-					INDETERMINATE_SCALE,
-				),
-			)
-			path.setAttribute(
-				'transform',
-				rotate((elapsed / ROTATION_DURATION) * 360 + (index + morph) * QUARTER_TURN),
-			)
-		}
-		raf = requestAnimationFrame(frame)
-		return () => cancelAnimationFrame(raf)
-	})
+	const turnAngle = (elapsed: number) =>
+		(Math.floor(elapsed / MORPH_DURATION) + springValue((elapsed % MORPH_DURATION) / 1000)) *
+		QUARTER_TURN
+	const TURN_VALUES = TURN_SAMPLES.map(
+		(elapsed) => `${turnAngle(elapsed).toFixed(2)} ${CENTER} ${CENTER}`,
+	).join(';')
+	const TURN_KEY_TIMES = TURN_SAMPLES.map((elapsed) => (elapsed / TURN_CYCLE).toFixed(4)).join(';')
 </script>
 
-<div
-	{...attributes}
-	class={['np-loading-indicator', contained && 'contained']}
-	role="progressbar"
-	aria-valuemin="0"
-	aria-valuemax={max}
-	aria-valuenow={indeterminate ? undefined : value}
->
+<script lang="ts">
+	let { contained = false, ...attributes }: LoadingIndicatorProps = $props()
+</script>
+
+<div {...attributes} class={['np-loading-indicator', contained && 'contained']} role="progressbar">
 	<svg viewBox="0 0 {VIEWBOX} {VIEWBOX}" aria-hidden="true">
-		{#if indeterminate}
-			<path bind:this={indicator} class="indicator" d={initialPath}></path>
-		{:else}
-			<path class="indicator" d={determinatePath} transform={rotate(-progress * 180)}></path>
-		{/if}
+		<path class="indicator" d={FRAMES[0]}>
+			<animate
+				attributeName="d"
+				values={MORPH_VALUES}
+				keyTimes={MORPH_KEY_TIMES}
+				keySplines={MORPH_KEY_SPLINES}
+				calcMode="spline"
+				dur="{MORPH_CYCLE}ms"
+				repeatCount="indefinite"
+			/>
+			<animateTransform
+				attributeName="transform"
+				type="rotate"
+				values={TURN_VALUES}
+				keyTimes={TURN_KEY_TIMES}
+				dur="{TURN_CYCLE}ms"
+				repeatCount="indefinite"
+			/>
+		</path>
 	</svg>
 </div>
 
@@ -121,6 +92,14 @@
 		display: block;
 		inline-size: 100%;
 		block-size: 100%;
+		transform-origin: 50% 50%;
+		animation: li-global-rotation 4666ms linear infinite;
+	}
+
+	@keyframes li-global-rotation {
+		to {
+			rotate: 360deg;
+		}
 	}
 
 	.indicator {

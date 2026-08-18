@@ -5,6 +5,105 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.0] - 2026-08-18
+
+A date and a time in one field, shaped like an `<input type="datetime-local">`
+rather than the Material clock dial: the docked calendar unchanged, with columns
+of hours and minutes beside it.
+
+### Added
+
+- **DockedDateTimePicker** (new component): the docked date picker with time
+  columns next to the calendar. Hours, minutes and, on a 12 hour locale, AM and
+  PM are three scrolling listboxes that open on their current value and move
+  under the arrow keys. `value` is a local `YYYY-MM-DDTHH:mm` string built from
+  local calendar fields, so it never slips across a timezone boundary, and a
+  hidden input carries it into the surrounding form. The date side is unchanged:
+  the field stays editable, the selection is provisional until `OK`, and `Cancel`
+  discards it.
+- **DockedDateTimePicker**: `minuteStep` cuts the minute column, five minutes by
+  default, without rounding a minute that was typed or set by the app.
+  `defaultTime` is where a first pick starts from an empty field, and `hour12`
+  overrides the clock of the locale. `min` and `max` take a whole moment rather
+  than a day: hours and minutes outside the range are greyed out on the first and
+  the last day, and picking such a day pulls the time to the nearest minute
+  allowed. A bare `YYYY-MM-DD` bound still covers that whole day.
+- **DockedDateTimePicker**: from 600dp up the columns sit beside the calendar,
+  below that under it. The switch is a media query, so the server sends what the
+  browser will show.
+- **Date helpers**: the minute-precision siblings of the day helpers are exported
+  too. `toISODateTime`, `parseISODateTime`, `parseDateTimeInput`, `formatDateTime`,
+  `formatTime`, `getDateTimePattern`, `uses12HourClock`, `getHourLabels`,
+  `getDayPeriodLabels`, `minutesOfDay`, `withMinutes`, `toISOTime`, `compareTimes`
+  and `isTimeWithin`.
+
+### Changed (breaking)
+
+- **LoadingIndicator**: the determinate mode is gone, and with it `value`, `max`
+  and `indeterminate`. It stands for a wait of unknown length, and
+  `CircularProgress` already covers a wait you can measure. It renders
+  `role="progressbar"` without an `aria-valuenow`, which is what marks the wait as
+  open ended.
+
+### Changed
+
+- **DockedDatePicker** and **DockedDateTimePicker**: opening the month or the year
+  list no longer resizes the panel. The list is drawn over the calendar rather than
+  in its place, sliding down inside a clip that does not move, so the height holds
+  and the time columns beside the calendar stay put.
+- **DockedDatePicker** and **DockedDateTimePicker**: the month and year steppers
+  fade out and back rather than blinking, and leave the tab order while gone.
+- **DockedDatePicker** and **DockedDateTimePicker**: the calendar is inert while a
+  list covers it, so tabbing out of the list reaches the actions rather than a day
+  nobody can see. Picking a month or a year hands focus back to the calendar, and
+  the list starts below the header, clear of the focus rings.
+- **Menu**: where a menu opens follows the room around its anchor. On top of the
+  existing side and inline flips, a menu too tall for either side now takes the
+  full window height and sits over the anchor, instead of being squeezed into the
+  larger gap and scrolling there. A menu longer than the window itself still keeps
+  to the roomier side.
+- **Menu**: `--np-menu-over-anchor-position-area` is the `position-area` of that
+  last step, `span-all` by default. A menu that sets the inline half of
+  `--np-menu-position-area` should repeat it here, the way `Select`,
+  `AutoComplete`, `DockedDatePicker` and `DockedDateTimePicker` now do.
+- **Menu**: `coverAnchor` opts out of that step, `true` by default. With `false`
+  the menu keeps to the roomier side and scrolls there. `AutoComplete` sets it, so
+  a long list of suggestions can no longer hide the field being typed into.
+- **DockedDatePicker** and **DockedDateTimePicker**: the calendar is no longer
+  scrolled when the field sits in the middle of the window, since the panel is now
+  shown whole over the field.
+
+### Removed
+
+- **Menu** and **Tooltip**: the script that placed the popover in browsers without
+  CSS anchor positioning is gone, now that the feature is baseline. Placement is
+  `position-area` and `position-try-fallbacks` alone, `Menu` only measures the
+  height it caps itself to, and neither one watches a scroll container.
+
+### Fixed
+
+- **Switch**: the track and handle move without JS. The appearance is read off
+  `input:checked` instead of a class the component set, the way `Checkbox` does
+  it, so a page whose JS has not arrived still matches the checkbox underneath;
+  the same goes for which of the two `icons` shows. `selected` still binds, but
+  anything that styled the `np-selected` class has to match
+  `.np-switch:has(input:checked)` now.
+
+### Migration
+
+**Determinate `LoadingIndicator`.** Reach for `CircularProgress` where the wait
+has a value, and drop `indeterminate` everywhere else:
+
+```svelte
+<!-- Before -->
+<LoadingIndicator value={0.6} max={1} aria-label="Downloading" />
+<LoadingIndicator indeterminate aria-label="Loading" />
+
+<!-- After -->
+<CircularProgress value={0.6} aria-label="Downloading" />
+<LoadingIndicator aria-label="Loading" />
+```
+
 ## [0.38.0] - 2026-08-17
 
 `DateRangePicker` shipped as a full screen surface at every window size. The

@@ -173,6 +173,15 @@
 
 	.np-date-picker-stepper.hidden {
 		visibility: hidden;
+		opacity: 0;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-date-picker-stepper {
+			transition:
+				opacity var(--np-motion-expressive-default-effects),
+				visibility var(--np-motion-expressive-default-effects);
+		}
 	}
 
 	.np-date-picker-stepper {

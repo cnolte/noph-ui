@@ -38,11 +38,11 @@
 	<article class="tile progress">
 		<h3 class="tile-heading">
 			<a class="tile-label" href="/components/progress"
-				>Progress <span aria-hidden="true">→</span></a
+				>Loading & Progress <span aria-hidden="true">→</span></a
 			>
 		</h3>
 		<div class="row centered">
-			<LoadingIndicator aria-label="Loading" indeterminate />
+			<LoadingIndicator aria-label="Loading" />
 			<CircularProgress aria-label="Upload progress" wavy value={progress} />
 		</div>
 		<LinearProgress aria-label="Upload progress" wavy value={progress} />
@@ -70,7 +70,14 @@
 		<label class="line"><Switch icons="both" /> Notifications</label>
 		<label class="line"><Checkbox checked /> Remember me</label>
 		<div class="line">
-			<Radio bind:group={plan} name="landing-plan" value="weekly" id="landing-plan-weekly" />
+			<Radio
+				defaultChecked
+				checked
+				bind:group={plan}
+				name="landing-plan"
+				value="weekly"
+				id="landing-plan-weekly"
+			/>
 			<label for="landing-plan-weekly">Weekly</label>
 			<Radio bind:group={plan} name="landing-plan" value="monthly" id="landing-plan-monthly" />
 			<label for="landing-plan-monthly">Monthly</label>

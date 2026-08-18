@@ -63,6 +63,7 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 [Checkbox](https://noph.dev/components/checkbox) &middot;
 [Chips](https://noph.dev/components/chip) &middot;
 [DatePicker](https://noph.dev/components/date-picker) &middot;
+[DateTimePicker](https://noph.dev/components/date-time-picker) &middot;
 [Radio](https://noph.dev/components/radio) &middot;
 [Select](https://noph.dev/components/select) &middot;
 [Slider](https://noph.dev/components/slider) &middot;

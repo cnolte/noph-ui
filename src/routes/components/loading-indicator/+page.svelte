@@ -1,10 +1,7 @@
 <script lang="ts">
 	import LoadingIndicator from '#lib/loading-indicator/LoadingIndicator.svelte'
-	import Slider from '#lib/slider/Slider.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let value = $state(0.6)
 </script>
 
 <svelte:head>
@@ -20,79 +17,37 @@
 	<a href="/components/progress">progress indicators</a> instead.
 </p>
 
-<h2 id="indeterminate">
-	Indeterminate<a href="#indeterminate" aria-hidden="true" tabindex="-1">#</a>
+<h2 id="usage">
+	Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Pass <code>indeterminate</code> when you cannot say how long the wait will be. The indicator loops through
-	seven shapes, a new morph every 650ms, and completes a full turn every 4.7 seconds.
-</p>
-<DemoContainer>
-	<LoadingIndicator aria-label="Loading" indeterminate />
-</DemoContainer>
-<Code
-	value={`<LoadingIndicator
-	indeterminate
-	aria-label="Loading"
-/>`}
-/>
-
-<h2 id="determinate">Determinate<a href="#determinate" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>
-	With a <code>value</code> the indicator morphs from a circle into a soft burst as it fills up,
-	turning half a rotation counterclockwise along the way. <code>value</code> is a fraction between
-	<code>0</code>
-	and <code>max</code>, which defaults to <code>1</code>.
-</p>
-<DemoContainer>
-	<div class="controls">
-		<Slider
-			min={0}
-			max={1}
-			labeled
-			step={0.01}
-			bind:value
-			aria-label="Progress value"
-			format={(v) => `${Math.round(v * 100)}%`}
-		/>
-		<div class="row">
-			<LoadingIndicator aria-label="Download progress" {value} />
-			<LoadingIndicator aria-label="Download progress" contained {value} />
-		</div>
-	</div>
-</DemoContainer>
-<Code value={`<LoadingIndicator value={0.6} aria-label="Download progress" />`} />
-
-<h2 id="contained">Contained<a href="#contained" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>
+	The indicator gives no reading of progress, so it needs nothing but a label. It loops through
+	seven shapes, a new morph every 650ms, and completes a full turn every 4.7 seconds. The whole
+	animation is precomputed, so it runs on the browser's own timeline and costs no script while it
+	spins.
 	<code>contained</code> puts the shape on a filled circle. Use it when the indicator floats over content,
 	where the container keeps it legible, and leave it off when the indicator sits on a surface of its own.
 </p>
 <DemoContainer>
-	<div class="row">
-		<LoadingIndicator aria-label="Loading" indeterminate />
-		<LoadingIndicator aria-label="Loading" contained indeterminate />
-	</div>
+	<LoadingIndicator aria-label="Loading" />
+	<LoadingIndicator aria-label="Loading" contained />
 </DemoContainer>
 <Code
-	value={`<LoadingIndicator indeterminate aria-label="Loading" />
-<LoadingIndicator contained indeterminate aria-label="Loading" />`}
+	value={`<LoadingIndicator
+	aria-label="Loading"
+/>`}
 />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The indicator renders <code>role="progressbar"</code> and keeps <code>aria-valuenow</code> and
-	<code>aria-valuemax</code>
-	in sync with <code>value</code> and <code>max</code>. It has no text of its own, so always pass an
-	<code>aria-label</code>
-	saying what is loading. An indeterminate indicator leaves out <code>aria-valuenow</code>, and that
-	omission is what tells assistive technology that the duration is unknown.
+	The indicator renders <code>role="progressbar"</code> without an <code>aria-valuenow</code>, and
+	that missing value is what tells assistive technology that the wait has no known length. It has no
+	text of its own, so always pass an <code>aria-label</code> saying what is loading.
 </p>
 <Code
 	value={`<LoadingIndicator
-	indeterminate
 	aria-label="Loading search results"
 />`}
 />
@@ -133,7 +88,6 @@
 		--np-loading-indicator-size="5rem"
 		aria-label="Loading, custom"
 		contained
-		indeterminate
 	/>
 </DemoContainer>
 <Code
@@ -142,7 +96,6 @@
 	--np-loading-indicator-container-color="var(--np-color-error-container)"
 	--np-loading-indicator-size="5rem"
 	contained
-	indeterminate
 />`}
 />
 
@@ -158,27 +111,6 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>value</code></td>
-			<td><code>number</code></td>
-			<td><code>0</code></td>
-			<td>Progress to display, a fraction between 0 and <code>max</code>.</td>
-		</tr>
-		<tr>
-			<td><code>max</code></td>
-			<td><code>number</code></td>
-			<td><code>1</code></td>
-			<td>Maximum progress to display, defaults to 1.</td>
-		</tr>
-		<tr>
-			<td><code>indeterminate</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td
-				>Whether or not to display indeterminate progress, which gives no indication to how long an
-				activity will take.</td
-			>
-		</tr>
-		<tr>
 			<td><code>contained</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
@@ -186,17 +118,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.controls {
-		display: flex;
-		flex-direction: column;
-		gap: 1.75rem;
-		min-width: min(22rem, 70vw);
-	}
-	.row {
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-	}
-</style>

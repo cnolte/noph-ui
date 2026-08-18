@@ -7,6 +7,7 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 	anchor?: HTMLElement | undefined
 	element?: HTMLDivElement
 	open?: boolean
+	coverAnchor?: boolean
 }
 
 export type MenuItemProps = Omit<ItemProps, 'variant' | 'softFocus'>

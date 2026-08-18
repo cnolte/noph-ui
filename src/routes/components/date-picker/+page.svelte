@@ -83,7 +83,8 @@
 <p>
 	Three components cover the Material 3 variants: <code>DockedDatePicker</code> anchors a calendar
 	under a text field, <code>DatePickerDialog</code> opens the same calendar as a modal, and
-	<code>DateRangePicker</code> selects a start and an end day.
+	<code>DateRangePicker</code> selects a start and an end day. For a day and a time in one control,
+	see the <a href="/components/date-time-picker">date and time picker</a>.
 </p>
 <p>
 	Every picker uses the same value shape: an ISO <code>YYYY-MM-DD</code> string built from local
@@ -771,7 +772,11 @@
 		</tr>
 		<tr>
 			<td>Month and year menus</td>
-			<td>Expand vertically and fade in from 60% opacity.</td>
+			<td>
+				The list slides down over the calendar and fades in from 60% opacity, the way a blind comes
+				down. The calendar stays where it is underneath, so the panel never resizes, and the
+				steppers fade out while it is covered.
+			</td>
 			<td><code>--np-motion-expressive-default-effects</code></td>
 		</tr>
 		<tr>
@@ -831,6 +836,10 @@
 	<code>cancelLabel</code>, <code>confirmLabel</code>, <code>openCalendarLabel</code>,
 	<code>selectedDateLabel</code> and the month and year navigation labels, so a localised app can translate
 	the whole control.
+</p>
+<p>
+	While a month or year list covers the calendar, the grid is inert, so the list, the actions and
+	nothing else are what <kbd>Tab</kbd> reaches. Picking from the list hands focus back to the grid.
 </p>
 <p>
 	The modal picker opens with focus on the grid rather than on the dialog, so the arrow keys work

@@ -27,6 +27,23 @@ const openCalendar = async () => {
 
 const expectClosed = () => expect.poll(() => !!container()).toBe(false)
 
+const height = () => Math.round(container()!.getBoundingClientRect().height)
+
+const heightsWhile = async (swap: () => Promise<void>) => {
+	const seen: number[] = []
+	let frame: number
+	const sample = () => {
+		if (!container()) return
+		seen.push(height())
+		frame = requestAnimationFrame(sample)
+	}
+	frame = requestAnimationFrame(sample)
+	await swap()
+	await new Promise((resolve) => setTimeout(resolve, 500))
+	cancelAnimationFrame(frame)
+	return [Math.min(...seen), Math.max(...seen)]
+}
+
 describe('text field', () => {
 	test('stays editable while a date is being typed', async () => {
 		setup()
@@ -195,7 +212,7 @@ describe('month and year menus', () => {
 
 		await expect.poll(() => count('.np-date-picker-stepper.hidden')).toBe(4)
 		const stepper = document.querySelector('.np-date-picker-stepper')!
-		expect(getComputedStyle(stepper).visibility).toBe('hidden')
+		await expect.poll(() => getComputedStyle(stepper).visibility).toBe('hidden')
 	})
 
 	test('picking a month returns to the day grid', async () => {
@@ -214,6 +231,55 @@ describe('month and year menus', () => {
 
 		await page.getByRole('button', { name: /^Select year/ }).click()
 		await expect.element(page.getByRole('option').first()).toHaveTextContent('1920')
+	})
+
+	test('the calendar under the list is out of reach', async () => {
+		setup()
+		await openCalendar()
+		await page.getByRole('button', { name: /^Select year/ }).click()
+
+		const stops: string[] = []
+		for (let i = 0; i < 3; i += 1) {
+			await userEvent.tab()
+			stops.push((document.activeElement as HTMLElement).className)
+		}
+
+		expect(stops.some((stop) => stop.includes('np-calendar-day'))).toBe(false)
+		expect(stops[0]).toContain('np-date-picker-selection-option')
+	})
+
+	test('picking a year hands focus on to the calendar', async () => {
+		setup()
+		await openCalendar()
+		await page.getByRole('button', { name: /^Select year/ }).click()
+		await page.getByRole('option', { name: '2027' }).click()
+
+		await expect
+			.poll(() => (document.activeElement as HTMLElement).className)
+			.toContain('np-calendar-day')
+	})
+
+	test('the list never covers the focus ring of the header buttons', async () => {
+		setup()
+		await openCalendar()
+		await page.getByRole('button', { name: /^Select year/ }).click()
+
+		const header = document.querySelector('.np-date-picker-menu-button')!.getBoundingClientRect()
+		const covered = document.querySelector('.np-docked-date-picker-views')!.getBoundingClientRect()
+		expect(covered.top).toBeGreaterThanOrEqual(header.bottom + 5)
+	})
+
+	test('the panel keeps its height through every view, so nothing jumps', async () => {
+		setup()
+		await openCalendar()
+		const days = height()
+		const months = () => page.getByRole('button', { name: /^Select month/ }).click()
+		const years = () => page.getByRole('button', { name: /^Select year/ }).click()
+
+		expect(await heightsWhile(months)).toEqual([days, days])
+		expect(await heightsWhile(months)).toEqual([days, days])
+		expect(await heightsWhile(years)).toEqual([days, days])
+		expect(await heightsWhile(years)).toEqual([days, days])
 	})
 })
 
@@ -285,6 +351,23 @@ describe('keyboard and pointer', () => {
 		await action('Cancel').click()
 		await expectClosed()
 		await expect.element(page.getByTestId('bound-month')).toHaveTextContent('2025-12-01')
+	})
+})
+
+describe('placement', () => {
+	test('shows the whole calendar over a field in the middle of the window', async () => {
+		setup({ style: 'margin-top:400px' })
+		await openCalendar()
+
+		const menu = document.querySelector<HTMLElement>('.np-docked-date-picker-menu')!
+		const panel = menu.getBoundingClientRect()
+		const anchor = document
+			.querySelector<HTMLElement>('.np-docked-date-picker-anchor')!
+			.getBoundingClientRect()
+
+		expect(panel.top).toBeLessThan(anchor.top)
+		expect(panel.bottom).toBeGreaterThan(anchor.bottom)
+		expect(menu.scrollHeight).toBeLessThanOrEqual(menu.clientHeight)
 	})
 })
 

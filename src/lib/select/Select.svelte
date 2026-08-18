@@ -532,6 +532,7 @@
 	aria-multiselectable={multiple}
 	--np-menu-justify-self="none"
 	--np-menu-position-area="bottom span-right"
+	--np-menu-over-anchor-position-area="span-all span-right"
 	--np-menu-margin="2px 0"
 	--np-menu-container-shape={variant === 'outlined'
 		? 'var(--np-outlined-select-text-field-container-shape)'

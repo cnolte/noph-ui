@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		DETERMINATE_SHAPES,
-		INDETERMINATE_SHAPES,
-		outlinePath,
-		VIEWBOX,
-	} from '#lib/loading-indicator/shapes.js'
+	import { CIRCLE, SHAPES, outlinePath, VIEWBOX } from '#lib/loading-indicator/shapes.js'
 	import type { SVGAttributes } from 'svelte/elements'
 
 	interface MorphShapeProps extends SVGAttributes<SVGSVGElement> {
@@ -15,7 +10,7 @@
 
 	let { duration = 28, offset = 0, scale = 0.96, ...attributes }: MorphShapeProps = $props()
 
-	const shapes = [DETERMINATE_SHAPES[0], ...INDETERMINATE_SHAPES]
+	const shapes = [CIRCLE, ...SHAPES]
 	const order = shapes.map((_, index) => shapes[(index + offset) % shapes.length])
 	const frames = [...order, order[0]].map((shape) => outlinePath(shape, shape, 0, scale))
 	const steps = frames.length - 1

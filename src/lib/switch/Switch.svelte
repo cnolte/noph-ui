@@ -13,32 +13,28 @@
 	}: SwitchProps = $props()
 </script>
 
-<div
-	bind:this={element}
-	class={['np-switch', selected && 'np-selected', disabled && 'np-disabled', attributes.class]}
->
+<div bind:this={element} class={['np-switch', disabled && 'np-disabled', attributes.class]}>
 	<div class="np-track"></div>
 	<div class={['np-handle', icons === 'both' && 'both-icons']}>
 		{#if icons}
-			{#if selected}
-				<svg class="np-switch-icon" viewBox="0 0 24 24">
-					<path
-						d="M20 6L9 17l-5-5"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			{:else if icons === 'both'}
-				<svg class="np-switch-icon" viewBox="0 0 24 24">
-					<path
-						fill="currentColor"
-						d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-					/>
-				</svg>
-			{/if}
+			<svg class="np-switch-icon np-icon-selected" viewBox="0 0 24 24">
+				<path
+					d="M20 6L9 17l-5-5"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			</svg>
+		{/if}
+		{#if icons === 'both'}
+			<svg class="np-switch-icon np-icon-unselected" viewBox="0 0 24 24">
+				<path
+					fill="currentColor"
+					d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+				/>
+			</svg>
 		{/if}
 	</div>
 	{#if !disabled}
@@ -118,7 +114,7 @@
 		border-radius: var(--np-comp-switch-state-layer-shape, var(--np-shape-corner-full));
 	}
 
-	.np-selected .np-state-layer {
+	.np-switch:has(input:checked) .np-state-layer {
 		transform: translateX(1.25rem);
 	}
 
@@ -137,6 +133,11 @@
 		transform: scale(0.6666667);
 	}
 
+	.np-switch:not(:has(input:checked)) .np-icon-selected,
+	.np-switch:has(input:checked) .np-icon-unselected {
+		display: none;
+	}
+
 	.np-switch:not(.np-disabled):has(input:not(:checked):active) .np-handle {
 		transform: scale(1.75);
 	}
@@ -145,7 +146,7 @@
 		transform: translateX(1.25rem) scale(1.75);
 	}
 
-	.np-selected .np-handle {
+	.np-switch:has(input:checked) .np-handle {
 		transform: translateX(1.25rem) scale(1.5);
 		color: var(--np-comp-switch-selected-icon-color, var(--np-color-primary));
 		background-color: var(--np-comp-switch-selected-handle-color, var(--np-color-on-primary));
@@ -155,12 +156,12 @@
 		opacity: var(--np-comp-switch-disabled-unselected-handle-opacity, 0.38);
 	}
 
-	.np-selected.np-disabled .np-handle {
+	.np-switch.np-disabled:has(input:checked) .np-handle {
 		opacity: var(--np-comp-switch-disabled-selected-handle-opacity, 1);
 		background-color: var(--np-comp-switch-selected-handle-color, var(--np-color-surface));
 	}
 
-	.np-selected .np-track {
+	.np-switch:has(input:checked) .np-track {
 		background-color: var(--np-comp-switch-selected-track-color, var(--np-color-primary));
 		outline-color: transparent;
 	}
@@ -173,7 +174,7 @@
 		);
 	}
 
-	.np-selected.np-disabled .np-track {
+	.np-switch.np-disabled:has(input:checked) .np-track {
 		background-color: var(
 			--np-comp-switch-disabled-selected-track-color,
 			var(--np-color-on-surface)

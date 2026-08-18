@@ -211,3 +211,195 @@ export const getCalendarDays = (
 		return { date, inMonth: date.getMonth() === first.getMonth() }
 	})
 }
+
+export const MINUTES_IN_HOUR = 60
+
+export const HOURS_IN_DAY = 24
+
+export const MINUTES_IN_DAY = HOURS_IN_DAY * MINUTES_IN_HOUR
+
+const DATE_TIME_PROBE = new Date(2024, 0, 2, 13, 45)
+
+export const minutesOfDay = (date: Date): number =>
+	date.getHours() * MINUTES_IN_HOUR + date.getMinutes()
+
+export const withMinutes = (date: Date, minutes: number): Date => {
+	const copy = new Date(date)
+	copy.setHours(Math.floor(minutes / MINUTES_IN_HOUR), minutes % MINUTES_IN_HOUR, 0, 0)
+	return copy
+}
+
+export const toISOTime = (minutes: number): string =>
+	`${pad(Math.floor(minutes / MINUTES_IN_HOUR))}:${pad(minutes % MINUTES_IN_HOUR)}`
+
+export const toISODateTime = (date: Date): string =>
+	`${toISODate(date)}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+
+export const createDateTime = (
+	year: number,
+	month: number,
+	day: number,
+	hours: number,
+	minutes: number,
+): Date | undefined => {
+	if (hours < 0 || hours >= HOURS_IN_DAY || minutes < 0 || minutes >= MINUTES_IN_HOUR) {
+		return undefined
+	}
+	const date = createDate(year, month, day)
+	if (!date) return undefined
+	date.setHours(hours, minutes, 0, 0)
+	return date
+}
+
+export const parseISODateTime = (
+	value: string | null | undefined,
+	dateOnlyMinutes = 0,
+): Date | undefined => {
+	if (!value) return undefined
+	const match = /^(\d{4,})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::\d{2}(?:\.\d+)?)?)?$/.exec(
+		value.trim(),
+	)
+	if (!match) return undefined
+	const [, year, month, day, hours, minutes] = match
+	if (hours === undefined) {
+		const date = createDate(Number(year), Number(month) - 1, Number(day))
+		return date && withMinutes(date, dateOnlyMinutes)
+	}
+	return createDateTime(
+		Number(year),
+		Number(month) - 1,
+		Number(day),
+		Number(hours),
+		Number(minutes),
+	)
+}
+
+const minuteStamp = (date: Date): number => {
+	const copy = new Date(date)
+	copy.setSeconds(0, 0)
+	return copy.getTime()
+}
+
+export const compareTimes = (a: Date, b: Date): number => minuteStamp(a) - minuteStamp(b)
+
+export const isTimeWithin = (date: Date, min?: Date, max?: Date): boolean =>
+	(!min || compareTimes(date, min) >= 0) && (!max || compareTimes(date, max) <= 0)
+
+const hourOptions = (hour12: boolean): Intl.DateTimeFormatOptions => ({
+	hour: '2-digit',
+	hour12,
+})
+
+const timeOptions = (hour12: boolean): Intl.DateTimeFormatOptions => ({
+	...hourOptions(hour12),
+	minute: '2-digit',
+})
+
+const dateTimeOptions = (hour12: boolean): Intl.DateTimeFormatOptions => ({
+	...numericOptions,
+	...timeOptions(hour12),
+})
+
+export const uses12HourClock = (locale?: string): boolean =>
+	getFormatter(locale, { hour: 'numeric' }).resolvedOptions().hour12 ?? false
+
+export const getDayPeriodLabels = (locale?: string): [string, string] => {
+	const formatter = getFormatter(locale, { hour: 'numeric', hour12: true })
+	const label = (hour: number, fallback: string) =>
+		formatter.formatToParts(new Date(2024, 0, 2, hour)).find((part) => part.type === 'dayPeriod')
+			?.value ?? fallback
+	return [label(9, 'AM'), label(21, 'PM')]
+}
+
+export const getHourLabels = (locale: string | undefined, hour12: boolean): string[] => {
+	const formatter = getFormatter(locale, hourOptions(hour12))
+	return Array.from({ length: hour12 ? 12 : HOURS_IN_DAY }, (_, hour) => {
+		const parts = formatter.formatToParts(new Date(2024, 0, 2, hour))
+		return parts.find((part) => part.type === 'hour')?.value ?? `${hour}`
+	})
+}
+
+const numberFormatterCache = new Map<string, Intl.NumberFormat>()
+
+export const formatTwoDigits = (value: number, locale?: string): string => {
+	const key = locale ?? ''
+	let formatter = numberFormatterCache.get(key)
+	if (!formatter) {
+		formatter = new Intl.NumberFormat(locale, { minimumIntegerDigits: 2, useGrouping: false })
+		numberFormatterCache.set(key, formatter)
+	}
+	return formatter.format(value)
+}
+
+export const formatTime = (date: Date, locale?: string, hour12 = uses12HourClock(locale)): string =>
+	getFormatter(locale, timeOptions(hour12)).format(date)
+
+export const formatDateTime = (
+	date: Date,
+	locale?: string,
+	hour12 = uses12HourClock(locale),
+): string => getFormatter(locale, dateTimeOptions(hour12)).format(date)
+
+export const getDateTimePattern = (locale?: string, hour12 = uses12HourClock(locale)): string => {
+	const [am, pm] = getDayPeriodLabels(locale)
+	return getFormatter(locale, dateTimeOptions(hour12))
+		.formatToParts(DATE_TIME_PROBE)
+		.map((part) => {
+			if (part.type === 'year') return 'YYYY'
+			if (part.type === 'month') return 'MM'
+			if (part.type === 'day') return 'DD'
+			if (part.type === 'hour') return hour12 ? 'hh' : 'HH'
+			if (part.type === 'minute') return 'mm'
+			if (part.type === 'dayPeriod') return `${am}/${pm}`
+			return part.value
+		})
+		.join('')
+}
+
+type DateTimeField = 'year' | 'month' | 'day' | 'hour' | 'minute'
+
+const getDateTimeFieldOrder = (locale: string | undefined, hour12: boolean): DateTimeField[] =>
+	getFormatter(locale, dateTimeOptions(hour12))
+		.formatToParts(DATE_TIME_PROBE)
+		.filter(
+			(part) =>
+				part.type === 'year' ||
+				part.type === 'month' ||
+				part.type === 'day' ||
+				part.type === 'hour' ||
+				part.type === 'minute',
+		)
+		.map((part) => part.type as DateTimeField)
+
+export const parseDateTimeInput = (
+	value: string,
+	locale?: string,
+	hour12 = uses12HourClock(locale),
+): Date | undefined => {
+	const groups = value.match(/\d+/g)
+	if (!groups || groups.length !== 5) return undefined
+	const order = getDateTimeFieldOrder(locale, hour12)
+	if (order.length !== 5) return undefined
+	const at = (field: DateTimeField) => {
+		const index = order.indexOf(field)
+		return index < 0 ? undefined : groups[index]
+	}
+	const year = at('year')
+	const month = at('month')
+	const day = at('day')
+	const minute = at('minute')
+	const hour = at('hour')
+	if (!year || !month || !day || !hour || !minute) return undefined
+	if (year.length !== 4) return undefined
+	let hours = Number(hour)
+	if (hour12) {
+		const [am, pm] = getDayPeriodLabels(locale)
+		const text = value.toLocaleLowerCase(locale)
+		const isPm = text.includes(pm.toLocaleLowerCase(locale)) || /\bpm\b/.test(text)
+		const isAm = text.includes(am.toLocaleLowerCase(locale)) || /\bam\b/.test(text)
+		if (isPm === isAm) return undefined
+		if (hours > 12) return undefined
+		hours = (hours % 12) + (isPm ? 12 : 0)
+	}
+	return createDateTime(Number(year), Number(month) - 1, Number(day), hours, Number(minute))
+}

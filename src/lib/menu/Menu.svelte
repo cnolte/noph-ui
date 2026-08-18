@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import type { MenuProps } from './types.ts'
-	import { on } from 'svelte/events'
 
 	const MENU_ITEM_SELECTOR = '[role="menuitem"]'
 	const attach = rovingTabindex(MENU_ITEM_SELECTOR)
@@ -14,12 +13,12 @@
 		style,
 		popover = 'auto',
 		anchor,
+		coverAnchor = true,
 		ontoggle,
 		...attributes
 	}: MenuProps = $props()
 
-	let clientWidth = $state(0)
-	let clientHeight = $state(0)
+	let contentHeight = $state(0)
 	let innerHeight = $state(0)
 
 	export const showPopover = () => {
@@ -29,89 +28,42 @@
 	export const hidePopover = () => {
 		element?.hidePopover()
 	}
+
 	const refreshValues = () => {
 		if (element && anchor && open) {
 			const anchorRect = anchor.getBoundingClientRect()
-			let maxHeight: number
-			if (innerHeight - anchorRect.bottom > anchorRect.top) {
-				maxHeight = innerHeight - anchorRect.bottom
-			} else {
-				maxHeight = anchorRect.top
-			}
-			element.style.maxHeight =
-				maxHeight > innerHeight - anchorRect.height
-					? `${innerHeight - anchorRect.height - 4}px`
-					: `${maxHeight - 4}px`
-			if (!('positionArea' in document.documentElement.style)) {
-				const docClientWidth = document.documentElement.clientWidth
-				if (anchorRect.bottom + clientHeight > innerHeight && anchorRect.top - clientHeight > 0) {
-					element.style.top = `${anchorRect.top - clientHeight - 2}px`
-				} else {
-					element.style.top = `${anchorRect.bottom + 2}px`
-				}
-				const left = anchorRect.left + anchorRect.width / 2 - clientWidth / 2
-				if (left < 2) {
-					element.style.left = '2px'
-				} else if (left > docClientWidth - clientWidth) {
-					element.style.left = `${docClientWidth - clientWidth - 4}px`
-				} else {
-					element.style.left = `${anchorRect.left + anchorRect.width / 2 - clientWidth / 2}px`
-				}
-			}
+			const styles = getComputedStyle(element)
+			const margin = (parseFloat(styles.marginTop) || 0) + (parseFloat(styles.marginBottom) || 0)
+			const wanted = Math.max(contentHeight, element.scrollHeight)
+			const room = Math.max(innerHeight - margin, 0)
+			const below = Math.max(innerHeight - anchorRect.bottom - margin, 0)
+			const above = Math.max(anchorRect.top - margin, 0)
+			const overAnchor = coverAnchor && wanted > below && wanted > above && wanted <= room
+			element.style.maxHeight = `${Math.floor(overAnchor ? room : Math.max(below, above))}px`
 		}
 	}
 	$effect(refreshValues)
-
-	const getScrollableParent = (start: HTMLElement) => {
-		let el: HTMLElement | null = start
-		while (el) {
-			const style = getComputedStyle(el)
-			const overflowY = style.overflowY
-			const overflowX = style.overflowX
-			const isScrollableY =
-				(overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight
-			const isScrollableX =
-				(overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth
-
-			if (isScrollableY || isScrollableX) {
-				return el
-			}
-
-			el = el.parentElement
-		}
-		return window
-	}
-
-	const attachScrollableParent = (el: HTMLDivElement) => {
-		if (!('anchorName' in document.documentElement.style)) {
-			const parent = getScrollableParent(el)
-			return on(parent, 'scroll', refreshValues, { passive: true })
-		}
-	}
 </script>
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
 <div
 	role="menu"
 	{...attributes}
-	{@attach attachScrollableParent}
 	bind:this={element}
-	bind:clientWidth
-	bind:clientHeight
 	ontoggle={(event) => {
 		let { newState } = event
 		open = newState === 'open'
 		ontoggle?.(event)
 	}}
 	{popover}
-	class={['np-menu-container', attributes.class]}
+	class={['np-menu-container', !coverAnchor && 'np-menu-no-cover', attributes.class]}
 	{style}
 	onkeydown={(event) => {
 		attributes.onkeydown?.(event)
 		if (!event.defaultPrevented) arrowHandler(event)
 	}}
 >
-	<div {@attach attach} class="np-menu" role="none">
+	<div {@attach attach} bind:clientHeight={contentHeight} class="np-menu" role="none">
 		{@render children()}
 	</div>
 </div>
@@ -138,7 +90,24 @@
 		scrollbar-width: thin;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom);
-		position-try-fallbacks: flip-block;
+		position-try-fallbacks:
+			flip-block,
+			flip-inline,
+			flip-block flip-inline,
+			--np-menu-over-anchor,
+			--np-menu-over-anchor flip-inline;
+	}
+
+	.np-menu-container.np-menu-no-cover[popover] {
+		position-try-fallbacks:
+			flip-block,
+			flip-inline,
+			flip-block flip-inline;
+	}
+
+	@position-try --np-menu-over-anchor {
+		position-area: var(--np-menu-over-anchor-position-area, span-all);
+		align-self: center;
 	}
 
 	.np-menu-container:popover-open {
