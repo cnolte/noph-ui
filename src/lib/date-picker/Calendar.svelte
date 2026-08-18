@@ -475,13 +475,9 @@
 
 	.np-calendar-cell.range-start::before {
 		inset-inline-start: 50%;
-		border-start-start-radius: var(--np-shape-corner-full);
-		border-end-start-radius: var(--np-shape-corner-full);
 	}
 
 	.np-calendar-cell.range-end::before {
 		inset-inline-end: 50%;
-		border-start-end-radius: var(--np-shape-corner-full);
-		border-end-end-radius: var(--np-shape-corner-full);
 	}
 </style>

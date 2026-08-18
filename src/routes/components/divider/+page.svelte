@@ -9,11 +9,11 @@
 </svelte:head>
 
 <h1>Divider</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <DemoContainer><Divider style="width:200px" /></DemoContainer>
 <Code value="<Divider style=&quot;width:200px&quot; />" />
 
-<h2>Theming</h2>
+<h2 id="theming">Theming</h2>
 <table>
 	<thead>
 		<tr>
@@ -28,7 +28,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Example</h3>
+<h3 id="example">Example</h3>
 <DemoContainer>
 	<Divider --np-divider-color="var(--np-color-tertiary)" style="width:200px" />
 </DemoContainer>
@@ -36,8 +36,8 @@
 	value="--np-divider-color=&quot;var(--np-color-tertiary)&quot; style=&quot;width:200px&quot;"
 />
 
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>

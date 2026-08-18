@@ -13,7 +13,7 @@
 
 <h1>Text fields</h1>
 
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <p>
 	Text fields function similarly to <code>&lt;input&gt;</code> elements, serving as containers with labels
 	to facilitate user input.
@@ -26,7 +26,7 @@
 	value={`<TextField label="Label" value="Value" />
 <TextField label="Label" value="Value" variant="filled" />`}
 />
-<h3>Input type</h3>
+<h3 id="input-type">Input type</h3>
 <p>
 	The <code>type</code> attribute of a text field changes how the text field works, such as displaying
 	a different keyboard or providing default validation.
@@ -53,7 +53,7 @@
 	value={`<TextField label="Email" type="email" />
 <TextField label="Password" type="password" />`}
 />
-<h3>Disabled</h3>
+<h3 id="disabled">Disabled</h3>
 <DemoContainer>
 	<TextField label="Label" disabled value="Value" />
 	<TextField label="Label" disabled value="Value" variant="filled" />
@@ -63,7 +63,7 @@
 <TextField label="Label" disabled value="Value" variant="filled" />`}
 />
 
-<h3>Labels</h3>
+<h3 id="labels">Labels</h3>
 <DemoContainer>
 	<TextField label="Country" />
 	<TextField placeholder="email@domain.com" />
@@ -84,7 +84,7 @@
 	<Icon>bookmark</Icon> Nesting text fields in labels without aria-labelledby is not currently supported.
 	If you want to avoid using an id, you can use aria-label instead.
 </blockquote>
-<h3>Textarea</h3>
+<h3 id="textarea">Textarea</h3>
 <DemoContainer>
 	<TextField label="Resize" type="textarea" />
 	<TextField label="Resize" type="textarea" variant="filled" />
@@ -94,7 +94,7 @@
 <TextField label="Resize" type="textarea" variant="filled" />`}
 />
 
-<h3>Icons</h3>
+<h3 id="icons">Icons</h3>
 <DemoContainer style="align-items:baseline">
 	<TextField placeholder="Search" type="search" inputmode="search">
 		{#snippet start()}<Icon>search</Icon>{/snippet}
@@ -136,7 +136,7 @@
 </TextField>`}
 />
 
-<h3>Prefix and suffix</h3>
+<h3 id="prefix-and-suffix">Prefix and suffix</h3>
 <DemoContainer>
 	<TextField
 		label="Amount"
@@ -157,7 +157,7 @@
 	type="number"
 />`}
 />
-<h3>Supporting text</h3>
+<h3 id="supporting-text">Supporting text</h3>
 <DemoContainer>
 	<TextField label="Username" supportingText="Your username is your unique identifier." />
 	<TextField
@@ -180,15 +180,15 @@
 />`}
 />
 
-<h3>Character counter</h3>
+<h3 id="character-counter">Character counter</h3>
 
 <DemoContainer>
 	<TextField label="Name" maxlength={10} />
 </DemoContainer>
 <Code value={`<TextField label="Name" maxlength={10} />`} />
 
-<h3>Validation</h3>
-<h4>Constraint validation</h4>
+<h3 id="validation">Validation</h3>
+<h4 id="constraint-validation">Constraint validation</h4>
 
 <DemoContainer>
 	<form>
@@ -215,7 +215,7 @@
 </form>`}
 />
 
-<h4>Manual validation</h4>
+<h4 id="manual-validation">Manual validation</h4>
 
 <DemoContainer>
 	<TextField
@@ -234,8 +234,8 @@
 />`}
 />
 
-<h2>Theming</h2>
-<h3>Filled text field tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="filled-text-field-tokens">Filled text field tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -262,7 +262,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Filled text field example</h3>
+<h3 id="filled-text-field-example">Filled text field example</h3>
 <DemoContainer>
 	<TextField
 		variant="filled"
@@ -284,7 +284,7 @@
 />`}
 />
 
-<h3>Outlined text field tokens</h3>
+<h3 id="outlined-text-field-tokens">Outlined text field tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -307,7 +307,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Shared tokens</h3>
+<h3 id="shared-tokens">Shared tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -327,7 +327,7 @@
 	own picker button, since it clashes with the field's own trailing content. Set
 	<code>--np-picker-indicator-display</code> to <code>block</code> to bring it back.
 </p>
-<h3>Outlined text field example</h3>
+<h3 id="outlined-text-field-example">Outlined text field example</h3>
 <DemoContainer>
 	<TextField
 		label="Outlined"
@@ -345,8 +345,8 @@
 />`}
 />
 
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>
@@ -449,7 +449,7 @@
 	</tbody>
 </table>
 
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

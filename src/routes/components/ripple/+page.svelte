@@ -9,7 +9,7 @@
 </svelte:head>
 
 <h1>Ripple</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <DemoContainer>
 	Click inside the container to see the ripple effect:
 	<div class="ripple-container">
@@ -33,8 +33,8 @@
 </div>`}
 />
 
-<h2>Theming</h2>
-<h3>Tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="tokens">Tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -65,7 +65,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Example</h3>
+<h3 id="example">Example</h3>
 <DemoContainer>
 	<div class="ripple-container theming-example">
 		<Ripple />
@@ -92,8 +92,8 @@
 	<Ripple />
 </div>`}
 />
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>
@@ -125,7 +125,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

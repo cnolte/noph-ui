@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Segmented buttons</h1>
-<h2>Single choice</h2>
+<h2 id="single-choice">Single choice</h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo"
@@ -45,7 +45,7 @@
 	]}
 />`}
 />
-<h2>Multiple choice</h2>
+<h2 id="multiple-choice">Multiple choice</h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo2"
@@ -93,7 +93,7 @@
 />`}
 />
 
-<h2>Icons</h2>
+<h2 id="icons">Icons</h2>
 
 {#snippet darkIcon()}
 	<Icon>dark_mode</Icon>
@@ -187,7 +187,7 @@
 	]}
 />`}
 />
-<h2>Disabled</h2>
+<h2 id="disabled">Disabled</h2>
 <DemoContainer>
 	<SegmentedButton
 		name="demo5"
@@ -225,8 +225,8 @@
 />`}
 />
 
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>
@@ -262,7 +262,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

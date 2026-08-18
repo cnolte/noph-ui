@@ -20,8 +20,8 @@
 		target="_blank">Popover API</a
 	> internally.
 </p>
-<h2>Usage</h2>
-<h3>Single-line snackbar</h3>
+<h2 id="usage">Usage</h2>
+<h3 id="single-line-snackbar-2">Single-line snackbar</h3>
 <DemoContainer>
 	<Button popovertarget="single-line-snackbar">Show Snackbar</Button>
 	<Snackbar
@@ -40,7 +40,7 @@
 	actionLabel="Action"
 />`}
 />
-<h3>Two-line snackbar</h3>
+<h3 id="two-line-snackbar">Two-line snackbar</h3>
 <DemoContainer>
 	<Button popovertarget="two-single-line-snackbar">Show Snackbar</Button>
 	<Snackbar
@@ -61,7 +61,7 @@
 	actionLabel="Action"
 />`}
 />
-<h2>Manual control</h2>
+<h2 id="manual-control">Manual control</h2>
 <DemoContainer>
 	<Button popovertarget="manual-snackbar" popovertargetaction="show">Show Snackbar</Button>
 	<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide Snackbar</Button>
@@ -73,8 +73,8 @@
 <Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />`}
 />
 
-<h2>Theming</h2>
-<h3>Tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="tokens">Tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -101,7 +101,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Example</h3>
+<h3 id="example">Example</h3>
 <DemoContainer>
 	<Button popovertarget="themed-snackbar">Show Snackbar</Button>
 	<Snackbar
@@ -128,8 +128,8 @@
 	label="Themed snackbar"
 />`}
 />
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>
@@ -206,7 +206,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>
@@ -236,7 +236,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Methods</h3>
+<h3 id="methods">Methods</h3>
 <p>
 	Access these by binding a reference to the component with <code>bind:this</code>, e.g.
 	<code>&lt;Snackbar bind:this={`{snackbar}`} /&gt;</code> then <code>snackbar.showPopover()</code>.

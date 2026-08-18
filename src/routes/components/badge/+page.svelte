@@ -10,14 +10,14 @@
 </svelte:head>
 
 <h1>Badges</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <p>
 	Badges show notifications, counts, or status information on navigation items and icons. A badge is
 	positioned relative to its anchor, so place it inside an element with
 	<code>position: relative</code>.
 </p>
 
-<h3>Small badge</h3>
+<h3 id="small-badge">Small badge</h3>
 <p>Without a label a badge renders as a small dot, indicating new content.</p>
 <DemoContainer>
 	<span style="position:relative;display:inline-flex">
@@ -32,7 +32,7 @@
 </span>`}
 />
 
-<h3>Large badge</h3>
+<h3 id="large-badge">Large badge</h3>
 <p>Set a <code>label</code> to display a number or short text.</p>
 <DemoContainer>
 	<span style="position:relative;display:inline-flex">
@@ -51,7 +51,7 @@
 </span>`}
 />
 
-<h2>Positioning</h2>
+<h2 id="positioning">Positioning</h2>
 <p>
 	By default a badge is positioned absolutely at the top of its anchor. Use the following custom
 	properties to adjust its placement. They accept any valid CSS length or keyword.
@@ -87,7 +87,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Example</h3>
+<h3 id="example">Example</h3>
 <DemoContainer>
 	<span style="position:relative;display:inline-flex">
 		<Icon>favorite</Icon>
@@ -101,8 +101,8 @@
 </span>`}
 />
 
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>

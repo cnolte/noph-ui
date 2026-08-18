@@ -16,6 +16,37 @@ h4 {
 	font-weight: 500;
 }
 
+h2,
+h3,
+h4 {
+	scroll-margin-top: 5.5rem;
+}
+
+.toc ul {
+	scroll-target-group: auto;
+}
+
+.heading-anchor {
+	color: var(--np-color-on-surface-variant);
+	opacity: 0;
+	padding-inline: 0.5rem;
+	font-weight: 400;
+}
+
+.heading-anchor::before {
+	content: '#';
+}
+
+:is(h2, h3, h4):hover > .heading-anchor {
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
 .primary {
 	color: var(--np-color-primary);
 }

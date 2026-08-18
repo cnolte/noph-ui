@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
+	import { page } from '$app/state'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import NavigationDrawer from '#lib/navigation-drawer/NavigationDrawer.svelte'
@@ -8,10 +9,15 @@
 	import GitHubMark from './GitHubMark.svelte'
 	import Logo from './Logo.svelte'
 	import MainNavigation from './MainNavigation.svelte'
+	import TableOfContents from './TableOfContents.svelte'
 	import ThemeButton from './ThemeButton.svelte'
+	import { tocSections } from './tocSections.ts'
 
 	let { children } = $props()
 	let popover: HTMLElement | undefined = $state()
+
+	let sections = $derived(tocSections[page.route.id ?? ''] ?? [])
+	let hasToc = $derived(sections.length > 0)
 </script>
 
 <svelte:head>
@@ -74,12 +80,15 @@
 		}}
 	/>
 </NavigationDrawer>
-<div class="paper"></div>
-<main class="main">
+<div class={['paper', hasToc && 'with-toc']}></div>
+<main class={['main', hasToc && 'with-toc']}>
 	<div class="main-content">
 		{@render children()}
 	</div>
 </main>
+{#if hasToc}
+	<TableOfContents {sections} />
+{/if}
 <div class="bottom-bar"></div>
 
 <style>
@@ -127,7 +136,7 @@
 	.main {
 		margin-top: 4.5rem;
 		padding: 0 1rem 2rem 1rem;
-		overflow: auto;
+		display: flow-root;
 	}
 	.layout-btn {
 		--np-text-button-label-text-color: var(--np-color-on-surface);
@@ -157,6 +166,9 @@
 	}
 	:global(.main-nav) {
 		position: fixed;
+		display: none;
+	}
+	:global(.toc) {
 		display: none;
 	}
 	header {
@@ -198,6 +210,26 @@
 		}
 		:global(.menu-btn) {
 			display: none !important;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		:global(.toc) {
+			display: block;
+			position: fixed;
+			top: 4.5rem;
+			inset-inline-end: 0;
+			width: 14rem;
+			height: calc(100dvh - 5.5rem);
+			overflow-y: auto;
+			box-sizing: border-box;
+			padding: 1.5rem 0.5rem 1.5rem 0;
+		}
+		.main.with-toc {
+			margin-inline-end: 14rem;
+		}
+		.paper.with-toc {
+			width: calc(100% - 32rem);
 		}
 	}
 </style>

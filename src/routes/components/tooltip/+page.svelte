@@ -23,7 +23,7 @@
 	the connection readable for assistive technology, so the <code>id</code> is not optional.
 </p>
 
-<h2>Basic tooltip</h2>
+<h2 id="basic-tooltip">Basic tooltip</h2>
 <DemoContainer>
 	<div aria-describedby="example-tooltip-1">Hover over this text</div>
 	<Tooltip id="example-tooltip-1">This is a basic tooltip</Tooltip>
@@ -37,7 +37,7 @@
 </Tooltip>`}
 />
 
-<h2>Button with tooltip</h2>
+<h2 id="button-with-tooltip">Button with tooltip</h2>
 <p>
 	<code>Button</code> and <code>IconButton</code> have built-in support, so a <code>title</code> is
 	enough. They render the tooltip for you, wire up <code>aria-describedby</code> and use the same
@@ -57,7 +57,7 @@
 </IconButton>`}
 />
 
-<h2>Positioning</h2>
+<h2 id="positioning">Positioning</h2>
 <p>
 	A tooltip sits above its anchor and centers on it. Both sides are custom properties, so you can
 	move it without touching the component. It is rendered in the top layer as a
@@ -80,14 +80,14 @@
 </Button>`}
 />
 
-<h2>Touch devices</h2>
+<h2 id="touch-devices">Touch devices</h2>
 <p>
 	There is no hover on a touch screen and no reliable way to reveal a tooltip there, so on devices
 	that report <code>(hover: none) and (pointer: coarse)</code> the tooltip is not rendered at all. Never
 	put information in a tooltip that is not available anywhere else.
 </p>
 
-<h2>Accessibility</h2>
+<h2 id="accessibility">Accessibility</h2>
 <p>
 	The tooltip renders <code>role="tooltip"</code> and is tied to its anchor through
 	<code>aria-describedby</code>, so a screen reader reads it as a description of the control rather
@@ -106,7 +106,7 @@
 <Tooltip id="delete-tip">Delete message</Tooltip>`}
 />
 
-<h2>Theming</h2>
+<h2 id="theming">Theming</h2>
 <table>
 	<thead>
 		<tr>
@@ -133,8 +133,8 @@
 	<code>inverse-surface</code> and <code>inverse-on-surface</code> roles of the theme.
 </p>
 
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <p>
 	Everything else you pass is forwarded to the tooltip element, so <code>class</code>,
 	<code>style</code> and the usual event handlers work as expected. <code>role</code> is set by the component.

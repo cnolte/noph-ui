@@ -12,7 +12,7 @@
 </svelte:head>
 
 <h1>Lists</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <DemoContainer>
 	<List style="max-width:300px">
 		<ListItem>Browsers</ListItem>
@@ -57,7 +57,7 @@
 	</ListItem>
 </List>`}
 />
-<h2>Icon Item</h2>
+<h2 id="icon-item">Icon Item</h2>
 <DemoContainer>
 	<List style="max-width:300px">
 		<ListItem>
@@ -108,8 +108,8 @@
 </List>`}
 />
 
-<h2>Theming</h2>
-<h3>Tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="tokens">Tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -144,7 +144,7 @@
 	<code>--np-item-container-height</code> sets the minimum height of an item, so an item whose content
 	is taller grows past it.
 </p>
-<h3>Example</h3>
+<h3 id="example">Example</h3>
 <DemoContainer>
 	<List style="max-width:300px">
 		<ListItem
@@ -172,7 +172,7 @@
 </ListItem>`}
 />
 
-<h2>Accessibility</h2>
+<h2 id="accessibility">Accessibility</h2>
 <p>
 	<code>List</code> renders a plain <code>&lt;ul&gt;</code>, so anything you put inside becomes a
 	list item for assistive technology. Pick the <code>variant</code> that matches what the item does:
@@ -185,8 +185,8 @@
 	control, which keeps it readable but takes it out of the tab order.
 </p>
 
-<h2>API</h2>
-<h3>List attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="list-attributes">List attributes</h3>
 <p>
 	Everything else you pass is forwarded to the <code>&lt;ul&gt;</code> element, so
 	<code>class</code>, <code>style</code> and the usual event handlers work as expected.
@@ -209,7 +209,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>ListItem attributes</h3>
+<h3 id="listitem-attributes">ListItem attributes</h3>
 <table>
 	<thead>
 		<tr>

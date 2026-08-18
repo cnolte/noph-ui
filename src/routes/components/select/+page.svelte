@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Select</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 
 <!-- <form {...demo} oninput={() => demo.validate()} novalidate>
 	<NativeSelect
@@ -126,7 +126,7 @@
 />`}
 />
 
-<h3>Disabled</h3>
+<h3 id="disabled">Disabled</h3>
 <DemoContainer>
 	<Select label="Fruit" name="fruit" disabled options={[{ value: '', label: '' }]} />
 	<Select
@@ -153,7 +153,7 @@
 />`}
 />
 
-<h3>Validation</h3>
+<h3 id="validation">Validation</h3>
 <DemoContainer>
 	<form>
 		<Select
@@ -192,7 +192,7 @@
 </form>`}
 />
 
-<h3>Multiple selection</h3>
+<h3 id="multiple-selection">Multiple selection</h3>
 <DemoContainer>
 	<Select
 		label="Favorite fruit"
@@ -226,7 +226,7 @@
 	/>`}
 />
 
-<h3>Virtual list</h3>
+<h3 id="virtual-list">Virtual list</h3>
 <p>
 	An <code>option</code> uses the Intersection Observer API to improve performance. This enables
 	lists of up to 300 options. Beyond that the <code>Select</code> component uses a virtual list to
@@ -260,7 +260,7 @@
 />`}
 />
 
-<h3>Icons</h3>
+<h3 id="icons">Icons</h3>
 <DemoContainer>
 	<Select
 		label="Favorite fruit"
@@ -324,8 +324,8 @@
 </Select>`}
 />
 
-<h2>Theming</h2>
-<h3>Filled select tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="filled-select-tokens">Filled select tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -344,7 +344,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Filled select example</h3>
+<h3 id="filled-select-example">Filled select example</h3>
 <DemoContainer>
 	<Select
 		variant="filled"
@@ -376,7 +376,7 @@
 />`}
 />
 
-<h3>Outlined select tokens</h3>
+<h3 id="outlined-select-tokens">Outlined select tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -391,7 +391,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Sizing tokens</h3>
+<h3 id="sizing-tokens">Sizing tokens</h3>
 <p>These apply to both variants and control how wide the select is allowed to get.</p>
 <table>
 	<thead>
@@ -411,7 +411,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Outlined select example</h3>
+<h3 id="outlined-select-example">Outlined select example</h3>
 <DemoContainer>
 	<Select
 		options={[
@@ -438,8 +438,8 @@
 	--np-color-primary="var(--np-color-tertiary)"
 />`}
 />
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>
@@ -538,7 +538,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>SelectOption</h3>
+<h3 id="selectoption">SelectOption</h3>
 <table>
 	<thead>
 		<tr>
@@ -570,7 +570,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Cards</h1>
-<h2>Types</h2>
+<h2 id="types">Types</h2>
 
 <DemoContainer style="width: calc(100% - 2rem)">
 	<div class="cards" style="width:100%;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));">
@@ -63,7 +63,7 @@
 {#snippet action()}
 	<Button variant="filled">Action</Button>
 {/snippet}
-<h2>Elevated card</h2>
+<h2 id="elevated-card">Elevated card</h2>
 <DemoContainer>
 	<div class="cards">
 		<Card
@@ -107,7 +107,7 @@
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2>Filled card</h2>
+<h2 id="filled-card">Filled card</h2>
 <DemoContainer>
 	<div class="cards">
 		<Card
@@ -151,7 +151,7 @@
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2>Outlined card</h2>
+<h2 id="outlined-card">Outlined card</h2>
 <DemoContainer>
 	<div class="cards">
 		<Card
@@ -195,8 +195,8 @@
   supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 ></Card>`}
 />
-<h2>Theming</h2>
-<h3>Elevated card tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="elevated-card-tokens">Elevated card tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -215,7 +215,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Filled card tokens</h3>
+<h3 id="filled-card-tokens">Filled card tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -234,7 +234,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Outlined card tokens</h3>
+<h3 id="outlined-card-tokens">Outlined card tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -254,7 +254,7 @@
 	</tbody>
 </table>
 
-<h2>API</h2>
+<h2 id="api">API</h2>
 <table>
 	<thead>
 		<tr>
@@ -332,7 +332,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

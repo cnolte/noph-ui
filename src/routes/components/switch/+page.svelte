@@ -9,21 +9,21 @@
 </svelte:head>
 
 <h1>Switch</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <DemoContainer>
 	<Switch />
 </DemoContainer>
 
 <Code value="<Switch />" />
 
-<h2>Disable</h2>
+<h2 id="disable">Disable</h2>
 <DemoContainer>
 	<Switch disabled />
 </DemoContainer>
 
 <Code value="<Switch disabled />" />
 
-<h2>Icons</h2>
+<h2 id="icons">Icons</h2>
 <DemoContainer>
 	<Switch icons="selected" />
 	<Switch icons="both" />
@@ -33,8 +33,8 @@
 	value={`<Switch icons="selected" />
 <Switch icons="both" />`}
 />
-<h2>Theming</h2>
-<h3>Tokens</h3>
+<h2 id="theming">Theming</h2>
+<h3 id="tokens">Tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -107,7 +107,7 @@
 	<code>disabled</code> tokens take a colour and an opacity separately, because the disabled switch is
 	drawn by fading the same colours rather than by swapping in pre-faded ones.
 </p>
-<h3>Example</h3>
+<h3 id="example">Example</h3>
 <DemoContainer>
 	<Switch
 		selected
@@ -126,10 +126,10 @@
 	--np-comp-switch-selected-icon-color="var(--np-color-tertiary)"
 />`}
 />
-<h2>API</h2>
-<h3>Switch</h3>
+<h2 id="api">API</h2>
+<h3 id="switch">Switch</h3>
 
-<h4>Attributes</h4>
+<h4 id="attributes">Attributes</h4>
 <table>
 	<thead>
 		<tr>
@@ -156,7 +156,7 @@
 	</tbody>
 </table>
 
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

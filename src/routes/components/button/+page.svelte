@@ -10,7 +10,7 @@
 </svelte:head>
 
 <h1>Buttons</h1>
-<h2>Types</h2>
+<h2 id="types">Types</h2>
 <DemoContainer>
 	<Button variant="elevated">{#snippet start()} <Icon>add</Icon>{/snippet}Elevated</Button>
 	<Button variant="filled">Filled</Button>
@@ -18,7 +18,7 @@
 	<Button variant="outlined">Outlined</Button>
 	<Button variant="text">Text</Button>
 </DemoContainer>
-<h2>Elevated button</h2>
+<h2 id="elevated-button">Elevated button</h2>
 <DemoContainer>
 	<Button variant="elevated">Elevated</Button>
 	<Button variant="elevated" disabled>Disabled</Button>
@@ -27,7 +27,7 @@
 	value={`<Button variant="elevated">Elevated</Button>
 <Button variant="elevated" disabled>Disabled</Button>`}
 />
-<h2>Filled button</h2>
+<h2 id="filled-button">Filled button</h2>
 <DemoContainer>
 	<Button variant="filled">Filled</Button>
 	<Button variant="filled" disabled>Disabled</Button>
@@ -36,7 +36,7 @@
 	value={`<Button variant="filled">Filled</Button>
 <Button variant="filled" disabled>Disabled</Button>`}
 />
-<h2>Tonal button</h2>
+<h2 id="tonal-button">Tonal button</h2>
 
 <DemoContainer>
 	<Button variant="tonal">Tonal</Button>
@@ -46,7 +46,7 @@
 	value={`<Button variant="tonal">Tonal</Button>
 <Button variant="tonal" disabled>Disabled</Button>`}
 />
-<h2>Outlined button</h2>
+<h2 id="outlined-button">Outlined button</h2>
 
 <DemoContainer>
 	<Button variant="outlined">Outlined</Button>
@@ -56,7 +56,7 @@
 	value={`<Button variant="outlined">Outlined</Button>
 <Button variant="outlined" disabled>Disabled</Button>`}
 />
-<h2>Text button</h2>
+<h2 id="text-button">Text button</h2>
 
 <DemoContainer>
 	<Button variant="text">Text</Button>
@@ -66,7 +66,7 @@
 	value={`<Button variant="text">Text</Button>
 <Button variant="text" disabled>Disabled</Button>`}
 />
-<h2>Icon</h2>
+<h2 id="icon">Icon</h2>
 <DemoContainer>
 	<Button variant="tonal">
 		{#snippet start()}
@@ -93,7 +93,7 @@
 	Open
 </Button>`}
 />
-<h2>Loading</h2>
+<h2 id="loading">Loading</h2>
 <DemoContainer>
 	<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
 	<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
@@ -108,7 +108,7 @@
 	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
 	when using the loading state.
 </blockquote>
-<h2>Size</h2>
+<h2 id="size">Size</h2>
 <DemoContainer>
 	<Button size="xs">{#snippet start()} <Icon>add</Icon>{/snippet}Extra small</Button>
 	<Button size="s">{#snippet start()} <Icon>add</Icon>{/snippet}Small</Button>
@@ -123,7 +123,7 @@
 <Button size="l">Large</Button>
 <Button size="xl">Extra large</Button>`}
 />
-<h2>Toggle</h2>
+<h2 id="toggle">Toggle</h2>
 <DemoContainer style="flex-direction: column">
 	<div class="button-list">
 		<Button toggle variant="elevated"
@@ -148,9 +148,9 @@
 <Button toggle selected variant="tonal">Tonal</Button>
 <Button toggle selected variant="outlined">Outlined</Button>`}
 />
-<h2>Theming</h2>
+<h2 id="theming">Theming</h2>
 
-<h3>Elevated button tokens</h3>
+<h3 id="elevated-button-tokens">Elevated button tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -169,7 +169,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Elevated button example</h3>
+<h3 id="elevated-button-example">Elevated button example</h3>
 <DemoContainer>
 	<Button variant="elevated" --np-elevated-button-label-text-color="var(--np-color-tertiary)">
 		Custom button
@@ -184,7 +184,7 @@
 </Button>`}
 />
 
-<h3>Filled button tokens</h3>
+<h3 id="filled-button-tokens">Filled button tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -203,7 +203,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Filled button example</h3>
+<h3 id="filled-button-example">Filled button example</h3>
 <DemoContainer>
 	<Button
 		variant="filled"
@@ -224,7 +224,7 @@
 	</Button>`}
 />
 
-<h3>Tonal button tokens</h3>
+<h3 id="tonal-button-tokens">Tonal button tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -243,7 +243,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Tonal button example</h3>
+<h3 id="tonal-button-example">Tonal button example</h3>
 <DemoContainer>
 	<Button
 		variant="tonal"
@@ -262,7 +262,7 @@
 		Custom button
 	</Button>`}
 />
-<h3>Outlined button tokens</h3>
+<h3 id="outlined-button-tokens">Outlined button tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -281,7 +281,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Outlined button example</h3>
+<h3 id="outlined-button-example">Outlined button example</h3>
 <DemoContainer>
 	<Button variant="outlined" --np-outlined-button-label-text-color="var(--np-color-tertiary)">
 		Custom button
@@ -295,7 +295,7 @@
 	Custom button
 </Button>`}
 />
-<h3>Text button tokens</h3>
+<h3 id="text-button-tokens">Text button tokens</h3>
 <table>
 	<thead>
 		<tr>
@@ -310,7 +310,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Shared tokens</h3>
+<h3 id="shared-tokens">Shared tokens</h3>
 <p>
 	These apply to every variant. Their defaults come from <code>size</code>, so setting one overrides
 	the sizing for whatever size the button is.
@@ -349,7 +349,7 @@
 		</tr>
 	</tbody>
 </table>
-<h3>Text button example</h3>
+<h3 id="text-button-example">Text button example</h3>
 <DemoContainer>
 	<Button variant="text" --np-text-button-label-text-color="var(--np-color-tertiary)">
 		Custom button
@@ -363,8 +363,8 @@
 	Custom button
 </Button>`}
 />
-<h2>API</h2>
-<h3>Attributes</h3>
+<h2 id="api">API</h2>
+<h3 id="attributes">Attributes</h3>
 <table>
 	<thead>
 		<tr>
@@ -458,7 +458,7 @@
 	</tbody>
 </table>
 
-<h3>Bindables</h3>
+<h3 id="bindables">Bindables</h3>
 <table>
 	<thead>
 		<tr>

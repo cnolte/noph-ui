@@ -13,7 +13,7 @@
 </svelte:head>
 
 <h1>Tabs</h1>
-<h2>Usage</h2>
+<h2 id="usage">Usage</h2>
 <p>
 	Tabs provide a user interface for navigating between distinct sections or pages within an
 	application. Each <code>&lt;Tabs&gt;</code> component contains multiple <code>&lt;Tab&gt;</code>
@@ -21,7 +21,7 @@
 	variants to suit different use cases.
 </p>
 
-<h3>Primary Tabs</h3>
+<h3 id="primary-tabs">Primary Tabs</h3>
 <DemoContainer>
 	<Tabs value="videos">
 		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
@@ -36,7 +36,7 @@
 	<Tab badge value="settings">Settings</Tab>
 </Tabs>`}
 />
-<h4>Icons</h4>
+<h4 id="icons">Icons</h4>
 <DemoContainer>
 	<Tabs value="videos">
 		<Tab badge badgeLabel="2" value="videos">
@@ -55,7 +55,7 @@
 	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 </Tabs>`}
 />
-<h3>Secondary Tabs</h3>
+<h3 id="secondary-tabs">Secondary Tabs</h3>
 <DemoContainer>
 	<Tabs variant="secondary" value="videos">
 		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
@@ -70,7 +70,7 @@
 	<Tab badge value="settings">Settings</Tab>
 </Tabs>`}
 />
-<h4>Icons</h4>
+<h4 id="icons-2">Icons</h4>
 <DemoContainer>
 	<Tabs variant="secondary" value="videos">
 		<Tab badge badgeLabel="2" value="videos">
@@ -89,7 +89,7 @@
 	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
 </Tabs>`}
 />
-<h3>Selection</h3>
+<h3 id="selection">Selection</h3>
 <p>
 	The <code>value</code> prop on <code>&lt;Tabs&gt;</code> determines which tab is currently
 	selected. Each <code>&lt;Tab&gt;</code> must have a unique <code>value</code> within the same
@@ -118,7 +118,7 @@
 <div>Selected Tab: {value}</div>`}
 />
 
-<h3>Links</h3>
+<h3 id="links">Links</h3>
 <p>
 	To enable navigation between pages or routes, use the <code>href</code> attribute on
 	<code>&lt;Tab&gt;</code>. This renders the tab as a link, allowing users to navigate to different
@@ -145,9 +145,9 @@
 </Tabs>`}
 />
 
-<h2>API</h2>
-<h3>Tabs</h3>
-<h4>Attributes</h4>
+<h2 id="api">API</h2>
+<h3 id="tabs">Tabs</h3>
+<h4 id="attributes">Attributes</h4>
 <table>
 	<thead>
 		<tr>
@@ -182,8 +182,8 @@
 	</tbody>
 </table>
 
-<h3>Tab</h3>
-<h4>Attributes</h4>
+<h3 id="tab">Tab</h3>
+<h4 id="attributes-2">Attributes</h4>
 <table>
 	<thead>
 		<tr>
