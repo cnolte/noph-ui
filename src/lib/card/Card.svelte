@@ -193,6 +193,7 @@
 		display: grid;
 		position: relative;
 		align-self: start;
+		flex: 1 0 auto;
 		min-width: calc(100% - 32px);
 		margin: 1rem;
 		grid-gap: 0.5rem;
@@ -215,7 +216,8 @@
 
 	.np-card-action {
 		display: flex;
-		margin-top: 1.5rem;
+		margin-top: auto;
+		padding-top: 1.5rem;
 		justify-content: flex-end;
 	}
 

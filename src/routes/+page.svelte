@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
 	import Button from '#lib/button/Button.svelte'
+	import Card from '#lib/card/Card.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import Code from './Code.svelte'
 	import LandingShowcase from './LandingShowcase.svelte'
@@ -107,63 +108,80 @@
 
 <h2>Why Noph UI</h2>
 <div class="features">
-	<article class="feature">
+	<Card
+		type="text"
+		variant="elevated"
+		class="feature"
+		headline="Server side rendering"
+		supportingText="Components render to HTML on the server, so the first paint does not wait for JavaScript. Good for load times, good for search engines."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="feature-icon"><Icon>language</Icon></div>
-		<h3>Server side rendering</h3>
-		<p>
-			Components render to HTML on the server, so the first paint does not wait for JavaScript. Good
-			for load times, good for search engines.
-		</p>
-	</article>
-	<article class="feature">
-		<div class="feature-icon"><Icon>fact_check</Icon></div>
-		<h3>Remote functions ready</h3>
-		<p>
-			Text fields, selects, checkboxes, autocompletes and date pickers take an <code>issues</code> prop
-			shaped exactly like a SvelteKit remote form's validation errors, so they wire straight in without
-			an adapter.
-		</p>
-	</article>
-	<article class="feature">
+	</Card>
+	<Card
+		type="link"
+		href="/about/remote-functions"
+		variant="elevated"
+		class="feature"
+		headline="Remote functions ready"
+		supportingText="Text fields, selects, checkboxes, autocompletes and date pickers take an issues prop shaped exactly like a SvelteKit remote form's validation errors, so they wire straight in without an adapter."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+		--np-outlined-card-container-color="var(--np-color-surface-container-low)"
+	>
+		<div class="feature-icon"><Icon>webhook</Icon></div>
+	</Card>
+	<Card
+		type="link"
+		href="/about/theming#generate-your-own-theme"
+		variant="elevated"
+		class="feature"
+		headline="Dynamic theming"
+		supportingText="Material 3 color roles are plain CSS variables. Pick a source color and every component follows, at runtime if you want."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="feature-icon"><Icon>palette</Icon></div>
-		<h3>Dynamic theming</h3>
-		<p>
-			Material 3 color roles are plain CSS variables. Pick a source color and every component
-			follows, at runtime if you want.
-		</p>
-	</article>
-	<article class="feature">
+	</Card>
+	<Card
+		type="text"
+		variant="elevated"
+		class="feature"
+		headline="Zero dependencies"
+		supportingText="One package, nothing else pulled in behind your back. Your users download components, not a framework on top of a framework."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="feature-icon"><Icon>download</Icon></div>
-		<h3>Zero dependencies</h3>
-		<p>
-			One package, nothing else pulled in behind your back. Your users download components, not a
-			framework on top of a framework.
-		</p>
-	</article>
-	<article class="feature">
-		<div class="feature-icon"><Icon>sports_gymnastics</Icon></div>
-		<h3>Expressive motion</h3>
-		<p>
-			Springy shape morphs, ripples and wavy progress from the Material 3 Expressive spec. All of it
-			steps aside when a visitor prefers reduced motion.
-		</p>
-	</article>
-	<article class="feature">
-		<div class="feature-icon"><Icon>groups</Icon></div>
-		<h3>Accessible by default</h3>
-		<p>
-			Components build on native elements, so roles, labels, keyboard navigation and focus rings
-			come with them.
-		</p>
-	</article>
-	<article class="feature">
+	</Card>
+	<Card
+		type="text"
+		variant="elevated"
+		class="feature"
+		headline="Expressive motion"
+		supportingText="Springy shape morphs, ripples and wavy progress from the Material 3 Expressive spec. All of it steps aside when a visitor prefers reduced motion."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
+		<div class="feature-icon"><Icon>animation</Icon></div>
+	</Card>
+	<Card
+		type="text"
+		variant="elevated"
+		class="feature"
+		headline="Accessible by default"
+		supportingText="Components build on native elements, so roles, labels, keyboard navigation and focus rings come with them."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
+		<div class="feature-icon"><Icon>accessibility_new</Icon></div>
+	</Card>
+	<Card
+		type="link"
+		href="/about/theming#light-and-dark-color-schemes"
+		variant="elevated"
+		class="feature"
+		headline="Light and dark"
+		supportingText="The default theme ships both color schemes and follows the system setting, or whatever setting you put in charge."
+		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="feature-icon"><Icon>brightness_medium</Icon></div>
-		<h3>Light and dark</h3>
-		<p>
-			The default theme ships both color schemes and follows the system setting, or whatever setting
-			you put in charge.
-		</p>
-	</article>
+	</Card>
 </div>
 
 <h2>One color, a whole theme</h2>
@@ -343,34 +361,23 @@
 		margin-top: 3rem;
 	}
 
-	/* Features */
 	.features {
 		display: grid;
 		gap: 1rem;
 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 		margin: 2rem 0;
 	}
-	.feature {
-		box-sizing: border-box;
-		padding: 1.5rem;
-		border-radius: var(--np-shape-corner-extra-large);
-		background-color: var(--np-color-surface-container-low);
-		border: 1px solid var(--np-color-outline-variant);
-	}
-	.feature h3 {
-		margin: 1rem 0 0.5rem 0;
-		font-size: 1.25rem;
-	}
-	.feature p {
-		margin: 0;
-		font-size: 1rem;
-		color: var(--np-color-on-surface-variant);
+
+	:global(.feature .np-card-content) {
+		margin: 1.5rem;
+		min-width: calc(100% - 3rem);
 	}
 	.feature-icon {
 		display: grid;
 		place-items: center;
 		width: 3rem;
 		height: 3rem;
+		order: -1;
 		border-radius: var(--np-shape-corner-large);
 		color: var(--np-color-on-primary-container);
 		background-color: var(--np-color-primary-container);

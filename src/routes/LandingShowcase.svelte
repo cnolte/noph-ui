@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Button from '#lib/button/Button.svelte'
+	import Card from '#lib/card/Card.svelte'
 	import Checkbox from '#lib/checkbox/Checkbox.svelte'
 	import ChipSet from '#lib/chip/ChipSet.svelte'
 	import FilterChip from '#lib/chip/FilterChip.svelte'
@@ -20,10 +21,13 @@
 </script>
 
 <div class="bento">
-	<article class="tile buttons">
-		<h3 class="tile-heading">
-			<a class="tile-label" href="/components/button">Buttons <span aria-hidden="true">→</span></a>
-		</h3>
+	<Card
+		type="text"
+		variant="outlined"
+		class="tile buttons"
+		headline="Buttons"
+		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="row">
 			<Button variant="filled">
 				{#snippet start()}<Icon>add</Icon>{/snippet}Filled
@@ -33,25 +37,41 @@
 			<Button variant="outlined">Outlined</Button>
 			<Button variant="text">Text</Button>
 		</div>
-	</article>
+		{#snippet action()}
+			<Button variant="text" href="/components/button">
+				Learn more
+				{#snippet end()}<Icon>arrow_forward</Icon>{/snippet}
+			</Button>
+		{/snippet}
+	</Card>
 
-	<article class="tile progress">
-		<h3 class="tile-heading">
-			<a class="tile-label" href="/components/progress"
-				>Loading & Progress <span aria-hidden="true">→</span></a
-			>
-		</h3>
+	<Card
+		type="text"
+		variant="outlined"
+		class="tile progress"
+		headline="Loading & Progress"
+		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="row centered">
 			<LoadingIndicator aria-label="Loading" />
 			<CircularProgress aria-label="Upload progress" wavy value={progress} />
 		</div>
 		<LinearProgress aria-label="Upload progress" wavy value={progress} />
-	</article>
+		{#snippet action()}
+			<Button variant="text" href="/components/progress">
+				Learn more
+				{#snippet end()}<Icon>arrow_forward</Icon>{/snippet}
+			</Button>
+		{/snippet}
+	</Card>
 
-	<article class="tile slider">
-		<h3 class="tile-heading">
-			<a class="tile-label" href="/components/slider">Slider <span aria-hidden="true">→</span></a>
-		</h3>
+	<Card
+		type="text"
+		variant="outlined"
+		class="tile slider"
+		headline="Slider"
+		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<Slider
 			bind:value={volume}
 			step={1}
@@ -60,13 +80,21 @@
 			aria-label="Volume"
 		/>
 		<p class="hint">Drag it. The progress tile follows along at {volume}%.</p>
-	</article>
+		{#snippet action()}
+			<Button variant="text" href="/components/slider">
+				Learn more
+				{#snippet end()}<Icon>arrow_forward</Icon>{/snippet}
+			</Button>
+		{/snippet}
+	</Card>
 
-	<article class="tile selection">
-		<h3 class="tile-heading">
-			<a class="tile-label" href="/components/switch">Selection <span aria-hidden="true">→</span></a
-			>
-		</h3>
+	<Card
+		type="text"
+		variant="outlined"
+		class="tile selection"
+		headline="Selection"
+		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<label class="line"><Switch icons="both" /> Notifications</label>
 		<label class="line"><Checkbox checked /> Remember me</label>
 		<div class="line">
@@ -82,26 +110,42 @@
 			<Radio bind:group={plan} name="landing-plan" value="monthly" id="landing-plan-monthly" />
 			<label for="landing-plan-monthly">Monthly</label>
 		</div>
-	</article>
+		{#snippet action()}
+			<Button variant="text" href="/components/switch">
+				Learn more
+				{#snippet end()}<Icon>arrow_forward</Icon>{/snippet}
+			</Button>
+		{/snippet}
+	</Card>
 
-	<article class="tile chips">
-		<h3 class="tile-heading">
-			<a class="tile-label" href="/components/chip">Chips <span aria-hidden="true">→</span></a>
-		</h3>
+	<Card
+		type="text"
+		variant="outlined"
+		class="tile chips"
+		headline="Chips"
+		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<ChipSet>
 			<FilterChip label="Expressive" value="expressive" bind:group={filters} />
 			<FilterChip label="SSR" value="ssr" bind:group={filters} />
 			<FilterChip label="Themed" value="themed" bind:group={filters} />
 		</ChipSet>
 		<p class="hint">{filters.length} of 3 selected</p>
-	</article>
+		{#snippet action()}
+			<Button variant="text" href="/components/chip">
+				Learn more
+				{#snippet end()}<Icon>arrow_forward</Icon>{/snippet}
+			</Button>
+		{/snippet}
+	</Card>
 
-	<article class="tile field">
-		<h3 class="tile-heading">
-			<a class="tile-label" href="/components/text-field"
-				>Text fields <span aria-hidden="true">→</span></a
-			>
-		</h3>
+	<Card
+		type="text"
+		variant="outlined"
+		class="tile field"
+		headline="Text fields"
+		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
+	>
 		<div class="row">
 			<TextField label="Message" bind:value={message} supportingText="Type to see the label float">
 				{#snippet start()}<Icon>search</Icon>{/snippet}
@@ -110,7 +154,13 @@
 				{#snippet start()}<Icon>send</Icon>{/snippet}Send
 			</Button>
 		</div>
-	</article>
+		{#snippet action()}
+			<Button variant="text" href="/components/text-field">
+				Learn more
+				{#snippet end()}<Icon>arrow_forward</Icon>{/snippet}
+			</Button>
+		{/snippet}
+	</Card>
 </div>
 
 <style>
@@ -119,38 +169,16 @@
 		gap: 1rem;
 		margin: 1rem 0 2rem 0;
 	}
-	.tile {
+	/* .tile, .buttons, .progress etc. are classes forwarded onto <Card>, not elements in
+	   this template, so Svelte can't see them as "used" and would otherwise drop these
+	   rules as dead code. They need :global() to survive compilation. */
+	:global(.tile .np-card-content) {
 		display: flex;
 		flex-direction: column;
+		align-self: stretch;
 		gap: 1rem;
-		box-sizing: border-box;
-		padding: 1.25rem;
-		border-radius: var(--np-shape-corner-extra-large);
-		border: 1px solid var(--np-color-outline-variant);
-		background-color: var(--np-color-surface-container-low);
-		transition:
-			border-color var(--np-motion-expressive-default-effects),
-			box-shadow var(--np-motion-expressive-default-effects);
-	}
-	.tile:hover {
-		border-color: var(--np-color-primary);
-		box-shadow: var(--np-elevation-1);
-	}
-	.tile-heading {
-		margin: 0;
-		font-size: inherit;
-		font-weight: inherit;
-	}
-	.tile-label {
-		color: var(--np-color-primary);
-		font-size: 0.875rem;
-		font-weight: 500;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		width: fit-content;
-	}
-	.tile-label:hover {
-		text-decoration: underline;
+		margin: 1.25rem;
+		min-width: calc(100% - 2.5rem);
 	}
 	.row {
 		display: flex;
@@ -172,30 +200,35 @@
 		font-size: 0.875rem;
 		color: var(--np-color-on-surface-variant);
 	}
-	.progress,
-	.slider {
-		justify-content: space-between;
+
+	@media (max-width: 639.98px) {
+		:global(.tile .np-card-action) {
+			justify-content: stretch;
+		}
+		:global(.tile .np-card-action .np-button) {
+			width: 100%;
+		}
 	}
 	@media (min-width: 640px) {
 		.bento {
 			grid-template-columns: repeat(6, minmax(0, 1fr));
 		}
-		.buttons {
+		:global(.buttons) {
 			grid-column: span 4;
 		}
-		.progress {
+		:global(.progress) {
 			grid-column: span 2;
 		}
-		.slider {
+		:global(.slider) {
 			grid-column: span 3;
 		}
-		.selection {
+		:global(.selection) {
 			grid-column: span 3;
 		}
-		.chips {
+		:global(.chips) {
 			grid-column: span 2;
 		}
-		.field {
+		:global(.field) {
 			grid-column: span 4;
 		}
 	}
