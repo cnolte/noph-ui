@@ -69,6 +69,9 @@
 		border-radius: var(--np-shape-corner-full);
 		-webkit-tap-highlight-color: transparent;
 	}
+	:global(label) {
+		-webkit-tap-highlight-color: transparent;
+	}
 	.np-track {
 		position: absolute;
 		width: 3.25rem;

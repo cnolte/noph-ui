@@ -65,6 +65,10 @@
 		width: 48px;
 	}
 
+	:global(label) {
+		-webkit-tap-highlight-color: transparent;
+	}
+
 	.np-container {
 		margin: max(0px, (40px - var(--np-radio-icon-size, 20px))/2);
 		display: inline-flex;

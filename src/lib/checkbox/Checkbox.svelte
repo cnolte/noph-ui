@@ -96,6 +96,9 @@
 		-webkit-tap-highlight-color: transparent;
 		margin: var(--np-checkbox-margin, max(0px, (48px - 18px)/2));
 	}
+	:global(label) {
+		-webkit-tap-highlight-color: transparent;
+	}
 	.np-container:has(input:disabled) {
 		cursor: default;
 	}

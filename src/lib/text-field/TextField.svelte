@@ -275,6 +275,9 @@
 		resize: both;
 		text-align: start;
 	}
+	:global(label) {
+		-webkit-tap-highlight-color: transparent;
+	}
 
 	.field {
 		cursor: text;

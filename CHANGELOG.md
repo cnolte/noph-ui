@@ -5,6 +5,22 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.1] - 2026-08-19
+
+### Fixed
+
+- **Checkbox**, **Radio**, **Switch**, **TextField** and **NativeSelect**: a
+  `<label>` wrapping one of these, or pointed at it with `for`, flashed iOS
+  Safari's default gray tap highlight over its whole box on touch, text
+  included, because none of these components can reach an ancestor or sibling
+  label to turn that off themselves. Each one now ships
+  `:global(label) { -webkit-tap-highlight-color: transparent }` in its own
+  stylesheet. The rule is unconditional rather than scoped through `:has()`,
+  because a label associated only through `for`/`id` cannot be matched from
+  CSS at all. It lives in the component's own styles rather than
+  `defaultTheme.css` so it still applies to an app using a generated theme
+  instead of the default one.
+
 ## [0.39.0] - 2026-08-18
 
 A date and a time in one field, shaped like an `<input type="datetime-local">`

@@ -278,6 +278,10 @@
 		opacity: 0.08;
 	}
 
+	:global(label) {
+		-webkit-tap-highlight-color: transparent;
+	}
+
 	label {
 		display: inline-block;
 		pointer-events: none;
