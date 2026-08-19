@@ -3,6 +3,7 @@ import { page, userEvent } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Form from './DockedDateTimePickerForm.test.svelte'
 import Harness from './DockedDateTimePickerHarness.test.svelte'
+import Layout from './DockedDateTimePickerLayout.test.svelte'
 
 const VALUE = '2025-08-17T14:30'
 
@@ -248,7 +249,7 @@ describe('placement', () => {
 		const menu = document.querySelector<HTMLElement>('.np-docked-date-time-picker-menu')!
 		const panel = menu.getBoundingClientRect()
 		const anchor = document
-			.querySelector<HTMLElement>('.np-docked-date-time-picker-anchor')!
+			.querySelector<HTMLElement>('.np-docked-date-time-picker')!
 			.getBoundingClientRect()
 
 		expect(panel.top).toBeLessThan(anchor.top)
@@ -264,5 +265,17 @@ describe('form', () => {
 		await expect
 			.element(page.getByTestId('submitted'))
 			.toHaveTextContent('Submitted startsAt=2025-08-17T14:30')
+	})
+})
+
+describe('layout', () => {
+	test('fills a stretching flex column like a plain text field', () => {
+		render(Layout)
+
+		const widths = [...document.querySelectorAll<HTMLElement>('.text-field')].map((field) =>
+			Math.round(field.getBoundingClientRect().width),
+		)
+
+		expect(widths).toEqual([480, 480])
 	})
 })

@@ -3,6 +3,7 @@ import { page, userEvent } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Form from './DockedDatePickerForm.test.svelte'
 import Harness from './DockedDatePickerHarness.test.svelte'
+import Layout from './DockedDatePickerLayout.test.svelte'
 
 const VALUE = '2025-08-17'
 
@@ -362,7 +363,7 @@ describe('placement', () => {
 		const menu = document.querySelector<HTMLElement>('.np-docked-date-picker-menu')!
 		const panel = menu.getBoundingClientRect()
 		const anchor = document
-			.querySelector<HTMLElement>('.np-docked-date-picker-anchor')!
+			.querySelector<HTMLElement>('.np-docked-date-picker')!
 			.getBoundingClientRect()
 
 		expect(panel.top).toBeLessThan(anchor.top)
@@ -436,5 +437,17 @@ describe('forms', () => {
 
 		await field().fill('12/24/2026')
 		await expect.poll(message).toBe('')
+	})
+})
+
+describe('layout', () => {
+	test('fills a stretching flex column like a plain text field', () => {
+		render(Layout)
+
+		const widths = [...document.querySelectorAll<HTMLElement>('.text-field')].map((field) =>
+			Math.round(field.getBoundingClientRect().width),
+		)
+
+		expect(widths).toEqual([480, 480])
 	})
 })

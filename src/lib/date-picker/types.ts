@@ -1,4 +1,5 @@
 import type { Snippet } from 'svelte'
+import type { TextFieldElement } from '#lib/text-field/types.js'
 import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements'
 
 export type ISODate = string
@@ -36,7 +37,7 @@ interface MonthStepperLabelProps {
 
 export interface DockedDatePickerProps
 	extends
-		Omit<HTMLAttributes<HTMLDivElement>, 'onchange'>,
+		Omit<HTMLAttributes<TextFieldElement>, 'onchange'>,
 		DatePickerLocaleProps,
 		DatePickerRangeProps,
 		DatePickerCommonLabelProps,
@@ -44,7 +45,7 @@ export interface DockedDatePickerProps
 	value?: ISODate | number | null
 	displayMonth?: ISODate
 	open?: boolean
-	element?: HTMLDivElement
+	element?: HTMLSpanElement
 	name?: string
 	form?: string
 	required?: boolean
@@ -69,7 +70,7 @@ export interface DockedDatePickerProps
 
 export interface DockedDateTimePickerProps
 	extends
-		Omit<HTMLAttributes<HTMLDivElement>, 'onchange'>,
+		Omit<HTMLAttributes<TextFieldElement>, 'onchange'>,
 		DatePickerLocaleProps,
 		Omit<DatePickerRangeProps, 'min' | 'max'>,
 		DatePickerCommonLabelProps,
@@ -77,7 +78,7 @@ export interface DockedDateTimePickerProps
 	value?: ISODateTime | number | null
 	displayMonth?: ISODate
 	open?: boolean
-	element?: HTMLDivElement
+	element?: HTMLSpanElement
 	min?: ISODate | ISODateTime
 	max?: ISODate | ISODateTime
 	name?: string

@@ -1051,8 +1051,8 @@
 		</tr>
 		<tr>
 			<td><code>element</code></td>
-			<td><code>HTMLDivElement</code></td>
-			<td>The picker's root element.</td>
+			<td><code>HTMLSpanElement</code></td>
+			<td>The picker's root element, which is the text field itself.</td>
 		</tr>
 	</tbody>
 </table>

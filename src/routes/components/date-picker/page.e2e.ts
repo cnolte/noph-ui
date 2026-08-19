@@ -20,7 +20,7 @@ test('the documented pickers survive server rendering and hydration', async ({ p
 	await calendar.getByRole('button', { name: 'Friday, August 8, 2025' }).click()
 	await calendar.getByRole('button', { name: 'OK', exact: true }).click()
 	await expect(input).toHaveValue('08/08/2025')
-	await expect(picker.locator('.np-docked-date-picker-value')).toHaveValue('2025-08-08')
+	await expect(page.locator('.np-docked-date-picker-value').first()).toHaveValue('2025-08-08')
 
 	expect(errors).toEqual([])
 })

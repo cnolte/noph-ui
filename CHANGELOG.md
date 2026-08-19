@@ -5,9 +5,17 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.40.0] - 2026-08-19
+## [0.40.1] - 2026-08-19
 
-### Added
+### Fixed
+
+- **DockedDatePicker** and **DockedDateTimePicker**: the field stopped at its
+  content width inside a stretching flex or grid parent, so it came out narrower
+  than the `TextField`s and `Select`s beside it in a form column. The removed
+  wrapper was a row flex container the field could not grow in. The field now
+  fills the space it is given, like every other field.
+
+## [0.40.0] - 2026-08-19
 
 ### Changed (breaking)
 

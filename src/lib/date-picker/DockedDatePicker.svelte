@@ -37,6 +37,7 @@
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- absorbed on purpose
 		type,
 		'aria-invalid': ariaInvalid,
+		style,
 		displayMonth = $bindable(),
 		open = $bindable(false),
 		element = $bindable(),
@@ -70,6 +71,8 @@
 		invalidDateMessage = 'Enter a valid date.',
 		selectedDateLabel = 'selected',
 		onchange,
+		oninput,
+		onblur,
 		...attributes
 	}: DockedDatePickerProps = $props()
 
@@ -77,7 +80,6 @@
 
 	const uid = $props.id()
 
-	let anchorElement = $state<HTMLDivElement>()
 	let menuElement = $state<HTMLDivElement>()
 	let mode = $state<'days' | 'months' | 'years'>('days')
 	let listMode = $state<'months' | 'years' | undefined>(undefined)
@@ -224,7 +226,7 @@
 	const closePicker = (restoreFocus = true) => {
 		menuElement?.hidePopover()
 		if (restoreFocus) {
-			anchorElement?.querySelector<HTMLElement>('input')?.focus()
+			element?.querySelector<HTMLElement>('input')?.focus()
 		}
 	}
 
@@ -290,185 +292,181 @@
 	}
 </script>
 
-<div {...attributes} bind:this={element} class={['np-docked-date-picker', attributes.class]}>
-	<div class="np-docked-date-picker-anchor" bind:this={anchorElement} style:anchor-name="--{uid}">
-		<TextField
-			{label}
-			{variant}
-			{issues}
+<TextField
+	{...attributes}
+	class={['np-docked-date-picker', attributes.class]}
+	style={`anchor-name:--${uid};${style ?? ''}`}
+	{label}
+	{variant}
+	{issues}
+	{disabled}
+	{readonly}
+	{required}
+	{noAsterisk}
+	{autocomplete}
+	supportingText={supportingText ?? pattern}
+	bind:value={text}
+	bind:element
+	bind:inputElement
+	aria-invalid={inputInvalid || issues?.length || ariaInvalid === true || ariaInvalid === 'true'
+		? 'true'
+		: undefined}
+	oninput={(event) => {
+		handleInput(event)
+		oninput?.(event)
+	}}
+	onblur={(event) => {
+		handleBlur()
+		onblur?.(event)
+	}}
+>
+	{#snippet end()}
+		<IconButton
+			type="button"
+			aria-label={openCalendarLabel}
+			aria-expanded={open}
+			aria-haspopup="dialog"
+			aria-controls={open ? `${uid}-calendar` : undefined}
 			{disabled}
-			{readonly}
-			{required}
-			{noAsterisk}
-			{autocomplete}
-			supportingText={supportingText ?? pattern}
-			bind:value={text}
-			bind:inputElement
-			aria-invalid={inputInvalid || issues?.length || ariaInvalid === true || ariaInvalid === 'true'
-				? 'true'
-				: undefined}
-			oninput={handleInput}
-			onblur={handleBlur}
+			onclick={() => {
+				if (open) closePicker()
+				else openPicker()
+			}}
 		>
-			{#snippet end()}
-				<IconButton
-					type="button"
-					aria-label={openCalendarLabel}
-					aria-expanded={open}
-					aria-haspopup="dialog"
-					aria-controls={open ? `${uid}-calendar` : undefined}
-					{disabled}
-					onclick={() => {
-						if (open) closePicker()
-						else openPicker()
-					}}
-				>
-					<CalendarToday />
-				</IconButton>
-			{/snippet}
-		</TextField>
-		<input
-			bind:this={valueInput}
-			class="np-docked-date-picker-value"
-			type="hidden"
-			value={current ?? ''}
-			{name}
-			{form}
-			{disabled}
-		/>
-	</div>
+			<CalendarToday />
+		</IconButton>
+	{/snippet}
+</TextField>
+<input
+	bind:this={valueInput}
+	class="np-docked-date-picker-value"
+	type="hidden"
+	value={current ?? ''}
+	{name}
+	{form}
+	{disabled}
+/>
 
-	<Menu
-		id="{uid}-calendar"
-		role="dialog"
-		aria-label={label}
-		aria-modal="false"
-		class="np-docked-date-picker-menu"
-		style={`position-anchor:--${uid};`}
-		--np-menu-justify-self="none"
-		--np-menu-position-area="bottom span-right"
-		--np-menu-over-anchor-position-area="span-all span-right"
-		--np-menu-margin="0"
-		--np-menu-container-color="var(--np-docked-date-picker-container-color, var(--np-color-surface-container-high))"
-		--np-menu-container-shape="var(--np-docked-date-picker-container-shape, var(--np-shape-corner-large))"
-		anchor={anchorElement}
-		bind:element={menuElement}
-		bind:open
-		ontoggle={({ newState }) => {
-			if (newState === 'open') {
-				monthBeforeOpen = displayMonth
-				pending = current
-				focusCalendarWhenReady()
-			}
-			if (newState === 'closed') {
-				setMode('days')
-				listMode = undefined
-				focusedDay = undefined
-				displayMonth = monthBeforeOpen
-			}
-		}}
-	>
-		{#if open}
-			<div class="np-docked-date-picker-container" style:--np-calendar-rows={rowCount}>
-				<CalendarHeader
-					{mode}
-					monthLabel={shortMonthNames[monthDate.getMonth()]}
-					yearLabel={`${monthDate.getFullYear()}`}
-					{canPreviousMonth}
-					{canNextMonth}
-					{canPreviousYear}
-					{canNextYear}
-					{previousMonthLabel}
-					{nextMonthLabel}
-					{previousYearLabel}
-					{nextYearLabel}
-					{selectMonthLabel}
-					{selectYearLabel}
-					monthListId="{uid}-months"
-					yearListId="{uid}-years"
-					onpreviousmonth={() => setMonth(addMonths(monthDate, -1))}
-					onnextmonth={() => setMonth(addMonths(monthDate, 1))}
-					onpreviousyear={() => setMonth(addMonths(monthDate, -12))}
-					onnextyear={() => setMonth(addMonths(monthDate, 12))}
-					ontogglemonths={() => setMode(mode === 'months' ? 'days' : 'months')}
-					ontoggleyears={() => setMode(mode === 'years' ? 'days' : 'years')}
-				/>
+<Menu
+	id="{uid}-calendar"
+	role="dialog"
+	aria-label={label}
+	aria-modal="false"
+	class="np-docked-date-picker-menu"
+	style={`position-anchor:--${uid};`}
+	--np-menu-justify-self="none"
+	--np-menu-position-area="bottom span-right"
+	--np-menu-over-anchor-position-area="span-all span-right"
+	--np-menu-margin="0"
+	--np-menu-container-color="var(--np-docked-date-picker-container-color, var(--np-color-surface-container-high))"
+	--np-menu-container-shape="var(--np-docked-date-picker-container-shape, var(--np-shape-corner-large))"
+	anchor={element}
+	bind:element={menuElement}
+	bind:open
+	ontoggle={({ newState }) => {
+		if (newState === 'open') {
+			monthBeforeOpen = displayMonth
+			pending = current
+			focusCalendarWhenReady()
+		}
+		if (newState === 'closed') {
+			setMode('days')
+			listMode = undefined
+			focusedDay = undefined
+			displayMonth = monthBeforeOpen
+		}
+	}}
+>
+	{#if open}
+		<div class="np-docked-date-picker-container" style:--np-calendar-rows={rowCount}>
+			<CalendarHeader
+				{mode}
+				monthLabel={shortMonthNames[monthDate.getMonth()]}
+				yearLabel={`${monthDate.getFullYear()}`}
+				{canPreviousMonth}
+				{canNextMonth}
+				{canPreviousYear}
+				{canNextYear}
+				{previousMonthLabel}
+				{nextMonthLabel}
+				{previousYearLabel}
+				{nextYearLabel}
+				{selectMonthLabel}
+				{selectYearLabel}
+				monthListId="{uid}-months"
+				yearListId="{uid}-years"
+				onpreviousmonth={() => setMonth(addMonths(monthDate, -1))}
+				onnextmonth={() => setMonth(addMonths(monthDate, 1))}
+				onpreviousyear={() => setMonth(addMonths(monthDate, -12))}
+				onnextyear={() => setMonth(addMonths(monthDate, 12))}
+				ontogglemonths={() => setMode(mode === 'months' ? 'days' : 'months')}
+				ontoggleyears={() => setMode(mode === 'years' ? 'days' : 'years')}
+			/>
 
-				<div class="np-docked-date-picker-views">
-					<div class="np-docked-date-picker-body" inert={mode !== 'days'}>
-						<Calendar
-							month={monthDate}
-							selected={pendingDate}
-							min={minDate}
-							max={maxDate}
-							{locale}
-							firstDayOfWeek={week}
-							{isDateEnabled}
-							{adjacentMonthDays}
-							dynamicRows
-							todayDate={todayValue}
-							focusedDate={focusedDay}
-							selectedLabel={selectedDateLabel}
-							onselect={selectDay}
-							onmonthstep={(delta) => setMonth(addMonths(monthDate, delta))}
-							onfocusday={(date) => {
-								focusedDay = date
-								if (
-									date.getMonth() !== monthDate.getMonth() ||
-									date.getFullYear() !== monthDate.getFullYear()
-								) {
-									setMonth(date)
-								}
-							}}
-						/>
-					</div>
+			<div class="np-docked-date-picker-views">
+				<div class="np-docked-date-picker-body" inert={mode !== 'days'}>
+					<Calendar
+						month={monthDate}
+						selected={pendingDate}
+						min={minDate}
+						max={maxDate}
+						{locale}
+						firstDayOfWeek={week}
+						{isDateEnabled}
+						{adjacentMonthDays}
+						dynamicRows
+						todayDate={todayValue}
+						focusedDate={focusedDay}
+						selectedLabel={selectedDateLabel}
+						onselect={selectDay}
+						onmonthstep={(delta) => setMonth(addMonths(monthDate, delta))}
+						onfocusday={(date) => {
+							focusedDay = date
+							if (
+								date.getMonth() !== monthDate.getMonth() ||
+								date.getFullYear() !== monthDate.getFullYear()
+							) {
+								setMonth(date)
+							}
+						}}
+					/>
+				</div>
 
-					{#if listMode}
-						<div class={['np-docked-date-picker-menu-view', mode !== 'days' && 'open']}>
-							<div class="np-docked-date-picker-menu-shade">
-								<Divider --np-divider-color="var(--np-color-outline-variant)" />
-								{#if listMode === 'months'}
-									<SelectionList
-										id="{uid}-months"
-										aria-label={selectMonthLabel}
-										options={monthOptions}
-										value={monthDate.getMonth()}
-										onselect={chooseMonth}
-									/>
-								{:else}
-									<SelectionList
-										id="{uid}-years"
-										aria-label={selectYearLabel}
-										options={yearOptions}
-										value={monthDate.getFullYear()}
-										onselect={chooseYear}
-									/>
-								{/if}
-							</div>
+				{#if listMode}
+					<div class={['np-docked-date-picker-menu-view', mode !== 'days' && 'open']}>
+						<div class="np-docked-date-picker-menu-shade">
+							<Divider --np-divider-color="var(--np-color-outline-variant)" />
+							{#if listMode === 'months'}
+								<SelectionList
+									id="{uid}-months"
+									aria-label={selectMonthLabel}
+									options={monthOptions}
+									value={monthDate.getMonth()}
+									onselect={chooseMonth}
+								/>
+							{:else}
+								<SelectionList
+									id="{uid}-years"
+									aria-label={selectYearLabel}
+									options={yearOptions}
+									value={monthDate.getFullYear()}
+									onselect={chooseYear}
+								/>
+							{/if}
 						</div>
-					{/if}
-				</div>
-
-				<div class="np-docked-date-picker-actions">
-					<Button type="button" variant="text" onclick={() => closePicker()}>{cancelLabel}</Button>
-					<Button type="button" variant="text" onclick={confirm}>{confirmLabel}</Button>
-				</div>
+					</div>
+				{/if}
 			</div>
-		{/if}
-	</Menu>
-</div>
+
+			<div class="np-docked-date-picker-actions">
+				<Button type="button" variant="text" onclick={() => closePicker()}>{cancelLabel}</Button>
+				<Button type="button" variant="text" onclick={confirm}>{confirmLabel}</Button>
+			</div>
+		</div>
+	{/if}
+</Menu>
 
 <style>
-	.np-docked-date-picker {
-		display: inline-flex;
-		flex-direction: column;
-	}
-
-	.np-docked-date-picker-anchor {
-		display: inline-flex;
-		position: relative;
-	}
-
 	:global(.np-docked-date-picker-menu .np-menu) {
 		padding: 0;
 	}

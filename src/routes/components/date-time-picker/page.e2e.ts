@@ -24,7 +24,9 @@ test('the date and time picker takes a day and a time together', async ({ page }
 	await panel.getByRole('button', { name: 'OK', exact: true }).click()
 
 	await expect(input).toHaveValue('08/08/2025, 09:45 AM')
-	await expect(picker.locator('.np-docked-date-time-picker-value')).toHaveValue('2025-08-08T09:45')
+	await expect(page.locator('.np-docked-date-time-picker-value').first()).toHaveValue(
+		'2025-08-08T09:45',
+	)
 
 	expect(errors).toEqual([])
 })
