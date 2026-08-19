@@ -13,13 +13,30 @@ const languages = {
 	bash: Prism.languages.bash,
 }
 
+const leadingComment = /^(?:\/\/[^\n]*|\/\*[\s\S]*?\*\/)\s*/
+
+function withoutLeadingComments(code: string): string {
+	let rest = code
+	let match = leadingComment.exec(rest)
+	while (match) {
+		rest = rest.slice(match[0].length)
+		match = leadingComment.exec(rest)
+	}
+	return rest
+}
+
 function detectLanguage(code: string): keyof typeof languages {
-	const trimmed = code.trim()
+	const trimmed = withoutLeadingComments(code.trim())
+	const firstLine = trimmed.split('\n', 1)[0]
 	if (/^(npm|npx|pnpm|yarn|git|curl)\b/.test(trimmed)) return 'bash'
 	if (trimmed.startsWith('<') || /^\{[#:/@]/.test(trimmed)) return 'markup'
-	if (/^(import|export|const|let|var|function|class|interface|type|console)\b/.test(trimmed))
+	if (
+		/^(import|export|const|let|var|function|class|interface|type|enum|declare|async|await|return|new|throw|console)\b/.test(
+			trimmed,
+		)
+	)
 		return 'typescript'
-	if (/^[.:#a-zA-Z-][^;]*\{/.test(trimmed) || /^[a-zA-Z-]+\s*:\s*[^;]+;?\s*$/.test(trimmed))
+	if (/^[.:#a-zA-Z-][^;]*\{/.test(trimmed) || /^[a-zA-Z-]+\s*:\s*[^;]+;?\s*$/.test(firstLine))
 		return 'css'
 	return 'markup'
 }

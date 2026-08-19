@@ -97,6 +97,7 @@
 		"svelte-check": "^4.7.5",
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.66.0",
+		"valibot": "^1.4.2",
 		"vite": "8.2.1",
 		"vitest": "^4.1.10",
 		"vitest-browser-svelte": "^2.1.1"
