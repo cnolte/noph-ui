@@ -28,6 +28,12 @@
 	href="/about/icons"
 	selected={page.url.pathname === '/about/icons'}
 />
+<NavigationDrawerItem
+	onclick={onclose}
+	label="Remote functions"
+	href="/about/remote-functions"
+	selected={page.url.pathname === '/about/remote-functions'}
+/>
 <Divider variant="inset-middle" style="margin-top: 1rem" />
 <div class="header">Components</div>
 <NavigationDrawerItem

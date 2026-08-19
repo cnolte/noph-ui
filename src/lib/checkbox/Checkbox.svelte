@@ -7,13 +7,14 @@
 		checked = $bindable(),
 		element = $bindable(),
 		group = $bindable(),
-		error = false,
+		issues,
 		style,
 		value,
 		...attributes
 	}: CheckboxProps = $props()
 
 	let inputEl: HTMLInputElement | undefined = $state()
+	let hasError = $derived(!!issues?.length)
 
 	let groupValue = $derived(
 		typeof value === 'string' || typeof value === 'number' ? value : undefined,
@@ -39,7 +40,7 @@
 
 <div
 	{style}
-	class={['np-container', error && !attributes.disabled && 'np-error', attributes.class]}
+	class={['np-container', hasError && !attributes.disabled && 'np-error', attributes.class]}
 	bind:this={element}
 >
 	<div class="np-outline"></div>
@@ -62,7 +63,7 @@
 				bind:this={inputEl}
 				checked={groupChecked}
 				{onchange}
-				aria-invalid={error ? 'true' : undefined}
+				aria-invalid={hasError ? 'true' : undefined}
 				aria-checked={indeterminate ? 'mixed' : undefined}
 			/>
 		{:else}
@@ -74,7 +75,7 @@
 				bind:indeterminate
 				bind:checked
 				bind:this={inputEl}
-				aria-invalid={error ? 'true' : undefined}
+				aria-invalid={hasError ? 'true' : undefined}
 				aria-checked={indeterminate ? 'mixed' : undefined}
 			/>
 		{/if}

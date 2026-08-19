@@ -1,12 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths'
 	import Button from '#lib/button/Button.svelte'
-	import BrightnessMediumIcon from '#lib/icons/BrightnessMediumIcon.svelte'
-	import DownloadIcon from '#lib/icons/DownloadIcon.svelte'
-	import GroupsIcon from '#lib/icons/GroupsIcon.svelte'
-	import LanguageIcon from '#lib/icons/LanguageIcon.svelte'
-	import PaletteIcon from '#lib/icons/PaletteIcon.svelte'
-	import SportsGymnasticsIcon from '#lib/icons/SportsGymnasticsIcon.svelte'
+	import Icon from '#lib/icons/Icon.svelte'
 	import Code from './Code.svelte'
 	import LandingShowcase from './LandingShowcase.svelte'
 	import Logo from './Logo.svelte'
@@ -59,8 +54,8 @@
 		<h1 class="header">Noph UI</h1>
 		<p class="sub-header">Material 3 Expressive components for Svelte</p>
 		<p class="hero-text">
-			Themed from a single color, shipped without a single runtime dependency, and server rendered
-			from the first byte.
+			Themed from a single color, shipped without a single runtime dependency, and built for
+			SvelteKit's remote functions.
 		</p>
 		<div class="hero-actions">
 			<Button
@@ -98,19 +93,10 @@
 			<dt>0</dt>
 			<dd>dependencies</dd>
 		</div>
-		<div>
-			<dt>SVELTE</dt>
-			<dd>5.40+</dd>
-		</div>
-		<div>
-			<dt>MIT</dt>
-			<dd>license</dd>
-		</div>
 	</dl>
 </section>
 
 <h2>Real components, right here</h2>
-<p>Server rendered, then hydrated. Click, drag and type in it.</p>
 <LandingShowcase />
 
 <p class="lead">
@@ -122,7 +108,7 @@
 <h2>Why Noph UI</h2>
 <div class="features">
 	<article class="feature">
-		<div class="feature-icon"><LanguageIcon /></div>
+		<div class="feature-icon"><Icon>language</Icon></div>
 		<h3>Server side rendering</h3>
 		<p>
 			Components render to HTML on the server, so the first paint does not wait for JavaScript. Good
@@ -130,7 +116,16 @@
 		</p>
 	</article>
 	<article class="feature">
-		<div class="feature-icon"><PaletteIcon /></div>
+		<div class="feature-icon"><Icon>fact_check</Icon></div>
+		<h3>Remote functions ready</h3>
+		<p>
+			Text fields, selects, checkboxes, autocompletes and date pickers take an <code>issues</code> prop
+			shaped exactly like a SvelteKit remote form's validation errors, so they wire straight in without
+			an adapter.
+		</p>
+	</article>
+	<article class="feature">
+		<div class="feature-icon"><Icon>palette</Icon></div>
 		<h3>Dynamic theming</h3>
 		<p>
 			Material 3 color roles are plain CSS variables. Pick a source color and every component
@@ -138,7 +133,7 @@
 		</p>
 	</article>
 	<article class="feature">
-		<div class="feature-icon"><DownloadIcon /></div>
+		<div class="feature-icon"><Icon>download</Icon></div>
 		<h3>Zero dependencies</h3>
 		<p>
 			One package, nothing else pulled in behind your back. Your users download components, not a
@@ -146,7 +141,7 @@
 		</p>
 	</article>
 	<article class="feature">
-		<div class="feature-icon"><SportsGymnasticsIcon /></div>
+		<div class="feature-icon"><Icon>sports_gymnastics</Icon></div>
 		<h3>Expressive motion</h3>
 		<p>
 			Springy shape morphs, ripples and wavy progress from the Material 3 Expressive spec. All of it
@@ -154,7 +149,7 @@
 		</p>
 	</article>
 	<article class="feature">
-		<div class="feature-icon"><GroupsIcon /></div>
+		<div class="feature-icon"><Icon>groups</Icon></div>
 		<h3>Accessible by default</h3>
 		<p>
 			Components build on native elements, so roles, labels, keyboard navigation and focus rings
@@ -162,7 +157,7 @@
 		</p>
 	</article>
 	<article class="feature">
-		<div class="feature-icon"><BrightnessMediumIcon /></div>
+		<div class="feature-icon"><Icon>brightness_medium</Icon></div>
 		<h3>Light and dark</h3>
 		<p>
 			The default theme ships both color schemes and follows the system setting, or whatever setting
@@ -380,10 +375,8 @@
 		color: var(--np-color-on-primary-container);
 		background-color: var(--np-color-primary-container);
 	}
-	.feature-icon :global(svg) {
-		width: 1.75rem;
-		height: 1.75rem;
-		fill: currentColor;
+	.feature-icon :global(.np-icon) {
+		--np-icon-size: 1.75rem;
 	}
 
 	/* Theming */

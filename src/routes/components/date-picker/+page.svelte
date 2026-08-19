@@ -396,6 +396,13 @@
 	<code>issues</code> replaces the supporting text with your own messages and turns the field red, so
 	it pairs with whatever validation library the form already uses.
 </p>
+<p>
+	A SvelteKit remote form field can be spread straight in with
+	<code>&#123;...field.as('date')&#125;</code>, alongside
+	<code>issues=&#123;field.issues()&#125;</code>. See
+	<a href="/about/remote-functions">Remote functions</a> for a form that wires several components up that
+	way.
+</p>
 <DemoContainer>
 	<form onsubmit={handleSubmit} novalidate>
 		<DockedDatePicker
@@ -883,7 +890,19 @@
 			<td><code>issues</code></td>
 			<td><code>&#123; message: string &#125;[]</code></td>
 			<td><code>undefined</code></td>
-			<td>Validation messages shown instead of the supporting text.</td>
+			<td
+				>Validation messages shown instead of the supporting text. Optimized to use with remote form
+				field issues.</td
+			>
+		</tr>
+		<tr>
+			<td><code>defaultValue</code></td>
+			<td><code>string | number | null</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Stands in for <code>value</code> while that is unset. Together with an accepted and ignored
+				<code>type</code>, it lets <code>&#123;...field.as('date')&#125;</code> be spread onto the picker.</td
+			>
 		</tr>
 		<tr>
 			<td><code>locale</code></td>

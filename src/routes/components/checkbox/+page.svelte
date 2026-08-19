@@ -31,6 +31,21 @@
 <Checkbox checked disabled />
 <Checkbox indeterminate disabled />`}
 />
+<h2 id="error">Error<a href="#error" aria-hidden="true" tabindex="-1">#</a></h2>
+<DemoContainer>
+	<Checkbox aria-label="Unchecked" issues={[{ message: 'Required' }]} />
+	<Checkbox aria-label="Checked" checked issues={[{ message: 'Required' }]} />
+	<Checkbox aria-label="Indeterminate" indeterminate issues={[{ message: 'Required' }]} />
+</DemoContainer>
+<Code
+	value={`<Checkbox issues={[{ message: 'Required' }]} />
+<Checkbox checked issues={[{ message: 'Required' }]} />
+<Checkbox indeterminate issues={[{ message: 'Required' }]} />`}
+/>
+<p>
+	<code>issues</code> is shaped like a SvelteKit remote form's field issues, so passing a field's
+	<code>issues()</code> straight through is enough to drive the error state.
+</p>
 <h3 id="label">Label<a href="#label" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<label style="display: flex; align-items: center"><Checkbox />Checkbox one</label>
@@ -109,12 +124,13 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>error</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
+			<td><code>issues</code></td>
+			<td><code>&#123; message: string &#125;[]</code></td>
+			<td><code>undefined</code></td>
 			<td
-				>Draws the checkbox in the error color and sets <code>aria-invalid</code> on the input. A disabled
-				checkbox keeps its disabled styling instead.</td
+				>Draws the checkbox in the error color and sets <code>aria-invalid</code> on the input when non-empty.
+				Shaped like a SvelteKit remote form's field issues, so it wires straight in. A disabled checkbox
+				keeps its disabled styling instead.</td
 			>
 		</tr>
 		<tr>

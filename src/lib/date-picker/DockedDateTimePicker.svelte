@@ -4,6 +4,7 @@
 	import Divider from '#lib/divider/Divider.svelte'
 	import CalendarToday from '#lib/icons/CalendarToday.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
+	import { onFormReset } from '#lib/form-reset.js'
 	import TextField from '#lib/text-field/TextField.svelte'
 	import { onMount, tick } from 'svelte'
 	import Calendar from './Calendar.svelte'
@@ -46,6 +47,10 @@
 
 	let {
 		value = $bindable(),
+		defaultValue,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- absorbed on purpose
+		type,
+		'aria-invalid': ariaInvalid,
 		displayMonth = $bindable(),
 		open = $bindable(false),
 		element = $bindable(),
@@ -101,6 +106,7 @@
 	let pendingMinutes = $state(0)
 	let focusedDay = $state<Date | undefined>(undefined)
 	let inputElement = $state<HTMLInputElement | HTMLTextAreaElement>()
+	let valueInput = $state<HTMLInputElement>()
 
 	let typed = $state.raw<{ source: string | null | undefined; text: string } | undefined>()
 	let invalidText = $state<string | undefined>()
@@ -110,7 +116,13 @@
 	let week = $derived(firstDayOfWeek ?? getFirstDayOfWeek(locale))
 	let minDate = $derived(parseISODateTime(min))
 	let maxDate = $derived(parseISODateTime(max, MINUTES_IN_DAY - 1))
-	let committed = $derived(parseISODateTime(value))
+	// `as('datetime-local')` types its value as `string | number` and carries the last submission in
+	// `defaultValue`, so both are funnelled into one ISO string the rest of the component reads.
+	let current = $derived<string | undefined>(
+		typeof value === 'string' ? value : typeof defaultValue === 'string' ? defaultValue : undefined,
+	)
+
+	let committed = $derived(parseISODateTime(current))
 	let pendingDayDate = $derived(open ? parseISODate(pendingDay) : undefined)
 	let pendingDate = $derived(
 		open ? (pendingDayDate ? withMinutes(pendingDayDate, pendingMinutes) : undefined) : committed,
@@ -153,7 +165,7 @@
 		return localeKnown ? formatDateTime(committed, locale, hour12) : toISODateTime(committed)
 	}
 
-	let text = $derived(typed && typed.source === value ? typed.text : formatValue())
+	let text = $derived(typed && typed.source === current ? typed.text : formatValue())
 
 	let inputInvalid = $derived(invalidText !== undefined && invalidText === text)
 
@@ -247,10 +259,25 @@
 	}
 
 	const commit = (next: string | undefined) => {
-		if (value === next) return
+		if (current === next) return
 		value = next
 		onchange?.(next)
 	}
+
+	const restoreDefault = () => {
+		const next = typeof defaultValue === 'string' ? defaultValue : undefined
+		if (valueInput) valueInput.value = next ?? ''
+		queueMicrotask(() => {
+			typed = undefined
+			invalidText = undefined
+			pendingDay = undefined
+			pendingMinutes = 0
+			value = next
+			text = formatValue()
+		})
+	}
+
+	$effect(() => onFormReset(valueInput, restoreDefault))
 
 	const isShowing = () => !!menuElement?.matches(':popover-open')
 
@@ -321,7 +348,7 @@
 		const parsed = usableDate(next)
 		commit(parsed ? toISODateTime(parsed) : undefined)
 		if (parsed) setMonth(parsed)
-		typed = { source: value, text: next }
+		typed = { source: current, text: next }
 		invalidText = undefined
 	}
 
@@ -371,7 +398,9 @@
 			supportingText={supportingText ?? pattern}
 			bind:value={text}
 			bind:inputElement
-			aria-invalid={inputInvalid || issues?.length ? 'true' : undefined}
+			aria-invalid={inputInvalid || issues?.length || ariaInvalid === true || ariaInvalid === 'true'
+				? 'true'
+				: undefined}
 			oninput={handleInput}
 			onblur={handleBlur}
 		>
@@ -393,9 +422,10 @@
 			{/snippet}
 		</TextField>
 		<input
+			bind:this={valueInput}
 			class="np-docked-date-time-picker-value"
 			type="hidden"
-			value={value ?? ''}
+			value={current ?? ''}
 			{name}
 			{form}
 			{disabled}

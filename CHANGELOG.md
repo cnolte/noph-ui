@@ -5,6 +5,29 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.0] - 2026-08-19
+
+### Added
+
+### Changed (breaking)
+
+- **Checkbox**: `error` is gone. `issues`, the same `{ message: string }[]`
+  shape `TextField`, `Select` and the date pickers already take, drives the
+  error state instead, so a field's remote form issues pass straight through
+  without a boolean translation step in between.
+
+### Migration
+
+**Checkbox error state.** Pass the field's issues instead of a boolean:
+
+```svelte
+<!-- Before -->
+<Checkbox error={hasError} />
+
+<!-- After -->
+<Checkbox issues={[{ message: 'Required' }]} />
+```
+
 ## [0.39.1] - 2026-08-19
 
 ### Fixed

@@ -17,6 +17,9 @@ export const tocSections: Record<string, TocSection[]> = {
 		{ id: 'put-it-together', text: 'Put it together', level: 2 },
 		{ id: 'whats-next', text: "What's next", level: 2 },
 	],
+	'/about/remote-functions': [
+		{ id: 'how-it-works', text: 'How it works', level: 2 },
+	],
 	'/about/theming': [
 		{ id: 'how-the-theme-works', text: 'How the theme works', level: 2 },
 		{ id: 'using-the-default-theme', text: 'Using the default theme', level: 2 },
@@ -94,6 +97,7 @@ export const tocSections: Record<string, TocSection[]> = {
 	'/components/checkbox': [
 		{ id: 'usage', text: 'Usage', level: 2 },
 		{ id: 'disabled', text: 'Disabled', level: 2 },
+		{ id: 'error', text: 'Error', level: 2 },
 		{ id: 'label', text: 'Label', level: 3 },
 		{ id: 'theming', text: 'Theming', level: 2 },
 		{ id: 'example', text: 'Example', level: 3 },

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onFormReset } from '#lib/form-reset.js'
 	import Item from '#lib/list/Item.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
 	import Check from '#lib/select/Check.svelte'
@@ -60,6 +61,17 @@
 	let selectElement = $state<HTMLSelectElement>()
 	let menuElement = $state<HTMLDivElement>()
 	let anchorElement = $state<HTMLDivElement>()
+
+	$effect(() =>
+		onFormReset(selectElement, () => {
+			queueMicrotask(() => {
+				value = multiple
+					? options.filter((option) => option.selected).map((option) => option.value)
+					: options.find((option) => option.selected)?.value
+			})
+		}),
+	)
+
 	let field = $state<HTMLDivElement>()
 	let clientWidth = $state(0)
 	let menuOpen = $state(false)

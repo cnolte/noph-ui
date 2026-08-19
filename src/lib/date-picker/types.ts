@@ -41,7 +41,7 @@ export interface DockedDatePickerProps
 		DatePickerRangeProps,
 		DatePickerCommonLabelProps,
 		MonthStepperLabelProps {
-	value?: ISODate | null
+	value?: ISODate | number | null
 	displayMonth?: ISODate
 	open?: boolean
 	element?: HTMLDivElement
@@ -52,6 +52,8 @@ export interface DockedDatePickerProps
 	readonly?: boolean
 	variant?: 'outlined' | 'filled'
 	issues?: { message: string }[]
+	defaultValue?: ISODate | number | null
+	type?: 'date'
 	noAsterisk?: boolean
 	autocomplete?: HTMLInputAttributes['autocomplete']
 	label?: string
@@ -72,7 +74,7 @@ export interface DockedDateTimePickerProps
 		Omit<DatePickerRangeProps, 'min' | 'max'>,
 		DatePickerCommonLabelProps,
 		MonthStepperLabelProps {
-	value?: ISODateTime | null
+	value?: ISODateTime | number | null
 	displayMonth?: ISODate
 	open?: boolean
 	element?: HTMLDivElement
@@ -85,6 +87,8 @@ export interface DockedDateTimePickerProps
 	readonly?: boolean
 	variant?: 'outlined' | 'filled'
 	issues?: { message: string }[]
+	defaultValue?: ISODateTime | number | null
+	type?: 'datetime-local'
 	noAsterisk?: boolean
 	autocomplete?: HTMLInputAttributes['autocomplete']
 	label?: string
