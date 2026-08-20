@@ -298,6 +298,11 @@
 		animation-duration: 6000ms, calc(4 * 1333ms);
 	}
 
+	.four-color .spinner-track {
+		animation-name: cp-track-sweep, four-color-track;
+		animation-duration: 6000ms, calc(4 * 1333ms);
+	}
+
 	@media (forced-colors: active) {
 		.active-track {
 			stroke: CanvasText;
@@ -326,6 +331,27 @@
 		}
 		100% {
 			stroke: var(--np-color-primary);
+		}
+	}
+	@keyframes four-color-track {
+		0%,
+		15% {
+			stroke: var(--np-color-primary-container);
+		}
+		25%,
+		40% {
+			stroke: var(--np-color-primary);
+		}
+		50%,
+		65% {
+			stroke: var(--np-color-tertiary-container);
+		}
+		75%,
+		90% {
+			stroke: var(--np-color-tertiary);
+		}
+		100% {
+			stroke: var(--np-color-primary-container);
 		}
 	}
 </style>

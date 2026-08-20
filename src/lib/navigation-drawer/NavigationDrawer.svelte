@@ -110,13 +110,13 @@
 
 	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
 		transform: var(--np-navigation-drawer-start, translateX(-100%));
-		transition: transform var(--np-motion-expressive-slow-effects);
+		transition: transform var(--np-motion-standard-slow-spatial);
 	}
 
 	.np-navigation-drawer-container[popover] {
 		transition:
-			overlay 0.3s allow-discrete,
-			display 0.3s allow-discrete;
+			overlay var(--np-motion-standard-slow-spatial) allow-discrete,
+			display var(--np-motion-standard-slow-spatial) allow-discrete;
 	}
 
 	.np-navigation-drawer-container:popover-open .np-navigation-wrapper {
@@ -139,7 +139,7 @@
 		position: fixed;
 		background-color: var(--np-color-scrim);
 		opacity: 0;
-		transition: opacity 0.25s ease;
+		transition: opacity var(--np-motion-expressive-slow-effects);
 	}
 	.np-navigation-drawer-backdrop[popover]:popover-open .np-backdrop {
 		opacity: 0.32;

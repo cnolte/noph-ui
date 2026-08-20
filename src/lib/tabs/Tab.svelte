@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import Badge from '#lib/badge/Badge.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { tick } from 'svelte'
@@ -226,20 +227,6 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
-		animation: focusAnimation 0.3s ease forwards;
-	}
-	@keyframes focusAnimation {
-		0% {
-			outline-offset: -3px;
-			outline-width: 3px;
-		}
-		50% {
-			outline-offset: -6px;
-			outline-width: 6px;
-		}
-		100% {
-			outline-offset: -3px;
-			outline-width: 3px;
-		}
+		animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
 	}
 </style>

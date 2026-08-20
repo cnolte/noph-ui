@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import CheckIcon from '#lib/icons/CheckIcon.svelte'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
@@ -237,18 +238,7 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
-		animation: focusAnimation 0.3s ease forwards;
-	}
-	@keyframes focusAnimation {
-		0% {
-			outline-width: 3px;
-		}
-		50% {
-			outline-width: 6px;
-		}
-		100% {
-			outline-width: 3px;
-		}
+		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
 	}
 
 	.np-filter-chip-disabled .np-filter-chip-label {

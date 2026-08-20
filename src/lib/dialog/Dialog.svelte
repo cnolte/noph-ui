@@ -156,9 +156,9 @@
 
 	.np-animate[popover] {
 		transition:
-			opacity 0.25s ease,
-			display 0.25s allow-discrete,
-			overlay 0.25s allow-discrete;
+			opacity var(--np-motion-expressive-slow-effects),
+			display var(--np-motion-expressive-slow-effects) allow-discrete,
+			overlay var(--np-motion-expressive-slow-effects) allow-discrete;
 		opacity: 0;
 	}
 	.np-animate[popover]:popover-open {

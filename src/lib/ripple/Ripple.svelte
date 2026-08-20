@@ -339,7 +339,7 @@
 				transparent 100%
 			);
 			transform-origin: center center;
-			transition: opacity 375ms linear;
+			transition: opacity var(--np-motion-expressive-slow-effects);
 		}
 	}
 
@@ -351,6 +351,6 @@
 
 	.np-ripple-pressed::after {
 		opacity: var(--np-ripple-pressed-opacity, 0.1);
-		transition-duration: 105ms;
+		transition: opacity var(--np-motion-expressive-fast-effects);
 	}
 </style>

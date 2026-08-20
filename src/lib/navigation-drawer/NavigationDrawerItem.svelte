@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationDrawerItemProps } from './types.ts'
@@ -103,21 +104,7 @@
 	}
 	@media (prefers-reduced-motion: no-preference) {
 		.np-navigation-drawer-item:focus-visible {
-			animation: focusAnimation 0.3s ease forwards;
-		}
-	}
-	@keyframes focusAnimation {
-		0% {
-			outline-offset: -3px;
-			outline-width: 3px;
-		}
-		50% {
-			outline-offset: -6px;
-			outline-width: 6px;
-		}
-		100% {
-			outline-offset: -3px;
-			outline-width: 3px;
+			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
 		}
 	}
 	.np-navigation-drawer-item-icon {

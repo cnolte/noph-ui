@@ -112,7 +112,7 @@
 
 	.np-menu-container:popover-open {
 		opacity: 1;
-		animation: fadeIn 0.2s linear;
+		animation: fadeIn var(--np-motion-expressive-default-effects);
 	}
 	@keyframes fadeIn {
 		0% {

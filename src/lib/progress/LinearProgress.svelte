@@ -378,6 +378,10 @@
 		border-radius: var(--np-linear-progress-track-shape, var(--np-shape-corner-full));
 	}
 
+	.indeterminate.four-color .np-lp-track {
+		animation: four-color-track calc(1750ms * 4) linear infinite;
+	}
+
 	.np-lp-track.ahead {
 		left: min(calc(var(--np-lp-h1) + var(--np-linear-progress-track-gap, 0.25rem)), 100%);
 		right: 0;
@@ -569,6 +573,38 @@
 		}
 		100% {
 			background: var(--np-color-primary);
+		}
+	}
+
+	@keyframes four-color-track {
+		0% {
+			background: var(--np-color-primary-container);
+		}
+
+		15% {
+			background: var(--np-color-primary-container);
+		}
+		25% {
+			background: var(--np-color-primary);
+		}
+		40% {
+			background: var(--np-color-primary);
+		}
+
+		50% {
+			background: var(--np-color-tertiary-container);
+		}
+		65% {
+			background: var(--np-color-tertiary-container);
+		}
+		75% {
+			background: var(--np-color-tertiary);
+		}
+		90% {
+			background: var(--np-color-tertiary);
+		}
+		100% {
+			background: var(--np-color-primary-container);
 		}
 	}
 

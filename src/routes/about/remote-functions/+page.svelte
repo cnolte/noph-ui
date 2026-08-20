@@ -17,8 +17,11 @@
 
 <h1>Remote functions</h1>
 <p>
-	<a href="https://svelte.dev/docs/kit/remote-functions" target="_blank" rel="noreferrer"
-		>Remote functions</a
+	<a
+		class="link"
+		href="https://svelte.dev/docs/kit/remote-functions"
+		target="_blank"
+		rel="noreferrer">Remote functions</a
 	>
 	are SvelteKit's way of calling server code from a component without hand rolling an API route. A
 	<code>form</code>
@@ -31,11 +34,12 @@
 </p>
 <p>
 	The form below wires five components to a single remote function: two <a
+		class="link"
 		href="/components/text-field">TextFields</a
-	>, a <a href="/components/select">Select</a>, a
-	<a href="/components/date-picker">DockedDatePicker</a>
-	and a <a href="/components/checkbox">Checkbox</a>. It validates against a
-	<a href="https://valibot.dev/" target="_blank" rel="noreferrer">Valibot</a>
+	>, a <a class="link" href="/components/select">Select</a>, a
+	<a class="link" href="/components/date-picker">DockedDatePicker</a>
+	and a <a class="link" href="/components/checkbox">Checkbox</a>. It validates against a
+	<a class="link" href="https://valibot.dev/" target="_blank" rel="noreferrer">Valibot</a>
 	schema, the way a real app would. Submit it empty to see every field flag itself, or register
 	<code>ada@example.com</code> to hit a rule the schema cannot express.
 </p>

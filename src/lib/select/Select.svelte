@@ -806,15 +806,9 @@
 		opacity: 1;
 	}
 
-	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))).menu-open .arrow,
-	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))):focus .arrow {
-		color: var(--np-color-primary);
-	}
 	.icon .arrow {
 		display: flex;
-		transition:
-			color 75ms linear 75ms,
-			rotate 150ms cubic-bezier(0.2, 0, 0, 1);
+		transition: rotate 150ms cubic-bezier(0.2, 0, 0, 1);
 	}
 	.field.menu-open .icon .arrow {
 		rotate: 180deg;

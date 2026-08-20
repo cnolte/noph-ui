@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import CheckIcon from '#lib/icons/CheckIcon.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { SegmentedButtonProps } from './types.ts'
@@ -109,7 +110,7 @@
 		align-items: center;
 		border-inline-end: 1px solid var(--np-color-outline);
 		position: relative;
-		transition: all 0.15s linear;
+		transition: all var(--np-motion-expressive-fast-effects);
 	}
 	.np-segmented-button-icon-label {
 		display: inline-flex;
@@ -142,7 +143,7 @@
 		inset: 0;
 		z-index: -1;
 		opacity: 0;
-		transition: opacity 0.15s linear;
+		transition: opacity var(--np-motion-expressive-fast-effects);
 		background-color: var(--np-color-secondary-container);
 	}
 	.width-icon,
@@ -160,7 +161,7 @@
 		width: 0;
 		overflow: hidden;
 		fill: currentColor;
-		transition: width 0.3s ease;
+		transition: width var(--np-motion-expressive-slow-effects);
 	}
 	:global(.check-icon svg) {
 		display: block;
@@ -168,14 +169,14 @@
 	.check-icon-wrapper {
 		width: 0;
 		overflow: hidden;
-		transition: width 0.15s linear;
+		transition: width var(--np-motion-expressive-fast-effects);
 	}
 	.alternate-icon {
 		display: flex;
 		width: 1.5rem;
 		overflow: hidden;
 		fill: currentColor;
-		transition: width 0.3s ease;
+		transition: width var(--np-motion-expressive-slow-effects);
 	}
 	:global(.alternate-icon svg) {
 		display: block;
@@ -186,8 +187,8 @@
 		width: 2rem;
 		overflow: hidden;
 		transition:
-			width 0.15s linear,
-			opacity 0.15s linear;
+			width var(--np-motion-expressive-fast-effects),
+			opacity var(--np-motion-expressive-fast-effects);
 	}
 	.np-segmented-button:has(input:checked) :global(.alternate-icon-wrapper) {
 		width: 0;
@@ -212,20 +213,6 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
-		animation: focusAnimation 0.3s ease forwards;
-	}
-	@keyframes focusAnimation {
-		0% {
-			outline-offset: -3px;
-			outline-width: 3px;
-		}
-		50% {
-			outline-offset: -6px;
-			outline-width: 6px;
-		}
-		100% {
-			outline-offset: -3px;
-			outline-width: 3px;
-		}
+		animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
 	}
 </style>

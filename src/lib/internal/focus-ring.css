@@ -1,0 +1,26 @@
+@keyframes focusAnimation {
+	0% {
+		outline-width: 3px;
+	}
+	50% {
+		outline-width: 6px;
+	}
+	100% {
+		outline-width: 3px;
+	}
+}
+
+@keyframes focusAnimationInset {
+	0% {
+		outline-offset: -3px;
+		outline-width: 3px;
+	}
+	50% {
+		outline-offset: -6px;
+		outline-width: 6px;
+	}
+	100% {
+		outline-offset: -3px;
+		outline-width: 3px;
+	}
+}
