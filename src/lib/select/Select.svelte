@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onFormReset } from '#lib/form-reset.js'
+	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
 	import Item from '#lib/list/Item.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
 	import Check from '#lib/select/Check.svelte'
@@ -256,10 +257,9 @@
 </script>
 
 {#snippet arrows()}
-	<svg height="5" viewBox="7 10 10 5" focusable="false">
-		<polygon class="down" stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
-		<polygon class="up" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15"></polygon>
-	</svg>
+	<span class="arrow">
+		<ArrowDropDownIcon />
+	</span>
 {/snippet}
 
 <div
@@ -806,16 +806,18 @@
 		opacity: 1;
 	}
 
-	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))).menu-open .down,
-	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))):focus .down {
+	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))).menu-open .arrow,
+	.field:not(:has(select:is(:user-invalid, [aria-invalid='true']))):focus .arrow {
 		color: var(--np-color-primary);
 	}
-	.icon .down {
-		transition: color 75ms linear 75ms;
+	.icon .arrow {
+		display: flex;
+		transition:
+			color 75ms linear 75ms,
+			rotate 150ms cubic-bezier(0.2, 0, 0, 1);
 	}
-	.icon .up {
-		opacity: 0;
-		transition: color 75ms linear 75ms;
+	.field.menu-open .icon .arrow {
+		rotate: 180deg;
 	}
 
 	.content {

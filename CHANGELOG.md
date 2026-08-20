@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.2] - 2026-08-20
+
+### Fixed
+
+- **TextField**: an `IconButton` in `start` or `end` sat too far from the
+  edge and the input text.
+- **Select** and **NativeSelect**: the dropdown arrow is now the library's
+  `arrow_drop_down` icon and rotates 180° on open, instead of a hand-drawn
+  shape crossfading between two polygons.
+
 ## [0.40.1] - 2026-08-19
 
 ### Fixed

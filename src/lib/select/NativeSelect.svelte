@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
 	import type { HTMLSelectAttributes } from 'svelte/elements'
 	interface SelectProps extends HTMLSelectAttributes {
 		label?: string
@@ -64,9 +65,9 @@
 		</div>
 		<div class="np-select-state-layer"></div>
 	{/if}
-	<svg class="arrow" height="6" viewBox="7 10 10 5" focusable="false">
-		<polygon stroke="none" fill-rule="evenodd" points="7 10 12 15 17 10"></polygon>
-	</svg>
+	<span class="arrow">
+		<ArrowDropDownIcon />
+	</span>
 	<select
 		oninput={(event) => {
 			if (
@@ -198,11 +199,7 @@
 	}
 
 	.arrow {
-		padding-inline: 0.375rem;
-		padding-block: 0.5625rem;
-		box-sizing: border-box;
-		width: 24px;
-		height: 24px;
+		display: flex;
 		fill: currentColor;
 		position: absolute;
 		pointer-events: none;

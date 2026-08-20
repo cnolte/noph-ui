@@ -460,6 +460,14 @@
 		margin-inline-start: 1rem;
 		margin-inline-end: 0.75rem;
 	}
+	.start:has(:global(.np-icon-button)) {
+		margin-inline-start: 0.25rem;
+		margin-inline-end: 0.5rem;
+	}
+	.end:has(:global(.np-icon-button)) {
+		margin-inline-start: 0.5rem;
+		margin-inline-end: 0.25rem;
+	}
 	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .end,
 	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .end {
 		color: var(--np-color-error);
