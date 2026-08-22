@@ -141,15 +141,20 @@
 	}
 	.np-tooltip:popover-open {
 		opacity: 1;
-		animation: scaleIn var(--np-motion-expressive-fast-spatial);
+		scale: 1;
+		animation:
+			fadeIn var(--np-motion-expressive-fast-effects),
+			scaleIn var(--np-motion-expressive-fast-spatial);
 	}
 
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+	}
 	@keyframes scaleIn {
 		from {
-			scale: 0;
-		}
-		to {
-			scale: 1;
+			scale: 0.8;
 		}
 	}
 </style>

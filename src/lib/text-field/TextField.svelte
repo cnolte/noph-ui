@@ -18,6 +18,8 @@
 		populated = false,
 		inputElement = $bindable(),
 		placeholder = ' ',
+		minLines = 1,
+		maxLines = 4,
 		children,
 		focused = $bindable(false),
 		clientWidth = $bindable(),
@@ -31,11 +33,13 @@
 
 <label
 	style={(variant === 'outlined'
-		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-inline-start:-2.25rem;--_focus-outline-width:3px;'
+		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-inline-start:-2.25rem;'
 		: !label?.length
 			? '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline);--top-space:1rem;--bottom-space:1rem; '
 			: '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline); ' +
-				(children ? '--top-space:2rem;--bottom-space:1rem;' : '')) + style}
+				(children ? '--top-space:2rem;--bottom-space:1rem;' : '')) +
+		`--_min-height:calc(${minLines} * 1lh);--_max-height:${`calc(${maxLines} * 1lh)`};` +
+		style}
 	class={['text-field', attributes.class]}
 	bind:this={element}
 	bind:clientWidth
@@ -43,7 +47,6 @@
 >
 	<div
 		class="field"
-		class:resizable={attributes.type === 'textarea'}
 		class:no-label={!label?.length}
 		class:with-start={start}
 		class:with-end={end}
@@ -109,8 +112,7 @@
 								bind:focused
 								bind:value
 								bind:this={inputElement}
-								class="input"
-								rows={attributes.rows || 2}></textarea>
+								class="input"></textarea>
 						{:else}
 							<div class="input-wrapper">
 								{#if suffixText}
@@ -272,7 +274,6 @@
 	}
 	.text-field {
 		display: inline-flex;
-		resize: both;
 		text-align: start;
 	}
 	:global(label) {
@@ -324,11 +325,6 @@
 		background: var(--np-color-on-surface);
 		opacity: 0.08;
 	}
-	.resizable .np-container > * {
-		top: var(--_focus-outline-width, 3px);
-		inset-inline-start: var(--_focus-outline-width, 0);
-	}
-
 	.content * {
 		all: unset;
 		color: currentColor;
@@ -418,6 +414,11 @@
 	.content textarea {
 		margin-top: var(--top-space, 1.5rem);
 		margin-bottom: var(--bottom-space, 0.5rem);
+		field-sizing: content;
+		min-inline-size: 20ch;
+		max-inline-size: 100%;
+		min-height: var(--_min-height, 1lh);
+		max-height: var(--_max-height, 4lh);
 	}
 
 	.content .input-wrapper .input,
@@ -627,25 +628,12 @@
 	.disabled .label:not(.np-hidden) {
 		opacity: 0.38;
 	}
-	.resizable:not(.disabled) .np-container {
-		resize: inherit;
-		overflow: hidden;
-	}
 	.disabled.no-label .content,
 	.disabled:has(input:-webkit-autofill) .content,
 	.disabled:has(input:not(:placeholder-shown)) .content,
 	.disabled:has(textarea:not(:placeholder-shown)) .content,
 	.disabled.populated .content {
 		opacity: 0.38;
-	}
-	.field,
-	.container-overflow {
-		resize: inherit;
-	}
-	.resizable .np-container {
-		bottom: 3px;
-		inset-inline-end: var(--_focus-outline-width, 0);
-		clip-path: inset(3px 0 0 var(--_focus-outline-width));
 	}
 	.outline-start,
 	.outline-end {

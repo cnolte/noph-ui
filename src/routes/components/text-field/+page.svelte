@@ -2,9 +2,13 @@
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
+	import Menu from '#lib/menu/Menu.svelte'
+	import MenuItem from '#lib/menu/MenuItem.svelte'
 	import TextField from '#lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+
+	let chatPromptPlusBtn: HTMLElement | undefined = $state()
 </script>
 
 <svelte:head>
@@ -85,13 +89,86 @@
 	If you want to avoid using an id, you can use aria-label instead.
 </blockquote>
 <h3 id="textarea">Textarea<a href="#textarea" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	A <code>type="textarea"</code> field grows with its content, from <code>minLines</code> up to
+	<code>maxLines</code>, then scrolls.
+</p>
 <DemoContainer>
-	<TextField label="Resize" type="textarea" />
-	<TextField label="Resize" type="textarea" variant="filled" />
+	<TextField label="Message" type="textarea" />
+	<TextField label="Message" type="textarea" variant="filled" />
 </DemoContainer>
 <Code
-	value={`<TextField label="Resize" type="textarea" />
-<TextField label="Resize" type="textarea" variant="filled" />`}
+	value={`<TextField label="Message" type="textarea" />
+<TextField label="Message" type="textarea" variant="filled" />`}
+/>
+<p>Use <code>minLines</code> and <code>maxLines</code> to change that range.</p>
+<DemoContainer>
+	<TextField label="Bio" type="textarea" minLines={3} maxLines={6} />
+</DemoContainer>
+<Code value={`<TextField label="Bio" type="textarea" minLines={3} maxLines={6} />`} />
+
+<h3 id="chat-prompt">Chat prompt<a href="#chat-prompt" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	A common use of an auto-growing textarea is a chat prompt field, like the input of an AI tool.
+	The leading "+" button below opens a menu, similar to ChatGPT's tools menu.
+</p>
+<DemoContainer>
+	<TextField placeholder="Ask anything" type="textarea" maxLines={8} style="width:22rem">
+		{#snippet start()}
+			<IconButton
+				title="Add"
+				style="anchor-name:--chat-prompt-plus"
+				popovertarget="chat-prompt-menu"
+				bind:element={chatPromptPlusBtn}
+			>
+				<Icon>add</Icon>
+			</IconButton>
+		{/snippet}
+		{#snippet end()}
+			<IconButton title="Send"><Icon>send</Icon></IconButton>
+		{/snippet}
+	</TextField>
+</DemoContainer>
+<Menu
+	anchor={chatPromptPlusBtn}
+	id="chat-prompt-menu"
+	style="position-anchor:--chat-prompt-plus"
+>
+	<MenuItem>
+		Web search
+		{#snippet start()}<Icon>language</Icon>{/snippet}
+	</MenuItem>
+	<MenuItem>
+		Connect apps
+		{#snippet start()}<Icon>webhook</Icon>{/snippet}
+	</MenuItem>
+</Menu>
+<Code
+	value={`<TextField placeholder="Ask anything" type="textarea" maxLines={8} style="width:22rem">
+	{#snippet start()}
+		<IconButton
+			title="Add"
+			style="anchor-name:--chat-prompt-plus"
+			popovertarget="chat-prompt-menu"
+			bind:element={chatPromptPlusBtn}
+		>
+			<Icon>add</Icon>
+		</IconButton>
+	{/snippet}
+	{#snippet end()}
+		<IconButton title="Send"><Icon>send</Icon></IconButton>
+	{/snippet}
+</TextField>
+<Menu anchor={chatPromptPlusBtn} id="chat-prompt-menu" style="position-anchor:--chat-prompt-plus">
+	<MenuItem>
+		Web search
+		{#snippet start()}<Icon>language</Icon>{/snippet}
+	</MenuItem>
+	<MenuItem>
+		Connect apps
+		{#snippet start()}<Icon>webhook</Icon>{/snippet}
+	</MenuItem>
+</Menu>`}
 />
 
 <h3 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -393,6 +470,21 @@
 			>
 			<td><code>'text'</code></td>
 			<td>Specifies the type of the field.</td>
+		</tr>
+		<tr>
+			<td><code>minLines</code></td>
+			<td><code>number</code></td>
+			<td><code>1</code></td>
+			<td>Minimum number of visible lines. Only applies to <code>type="textarea"</code>.</td>
+		</tr>
+		<tr>
+			<td><code>maxLines</code></td>
+			<td><code>number</code></td>
+			<td><code>4</code></td>
+			<td>
+				Number of lines the field grows to before it scrolls. Only applies to
+				<code>type="textarea"</code>.
+			</td>
 		</tr>
 		<tr>
 			<td><code>variant</code></td>

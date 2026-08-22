@@ -131,16 +131,21 @@
 		box-shadow: var(--np-elevation-2);
 		border: none;
 		opacity: 0;
+		scale: 0.8;
+		transform-origin: top center;
 		transition:
-			opacity var(--easing-fast),
+			opacity var(--np-motion-expressive-fast-effects),
+			scale var(--np-motion-expressive-fast-spatial),
 			display 150ms allow-discrete,
 			overlay 150ms allow-discrete;
 	}
 
 	select:open::picker(select) {
 		opacity: 1;
+		scale: 1;
 		@starting-style {
 			opacity: 0;
+			scale: 0.8;
 		}
 	}
 

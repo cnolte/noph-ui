@@ -148,10 +148,11 @@
 		padding: 0 1rem;
 		color: var(--np-color-on-surface-variant);
 		height: 3rem;
-		transition: color 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+		transition: color var(--np-motion-expressive-fast-effects);
 	}
 	.np-tab-content-active {
 		--_focus-bottom: 4px;
+		transition: color var(--np-motion-expressive-default-effects);
 	}
 	.np-tab-content-active.primary {
 		color: var(--np-color-primary);

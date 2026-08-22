@@ -29,6 +29,24 @@
 		element?.hidePopover()
 	}
 
+	// CSS anchor positioning has no way to read which position-try fallback won, so the
+	// scale pivot can't be expressed declaratively (see open spec request for @position-try
+	// to set transform-origin: https://github.com/w3c/csswg-drafts/issues/11666). Until that
+	// lands, mirror Compose's calculateTransformOrigin (Menu.kt) in JS instead.
+	const calculateTransformOrigin = (anchorRect: DOMRect, menuRect: DOMRect) => {
+		const pivot = (anchorStart: number, anchorEnd: number, menuStart: number, menuEnd: number) => {
+			if (menuStart >= anchorEnd) return 0
+			if (menuEnd <= anchorStart) return 1
+			if (menuEnd === menuStart) return 0
+			const intersectionCenter =
+				(Math.max(anchorStart, menuStart) + Math.min(anchorEnd, menuEnd)) / 2
+			return (intersectionCenter - menuStart) / (menuEnd - menuStart)
+		}
+		const x = pivot(anchorRect.left, anchorRect.right, menuRect.left, menuRect.right)
+		const y = pivot(anchorRect.top, anchorRect.bottom, menuRect.top, menuRect.bottom)
+		return `${x * 100}% ${y * 100}%`
+	}
+
 	const refreshValues = () => {
 		if (element && anchor && open) {
 			const anchorRect = anchor.getBoundingClientRect()
@@ -40,6 +58,10 @@
 			const above = Math.max(anchorRect.top - margin, 0)
 			const overAnchor = coverAnchor && wanted > below && wanted > above && wanted <= room
 			element.style.maxHeight = `${Math.floor(overAnchor ? room : Math.max(below, above))}px`
+			element.style.transformOrigin = calculateTransformOrigin(
+				anchorRect,
+				element.getBoundingClientRect(),
+			)
 		}
 	}
 	$effect(refreshValues)
@@ -90,6 +112,7 @@
 		scrollbar-width: thin;
 		justify-self: var(--np-menu-justify-self, anchor-center);
 		position-area: var(--np-menu-position-area, bottom);
+		transform-origin: var(--np-menu-transform-origin, top center);
 		position-try-fallbacks:
 			flip-block,
 			flip-inline,
@@ -112,14 +135,19 @@
 
 	.np-menu-container:popover-open {
 		opacity: 1;
-		animation: fadeIn var(--np-motion-expressive-default-effects);
+		scale: 1;
+		animation:
+			fadeIn var(--np-motion-expressive-fast-effects),
+			scaleIn var(--np-motion-expressive-fast-spatial);
 	}
 	@keyframes fadeIn {
-		0% {
+		from {
 			opacity: 0;
 		}
-		100% {
-			opacity: 1;
+	}
+	@keyframes scaleIn {
+		from {
+			scale: 0.8;
 		}
 	}
 </style>

@@ -5,6 +5,27 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.0] - 2026-08-22
+
+### Changed (breaking)
+
+- **TextField**: `type="textarea"` no longer supports manual resizing
+  (`resize: both`, `rows`). It now auto-grows with content between
+  `minLines` and `maxLines`.
+
+### Added
+
+- **TextField**: `minLines` and `maxLines` props for `type="textarea"`.
+
+### Fixed
+
+- **Menu**: the open animation now scales in from the anchor edge instead
+  of a fixed corner.
+- **NativeSelect** and **Tooltip**: popovers now fade and scale in together
+  instead of scaling alone.
+- **Tabs** and **Tab**: indicator and label color transitions now use the
+  default (not fast) motion tokens.
+
 ## [0.40.3] - 2026-08-20
 
 ### Fixed

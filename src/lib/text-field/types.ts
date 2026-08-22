@@ -42,6 +42,8 @@ export interface InputFieldProps extends HTMLInputAttributes, FieldProps {
 
 export interface TextAreaFieldProps extends HTMLTextareaAttributes, FieldProps {
 	type: 'textarea'
+	minLines?: number
+	maxLines?: number
 }
 
 export interface TextFieldProps
@@ -59,4 +61,6 @@ export interface TextFieldProps
 	type?: TextFieldType | 'textarea'
 	value?: string | number | null
 	defaultValue?: string | number | null
+	minLines?: number
+	maxLines?: number
 }
