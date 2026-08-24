@@ -104,6 +104,9 @@
 		position: relative;
 		font-size: 1rem;
 		display: inline-block;
+		box-sizing: border-box;
+		min-width: var(--np-select-min-width, 210px);
+		max-width: var(--np-select-max-width, 100%);
 		color: var(--np-color-on-surface-variant);
 	}
 
