@@ -159,7 +159,11 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
-		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.np-card-container:focus-visible {
+			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 	.np-card-disabled {
 		opacity: 0.38;

@@ -151,7 +151,11 @@
 		outline-width: 3px;
 		outline-offset: -3px;
 		border-radius: var(--np-shape-corner-extra-small);
-		animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.np-item:focus-visible {
+			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 
 	div.np-item {

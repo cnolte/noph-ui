@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { on } from 'svelte/events'
+	import { MediaQuery } from 'svelte/reactivity'
 	import type { RippleProps } from './types.ts'
 
 	let {
@@ -21,6 +22,8 @@
 	const ANIMATION_FILL = 'forwards'
 	const EASING_STANDARD = 'cubic-bezier(0.2, 0, 0, 1)'
 	const TOUCH_DELAY_MS = 150
+
+	const reducedMotion = new MediaQuery('(prefers-reduced-motion: reduce)', false)
 
 	let rippleSize = $state('')
 	let rippleScale = $state('')
@@ -128,7 +131,7 @@
 			},
 			{
 				pseudoElement: PRESS_PSEUDO,
-				duration: PRESS_GROW_MS,
+				duration: reducedMotion.current ? 0 : PRESS_GROW_MS,
 				easing: EASING_STANDARD,
 				fill: ANIMATION_FILL,
 			},

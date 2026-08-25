@@ -808,7 +808,6 @@
 
 	.icon .arrow {
 		display: flex;
-		transition: rotate 150ms cubic-bezier(0.2, 0, 0, 1);
 	}
 	.field.menu-open .icon .arrow {
 		rotate: 180deg;
@@ -949,9 +948,7 @@
 		inset-inline-start: var(--floating-label-left, 0);
 	}
 	.label {
-		transition-property: all;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 150ms;
+		transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
 		box-sizing: border-box;
 		color: var(--np-color-on-surface-variant);
 		overflow: hidden;
@@ -1137,5 +1134,17 @@
 	.disabled .outline-end,
 	.disabled .outline-notch {
 		opacity: 0.12;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.icon .arrow {
+			transition: rotate 150ms cubic-bezier(0.2, 0, 0, 1);
+		}
+
+		.label {
+			transition-property: all;
+			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			transition-duration: 150ms;
+		}
 	}
 </style>

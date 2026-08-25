@@ -216,7 +216,6 @@
 		inset-inline: 0;
 		bottom: var(--_focus-bottom, 0);
 		border-radius: var(--np-shape-corner-medium);
-		transition: height 0.3s ease;
 		pointer-events: none;
 	}
 	.np-tab:focus-visible {
@@ -228,6 +227,15 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
-		animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.focus-area {
+			transition: height 0.3s ease;
+		}
+
+		.np-tab:focus-visible .focus-area {
+			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 </style>

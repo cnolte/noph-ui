@@ -2,6 +2,7 @@
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
+	import RichTooltip from '#lib/tooltip/RichTooltip.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
@@ -13,60 +14,105 @@
 
 <h1>Tooltips</h1>
 <p>
-	A tooltip labels an element that is not self-explanatory, most often an icon-only control. It
-	appears on hover and on keyboard focus, and disappears again on leave, on blur or on
-	<kbd>Escape</kbd>.
-</p>
-<p>
-	A tooltip finds its own anchor: it looks for the element whose <code>aria-describedby</code>
-	points at the tooltip's <code>id</code>, and attaches its listeners there. That is also what makes
-	the connection readable for assistive technology, so the <code>id</code> is not optional.
+	A tooltip explains a control that does not explain itself. It sits in the top layer as a popover,
+	so nothing clips it, and the browser drives it wherever it can.
 </p>
 
-<h2 id="basic-tooltip">
-	Basic tooltip<a href="#basic-tooltip" aria-hidden="true" tabindex="-1">#</a>
-</h2>
+<h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<div aria-describedby="example-tooltip-1">Hover over this text</div>
-	<Tooltip id="example-tooltip-1">This is a basic tooltip</Tooltip>
+	<IconButton title="Add to favorites"><Icon>favorite</Icon></IconButton>
+	<IconButton
+		popovertarget="example-rich-tooltip"
+		popovertargetaction="show"
+		aria-label="About tooltips"
+	>
+		<Icon>info</Icon>
+	</IconButton>
+	<RichTooltip id="example-rich-tooltip" subhead="Rich tooltip">
+		Room for a sentence or two, and an action.
+		{#snippet actions()}
+			<Button variant="text">Learn more</Button>
+		{/snippet}
+	</RichTooltip>
 </DemoContainer>
+<ul>
+	<li>
+		<strong>Plain</strong> labels the control. It shows on hover and on focus, and leaves again.
+	</li>
+	<li>
+		<strong>Rich</strong> adds a subhead, text and an action, and stays until it is dismissed.
+	</li>
+</ul>
 <Code
-	value={`<div aria-describedby="tooltip">
-	Hover over this text
-</div>
-<Tooltip id="tooltip">
-	This is a basic tooltip
-</Tooltip>`}
+	value={`<IconButton title="Add to favorites">
+	<Icon>favorite</Icon>
+</IconButton>
+
+<IconButton popovertarget="tip" popovertargetaction="show" aria-label="About tooltips">
+	<Icon>info</Icon>
+</IconButton>
+<RichTooltip id="tip" subhead="Rich tooltip">
+	Room for a sentence or two, and an action.
+	{#snippet actions()}
+		<Button variant="text">Learn more</Button>
+	{/snippet}
+</RichTooltip>`}
 />
 
-<h2 id="button-with-tooltip">
-	Button with tooltip<a href="#button-with-tooltip" aria-hidden="true" tabindex="-1">#</a>
+<h2 id="plain-tooltip">
+	Plain tooltip<a href="#plain-tooltip" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>Button</code> and <code>IconButton</code> have built-in support, so a <code>title</code> is
-	enough. They render the tooltip for you, wire up <code>aria-describedby</code> and use the same
-	text as the <code>aria-label</code>, which is what makes an icon-only button announceable. A
-	disabled or loading button drops its tooltip, since there is nothing left to hover.
+	<code>Button</code> and <code>IconButton</code> take a <code>title</code> and do the rest: it
+	becomes the tooltip text and the <code>aria-label</code>, and a disabled or loading control drops
+	it. Any other element becomes the anchor by pointing <code>aria-describedby</code> at the
+	tooltip's
+	<code>id</code>.
 </p>
 <DemoContainer>
 	<Button title="This is a button tooltip">Hover over this button</Button>
-	<IconButton title="Add to favorites"><Icon>favorite</Icon></IconButton>
+	<div aria-describedby="example-tooltip">Hover over this text</div>
+	<Tooltip id="example-tooltip">This is a basic tooltip</Tooltip>
 </DemoContainer>
 <Code
 	value={`<Button title="This is a button tooltip">
 	Hover over this button
 </Button>
-<IconButton title="Add to favorites">
-	<Icon>favorite</Icon>
-</IconButton>`}
+
+<div aria-describedby="tip">Hover over this text</div>
+<Tooltip id="tip">This is a basic tooltip</Tooltip>`}
 />
+<p>
+	After the pointer leaves it waits half a second before hiding, so the text inside stays reachable.
+	<kbd>Escape</kbd> closes it.
+</p>
+
+<h2 id="rich-tooltip">
+	Rich tooltip<a href="#rich-tooltip" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	A rich tooltip is persistent. A click or a tap on the control opens it, and it stays open when the
+	pointer leaves, until the person interacts with something else: <kbd>Escape</kbd> or a click outside
+	closes it. Hovering is deliberately not a trigger, so a panel with an action in it does not appear under
+	a pointer that is only passing through.
+</p>
+<p>
+	The control points at it with <code>popovertarget</code>, and
+	<code>popovertargetaction="show"</code> keeps a second click on the control from closing it again.
+	A keyboard reaches it the same way, since <kbd>Enter</kbd> on the control is a click.
+</p>
+<p>
+	It takes a <code>subhead</code>, its children as the text and an <code>actions</code> snippet, and
+	it is at most <code>20rem</code> wide. <code>bind:open</code>, <code>element</code>,
+	<code>showPopover</code> and <code>hidePopover</code> are there to open and close it yourself, which
+	is how Material introduces a new feature on page load.
+</p>
 
 <h2 id="positioning">Positioning<a href="#positioning" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	A tooltip sits above its anchor and centers on it. Both sides are custom properties, so you can
-	move it without touching the component. It is rendered in the top layer as a
-	<code>popover="hint"</code>, which keeps it above scroll containers and clipping ancestors, and it
-	flips to the other side by itself when there is no room left.
+	A plain tooltip sits centered above its anchor, a rich one centered below its control. Neither
+	covers it: they flip to the other side when there is no room, and shift back in when a window edge
+	is in the way. Both sides are custom properties.
 </p>
 <DemoContainer>
 	<Button title="Shown below the button" --np-tooltip-position-area="bottom">Below</Button>
@@ -77,41 +123,104 @@
 	>
 		Right
 	</Button>
+	<IconButton
+		popovertarget="placement-rich-tooltip"
+		popovertargetaction="show"
+		aria-label="About placement"
+	>
+		<Icon>info</Icon>
+	</IconButton>
+	<RichTooltip
+		id="placement-rich-tooltip"
+		subhead="Bottom right"
+		--np-rich-tooltip-position-area="bottom right"
+		--np-rich-tooltip-justify-self="start"
+	>
+		Room for a sentence or two.
+	</RichTooltip>
 </DemoContainer>
 <Code
 	value={`<Button title="Shown below the button" --np-tooltip-position-area="bottom">
 	Below
-</Button>`}
+</Button>
+
+<Button
+	title="Shown to the right"
+	--np-tooltip-position-area="right"
+	--np-tooltip-justify-self="auto"
+>
+	Right
+</Button>
+
+<IconButton popovertarget="tip" popovertargetaction="show" aria-label="About placement">
+	<Icon>info</Icon>
+</IconButton>
+<RichTooltip
+	id="tip"
+	subhead="Bottom right"
+	--np-rich-tooltip-position-area="bottom right"
+	--np-rich-tooltip-justify-self="start"
+>
+	Room for a sentence or two.
+</RichTooltip>`}
 />
+<p>
+	That last one is the placement Material specifies by default: the panel's top left corner sits at
+	the control's bottom right corner. Centered below, the way this component leaves it, is the
+	variant Material allows on desktop.
+</p>
+
+<h2 id="without-javascript">
+	Without JavaScript<a href="#without-javascript" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	Everything a tooltip needs is in the markup the server sends: <code>interestfor</code> on a plain
+	tooltip's anchor, <code>popovertarget</code> on a rich tooltip's control, the popover itself and
+	CSS for the timing. Either attribute also makes the control the implicit anchor of its popover, so
+	there is no <code>anchor-name</code> to set.
+</p>
+<Code
+	value={`<button interestfor="save-tip" aria-describedby="save-tip">
+	Save
+</button>
+<Tooltip id="save-tip">Save the file</Tooltip>`}
+/>
+<p>
+	<code>interestfor</code> only exists on <code>a</code>, <code>area</code> and
+	<code>button</code>. Any other anchor, and any browser without it, falls back to listeners the
+	plain tooltip attaches on mount. A rich tooltip attaches none at all: opening it is a click on its
+	control, which the browser handles on its own.
+</p>
 
 <h2 id="touch-devices">
 	Touch devices<a href="#touch-devices" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	There is no hover on a touch screen and no reliable way to reveal a tooltip there, so on devices
-	that report <code>(hover: none) and (pointer: coarse)</code> the tooltip is not rendered at all. Never
-	put information in a tooltip that is not available anywhere else.
+	A link or a button shows its plain tooltip on long press, and a rich tooltip opens on tap. The
+	fallback has no hover to work with, so it stays quiet on
+	<code>(hover: none) and (pointer: coarse)</code>. Never put information in a tooltip that is not
+	available anywhere else.
 </p>
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The tooltip renders <code>role="tooltip"</code> and is tied to its anchor through
-	<code>aria-describedby</code>, so a screen reader reads it as a description of the control rather
-	than as separate content.
+	Both render <code>role="tooltip"</code>. A plain tooltip hangs off its anchor's
+	<code>aria-describedby</code>; a rich one gets <code>aria-expanded</code> and
+	<code>aria-details</code> from <code>popovertarget</code>, and <kbd>Tab</kbd> moves from the control
+	into the panel.
 </p>
 <p>
-	It only opens on <code>:focus-visible</code>, which means it stays out of the way for pointer
-	users while still appearing for anyone tabbing through the page. <kbd>Escape</kbd> closes it, and after
-	the pointer leaves it waits half a second before hiding, so the tooltip itself can be reached, for instance
-	to select the text inside it.
+	A plain tooltip opens on keyboard focus but not on a plain click, so it stays out of the way of a
+	pointer user; a rich one opens on <kbd>Enter</kbd>, the same click a pointer makes. On an
+	icon-only control, <code>title</code> gives the button its name and its description in one go. An action
+	inside a tooltip is a shortcut, never the only way to get somewhere.
 </p>
 <Code
-	value={`<IconButton aria-describedby="delete-tip">
+	value={`<IconButton title="Delete message">
 	<Icon>delete</Icon>
-</IconButton>
-<Tooltip id="delete-tip">Delete message</Tooltip>`}
+</IconButton>`}
 />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -131,21 +240,38 @@
 			<td><code>--np-tooltip-justify-self</code></td>
 			<td><code>anchor-center</code></td>
 		</tr>
+		<tr>
+			<td><code>--np-rich-tooltip-position-area</code></td>
+			<td><code>bottom</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-rich-tooltip-justify-self</code></td>
+			<td><code>anchor-center</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-rich-tooltip-action-inset</code></td>
+			<td><code>1rem</code></td>
+		</tr>
 	</tbody>
 </table>
 <p>
-	<code>--np-tooltip-position-area</code> takes any CSS <code>position-area</code> value, for
-	example
-	<code>bottom</code>, <code>right</code> or <code>bottom span-right</code>. The colors come from
-	the
-	<code>inverse-surface</code> and <code>inverse-on-surface</code> roles of the theme.
+	Both position properties take any CSS <code>position-area</code> value, for example
+	<code>right</code> or <code>bottom right</code>. The colors come from the theme: a plain tooltip
+	uses the <code>inverse-surface</code> roles, a rich one
+	<code>surface-container</code> and <code>on-surface-variant</code>.
+</p>
+<p>
+	The action row is pulled out by <code>--np-rich-tooltip-action-inset</code> so the label of the
+	action lines up with the text above it. It matches the inline padding of a small
+	<code>Button</code>, so set it to the padding of the action you use if that differs.
 </p>
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
-<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
+<h3 id="tooltip-attributes">
+	Tooltip attributes<a href="#tooltip-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
 <p>
-	Everything else you pass is forwarded to the tooltip element, so <code>class</code>,
-	<code>style</code> and the usual event handlers work as expected. <code>role</code> is set by the component.
+	Everything else is forwarded to the tooltip element. <code>role</code> is set by the component.
 </p>
 <table>
 	<thead>
@@ -162,7 +288,7 @@
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>Connects the tooltip to its anchor. The anchor is the element with a matching
+				>Connects the tooltip to its anchor, the element with a matching
 				<code>aria-describedby</code>.</td
 			>
 		</tr>
@@ -170,13 +296,66 @@
 			<td><code>open</code></td>
 			<td><code>boolean | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Bindable. Reflects whether the tooltip is currently shown.</td>
+			<td>Bindable. Reflects whether the tooltip is shown.</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLDivElement | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Bindable reference to the tooltip element.</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3 id="rich-tooltip-attributes">
+	Rich tooltip attributes<a href="#rich-tooltip-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
+<p>
+	Everything else is forwarded to the panel. <code>role</code> and <code>popover</code> are set by the
+	component.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>id</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Connects the tooltip to its control, the element with a matching
+				<code>popovertarget</code>.</td
+			>
+		</tr>
+		<tr>
+			<td><code>subhead</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Title line above the text.</td>
+		</tr>
+		<tr>
+			<td><code>actions</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Row below the text, meant for one or two text buttons.</td>
+		</tr>
+		<tr>
+			<td><code>open</code></td>
+			<td><code>boolean | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable in both directions. Setting it opens or closes the tooltip.</td>
+		</tr>
+		<tr>
+			<td><code>element</code></td>
+			<td><code>HTMLDivElement | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Bindable reference to the panel.</td>
 		</tr>
 	</tbody>
 </table>

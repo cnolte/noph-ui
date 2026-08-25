@@ -588,7 +588,7 @@
 		inset-inline-start: var(--floating-label-inline-start, 0);
 	}
 	.label {
-		transition: all var(--np-motion-expressive-fast-effects);
+		transition: color var(--np-motion-expressive-fast-effects);
 		box-sizing: border-box;
 		color: var(--np-color-on-surface-variant);
 		overflow: hidden;
@@ -792,5 +792,11 @@
 	.disabled .outline-end,
 	.disabled .outline-notch {
 		opacity: 0.12;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.label {
+			transition: all var(--np-motion-expressive-fast-effects);
+		}
 	}
 </style>

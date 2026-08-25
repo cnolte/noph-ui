@@ -110,19 +110,27 @@
 
 	.np-navigation-drawer-container[popover] .np-navigation-wrapper {
 		transform: var(--np-navigation-drawer-start, translateX(-100%));
-		transition: transform var(--np-motion-standard-slow-spatial);
-	}
-
-	.np-navigation-drawer-container[popover] {
-		transition:
-			overlay var(--np-motion-standard-slow-spatial) allow-discrete,
-			display var(--np-motion-standard-slow-spatial) allow-discrete;
 	}
 
 	.np-navigation-drawer-container:popover-open .np-navigation-wrapper {
 		transform: translateX(0);
-		@starting-style {
-			transform: var(--np-navigation-drawer-start, translateX(-100%));
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-navigation-drawer-container[popover] .np-navigation-wrapper {
+			transition: transform var(--np-motion-standard-slow-spatial);
+		}
+
+		.np-navigation-drawer-container[popover] {
+			transition:
+				overlay var(--np-motion-standard-slow-spatial) allow-discrete,
+				display var(--np-motion-standard-slow-spatial) allow-discrete;
+		}
+
+		.np-navigation-drawer-container:popover-open .np-navigation-wrapper {
+			@starting-style {
+				transform: var(--np-navigation-drawer-start, translateX(-100%));
+			}
 		}
 	}
 	.np-navigation-drawer {

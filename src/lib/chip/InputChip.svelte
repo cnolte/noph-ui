@@ -150,7 +150,6 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
-		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
 	}
 
 	.np-input-chip-disabled .np-input-chip-label {
@@ -165,5 +164,11 @@
 	.np-input-chip-selected.np-input-chip-disabled::before {
 		outline-color: transparent;
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-input-chip:has(:focus-visible) {
+			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 </style>

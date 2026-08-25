@@ -44,7 +44,7 @@
 	<meta property="og:title" content="Noph UI - Material 3 Expressive components for Svelte" />
 	<meta
 		property="og:description"
-		content="Material 3 Expressive components for Svelte. Dynamic theming from a single color, zero dependencies, 27 components."
+		content="Material 3 Expressive components for Svelte. Dynamic theming from a single color, zero dependencies, 36 components."
 	/>
 	<meta name="twitter:card" content="summary" />
 </svelte:head>
@@ -87,7 +87,7 @@
 	</div>
 	<dl class="stats">
 		<div>
-			<dt>27</dt>
+			<dt>36</dt>
 			<dd>components</dd>
 		</div>
 		<div>

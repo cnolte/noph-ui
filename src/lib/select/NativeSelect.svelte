@@ -138,7 +138,6 @@
 		transform-origin: top center;
 		transition:
 			opacity var(--np-motion-expressive-fast-effects),
-			scale var(--np-motion-expressive-fast-spatial),
 			display 150ms allow-discrete,
 			overlay 150ms allow-discrete;
 	}
@@ -148,7 +147,6 @@
 		scale: 1;
 		@starting-style {
 			opacity: 0;
-			scale: 0.8;
 		}
 	}
 
@@ -184,7 +182,8 @@
 
 	.np-select-outline-start,
 	.np-select-outline-notch,
-	.np-select-outline-end {
+	.np-select-outline-end,
+	.np-select-filled {
 		transition:
 			border-color var(--easing-fast),
 			border-width var(--easing-fast);
@@ -213,7 +212,6 @@
 		pointer-events: none;
 		inset-inline-end: 0.75rem;
 		inset-block-start: 1rem;
-		transition: rotate var(--easing-fast);
 	}
 
 	.np-select-container:has(select:open) .arrow {
@@ -261,9 +259,6 @@
 		border-start-start-radius: var(--np-shape-corner-extra-small);
 		border-start-end-radius: var(--np-shape-corner-extra-small);
 		border-block-end: 1px solid var(--np-color-on-surface-variant);
-		transition:
-			border-color var(--easing-fast),
-			border-width var(--easing-fast);
 	}
 
 	.np-select-container:focus-within .np-select-filled {
@@ -309,18 +304,8 @@
 		transform: translateY(0.5rem);
 	}
 
-	.animate-label label {
-		transition-property: font-size;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 150ms;
-	}
-
 	.np-select-container:focus-within label {
 		color: var(--np-color-primary);
-	}
-
-	.animate-label:not(.is-empty) .np-select-outline label {
-		animation: slideUpOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
 	@keyframes slideUpOutline {
@@ -330,10 +315,6 @@
 		to {
 			transform: translateY(-0.5rem);
 		}
-	}
-
-	.animate-label:not(.is-empty) .np-select-filled label {
-		animation: slideUpFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
 	@keyframes slideUpFilled {
@@ -352,10 +333,6 @@
 		position: absolute;
 	}
 
-	.is-empty.animate-label .np-select-outline label {
-		animation: slideDownOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-	}
-
 	@keyframes slideDownOutline {
 		from {
 			transform: translateY(-1.5rem);
@@ -368,10 +345,6 @@
 	.is-empty .np-select-filled label {
 		font-size: 1rem;
 		transform: translateY(1.25rem);
-	}
-
-	.is-empty.animate-label .np-select-filled label {
-		animation: slideDownFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 	}
 
 	@keyframes slideDownFilled {
@@ -435,5 +408,48 @@
 	.disabled:hover .np-select-outline,
 	.disabled .np-select-outline {
 		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		::picker(select) {
+			transition:
+				opacity var(--np-motion-expressive-fast-effects),
+				scale var(--np-motion-expressive-fast-spatial),
+				display 150ms allow-discrete,
+				overlay 150ms allow-discrete;
+		}
+
+		select:open::picker(select) {
+			@starting-style {
+				opacity: 0;
+				scale: 0.8;
+			}
+		}
+
+		.arrow {
+			transition: rotate var(--easing-fast);
+		}
+
+		.animate-label label {
+			transition-property: font-size;
+			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			transition-duration: 150ms;
+		}
+
+		.animate-label:not(.is-empty) .np-select-outline label {
+			animation: slideUpOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+		}
+
+		.animate-label:not(.is-empty) .np-select-filled label {
+			animation: slideUpFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+		}
+
+		.is-empty.animate-label .np-select-outline label {
+			animation: slideDownOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+		}
+
+		.is-empty.animate-label .np-select-filled label {
+			animation: slideDownFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+		}
 	}
 </style>

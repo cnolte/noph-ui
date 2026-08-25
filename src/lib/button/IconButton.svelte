@@ -25,6 +25,7 @@
 	}: IconButtonProps = $props()
 
 	const uid = $props.id()
+	const tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
 
 	let pressed = $state(false)
 	let pressedTimeout: ReturnType<typeof setTimeout>
@@ -70,7 +71,8 @@
 			}
 			attributes.onclick?.(event)
 		}}
-		aria-describedby={title ? uid : attributes['aria-describedby']}
+		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		interestfor={tooltipId ?? attributes['interestfor']}
 		aria-label={title || attributes['aria-label']}
 		bind:this={element}
 		class={[
@@ -91,7 +93,8 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		aria-describedby={title ? uid : attributes['aria-describedby']}
+		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		interestfor={tooltipId ?? attributes['interestfor']}
 		aria-label={title || attributes['aria-label']}
 		aria-pressed={toggle ? selected : undefined}
 		aria-busy={loading}
@@ -122,8 +125,8 @@
 	</button>
 {/if}
 
-{#if title && !disabled && !loading}
-	<Tooltip id={uid}>{title}</Tooltip>
+{#if tooltipId}
+	<Tooltip id={tooltipId}>{title}</Tooltip>
 {/if}
 
 <style>
@@ -142,9 +145,14 @@
 		align-items: center;
 		justify-content: center;
 		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-		transition:
-			background-color var(--np-motion-expressive-default-effects),
-			border-radius var(--np-motion-expressive-default-effects);
+		transition: background-color var(--np-motion-expressive-default-effects);
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.np-icon-button {
+			transition:
+				background-color var(--np-motion-expressive-default-effects),
+				border-radius var(--np-motion-expressive-default-effects);
+		}
 	}
 
 	:global(.np-icon-button svg) {
@@ -291,7 +299,11 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
-		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.enabled:focus-visible {
+			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 	.text {
 		--np-ripple-hover-color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));

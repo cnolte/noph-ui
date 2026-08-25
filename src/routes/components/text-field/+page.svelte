@@ -109,8 +109,8 @@
 
 <h3 id="chat-prompt">Chat prompt<a href="#chat-prompt" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	A common use of an auto-growing textarea is a chat prompt field, like the input of an AI tool.
-	The leading "+" button below opens a menu, similar to ChatGPT's tools menu.
+	A common use of an auto-growing textarea is a chat prompt field, like the input of an AI tool. The
+	leading "+" button below opens a menu, similar to ChatGPT's tools menu.
 </p>
 <DemoContainer>
 	<TextField placeholder="Ask anything" type="textarea" maxLines={8} style="width:22rem">
@@ -129,11 +129,7 @@
 		{/snippet}
 	</TextField>
 </DemoContainer>
-<Menu
-	anchor={chatPromptPlusBtn}
-	id="chat-prompt-menu"
-	style="position-anchor:--chat-prompt-plus"
->
+<Menu anchor={chatPromptPlusBtn} id="chat-prompt-menu" style="position-anchor:--chat-prompt-plus">
 	<MenuItem>
 		Web search
 		{#snippet start()}<Icon>language</Icon>{/snippet}

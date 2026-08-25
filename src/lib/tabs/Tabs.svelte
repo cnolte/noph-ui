@@ -80,7 +80,10 @@
 			border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
 			position-anchor: --np-tab-indicator;
-			transition: var(--np-motion-expressive-default-spatial);
+
+			@media (prefers-reduced-motion: no-preference) {
+				transition: var(--np-motion-expressive-default-spatial);
+			}
 		}
 	}
 </style>

@@ -138,7 +138,12 @@
 
 	.np-snackbar:popover-open {
 		opacity: 1;
-		animation: slideIn var(--np-motion-expressive-default-spatial);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-snackbar:popover-open {
+			animation: slideIn var(--np-motion-expressive-default-spatial);
+		}
 	}
 
 	@keyframes slideIn {

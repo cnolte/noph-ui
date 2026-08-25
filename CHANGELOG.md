@@ -5,6 +5,32 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.0] - 2026-08-25
+
+### Added
+
+- **RichTooltip** (new component): a persistent tooltip, with a `subhead`, text
+  and an `actions` snippet. A click on the control opens it through
+  `popovertarget`, and it stays open until the person interacts with something
+  else: `Escape` or a click outside closes it. Hovering is not a trigger.
+  `bind:open`, `element`, `showPopover` and `hidePopover` open it from the app,
+  the way Material introduces a new feature on page load, and
+  `--np-rich-tooltip-position-area` and `--np-rich-tooltip-justify-self` place
+  it.
+
+### Changed
+
+- **Tooltip**: an anchor that supports interest invokers is now wired up with
+  `interestfor`, so the browser handles hover, long press, focus and dismissal
+  instead of the component's own listeners. Without the API nothing changes.
+- **Tooltip**: touch devices get the tooltip element instead of nothing, so
+  `aria-describedby` always points at something.
+
+### Fixed
+
+- **Button** and **IconButton**: a disabled or loading control with a `title`
+  pointed `aria-describedby` at a tooltip it did not render.
+
 ## [0.41.1] - 2026-08-24
 
 ### Fixed

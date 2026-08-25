@@ -133,7 +133,6 @@
 		z-index: 1;
 		padding-inline: 1rem;
 		overflow: hidden;
-		transition: padding var(--np-motion-expressive-default-effects);
 	}
 	.np-chip-icon-checked {
 		display: flex;
@@ -141,16 +140,10 @@
 		min-width: 0;
 		margin-inline-end: -0.5rem;
 		overflow: hidden;
-		transition:
-			width var(--np-motion-expressive-default-effects),
-			margin var(--np-motion-expressive-default-effects);
 	}
 	.np-filter-chip:has(input:checked) .np-chip-icon-checked {
 		width: 18px;
 		margin-inline-end: 0;
-	}
-	.np-filter-chip-icon .np-chip-icon-checked {
-		transition: none;
 	}
 	.np-filter-chip:has(input:checked) .np-chip-icon {
 		display: none;
@@ -238,7 +231,6 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
-		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
 	}
 
 	.np-filter-chip-disabled .np-filter-chip-label {
@@ -258,5 +250,22 @@
 	.np-filter-chip-disabled:has(input:checked)::before {
 		outline-color: transparent;
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-filter-chip-label {
+			transition: padding var(--np-motion-expressive-default-effects);
+		}
+		.np-chip-icon-checked {
+			transition:
+				width var(--np-motion-expressive-default-effects),
+				margin var(--np-motion-expressive-default-effects);
+		}
+		.np-filter-chip-icon .np-chip-icon-checked {
+			transition: none;
+		}
+		.np-filter-chip:has(input:focus-visible) {
+			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 </style>

@@ -110,7 +110,7 @@
 		align-items: center;
 		border-inline-end: 1px solid var(--np-color-outline);
 		position: relative;
-		transition: all var(--np-motion-expressive-fast-effects);
+		transition: color var(--np-motion-expressive-fast-effects);
 	}
 	.np-segmented-button-icon-label {
 		display: inline-flex;
@@ -161,7 +161,6 @@
 		width: 0;
 		overflow: hidden;
 		fill: currentColor;
-		transition: width var(--np-motion-expressive-slow-effects);
 	}
 	:global(.check-icon svg) {
 		display: block;
@@ -169,14 +168,12 @@
 	.check-icon-wrapper {
 		width: 0;
 		overflow: hidden;
-		transition: width var(--np-motion-expressive-fast-effects);
 	}
 	.alternate-icon {
 		display: flex;
 		width: 1.5rem;
 		overflow: hidden;
 		fill: currentColor;
-		transition: width var(--np-motion-expressive-slow-effects);
 	}
 	:global(.alternate-icon svg) {
 		display: block;
@@ -186,9 +183,7 @@
 	.alternate-icon-wrapper {
 		width: 2rem;
 		overflow: hidden;
-		transition:
-			width var(--np-motion-expressive-fast-effects),
-			opacity var(--np-motion-expressive-fast-effects);
+		transition: opacity var(--np-motion-expressive-fast-effects);
 	}
 	.np-segmented-button:has(input:checked) :global(.alternate-icon-wrapper) {
 		width: 0;
@@ -213,6 +208,28 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: -3px;
-		animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-segmented-button {
+			transition: all var(--np-motion-expressive-fast-effects);
+		}
+		.check-icon {
+			transition: width var(--np-motion-expressive-slow-effects);
+		}
+		.check-icon-wrapper {
+			transition: width var(--np-motion-expressive-fast-effects);
+		}
+		.alternate-icon {
+			transition: width var(--np-motion-expressive-slow-effects);
+		}
+		.alternate-icon-wrapper {
+			transition:
+				width var(--np-motion-expressive-fast-effects),
+				opacity var(--np-motion-expressive-fast-effects);
+		}
+		.np-segmented-button:has(input:focus-visible) {
+			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
+		}
 	}
 </style>

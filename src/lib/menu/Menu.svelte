@@ -29,10 +29,6 @@
 		element?.hidePopover()
 	}
 
-	// CSS anchor positioning has no way to read which position-try fallback won, so the
-	// scale pivot can't be expressed declaratively (see open spec request for @position-try
-	// to set transform-origin: https://github.com/w3c/csswg-drafts/issues/11666). Until that
-	// lands, mirror Compose's calculateTransformOrigin (Menu.kt) in JS instead.
 	const calculateTransformOrigin = (anchorRect: DOMRect, menuRect: DOMRect) => {
 		const pivot = (anchorStart: number, anchorEnd: number, menuStart: number, menuEnd: number) => {
 			if (menuStart >= anchorEnd) return 0
@@ -136,9 +132,13 @@
 	.np-menu-container:popover-open {
 		opacity: 1;
 		scale: 1;
-		animation:
-			fadeIn var(--np-motion-expressive-fast-effects),
-			scaleIn var(--np-motion-expressive-fast-spatial);
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.np-menu-container:popover-open {
+			animation:
+				fadeIn var(--np-motion-expressive-fast-effects),
+				scaleIn var(--np-motion-expressive-fast-spatial);
+		}
 	}
 	@keyframes fadeIn {
 		from {
