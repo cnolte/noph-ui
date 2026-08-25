@@ -25,6 +25,8 @@
 	}: IconButtonProps = $props()
 
 	const uid = $props.id()
+
+	const isLink = $derived(attributes.href != null && !disabled && !loading)
 	const tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
 
 	let pressed = $state(false)
@@ -62,7 +64,7 @@
 	{/if}
 {/snippet}
 
-{#if 'href' in attributes && !disabled && !loading}
+{#if isLink}
 	<a
 		{...attributes}
 		onclick={(event) => {

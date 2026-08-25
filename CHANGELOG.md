@@ -5,6 +5,15 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.1] - 2026-08-25
+
+### Fixed
+
+- **Button**, **IconButton**, **MenuItem**, **NavigationDrawerItem** and
+  **NavigationRailItem**: passing `href={undefined}` or `href={null}` rendered a
+  link without a destination, which is neither focusable nor announced as a
+  link or a button. These now render a `button`, so a conditional `href` is safe.
+
 ## [0.42.0] - 2026-08-25
 
 ### Added

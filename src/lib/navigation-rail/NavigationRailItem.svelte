@@ -6,6 +6,8 @@
 
 	let { selected, icon, label, ...attributes }: NavigationRailItemProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
+
+	const isLink = $derived(attributes.href != null)
 </script>
 
 {#snippet content()}
@@ -17,7 +19,7 @@
 	<span class="np-touch" bind:this={touchEl}></span>
 {/snippet}
 
-{#if 'href' in attributes}
+{#if isLink}
 	<a
 		{...attributes}
 		href={attributes.href}

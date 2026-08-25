@@ -3,14 +3,12 @@
 	import type { MenuItemProps } from './types.ts'
 
 	let { ...attributes }: MenuItemProps = $props()
+
+	const isLink = $derived(attributes.href != null)
 </script>
 
 <div class="np-menu-item" role="none">
-	{#if 'href' in attributes}
-		<Item role="menuitem" {...attributes} variant="link" />
-	{:else}
-		<Item role="menuitem" {...attributes} variant="button" />
-	{/if}
+	<Item role="menuitem" {...attributes} variant={isLink ? 'link' : 'button'} />
 </div>
 
 <style>

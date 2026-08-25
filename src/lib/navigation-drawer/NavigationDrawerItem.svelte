@@ -11,6 +11,8 @@
 		icon,
 		...attributes
 	}: NavigationDrawerItemProps = $props()
+
+	const isLink = $derived(attributes.href != null)
 </script>
 
 {#snippet content()}
@@ -26,7 +28,7 @@
 	{/if}
 {/snippet}
 
-{#if 'href' in attributes}
+{#if isLink}
 	<a
 		{...attributes}
 		href={attributes.href}
