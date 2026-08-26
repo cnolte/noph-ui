@@ -143,8 +143,8 @@
 <style>
 	.children-wrapper {
 		flex: 1;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		overflow: var(--_button-label-overflow, hidden);
+		text-overflow: var(--_button-label-text-overflow, ellipsis);
 		text-wrap: nowrap;
 	}
 	.circular-progress {
@@ -186,6 +186,9 @@
 				box-shadow var(--np-motion-expressive-default-effects);
 		}
 	}
+	.round {
+		border-radius: var(--_round-radius);
+	}
 	.xs {
 		font-size: 0.875rem;
 		height: 2rem;
@@ -193,16 +196,11 @@
 		gap: var(--np-button-gap, 0.25rem);
 		--_icon-size: var(--np-button-icon-size, 1.25rem);
 		--np-circular-progress-size: 1.75rem;
-	}
-	.xs.round {
-		border-radius: 1rem;
+		--_round-radius: 1rem;
+		--_pressed-radius: 0.5rem;
 	}
 	.xs.square {
 		border-radius: var(--np-button-shape, 0.75rem);
-	}
-	.xs:active,
-	.xs.pressed {
-		border-radius: 0.5rem;
 	}
 	.s {
 		font-size: 0.875rem;
@@ -211,16 +209,11 @@
 		gap: var(--np-button-gap, 0.5rem);
 		--_icon-size: var(--np-button-icon-size, 1.25rem);
 		--np-circular-progress-size: 2rem;
-	}
-	.s.round {
-		border-radius: 1.25rem;
+		--_round-radius: 1.25rem;
+		--_pressed-radius: 0.5rem;
 	}
 	.s.square {
 		border-radius: var(--np-button-shape, 0.75rem);
-	}
-	.s:active,
-	.s.pressed {
-		border-radius: 0.5rem;
 	}
 	.m {
 		font-size: 1rem;
@@ -229,16 +222,11 @@
 		gap: var(--np-button-gap, 0.5rem);
 		--_icon-size: var(--np-button-icon-size, 1.5rem);
 		--np-circular-progress-size: 3rem;
-	}
-	.m.round {
-		border-radius: 1.75rem;
+		--_round-radius: 1.75rem;
+		--_pressed-radius: 0.75rem;
 	}
 	.m.square {
 		border-radius: var(--np-button-shape, 1rem);
-	}
-	.m:active,
-	.m.pressed {
-		border-radius: 0.75rem;
 	}
 	.l {
 		font-size: 1.5rem;
@@ -247,16 +235,11 @@
 		gap: var(--np-button-gap, 0.75rem);
 		--_icon-size: var(--np-button-icon-size, 2rem);
 		--np-circular-progress-size: 5rem;
-	}
-	.l.round {
-		border-radius: 3rem;
+		--_round-radius: 3rem;
+		--_pressed-radius: 1rem;
 	}
 	.l.square {
 		border-radius: var(--np-button-shape, 1.75rem);
-	}
-	.l:active,
-	.l.pressed {
-		border-radius: 1rem;
 	}
 	.xl {
 		font-size: 2rem;
@@ -265,16 +248,16 @@
 		gap: var(--np-button-gap, 1rem);
 		--_icon-size: var(--np-button-icon-size, 2.5rem);
 		--np-circular-progress-size: 7rem;
-	}
-	.xl.round {
-		border-radius: 4.25rem;
+		--_round-radius: 4.25rem;
+		--_pressed-radius: 1rem;
 	}
 	.xl.square {
 		border-radius: var(--np-button-shape, 1.75rem);
 	}
-	.xl:active,
-	.xl.pressed {
-		border-radius: 1rem;
+	@media (prefers-reduced-motion: no-preference) {
+		.np-button:is(:active, .pressed) {
+			border-radius: var(--_pressed-radius);
+		}
 	}
 	.toggle {
 		--np-icon-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

@@ -56,6 +56,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Button groups"
+	href="/components/button-group"
+	selected={page.url.pathname === '/components/button-group'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Cards"
 	href="/components/card"
 	selected={page.url.pathname === '/components/card'}

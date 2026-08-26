@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.43.0] - 2026-08-26
+
+### Added
+
+- **ButtonGroup** (new component): a row of buttons or icon buttons. A press
+  widens the button and compresses its neighbours, tuned with `expandedRatio`
+  and `compressionLimit`. `variant="connected"` moves the buttons together and
+  takes over the corners between them.
+
+### Changed
+
+- **Button** and **IconButton**: reduced motion no longer changes the corner
+  radius of a pressed button. It used to change without the animation.
+
 ## [0.42.1] - 2026-08-25
 
 ### Fixed

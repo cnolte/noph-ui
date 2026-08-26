@@ -163,21 +163,19 @@
 		width: var(--_icon-size, 1.25rem);
 	}
 
+	.round {
+		border-radius: var(--_round-radius);
+	}
 	.xs {
 		--_icon-size: var(--np-icon-button-icon-size, 1.25rem);
 		height: 2rem;
 		width: 2rem;
 		--np-circular-progress-size: 1.75rem;
-	}
-	.xs.round {
-		border-radius: 1rem;
+		--_round-radius: 1rem;
+		--_pressed-radius: 0.5rem;
 	}
 	.xs.square {
 		border-radius: var(--np-icon-button-shape, 0.75rem);
-	}
-	.xs:active,
-	.xs.pressed {
-		border-radius: 0.5rem;
 	}
 	.xs.narrow {
 		width: 1.75rem;
@@ -190,9 +188,8 @@
 		height: 2.5rem;
 		width: 2.5rem;
 		--np-circular-progress-size: 2rem;
-	}
-	.s.round {
-		border-radius: 1.25rem;
+		--_round-radius: 1.25rem;
+		--_pressed-radius: 0.5rem;
 	}
 	.s.square {
 		border-radius: var(--np-icon-button-shape, 0.75rem);
@@ -203,18 +200,13 @@
 	.s.wide {
 		width: 3.25rem;
 	}
-	.s:active,
-	.s.pressed {
-		border-radius: 0.5rem;
-	}
 	.m {
 		--_icon-size: var(--np-icon-button-icon-size, 1.5rem);
 		height: 3.5rem;
 		width: 3.5rem;
 		--np-circular-progress-size: 3rem;
-	}
-	.m.round {
-		border-radius: 1.75rem;
+		--_round-radius: 1.75rem;
+		--_pressed-radius: 0.75rem;
 	}
 	.m.square {
 		border-radius: var(--np-icon-button-shape, 1rem);
@@ -225,18 +217,13 @@
 	.m.wide {
 		width: 4.5rem;
 	}
-	.m:active,
-	.m.pressed {
-		border-radius: 0.75rem;
-	}
 	.l {
 		--_icon-size: var(--np-icon-button-icon-size, 2rem);
 		height: 6rem;
 		width: 6rem;
 		--np-circular-progress-size: 5rem;
-	}
-	.l.round {
-		border-radius: 3rem;
+		--_round-radius: 3rem;
+		--_pressed-radius: 1rem;
 	}
 	.l.square {
 		border-radius: var(--np-icon-button-shape, 1.75rem);
@@ -247,18 +234,13 @@
 	.l.wide {
 		width: 8rem;
 	}
-	.l:active,
-	.l.pressed {
-		border-radius: 1rem;
-	}
 	.xl {
 		--_icon-size: var(--np-icon-button-icon-size, 2.5rem);
 		height: 8.5rem;
 		width: 8.5rem;
 		--np-circular-progress-size: 7rem;
-	}
-	.xl.round {
-		border-radius: 4.25rem;
+		--_round-radius: 4.25rem;
+		--_pressed-radius: 1rem;
 	}
 	.xl.square {
 		border-radius: var(--np-icon-button-shape, 1.75rem);
@@ -269,9 +251,10 @@
 	.xl.wide {
 		width: 11.5rem;
 	}
-	.xl:active,
-	.xl.pressed {
-		border-radius: 1rem;
+	@media (prefers-reduced-motion: no-preference) {
+		.np-icon-button:is(:active, .pressed) {
+			border-radius: var(--_pressed-radius);
+		}
 	}
 
 	.toggle {

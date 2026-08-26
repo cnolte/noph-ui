@@ -85,6 +85,36 @@
 <IconButton aria-label="Large" size="l"><Icon>add</Icon></IconButton>
 <IconButton aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>`}
 />
+<h2 id="shape">Shape<a href="#shape" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	Icon buttons come in two shapes. The shape morphs while the button is pressed and stays square
+	while a toggle button is selected.
+</p>
+<DemoContainer>
+	<IconButton variant="outlined" aria-label="Round" shape="round"><Icon>bookmark</Icon></IconButton>
+	<IconButton variant="outlined" aria-label="Square" shape="square"
+		><Icon>bookmark</Icon></IconButton
+	>
+</DemoContainer>
+<Code
+	value={`<IconButton aria-label="Round" shape="round"><Icon>bookmark</Icon></IconButton>
+<IconButton aria-label="Square" shape="square"><Icon>bookmark</Icon></IconButton>`}
+/>
+<h2 id="width">Width<a href="#width" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>The width can be adjusted independently of the size. The height stays the same.</p>
+<DemoContainer>
+	<IconButton variant="filled" aria-label="Narrow" width="narrow"><Icon>more_vert</Icon></IconButton
+	>
+	<IconButton variant="filled" aria-label="Default" width="default"
+		><Icon>more_vert</Icon></IconButton
+	>
+	<IconButton variant="filled" aria-label="Wide" width="wide"><Icon>more_vert</Icon></IconButton>
+</DemoContainer>
+<Code
+	value={`<IconButton aria-label="Narrow" width="narrow"><Icon>more_vert</Icon></IconButton>
+<IconButton aria-label="Default" width="default"><Icon>more_vert</Icon></IconButton>
+<IconButton aria-label="Wide" width="wide"><Icon>more_vert</Icon></IconButton>`}
+/>
 <h2 id="toggle">Toggle<a href="#toggle" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer style="flex-direction: column">
 	<div class="icon-list">

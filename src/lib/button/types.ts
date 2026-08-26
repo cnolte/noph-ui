@@ -31,6 +31,14 @@ export interface IconButtonProps extends BaseButtonProps {
 	width?: 'narrow' | 'wide' | 'default'
 }
 
+export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
+	variant?: 'standard' | 'connected'
+	expandedRatio?: number
+	compressionLimit?: number
+	element?: HTMLElement
+	children?: Snippet
+}
+
 export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
 	name: string
 	multiSelect?: boolean
