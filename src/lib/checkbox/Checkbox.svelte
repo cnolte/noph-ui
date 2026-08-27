@@ -11,6 +11,7 @@
 		issues,
 		style,
 		value,
+		'aria-invalid': ariaInvalid,
 		...attributes
 	}: CheckboxProps = $props()
 
@@ -64,7 +65,7 @@
 				bind:this={inputEl}
 				checked={groupChecked}
 				{onchange}
-				aria-invalid={hasError ? 'true' : undefined}
+				aria-invalid={hasError ? 'true' : ariaInvalid}
 				aria-checked={indeterminate ? 'mixed' : undefined}
 			/>
 		{:else}
@@ -76,7 +77,7 @@
 				bind:indeterminate
 				bind:checked
 				bind:this={inputEl}
-				aria-invalid={hasError ? 'true' : undefined}
+				aria-invalid={hasError ? 'true' : ariaInvalid}
 				aria-checked={indeterminate ? 'mixed' : undefined}
 			/>
 		{/if}

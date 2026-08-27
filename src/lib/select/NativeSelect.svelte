@@ -1,18 +1,7 @@
 <script lang="ts">
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
-	import type { HTMLSelectAttributes } from 'svelte/elements'
-	interface SelectProps extends HTMLSelectAttributes {
-		label?: string
-		noAsterisk?: boolean
-		supportingText?: string
-		issues?:
-			| {
-					message: string
-			  }[]
-			| undefined
-		variant?: 'outlined' | 'filled'
-		element?: HTMLSpanElement
-	}
+	import type { NativeSelectProps } from './types.ts'
+
 	let {
 		id,
 		supportingText,
@@ -26,8 +15,11 @@
 		children,
 		oninput,
 		style,
+		element = $bindable(),
+		'aria-describedby': ariaDescribedby,
+		'aria-errormessage': ariaErrormessage,
 		...attributes
-	}: SelectProps = $props()
+	}: NativeSelectProps = $props()
 	const uid = $props.id()
 	const selectId = $derived(id ?? `select-${uid}`)
 
@@ -46,6 +38,7 @@
 		attributes.class,
 	]}
 	{style}
+	bind:this={element}
 >
 	{#if variant === 'outlined'}
 		<div class="np-select-outline">
@@ -83,10 +76,14 @@
 		{disabled}
 		{required}
 		id={selectId}
-		aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
-		aria-describedby={supportingText && !errorText ? `supporting-text-${uid}` : undefined}
 		bind:value
 		{...attributes}
+		aria-errormessage={[errorText && `supporting-text-${uid}`, ariaErrormessage]
+			.filter(Boolean)
+			.join(' ') || undefined}
+		aria-describedby={[supportingText && !errorText && `supporting-text-${uid}`, ariaDescribedby]
+			.filter(Boolean)
+			.join(' ') || undefined}
 		class="np-select"
 	>
 		{@render children?.()}

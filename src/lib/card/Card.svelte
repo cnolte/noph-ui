@@ -66,8 +66,8 @@
 	</div>
 {:else if type === 'button'}
 	<button
-		aria-disabled={disabled}
 		{...attributes}
+		aria-disabled={disabled}
 		type="button"
 		bind:this={element}
 		{disabled}

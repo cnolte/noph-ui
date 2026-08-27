@@ -1,13 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { Snippet } from 'svelte'
-	import type { HTMLOptionAttributes } from 'svelte/elements'
-
-	interface OptionProps extends HTMLOptionAttributes {
-		start?: Snippet
-		end?: Snippet
-	}
+	import type { OptionProps } from './types.ts'
 
 	let { start, end, children, ...attributes }: OptionProps = $props()
 </script>

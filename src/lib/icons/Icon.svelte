@@ -1,11 +1,6 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte'
-	import type { HTMLAttributes } from 'svelte/elements'
+	import type { IconProps } from './types.ts'
 
-	interface IconProps extends HTMLAttributes<HTMLSpanElement> {
-		children: Snippet
-		element?: HTMLSpanElement
-	}
 	let { children, element = $bindable(), ...attributes }: IconProps = $props()
 </script>
 

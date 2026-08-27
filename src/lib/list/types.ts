@@ -17,6 +17,7 @@ export interface ItemProps
 	softFocus?: boolean
 	lazy?: boolean
 	type?: 'submit' | 'reset' | 'button' | null
+	element?: ItemElement
 }
 
 export type ListItemProps = ItemProps

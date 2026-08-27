@@ -20,4 +20,5 @@ export interface NavigationDrawerItemProps
 	selected?: boolean
 	badgeLabelText?: string
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
+	element?: NavigationDrawerItemElement
 }

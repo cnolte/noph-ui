@@ -4,7 +4,13 @@
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationRailItemProps } from './types.ts'
 
-	let { selected, icon, label, ...attributes }: NavigationRailItemProps = $props()
+	let {
+		selected,
+		icon,
+		label,
+		element = $bindable(),
+		...attributes
+	}: NavigationRailItemProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
 
 	const isLink = $derived(attributes.href != null)
@@ -22,6 +28,7 @@
 {#if isLink}
 	<a
 		{...attributes}
+		bind:this={element}
 		href={attributes.href}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
 		aria-current={selected ? 'page' : undefined}
@@ -32,6 +39,7 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
+		bind:this={element}
 		class={['np-navigation-action', selected && 'np-navigation-action-selected', attributes.class]}
 		aria-current={selected ? 'page' : undefined}
 		tabindex={selected ? 0 : -1}

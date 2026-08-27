@@ -9,6 +9,9 @@
 		fourColor = false,
 		track = true,
 		wavy = false,
+		element = $bindable(),
+		class: className,
+		style,
 		...attributes
 	}: CircularProgressProps = $props()
 
@@ -68,7 +71,7 @@
 	let activeStyle = $derived(`--_active:${activeLength}`)
 </script>
 
-<div class="np-container">
+<div bind:this={element} class={['np-container', className]} {style}>
 	<div
 		{...attributes}
 		class={[

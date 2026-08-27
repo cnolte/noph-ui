@@ -2,9 +2,9 @@
 	import Item from '#lib/list/Item.svelte'
 	import type { ListItemProps } from './types.ts'
 
-	let { ...attributes }: ListItemProps = $props()
+	let { element = $bindable(), ...attributes }: ListItemProps = $props()
 </script>
 
 <li>
-	<Item {...attributes} />
+	<Item bind:element {...attributes} />
 </li>

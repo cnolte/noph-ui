@@ -10,6 +10,9 @@
 		buffer = 0,
 		wavy = false,
 		track = true,
+		element = $bindable(),
+		class: className,
+		style,
 		...attributes
 	}: LinearProgressProps = $props()
 
@@ -159,7 +162,12 @@
 	let hideDots = $derived(indeterminate || !hasBuffer || bufferValue >= max || value >= max)
 </script>
 
-<div class={['np-container', wave && 'wavy']} bind:clientWidth={containerWidth}>
+<div
+	bind:this={element}
+	class={['np-container', wave && 'wavy', className]}
+	{style}
+	bind:clientWidth={containerWidth}
+>
 	<div
 		{...attributes}
 		style={trackStyles}

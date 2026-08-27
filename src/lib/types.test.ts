@@ -1,0 +1,159 @@
+import { describe, expect, test } from 'vitest'
+import type {
+	AssistChipProps,
+	AutoCompleteProps,
+	BadgeProps,
+	ButtonGroupProps,
+	ButtonProps,
+	CardProps,
+	CheckboxProps,
+	ChipSetProps,
+	CircularProgressProps,
+	DialogProps,
+	DividerProps,
+	FilterChipProps,
+	IconButtonProps,
+	IconProps,
+	InputChipProps,
+	ItemProps,
+	LinearProgressProps,
+	ListItemProps,
+	ListProps,
+	LoadingIndicatorProps,
+	MenuItemProps,
+	MenuProps,
+	NativeSelectProps,
+	NavigationDrawerItemProps,
+	NavigationDrawerProps,
+	NavigationRailItemProps,
+	NavigationRailProps,
+	OptionProps,
+	RadioProps,
+	RichTooltipProps,
+	RippleProps,
+	SegmentedButtonProps,
+	SelectProps,
+	SliderProps,
+	SnackbarProps,
+	SwitchProps,
+	TabProps,
+	TabsProps,
+	TextFieldProps,
+	TooltipProps,
+} from './types.ts'
+
+/**
+ * Compile-time assertions about the public props types. `npm run check` is what enforces them —
+ * the runtime test below only exists so this file is part of the suite.
+ *
+ * A plain `T extends { element?: unknown }` constraint would NOT work: TypeScript satisfies
+ * optional properties by absence, so it only catches a type with no overlapping keys at all.
+ * `HasKeys` asks whether the key is really in `keyof T`, which is the actual question. The
+ * assertions are per type rather than over a union, because `keyof` of a large union of
+ * attribute types is too complex for the compiler to represent.
+ */
+type Assert<T extends true> = T
+type HasKeys<T, K extends PropertyKey> = [K] extends [keyof T] ? true : false
+
+/** Every props type forwards the attributes a consumer expects to pass through. */
+type ForwardsAttributes = [
+	Assert<HasKeys<AssistChipProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<AutoCompleteProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<BadgeProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<ButtonGroupProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<ButtonProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<CardProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<CheckboxProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<ChipSetProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<CircularProgressProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<DialogProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<DividerProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<FilterChipProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<IconButtonProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<IconProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<InputChipProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<ItemProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<LinearProgressProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<ListItemProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<ListProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<LoadingIndicatorProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<MenuItemProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<MenuProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<NativeSelectProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<NavigationDrawerItemProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<NavigationDrawerProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<NavigationRailItemProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<NavigationRailProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<OptionProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<RadioProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<RichTooltipProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<RippleProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<SegmentedButtonProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<SelectProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<SliderProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<SnackbarProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<SwitchProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<TabProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<TabsProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<TextFieldProps, 'class' | 'id' | 'style'>>,
+	Assert<HasKeys<TooltipProps, 'class' | 'id' | 'style'>>,
+]
+
+/** Every component that renders a root element exposes a bindable ref for it. */
+type ExposesElement = [
+	Assert<HasKeys<AssistChipProps, 'element'>>,
+	Assert<HasKeys<AutoCompleteProps, 'element'>>,
+	Assert<HasKeys<BadgeProps, 'element'>>,
+	Assert<HasKeys<ButtonGroupProps, 'element'>>,
+	Assert<HasKeys<ButtonProps, 'element'>>,
+	Assert<HasKeys<CardProps, 'element'>>,
+	Assert<HasKeys<CheckboxProps, 'element'>>,
+	Assert<HasKeys<ChipSetProps, 'element'>>,
+	Assert<HasKeys<CircularProgressProps, 'element'>>,
+	Assert<HasKeys<DialogProps, 'element'>>,
+	Assert<HasKeys<DividerProps, 'element'>>,
+	Assert<HasKeys<FilterChipProps, 'element'>>,
+	Assert<HasKeys<IconButtonProps, 'element'>>,
+	Assert<HasKeys<IconProps, 'element'>>,
+	Assert<HasKeys<InputChipProps, 'element'>>,
+	Assert<HasKeys<ItemProps, 'element'>>,
+	Assert<HasKeys<LinearProgressProps, 'element'>>,
+	Assert<HasKeys<ListItemProps, 'element'>>,
+	Assert<HasKeys<ListProps, 'element'>>,
+	Assert<HasKeys<LoadingIndicatorProps, 'element'>>,
+	Assert<HasKeys<MenuItemProps, 'element'>>,
+	Assert<HasKeys<MenuProps, 'element'>>,
+	Assert<HasKeys<NativeSelectProps, 'element'>>,
+	Assert<HasKeys<NavigationDrawerItemProps, 'element'>>,
+	Assert<HasKeys<NavigationDrawerProps, 'element'>>,
+	Assert<HasKeys<NavigationRailItemProps, 'element'>>,
+	Assert<HasKeys<NavigationRailProps, 'element'>>,
+	Assert<HasKeys<RadioProps, 'element'>>,
+	Assert<HasKeys<RichTooltipProps, 'element'>>,
+	Assert<HasKeys<RippleProps, 'element'>>,
+	Assert<HasKeys<SegmentedButtonProps, 'element'>>,
+	Assert<HasKeys<SelectProps, 'element'>>,
+	Assert<HasKeys<SliderProps, 'element'>>,
+	Assert<HasKeys<SnackbarProps, 'element'>>,
+	Assert<HasKeys<SwitchProps, 'element'>>,
+	Assert<HasKeys<TabProps, 'element'>>,
+	Assert<HasKeys<TabsProps, 'element'>>,
+	Assert<HasKeys<TextFieldProps, 'element'>>,
+	Assert<HasKeys<TooltipProps, 'element'>>,
+]
+
+/** Every form control can show validation issues. */
+type ShowsIssues = [
+	Assert<HasKeys<AutoCompleteProps, 'issues'>>,
+	Assert<HasKeys<CheckboxProps, 'issues'>>,
+	Assert<HasKeys<NativeSelectProps, 'issues'>>,
+	Assert<HasKeys<SelectProps, 'issues'>>,
+	Assert<HasKeys<TextFieldProps, 'issues'>>,
+]
+
+describe('public props types', () => {
+	test('the compile-time assertions above are part of the build', () => {
+		const assertions: [ForwardsAttributes, ExposesElement, ShowsIssues] | undefined = undefined
+		expect(assertions).toBeUndefined()
+	})
+})

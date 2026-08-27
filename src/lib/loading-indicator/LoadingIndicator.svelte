@@ -38,10 +38,15 @@
 </script>
 
 <script lang="ts">
-	let { contained = false, ...attributes }: LoadingIndicatorProps = $props()
+	let { contained = false, element = $bindable(), ...attributes }: LoadingIndicatorProps = $props()
 </script>
 
-<div {...attributes} class={['np-loading-indicator', contained && 'contained']} role="progressbar">
+<div
+	{...attributes}
+	bind:this={element}
+	class={['np-loading-indicator', contained && 'contained', attributes.class]}
+	role="progressbar"
+>
 	<svg viewBox="0 0 {VIEWBOX} {VIEWBOX}" aria-hidden="true">
 		<path class="indicator" d={FRAMES[0]}>
 			<animate

@@ -1,5 +1,5 @@
 import type { Snippet } from 'svelte'
-import type { HTMLSelectAttributes } from 'svelte/elements'
+import type { HTMLOptionAttributes, HTMLSelectAttributes } from 'svelte/elements'
 
 export interface SelectOption {
 	value: string | number
@@ -22,4 +22,22 @@ export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autoco
 	options: SelectOption[]
 	clampMenuWidth?: boolean
 	virtualThreshold?: number
+}
+
+export interface NativeSelectProps extends HTMLSelectAttributes {
+	label?: string
+	noAsterisk?: boolean
+	supportingText?: string
+	issues?:
+		| {
+				message: string
+		  }[]
+		| undefined
+	variant?: 'outlined' | 'filled'
+	element?: HTMLDivElement
+}
+
+export interface OptionProps extends HTMLOptionAttributes {
+	start?: Snippet
+	end?: Snippet
 }

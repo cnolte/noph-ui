@@ -1,10 +1,14 @@
 <script lang="ts">
 	import type { DividerProps } from './types.ts'
 
-	let { variant = 'full', ...attributes }: DividerProps = $props()
+	let { variant = 'full', element = $bindable(), ...attributes }: DividerProps = $props()
 </script>
 
-<template {...attributes} role="separator" class={['np-divider', variant, attributes.class]}
+<template
+	{...attributes}
+	bind:this={element}
+	role="separator"
+	class={['np-divider', variant, attributes.class]}
 ></template>
 
 <style>

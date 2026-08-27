@@ -2,7 +2,7 @@
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import type { ChipSetProps } from './types.ts'
 
-	let { children, chipsCount, ...attributes }: ChipSetProps = $props()
+	let { children, chipsCount, element = $bindable(), ...attributes }: ChipSetProps = $props()
 
 	const CHIP_SELECTOR = "input:not([type='hidden']), button, a[href]"
 	const attach = rovingTabindex(CHIP_SELECTOR, {
@@ -13,12 +13,13 @@
 </script>
 
 <div
+	{...attributes}
+	bind:this={element}
 	class={[
 		'np-chip-set-wrapper',
 		(chipsCount ?? 0) > 0 && 'np-chip-set-has-chips',
 		attributes.class,
 	]}
-	style={attributes.style}
 >
 	{#if children}
 		<div {@attach attach} class={['np-chip-set']} role="toolbar" tabindex="-1" {onkeydown}>

@@ -1,14 +1,19 @@
 <script lang="ts">
-	let { label, ariaLabel }: { label?: string | number; ariaLabel?: string } = $props()
+	import type { BadgeProps } from './types.ts'
+
+	let { label, ariaLabel, element = $bindable(), ...attributes }: BadgeProps = $props()
 </script>
 
 <div
+	{...attributes}
 	aria-hidden={ariaLabel ? undefined : 'true'}
 	role={ariaLabel ? 'status' : undefined}
 	aria-label={ariaLabel}
+	bind:this={element}
 	class={[
 		'np-badge-container',
 		label === undefined ? 'np-badge-container-no-label' : 'np-badge-container-label',
+		attributes.class,
 	]}
 >
 	{#if label !== undefined}

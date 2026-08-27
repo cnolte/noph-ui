@@ -24,11 +24,25 @@
 		focused = $bindable(false),
 		clientWidth = $bindable(),
 		clientHeight = $bindable(),
+		'aria-invalid': ariaInvalid,
+		'aria-describedby': ariaDescribedby,
+		'aria-errormessage': ariaErrormessage,
 		...attributes
 	}: TextFieldProps = $props()
 
 	const uid = $props.id()
 	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))
+
+	// Merged rather than set before the spread, so a consumer's own aria wiring adds to the
+	// supporting-text wiring instead of silently replacing it.
+	const supportingTextId = `supporting-text-${uid}`
+	const ids = (...values: (string | undefined | null | false)[]) =>
+		values.filter(Boolean).join(' ') || undefined
+	let ariaProps = $derived({
+		'aria-invalid': errorText ? ('true' as const) : ariaInvalid,
+		'aria-errormessage': ids(errorText && supportingTextId, ariaErrormessage),
+		'aria-describedby': ids(supportingText && !errorText && supportingTextId, ariaDescribedby),
+	})
 </script>
 
 <label
@@ -101,12 +115,8 @@
 					<div class="content">
 						{#if attributes.type === 'textarea'}
 							<textarea
-								aria-invalid={errorText ? 'true' : undefined}
-								aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
-								aria-describedby={supportingText && !errorText
-									? `supporting-text-${uid}`
-									: undefined}
 								{...attributes}
+								{...ariaProps}
 								{placeholder}
 								{defaultValue}
 								bind:focused
@@ -121,14 +131,11 @@
 									</span>
 								{/if}
 								<input
-									aria-invalid={errorText ? 'true' : undefined}
-									aria-errormessage={errorText ? `supporting-text-${uid}` : undefined}
-									aria-describedby={supportingText && !errorText
-										? `supporting-text-${uid}`
-										: undefined}
 									{...attributes}
+									{...ariaProps}
 									{placeholder}
 									{defaultValue}
+									bind:focused
 									bind:value
 									bind:this={inputElement}
 									class="input"

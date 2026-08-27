@@ -65,8 +65,8 @@
 
 <svelte:window bind:innerHeight onresize={refreshValues} />
 <div
-	role="menu"
 	{...attributes}
+	role="menu"
 	bind:this={element}
 	ontoggle={(event) => {
 		let { newState } = event

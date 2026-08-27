@@ -1,11 +1,13 @@
-export interface CircularProgressProps {
+import type { HTMLAttributes } from 'svelte/elements'
+
+export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
 	value?: number
 	max?: number
 	indeterminate?: boolean
 	fourColor?: boolean
 	track?: boolean
 	wavy?: boolean
-	'aria-label'?: string | undefined | null
+	element?: HTMLDivElement
 }
 
 export interface LinearProgressProps extends CircularProgressProps {

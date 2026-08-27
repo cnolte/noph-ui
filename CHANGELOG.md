@@ -5,6 +5,46 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.0] - 2026-08-27
+
+### Added
+
+- **Types**: `BadgeProps`, `IconProps`, `OptionProps` and `NativeSelectProps` are
+  now exported from `noph-ui/types`.
+- **CircularProgress**, **LinearProgress** and **LoadingIndicator**: prop types
+  now extend `HTMLAttributes`, so `class`, `id`, `style` and `data-*` type-check.
+  `CircularProgress` and `LinearProgress` also no longer drop a passed `class`.
+- **`bind:element`** on **Badge**, **ChipSet**, **CircularProgress**,
+  **Divider**, **Item**, **LinearProgress**, **ListItem**, **LoadingIndicator**,
+  **MenuItem**, **NavigationDrawerItem** and **NavigationRailItem**.
+- **ChipSet**: now forwards all attributes to its root, not just `class` and
+  `style`.
+
+### Fixed
+
+- **NavigationRail**: no longer renders a literal `undefined` class when `class`
+  is unset. Also takes `bind:element` now.
+- **NativeSelect**: `element` is now actually bound to the root (typed
+  `HTMLDivElement`) instead of being spread onto the DOM as an invalid attribute.
+- **TextField**, **NativeSelect** and **Checkbox**: a custom `aria-describedby`,
+  `aria-errormessage` or `aria-invalid` is now merged with the component's own
+  instead of overwriting it.
+- **TextField**: `bind:focused` now works for every input type, not just
+  `type="textarea"`.
+- **Card**: `aria-disabled` placement relative to the spread is now consistent
+  across `button`, `text` and `link` cards.
+- **AssistChip**: `element` is now typed `HTMLElement` instead of
+  `HTMLDivElement`, matching the `button`/`a` it renders.
+
+### Changed
+
+- **BREAKING** **NavigationRail**: root class renamed to `np-navigation-rail` to
+  match the `np-` prefix used elsewhere.
+- **Menu**: `role="menu"` is now applied after the spread so it can't be
+  overwritten.
+- **Dialog**: dropped an unreachable `popover="auto"` left over before the
+  spread.
+
 ## [0.43.1] - 2026-08-27
 
 ### Fixed

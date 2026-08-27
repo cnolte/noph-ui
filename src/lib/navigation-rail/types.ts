@@ -1,7 +1,9 @@
 import type { Snippet } from 'svelte'
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
-export type NavigationRailProps = HTMLAttributes<HTMLElement>
+export interface NavigationRailProps extends HTMLAttributes<HTMLElement> {
+	element?: HTMLElement
+}
 
 export type NavigationRailItemElement = HTMLButtonElement | HTMLAnchorElement
 
@@ -14,4 +16,5 @@ export interface NavigationRailItemProps
 	label: string
 	selected?: boolean
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
+	element?: NavigationRailItemElement
 }

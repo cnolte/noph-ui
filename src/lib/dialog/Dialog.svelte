@@ -59,8 +59,8 @@
 
 <div
 	bind:this={element}
-	popover="auto"
 	{...attributes}
+	popover="auto"
 	ontoggle={(event) => {
 		if (event.newState === 'open') {
 			trapFocus()

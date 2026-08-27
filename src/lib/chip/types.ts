@@ -4,6 +4,7 @@ import type { HTMLAttributes, MouseEventHandler } from 'svelte/elements'
 
 export interface ChipSetProps extends HTMLAttributes<HTMLDivElement> {
 	chipsCount?: number
+	element?: HTMLDivElement
 }
 
 export interface AssistChipProps extends Omit<
@@ -14,7 +15,7 @@ export interface AssistChipProps extends Omit<
 	disabled?: boolean
 	label?: string
 	icon?: Snippet
-	element?: HTMLDivElement
+	element?: HTMLElement
 }
 
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {

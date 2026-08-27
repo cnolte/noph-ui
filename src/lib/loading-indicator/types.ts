@@ -1,4 +1,6 @@
-export interface LoadingIndicatorProps {
+import type { HTMLAttributes } from 'svelte/elements'
+
+export interface LoadingIndicatorProps extends HTMLAttributes<HTMLDivElement> {
 	contained?: boolean
-	'aria-label'?: string | undefined | null
+	element?: HTMLDivElement
 }

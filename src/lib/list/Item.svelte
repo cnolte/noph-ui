@@ -13,6 +13,7 @@
 		softFocus = false,
 		lazy = false,
 		variant,
+		element = $bindable(),
 		...attributes
 	}: ItemProps = $props()
 </script>
@@ -46,6 +47,7 @@
 {#if disabled}
 	<div
 		{...attributes}
+		bind:this={element}
 		aria-disabled="true"
 		class={['np-item disabled', lazy && 'np-item-lazy', attributes.class]}
 	>
@@ -54,6 +56,7 @@
 {:else if variant === 'text' || variant === undefined}
 	<div
 		{...attributes}
+		bind:this={element}
 		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
 	>
 		{@render content()}
@@ -61,6 +64,7 @@
 {:else if variant === 'button'}
 	<button
 		{...attributes}
+		bind:this={element}
 		type={attributes.type ?? 'button'}
 		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
 	>
@@ -70,6 +74,7 @@
 {:else if variant === 'link'}
 	<a
 		{...attributes}
+		bind:this={element}
 		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
 	>
 		{@render content()}

@@ -9,6 +9,7 @@
 		label,
 		badgeLabelText,
 		icon,
+		element = $bindable(),
 		...attributes
 	}: NavigationDrawerItemProps = $props()
 
@@ -31,6 +32,7 @@
 {#if isLink}
 	<a
 		{...attributes}
+		bind:this={element}
 		href={attributes.href}
 		class={[
 			'np-navigation-drawer-item',
@@ -45,6 +47,7 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
+		bind:this={element}
 		class={[
 			'np-navigation-drawer-item',
 			selected && 'np-navigation-drawer-item-selected',
