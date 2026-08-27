@@ -544,7 +544,8 @@
 	AssistChip attributes<a href="#assistchip-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	An assist chip takes the <a href="/components/button">Button</a> attributes apart from
+	An assist chip takes the <a class="link" href="/components/button">Button</a> attributes apart
+	from
 	<code>variant</code>, <code>start</code> and <code>end</code>, which the chip sets itself. That
 	includes <code>href</code>, <code>onclick</code> and <code>type</code>.
 </p>

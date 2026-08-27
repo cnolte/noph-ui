@@ -1,6 +1,7 @@
-import { describe, expect, test } from 'vitest'
+import { afterEach, describe, expect, test } from 'vitest'
 import { render } from 'vitest-browser-svelte'
 import Harness from './ButtonGroupHarness.test.svelte'
+import { resolveItem } from './buttonGroup.ts'
 
 const byId = (id: string) => document.getElementById(id)!
 const group = () => document.querySelector<HTMLElement>('.np-button-group')!
@@ -81,5 +82,59 @@ describe('ButtonGroup', () => {
 
 		expect(first.style.width).toBe('')
 		expect(first.getBoundingClientRect().width).toBe(before)
+	})
+})
+
+describe('resolveItem', () => {
+	// getComputedStyle only reports display:contents for an element in the document
+	const rows: HTMLElement[] = []
+	afterEach(() => {
+		for (const row of rows.splice(0)) row.remove()
+	})
+
+	const child = (parent: HTMLElement, tag: string, style = '') => {
+		const element = document.createElement(tag)
+		element.setAttribute('style', style)
+		parent.append(element)
+		return element as HTMLElement
+	}
+	const row = () => {
+		const element = child(document.body, 'div')
+		rows.push(element)
+		return element
+	}
+
+	test('keeps an element that generates a box of its own', () => {
+		const button = child(row(), 'button')
+
+		expect(resolveItem(button)).toBe(button)
+	})
+
+	test('stands in the button for a display:contents wrapper', () => {
+		const wrapper = child(row(), 'span', 'display: contents')
+		const button = child(wrapper, 'button')
+
+		expect(resolveItem(wrapper)).toBe(button)
+	})
+
+	test('skips a popover the wrapper holds next to its button', () => {
+		const wrapper = child(row(), 'span', 'display: contents')
+		child(wrapper, 'div').setAttribute('popover', '')
+		const button = child(wrapper, 'button')
+
+		expect(resolveItem(wrapper)).toBe(button)
+	})
+
+	test('walks through nested wrappers', () => {
+		const outer = child(row(), 'span', 'display: contents')
+		const button = child(child(outer, 'span', 'display: contents'), 'button')
+
+		expect(resolveItem(outer)).toBe(button)
+	})
+
+	test('keeps a wrapper that holds nothing to measure', () => {
+		const wrapper = child(row(), 'span', 'display: contents')
+
+		expect(resolveItem(wrapper)).toBe(wrapper)
 	})
 })

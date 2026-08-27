@@ -221,6 +221,8 @@ export const tocSections: Record<string, TocSection[]> = {
 		{ id: 'icon-button-example', text: 'Icon button example', level: 3 },
 		{ id: 'filled-icon-button-tokens', text: 'Filled icon button tokens', level: 3 },
 		{ id: 'filled-icon-button-example', text: 'Filled icon button example', level: 3 },
+		{ id: 'filled-toggle-icon-button-tokens', text: 'Filled toggle icon button tokens', level: 3 },
+		{ id: 'filled-toggle-icon-button-example', text: 'Filled toggle icon button example', level: 3 },
 		{ id: 'tonal-icon-buttons-tokens', text: 'Tonal icon buttons tokens', level: 3 },
 		{ id: 'tonal-icon-button-example', text: 'Tonal icon button example', level: 3 },
 		{ id: 'outlined-icon-button-tokens', text: 'Outlined icon button tokens', level: 3 },

@@ -26,9 +26,10 @@
 
 <h1>Auto complete</h1>
 <p>
-	Auto complete is a <a href="/components/text-field">text field</a> that suggests matching options
-	as you type. Unlike a <a href="/components/select">select</a> it does not restrict the input: what the
-	user types is the value, and the menu is only there to help them get there faster.
+	Auto complete is a <a class="link" href="/components/text-field">text field</a> that suggests
+	matching options as you type. Unlike a <a class="link" href="/components/select">select</a> it does
+	not restrict the input: what the user types is the value, and the menu is only there to help them get
+	there faster.
 </p>
 <p>
 	It accepts every text field attribute, so <code>variant</code>, <code>label</code>,
@@ -64,7 +65,7 @@
 </h2>
 <p>
 	To collect more than one value, keep the chosen options in your own state and render them as
-	<a href="/components/chip">input chips</a> inside the field. Two props do the work:
+	<a class="link" href="/components/chip">input chips</a> inside the field. Two props do the work:
 	<code>onoptionselect</code> replaces the default behaviour of writing the label into the input,
 	and
 	<code>optionsFilter</code> takes over the filtering so options that are already picked disappear from
@@ -188,9 +189,11 @@
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Auto complete has no tokens of its own. The field follows the
-	<a href="/components/text-field">text field tokens</a> and the suggestion list follows the
-	<a href="/components/menu">menu</a> and <a href="/components/list">list tokens</a>, so it picks up
-	whatever you already set for those.
+	<a class="link" href="/components/text-field">text field tokens</a> and the suggestion list
+	follows the
+	<a class="link" href="/components/menu">menu</a> and
+	<a class="link" href="/components/list">list tokens</a>, so it picks up whatever you already set
+	for those.
 </p>
 <Code
 	value={`<AutoComplete
@@ -204,8 +207,8 @@
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	Auto complete takes every <a href="/components/text-field">TextField</a> attribute in addition to the
-	ones below.
+	Auto complete takes every <a class="link" href="/components/text-field">TextField</a> attribute in addition
+	to the ones below.
 </p>
 <table>
 	<thead>

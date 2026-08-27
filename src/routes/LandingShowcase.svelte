@@ -5,13 +5,12 @@
 	import Button from '#lib/button/Button.svelte'
 	import ButtonGroup from '#lib/button/ButtonGroup.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
-	import SegmentedButton from '#lib/button/SegmentedButton.svelte'
 	import Card from '#lib/card/Card.svelte'
 	import AssistChip from '#lib/chip/AssistChip.svelte'
 	import ChipSet from '#lib/chip/ChipSet.svelte'
 	import FilterChip from '#lib/chip/FilterChip.svelte'
-	import { formatDateMedium, parseISODate, toISODate } from '#lib/date-picker/dateUtils.js'
-	import DockedDatePicker from '#lib/date-picker/DockedDatePicker.svelte'
+	import { formatDateTime, parseISODateTime, toISODate } from '#lib/date-picker/dateUtils.js'
+	import DockedDateTimePicker from '#lib/date-picker/DockedDateTimePicker.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import LoadingIndicator from '#lib/loading-indicator/LoadingIndicator.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
@@ -77,17 +76,16 @@
 
 	// Reservation
 	const isoToday = toISODate(new Date())
-	let reserved = $state<string | undefined>(isoToday)
-	let slot = $state('19:00')
+	let reserved = $state<string | undefined>(`${isoToday}T19:00`)
 	let confirmation = $state('')
 	let reserveSnackbar: ReturnType<typeof Snackbar> | undefined = $state()
 	let reservedText = $derived.by(() => {
-		const date = parseISODate(reserved)
-		return date ? formatDateMedium(date) : ''
+		const date = parseISODateTime(reserved)
+		return date ? formatDateTime(date) : ''
 	})
 
 	const confirm = () => {
-		confirmation = `Table for two on ${reservedText} at ${slot}`
+		confirmation = `Table for two, ${reservedText}`
 		reserveSnackbar?.showPopover()
 	}
 
@@ -174,7 +172,7 @@
 	<p class="uses">
 		{#each links as link, index (link.href)}
 			{#if index > 0}<span aria-hidden="true">&middot;</span>{/if}
-			<a href={link.href}>{link.label}</a>
+			<a class="link" href={link.href}>{link.label}</a>
 		{/each}
 	</p>
 {/snippet}
@@ -182,7 +180,7 @@
 <div class="bento">
 	<Card
 		type="text"
-		variant="outlined"
+		variant="elevated"
 		class="tile player"
 		headline="Now playing"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
@@ -218,6 +216,10 @@
 					toggle
 					bind:selected={playing}
 					title={playing ? 'Pause' : 'Play'}
+					--np-filled-icon-button-selected-container-color="var(--np-color-on-tertiary-container)"
+					--np-filled-icon-button-selected-icon-color="var(--np-color-tertiary-container)"
+					--np-filled-icon-button-unselected-container-color="var(--np-color-tertiary-container)"
+					--np-filled-icon-button-unselected-icon-color="var(--np-color-on-tertiary-container)"
 				>
 					{#snippet selectedIcon()}
 						<Icon>pause</Icon>
@@ -229,15 +231,19 @@
 				</IconButton>
 			</ButtonGroup>
 			<div class="volume">
-				<Icon>{volumeIcon}</Icon>
 				<div class="grow">
 					<Slider
 						bind:value={volume}
 						step={1}
 						labeled
+						size="s"
 						format={(value) => `${value}%`}
 						aria-label="Volume"
-					/>
+					>
+						{#snippet icon()}
+							<Icon>{volumeIcon}</Icon>
+						{/snippet}
+					</Slider>
 				</div>
 			</div>
 		</div>
@@ -251,7 +257,7 @@
 
 	<Card
 		type="text"
-		variant="outlined"
+		variant="elevated"
 		class="tile inbox"
 		headline="Inbox"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
@@ -312,7 +318,7 @@
 
 	<Card
 		type="text"
-		variant="outlined"
+		variant="elevated"
 		class="tile toolbar"
 		headline="Toolbar"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
@@ -350,18 +356,13 @@
 
 	<Card
 		type="text"
-		variant="outlined"
+		variant="elevated"
 		class="tile reserve"
 		headline="Reserve a table"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
-		<DockedDatePicker bind:value={reserved} label="Date" min={isoToday} />
-		<div class="row controls">
-			<SegmentedButton
-				name="landing-slot"
-				bind:group={slot}
-				options={[{ label: '18:00' }, { label: '19:00', selected: true }, { label: '20:00' }]}
-			/>
+		<DockedDateTimePicker bind:value={reserved} label="Date and time" min={`${isoToday}T00:00`} />
+		<div style="display:flex;justify-content:flex-end">
 			<Button variant="filled" onclick={confirm} disabled={!reserved}>
 				{#snippet start()}<Icon>restaurant</Icon>{/snippet}
 				Reserve
@@ -375,15 +376,14 @@
 			onActionClick={() => reserveSnackbar?.hidePopover()}
 		/>
 		{@render uses([
-			{ label: 'Date picker', href: '/components/date-picker' },
-			{ label: 'Segmented button', href: '/components/segmented-button' },
+			{ label: 'Date and time picker', href: '/components/date-time-picker' },
 			{ label: 'Snackbar', href: '/components/snackbar' },
 		])}
 	</Card>
 
 	<Card
 		type="text"
-		variant="outlined"
+		variant="elevated"
 		class="tile search"
 		headline="Search the docs"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
@@ -422,7 +422,7 @@
 
 	<Card
 		type="text"
-		variant="outlined"
+		variant="elevated"
 		class="tile upload"
 		headline="Uploading"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"

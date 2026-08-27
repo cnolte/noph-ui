@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { MediaQuery } from 'svelte/reactivity'
-	import { expandedWidths, parseMotion } from './buttonGroup.ts'
+	import { expandedWidths, parseMotion, resolveItem } from './buttonGroup.ts'
 	import type { ButtonGroupProps } from './types.ts'
 
 	let {
@@ -31,9 +31,9 @@
 
 	const items = () =>
 		element
-			? (Array.from(element.children) as HTMLElement[]).filter(
-					(item) => !item.hasAttribute('popover'),
-				)
+			? (Array.from(element.children) as HTMLElement[])
+					.filter((item) => !item.hasAttribute('popover'))
+					.map(resolveItem)
 			: []
 
 	const motion = () =>

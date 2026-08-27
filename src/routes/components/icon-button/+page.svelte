@@ -303,6 +303,75 @@
 	<Icon>close</Icon>
 </IconButton>`}
 />
+<h3 id="filled-toggle-icon-button-tokens">
+	Filled toggle icon button tokens<a
+		href="#filled-toggle-icon-button-tokens"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
+<p>
+	A <code>toggle</code> filled icon button switches between an unselected and a selected container, each
+	with its own tokens instead of sharing the plain filled ones above.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Token</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>--np-filled-icon-button-unselected-icon-color</code></td>
+			<td><code>--np-color-on-surface-variant</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-icon-button-unselected-container-color</code></td>
+			<td><code>--np-color-surface-container</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-icon-button-selected-icon-color</code></td>
+			<td><code>--np-color-on-primary</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-filled-icon-button-selected-container-color</code></td>
+			<td><code>--np-color-primary</code></td>
+		</tr>
+	</tbody>
+</table>
+
+<h3 id="filled-toggle-icon-button-example">
+	Filled toggle icon button example<a
+		href="#filled-toggle-icon-button-example"
+		aria-hidden="true"
+		tabindex="-1">#</a
+	>
+</h3>
+<DemoContainer>
+	<IconButton
+		aria-label="Custom toggle icon button"
+		toggle
+		selected
+		--np-filled-icon-button-selected-container-color="var(--np-color-tertiary-container)"
+		--np-filled-icon-button-selected-icon-color="var(--np-color-on-tertiary-container)"
+		variant="filled"
+	>
+		<Icon>favorite</Icon>
+	</IconButton>
+</DemoContainer>
+<Code
+	value={`<IconButton
+	aria-label="Custom toggle icon button"
+	toggle
+	selected
+	--np-filled-icon-button-selected-container-color="var(--np-color-tertiary-container)"
+	--np-filled-icon-button-selected-icon-color="var(--np-color-on-tertiary-container)"
+	variant="filled"
+>
+	<Icon>favorite</Icon>
+</IconButton>`}
+/>
 <h3 id="tonal-icon-buttons-tokens">
 	Tonal icon buttons tokens<a href="#tonal-icon-buttons-tokens" aria-hidden="true" tabindex="-1"
 		>#</a

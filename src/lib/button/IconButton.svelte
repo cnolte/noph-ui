@@ -307,16 +307,34 @@
 		background-color: var(--np-filled-icon-button-container-color, var(--np-color-primary));
 	}
 	.filled.toggle {
-		--np-ripple-hover-color: var(--np-color-on-surface-variant);
-		--np-ripple-pressed-color: var(--np-color-on-surface-variant);
-		color: var(--np-color-on-surface-variant);
-		background-color: var(--np-color-surface-container);
+		--np-ripple-hover-color: var(
+			--np-filled-icon-button-unselected-icon-color,
+			var(--np-color-on-surface-variant)
+		);
+		--np-ripple-pressed-color: var(
+			--np-filled-icon-button-unselected-icon-color,
+			var(--np-color-on-surface-variant)
+		);
+		color: var(--np-filled-icon-button-unselected-icon-color, var(--np-color-on-surface-variant));
+		background-color: var(
+			--np-filled-icon-button-unselected-container-color,
+			var(--np-color-surface-container)
+		);
 	}
 	.filled.selected {
-		--np-ripple-hover-color: var(--np-color-on-primary);
-		--np-ripple-pressed-color: var(--np-color-on-primary);
-		color: var(--np-color-on-primary);
-		background-color: var(--np-color-primary);
+		--np-ripple-hover-color: var(
+			--np-filled-icon-button-selected-icon-color,
+			var(--np-color-on-primary)
+		);
+		--np-ripple-pressed-color: var(
+			--np-filled-icon-button-selected-icon-color,
+			var(--np-color-on-primary)
+		);
+		color: var(--np-filled-icon-button-selected-icon-color, var(--np-color-on-primary));
+		background-color: var(
+			--np-filled-icon-button-selected-container-color,
+			var(--np-color-primary)
+		);
 	}
 
 	.tonal {

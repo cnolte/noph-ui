@@ -1,3 +1,15 @@
+export const resolveItem = (item: HTMLElement): HTMLElement => {
+	let current = item
+	while (current.ownerDocument.defaultView?.getComputedStyle(current).display === 'contents') {
+		const child = (Array.from(current.children) as HTMLElement[]).find(
+			(candidate) => !candidate.hasAttribute('popover'),
+		)
+		if (!child) return current
+		current = child
+	}
+	return current
+}
+
 export const expandedWidths = (
 	widths: number[],
 	index: number,

@@ -18,6 +18,7 @@
 		margin-inline: auto;
 		padding: 1.75rem 0;
 		width: fit-content;
+		max-width: 100%;
 	}
 	figure {
 		align-items: center;
@@ -30,5 +31,7 @@
 		border-style: solid;
 		border-color: var(--np-color-outline);
 		padding: 1rem;
+		max-width: 100%;
+		overflow-x: auto;
 	}
 </style>

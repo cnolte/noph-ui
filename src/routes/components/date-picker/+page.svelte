@@ -84,7 +84,7 @@
 	Three components cover the Material 3 variants: <code>DockedDatePicker</code> anchors a calendar
 	under a text field, <code>DatePickerDialog</code> opens the same calendar as a modal, and
 	<code>DateRangePicker</code> selects a start and an end day. For a day and a time in one control,
-	see the <a href="/components/date-time-picker">date and time picker</a>.
+	see the <a class="link" href="/components/date-time-picker">date and time picker</a>.
 </p>
 <p>
 	Every picker uses the same value shape: an ISO <code>YYYY-MM-DD</code> string built from local
@@ -400,8 +400,8 @@
 	A SvelteKit remote form field can be spread straight in with
 	<code>&#123;...field.as('date')&#125;</code>, alongside
 	<code>issues=&#123;field.issues()&#125;</code>. See
-	<a href="/about/remote-functions">Remote functions</a> for a form that wires several components up that
-	way.
+	<a class="link" href="/about/remote-functions">Remote functions</a> for a form that wires several components
+	up that way.
 </p>
 <DemoContainer>
 	<form onsubmit={handleSubmit} novalidate>

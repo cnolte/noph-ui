@@ -22,7 +22,7 @@
 </p>
 <p>
 	Keep dialogs for choices that really cannot wait. For a message that only confirms what happened,
-	use a <a href="/components/snackbar">snackbar</a> instead.
+	use a <a class="link" href="/components/snackbar">snackbar</a> instead.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>

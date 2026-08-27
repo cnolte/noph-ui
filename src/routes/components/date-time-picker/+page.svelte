@@ -28,11 +28,11 @@
 <h1>Date and time pickers</h1>
 <p>
 	<code>DockedDateTimePicker</code> is the docked
-	<a href="/components/date-picker">date picker</a> with the time next to the calendar: a column of
-	hours, one of minutes and, on a 12 hour locale, one for AM and PM. It is the shape a browser gives
-	an <code>&lt;input type="datetime-local"&gt;</code>, and it is deliberately not the Material clock
-	dial, which is built for a thumb rather than a pointer. Reach for it when the day and the time
-	belong to one decision, like the start of a meeting or a shift.
+	<a class="link" href="/components/date-picker">date picker</a> with the time next to the calendar:
+	a column of hours, one of minutes and, on a 12 hour locale, one for AM and PM. It is the shape a
+	browser gives an <code>&lt;input type="datetime-local"&gt;</code>, and it is deliberately not the
+	Material clock dial, which is built for a thumb rather than a pointer. Reach for it when the day
+	and the time belong to one decision, like the start of a meeting or a shift.
 </p>
 <p>
 	<code>value</code> is a local <code>YYYY-MM-DDTHH:mm</code> string, the day-precision
@@ -154,7 +154,7 @@
 	Passing a <code>name</code> submits the ISO moment with the surrounding form through a hidden
 	input, and the constraints stay on the visible field, so a blocked submit reports against a
 	control the browser can focus. The timing is the same as on the
-	<a href="/components/date-picker#forms-and-validation">date picker</a>:
+	<a class="link" href="/components/date-picker#forms-and-validation">date picker</a>:
 	<code>:user-invalid</code> switches on at a submit attempt and on blur, never while a moment is
 	still being typed. <code>issues</code> replaces the supporting text with your own messages.
 </p>
@@ -191,14 +191,24 @@
 </h2>
 <p>
 	The calendar half is the docked date picker, so its documentation applies here unchanged. See
-	<a href="/components/date-picker#reacting-to-a-change">reacting to a change</a>,
-	<a href="/components/date-picker#text-field-variants">text field variants</a>,
-	<a href="/components/date-picker#disabling-individual-days">disabling individual days</a>,
-	<a href="/components/date-picker#restricting-the-year-menu">restricting the year menu</a>,
-	<a href="/components/date-picker#days-of-neighbouring-months">days of neighbouring months</a> and
-	<a href="/components/date-picker#controlling-the-calendar">controlling the calendar</a>. For a day
-	on its own, a modal, or a start and an end day, use
-	<a href="/components/date-picker">DockedDatePicker, DatePickerDialog or DateRangePicker</a>.
+	<a class="link" href="/components/date-picker#reacting-to-a-change">reacting to a change</a>,
+	<a class="link" href="/components/date-picker#text-field-variants">text field variants</a>,
+	<a class="link" href="/components/date-picker#disabling-individual-days"
+		>disabling individual days</a
+	>,
+	<a class="link" href="/components/date-picker#restricting-the-year-menu"
+		>restricting the year menu</a
+	>,
+	<a class="link" href="/components/date-picker#days-of-neighbouring-months"
+		>days of neighbouring months</a
+	>
+	and
+	<a class="link" href="/components/date-picker#controlling-the-calendar"
+		>controlling the calendar</a
+	>. For a day on its own, a modal, or a start and an end day, use
+	<a class="link" href="/components/date-picker"
+		>DockedDatePicker, DatePickerDialog or DateRangePicker</a
+	>.
 </p>
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -206,7 +216,7 @@
 	Colours and shapes come from the theme, and every part exposes a custom property for the cases the
 	theme cannot reach. Set them on the picker itself; they inherit into the calendar and the columns.
 	The calendar half also takes every
-	<a href="/components/date-picker#theming"><code>--np-date-picker-*</code> token</a>.
+	<a class="link" href="/components/date-picker#theming"><code>--np-date-picker-*</code> token</a>.
 </p>
 <table>
 	<thead>
@@ -272,13 +282,14 @@
 </h2>
 <p>
 	The calendar half moves exactly as the
-	<a href="/components/date-picker#motion-and-gestures">date picker</a> does, on the theme's own
-	motion tokens, and the month and year lists slide down over the calendar rather than in its place,
-	so opening one leaves the panel the same size and the columns beside it where they are. The time
-	columns add nothing of their own beyond a colour cross-fade on the selection: they scroll, and
-	they open centred on the selected value so the values around it are in view. After that they only
-	scroll as far as they have to, because pulling the list back to the middle under a pointer that is
-	still picking makes the next click land somewhere else. Every transition is wrapped in
+	<a class="link" href="/components/date-picker#motion-and-gestures">date picker</a> does, on the
+	theme's own motion tokens, and the month and year lists slide down over the calendar rather than
+	in its place, so opening one leaves the panel the same size and the columns beside it where they
+	are. The time columns add nothing of their own beyond a colour cross-fade on the selection: they
+	scroll, and they open centred on the selected value so the values around it are in view. After
+	that they only scroll as far as they have to, because pulling the list back to the middle under a
+	pointer that is still picking makes the next click land somewhere else. Every transition is
+	wrapped in
 	<code>prefers-reduced-motion: no-preference</code>.
 </p>
 
@@ -309,7 +320,8 @@
 	</tbody>
 </table>
 <p>
-	The calendar keeps its own <a href="/components/date-picker#accessibility">grid keyboard model</a
+	The calendar keeps its own <a class="link" href="/components/date-picker#accessibility"
+		>grid keyboard model</a
 	>, and every label string is a prop, so a localised app can translate the whole control.
 </p>
 
@@ -318,7 +330,9 @@
 	DockedDateTimePicker<a href="#dockeddatetimepicker" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	Takes every <a href="/components/date-picker#dockeddatepicker"><code>DockedDatePicker</code></a>
+	Takes every <a class="link" href="/components/date-picker#dockeddatepicker"
+		><code>DockedDatePicker</code></a
+	>
 	prop, with <code>value</code> as a <code>YYYY-MM-DDTHH:mm</code> string, <code>min</code> and
 	<code>max</code> as either a moment or a bare day, and <code>isDateEnabled</code> called with the
 	full moment. <code>label</code> defaults to <code>'Date and time'</code>,
@@ -404,7 +418,7 @@
 <p>
 	The minute-precision maths behind the picker is exported too, so an app can share the same
 	timezone-safe handling. The day-precision counterparts live with the
-	<a href="/components/date-picker#date-helpers">date picker</a>.
+	<a class="link" href="/components/date-picker#date-helpers">date picker</a>.
 </p>
 <table>
 	<thead>

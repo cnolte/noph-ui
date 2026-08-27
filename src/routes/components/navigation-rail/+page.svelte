@@ -15,8 +15,8 @@
 <p>
 	A navigation rail is the top level navigation for medium sized screens: a narrow vertical strip of
 	destinations that stays visible next to the content. Use it for three to seven destinations. Below
-	that a <a href="/components/tabs">tab bar</a> reads better, above it a
-	<a href="/components/navigation-drawer">navigation drawer</a> has room for labels and grouping.
+	that a <a class="link" href="/components/tabs">tab bar</a> reads better, above it a
+	<a class="link" href="/components/navigation-drawer">navigation drawer</a> has room for labels and grouping.
 </p>
 <p>
 	Each item needs an <code>icon</code> and a <code>label</code>. Mark the destination the user is on

@@ -14,7 +14,7 @@
 	around a circle, it morphs through a sequence of shapes while it turns. Use it for short waits
 	inside a surface you already own, such as a pull to refresh gesture or a panel that is fetching
 	its contents. For anything that reports real progress over a longer period, reach for
-	<a href="/components/progress">progress indicators</a> instead.
+	<a class="link" href="/components/progress">progress indicators</a> instead.
 </p>
 
 <h2 id="usage">

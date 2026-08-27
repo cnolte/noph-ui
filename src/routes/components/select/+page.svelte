@@ -19,7 +19,8 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The sections up to <a href="#native-select">NativeSelect</a> all describe <code>Select</code>.
+	The sections up to <a class="link" href="#native-select">NativeSelect</a> all describe
+	<code>Select</code>.
 </p>
 
 <DemoContainer>

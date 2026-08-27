@@ -189,12 +189,12 @@
 <p>
 	<code>--np-menu-position-area</code> takes any CSS <code>position-area</code> value and decides
 	which side of the anchor the menu opens on. Whatever you pick, the menu still moves as
-	<a href="#placement">Placement</a> describes when that side is too small.
+	<a class="link" href="#placement">Placement</a> describes when that side is too small.
 	<code>--np-menu-over-anchor-position-area</code> is the area used for the last of those steps, the
 	one that spans the height over the anchor; keep <code>span-all</code> in the block axis and repeat
 	whatever the inline half of <code>--np-menu-position-area</code> says, so the menu stays lined up
 	the same way. The items themselves are styled through the
-	<a href="/components/list">list tokens</a>.
+	<a class="link" href="/components/list">list tokens</a>.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <Code
@@ -272,6 +272,7 @@
 	MenuItem attributes<a href="#menuitem-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	<code>MenuItem</code> accepts the <a href="/components/list">ListItem</a> attributes apart from
+	<code>MenuItem</code> accepts the <a class="link" href="/components/list">ListItem</a> attributes
+	apart from
 	<code>variant</code> and <code>softFocus</code>, which the menu sets itself.
 </p>
