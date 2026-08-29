@@ -11,10 +11,6 @@ export interface ChipSetProps extends HTMLAttributes<HTMLDivElement> {
 	element?: HTMLDivElement
 }
 
-/**
- * Declared from the element attributes rather than `ButtonProps`, which leaked `size`, `shape`,
- * `toggle`, `loading` and `selected` onto a chip. A chip has one size and one shape.
- */
 export interface AssistChipProps
 	extends
 		HTMLAttributes<ButtonElement>,
@@ -28,10 +24,6 @@ export interface AssistChipProps
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 }
 
-/**
- * A suggestion chip carries a generated suggestion rather than an action, so it is text-first and
- * takes no leading icon. Everything else matches an assist chip.
- */
 export type SuggestionChipProps = Omit<AssistChipProps, 'icon'>
 
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {

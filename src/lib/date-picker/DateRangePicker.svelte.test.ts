@@ -49,7 +49,6 @@ test('holds the content through the fade and keeps the form value behind it', as
 	await expect.poll(() => count('.np-date-range-picker-content')).toBe(0)
 	expect(dialog.getAnimations()).toHaveLength(0)
 
-	// The hidden inputs are what a form reads, so they outlast the calendar entirely.
 	const values = [...document.querySelectorAll<HTMLInputElement>('.np-date-range-picker-value')]
 	expect(values.map((input) => input.value)).toEqual(['2025-08-05', ''])
 })
@@ -81,9 +80,6 @@ test('is an ordinary modal on a wide window', async () => {
 	await setup({ value: { start: '2025-08-17' } })
 	await openRange()
 
-	// The dialog is the calendar column and nothing more, and it stops short of the window on both
-	// axes. Measured against the content rather than 360px, so a width regression fails here for the
-	// right reason instead of as a bare number.
 	const box = dialogBox()
 	const content = document.querySelector<HTMLElement>('.np-date-range-picker-content')!
 	expect(box.width).toBe(content.getBoundingClientRect().width)

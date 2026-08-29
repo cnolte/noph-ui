@@ -4,7 +4,6 @@ import Harness from './PickerMethodsHarness.test.svelte'
 
 const WHICH = ['dialog', 'range', 'docked', 'dockedTime'] as const
 
-/** The dialogs report through `open`; the docked pickers hang their calendar off a popover. */
 const isOpen = () => {
 	const dialog = document.querySelector('dialog')
 	if (dialog) return dialog.open
@@ -16,10 +15,6 @@ const press = (testid: string) =>
 
 const bound = () => document.querySelector('[data-testid="bound-open"]')!.textContent
 
-/**
- * Every overlay in the library exports the same pair, so a page with no trigger to point at the
- * picker can still open it without reaching for `open`. `open` follows either way.
- */
 describe.each(WHICH)('%s show() and close()', async (which) => {
 	test('show() opens it and open follows', async () => {
 		await render(Harness, { which })
@@ -51,7 +46,6 @@ describe.each(WHICH)('%s show() and close()', async (which) => {
 	})
 })
 
-/** A disabled field has nothing to pick with, so `show()` must not get around that. */
 describe.each(['docked', 'dockedTime'] as const)('disabled %s', async (which) => {
 	test('show() leaves it closed', async () => {
 		await render(Harness, { which, disabled: true })

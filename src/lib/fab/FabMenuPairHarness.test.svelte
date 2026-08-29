@@ -6,7 +6,6 @@
 	let { open = false }: { open?: boolean } = $props()
 </script>
 
-<!-- Two on one page, set well apart, so a menu opening on the wrong trigger is unmistakable. -->
 <div style="display:flex;gap:8rem;justify-content:center;padding-block:12rem">
 	<FabMenu label="First" {open}>
 		{#snippet icon()}<Icon>add</Icon>{/snippet}

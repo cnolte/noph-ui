@@ -10,7 +10,6 @@
 	}: { open?: boolean; placement?: FabMenuProps['placement'] } = $props()
 </script>
 
-<!-- Room above and below, so a placement is not clamped by the viewport edge. -->
 <div style="margin-block:10rem;display:flex;justify-content:center">
 	<FabMenu bind:open {placement} label="Create">
 		{#snippet icon()}<Icon>add</Icon>{/snippet}

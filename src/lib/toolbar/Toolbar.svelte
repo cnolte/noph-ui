@@ -54,12 +54,6 @@
 
 	.np-toolbar-vertical {
 		flex-direction: column;
-		/*
-		 * Stacked actions sit right above one another, so a tooltip in its default place covers the
-		 * button before it. Moving it to the trailing side keeps every action readable, and
-		 * flip-inline sends it the other way when the window edge really is in the way. Material's
-		 * Compose API exposes the same idea as TooltipAnchorPosition.End.
-		 */
 		--np-tooltip-position-area: inline-end;
 		--np-tooltip-justify-self: auto;
 		--np-tooltip-align-self: anchor-center;
@@ -72,14 +66,12 @@
 		--np-rich-tooltip-position-try-fallbacks: flip-inline;
 	}
 
-	/* Docked: full width, flush to the edge, no corner rounding. */
 	.np-toolbar-docked {
 		width: 100%;
 		min-height: 4rem;
 		justify-content: center;
 		padding-inline: 0.5rem;
 		background-color: var(--np-toolbar-container-color, var(--np-color-surface-container));
-		/* Clears the home inset when docked to the bottom of a phone screen. */
 		padding-block-end: max(0px, env(safe-area-inset-bottom));
 	}
 	.np-toolbar-docked.np-toolbar-vertical {
@@ -91,10 +83,6 @@
 		padding-inline: 0;
 	}
 
-	/*
-	 * Floating: an island above the content. `position: sticky` keeps it in flow so it never
-	 * covers the end of the page, which `fixed` would.
-	 */
 	.np-toolbar-floating {
 		position: sticky;
 		z-index: 8;

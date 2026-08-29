@@ -37,14 +37,6 @@
 	)
 </script>
 
-<!--
-	A `dialog` rather than a popover. `showModal()` keeps everything outside the sheet inert for as
-	long as it is open, including anything added while it is open, and restores focus on close. A
-	hand-rolled trap can only inert what exists at the moment it runs.
-
-	`closedby="any"` is the light dismiss a popover gets for free. Where it is unsupported the click
-	handler below covers it: a click on the backdrop is reported against the dialog itself.
--->
 <dialog
 	{...attributes}
 	bind:this={element}
@@ -58,11 +50,6 @@
 	}}
 	ontoggle={(event) => {
 		open = event.newState === 'open'
-		/*
-		 * Without this the browser autofocuses the first focusable descendant, which is the close
-		 * button when `action` puts one in the header, firing its tooltip on open. Focus the sheet
-		 * itself instead, so nothing is focused that the user didn't choose to interact with.
-		 */
 		if (event.newState === 'open') element?.focus()
 		ontoggle?.(event)
 	}}
@@ -91,13 +78,7 @@
 <style>
 	.np-sheet {
 		position: fixed;
-		/* Focus lands here on open only to stay off the header action, not as something to show. */
 		outline: none;
-		/*
-		 * `showModal()` puts a modal sheet in the top layer, above normal stacking order regardless
-		 * of z-index. A non-modal sheet (`.show()`) stays in normal flow, so it needs a z-index of
-		 * its own to clear app bars and other overlays.
-		 */
 		z-index: var(--np-sheet-z-index, 24);
 		box-sizing: border-box;
 		margin: 0;
@@ -113,7 +94,6 @@
 		box-shadow: var(--np-sheet-elevation, var(--np-elevation-1));
 	}
 
-	/* A closed dialog is `display: none` from the user agent, which the enter transition needs. */
 	.np-sheet:not([open]) {
 		display: none;
 	}
@@ -193,16 +173,11 @@
 		padding: 1rem 1.5rem 1.5rem;
 	}
 
-	/* `::backdrop` is the scrim, so a modal sheet needs no backdrop element of its own. */
 	.np-sheet-modal::backdrop {
 		background-color: var(--np-color-scrim);
 		opacity: 0.32;
 	}
 
-	/*
-	 * `display` and `overlay` are discrete properties, so the sheet would appear and vanish without
-	 * `allow-discrete`. `@starting-style` gives the entry a value to move from.
-	 */
 	@media (prefers-reduced-motion: no-preference) {
 		.np-sheet {
 			transition:

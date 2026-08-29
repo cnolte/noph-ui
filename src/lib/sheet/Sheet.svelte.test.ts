@@ -36,20 +36,15 @@ describe('Sheet', async () => {
 		await render(Harness, { open: true })
 		await expect.poll(() => sheet().open).toBe(true)
 
-		// Appended while the sheet is already open. A hand-rolled trap can only inert what exists
-		// at the moment it runs, so this is exactly the case it misses.
 		const late = document.createElement('button')
 		late.textContent = 'late'
 		document.body.append(late)
 
-		// Focus cannot reach either one: the browser keeps everything outside the modal blocked
-		// for as long as it is open.
 		at('outside').focus()
 		expect(document.activeElement).not.toBe(at('outside'))
 		late.focus()
 		expect(document.activeElement).not.toBe(late)
 
-		// And focus does land inside.
 		at('inside').focus()
 		expect(document.activeElement).toBe(at('inside'))
 
@@ -73,8 +68,6 @@ describe('Sheet', async () => {
 
 		await expect.poll(() => sheet().open).toBe(true)
 		expect(sheet().matches(':modal')).toBe(false)
-		// The contrast that makes the modal test above mean something: focus really does move
-		// here, so the modal case failing to move it is the trap and not an inert environment.
 		at('outside').focus()
 		expect(document.activeElement).toBe(at('outside'))
 	})

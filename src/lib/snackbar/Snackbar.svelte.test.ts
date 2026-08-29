@@ -14,12 +14,6 @@ const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 const hover = (el: HTMLElement) => page.elementLocator(el).hover()
 const elsewhere = () => document.getElementById('elsewhere')!
 
-/*
- * The pointer is a page-wide thing in a browser test and a hovered snackbar waits, so a test has to
- * say where the mouse is rather than inherit it. Moving it takes long enough that a snackbar
- * rendered with a live timeout can close on the way, so these open without one, park the pointer
- * off the snackbar, and hand back the arming of the timeout for the test to do last.
- */
 const openWithoutTimer = async (props: Props) => {
 	const { rerender } = await render(Harness, { ...props, open: true, timeout: 0 })
 	await expect.poll(isOpen, { timeout: 3000 }).toBe(true)

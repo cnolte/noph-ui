@@ -1,6 +1,4 @@
 <script lang="ts">
-	// A picker inside a form that validates itself, so the component tests can check what a submit
-	// does without a documentation page around it.
 	import DockedDatePicker from './DockedDatePicker.svelte'
 	import type { DockedDatePickerProps } from './types.ts'
 

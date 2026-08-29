@@ -17,7 +17,6 @@
 
 	const twoLine = $derived(variant === 'medium' || variant === 'large')
 	const isSearch = $derived(variant === 'search')
-	// Only a two-line bar has a second row to collapse.
 	const collapses = $derived(collapsible && twoLine)
 </script>
 
@@ -46,13 +45,8 @@
 			<div class="np-app-bar-leading">{@render leading()}</div>
 		{/if}
 		{#if isSearch}
-			<!-- A search app bar carries a field in place of a headline. -->
 			<div class="np-app-bar-search-field">{@render search?.()}</div>
 		{:else if twoLine}
-			<!--
-				The collapsed copy of the headline and subtitle. Hidden from assistive technology so they
-				are announced once; the real ones below stay in the accessibility tree even at height zero.
-			-->
 			<div class="np-app-bar-inline" aria-hidden="true">{@render titles(true)}</div>
 		{:else}
 			{@render titles(false)}
@@ -83,12 +77,6 @@
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 	}
 
-	/*
-	 * An expanded search floats past the bar's own bounds, into the space of whatever comes
-	 * after it in the document. Sibling bars share the same z-index, so without this the one
-	 * holding the expanded search would lose to a later sibling and the view would open behind
-	 * it rather than over it.
-	 */
 	.np-app-bar:has(:global(.np-search-expanded)) {
 		z-index: 9;
 	}
@@ -98,7 +86,6 @@
 		align-items: center;
 		gap: 0.5rem;
 		flex: none;
-		/* `min-height` rather than `height`, so a subtitle on a one-row bar grows it. */
 		min-height: 4rem;
 		padding-inline: 0.25rem;
 	}
@@ -131,7 +118,6 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	/* The collapsed copy sits on one row, so its subtitle stays at the small size. */
 	.np-app-bar-titles-inline .np-app-bar-headline {
 		font-size: 1.375rem;
 	}
@@ -147,16 +133,11 @@
 		min-width: 0;
 	}
 
-	/* One-row bars: the headline sits in the action row. */
 	.np-app-bar-small,
 	.np-app-bar-search {
 		--_headline-size: 1.375rem;
 	}
 
-	/*
-	 * The field takes the row, so a search bar has no headline to size. Named `-search-field`
-	 * rather than `-search`, which is already the variant class on the header.
-	 */
 	.np-app-bar-search-field {
 		flex: 1;
 		min-width: 0;
@@ -169,21 +150,15 @@
 		flex: 1;
 	}
 
-	/* Two-row bars: the headline sits below, and the inline copy is revealed on collapse. */
 	.np-app-bar-medium {
 		--_headline-size: 1.5rem;
-		--_second-row-height: 3rem; /* medium: 64 + 48 = 112 */
+		--_second-row-height: 3rem;
 	}
 	.np-app-bar-large {
 		--_headline-size: 1.75rem;
-		--_second-row-height: 5.5rem; /* large: 64 + 88 = 152 */
+		--_second-row-height: 5.5rem;
 	}
 
-	/*
-	 * Sized by its content with a floor, not a fixed height, so a headline plus a subtitle is not
-	 * clipped. `interpolate-size` lets the collapse animate that intrinsic height down to zero,
-	 * the same way the extended FAB animates its width.
-	 */
 	.np-app-bar-second-row {
 		interpolate-size: allow-keywords;
 		display: flex;
@@ -207,41 +182,17 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		/* Hidden until the bar collapses. */
 		opacity: 0;
 	}
 
-	/*
-	 * The collapse. `animation-timeline: scroll()` drives these keyframes from the scroll position
-	 * itself, so there is no scroll listener, no measurement and no state. `animation-range` ends
-	 * the collapse once the page has scrolled past the second row's height.
-	 */
 	@supports (animation-timeline: scroll()) {
-		/*
-		 * Scroll anchoring has to be off on whichever element scrolls, or the collapse cannot
-		 * happen at all: the bar shrinking above the viewport is exactly the content shift that
-		 * anchoring exists to compensate for, so the browser pushes the scroll position back and
-		 * the two fight to a standstill. `:has()` reaches the scroller so a consumer does not have
-		 * to know this, and only ever matches when a collapsible bar is actually present.
-		 */
 		:global(html:has(.np-app-bar-collapsible)) {
 			overflow-anchor: none;
 		}
-		/*
-		 * `scroll(nearest block)` resolves to the nearest scrollable ancestor at any depth, and CSS
-		 * cannot single that one out, so every ancestor of the bar is covered. Turning anchoring off
-		 * on an ancestor that does not scroll costs nothing.
-		 */
 		:global(:has(.np-app-bar-scroller-nearest)) {
 			overflow-anchor: none;
 		}
 
-		/*
-		 * Deliberately not gated on `prefers-reduced-motion`. The collapse is a layout state tied
-		 * one to one to the scroll position, the way `position: sticky` is, not motion that plays on
-		 * its own. Turning it off would leave the bar permanently eating a third of a small screen
-		 * rather than removing an animation.
-		 */
 		.np-app-bar-collapsible .np-app-bar-second-row {
 			animation: np-app-bar-collapse linear both;
 			animation-timeline: scroll(root block);
@@ -268,7 +219,6 @@
 	}
 
 	@keyframes np-app-bar-reveal {
-		/* Held hidden for the first half, so the two headlines cross rather than overlap. */
 		0%,
 		50% {
 			opacity: 0;

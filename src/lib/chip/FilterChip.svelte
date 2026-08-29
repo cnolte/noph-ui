@@ -29,8 +29,6 @@
 
 	let chipLabel: HTMLLabelElement | undefined = $state()
 
-	// A grouped chip takes its checked state from the group, so it cannot also `bind:checked`. One
-	// controlled input covers both, with the change handler writing back whichever is in play.
 	let isChecked = $derived(
 		Array.isArray(group) && value !== undefined ? group.includes(value) : selected,
 	)

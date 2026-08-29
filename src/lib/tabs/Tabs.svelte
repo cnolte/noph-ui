@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte'
 	import Divider from '#lib/divider/Divider.svelte'
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import { setTabsContext } from './context.js'
@@ -12,11 +13,10 @@
 		...attributes
 	}: TabsProps = $props()
 
-	// svelte-ignore state_referenced_locally
 	let tabsContext = $state<TabsContext>({
 		value,
 		indicatorValue: value,
-		variant,
+		variant: untrack(() => variant),
 	})
 	$effect(() => {
 		value = tabsContext.value

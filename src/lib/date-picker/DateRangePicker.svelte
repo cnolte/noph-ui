@@ -116,11 +116,6 @@
 		if (target && scroller) scroller.scrollTop = target.offsetTop
 	}
 
-	/*
-	 * The same pair every overlay in the library exports. A trigger with `command="show-modal"` and
-	 * `commandfor` needs neither, so these are for the times there is no trigger to point at the
-	 * dialog. `open` follows either way, written back from the dialog's own toggle event.
-	 */
 	export const show = () => {
 		if (element && !element.open) element.showModal()
 	}

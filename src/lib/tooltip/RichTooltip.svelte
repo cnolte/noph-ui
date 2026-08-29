@@ -13,13 +13,6 @@
 		...attributes
 	}: RichTooltipProps = $props()
 
-	/*
-	 * The control the tooltip is opened from, passed to `showPopover()` as its source so a
-	 * programmatic open gets the invoker relationship the declarative one gets for free: the
-	 * tooltip counts as nested inside any popover its control sits in, rather than dismissing it.
-	 * Either attribute names a control, since `commandfor` and `popovertarget` are separate
-	 * properties that set the same relationship.
-	 */
 	const findControl = () =>
 		id
 			? (document.querySelector<HTMLElement>(`[commandfor="${id}"], [popovertarget="${id}"]`) ??

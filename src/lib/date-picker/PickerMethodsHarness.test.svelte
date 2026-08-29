@@ -1,6 +1,4 @@
 <script lang="ts">
-	// Wraps each picker behind buttons that reach it through `show()` and `close()` rather than
-	// through `open`, which is how a page drives a picker that has no trigger to point at.
 	import DatePickerDialog from './DatePickerDialog.svelte'
 	import DateRangePicker from './DateRangePicker.svelte'
 	import DockedDatePicker from './DockedDatePicker.svelte'

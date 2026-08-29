@@ -204,7 +204,6 @@
 <p>Import the default theme once, in your root layout.</p>
 <Code value="import 'noph-ui/defaultTheme'" />
 <p>Then import a component and drop it into your markup.</p>
-<!-- eslint-disable no-useless-escape -- the backslash keeps this from closing the script block it is written inside of -->
 <Code
 	value={`<script>
 	import { Button } from 'noph-ui'
@@ -212,7 +211,6 @@
 
 <Button variant="filled">Get started</Button>`}
 />
-<!-- eslint-enable no-useless-escape -->
 <p>
 	The <a class="link" href={resolve('/about/quick-start')}>quick start</a> covers theming, dark mode and
 	typography in a few more lines.
@@ -251,7 +249,6 @@
 </section>
 
 <style>
-	/* Hero */
 	.hero {
 		position: relative;
 		overflow: clip;
@@ -386,7 +383,6 @@
 		--np-icon-size: 1.75rem;
 	}
 
-	/* Theming */
 	.swatches {
 		display: grid;
 		gap: 0.5rem;
@@ -410,7 +406,6 @@
 		opacity: 0.85;
 	}
 
-	/* Closing panel */
 	.closing {
 		position: relative;
 		overflow: clip;

@@ -21,8 +21,6 @@
 	let groupValue = $derived(
 		typeof value === 'string' || typeof value === 'number' ? value : undefined,
 	)
-	// A grouped checkbox takes its checked state from the group, so it cannot also `bind:checked`.
-	// One controlled input covers both, with the change handler writing back whichever is in play.
 	let isChecked = $derived(
 		Array.isArray(group) && groupValue !== undefined ? group.includes(groupValue) : checked,
 	)

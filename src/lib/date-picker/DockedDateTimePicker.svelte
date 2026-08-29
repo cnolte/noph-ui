@@ -49,7 +49,6 @@
 	let {
 		value = $bindable(),
 		defaultValue,
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- absorbed on purpose
 		type,
 		'aria-invalid': ariaInvalid,
 		style,
@@ -119,8 +118,6 @@
 	let week = $derived(firstDayOfWeek ?? getFirstDayOfWeek(locale))
 	let minDate = $derived(parseISODateTime(min))
 	let maxDate = $derived(parseISODateTime(max, MINUTES_IN_DAY - 1))
-	// `as('datetime-local')` types its value as `string | number` and carries the last submission in
-	// `defaultValue`, so both are funnelled into one ISO string the rest of the component reads.
 	let current = $derived<string | undefined>(
 		typeof value === 'string' ? value : typeof defaultValue === 'string' ? defaultValue : undefined,
 	)
@@ -298,11 +295,6 @@
 		focusCalendar()
 	}
 
-	/*
-	 * The same pair every overlay in the library exports, for the times there is no trigger to point
-	 * at the picker. `close()` leaves focus where it is; only a close the user asked for, through the
-	 * field or the cancel button, hands focus back to the input.
-	 */
 	export const show = () => openPicker()
 
 	export const close = () => {

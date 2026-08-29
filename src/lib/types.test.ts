@@ -42,20 +42,9 @@ import type {
 	TooltipProps,
 } from './types.ts'
 
-/**
- * Compile-time assertions about the public props types. `npm run check` is what enforces them —
- * the runtime test below only exists so this file is part of the suite.
- *
- * A plain `T extends { element?: unknown }` constraint would NOT work: TypeScript satisfies
- * optional properties by absence, so it only catches a type with no overlapping keys at all.
- * `HasKeys` asks whether the key is really in `keyof T`, which is the actual question. The
- * assertions are per type rather than over a union, because `keyof` of a large union of
- * attribute types is too complex for the compiler to represent.
- */
 type Assert<T extends true> = T
 type HasKeys<T, K extends PropertyKey> = [K] extends [keyof T] ? true : false
 
-/** Every props type forwards the attributes a consumer expects to pass through. */
 type ForwardsAttributes = [
 	Assert<HasKeys<AssistChipProps, 'class' | 'id' | 'style'>>,
 	Assert<HasKeys<AutoCompleteProps, 'class' | 'id' | 'style'>>,
@@ -99,7 +88,6 @@ type ForwardsAttributes = [
 	Assert<HasKeys<TooltipProps, 'class' | 'id' | 'style'>>,
 ]
 
-/** Every component that renders a root element exposes a bindable ref for it. */
 type ExposesElement = [
 	Assert<HasKeys<AssistChipProps, 'element'>>,
 	Assert<HasKeys<AutoCompleteProps, 'element'>>,
@@ -142,7 +130,6 @@ type ExposesElement = [
 	Assert<HasKeys<TooltipProps, 'element'>>,
 ]
 
-/** Every form control can show validation issues. */
 type ShowsIssues = [
 	Assert<HasKeys<AutoCompleteProps, 'issues'>>,
 	Assert<HasKeys<CheckboxProps, 'issues'>>,

@@ -71,7 +71,6 @@ describe('NavigationBarItem', async () => {
 		const visible = labels().filter((l) => getComputedStyle(l).visibility === 'visible')
 		expect(visible).toHaveLength(1)
 		expect(visible[0].textContent).toContain('Search')
-		// Hidden rather than removed, so the row does not reflow as the selection moves.
 		expect(labels().every((l) => l.getBoundingClientRect().height > 0)).toBe(true)
 	})
 
@@ -96,11 +95,9 @@ describe('NavigationBarItem', async () => {
 		const barBox = bar.getBoundingClientRect()
 		const boxes = items().map((i) => i.getBoundingClientRect())
 
-		// Content-sized rather than stretched: the items do not fill the bar.
 		expect(items().every((i) => getComputedStyle(i).flexGrow === '0')).toBe(true)
 		const spanned = boxes.at(-1)!.right - boxes[0].left
 		expect(spanned).toBeLessThan(barBox.width)
-		// Grouped in the middle: equal slack on both sides.
 		const startGap = boxes[0].left - barBox.left
 		const endGap = barBox.right - boxes.at(-1)!.right
 		expect(Math.abs(startGap - endGap)).toBeLessThan(2)
@@ -129,7 +126,6 @@ describe('NavigationBarItem orientation', async () => {
 		const iconBox = icon.getBoundingClientRect()
 		const labelBox = label.getBoundingClientRect()
 
-		// Side by side: they overlap vertically and the icon starts before the label.
 		expect(iconBox.left).toBeLessThan(labelBox.left)
 		expect(iconBox.top).toBeLessThan(labelBox.bottom)
 		expect(labelBox.top).toBeLessThan(iconBox.bottom)

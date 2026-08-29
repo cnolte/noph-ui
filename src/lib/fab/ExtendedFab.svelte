@@ -22,7 +22,6 @@
 	const uid = $props.id()
 
 	const isLink = $derived(attributes.href != null && !disabled)
-	// Collapsed, the text is hidden, so the label has to be announced some other way.
 	const tooltipId = $derived(collapsed && label && !disabled ? uid : undefined)
 
 	const morph = pressMorph()
@@ -97,10 +96,6 @@
 {/if}
 
 <style>
-	/*
-	 * `interpolate-size` lets the intrinsic width animate, so collapsing is a plain CSS
-	 * transition on `width` rather than a measured pixel value.
-	 */
 	.np-extended-fab {
 		interpolate-size: allow-keywords;
 		position: relative;
@@ -128,27 +123,12 @@
 		padding-inline: var(--_padding);
 	}
 
-	/*
-	 * `calc(var(--_height) / 2)` renders identically to `--np-shape-corner-full` (9999px) at
-	 * rest, since border-radius clamps an oversized radius down to exactly half the height
-	 * anyway. It matters for the pressed transition: animating from a huge fixed value spends
-	 * nearly the whole transition on radii that still render as fully round, so the morph never
-	 * becomes visible during a normal, brief click. `50%` isn't a substitute here, since the box
-	 * isn't square, it would resolve to an elliptical corner rather than a round pill end.
-	 */
 	.round {
 		border-radius: var(--np-fab-shape, calc(var(--_height) / 2));
 	}
 	.square {
 		border-radius: var(--np-fab-shape, var(--_square-radius));
 	}
-	/*
-	 * A press morphs the corner towards the other shape. `:active` alone drops the moment the
-	 * pointer lifts, which on a normal click is long before the morph has played, so the short
-	 * `pressed` class holds the shape until the whole round trip is visible, the way Button does
-	 * it. Both are gated on the motion preference, since without the transition below this is
-	 * only an instant snap.
-	 */
 	@media (prefers-reduced-motion: no-preference) {
 		.round:not(:disabled):is(:active, .pressed) {
 			border-radius: var(--np-fab-pressed-shape, var(--_square-radius));
@@ -158,7 +138,6 @@
 		}
 	}
 
-	/* The same three sizes as `Fab`, which is what M3 Expressive aligned the two on. */
 	.s {
 		--_height: 3.5rem;
 		--_square-radius: 1rem;
@@ -184,7 +163,6 @@
 		--np-icon-size: 2.25rem;
 	}
 
-	/* Collapsed is the icon-only FAB: square box, no text, no padding around the label. */
 	.np-fab-collapsed {
 		width: var(--_height);
 		padding-inline: 0;
@@ -219,10 +197,6 @@
 		}
 	}
 
-	/*
-	 * M3's colour styles, named after the tokens they map to. The tone styles are the stronger
-	 * pair, the container styles the softer one. The surface style M3 Expressive dropped is gone.
-	 */
 	.np-fab-primary {
 		--_container-color: var(--np-color-primary);
 		--_icon-color: var(--np-color-on-primary);

@@ -10,7 +10,8 @@ const VALUE = '2025-08-17'
 const setup = (props: Record<string, unknown> = {}) =>
 	render(Harness, { locale: 'en-US', value: VALUE, ...props })
 
-const setupForm = (props: Record<string, unknown> = {}) => render(Form, { locale: 'en-US', ...props })
+const setupForm = (props: Record<string, unknown> = {}) =>
+	render(Form, { locale: 'en-US', ...props })
 
 const field = () => page.getByRole('textbox')
 const input = () => field().element() as HTMLInputElement

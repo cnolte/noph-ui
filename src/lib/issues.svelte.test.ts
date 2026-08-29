@@ -9,10 +9,6 @@ import Switch from '#lib/switch/Switch.svelte'
 
 const issues = [{ message: 'Required' }]
 
-/**
- * Resolves a theme token to the value the browser actually computes, so an assertion compares
- * `rgb(...)` with `rgb(...)` rather than with the raw `light-dark(...)` declaration.
- */
 const resolve = (token: string) => {
 	const probe = document.createElement('span')
 	probe.style.color = `var(${token})`
@@ -26,10 +22,6 @@ const errorColor = () => resolve('--np-color-error')
 const styleOf = (selector: string) =>
 	getComputedStyle(document.querySelector<HTMLElement>(selector)!)
 
-/**
- * Every form control takes `issues`, the same `{ message: string }[]` TextField and Select
- * already accept, and shows an error state from it.
- */
 describe('issues', async () => {
 	test('Radio turns its icon to the error colour', async () => {
 		await render(Radio, { name: 'r', value: 'a', 'aria-label': 'a', issues })

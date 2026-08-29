@@ -23,16 +23,12 @@
 	let hovered = $state(false)
 	let focused = $state(false)
 
+	const uid = $props.id()
 	const controller = popoverController(() => element)
 
 	export const show = () => controller.show()
 	export const close = () => controller.close()
 
-	/*
-	 * `toggle` fires once the popover has settled, so `open` coming back from the DOM already
-	 * matches it and this does nothing. Syncing on `beforetoggle` instead would land in the middle
-	 * of the browser's show operation, where `showPopover()` throws.
-	 */
 	syncOpenEffect(
 		() => element,
 		() => open,
@@ -40,11 +36,6 @@
 		close,
 	)
 
-	/*
-	 * The timeout lives and dies with the snackbar being open, so there is no timer to clear by
-	 * hand: closing early or unmounting runs the cleanup. It holds while the snackbar is hovered or
-	 * keeps focus, and starts over once the snackbar is left alone, so an action stays reachable.
-	 */
 	$effect(() => {
 		if (!open || hovered || focused || timeout <= 0) return
 		const timeoutId = setTimeout(close, timeout)
@@ -52,18 +43,13 @@
 	})
 </script>
 
-<!--
-	`alert` is an atomic live region, so a screen reader reads the whole snackbar out when it appears,
-	label and supporting text together. It needs no name of its own for that, and the ARIA alert
-	pattern gives it none: naming the region after an element inside it only risks that text being
-	announced twice. A caller's own `aria-label` reaches the element through `attributes`.
--->
 <div
 	{...attributes}
 	{popover}
 	class={['np-snackbar', attributes.class]}
 	bind:this={element}
 	role="alert"
+	aria-labelledby="np-snackbar-label-{uid}"
 	onpointerenter={() => (hovered = true)}
 	onpointerleave={() => (hovered = false)}
 	onfocusin={() => (focused = true)}
@@ -75,7 +61,7 @@
 >
 	<div class="np-snackbar-inner">
 		<div class="np-snackbar-label-container">
-			<div class="np-snackbar-label">{label}</div>
+			<div id="np-snackbar-label-{uid}" class="np-snackbar-label">{label}</div>
 			{#if supportingText}
 				<div class="np-snackbar-supporting-text">{supportingText}</div>
 			{/if}

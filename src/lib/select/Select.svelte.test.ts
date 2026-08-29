@@ -3,10 +3,6 @@ import { render } from 'vitest-browser-svelte'
 import Harness from './MenuWidthHarness.test.svelte'
 import MultiHarness from './SelectOptionsHarness.test.svelte'
 
-/**
- * The menu is sized off its anchor by `anchor-size()`, not by a measured pixel width written from
- * script, so it has to come out the width of the field for any field width.
- */
 describe.each(['select', 'autocomplete'] as const)('%s menu width', async (which) => {
 	test.each(['420px', '260px'])('matches the field at %s', async (width) => {
 		await render(Harness, { which, width })
@@ -24,10 +20,6 @@ describe.each(['select', 'autocomplete'] as const)('%s menu width', async (which
 	})
 })
 
-/**
- * One option snippet serves both kinds of select, so the leading checkmark that marks a chosen
- * option has to appear for a multiple select and stay away from a single one.
- */
 describe('select options', async () => {
 	test('a multiple select leads each option with a checkmark', async () => {
 		await render(MultiHarness, { multiple: true, value: ['a'] })

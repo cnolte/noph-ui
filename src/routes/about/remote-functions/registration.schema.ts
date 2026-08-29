@@ -21,7 +21,6 @@ export const registrationSchema = v.object({
 		'Choose a plan.',
 	),
 	startDate: v.pipe(v.string(), v.isoDate('Pick a start date.')),
-	// Checkboxes send nothing when unchecked, so the field has to be optional with a default.
 	acceptedTerms: v.pipe(
 		v.optional(v.boolean(), false),
 		v.literal(true, 'You must accept the terms.'),

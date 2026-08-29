@@ -33,8 +33,6 @@
 	const uid = $props.id()
 	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))
 
-	// Merged rather than set before the spread, so a consumer's own aria wiring adds to the
-	// supporting-text wiring instead of silently replacing it.
 	const supportingTextId = `supporting-text-${uid}`
 	const ids = (...values: (string | undefined | null | false)[]) =>
 		values.filter(Boolean).join(' ') || undefined

@@ -9,11 +9,6 @@ import Harness from './FabHarness.test.svelte'
 const root = () => document.querySelector<HTMLElement>('.np-fab, .np-extended-fab')!
 const at = (id: string) => document.querySelector<HTMLElement>(`[data-testid="${id}"]`)!
 const box = (id: string) => at(id).getBoundingClientRect()
-/**
- * Resolves the corner radius to pixels whichever form the CSS uses. `border-radius` percentages
- * are not resolved by `getComputedStyle`, so a raw string comparison would silently compare a
- * percentage against a length.
- */
 const cornerPx = (id: string) => {
 	const declared = getComputedStyle(at(id)).borderTopLeftRadius
 	const value = Number.parseFloat(declared)
@@ -60,9 +55,7 @@ describe('Fab', async () => {
 		expect(box('s').width).toBe(56)
 		expect(box('m').width).toBe(80)
 		expect(box('l').width).toBe(96)
-		// Square aspect: a FAB is as tall as it is wide.
 		expect(box('m').height).toBe(80)
-		// M3's baseline FAB is the 56 pixel one, so that is the default rather than the middle size.
 		expect(box('default').width).toBe(56)
 	})
 
@@ -79,7 +72,6 @@ describe('Fab', async () => {
 	test('tone and container color styles map to their own tokens', async () => {
 		await render(Harness)
 
-		// Resolved through a probe rather than hardcoded, so the theme stays free to change.
 		const resolve = (token: string) => {
 			const probe = document.createElement('div')
 			probe.style.color = `var(${token})`
@@ -93,7 +85,6 @@ describe('Fab', async () => {
 		expect(getComputedStyle(at('container')).backgroundColor).toBe(
 			resolve('--np-color-primary-container'),
 		)
-		// The softer pair stays the default look, so `primary` naming the tone is not a silent swap.
 		expect(getComputedStyle(at('default')).backgroundColor).toBe(
 			resolve('--np-color-primary-container'),
 		)
@@ -123,7 +114,6 @@ describe('Fab', async () => {
 
 		const half = box('round').width / 2
 
-		// Round covers at least half the box, so it renders as a circle; square is tighter.
 		expect(cornerPx('round')).toBeGreaterThanOrEqual(half)
 		expect(cornerPx('square')).toBeLessThan(half)
 	})
@@ -145,7 +135,6 @@ describe('ExtendedFab', async () => {
 		await render(Harness)
 
 		expect(box('collapsed').width).toBeLessThan(box('expanded').width)
-		// Collapsed is the icon-only FAB, so it is as wide as it is tall.
 		expect(box('collapsed').width).toBe(box('collapsed').height)
 	})
 

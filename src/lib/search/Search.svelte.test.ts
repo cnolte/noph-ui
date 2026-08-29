@@ -23,7 +23,6 @@ describe('Search', async () => {
 	test('the results carry no role of their own, and neither does the field', async () => {
 		await render(Harness)
 
-		// Whatever goes in the container brings its own semantics, so the component invents none.
 		expect(results().getAttribute('role')).toBeNull()
 		expect(input().getAttribute('role')).toBeNull()
 		expect(input().getAttribute('aria-expanded')).toBeNull()
@@ -116,7 +115,6 @@ describe('Search', async () => {
 
 		await rerender({ expanded: true })
 
-		// The bar is still all the component takes up, however tall the results grow.
 		await expect.poll(() => getComputedStyle(container()).position).toBe('absolute')
 		expect(px(getComputedStyle(root()).height)).toBe(56)
 		expect(results().getBoundingClientRect().height).toBeGreaterThan(0)
@@ -163,7 +161,6 @@ describe('Search', async () => {
 		await rerender({ expanded: true, variant: 'divided' })
 
 		await expect.poll(() => px(getComputedStyle(bar()).borderTopLeftRadius)).toBe(0)
-		// Divided separates the field from its results with a rule.
 		expect(px(getComputedStyle(bar()).borderBottomWidth)).toBeGreaterThan(0)
 	})
 
@@ -171,7 +168,6 @@ describe('Search', async () => {
 		await render(Harness, { expanded: true, variant: 'contained' })
 
 		expect(px(getComputedStyle(results()).borderTopLeftRadius)).toBe(12)
-		// The two surfaces sit 2dp apart.
 		expect(px(getComputedStyle(container()).rowGap)).toBe(2)
 	})
 

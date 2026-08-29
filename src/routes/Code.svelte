@@ -39,9 +39,7 @@
 			<Icon>content_copy</Icon></IconButton
 		>
 		<span class="np-sr-only" aria-live="polite">{announcement}</span>
-		<pre><code
-				><!-- eslint-disable-line svelte/no-at-html-tags -- Prism.highlight escapes all text content, and `value` is always a hardcoded doc example, never user input -->{@html highlighted}</code
-			></pre>
+		<pre><code>{@html highlighted}</code></pre>
 	</div>
 </div>
 

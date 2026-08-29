@@ -23,10 +23,6 @@
 
 	const tabsContext = getTabsContext()
 
-	/*
-	 * The indicator follows the selection one flush behind, so the anchor it is tied to has moved
-	 * to the tab that is already marked selected rather than to one still being rendered.
-	 */
 	$effect(() => {
 		if (tabsContext.value === value) {
 			tabsContext.indicatorValue = value

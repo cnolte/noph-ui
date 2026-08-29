@@ -9,6 +9,5 @@ export interface DialogProps extends Omit<HTMLDialogAttributes, 'open'> {
 	actions?: Snippet
 	quick?: boolean
 	element?: HTMLDialogElement
-	/** Bindable. Whether the dialog is showing. */
 	open?: boolean
 }

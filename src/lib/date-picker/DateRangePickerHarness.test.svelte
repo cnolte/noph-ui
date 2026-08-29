@@ -1,6 +1,4 @@
 <script lang="ts">
-	// Wraps the range picker so a component test can open it the way a page does and read the bound
-	// range back out of the DOM.
 	import DateRangePicker from './DateRangePicker.svelte'
 	import type { DateRangePickerProps } from './types.ts'
 

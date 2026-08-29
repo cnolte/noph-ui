@@ -71,7 +71,6 @@
 </h2>
 <p>A minimal SvelteKit app with the pieces above wired up.</p>
 <p><code>src/routes/+layout.svelte</code></p>
-<!-- eslint-disable no-useless-escape -- the backslash keeps this from closing the script block it is written inside of -->
 <Code
 	value={`<script>
 	import 'noph-ui/defaultTheme'
@@ -82,14 +81,12 @@
 
 {@render children()}`}
 />
-<!-- eslint-enable no-useless-escape -->
 <p>
 	<code>app.css</code> is the file from the <a class="link" href="#theming">Theming</a> section
 	above, the one that sets <code>background-color</code> and <code>color</code> on
 	<code>body</code>.
 </p>
 <p><code>src/routes/+page.svelte</code></p>
-<!-- eslint-disable no-useless-escape -- the backslash keeps this from closing the script block it is written inside of -->
 <Code
 	value={`<script>
 	import { Button } from 'noph-ui'
@@ -98,4 +95,3 @@
 <h1>Hello Noph UI</h1>
 <Button variant="filled">Get started</Button>`}
 />
-<!-- eslint-enable no-useless-escape -->

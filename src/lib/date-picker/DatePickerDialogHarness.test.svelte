@@ -1,6 +1,4 @@
 <script lang="ts">
-	// Wraps the modal picker so a component test can open it the way a page does and read the bound
-	// state back out of the DOM.
 	import DatePickerDialog from './DatePickerDialog.svelte'
 	import type { DatePickerDialogProps } from './types.ts'
 

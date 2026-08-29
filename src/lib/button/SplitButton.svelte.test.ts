@@ -26,8 +26,6 @@ describe('SplitButton', async () => {
 		await render(Harness)
 
 		const [action, more] = halves().map((h) => getComputedStyle(h))
-		// The action half keeps its outer start corner and gives up its end corner, and the
-		// trailing half does the opposite.
 		expect(action.borderStartStartRadius).not.toBe(action.borderStartEndRadius)
 		expect(more.borderStartEndRadius).not.toBe(more.borderStartStartRadius)
 	})
@@ -54,8 +52,6 @@ describe('SplitButton', async () => {
 
 	test('the trailing half rounds out into a circle while its menu is open', async () => {
 		await render(Harness)
-		// The half is square, so the round corner every size sets to half its height reads as a
-		// circle rather than as a pill with two flat sides.
 		const { width, height } = trigger().getBoundingClientRect()
 		expect(width).toBe(height)
 

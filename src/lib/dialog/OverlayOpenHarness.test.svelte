@@ -14,10 +14,6 @@
 	} = $props()
 </script>
 
-<!--
-	Each overlay gets the trigger it is opened with in markup, so a test can go through the DOM
-	rather than through `open`: `command` for the dialog, `popovertarget` for the popovers.
--->
 {#if which === 'dialog'}
 	<button command="show-modal" commandfor="overlay-dialog">Open</button>
 	<Dialog bind:open id="overlay-dialog" headline="Headline">Body</Dialog>

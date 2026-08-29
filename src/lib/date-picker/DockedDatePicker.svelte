@@ -35,7 +35,6 @@
 	let {
 		value = $bindable(),
 		defaultValue,
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- absorbed on purpose
 		type,
 		'aria-invalid': ariaInvalid,
 		style,
@@ -215,11 +214,6 @@
 		focusCalendar()
 	}
 
-	/*
-	 * The same pair every overlay in the library exports, for the times there is no trigger to point
-	 * at the picker. `close()` leaves focus where it is; only a close the user asked for, through the
-	 * field or the cancel button, hands focus back to the input.
-	 */
 	export const show = () => openPicker()
 
 	export const close = () => {
@@ -269,7 +263,6 @@
 		const parsed = usableDate(next)
 		commit(parsed ? toISODate(parsed) : undefined)
 		if (parsed) setMonth(parsed)
-		// Recorded after the commit, so that it is remembered against the value it just produced.
 		typed = { source: current, text: next }
 		invalidText = undefined
 	}
@@ -281,8 +274,6 @@
 		}
 		const parsed = usableDate(text)
 		invalidText = parsed ? undefined : text
-		// Leaving the field tidies a loose entry: dropping what was typed falls back to the
-		// canonical formatting of the value it produced.
 		if (parsed) typed = undefined
 	}
 
@@ -299,8 +290,6 @@
 	}
 
 	const chooseYear = (year: number) => {
-		// A year is offered as soon as any of its days is in range, so keeping the month the list was
-		// opened from can land on a month where nothing at all is selectable.
 		setMonth(new Date(year, clampMonthInYear(year, monthDate.getMonth(), minDate, maxDate), 1))
 		leaveList()
 	}

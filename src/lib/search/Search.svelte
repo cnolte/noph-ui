@@ -29,18 +29,9 @@
 	const uid = $props.id()
 	const resultsId = `np-search-results-${uid}`
 
-	/*
-	 * A combobox has to own a popup ARIA recognises, so the field claims to be one only when the
-	 * results say what they are. Left alone they are ordinary content that appears below the
-	 * field, which is what a list, a set of categories or a row of chips actually is.
-	 */
 	const comboboxPopups = ['listbox', 'tree', 'grid', 'dialog']
 	const isCombobox = $derived(comboboxPopups.includes(String(resultsAttributes?.role)))
 
-	/*
-	 * A focused text input always matches `:focus-visible`, pointer or not, so the ring is tracked
-	 * by hand: it shows only when focus did not arrive under a finger or a mouse.
-	 */
 	let pointerFocus = false
 	let focusRing = $state(false)
 </script>
@@ -56,19 +47,16 @@
 		attributes.class,
 	]}
 	onkeydown={(event) => {
-		// A key press means whatever takes focus next is being reached with the keyboard.
 		pointerFocus = false
 		attributes.onkeydown?.(event)
 	}}
 	onfocusout={(event) => {
-		// The open view floats over the page, so it closes the moment focus leaves it.
 		const next = event.relatedTarget
 		if (expanded && !(next instanceof Node && element?.contains(next))) expanded = false
 		attributes.onfocusout?.(event)
 	}}
 >
 	<div class="np-search-container">
-		<!-- The click only forwards focus to the input below, which is the actual control. -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
@@ -84,7 +72,6 @@
 					<IconButton
 						title={backLabel}
 						onclick={(event) => {
-							// Bubbling to the bar's own onclick would refocus the input and reopen the view.
 							event.stopPropagation()
 							expanded = false
 						}}
@@ -139,7 +126,6 @@
 						title={clearLabel}
 						onclick={() => {
 							value = ''
-							// The focus below is a pointer's doing, so it must not raise the ring.
 							pointerFocus = true
 							inputElement?.focus()
 						}}
@@ -153,11 +139,6 @@
 			</span>
 		</div>
 
-		<!--
-			The container brings no semantics of its own: what goes in it is a list one time and
-			categories, avatars and chips the next. `resultsAttributes` is where a role belongs when
-			the content has earned one.
-		-->
 		<div
 			{...resultsAttributes}
 			id={resultsId}
@@ -170,13 +151,7 @@
 
 <style>
 	.np-search {
-		/* SearchBarTokens: 56dp tall, fully rounded, surface-container-high. */
 		--_bar-height: 3.5rem;
-		/*
-		 * M3 Expressive grows the bar by shrinking the margins it keeps to its pane, from 24dp at
-		 * rest to 12dp once the view opens. Owning the margin is what makes that growth work
-		 * without the consumer having to name two widths.
-		 */
 		--_pane-margin: var(--np-search-pane-margin, 1.5rem);
 		display: flex;
 		flex-direction: column;
@@ -195,27 +170,18 @@
 		}
 	}
 
-	/*
-	 * Docked, the bar is all the component takes up in the layout: the view it opens floats over
-	 * the page rather than pushing it down, so the margins are the container's own insets.
-	 */
 	.np-search-docked {
 		position: relative;
 		block-size: var(--_bar-height);
 		padding-inline: 0;
 	}
 
-	/*
-	 * The container is only a surface in the divided style, where the bar and the results share
-	 * one. Contained keeps them apart, 2dp of gap between the two.
-	 */
 	.np-search-container {
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
 		gap: 0.125rem;
 		min-height: 0;
-		/* Container width is 360dp at the least and 720dp at the most. */
 		width: 100%;
 		min-width: min(22.5rem, 100%);
 		max-width: var(--np-search-width, 45rem);
@@ -225,18 +191,7 @@
 		position: absolute;
 		inset-block-start: 0;
 		inset-inline: var(--_pane-margin);
-		/*
-		 * A definite `width` rather than `auto`, which resolves outside the transition engine and
-		 * would snap the pane to its grown width the instant the class changes instead of easing
-		 * it in with the insets.
-		 */
 		width: calc(100% - 2 * var(--_pane-margin));
-		/*
-		 * An absolutely positioned box measures a percentage against the whole component, margins
-		 * included, so the floor has to leave room for them or a narrow host overflows. Also
-		 * transitioned below, in step with `width`, or it would snap to its own end value early
-		 * and clamp the still-transitioning `width` to it for the whole animation.
-		 */
 		min-width: min(22.5rem, calc(100% - 2 * var(--_pane-margin)));
 		z-index: var(--np-search-z-index, 3);
 	}
@@ -250,11 +205,6 @@
 				min-width var(--np-motion-expressive-default-spatial);
 		}
 
-		/*
-		 * The view unrolls from under the bar rather than arriving whole. Clipping is what does it,
-		 * so nothing about the bar moves and the pane's shape, rule and shadow are all uncovered
-		 * together, however tall the list turns out to be.
-		 */
 		.np-search-docked.np-search-expanded .np-search-container {
 			animation: unroll var(--np-motion-expressive-default-spatial);
 		}
@@ -262,7 +212,6 @@
 			animation: fadeIn var(--np-motion-expressive-default-effects);
 		}
 	}
-	/* The clip is held off the edges so that it never cuts the shadow while it plays. */
 	@keyframes unroll {
 		from {
 			clip-path: inset(-1.5rem -1.5rem calc(100% - var(--_bar-height)) -1.5rem);
@@ -283,12 +232,6 @@
 		align-items: center;
 		box-sizing: border-box;
 		flex: none;
-		/*
-		 * 8dp of padding and 8dp of gap put the glyphs 16dp inside the bar and the input text 16dp
-		 * past them, which is what the spec measures. The spec reaches those numbers with 48dp tap
-		 * targets and 4dp of space; the library's icon buttons are 40dp, so the space absorbs the
-		 * difference.
-		 */
 		gap: 0.5rem;
 		padding-inline: 0.5rem;
 		height: var(--_bar-height);
@@ -308,7 +251,6 @@
 		}
 	}
 
-	/* The bar is a tap target at rest. Once the view is open it is a header, and takes no states. */
 	.np-search-state-layer {
 		position: absolute;
 		inset: 0;
@@ -326,7 +268,6 @@
 		opacity: 0.1;
 	}
 
-	/* Positioned, so the bar's content paints over the state layer rather than under it. */
 	.np-search-leading,
 	.np-search-trailing,
 	.np-search-input {
@@ -339,18 +280,15 @@
 		align-items: center;
 		flex: none;
 	}
-	/* Trailing actions sit flush against one another. */
 	.np-search-trailing {
 		gap: 0;
 	}
-	/* LeadingIconColor is on-surface; trailing is on-surface-variant. */
 	.np-search-leading {
 		--np-icon-button-icon-color: var(--np-color-on-surface);
 	}
 	.np-search-trailing {
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 	}
-	/* Sized like the icon button that replaces it, so the glyph holds still as the view opens. */
 	.np-search-leading-icon {
 		display: flex;
 		align-items: center;
@@ -368,7 +306,6 @@
 		outline: none;
 		background: none;
 		font: inherit;
-		/* InputTextFont is body-large. */
 		font-size: 1rem;
 		line-height: 1.5rem;
 		letter-spacing: 0.03125rem;
@@ -380,7 +317,6 @@
 		color: var(--np-color-on-surface-variant);
 		opacity: 1;
 	}
-	/* The type="search" clear affordance would duplicate the component's own. */
 	.np-search-input::-webkit-search-cancel-button {
 		appearance: none;
 	}
@@ -397,7 +333,6 @@
 		}
 	}
 
-	/* Results are only in the layout, and only in the accessibility tree, once expanded. */
 	.np-search-results {
 		display: none;
 		box-sizing: border-box;
@@ -408,20 +343,14 @@
 		display: block;
 	}
 
-	/* Docked: the results sit under the field, growing to two thirds of the screen at the most. */
 	.np-search-docked .np-search-results {
 		max-height: var(--np-search-results-max-height, 66.6667dvh);
 	}
-	/* Contained docks them as their own 12dp pane. */
 	.np-search-contained.np-search-docked .np-search-results {
 		border-radius: var(--np-search-results-shape, var(--np-shape-corner-medium));
 		background-color: var(--np-search-container-color, var(--np-color-surface-container-high));
 	}
 
-	/*
-	 * Divided (baseline) folds the field and the results into one 28dp container, separated by a
-	 * rule. Contained keeps the pill, which is what M3 recommends.
-	 */
 	.np-search-divided.np-search-expanded .np-search-bar {
 		border-radius: 0;
 		background-color: transparent;
@@ -432,21 +361,15 @@
 		border-radius: var(--np-search-results-shape, var(--np-shape-corner-extra-large));
 		background-color: var(--np-search-container-color, var(--np-color-surface-container-high));
 	}
-	/*
-	 * The results round off the container's bottom corners themselves, rather than the container
-	 * clipping them, which would take the header's focus ring with it.
-	 */
 	.np-search-divided.np-search-docked.np-search-expanded .np-search-results {
 		border-end-start-radius: inherit;
 		border-end-end-radius: inherit;
 	}
 
-	/* Full screen: the field and its results take over the viewport, and the view has no shape. */
 	.np-search-full-screen.np-search-expanded {
 		position: fixed;
 		inset: 0;
 		z-index: var(--np-search-z-index, 24);
-		/* The pill needs the same room above it that it keeps at its sides. */
 		padding-block-start: var(--_pane-margin);
 		background-color: var(--np-search-view-background-color, var(--np-color-surface-container-low));
 	}
@@ -458,10 +381,6 @@
 		flex: 1;
 		max-height: none;
 	}
-	/*
-	 * Contained holds the 56dp bar in full screen too. Only the divided header grows to 72dp, and
-	 * it runs edge to edge on the view's own surface.
-	 */
 	.np-search-divided.np-search-full-screen.np-search-expanded {
 		padding: 0;
 		background-color: var(--np-search-container-color, var(--np-color-surface-container-high));

@@ -32,7 +32,6 @@
 
 {#snippet content()}
 	{#if orientation === 'horizontal'}
-		<!-- Sized off its own parent, so it has to sit on the whole pill rather than the icon alone. -->
 		<Ripple forElement={touchEl} />
 	{/if}
 	<span class="np-navigation-bar-item-icon">
@@ -104,7 +103,6 @@
 		z-index: 1;
 	}
 
-	/* The active-indicator pill, grown from the selected class rather than measured. */
 	.np-navigation-bar-item-icon::before {
 		content: '';
 		position: absolute;
@@ -144,10 +142,6 @@
 		color: var(--np-color-on-surface);
 	}
 
-	/*
-	 * `labelBehavior="selected"` keeps the label in the layout but hides it, so the row does not
-	 * reflow as the selection moves.
-	 */
 	.np-navigation-bar-item-label-selected .np-navigation-bar-item-label {
 		visibility: hidden;
 	}
@@ -156,28 +150,13 @@
 		visibility: visible;
 	}
 
-	/*
-	 * The icon sits beside the label instead of above it, for a bar with room to spare. Unlike the
-	 * stacked layout, the active-indicator pill wraps the icon and label together, like a chip,
-	 * rather than just the icon.
-	 */
 	.np-navigation-bar-item-horizontal {
 		flex-direction: row;
 		justify-content: center;
-		/* M3's "icon label space" token: 4dp between the icon and the label. */
 		gap: 0.25rem;
-		/*
-		 * M3's "leading/trailing space" token (16dp) sets the inline padding, and the block padding
-		 * is picked so a 1.5rem icon plus padding adds up to the "active indicator height" token
-		 * (40dp).
-		 */
 		padding: 0.5rem 1rem;
 		border-radius: var(--np-shape-corner-full);
-		/* The bar stretches items to its own height by default; a pill sizes to its own content and
-		 * centers in the bar instead. */
 		align-self: center;
-		/* Gives the item its own stacking context, so the pill's z-index: -1 stays behind the icon
-		 * and label instead of escaping to sit behind the bar's own background. */
 		z-index: 0;
 	}
 	.np-navigation-bar-item-horizontal::before {
@@ -197,7 +176,6 @@
 		opacity: 1;
 		transform: scaleX(1);
 	}
-	/* The wrapping item now supplies the pill, so the icon's own is switched off. */
 	.np-navigation-bar-item-horizontal .np-navigation-bar-item-icon {
 		width: 1.5rem;
 		height: 1.5rem;

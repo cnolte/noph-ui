@@ -1,10 +1,6 @@
 import type { Attachment } from 'svelte/attachments'
 import type { TimeOption } from './types.ts'
 
-/**
- * The option that carries the list's single tab stop: the selected one, or else the offered option
- * nearest to the value, so arriving with the keyboard lands next to where the value already is.
- */
 export const tabStop = (options: TimeOption[], value: number | undefined) => {
 	if (options.some((option) => option.value === value)) return value
 	const offered = options.filter((option) => !option.disabled)
@@ -16,14 +12,6 @@ export const tabStop = (options: TimeOption[], value: number | undefined) => {
 	).value
 }
 
-/**
- * Scrolls the selected option into view inside its own list, rather than through `scrollIntoView`,
- * which takes every scrollable ancestor with it and would move the page behind the picker.
- *
- * `centre` puts the option in the middle of the list every time it changes. Otherwise the list is
- * centred once, on the option it opens with, and afterwards the selection is only pulled to the
- * nearest edge when it has moved out of view, so stepping through options does not jump the list.
- */
 export const revealSelected = (centre = false): Attachment<HTMLElement> => {
 	let centred = false
 	return (element) => {

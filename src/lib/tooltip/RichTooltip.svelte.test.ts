@@ -149,8 +149,6 @@ describe('content and semantics', async () => {
 	})
 
 	test('needs no JavaScript: a copy of the markup with no listeners still opens', async () => {
-		// `popovertarget` rather than the `commandfor` the harness uses, so the older attribute pair
-		// is covered too. Both name a control the same way.
 		await render(Harness)
 		const { anchor, tooltip } = parts()
 

@@ -115,13 +115,6 @@
 
 	const DRAG_THRESHOLD = 3
 
-	/*
-	 * The value label is a `manual` popover rather than a plain absolutely positioned element, so it
-	 * renders in the top layer and isn't clipped by an ancestor that scrolls or clips overflow, the
-	 * way a `DemoContainer` or any card with `overflow: hidden` would otherwise cut it off. `manual`
-	 * rather than `hint`, whose open and close the browser drives on its own schedule; this one has
-	 * to follow the drag exactly.
-	 */
 	let startLabelElement = $state<HTMLDivElement>()
 	let endLabelElement = $state<HTMLDivElement>()
 	let startHandleElement = $state<HTMLDivElement>()
@@ -129,13 +122,6 @@
 	let hovered = $state<'start' | 'end' | null>(null)
 	let focused = $state<'start' | 'end' | null>(null)
 
-	/*
-	 * One handle carries the label at a time, the one being interacted with: a drag wins, then the
-	 * pointer, then the keyboard. Focus only counts when it did not come from a pointer, since a
-	 * drag focuses the input and `:focus-visible` does match a range input focused that way, which
-	 * is why the focus ring is suppressed by `np-pointer-focused` too. Without that gate the label
-	 * would stay up after a drag for as long as the input keeps focus, however far the pointer went.
-	 */
 	let labelled = $derived(
 		disabled ? null : (dragging ?? hovered ?? (pointerFocused ? null : focused)),
 	)
@@ -193,16 +179,8 @@
 		}
 	}
 
-	/*
-	 * Hover is derived from where the pointer actually is rather than from the handle's own
-	 * mouseenter/mouseleave. A handle is only a few pixels wide, so those events are easy to miss
-	 * between frames, and while a drag holds pointer capture they are routed to the capturing
-	 * element and never reach the handle at all, which left the label stuck open. The tolerance
-	 * gives the thin handle a hit area worth aiming at.
-	 */
 	const HOVER_TOLERANCE = 12
 
-	/** Distance from the pointer to a handle's box, zero while inside it. */
 	const distanceTo = (handle: HTMLDivElement | undefined, e: PointerEvent) => {
 		if (!handle) return Infinity
 		const r = handle.getBoundingClientRect()
@@ -597,15 +575,6 @@
 			block-size var(--np-motion-expressive-fast-effects);
 	}
 
-	/*
-	 * A `manual` popover rather than a plain absolutely positioned element: it renders in the top
-	 * layer, anchored to the handle by `position-anchor`/`position-area` rather than by an inset
-	 * computed from the handle's own box, so it isn't clipped by an ancestor that scrolls or hides
-	 * overflow. It stays a wrapper around the visible label rather than the popover itself carrying
-	 * the styling, so it can keep resolving `position-area` in the slider's own writing mode while
-	 * the label inside always renders horizontally, the same split the previous absolute-positioned
-	 * version needed for a vertical slider's rotated writing mode.
-	 */
 	.np-slider-label-anchor[popover] {
 		position-area: block-start;
 		justify-self: anchor-center;
@@ -617,11 +586,6 @@
 		pointer-events: none;
 	}
 
-	/*
-	 * `display` only while open. Setting it on the base rule would beat the user agent's
-	 * `display: none` for a closed popover, because author styles win over user agent styles
-	 * whatever the specificity, leaving the label on screen the whole time.
-	 */
 	.np-slider-label-anchor:popover-open {
 		display: flex;
 		opacity: 1;

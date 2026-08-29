@@ -1,6 +1,4 @@
 <script lang="ts">
-	// Wraps the picker so a component test can bind to it and read the bound state back out of the
-	// DOM, the way the documentation page does.
 	import DockedDatePicker from './DockedDatePicker.svelte'
 	import type { DockedDatePickerProps } from './types.ts'
 

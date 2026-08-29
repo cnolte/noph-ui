@@ -20,10 +20,6 @@
 
 	const uid = $props.id()
 
-	/*
-	 * A modal dialog can only be opened from script or from a `command` button; `<dialog open>` on
-	 * its own is the non-modal kind, with no focus trap and no backdrop.
-	 */
 	export const show = () => {
 		if (element && !element.open) element.showModal()
 	}
@@ -40,13 +36,6 @@
 	)
 </script>
 
-<!--
-	A `dialog`, not a popover. `showModal()` keeps everything outside inert for as long as the dialog
-	is open, including anything added to the page while it is open, and hands focus back on close.
-	`::backdrop` is the scrim and `closedby="any"` the click-outside-to-close. Where `closedby` is
-	unsupported the click handler below covers it: a click on the backdrop is reported against the
-	dialog itself.
--->
 <dialog
 	bind:this={element}
 	{...attributes}
@@ -57,11 +46,6 @@
 	class={['np-dialog-container', !quick && 'np-animate', attributes.class]}
 	ontoggle={(event) => {
 		open = event.newState === 'open'
-		/*
-		 * Without this the browser autofocuses the first focusable descendant, one of the actions,
-		 * which can be a destructive one. Focus the dialog itself instead, so nothing is focused
-		 * that the user didn't choose to interact with.
-		 */
 		if (event.newState === 'open') element?.focus()
 		ontoggle?.(event)
 	}}
@@ -108,7 +92,6 @@
 	.np-dialog-container {
 		background: transparent;
 		border: none;
-		/* Focus lands here on open only to stay off the actions, not as something to show. */
 		outline: none;
 		margin: auto;
 		padding: var(--np-dialog-inset, 2rem 1rem);
@@ -120,14 +103,9 @@
 		overflow: visible;
 		color: var(--np-color-on-surface);
 	}
-	/* A closed dialog is `display: none` from the user agent, which the enter transition needs. */
 	.np-dialog-container:not([open]) {
 		display: none;
 	}
-	/*
-	 * The exit transition holds the dialog in the top layer after it has closed, where it would go on
-	 * taking the clicks meant for the page behind it.
-	 */
 	.np-animate:not([open]) {
 		pointer-events: none;
 	}

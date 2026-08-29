@@ -32,7 +32,6 @@
 	const FILLED = "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24"
 	const OUTLINED = "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24"
 
-	// Player
 	const tracks = [
 		{ title: 'Expressive Motion', artist: 'Tonal Palette', seconds: 214 },
 		{ title: 'Ripple on Press', artist: 'Surface Container', seconds: 187 },
@@ -62,7 +61,6 @@
 		return () => clearInterval(timer)
 	})
 
-	// Inbox
 	let mail = $state([
 		{ from: 'Ada', subject: 'Design review moved to 3pm', unread: true },
 		{ from: 'Grace', subject: 'Ship the button group?', unread: true },
@@ -97,11 +95,9 @@
 		return () => clearInterval(timer)
 	})
 
-	// Toolbar
 	let styles = $state({ bold: true, italic: false, underline: false })
 	let align = $state<'left' | 'center' | 'right'>('left')
 
-	// Reservation
 	const isoToday = toISODate(new Date())
 	let reserved = $state<string | undefined>(`${isoToday}T19:00`)
 	let confirmation = $state('')
@@ -126,7 +122,6 @@
 		reserveSnackbar?.show()
 	}
 
-	// Search
 	const docs: AutoCompleteOption[] = [
 		{
 			label: 'Button group',
@@ -169,7 +164,6 @@
 	}
 	let includeArchived = $state(false)
 
-	// Jump to track
 	let jump = $state('')
 	let jumpExpanded = $state(false)
 	const trackMatches = $derived(

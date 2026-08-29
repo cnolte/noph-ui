@@ -23,7 +23,6 @@
 		if (!event.defaultPrevented) arrowHandler(event)
 	}
 
-	/* Only a modal drawer is a dialog; a standard one is a nav that is always in the layout. */
 	const asDialog = () => (element instanceof HTMLDialogElement ? element : undefined)
 
 	export const show = () => {
@@ -45,12 +44,6 @@
 	const start = $derived(direction === 'ltr' ? 'translateX(-100%)' : 'translateX(100%)')
 </script>
 
-<!--
-	A modal drawer is a `dialog` holding a nav landmark, so the browser keeps the page behind it
-	inert for as long as it is open and hands focus back on close. `::backdrop` is the scrim and
-	`closedby="any"` the tap-outside-to-close. Where `closedby` is unsupported the click handler
-	below covers it: a click on the backdrop is reported against the dialog itself.
--->
 {#if modal}
 	<dialog
 		{...attributes}
@@ -70,11 +63,6 @@
 		onkeydown={handleKeydown}
 		ontoggle={(event) => {
 			open = event.newState === 'open'
-			/*
-			 * Without this the browser autofocuses the first focusable descendant, the first nav
-			 * item. Focus the drawer itself instead, so nothing is focused that the user didn't
-			 * choose to interact with.
-			 */
 			if (event.newState === 'open') element?.focus()
 			ontoggle?.(event)
 		}}
@@ -83,12 +71,6 @@
 			if (event.target === element) close()
 		}}
 	>
-		<!--
-			The label belongs to the navigation landmark, not to the dialog wrapping it, so it is
-			pulled back off the dialog above and put here. Everything else stays on the dialog: it
-			is the container the layout and the custom properties are written against, and the
-			element `commandfor` has to reach.
-		-->
 		<nav
 			aria-label={attributes['aria-label']}
 			aria-labelledby={attributes['aria-labelledby']}
@@ -120,7 +102,6 @@
 		color: var(--np-color-on-surface-variant);
 		width: calc(var(--np-navigation-drawer-width, 22.5rem) + 3px);
 		border: 0;
-		/* Focus lands here on open only to stay off the first nav item, not as something to show. */
 		outline: none;
 		margin: 0;
 		padding: 0;
@@ -129,7 +110,6 @@
 		max-height: none;
 	}
 
-	/* The modal drawer is docked to the inline edge rather than centred as a dialog would be. */
 	.np-navigation-drawer-container-modal {
 		position: fixed;
 		inset-block: 0;
@@ -183,7 +163,6 @@
 		box-shadow: var(--np-elevation-1);
 	}
 
-	/* `backdrop` decides whether the scrim is painted; a modal dialog always has the layer. */
 	.np-navigation-drawer-container-modal::backdrop {
 		background-color: transparent;
 	}

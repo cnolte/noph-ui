@@ -6,7 +6,6 @@ import AppBar from './AppBar.svelte'
 const bar = () => document.querySelector<HTMLElement>('.np-app-bar')!
 const secondRow = () => document.querySelector<HTMLElement>('.np-app-bar-second-row')
 const inlineTitles = () => document.querySelector<HTMLElement>('.np-app-bar-inline')
-/** Excludes the collapsed copy, which only exists for the crossfade. */
 const headlines = () => [
 	...document.querySelectorAll<HTMLElement>(
 		'.np-app-bar-headline:not(.np-app-bar-inline .np-app-bar-headline)',
@@ -35,7 +34,6 @@ describe('AppBar', async () => {
 		await render(Harness, { variant: 'search' })
 
 		expect(document.querySelector('.np-app-bar-search-field .np-search')).not.toBeNull()
-		// A search app bar shows no headline, so none is rendered to be announced.
 		expect(headlines()).toHaveLength(0)
 	})
 
@@ -65,7 +63,6 @@ describe('AppBar', async () => {
 	test('the headline is announced once, even though it is rendered twice', async () => {
 		await render(Harness, { variant: 'large' })
 
-		// The collapsed copy exists for the crossfade but is hidden from assistive technology.
 		expect(inlineTitles()!.getAttribute('aria-hidden')).toBe('true')
 		const announced = [...document.querySelectorAll('*')].filter(
 			(el) => el.textContent === 'Inbox' && el.closest('[aria-hidden="true"]') === null,
@@ -85,7 +82,6 @@ describe('AppBar', async () => {
 
 		const style = getComputedStyle(secondRow()!)
 		expect(style.animationTimeline).toContain('scroll')
-		// Svelte scopes keyframe names, so the declared name carries a hash prefix.
 		expect(style.animationName).toContain('np-app-bar-collapse')
 	})
 
@@ -98,7 +94,6 @@ describe('AppBar', async () => {
 	test('collapsible without scroll support leaves the bar expanded', async () => {
 		await render(Harness, { variant: 'large', collapsible: true, scrollable: true })
 
-		// The second row keeps its height until the scroll timeline advances it.
 		expect(Math.round(secondRow()!.getBoundingClientRect().height)).toBe(88)
 	})
 
@@ -117,7 +112,6 @@ describe('AppBar', async () => {
 
 		const headline = headlines()[0]
 		const row = document.querySelector<HTMLElement>('.np-app-bar-second-row')!
-		// Fully inside the row it sits in, so nothing is cut off by the row's `overflow: hidden`.
 		expect(headline.getBoundingClientRect().top).toBeGreaterThanOrEqual(
 			row.getBoundingClientRect().top - 1,
 		)
@@ -127,8 +121,6 @@ describe('AppBar', async () => {
 	test('a collapsible bar turns off scroll anchoring on the scroller', async () => {
 		await render(Harness, { variant: 'large', collapsible: true, scrollable: true })
 
-		// Without this the shrinking bar and the browser's scroll compensation fight to a
-		// standstill and the bar never collapses at all.
 		expect(getComputedStyle(document.documentElement).overflowAnchor).toBe('none')
 	})
 

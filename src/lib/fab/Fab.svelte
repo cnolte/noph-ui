@@ -109,13 +109,6 @@
 		--np-ripple-pressed-color: var(--np-fab-icon-color, var(--_icon-color));
 	}
 
-	/*
-	 * `round` is fully rounded and `square` is the smaller radius, the same way Button reads.
-	 * The FAB box is always square, so `50%` renders identically to `--np-shape-corner-full`
-	 * (9999px) at rest. It matters for the pressed transition below: animating `border-radius`
-	 * from a huge fixed value spends nearly the whole transition on radii that still render as
-	 * fully round, so the morph never becomes visible during a normal, brief click.
-	 */
 	.round {
 		border-radius: var(--np-fab-shape, 50%);
 	}
@@ -123,13 +116,6 @@
 		border-radius: var(--np-fab-shape, var(--_square-radius));
 	}
 
-	/*
-	 * A press morphs the corner towards the other shape. `:active` alone drops the moment the
-	 * pointer lifts, which on a normal click is long before the morph has played, so the short
-	 * `pressed` class holds the shape until the whole round trip is visible, the way Button does
-	 * it. Both are gated on the motion preference, since without the transition below this is
-	 * only an instant snap.
-	 */
 	@media (prefers-reduced-motion: no-preference) {
 		.round:not(:disabled):is(:active, .pressed) {
 			border-radius: var(--np-fab-pressed-shape, var(--_square-radius));
@@ -148,11 +134,6 @@
 		}
 	}
 
-	/*
-	 * M3's three recommended sizes, matching the extended FAB's. The 40px FAB it used to also
-	 * define is gone: M3 Expressive no longer recommends it. Each square radius is the shape token
-	 * that goes with the size, large, large-increased and extra-large.
-	 */
 	.s {
 		width: 3.5rem;
 		height: 3.5rem;
@@ -172,10 +153,6 @@
 		--np-icon-size: 2.25rem;
 	}
 
-	/*
-	 * M3's colour styles, named after the tokens they map to. The tone styles are the stronger
-	 * pair, the container styles the softer one. The surface style M3 Expressive dropped is gone.
-	 */
 	.np-fab-primary {
 		--_container-color: var(--np-color-primary);
 		--_icon-color: var(--np-color-on-primary);
@@ -226,11 +203,6 @@
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
 
-	/*
-	 * The icon is never a hit target, matching `Button`'s. Otherwise swapping it out from under
-	 * the pointer, which `FabMenu`'s trigger does when it opens, moves the pointer to a different
-	 * element; the browser hands the button fresh interest on the way and reopens its tooltip.
-	 */
 	.np-fab-icon {
 		display: flex;
 		fill: currentColor;

@@ -130,11 +130,6 @@
 		cancelYearEnter = afterTwoFrames(() => (yearEnter = false))
 	}
 
-	/*
-	 * The same pair every overlay in the library exports. A trigger with `command="show-modal"` and
-	 * `commandfor` needs neither, so these are for the times there is no trigger to point at the
-	 * dialog. `open` follows either way, written back from the dialog's own toggle event.
-	 */
 	export const show = () => {
 		if (element && !element.open) element.showModal()
 	}
@@ -227,8 +222,6 @@
 		} else {
 			if (!confirming) oncancel?.()
 			confirming = false
-			// Handing the month back before the dialog has gone would step the calendar to another
-			// month in front of the user, so that waits for the fade as well.
 			exit.scheduleExit(element, () => (displayMonth = monthBeforeOpen))
 		}
 	}}
@@ -246,9 +239,6 @@
 						type="button"
 						aria-label={mode === 'calendar' ? inputModeLabel : calendarModeLabel}
 						onclick={() => {
-							// The calendar moves `pending` on without touching the field, so the text has to
-							// catch up before it is shown again. Otherwise the field contradicts the headline
-							// and OK confirms a date the user never saw there.
 							if (mode === 'calendar') syncText()
 							setMode(mode === 'calendar' ? 'input' : 'calendar')
 							showYearPicker(false)

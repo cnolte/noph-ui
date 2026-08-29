@@ -86,7 +86,6 @@ describe('ButtonGroup', async () => {
 })
 
 describe('resolveItem', () => {
-	// getComputedStyle only reports display:contents for an element in the document
 	const rows: HTMLElement[] = []
 	afterEach(() => {
 		for (const row of rows.splice(0)) row.remove()
