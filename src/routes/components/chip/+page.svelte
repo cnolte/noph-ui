@@ -1,24 +1,38 @@
 <script lang="ts">
-	import ChipSet from '#lib/chip/ChipSet.svelte'
-	import FilterChip from '#lib/chip/FilterChip.svelte'
-	import InputChip from '#lib/chip/InputChip.svelte'
-	import { Icon } from '#lib/icons/index.js'
-	import { AssistChip } from '#lib/index.js'
-	import Snackbar from '#lib/snackbar/Snackbar.svelte'
-	import TextField from '#lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let snackbar: ReturnType<typeof Snackbar> | undefined = $state()
-
-	let filterGroup = $state<string[]>([])
-
-	let emails: string[] = $state(['info@noph.dev'])
-	let email = $state('')
-	let pendingDeleteIndex: number | null = $state(null)
-
-	let editableLabel = $state('Fabian Reza')
-	let editableSelected = $state(false)
+	import AssistChipAsLink from './demos/AssistChipAsLink.svelte'
+	import AssistChipAsLinkSource from './demos/AssistChipAsLink.svelte?raw'
+	import AssistChipDisabled from './demos/AssistChipDisabled.svelte'
+	import AssistChipDisabledSource from './demos/AssistChipDisabled.svelte?raw'
+	import AssistChipElevated from './demos/AssistChipElevated.svelte'
+	import AssistChipElevatedSource from './demos/AssistChipElevated.svelte?raw'
+	import AssistChipOutlined from './demos/AssistChipOutlined.svelte'
+	import AssistChipOutlinedSource from './demos/AssistChipOutlined.svelte?raw'
+	import FilterChipDisabled from './demos/FilterChipDisabled.svelte'
+	import FilterChipDisabledSource from './demos/FilterChipDisabled.svelte?raw'
+	import FilterChipElevated from './demos/FilterChipElevated.svelte'
+	import FilterChipElevatedSource from './demos/FilterChipElevated.svelte?raw'
+	import FilterChipGroup from './demos/FilterChipGroup.svelte'
+	import FilterChipGroupSource from './demos/FilterChipGroup.svelte?raw'
+	import FilterChipOutlined from './demos/FilterChipOutlined.svelte'
+	import FilterChipOutlinedSource from './demos/FilterChipOutlined.svelte?raw'
+	import FilterChipRemovable from './demos/FilterChipRemovable.svelte'
+	import FilterChipRemovableSource from './demos/FilterChipRemovable.svelte?raw'
+	import InputChipDefault from './demos/InputChipDefault.svelte'
+	import InputChipDefaultSource from './demos/InputChipDefault.svelte?raw'
+	import InputChipDisabled from './demos/InputChipDisabled.svelte'
+	import InputChipDisabledSource from './demos/InputChipDisabled.svelte?raw'
+	import InputChipSelected from './demos/InputChipSelected.svelte'
+	import InputChipSelectedSource from './demos/InputChipSelected.svelte?raw'
+	import InputChipSeparateActions from './demos/InputChipSeparateActions.svelte'
+	import InputChipSeparateActionsSource from './demos/InputChipSeparateActions.svelte?raw'
+	import InputChipWithTextField from './demos/InputChipWithTextField.svelte'
+	import InputChipWithTextFieldSource from './demos/InputChipWithTextField.svelte?raw'
+	import SuggestionChip from './demos/SuggestionChip.svelte'
+	import SuggestionChipSource from './demos/SuggestionChip.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
 </script>
 
 <svelte:head>
@@ -31,234 +45,85 @@
 
 <h3 id="outlined">Outlined<a href="#outlined" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<AssistChip label="Assist chip" />
-		<AssistChip label="With icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</AssistChip>
-	</ChipSet>
+	<AssistChipOutlined />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<AssistChip label="Assist chip" />
-	<AssistChip label="With icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</AssistChip>
-</ChipSet>`}
-/>
+<Code value={AssistChipOutlinedSource} />
 
 <h3 id="elevated">Elevated<a href="#elevated" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<AssistChip elevated label="Assist chip" />
-		<AssistChip elevated label="With icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</AssistChip>
-	</ChipSet>
+	<AssistChipElevated />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<AssistChip elevated label="Assist chip" />
-	<AssistChip elevated label="With icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</AssistChip>
-</ChipSet>`}
-/>
+<Code value={AssistChipElevatedSource} />
 
 <h3 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<AssistChip disabled label="Outlined" />
-		<AssistChip disabled label="Outlined with icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</AssistChip>
-		<AssistChip disabled elevated label="Elevated" />
-		<AssistChip disabled elevated label="Elevated with icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</AssistChip>
-	</ChipSet>
+	<AssistChipDisabled />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<AssistChip disabled label="Outlined" />
-	<AssistChip disabled label="Outlined with icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</AssistChip>
-	<AssistChip disabled elevated label="Elevated" />
-	<AssistChip disabled elevated label="Elevated with icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</AssistChip>
-</ChipSet>`}
-/>
+<Code value={AssistChipDisabledSource} />
 
 <h3 id="as-link">As link<a href="#as-link" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<AssistChip label="Visit website" href="https://noph.dev" target="_blank" rel="noopener">
-			{#snippet icon()}<Icon>open_in_new</Icon>{/snippet}
-		</AssistChip>
-	</ChipSet>
+	<AssistChipAsLink />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<AssistChip label="Visit website" href="https://noph.dev">
-		{#snippet icon()}<Icon>open_in_new</Icon>{/snippet}
-	</AssistChip>
-</ChipSet>`}
-/>
+<Code value={AssistChipAsLinkSource} />
+
+<h2 id="suggestion-chip">
+	Suggestion chip<a href="#suggestion-chip" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	A suggestion chip carries a generated suggestion rather than an action, so it is text only and
+	takes no icon. Everything else matches an assist chip.
+</p>
+<DemoContainer>
+	<SuggestionChip />
+</DemoContainer>
+<Code value={SuggestionChipSource} />
 
 <h2 id="filter-chip">Filter chip<a href="#filter-chip" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <h3 id="outlined-2">Outlined<a href="#outlined-2" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<FilterChip label="Filter chip" />
-		<FilterChip label="Selected" selected />
-		<FilterChip label="With icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</FilterChip>
-		<FilterChip label="Selected with icon" selected>
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</FilterChip>
-	</ChipSet>
+	<FilterChipOutlined />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<FilterChip label="Filter chip" />
-	<FilterChip label="Selected" selected />
-	<FilterChip label="With icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</FilterChip>
-	<FilterChip label="Selected with icon" selected>
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</FilterChip>
-</ChipSet>`}
-/>
+<Code value={FilterChipOutlinedSource} />
 
 <h3 id="elevated-2">Elevated<a href="#elevated-2" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<FilterChip elevated label="Filter chip" />
-		<FilterChip elevated label="Selected" selected />
-		<FilterChip elevated label="With icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</FilterChip>
-		<FilterChip elevated label="Selected with icon" selected>
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</FilterChip>
-	</ChipSet>
+	<FilterChipElevated />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<FilterChip elevated label="Filter chip" />
-	<FilterChip elevated label="Selected" selected />
-	<FilterChip elevated label="With icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</FilterChip>
-	<FilterChip elevated label="Selected with icon" selected>
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</FilterChip>
-</ChipSet>`}
-/>
+<Code value={FilterChipElevatedSource} />
 
 <h3 id="removable">Removable<a href="#removable" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<FilterChip label="Removable" removable onremove={() => snackbar?.showPopover()} />
-		<FilterChip label="Selected" removable selected onremove={() => snackbar?.showPopover()} />
-		<FilterChip elevated label="Elevated" removable onremove={() => snackbar?.showPopover()} />
-	</ChipSet>
+	<FilterChipRemovable />
 </DemoContainer>
-<Snackbar bind:this={snackbar} label="Remove was clicked" />
-<Code
-	value={`<ChipSet>
-	<FilterChip label="Removable" removable onremove={() => {}} />
-	<FilterChip label="Selected" removable selected onremove={() => {}} />
-	<FilterChip elevated label="Elevated" removable onremove={() => {}} />
-</ChipSet>`}
-/>
+<Code value={FilterChipRemovableSource} />
 
 <h3 id="disabled-2">Disabled<a href="#disabled-2" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<FilterChip disabled label="Outlined" />
-		<FilterChip disabled label="Outlined selected" selected />
-		<FilterChip disabled elevated label="Elevated" />
-		<FilterChip disabled elevated label="Elevated selected" selected />
-		<FilterChip disabled label="With icon">
-			{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-		</FilterChip>
-	</ChipSet>
+	<FilterChipDisabled />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<FilterChip disabled label="Outlined" />
-	<FilterChip disabled label="Outlined selected" selected />
-	<FilterChip disabled elevated label="Elevated" />
-	<FilterChip disabled elevated label="Elevated selected" selected />
-	<FilterChip disabled label="With icon">
-		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
-	</FilterChip>
-</ChipSet>`}
-/>
+<Code value={FilterChipDisabledSource} />
 
 <h3 id="group">Group<a href="#group" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<FilterChip label="Running" value="running" bind:group={filterGroup} />
-		<FilterChip label="Walking" value="walking" bind:group={filterGroup} />
-		<FilterChip label="Cycling" value="cycling" bind:group={filterGroup} />
-		<FilterChip label="Swimming" value="swimming" bind:group={filterGroup} />
-	</ChipSet>
+	<FilterChipGroup />
 </DemoContainer>
-<Code
-	value={`let filterGroup = $state<string[]>([])
-
-<ChipSet>
-	<FilterChip label="Running" value="running" bind:group={filterGroup} />
-	<FilterChip label="Walking" value="walking" bind:group={filterGroup} />
-	<FilterChip label="Cycling" value="cycling" bind:group={filterGroup} />
-	<FilterChip label="Swimming" value="swimming" bind:group={filterGroup} />
-</ChipSet>`}
-/>
+<Code value={FilterChipGroupSource} />
 
 <h2 id="input-chip">Input chip<a href="#input-chip" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <h3 id="default">Default<a href="#default" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<InputChip label="Input chip" />
-		<InputChip label="With icon">
-			{#snippet icon()}<Icon>person</Icon>{/snippet}
-		</InputChip>
-	</ChipSet>
+	<InputChipDefault />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<InputChip label="Input chip" />
-	<InputChip label="With icon">
-		{#snippet icon()}<Icon>person</Icon>{/snippet}
-	</InputChip>
-</ChipSet>`}
-/>
+<Code value={InputChipDefaultSource} />
 
 <h3 id="selected">Selected<a href="#selected" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<InputChip selected label="Selected" />
-		<InputChip selected label="With icon">
-			{#snippet icon()}<Icon>person</Icon>{/snippet}
-		</InputChip>
-	</ChipSet>
+	<InputChipSelected />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<InputChip selected label="Selected" />
-	<InputChip selected label="With icon">
-		{#snippet icon()}<Icon>person</Icon>{/snippet}
-	</InputChip>
-</ChipSet>`}
-/>
+<Code value={InputChipSelectedSource} />
 
 <h3 id="separate-actions">
 	Separate actions<a href="#separate-actions" aria-hidden="true" tabindex="-1">#</a>
@@ -269,155 +134,24 @@
 	an edit mode, and <code>onremove</code> for the trailing icon.
 </p>
 <DemoContainer>
-	<ChipSet>
-		<InputChip
-			bind:selected={editableSelected}
-			label={editableLabel}
-			ariaLabelRemove="Remove {editableLabel}"
-			onclick={() => (editableSelected = !editableSelected)}
-			onremove={() => (editableLabel = 'Removed')}
-		>
-			{#snippet icon()}<Icon>person</Icon>{/snippet}
-		</InputChip>
-	</ChipSet>
+	<InputChipSeparateActions />
 </DemoContainer>
-<Code
-	value={`<InputChip
-	bind:selected
-	label={label}
-	ariaLabelRemove="Remove {label}"
-	onclick={() => (selected = !selected)}
-	onremove={() => remove()}
-/>`}
-/>
+<Code value={InputChipSeparateActionsSource} />
 
 <h3 id="disabled-3">Disabled<a href="#disabled-3" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<InputChip disabled label="Disabled" />
-		<InputChip disabled selected label="Disabled selected" />
-		<InputChip disabled label="With icon">
-			{#snippet icon()}<Icon>person</Icon>{/snippet}
-		</InputChip>
-	</ChipSet>
+	<InputChipDisabled />
 </DemoContainer>
-<Code
-	value={`<ChipSet>
-	<InputChip disabled label="Disabled" />
-	<InputChip disabled selected label="Disabled selected" />
-	<InputChip disabled label="With icon">
-		{#snippet icon()}<Icon>person</Icon>{/snippet}
-	</InputChip>
-</ChipSet>`}
-/>
+<Code value={InputChipDisabledSource} />
 
 <h3 id="chips-with-text-fields">
 	Chips with text fields<a href="#chips-with-text-fields" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 
 <DemoContainer>
-	<TextField
-		type="email"
-		label="Emails"
-		variant="outlined"
-		placeholder="Add email..."
-		style="width:340px"
-		bind:value={email}
-		populated={emails.length > 0}
-		onkeydown={(e) => {
-			if (e.key === 'Enter') {
-				e.preventDefault()
-				if (e.currentTarget.value && e.currentTarget.reportValidity()) {
-					emails.push(e.currentTarget.value)
-					email = ''
-				}
-			} else if (e.key === 'Backspace' && !e.currentTarget.value && emails.length > 0) {
-				e.preventDefault()
-				if (pendingDeleteIndex !== null) {
-					emails.splice(pendingDeleteIndex, 1)
-					pendingDeleteIndex = null
-				} else {
-					pendingDeleteIndex = emails.length - 1
-				}
-			} else {
-				pendingDeleteIndex = null
-			}
-		}}
-		onfocus={() => {
-			pendingDeleteIndex = null
-		}}
-		onblur={(e) => {
-			if (e.currentTarget.value && e.currentTarget.reportValidity()) {
-				emails.push(e.currentTarget.value)
-				email = ''
-			}
-		}}
-	>
-		<ChipSet chipsCount={emails.length}>
-			{#each emails as email, index (index)}
-				<InputChip
-					name="email"
-					value={email}
-					selected={pendingDeleteIndex === index}
-					onremove={() => {
-						if (index > -1) {
-							emails.splice(index, 1)
-							pendingDeleteIndex = null
-						}
-					}}
-				/>
-			{/each}
-		</ChipSet>
-	</TextField>
+	<InputChipWithTextField />
 </DemoContainer>
-<Code
-	value={`let pendingDeleteIndex: number | null = $state(null)
-
-<TextField
-	type="email"
-	label="Emails"
-	variant="outlined"
-	placeholder="Add email..."
-	bind:value={email}
-	populated={emails.length > 0}
-	onkeydown={(e) => {
-		if (e.key === 'Enter') {
-			e.preventDefault()
-			if (e.currentTarget.value && e.currentTarget.reportValidity()) {
-				emails.push(e.currentTarget.value)
-				email = ''
-			}
-		} else if (e.key === 'Backspace' && !e.currentTarget.value && emails.length > 0) {
-			e.preventDefault()
-			if (pendingDeleteIndex !== null) {
-				emails.splice(pendingDeleteIndex, 1)
-				pendingDeleteIndex = null
-			} else {
-				pendingDeleteIndex = emails.length - 1
-			}
-		} else {
-			pendingDeleteIndex = null
-		}
-	}}
-	onfocus={() => { pendingDeleteIndex = null }}
->
-	<ChipSet chipsCount={emails.length}>
-		{#each emails as email, index (index)}
-			<InputChip
-				name="email"
-				value={email}
-				selected={pendingDeleteIndex === index}
-				onremove={() => {
-					if (index > -1) {
-						emails.splice(index, 1)
-						pendingDeleteIndex = null
-					}
-				}}
-			/>
-		{/each}
-	</ChipSet>
-</TextField>`}
-/>
+<Code value={InputChipWithTextFieldSource} />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
@@ -435,13 +169,13 @@
 </p>
 <p>
 	A remove button carries no text of its own, so give it one through
-	<code>ariaLabelRemove</code>. The default is the bare <code>"Remove"</code>, which does not say
+	<code>removeAriaLabel</code>. The default is the bare <code>"Remove"</code>, which does not say
 	what is being removed, so name the chip in it.
 </p>
 <Code
 	value={`<InputChip
 	label={email}
-	ariaLabelRemove="Remove {email}"
+	removeAriaLabel="Remove {email}"
 	onremove={() => remove(email)}
 />`}
 />
@@ -489,26 +223,9 @@
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ChipSet>
-		<FilterChip
-			label="Tertiary"
-			--np-filter-chip-container-shape="var(--np-shape-corner-full)"
-			--np-filter-chip-outline-color="var(--np-color-tertiary)"
-		/>
-		<AssistChip
-			label="Tertiary"
-			--np-assist-chip-outline-color="var(--np-color-tertiary)"
-			--np-assist-chip-label-text-color="var(--np-color-tertiary)"
-		/>
-	</ChipSet>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<FilterChip
-	label="Tertiary"
-	--np-filter-chip-container-shape="var(--np-shape-corner-full)"
-	--np-filter-chip-outline-color="var(--np-color-tertiary)"
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="chipset-attributes">
@@ -517,37 +234,19 @@
 <p>
 	Everything you pass is forwarded to the wrapping <code>&lt;div&gt;</code>, so
 	<code>class</code>, <code>style</code> and <code>aria-label</code> work as expected.
+	<code>bind:element</code> gives you that <code>&lt;div&gt;</code>. The set makes room for its
+	chips on its own, from whether it has any, so there is nothing to configure.
 </p>
-<table>
-	<thead>
-		<tr>
-			<th>Attribute</th>
-			<th>Type</th>
-			<th>Default</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><code>chipsCount</code></td>
-			<td><code>number | undefined</code></td>
-			<td><code>undefined</code></td>
-			<td>
-				Number of chips in the set. Pass it when the set lives inside a text field, so the field can
-				make room for the chips.
-			</td>
-		</tr>
-	</tbody>
-</table>
 
 <h3 id="assistchip-attributes">
 	AssistChip attributes<a href="#assistchip-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	An assist chip takes the <a class="link" href="/components/button">Button</a> attributes apart
-	from
-	<code>variant</code>, <code>start</code> and <code>end</code>, which the chip sets itself. That
-	includes <code>href</code>, <code>onclick</code> and <code>type</code>.
+	An assist chip renders a <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> when you give
+	it an <code>href</code>, and takes that element's attributes: <code>onclick</code>,
+	<code>type</code>, <code>class</code>, <code>aria-*</code> and the rest.
+	<code>bind:element</code> gives you whichever element it rendered. It does not take
+	<code>size</code> or <code>shape</code>: a chip has one of each.
 </p>
 <table>
 	<thead>
@@ -572,10 +271,12 @@
 			<td>Leading icon.</td>
 		</tr>
 		<tr>
-			<td><code>elevated</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td>Drops the outline and gives the chip a shadow instead.</td>
+			<td><code>variant</code></td>
+			<td><code>'outlined' | 'elevated'</code></td>
+			<td><code>'outlined'</code></td>
+			<td>
+				<code>elevated</code> drops the outline and gives the chip a shadow instead.
+			</td>
 		</tr>
 		<tr>
 			<td><code>disabled</code></td>
@@ -657,7 +358,7 @@
 			<td>Called when the remove button is clicked.</td>
 		</tr>
 		<tr>
-			<td><code>ariaLabelRemove</code></td>
+			<td><code>removeAriaLabel</code></td>
 			<td><code>string</code></td>
 			<td><code>'Remove'</code></td>
 			<td>Accessible name of the remove button.</td>
@@ -669,10 +370,12 @@
 			<td>Leading icon, shown while the chip is not selected.</td>
 		</tr>
 		<tr>
-			<td><code>elevated</code></td>
-			<td><code>boolean</code></td>
-			<td><code>false</code></td>
-			<td>Drops the outline and gives the chip a shadow instead.</td>
+			<td><code>variant</code></td>
+			<td><code>'outlined' | 'elevated'</code></td>
+			<td><code>'outlined'</code></td>
+			<td>
+				<code>elevated</code> drops the outline and gives the chip a shadow instead.
+			</td>
 		</tr>
 		<tr>
 			<td><code>disabled</code></td>
@@ -742,7 +445,7 @@
 			<td>Called when the remove button is clicked.</td>
 		</tr>
 		<tr>
-			<td><code>ariaLabelRemove</code></td>
+			<td><code>removeAriaLabel</code></td>
 			<td><code>string</code></td>
 			<td><code>'Remove'</code></td>
 			<td>Accessible name of the remove button.</td>

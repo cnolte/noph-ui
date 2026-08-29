@@ -13,9 +13,9 @@ const currentForm = () => [...document.querySelectorAll('form')].at(-1)!
 const visibleText = (form: HTMLFormElement) =>
 	form.querySelector<HTMLInputElement>('input:not([type=hidden])')!.value
 
-describe('DockedDatePicker form reset', () => {
+describe('DockedDatePicker form reset', async () => {
 	test('stops submitting a value once the form is reset', async () => {
-		render(Form, { locale: 'en-US', value: '2025-08-17' })
+		await render(Form, { locale: 'en-US', value: '2025-08-17' })
 		const form = currentForm()
 		await expect.poll(() => new FormData(form).get('deliveryDate')).toBe('2025-08-17')
 
@@ -30,7 +30,7 @@ describe('DockedDatePicker form reset', () => {
 	})
 
 	test('falls back to defaultValue, the way a value attribute would', async () => {
-		render(Form, { locale: 'en-US', value: '2025-08-17', defaultValue: '2025-01-02' })
+		await render(Form, { locale: 'en-US', value: '2025-08-17', defaultValue: '2025-01-02' })
 		const form = currentForm()
 		await expect.poll(() => new FormData(form).get('deliveryDate')).toBe('2025-08-17')
 

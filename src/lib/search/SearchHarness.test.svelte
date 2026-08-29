@@ -1,0 +1,40 @@
+<script lang="ts">
+	import Item from '#lib/list/Item.svelte'
+	import Search from './Search.svelte'
+	import type { SearchProps } from './types.ts'
+
+	let {
+		value = $bindable(''),
+		expanded = $bindable(false),
+		variant = 'contained',
+		view = 'docked',
+		searched = $bindable(''),
+		width = 'auto',
+		resultsRole,
+	}: {
+		value?: string
+		expanded?: boolean
+		variant?: SearchProps['variant']
+		view?: SearchProps['view']
+		searched?: string
+		width?: string
+		resultsRole?: string
+	} = $props()
+</script>
+
+<div style="width:{width}">
+	<Search
+		bind:value
+		bind:expanded
+		{variant}
+		{view}
+		resultsAttributes={resultsRole ? { role: resultsRole } : undefined}
+		placeholder="Search product"
+		onsearch={(q) => (searched = q)}
+	>
+		<Item variant="button">Simple Classic Tacos</Item>
+		<Item variant="button">Mexican dishes</Item>
+	</Search>
+</div>
+
+<span data-testid="searched">{searched}</span>

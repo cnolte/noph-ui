@@ -24,7 +24,7 @@ const openRange = async () => {
 }
 
 test('fills the days between the two ends', async () => {
-	setup({ min: '2025-08-01', max: '2025-08-31' })
+	await setup({ min: '2025-08-01', max: '2025-08-31' })
 	await openRange()
 
 	await action('Tuesday, August 5, 2025').click()
@@ -40,8 +40,22 @@ test('fills the days between the two ends', async () => {
 		.toHaveTextContent('2025-08-05 to 2025-08-13')
 })
 
+test('holds the content through the fade and keeps the form value behind it', async () => {
+	await setup({ value: { start: '2025-08-05' } })
+	await openRange()
+	const dialog = document.querySelector<HTMLDialogElement>('dialog.np-date-range-picker')!
+
+	await action('Save').click()
+	await expect.poll(() => count('.np-date-range-picker-content')).toBe(0)
+	expect(dialog.getAnimations()).toHaveLength(0)
+
+	// The hidden inputs are what a form reads, so they outlast the calendar entirely.
+	const values = [...document.querySelectorAll<HTMLInputElement>('.np-date-range-picker-value')]
+	expect(values.map((input) => input.value)).toEqual(['2025-08-05', ''])
+})
+
 test('shares one tab stop and carries focus from one month into the next', async () => {
-	setup({ value: { start: '2025-08-17' } })
+	await setup({ value: { start: '2025-08-17' } })
 	await openRange()
 
 	await expect.poll(() => count('.np-calendar-day[tabindex="0"]')).toBe(1)
@@ -56,7 +70,7 @@ test('shares one tab stop and carries focus from one month into the next', async
 })
 
 test('opens on the current month', async () => {
-	setup()
+	await setup()
 	await openRange()
 
 	const thisMonth = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
@@ -64,7 +78,7 @@ test('opens on the current month', async () => {
 })
 
 test('is an ordinary modal on a wide window', async () => {
-	setup({ value: { start: '2025-08-17' } })
+	await setup({ value: { start: '2025-08-17' } })
 	await openRange()
 
 	// The dialog is the calendar column and nothing more, and it stops short of the window on both
@@ -87,7 +101,7 @@ test('is an ordinary modal on a wide window', async () => {
 
 test('is full screen on a compact window', async () => {
 	await compactWindow()
-	setup({ value: { start: '2025-08-17' } })
+	await setup({ value: { start: '2025-08-17' } })
 	await openRange()
 
 	const box = dialogBox()

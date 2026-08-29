@@ -15,6 +15,9 @@ export interface NavigationRailItemProps
 	icon: Snippet
 	label: string
 	selected?: boolean
+	badge?: boolean
+	badgeLabel?: string | number
+	badgeAriaLabel?: string
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 	element?: NavigationRailItemElement
 }

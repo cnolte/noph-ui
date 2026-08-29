@@ -5,6 +5,7 @@
 	import CalendarToday from '#lib/icons/CalendarToday.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
 	import { onFormReset } from '#lib/form-reset.js'
+	import { syncOpenEffect } from '#lib/popover.svelte.js'
 	import TextField from '#lib/text-field/TextField.svelte'
 	import { onMount, tick } from 'svelte'
 	import Calendar from './Calendar.svelte'
@@ -214,10 +215,23 @@
 		focusCalendar()
 	}
 
-	$effect(() => {
-		if (open) openPicker()
-		else if (isShowing()) menuElement?.hidePopover()
-	})
+	/*
+	 * The same pair every overlay in the library exports, for the times there is no trigger to point
+	 * at the picker. `close()` leaves focus where it is; only a close the user asked for, through the
+	 * field or the cancel button, hands focus back to the input.
+	 */
+	export const show = () => openPicker()
+
+	export const close = () => {
+		if (isShowing()) menuElement?.hidePopover()
+	}
+
+	syncOpenEffect(
+		() => menuElement,
+		() => open,
+		show,
+		close,
+	)
 
 	const focusCalendar = () => {
 		menuElement?.querySelector<HTMLElement>('.np-calendar-day[tabindex="0"]')?.focus()

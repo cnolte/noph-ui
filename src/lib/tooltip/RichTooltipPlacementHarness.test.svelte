@@ -18,8 +18,8 @@
 >
 	<IconButton
 		id="placement-anchor"
-		popovertarget="placement-tip"
-		popovertargetaction="show"
+		command="show-popover"
+		commandfor="placement-tip"
 		aria-label="About tooltips"
 	>
 		<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" /></svg>

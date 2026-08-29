@@ -32,14 +32,14 @@ const hrefTests = (renderButton: (props: { href?: string | null; disabled?: bool
 	})
 }
 
-describe('Button', () => {
-	hrefTests((props) => {
-		render(Button, props)
+describe('Button', async () => {
+	hrefTests(async (props) => {
+		await render(Button, props)
 	})
 })
 
-describe('IconButton', () => {
-	hrefTests((props) => {
-		render(IconButton, props)
+describe('IconButton', async () => {
+	hrefTests(async (props) => {
+		await render(IconButton, props)
 	})
 })

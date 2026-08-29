@@ -1,7 +1,10 @@
 <script lang="ts">
-	import Divider from '#lib/divider/Divider.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -10,8 +13,8 @@
 
 <h1>Divider</h1>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
-<DemoContainer><Divider style="width:200px" /></DemoContainer>
-<Code value="<Divider style=&quot;width:200px&quot; />" />
+<DemoContainer><Usage /></DemoContainer>
+<Code value={UsageSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -30,11 +33,9 @@
 </table>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<Divider --np-divider-color="var(--np-color-tertiary)" style="width:200px" />
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value="--np-divider-color=&quot;var(--np-color-tertiary)&quot; style=&quot;width:200px&quot;"
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>

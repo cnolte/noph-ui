@@ -1,17 +1,21 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
-	import Snackbar from '#lib/snackbar/Snackbar.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import BoundToState from './demos/BoundToState.svelte'
+	import BoundToStateSource from './demos/BoundToState.svelte?raw'
+	import ManualControl from './demos/ManualControl.svelte'
+	import ManualControlSource from './demos/ManualControl.svelte?raw'
+	import SingleLineSnackbar from './demos/SingleLineSnackbar.svelte'
+	import SingleLineSnackbarSource from './demos/SingleLineSnackbar.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import TwoLineSnackbar from './demos/TwoLineSnackbar.svelte'
+	import TwoLineSnackbarSource from './demos/TwoLineSnackbar.svelte?raw'
 </script>
 
 <svelte:head>
 	<title>Snackbar - Noph UI</title>
 </svelte:head>
-{#snippet icon()}
-	<Icon>close</Icon>
-{/snippet}
 <h1>Snackbar</h1>
 <p>
 	The snackbar uses the <a
@@ -25,60 +29,56 @@
 	Single-line snackbar<a href="#single-line-snackbar-2" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button popovertarget="single-line-snackbar">Show snackbar</Button>
-	<Snackbar
-		{icon}
-		id="single-line-snackbar"
-		label="Single line snackbar with action and icon"
-		actionLabel="Action"
-	/>
+	<SingleLineSnackbar />
 </DemoContainer>
-<Code
-	value={`<Button popovertarget="single-line-snackbar">Show snackbar</Button>
-<Snackbar
-	{icon}
-	id="single-line-snackbar"
-	label="Single line snackbar with action and icon"
-	actionLabel="Action"
-/>`}
-/>
+<Code value={SingleLineSnackbarSource} />
 <h3 id="two-line-snackbar">
 	Two-line snackbar<a href="#two-line-snackbar" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button popovertarget="two-single-line-snackbar">Show snackbar</Button>
-	<Snackbar
-		{icon}
-		id="two-single-line-snackbar"
-		label="Two line snackbar"
-		supportingText="with action and icon"
-		actionLabel="Action"
-	/>
+	<TwoLineSnackbar />
 </DemoContainer>
-<Code
-	value={`<Button popovertarget="two-single-line-snackbar">Show snackbar</Button>
-<Snackbar
-	{icon}
-	id="two-single-line-snackbar"
-	label="Two line snackbar"
-	supportingText="with action and icon"
-	actionLabel="Action"
-/>`}
-/>
+<Code value={TwoLineSnackbarSource} />
 <h2 id="manual-control">
 	Manual control<a href="#manual-control" aria-hidden="true" tabindex="-1">#</a>
 </h2>
+<p>
+	A snackbar is a popover, so <code>command</code> and <code>commandfor</code> on a trigger open and
+	close it with no script at all. Reach for this first: it is the same pair every overlay in the
+	library takes, and it works before the page has hydrated. With <code>timeout={0}</code> it stays open
+	until something closes it.
+</p>
 <DemoContainer>
-	<Button popovertarget="manual-snackbar" popovertargetaction="show">Show snackbar</Button>
-	<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide snackbar</Button>
-	<Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />
+	<ManualControl />
 </DemoContainer>
-<Code
-	value={`<Button popovertarget="manual-snackbar" popovertargetaction="show">Show snackbar</Button>
-<Button popovertarget="manual-snackbar" popovertargetaction="hide">Hide snackbar</Button>
-<Snackbar id="manual-snackbar" timeout={0} popover="manual" label="Manual controlled snackbar" />`}
-/>
+<Code value={ManualControlSource} />
+<p>
+	Where there is no trigger to point at the snackbar, call <code>show()</code> and
+	<code>close()</code> on the component, as under <a class="link" href="#methods">Methods</a>.
+	<code>bind:open</code> reports whether the snackbar is showing and follows it when it times out on its
+	own, so it is there to read rather than to drive.
+</p>
+<DemoContainer>
+	<BoundToState />
+</DemoContainer>
+<Code value={BoundToStateSource} />
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The snackbar is <code>role="alert"</code>, an atomic live region, so a screen reader reads the
+	whole thing out when it appears: the <code>label</code>, the <code>supportingText</code> and the
+	action label together. It takes no name of its own, which is what the ARIA alert pattern asks for,
+	and it never takes focus. Pass <code>aria-label</code> if you do want to name it, and
+	<code>iconAriaLabel</code> to translate the close button.
+</p>
+<p>
+	The <code>timeout</code> waits while the snackbar is hovered or holds focus and starts over once
+	it is left alone, so an action stays reachable with a keyboard. Give a snackbar that must not
+	vanish
+	<code>timeout={0}</code>.
+</p>
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -109,31 +109,9 @@
 </table>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<Button popovertarget="themed-snackbar">Show snackbar</Button>
-	<Snackbar
-		id="themed-snackbar"
-		{icon}
-		actionLabel="Action"
-		--np-snackbar-container-color="var(--np-color-tertiary)"
-		--np-snackbar-action-color="var(--np-color-on-tertiary)"
-		--np-snackbar-container-shape="1rem"
-		--np-snackbar-text-color="var(--np-color-on-tertiary)"
-		label="Themed snackbar"
-	/>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<Button popovertarget="themed-snackbar">Show snackbar</Button>
-<Snackbar
-	id="themed-snackbar"
-	{icon}
-	actionLabel="Action"
-	--np-snackbar-container-color="var(--np-color-tertiary)"
-	--np-snackbar-action-color="var(--np-color-on-tertiary)"
-	--np-snackbar-container-shape="1rem"
-	--np-snackbar-text-color="var(--np-color-on-tertiary)"
-	label="Themed snackbar"
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -174,6 +152,12 @@
 			<td>Icon for the close affordance</td>
 		</tr>
 		<tr>
+			<td><code>iconAriaLabel</code></td>
+			<td><code>string</code></td>
+			<td><code>'Close'</code></td>
+			<td>Accessible label of the icon button.</td>
+		</tr>
+		<tr>
 			<td><code>timeout</code></td>
 			<td><code>number</code></td>
 			<td><code>4000</code></td>
@@ -193,15 +177,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td><code>onActionClick</code></td>
+			<td><code>onactionclick</code></td>
 			<td><code>(event: Event) =&gt; void | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Function that is triggered when clicking on the action button.</td>
 		</tr>
 		<tr>
-			<td><code>onIconClick</code></td>
+			<td><code>oniconclick</code></td>
 			<td><code>(event: Event) =&gt; void</code></td>
-			<td><code>hidePopover()</code></td>
+			<td><code>close()</code></td>
 			<td>Function that is triggered when clicking on the icon button.</td>
 		</tr>
 		<tr>
@@ -226,8 +210,9 @@
 			<td><code>open</code></td>
 			<td><code>boolean</code></td>
 			<td
-				>Whether the snackbar is currently shown. Defaults to <code>false</code>. Setting it does
-				not open the snackbar; use <code>showPopover()</code>.</td
+				>Whether the snackbar is shown. Defaults to <code>false</code>. Set it to
+				<code>true</code> to show the snackbar and <code>false</code> to hide it; the snackbar writes
+				back when it opens or closes on its own.</td
 			>
 		</tr>
 		<tr>
@@ -244,9 +229,24 @@
 </table>
 <h3 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	Access these by binding a reference to the component with <code>bind:this</code>, e.g.
-	<code>&lt;Snackbar bind:this={`{snackbar}`} /&gt;</code> then <code>snackbar.showPopover()</code>.
+	Bind a reference to the component with <code>bind:this</code> and type it with
+	<code>ReturnType&lt;typeof Snackbar&gt;</code>; it is <code>undefined</code> until the component
+	has mounted, so call through <code>?.</code>.
 </p>
+<Code
+	value={`<script lang="ts">
+	let snackbar: ReturnType<typeof Snackbar> | undefined = $state()
+</` +
+		`script>
+
+<Button onclick={() => snackbar?.show()}>Show snackbar</Button>
+<Snackbar
+	bind:this={snackbar}
+	label="Reservation saved"
+	actionLabel="Undo"
+	onactionclick={() => snackbar?.close()}
+/>`}
+/>
 <table>
 	<thead>
 		<tr>
@@ -257,12 +257,12 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>showPopover</code></td>
+			<td><code>show</code></td>
 			<td><code>() =&gt; void</code></td>
-			<td>Shows the snackbar.</td>
+			<td>Shows the snackbar. A no-op if it is already showing.</td>
 		</tr>
 		<tr>
-			<td><code>hidePopover</code></td>
+			<td><code>close</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>Hides the snackbar.</td>
 		</tr>

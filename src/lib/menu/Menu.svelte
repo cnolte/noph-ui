@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
+	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { MenuProps } from './types.ts'
 
 	const MENU_ITEM_SELECTOR = '[role="menuitem"]'
@@ -21,13 +22,17 @@
 	let contentHeight = $state(0)
 	let innerHeight = $state(0)
 
-	export const showPopover = () => {
-		element?.showPopover()
-	}
+	const controller = popoverController(() => element)
 
-	export const hidePopover = () => {
-		element?.hidePopover()
-	}
+	export const show = () => controller.show()
+	export const close = () => controller.close()
+
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 
 	const calculateTransformOrigin = (anchorRect: DOMRect, menuRect: DOMRect) => {
 		const pivot = (anchorStart: number, anchorEnd: number, menuStart: number, menuEnd: number) => {
@@ -82,7 +87,7 @@
 	}}
 >
 	<div {@attach attach} bind:clientHeight={contentHeight} class="np-menu" role="none">
-		{@render children()}
+		{@render children?.()}
 	</div>
 </div>
 

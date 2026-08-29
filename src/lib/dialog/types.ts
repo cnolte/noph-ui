@@ -1,12 +1,14 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes } from 'svelte/elements'
+import type { HTMLDialogAttributes } from 'svelte/elements'
 
-export interface DialogProps extends Omit<HTMLAttributes<HTMLDivElement>, 'popover'> {
+export interface DialogProps extends Omit<HTMLDialogAttributes, 'open'> {
 	icon?: Snippet
 	headline?: string
 	supportingText?: string
 	divider?: boolean
 	actions?: Snippet
 	quick?: boolean
-	element?: HTMLElement
+	element?: HTMLDialogElement
+	/** Bindable. Whether the dialog is showing. */
+	open?: boolean
 }

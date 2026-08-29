@@ -10,11 +10,23 @@
 		inputElement = $bindable(),
 		icons,
 		onkeyup,
+		issues,
+		'aria-invalid': ariaInvalid,
 		...attributes
 	}: SwitchProps = $props()
+
+	let hasError = $derived(!!issues?.length)
 </script>
 
-<div bind:this={element} class={['np-switch', disabled && 'np-disabled', attributes.class]}>
+<div
+	bind:this={element}
+	class={[
+		'np-switch',
+		disabled && 'np-disabled',
+		hasError && !disabled && 'np-error',
+		attributes.class,
+	]}
+>
 	<div class="np-track"></div>
 	<div class={['np-handle', icons === 'both' && 'both-icons']}>
 		{#if icons}
@@ -57,6 +69,7 @@
 		bind:this={inputElement}
 		bind:checked={selected}
 		{disabled}
+		aria-invalid={hasError ? 'true' : ariaInvalid}
 	/>
 </div>
 
@@ -78,7 +91,7 @@
 		width: 3.25rem;
 		height: 2rem;
 		background-color: var(
-			--np-comp-switch-unselected-track-color,
+			--np-switch-unselected-track-color,
 			var(--np-color-surface-container-highest)
 		);
 		border-radius: var(--np-shape-corner-full);
@@ -86,7 +99,7 @@
 			background-color 0.2s,
 			outline-color 0.2s;
 		outline-width: 0.125rem;
-		outline-color: var(--np-comp-switch-unselected-track-outline-color, var(--np-color-outline));
+		outline-color: var(--np-switch-unselected-track-outline-color, var(--np-color-outline));
 		outline-style: solid;
 		outline-offset: -0.125rem;
 	}
@@ -100,8 +113,8 @@
 		transition:
 			transform var(--np-motion-expressive-fast-spatial),
 			background-color var(--np-motion-expressive-default-effects);
-		background-color: var(--np-comp-switch-unselected-handle-color, var(--np-color-outline));
-		border-radius: var(--np-comp-switch-handle-shape, var(--np-shape-corner-full));
+		background-color: var(--np-switch-unselected-handle-color, var(--np-color-outline));
+		border-radius: var(--np-switch-handle-shape, var(--np-shape-corner-full));
 	}
 
 	.np-handle.both-icons {
@@ -110,12 +123,12 @@
 
 	.np-state-layer {
 		position: relative;
-		width: var(--np-comp-switch-state-layer-size, 2.5rem);
-		height: var(--np-comp-switch-state-layer-size, 2.5rem);
+		width: var(--np-switch-state-layer-size, 2.5rem);
+		height: var(--np-switch-state-layer-size, 2.5rem);
 		margin-block-start: -0.25rem;
 		margin-inline-start: -0.25rem;
 		transition: var(--np-motion-expressive-fast-spatial);
-		border-radius: var(--np-comp-switch-state-layer-shape, var(--np-shape-corner-full));
+		border-radius: var(--np-switch-state-layer-shape, var(--np-shape-corner-full));
 	}
 
 	.np-switch:has(input:checked) .np-state-layer {
@@ -152,37 +165,55 @@
 
 	.np-switch:has(input:checked) .np-handle {
 		transform: translateX(1.25rem) scale(1.5);
-		color: var(--np-comp-switch-selected-icon-color, var(--np-color-primary));
-		background-color: var(--np-comp-switch-selected-handle-color, var(--np-color-on-primary));
+		color: var(--np-switch-selected-icon-color, var(--np-color-primary));
+		background-color: var(--np-switch-selected-handle-color, var(--np-color-on-primary));
 	}
 
 	.np-disabled .np-handle {
-		opacity: var(--np-comp-switch-disabled-unselected-handle-opacity, 0.38);
+		opacity: var(--np-switch-disabled-unselected-handle-opacity, 0.38);
 	}
 
 	.np-switch.np-disabled:has(input:checked) .np-handle {
-		opacity: var(--np-comp-switch-disabled-selected-handle-opacity, 1);
-		background-color: var(--np-comp-switch-selected-handle-color, var(--np-color-surface));
+		opacity: var(--np-switch-disabled-selected-handle-opacity, 1);
+		background-color: var(--np-switch-selected-handle-color, var(--np-color-surface));
 	}
 
 	.np-switch:has(input:checked) .np-track {
-		background-color: var(--np-comp-switch-selected-track-color, var(--np-color-primary));
+		background-color: var(--np-switch-selected-track-color, var(--np-color-primary));
 		outline-color: transparent;
 	}
 
+	.np-error .np-track {
+		outline-color: var(--np-color-error);
+	}
+
+	.np-error:has(input:checked) .np-track {
+		background-color: var(--np-color-error);
+	}
+
+	.np-error:has(input:checked) .np-handle {
+		background-color: var(--np-color-on-error);
+	}
+
+	.np-error:has(input:checked) .np-switch-icon {
+		fill: var(--np-color-error);
+	}
+
+	.np-error {
+		--np-ripple-hover-color: var(--np-color-error);
+		--np-ripple-pressed-color: var(--np-color-error);
+	}
+
 	.np-disabled .np-track {
-		opacity: var(--np-comp-switch-disabled-track-opacity, 0.12);
+		opacity: var(--np-switch-disabled-track-opacity, 0.12);
 		background-color: var(
-			--np-comp-switch-disabled-unselected-track-color,
+			--np-switch-disabled-unselected-track-color,
 			var(--np-color-surface-container-highest)
 		);
 	}
 
 	.np-switch.np-disabled:has(input:checked) .np-track {
-		background-color: var(
-			--np-comp-switch-disabled-selected-track-color,
-			var(--np-color-on-surface)
-		);
+		background-color: var(--np-switch-disabled-selected-track-color, var(--np-color-on-surface));
 	}
 
 	.np-disabled {

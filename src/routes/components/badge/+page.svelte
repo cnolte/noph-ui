@@ -1,8 +1,12 @@
 <script lang="ts">
-	import Badge from '#lib/badge/Badge.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import LargeBadge from './demos/LargeBadge.svelte'
+	import LargeBadgeSource from './demos/LargeBadge.svelte?raw'
+	import PositioningExample from './demos/PositioningExample.svelte'
+	import PositioningExampleSource from './demos/PositioningExample.svelte?raw'
+	import SmallBadge from './demos/SmallBadge.svelte'
+	import SmallBadgeSource from './demos/SmallBadge.svelte?raw'
 </script>
 
 <svelte:head>
@@ -20,36 +24,16 @@
 <h3 id="small-badge">Small badge<a href="#small-badge" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>Without a label a badge renders as a small dot, indicating new content.</p>
 <DemoContainer>
-	<span style="position:relative;display:inline-flex">
-		<Icon>favorite</Icon>
-		<Badge --np-badge-end="0" />
-	</span>
+	<SmallBadge />
 </DemoContainer>
-<Code
-	value={`<span style="position:relative;display:inline-flex">
-	<Icon>favorite</Icon>
-	<Badge --np-badge-end="0" />
-</span>`}
-/>
+<Code value={SmallBadgeSource} />
 
 <h3 id="large-badge">Large badge<a href="#large-badge" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>Set a <code>label</code> to display a number or short text.</p>
 <DemoContainer>
-	<span style="position:relative;display:inline-flex">
-		<Icon>person</Icon>
-		<Badge label={6} --np-badge-end="-0.5rem" --np-badge-top="-0.25rem" />
-	</span>
-	<span style="position:relative;display:inline-flex">
-		<Icon>settings</Icon>
-		<Badge label={99} --np-badge-end="-0.75rem" --np-badge-top="-0.25rem" />
-	</span>
+	<LargeBadge />
 </DemoContainer>
-<Code
-	value={`<span style="position:relative;display:inline-flex">
-	<Icon>person</Icon>
-	<Badge label={6} --np-badge-end="-0.5rem" --np-badge-top="-0.25rem" />
-</span>`}
-/>
+<Code value={LargeBadgeSource} />
 
 <h2 id="positioning">Positioning<a href="#positioning" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -89,17 +73,9 @@
 </table>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<span style="position:relative;display:inline-flex">
-		<Icon>favorite</Icon>
-		<Badge label={3} --np-badge-start="1rem" --np-badge-top="-0.25rem" />
-	</span>
+	<PositioningExample />
 </DemoContainer>
-<Code
-	value={`<span style="position:relative;display:inline-flex">
-	<Icon>favorite</Icon>
-	<Badge label={3} --np-badge-start="1rem" --np-badge-top="-0.25rem" />
-</span>`}
-/>
+<Code value={PositioningExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -120,7 +96,7 @@
 			<td>Content displayed inside the badge. When omitted, a small badge (dot) is shown.</td>
 		</tr>
 		<tr>
-			<td><code>ariaLabel</code></td>
+			<td><code>aria-label</code></td>
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td

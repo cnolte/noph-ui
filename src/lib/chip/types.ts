@@ -1,37 +1,54 @@
-import type { ButtonElement, ButtonProps } from '#lib/button/types.js'
+import type { ButtonElement } from '#lib/button/types.js'
 import type { Snippet } from 'svelte'
-import type { HTMLAttributes, MouseEventHandler } from 'svelte/elements'
+import type {
+	HTMLAnchorAttributes,
+	HTMLAttributes,
+	HTMLButtonAttributes,
+	MouseEventHandler,
+} from 'svelte/elements'
 
 export interface ChipSetProps extends HTMLAttributes<HTMLDivElement> {
-	chipsCount?: number
 	element?: HTMLDivElement
 }
 
-export interface AssistChipProps extends Omit<
-	ButtonProps,
-	'variant' | 'start' | 'end' | 'element'
-> {
-	elevated?: boolean
-	disabled?: boolean
+/**
+ * Declared from the element attributes rather than `ButtonProps`, which leaked `size`, `shape`,
+ * `toggle`, `loading` and `selected` onto a chip. A chip has one size and one shape.
+ */
+export interface AssistChipProps
+	extends
+		HTMLAttributes<ButtonElement>,
+		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
+		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
+	variant?: 'outlined' | 'elevated'
+	disabled?: boolean | null
 	label?: string
 	icon?: Snippet
 	element?: HTMLElement
+	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 }
+
+/**
+ * A suggestion chip carries a generated suggestion rather than an action, so it is text-first and
+ * takes no leading icon. Everything else matches an assist chip.
+ */
+export type SuggestionChipProps = Omit<AssistChipProps, 'icon'>
 
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
 	removable?: boolean
 	disabled?: boolean
-	elevated?: boolean
+	variant?: 'outlined' | 'elevated'
 	label?: string
 	icon?: Snippet
-	ariaLabelRemove?: string
+	removeAriaLabel?: string
 	element?: HTMLDivElement
 	name?: string
 	value?: string
 	group?: (string | number)[] | null
 	defaultSelected?: boolean | null
 	onremove?: MouseEventHandler<ButtonElement>
+	issues?: { message: string }[]
 }
 
 export interface InputChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onclick'> {
@@ -39,13 +56,14 @@ export interface InputChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
 	disabled?: boolean
 	label?: string
 	icon?: Snippet
-	ariaLabelRemove?: string
+	removeAriaLabel?: string
 	element?: HTMLDivElement
 	actionElement?: HTMLButtonElement
 	name?: string
 	value?: string | number
 	onclick?: MouseEventHandler<HTMLButtonElement>
 	onremove?: MouseEventHandler<ButtonElement>
+	issues?: { message: string }[]
 }
 
 export interface ChipSetContext {

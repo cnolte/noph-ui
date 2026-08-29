@@ -1,29 +1,19 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
-	import ButtonGroup from '#lib/button/ButtonGroup.svelte'
-	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let places = $state([
-		{ label: 'Work', icon: 'work', selected: true },
-		{ label: 'Restaurant', icon: 'restaurant', selected: false },
-		{ label: 'Coffee', icon: 'coffee', selected: false },
-		{ label: 'Home', icon: 'home', selected: false },
-	])
-
-	const choose = (index: number) => {
-		places.forEach((place, i) => (place.selected = i === index))
-	}
-
-	let styles = $state({ bold: true, italic: false, underline: false })
-
-	const alignments = [
-		{ title: 'Align left', icon: 'format_align_left' },
-		{ title: 'Align center', icon: 'format_align_center' },
-		{ title: 'Align right', icon: 'format_align_right' },
-	]
+	import Connected from './demos/Connected.svelte'
+	import ConnectedSource from './demos/Connected.svelte?raw'
+	import Motion from './demos/Motion.svelte'
+	import MotionSource from './demos/Motion.svelte?raw'
+	import MultipleChoice from './demos/MultipleChoice.svelte'
+	import MultipleChoiceSource from './demos/MultipleChoice.svelte?raw'
+	import Sizes from './demos/Sizes.svelte'
+	import SizesSource from './demos/Sizes.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -34,31 +24,9 @@
 <p>A row of buttons or icon buttons that react to a press together.</p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<ButtonGroup aria-label="Playback">
-		<IconButton variant="tonal" width="narrow" size="m" title="Previous">
-			<Icon>skip_previous</Icon>
-		</IconButton>
-		<IconButton variant="filled" width="wide" size="m" title="Play">
-			<Icon>play_arrow</Icon>
-		</IconButton>
-		<IconButton variant="tonal" width="narrow" size="m" title="Next">
-			<Icon>skip_next</Icon>
-		</IconButton>
-	</ButtonGroup>
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<ButtonGroup aria-label="Playback">
-	<IconButton variant="tonal" width="narrow" size="m" title="Previous">
-		<Icon>skip_previous</Icon>
-	</IconButton>
-	<IconButton variant="filled" width="wide" size="m" title="Play">
-		<Icon>play_arrow</Icon>
-	</IconButton>
-	<IconButton variant="tonal" width="narrow" size="m" title="Next">
-		<Icon>skip_next</Icon>
-	</IconButton>
-</ButtonGroup>`}
-/>
+<Code value={UsageSource} />
 <blockquote>
 	<Icon>bookmark</Icon> A group needs a name of its own, so pass an <code>aria-label</code> that says
 	what the buttons belong to.
@@ -70,114 +38,22 @@
 	so leave its buttons on <code>shape="round"</code>.
 </p>
 <DemoContainer>
-	<ButtonGroup variant="connected" aria-label="Place">
-		{#each places as place, index (place.label)}
-			<Button variant="tonal" toggle bind:selected={place.selected} onclick={() => choose(index)}>
-				{#snippet start()}
-					<Icon>{place.icon}</Icon>
-				{/snippet}
-				{place.label}
-			</Button>
-		{/each}
-	</ButtonGroup>
+	<Connected />
 </DemoContainer>
-<Code
-	value={`<script lang="ts">
-	let places = $state([
-		{ label: 'Work', icon: 'work', selected: true },
-		{ label: 'Restaurant', icon: 'restaurant', selected: false },
-		{ label: 'Coffee', icon: 'coffee', selected: false },
-		{ label: 'Home', icon: 'home', selected: false },
-	])
-
-	const choose = (index: number) => {
-		places.forEach((place, i) => (place.selected = i === index))
-	}
-</` +
-		`script>
-
-<ButtonGroup variant="connected" aria-label="Place">
-	{#each places as place, index (place.label)}
-		<Button variant="tonal" toggle bind:selected={place.selected} onclick={() => choose(index)}>
-			{#snippet start()}
-				<Icon>{place.icon}</Icon>
-			{/snippet}
-			{place.label}
-		</Button>
-	{/each}
-</ButtonGroup>`}
-/>
+<Code value={ConnectedSource} />
 <h2 id="multiple-choice">
 	Multiple choice<a href="#multiple-choice" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<ButtonGroup variant="connected" aria-label="Text style">
-		<Button variant="tonal" toggle bind:selected={styles.bold}>
-			{#snippet start()}
-				<Icon>format_bold</Icon>
-			{/snippet}
-			Bold
-		</Button>
-		<Button variant="tonal" toggle bind:selected={styles.italic}>
-			{#snippet start()}
-				<Icon>format_italic</Icon>
-			{/snippet}
-			Italic
-		</Button>
-		<Button variant="tonal" toggle bind:selected={styles.underline}>
-			{#snippet start()}
-				<Icon>format_underlined</Icon>
-			{/snippet}
-			Underline
-		</Button>
-	</ButtonGroup>
+	<MultipleChoice />
 </DemoContainer>
-<Code
-	value={`<ButtonGroup variant="connected" aria-label="Text style">
-	<Button variant="tonal" toggle bind:selected={styles.bold}>
-		{#snippet start()}
-			<Icon>format_bold</Icon>
-		{/snippet}
-		Bold
-	</Button>
-	<Button variant="tonal" toggle bind:selected={styles.italic}>
-		{#snippet start()}
-			<Icon>format_italic</Icon>
-		{/snippet}
-		Italic
-	</Button>
-	<Button variant="tonal" toggle bind:selected={styles.underline}>
-		{#snippet start()}
-			<Icon>format_underlined</Icon>
-		{/snippet}
-		Underline
-	</Button>
-</ButtonGroup>`}
-/>
+<Code value={MultipleChoiceSource} />
 <h2 id="sizes">Sizes<a href="#sizes" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>The buttons carry their own <code>size</code>, the group only holds them together.</p>
 <DemoContainer style="flex-direction: column; align-items: stretch">
-	{#each ['xs', 'm'] as const as size (size)}
-		<ButtonGroup variant="connected" aria-label="Alignment, size {size}">
-			{#each alignments as alignment (alignment.icon)}
-				<IconButton {size} variant="tonal" title={alignment.title}>
-					<Icon>{alignment.icon}</Icon>
-				</IconButton>
-			{/each}
-		</ButtonGroup>
-	{/each}
+	<Sizes />
 </DemoContainer>
-<Code
-	value={`<ButtonGroup variant="connected" aria-label="Medium alignment">
-	<IconButton size="m" variant="tonal" title="Align left"><Icon>format_align_left</Icon></IconButton>
-	<IconButton size="m" variant="tonal" title="Align center">
-		<Icon>format_align_center</Icon>
-	</IconButton>
-	<IconButton size="m" variant="tonal" title="Align right">
-		<Icon>format_align_right</Icon>
-	</IconButton>
-</ButtonGroup>`}
-/>
+<Code value={SizesSource} />
 <h2 id="motion">Motion<a href="#motion" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>expandedRatio</code> is the share of its width a pressed button grows by,
@@ -185,19 +61,9 @@
 	and reduced motion turns the motion off in both variants.
 </p>
 <DemoContainer>
-	<ButtonGroup expandedRatio={0.5} aria-label="Rating">
-		<Button variant="tonal">Bad</Button>
-		<Button variant="tonal">Fine</Button>
-		<Button variant="tonal">Great</Button>
-	</ButtonGroup>
+	<Motion />
 </DemoContainer>
-<Code
-	value={`<ButtonGroup expandedRatio={0.5} aria-label="Rating">
-	<Button variant="tonal">Bad</Button>
-	<Button variant="tonal">Fine</Button>
-	<Button variant="tonal">Great</Button>
-</ButtonGroup>`}
-/>
+<Code value={MotionSource} />
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -225,29 +91,9 @@
 <p>The corner tokens only apply to a connected group.</p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<ButtonGroup
-		variant="connected"
-		aria-label="Custom button group"
-		--np-button-group-space="0.25rem"
-		--np-button-group-inner-corner="1rem"
-	>
-		<Button variant="tonal">Start</Button>
-		<Button variant="tonal">Middle</Button>
-		<Button variant="tonal">End</Button>
-	</ButtonGroup>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<ButtonGroup
-	variant="connected"
-	aria-label="Custom button group"
-	--np-button-group-space="0.25rem"
-	--np-button-group-inner-corner="1rem"
->
-	<Button variant="tonal">Start</Button>
-	<Button variant="tonal">Middle</Button>
-	<Button variant="tonal">End</Button>
-</ButtonGroup>`}
-/>
+<Code value={ThemingExampleSource} />
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="props">Props<a href="#props" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>

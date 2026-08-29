@@ -38,6 +38,12 @@
 <div class="header">Components</div>
 <NavigationDrawerItem
 	onclick={onclose}
+	label="App bar"
+	href="/components/app-bar"
+	selected={page.url.pathname === '/components/app-bar'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Auto complete"
 	href="/components/autocomplete"
 	selected={page.url.pathname === '/components/autocomplete'}
@@ -104,6 +110,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="FAB"
+	href="/components/fab"
+	selected={page.url.pathname === '/components/fab'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Icon buttons"
 	href="/components/icon-button"
 	selected={page.url.pathname === '/components/icon-button'}
@@ -125,6 +137,12 @@
 	label="Menus"
 	href="/components/menu"
 	selected={page.url.pathname === '/components/menu'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
+	label="Navigation bar"
+	href="/components/navigation-bar"
+	selected={page.url.pathname === '/components/navigation-bar'}
 />
 <NavigationDrawerItem
 	onclick={onclose}
@@ -158,6 +176,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Search"
+	href="/components/search"
+	selected={page.url.pathname === '/components/search'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Segmented buttons"
 	href="/components/segmented-button"
 	selected={page.url.pathname === '/components/segmented-button'}
@@ -170,6 +194,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Sheets"
+	href="/components/sheet"
+	selected={page.url.pathname === '/components/sheet'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Slider"
 	href="/components/slider"
 	selected={page.url.pathname === '/components/slider'}
@@ -179,6 +209,12 @@
 	label="Snackbar"
 	href="/components/snackbar"
 	selected={page.url.pathname === '/components/snackbar'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
+	label="Split button"
+	href="/components/split-button"
+	selected={page.url.pathname === '/components/split-button'}
 />
 <NavigationDrawerItem
 	onclick={onclose}
@@ -197,6 +233,12 @@
 	label="Tabs"
 	href="/components/tabs"
 	selected={page.url.pathname === '/components/tabs'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
+	label="Toolbar"
+	href="/components/toolbar"
+	selected={page.url.pathname === '/components/toolbar'}
 />
 <NavigationDrawerItem
 	onclick={onclose}

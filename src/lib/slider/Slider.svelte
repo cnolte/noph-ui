@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { SliderProps } from './types.ts'
 
 	let {
@@ -21,8 +22,13 @@
 		element = $bindable(),
 		inputElement = $bindable(),
 		endInputElement = $bindable(),
+		issues,
+		'aria-invalid': ariaInvalid,
 		...attributes
 	}: SliderProps = $props()
+
+	let hasError = $derived(!!issues?.length)
+	const uid = $props.id()
 
 	const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 
@@ -109,6 +115,38 @@
 
 	const DRAG_THRESHOLD = 3
 
+	/*
+	 * The value label is a `manual` popover rather than a plain absolutely positioned element, so it
+	 * renders in the top layer and isn't clipped by an ancestor that scrolls or clips overflow, the
+	 * way a `DemoContainer` or any card with `overflow: hidden` would otherwise cut it off. `manual`
+	 * rather than `hint`, whose open and close the browser drives on its own schedule; this one has
+	 * to follow the drag exactly.
+	 */
+	let startLabelElement = $state<HTMLDivElement>()
+	let endLabelElement = $state<HTMLDivElement>()
+	let startHandleElement = $state<HTMLDivElement>()
+	let endHandleElement = $state<HTMLDivElement>()
+	let hovered = $state<'start' | 'end' | null>(null)
+	let focused = $state<'start' | 'end' | null>(null)
+
+	/*
+	 * One handle carries the label at a time, the one being interacted with: a drag wins, then the
+	 * pointer, then the keyboard. Focus only counts when it did not come from a pointer, since a
+	 * drag focuses the input and `:focus-visible` does match a range input focused that way, which
+	 * is why the focus ring is suppressed by `np-pointer-focused` too. Without that gate the label
+	 * would stay up after a drag for as long as the input keeps focus, however far the pointer went.
+	 */
+	let labelled = $derived(
+		disabled ? null : (dragging ?? hovered ?? (pointerFocused ? null : focused)),
+	)
+
+	const bindLabel = (getElement: () => HTMLDivElement | undefined, side: 'start' | 'end') => {
+		const controller = popoverController(getElement)
+		syncOpenEffect(getElement, () => labelled === side, controller.show, controller.close)
+	}
+	bindLabel(() => startLabelElement, 'start')
+	bindLabel(() => endLabelElement, 'end')
+
 	$effect(() => {
 		if (!icon || !activeLaneElement) return
 		const lane = activeLaneElement
@@ -155,7 +193,32 @@
 		}
 	}
 
+	/*
+	 * Hover is derived from where the pointer actually is rather than from the handle's own
+	 * mouseenter/mouseleave. A handle is only a few pixels wide, so those events are easy to miss
+	 * between frames, and while a drag holds pointer capture they are routed to the capturing
+	 * element and never reach the handle at all, which left the label stuck open. The tolerance
+	 * gives the thin handle a hit area worth aiming at.
+	 */
+	const HOVER_TOLERANCE = 12
+
+	/** Distance from the pointer to a handle's box, zero while inside it. */
+	const distanceTo = (handle: HTMLDivElement | undefined, e: PointerEvent) => {
+		if (!handle) return Infinity
+		const r = handle.getBoundingClientRect()
+		const dx = Math.max(r.left - e.clientX, 0, e.clientX - r.right)
+		const dy = Math.max(r.top - e.clientY, 0, e.clientY - r.bottom)
+		return Math.hypot(dx, dy)
+	}
+
+	const updateHover = (e: PointerEvent) => {
+		const toStart = distanceTo(startHandleElement, e)
+		const toEnd = distanceTo(endHandleElement, e)
+		hovered = Math.min(toStart, toEnd) > HOVER_TOLERANCE ? null : toStart <= toEnd ? 'start' : 'end'
+	}
+
 	const onpointermove = (e: PointerEvent) => {
+		updateHover(e)
 		if (!dragging) return
 		if (!tracking) {
 			const d = pointerOrigin
@@ -195,6 +258,7 @@
 		tracking = false
 		pointerOrigin = null
 		element?.releasePointerCapture(e.pointerId)
+		updateHover(e)
 		input?.dispatchEvent(new Event('change', { bubbles: true }))
 	}
 
@@ -215,6 +279,7 @@
 		dragging && 'np-dragging',
 		tracking && 'np-tracking',
 		pointerFocused && 'np-pointer-focused',
+		hasError && !disabled && 'np-error',
 		attributes.class,
 	]}
 	role="presentation"
@@ -222,8 +287,13 @@
 	{onpointermove}
 	onpointerup={endDrag}
 	onpointercancel={endDrag}
+	onpointerleave={() => (hovered = null)}
 	onkeydown={() => (pointerFocused = false)}
-	onfocusout={() => (pointerFocused = false)}
+	onfocusin={(event) => (focused = event.target === endInputElement ? 'end' : 'start')}
+	onfocusout={() => {
+		focused = null
+		pointerFocused = false
+	}}
 >
 	<div class="np-slider-track" bind:this={trackElement}>
 		{#if hasStartStop}
@@ -247,21 +317,37 @@
 			<span class={['np-slider-tick', isActive(t) && 'np-on-active']} style="--_t:{t}"></span>
 		{/each}
 
-		<div class="np-slider-handle np-slider-handle-start">
+		<div
+			bind:this={startHandleElement}
+			class="np-slider-handle np-slider-handle-start"
+			style="anchor-name: --np-slider-{uid}-start"
+		></div>
+		{#if labeled}
+			<div
+				bind:this={startLabelElement}
+				popover="manual"
+				class="np-slider-label-anchor"
+				style="position-anchor: --np-slider-{uid}-start"
+			>
+				<div class="np-slider-label">{labelFor(range ? Math.min(lo, hi) : lo)}</div>
+			</div>
+		{/if}
+		{#if range}
+			<div
+				bind:this={endHandleElement}
+				class="np-slider-handle np-slider-handle-end"
+				style="anchor-name: --np-slider-{uid}-end"
+			></div>
 			{#if labeled}
-				<div class="np-slider-label-anchor">
-					<div class="np-slider-label">{labelFor(range ? Math.min(lo, hi) : lo)}</div>
+				<div
+					bind:this={endLabelElement}
+					popover="manual"
+					class="np-slider-label-anchor"
+					style="position-anchor: --np-slider-{uid}-end"
+				>
+					<div class="np-slider-label">{labelFor(Math.max(lo, hi))}</div>
 				</div>
 			{/if}
-		</div>
-		{#if range}
-			<div class="np-slider-handle np-slider-handle-end">
-				{#if labeled}
-					<div class="np-slider-label-anchor">
-						<div class="np-slider-label">{labelFor(Math.max(lo, hi))}</div>
-					</div>
-				{/if}
-			</div>
 		{/if}
 	</div>
 
@@ -277,6 +363,7 @@
 		{disabled}
 		aria-orientation={orientation}
 		aria-valuetext={format ? labelFor(lo) : attributes['aria-valuetext']}
+		aria-invalid={hasError ? 'true' : ariaInvalid}
 	/>
 	{#if range}
 		<input
@@ -375,6 +462,14 @@
 		inset-inline-end: calc(100% - var(--_a2));
 		overflow: hidden;
 		background: var(--np-slider-active-track-color, var(--np-color-primary));
+	}
+
+	.np-error {
+		--np-slider-active-track-color: var(--np-color-error);
+		--np-slider-handle-color: var(--np-color-error);
+		--np-slider-active-stop-color: var(--np-color-on-error);
+		--np-slider-label-container-color: var(--np-color-error);
+		--np-slider-label-text-color: var(--np-color-on-error);
 	}
 
 	.np-slider-inactive-start {
@@ -502,13 +597,54 @@
 			block-size var(--np-motion-expressive-fast-effects);
 	}
 
-	.np-slider-label-anchor {
-		position: absolute;
-		inset-block-end: calc(100% + 0.375rem);
-		inset-inline: 0;
-		display: flex;
+	/*
+	 * A `manual` popover rather than a plain absolutely positioned element: it renders in the top
+	 * layer, anchored to the handle by `position-anchor`/`position-area` rather than by an inset
+	 * computed from the handle's own box, so it isn't clipped by an ancestor that scrolls or hides
+	 * overflow. It stays a wrapper around the visible label rather than the popover itself carrying
+	 * the styling, so it can keep resolving `position-area` in the slider's own writing mode while
+	 * the label inside always renders horizontally, the same split the previous absolute-positioned
+	 * version needed for a vertical slider's rotated writing mode.
+	 */
+	.np-slider-label-anchor[popover] {
+		position-area: block-start;
+		justify-self: anchor-center;
+		margin: 0 0 0.375rem 0;
+		border: none;
+		background: none;
+		padding: 0;
 		justify-content: center;
 		pointer-events: none;
+	}
+
+	/*
+	 * `display` only while open. Setting it on the base rule would beat the user agent's
+	 * `display: none` for a closed popover, because author styles win over user agent styles
+	 * whatever the specificity, leaving the label on screen the whole time.
+	 */
+	.np-slider-label-anchor:popover-open {
+		display: flex;
+		opacity: 1;
+		scale: 1;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-slider-label-anchor:popover-open {
+			animation:
+				fadeIn var(--np-motion-expressive-fast-effects),
+				scaleIn var(--np-motion-expressive-fast-spatial);
+		}
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+	}
+	@keyframes scaleIn {
+		from {
+			scale: 0.8;
+		}
 	}
 
 	.np-slider-label {
@@ -526,18 +662,6 @@
 		font-weight: 500;
 		text-align: center;
 		white-space: nowrap;
-		opacity: 0;
-		transition: opacity var(--np-motion-expressive-fast-effects);
-	}
-
-	.np-slider.np-labeled:hover .np-slider-label,
-	.np-slider.np-labeled.np-dragging .np-slider-label,
-	.np-slider.np-labeled:has(.np-slider-input:focus-visible) .np-slider-label {
-		opacity: 1;
-	}
-
-	.np-slider.np-disabled .np-slider-label {
-		opacity: 0;
 	}
 
 	.np-slider-input {

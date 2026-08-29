@@ -1,14 +1,9 @@
 <script lang="ts">
-	import { Button, Checkbox, DockedDatePicker, Select, TextField } from '#lib/index.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-	import { plans, registrationSchema } from './registration.schema.ts'
-	import { submitRegistration } from './registration.remote.ts'
-
-	const registration = submitRegistration.preflight(registrationSchema)
-
-	const today = new Date()
-	const isoToday = `${today.getFullYear()}-${`${today.getMonth() + 1}`.padStart(2, '0')}-${`${today.getDate()}`.padStart(2, '0')}`
+	import RegistrationForm from './demos/RegistrationForm.svelte'
+	import RegistrationFormSource from './demos/RegistrationForm.svelte?raw'
+	import registrationSchemaSource from './registration.schema.ts?raw'
 </script>
 
 <svelte:head>
@@ -44,127 +39,15 @@
 	<code>ada@example.com</code> to hit a rule the schema cannot express.
 </p>
 <DemoContainer>
-	{#if registration.result}
-		<p>Thanks, {registration.result.name}! You're on the list.</p>
-	{/if}
-	<form
-		{...registration}
-		style="display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 24rem"
-	>
-		<TextField
-			label="Name"
-			issues={registration.fields.name.issues()}
-			{...registration.fields.name.as('text')}
-		/>
-		<TextField
-			label="Email"
-			issues={registration.fields.email.issues()}
-			{...registration.fields.email.as('email')}
-		/>
-		<Select
-			label="Plan"
-			issues={registration.fields.plan.issues()}
-			options={plans}
-			{...registration.fields.plan.as('select')}
-		/>
-		<DockedDatePicker
-			label="Start date"
-			min={isoToday}
-			locale="en-US"
-			issues={registration.fields.startDate.issues()}
-			{...registration.fields.startDate.as('date')}
-		/>
-		<label style="display: flex; align-items: center; gap: 0.5rem">
-			<Checkbox
-				issues={registration.fields.acceptedTerms.issues()}
-				{...registration.fields.acceptedTerms.as('checkbox')}
-			/>
-			I accept the terms
-		</label>
-		<div style="display: flex; justify-content: flex-end">
-			<Button type="submit" variant="filled" loading={registration.pending > 0}>
-				{registration.pending > 0 ? 'Registering…' : 'Register'}
-			</Button>
-		</div>
-	</form>
+	<RegistrationForm />
 </DemoContainer>
-<!-- eslint-disable no-useless-escape -- the backslash keeps this from closing the script block it is written inside of -->
+<p><code>Form.svelte</code></p>
+<Code value={RegistrationFormSource} />
+<p><code>registration.schema.ts</code></p>
+<Code value={registrationSchemaSource} />
+<p><code>registration.remote.ts</code></p>
 <Code
-	value={`<script>
-	import { plans, registrationSchema } from './registration.schema'
-	import { submitRegistration } from './registration.remote'
-
-	const registration = submitRegistration.preflight(registrationSchema)
-<\/script>
-
-<form {...registration}>
-	<TextField
-		label="Name"
-		issues={registration.fields.name.issues()}
-		{...registration.fields.name.as('text')}
-	/>
-	<TextField
-		label="Email"
-		issues={registration.fields.email.issues()}
-		{...registration.fields.email.as('email')}
-	/>
-	<Select
-		label="Plan"
-		options={plans}
-		issues={registration.fields.plan.issues()}
-		{...registration.fields.plan.as('select')}
-	/>
-	<DockedDatePicker
-		label="Start date"
-		issues={registration.fields.startDate.issues()}
-		{...registration.fields.startDate.as('date')}
-	/>
-	<label>
-		<Checkbox
-			issues={registration.fields.acceptedTerms.issues()}
-			{...registration.fields.acceptedTerms.as('checkbox')}
-		/>
-		I accept the terms
-	</label>
-	<Button type="submit" loading={registration.pending > 0}>Register</Button>
-</form>`}
-/>
-<!-- eslint-enable no-useless-escape -->
-<Code
-	value={`// registration.schema.ts
-import * as v from 'valibot'
-
-export type Plan = 'starter' | 'pro' | 'enterprise'
-
-export const plans: { value: Plan; label: string }[] = [
-	{ value: 'starter', label: 'Starter' },
-	{ value: 'pro', label: 'Pro' },
-	{ value: 'enterprise', label: 'Enterprise' },
-]
-
-export const registrationSchema = v.object({
-	name: v.pipe(
-		v.string(),
-		v.trim(),
-		v.nonEmpty('Enter your name.'),
-		v.maxLength(80, 'Use 80 characters or fewer.'),
-	),
-	email: v.pipe(v.string(), v.trim(), v.email('Enter a valid email address.')),
-	plan: v.picklist(
-		plans.map((plan) => plan.value),
-		'Choose a plan.',
-	),
-	startDate: v.pipe(v.string(), v.isoDate('Pick a start date.')),
-	// Checkboxes send nothing when unchecked, so the field has to be optional with a default.
-	acceptedTerms: v.pipe(
-		v.optional(v.boolean(), false),
-		v.literal(true, 'You must accept the terms.'),
-	),
-})`}
-/>
-<Code
-	value={`// registration.remote.ts
-import { form } from '$app/server'
+	value={`import { form } from '$app/server'
 import { invalid } from '@sveltejs/kit'
 import { registrationSchema } from './registration.schema'
 
@@ -177,11 +60,13 @@ export const submitRegistration = form(registrationSchema, async (data, issue) =
 		invalid(issue.email('That email is already registered.'))
 	}
 
-	await createRegistration(data)
+	// A real handler would write the registration to the database.
+	await new Promise((resolve) => setTimeout(resolve, 400))
 
 	return { name: data.name }
 })`}
 />
+
 <h2 id="how-it-works">
 	How it works<a href="#how-it-works" aria-hidden="true" tabindex="-1">#</a>
 </h2>

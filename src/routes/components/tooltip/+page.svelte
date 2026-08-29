@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
-	import IconButton from '#lib/button/IconButton.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
-	import RichTooltip from '#lib/tooltip/RichTooltip.svelte'
-	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import PlainTooltip from './demos/PlainTooltip.svelte'
+	import PlainTooltipSource from './demos/PlainTooltip.svelte?raw'
+	import Positioning from './demos/Positioning.svelte'
+	import PositioningSource from './demos/Positioning.svelte?raw'
+	import Types from './demos/Types.svelte'
+	import TypesSource from './demos/Types.svelte?raw'
 </script>
 
 <svelte:head>
@@ -20,20 +21,7 @@
 
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<IconButton title="Add to favorites"><Icon>favorite</Icon></IconButton>
-	<IconButton
-		popovertarget="example-rich-tooltip"
-		popovertargetaction="show"
-		aria-label="About tooltips"
-	>
-		<Icon>info</Icon>
-	</IconButton>
-	<RichTooltip id="example-rich-tooltip" subhead="Rich tooltip">
-		Room for a sentence or two, and an action.
-		{#snippet actions()}
-			<Button variant="text">Learn more</Button>
-		{/snippet}
-	</RichTooltip>
+	<Types />
 </DemoContainer>
 <ul>
 	<li>
@@ -43,21 +31,7 @@
 		<strong>Rich</strong> adds a subhead, text and an action, and stays until it is dismissed.
 	</li>
 </ul>
-<Code
-	value={`<IconButton title="Add to favorites">
-	<Icon>favorite</Icon>
-</IconButton>
-
-<IconButton popovertarget="tip" popovertargetaction="show" aria-label="About tooltips">
-	<Icon>info</Icon>
-</IconButton>
-<RichTooltip id="tip" subhead="Rich tooltip">
-	Room for a sentence or two, and an action.
-	{#snippet actions()}
-		<Button variant="text">Learn more</Button>
-	{/snippet}
-</RichTooltip>`}
-/>
+<Code value={TypesSource} />
 
 <h2 id="plain-tooltip">
 	Plain tooltip<a href="#plain-tooltip" aria-hidden="true" tabindex="-1">#</a>
@@ -70,18 +44,9 @@
 	<code>id</code>.
 </p>
 <DemoContainer>
-	<Button title="This is a button tooltip">Hover over this button</Button>
-	<div aria-describedby="example-tooltip">Hover over this text</div>
-	<Tooltip id="example-tooltip">This is a basic tooltip</Tooltip>
+	<PlainTooltip />
 </DemoContainer>
-<Code
-	value={`<Button title="This is a button tooltip">
-	Hover over this button
-</Button>
-
-<div aria-describedby="tip">Hover over this text</div>
-<Tooltip id="tip">This is a basic tooltip</Tooltip>`}
-/>
+<Code value={PlainTooltipSource} />
 <p>
 	After the pointer leaves it waits half a second before hiding, so the text inside stays reachable.
 	<kbd>Escape</kbd> closes it.
@@ -97,15 +62,15 @@
 	a pointer that is only passing through.
 </p>
 <p>
-	The control points at it with <code>popovertarget</code>, and
-	<code>popovertargetaction="show"</code> keeps a second click on the control from closing it again.
-	A keyboard reaches it the same way, since <kbd>Enter</kbd> on the control is a click.
+	The control points at it with <code>commandfor</code>, and
+	<code>command="show-popover"</code> keeps a second click on the control from closing it again. A
+	keyboard reaches it the same way, since <kbd>Enter</kbd> on the control is a click.
 </p>
 <p>
 	It takes a <code>subhead</code>, its children as the text and an <code>actions</code> snippet, and
 	it is at most <code>20rem</code> wide. <code>bind:open</code>, <code>element</code>,
-	<code>showPopover</code> and <code>hidePopover</code> are there to open and close it yourself, which
-	is how Material introduces a new feature on page load.
+	<code>show</code> and <code>close</code> are there to open and close it yourself, which is how Material
+	introduces a new feature on page load.
 </p>
 
 <h2 id="positioning">Positioning<a href="#positioning" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -115,59 +80,19 @@
 	is in the way. Both sides are custom properties.
 </p>
 <DemoContainer>
-	<Button title="Shown below the button" --np-tooltip-position-area="bottom">Below</Button>
-	<Button
-		title="Shown to the right"
-		--np-tooltip-position-area="right"
-		--np-tooltip-justify-self="auto"
-	>
-		Right
-	</Button>
-	<IconButton
-		popovertarget="placement-rich-tooltip"
-		popovertargetaction="show"
-		aria-label="About placement"
-	>
-		<Icon>info</Icon>
-	</IconButton>
-	<RichTooltip
-		id="placement-rich-tooltip"
-		subhead="Bottom right"
-		--np-rich-tooltip-position-area="bottom right"
-		--np-rich-tooltip-justify-self="start"
-	>
-		Room for a sentence or two.
-	</RichTooltip>
+	<Positioning />
 </DemoContainer>
-<Code
-	value={`<Button title="Shown below the button" --np-tooltip-position-area="bottom">
-	Below
-</Button>
-
-<Button
-	title="Shown to the right"
-	--np-tooltip-position-area="right"
-	--np-tooltip-justify-self="auto"
->
-	Right
-</Button>
-
-<IconButton popovertarget="tip" popovertargetaction="show" aria-label="About placement">
-	<Icon>info</Icon>
-</IconButton>
-<RichTooltip
-	id="tip"
-	subhead="Bottom right"
-	--np-rich-tooltip-position-area="bottom right"
-	--np-rich-tooltip-justify-self="start"
->
-	Room for a sentence or two.
-</RichTooltip>`}
-/>
+<Code value={PositioningSource} />
 <p>
 	That last one is the placement Material specifies by default: the panel's top left corner sits at
 	the control's bottom right corner. Centered below, the way this component leaves it, is the
 	variant Material allows on desktop.
+</p>
+
+<p>
+	A vertical <a href="/components/toolbar">toolbar</a> does this for you. Its actions are stacked, so
+	a tooltip above one of them would cover the one before it, and the toolbar moves them to the trailing
+	side instead.
 </p>
 
 <h2 id="without-javascript">
@@ -175,9 +100,9 @@
 </h2>
 <p>
 	Everything a tooltip needs is in the markup the server sends: <code>interestfor</code> on a plain
-	tooltip's anchor, <code>popovertarget</code> on a rich tooltip's control, the popover itself and
-	CSS for the timing. Either attribute also makes the control the implicit anchor of its popover, so
-	there is no <code>anchor-name</code> to set.
+	tooltip's anchor, <code>command</code> and <code>commandfor</code> on a rich tooltip's control,
+	the popover itself and CSS for the timing. Either attribute also makes the control the implicit
+	anchor of its popover, so there is no <code>anchor-name</code> to set.
 </p>
 <Code
 	value={`<button interestfor="save-tip" aria-describedby="save-tip">
@@ -208,8 +133,8 @@
 <p>
 	Both render <code>role="tooltip"</code>. A plain tooltip hangs off its anchor's
 	<code>aria-describedby</code>; a rich one gets <code>aria-expanded</code> and
-	<code>aria-details</code> from <code>popovertarget</code>, and <kbd>Tab</kbd> moves from the control
-	into the panel.
+	<code>aria-details</code> from <code>commandfor</code>, and <kbd>Tab</kbd> moves from the control into
+	the panel.
 </p>
 <p>
 	A plain tooltip opens on keyboard focus but not on a plain click, so it stays out of the way of a
@@ -241,12 +166,36 @@
 			<td><code>anchor-center</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-tooltip-align-self</code></td>
+			<td><code>auto</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-tooltip-margin</code></td>
+			<td><code>4px 0</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-tooltip-position-try-fallbacks</code></td>
+			<td><code>flip-block</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-rich-tooltip-position-area</code></td>
 			<td><code>bottom</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-justify-self</code></td>
 			<td><code>anchor-center</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-rich-tooltip-align-self</code></td>
+			<td><code>auto</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-rich-tooltip-margin</code></td>
+			<td><code>4px 0</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-rich-tooltip-position-try-fallbacks</code></td>
+			<td><code>flip-block</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-action-inset</code></td>
@@ -330,7 +279,7 @@
 			<td><code>undefined</code></td>
 			<td
 				>Connects the tooltip to its control, the element with a matching
-				<code>popovertarget</code>.</td
+				<code>commandfor</code>.</td
 			>
 		</tr>
 		<tr>

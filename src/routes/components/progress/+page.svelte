@@ -1,12 +1,24 @@
 <script lang="ts">
-	import CircularProgress from '#lib/progress/CircularProgress.svelte'
-	import LinearProgress from '#lib/progress/LinearProgress.svelte'
-	import Slider from '#lib/slider/Slider.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let value = $state(0.6)
-	let buffered = $state(0.85)
+	import Buffer from './demos/Buffer.svelte'
+	import BufferSource from './demos/Buffer.svelte?raw'
+	import CircularProgressExample from './demos/CircularProgressExample.svelte'
+	import CircularProgressExampleSource from './demos/CircularProgressExample.svelte?raw'
+	import Determinate from './demos/Determinate.svelte'
+	import DeterminateSource from './demos/Determinate.svelte?raw'
+	import FourColors from './demos/FourColors.svelte'
+	import FourColorsSource from './demos/FourColors.svelte?raw'
+	import Indeterminate from './demos/Indeterminate.svelte'
+	import IndeterminateSource from './demos/Indeterminate.svelte?raw'
+	import LinearProgressExample from './demos/LinearProgressExample.svelte'
+	import LinearProgressExampleSource from './demos/LinearProgressExample.svelte?raw'
+	import RightToLeft from './demos/RightToLeft.svelte'
+	import RightToLeftSource from './demos/RightToLeft.svelte?raw'
+	import Wavy from './demos/Wavy.svelte'
+	import WavySource from './demos/Wavy.svelte?raw'
+	import WithoutTrack from './demos/WithoutTrack.svelte'
+	import WithoutTrackSource from './demos/WithoutTrack.svelte?raw'
 </script>
 
 <svelte:head>
@@ -36,30 +48,9 @@
 	indicator respond.
 </p>
 <DemoContainer>
-	<div class="controls">
-		<Slider
-			min={0}
-			max={1}
-			labeled
-			step={0.01}
-			bind:value
-			aria-label="Progress value"
-			format={(v) => `${Math.round(v * 100)}%`}
-		/>
-		<div class="stack">
-			<LinearProgress aria-label="Download progress" {value} />
-			<LinearProgress aria-label="Download progress, wavy" wavy {value} />
-		</div>
-		<div class="row">
-			<CircularProgress aria-label="Download progress" {value} />
-			<CircularProgress aria-label="Download progress, wavy" wavy {value} />
-		</div>
-	</div>
+	<Determinate />
 </DemoContainer>
-<Code
-	value={`<LinearProgress value={0.6} aria-label="Download progress" />
-<CircularProgress value={0.6} aria-label="Download progress" />`}
-/>
+<Code value={DeterminateSource} />
 
 <h2 id="indeterminate">
 	Indeterminate<a href="#indeterminate" aria-hidden="true" tabindex="-1">#</a>
@@ -69,17 +60,9 @@
 	looping until you either remove it or give it a value.
 </p>
 <DemoContainer>
-	<div class="controls">
-		<div class="stack">
-			<LinearProgress aria-label="Loading" indeterminate />
-		</div>
-		<CircularProgress aria-label="Loading" indeterminate />
-	</div>
+	<Indeterminate />
 </DemoContainer>
-<Code
-	value={`<LinearProgress indeterminate aria-label="Loading" />
-<CircularProgress indeterminate aria-label="Loading" />`}
-/>
+<Code value={IndeterminateSource} />
 
 <h2 id="wavy">Wavy<a href="#wavy" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -89,23 +72,9 @@
 	to see it happen.
 </p>
 <DemoContainer>
-	<div class="controls">
-		<div class="stack">
-			<LinearProgress aria-label="Uploading, wavy" wavy value={0.6} />
-			<LinearProgress aria-label="Loading, wavy" wavy indeterminate />
-		</div>
-		<div class="row">
-			<CircularProgress aria-label="Uploading, wavy" wavy value={0.6} />
-			<CircularProgress aria-label="Loading, wavy" wavy indeterminate />
-		</div>
-	</div>
+	<Wavy />
 </DemoContainer>
-<Code
-	value={`<LinearProgress wavy value={0.6} />
-<LinearProgress wavy indeterminate />
-<CircularProgress wavy value={0.6} />
-<CircularProgress wavy indeterminate />`}
-/>
+<Code value={WavySource} />
 
 <h2 id="buffer">Buffer<a href="#buffer" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -113,22 +82,9 @@
 	a streaming video would. Everything beyond the buffer is drawn as dots.
 </p>
 <DemoContainer>
-	<div class="controls">
-		<Slider
-			labeled
-			min={0}
-			max={1}
-			step={0.01}
-			format={(v) => `${Math.round(v * 100)}%`}
-			bind:value={buffered}
-			aria-label="Buffer amount"
-		/>
-		<div class="stack">
-			<LinearProgress aria-label="Playback progress" value={0.4} buffer={buffered} />
-		</div>
-	</div>
+	<Buffer />
 </DemoContainer>
-<Code value={`<LinearProgress value={0.4} buffer={0.85} />`} />
+<Code value={BufferSource} />
 
 <h2 id="without-a-track">
 	Without a track<a href="#without-a-track" aria-hidden="true" tabindex="-1">#</a>
@@ -139,15 +95,9 @@
 	<code>IconButton</code> do this for you when you pass <code>loading</code>.
 </p>
 <DemoContainer>
-	<CircularProgress aria-label="Loading, no track" indeterminate track={false} />
-	<div class="stack">
-		<LinearProgress aria-label="Loading, no track" indeterminate track={false} />
-	</div>
+	<WithoutTrack />
 </DemoContainer>
-<Code
-	value={`<CircularProgress indeterminate track={false} />
-<LinearProgress indeterminate track={false} />`}
-/>
+<Code value={WithoutTrackSource} />
 
 <h2 id="four-colors">Four colors<a href="#four-colors" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -155,16 +105,9 @@
 	Use it on indeterminate indicators, where the shifting colour helps convey that something is still happening.
 </p>
 <DemoContainer>
-	<CircularProgress aria-label="Loading, four colors" fourColor indeterminate />
-	<CircularProgress aria-label="Loading, four colors, wavy" fourColor wavy indeterminate />
-	<div class="stack">
-		<LinearProgress aria-label="Loading, four colors" fourColor indeterminate />
-	</div>
+	<FourColors />
 </DemoContainer>
-<Code
-	value={`<CircularProgress fourColor indeterminate />
-<LinearProgress fourColor indeterminate />`}
-/>
+<Code value={FourColorsSource} />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
@@ -197,14 +140,9 @@
 	follows the inherited <code>dir</code>.
 </p>
 <DemoContainer>
-	<div class="controls" dir="rtl">
-		<div class="stack">
-			<LinearProgress aria-label="Download progress, right to left" value={0.6} />
-			<LinearProgress aria-label="Loading, right to left" wavy indeterminate />
-		</div>
-	</div>
+	<RightToLeft />
 </DemoContainer>
-<Code value={`<div dir="rtl">\n\t<LinearProgress value={0.6} />\n</div>`} />
+<Code value={RightToLeftSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="circular-progress-tokens">
@@ -248,24 +186,9 @@
 	>
 </h3>
 <DemoContainer>
-	<CircularProgress
-		--np-circular-progress-color="var(--np-color-error)"
-		--np-circular-progress-track-color="var(--np-color-error-container)"
-		--np-circular-progress-active-indicator-width="20"
-		--np-circular-progress-size="5rem"
-		aria-label="Circular progress custom"
-		indeterminate
-	/>
+	<CircularProgressExample />
 </DemoContainer>
-<Code
-	value={`<CircularProgress
-	--np-circular-progress-color="var(--np-color-error)"
-	--np-circular-progress-track-color="var(--np-color-error-container)"
-	--np-circular-progress-active-indicator-width="20"
-	--np-circular-progress-size="5rem"
-	indeterminate
-/>`}
-/>
+<Code value={CircularProgressExampleSource} />
 <h3 id="linear-progress-tokens">
 	Linear progress tokens<a href="#linear-progress-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -315,28 +238,9 @@
 	Linear progress example<a href="#linear-progress-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<div class="stack">
-		<LinearProgress
-			--np-linear-progress-active-indicator-color="var(--np-color-error)"
-			--np-linear-progress-track-color="var(--np-color-error-container)"
-			--np-linear-progress-track-shape="0.5rem"
-			--np-linear-progress-track-height="0.5rem"
-			--np-linear-progress-active-indicator-height="0.5rem"
-			aria-label="Linear progress custom"
-			indeterminate
-		/>
-	</div>
+	<LinearProgressExample />
 </DemoContainer>
-<Code
-	value={`<LinearProgress
-	--np-linear-progress-active-indicator-color="var(--np-color-error)"
-	--np-linear-progress-track-color="var(--np-color-error-container)"
-	--np-linear-progress-track-shape="0.5rem"
-	--np-linear-progress-track-height="0.5rem"
-	--np-linear-progress-active-indicator-height="0.5rem"
-	indeterminate
-/>`}
-/>
+<Code value={LinearProgressExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -472,22 +376,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.controls {
-		display: flex;
-		flex-direction: column;
-		gap: 1.75rem;
-		min-width: min(22rem, 70vw);
-	}
-	.stack {
-		display: flex;
-		flex-direction: column;
-		gap: 1.75rem;
-	}
-	.row {
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-	}
-</style>

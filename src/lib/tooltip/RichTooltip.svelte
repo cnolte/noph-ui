@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { RichTooltipProps } from './types.ts'
 
 	let {
@@ -12,24 +13,35 @@
 		...attributes
 	}: RichTooltipProps = $props()
 
+	/*
+	 * The control the tooltip is opened from, passed to `showPopover()` as its source so a
+	 * programmatic open gets the invoker relationship the declarative one gets for free: the
+	 * tooltip counts as nested inside any popover its control sits in, rather than dismissing it.
+	 * Either attribute names a control, since `commandfor` and `popovertarget` are separate
+	 * properties that set the same relationship.
+	 */
 	const findControl = () =>
-		id ? (document.querySelector<HTMLElement>(`[popovertarget="${id}"]`) ?? undefined) : undefined
+		id
+			? (document.querySelector<HTMLElement>(`[commandfor="${id}"], [popovertarget="${id}"]`) ??
+				undefined)
+			: undefined
 
-	export const showPopover = () => {
+	const controller = popoverController(() => element)
+
+	export const show = () => {
 		if (!element || element.matches(':popover-open')) return
 		const source = findControl()
 		element.showPopover(source ? { source } : undefined)
 	}
 
-	export const hidePopover = () => {
-		element?.hidePopover()
-	}
+	export const close = () => controller.close()
 
-	$effect(() => {
-		if (!element) return
-		if (open === true) showPopover()
-		else if (open === false) hidePopover()
-	})
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 </script>
 
 <div
@@ -68,7 +80,7 @@
 		max-width: 20rem;
 		word-wrap: break-word;
 		overflow-wrap: break-word;
-		margin: 4px 0;
+		margin: var(--np-rich-tooltip-margin, 4px 0);
 		padding: 0.25rem 1rem;
 		border: none;
 		border-radius: var(--np-shape-corner-medium);
@@ -78,8 +90,9 @@
 		font-size: 0.875rem;
 		line-height: 1.25rem;
 		justify-self: var(--np-rich-tooltip-justify-self, anchor-center);
+		align-self: var(--np-rich-tooltip-align-self, auto);
 		position-area: var(--np-rich-tooltip-position-area, bottom);
-		position-try-fallbacks: flip-block;
+		position-try-fallbacks: var(--np-rich-tooltip-position-try-fallbacks, flip-block);
 	}
 	.np-rich-tooltip-with-subhead[popover] {
 		padding-block: 0.75rem 1rem;

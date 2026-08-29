@@ -1,23 +1,10 @@
 <script lang="ts">
-	import AutoComplete from '#lib/autocomplete/AutoComplete.svelte'
-	import ChipSet from '#lib/chip/ChipSet.svelte'
-	import InputChip from '#lib/chip/InputChip.svelte'
-	import type { AutoCompleteOption } from '#lib/types.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	const fruitOptions: AutoCompleteOption[] = [
-		{ value: 1, label: 'Apple' },
-		{ value: 2, label: 'Banana' },
-		{ value: 3, label: 'Orange' },
-		{ value: 4, label: 'Grape' },
-		{ value: 5, label: 'Pineapple' },
-		{ value: 6, label: 'Strawberry' },
-		{ value: 7, label: 'Mango' },
-		{ value: 8, label: 'Melon' },
-	]
-	let fruits: AutoCompleteOption[] = $state([{ value: 1, label: 'Apple' }])
-	let fruitValue = $state('')
+	import AutoCompleteMultipleValues from './demos/AutoCompleteMultipleValues.svelte'
+	import AutoCompleteMultipleValuesSource from './demos/AutoCompleteMultipleValues.svelte?raw'
+	import AutoCompleteUsage from './demos/AutoCompleteUsage.svelte'
+	import AutoCompleteUsageSource from './demos/AutoCompleteUsage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -44,21 +31,9 @@
 	into the field.
 </p>
 <DemoContainer>
-	<AutoComplete
-		variant="filled"
-		label="Fruits"
-		name="fruit"
-		options={[{ label: 'Apple' }, { label: 'Banana' }]}
-	/>
+	<AutoCompleteUsage />
 </DemoContainer>
-<Code
-	value={`<AutoComplete
-	variant="filled"
-	label="Fruits"
-	name="fruit"
-	options={[{ label: 'Apple' }, { label: 'Banana' }]}
-/>`}
-/>
+<Code value={AutoCompleteUsageSource} />
 
 <h2 id="multiple-values">
 	Multiple values<a href="#multiple-values" aria-hidden="true" tabindex="-1">#</a>
@@ -72,79 +47,9 @@
 	the menu.
 </p>
 <DemoContainer>
-	<AutoComplete
-		options={fruitOptions}
-		placeholder="Add fruit..."
-		style="width:340px"
-		label="Fruits"
-		name="fruit"
-		populated={fruits.length > 0}
-		bind:value={fruitValue}
-		onoptionselect={(option) => {
-			fruits.push(option)
-		}}
-		optionsFilter={(option) => {
-			return (
-				(!fruitValue ||
-					option.label.toLocaleLowerCase().includes(fruitValue.toLocaleLowerCase())) &&
-				!fruits.find((f) => f.value === option.value)
-			)
-		}}
-	>
-		<ChipSet chipsCount={fruits.length}>
-			{#each fruits as fruit, index (fruit.value)}
-				<InputChip
-					name="fruit"
-					value={fruit.value}
-					label={fruit.label}
-					ariaLabelRemove="Remove {fruit.label}"
-					onremove={() => {
-						if (index > -1) {
-							fruits.splice(index, 1)
-						}
-					}}
-				/>
-			{/each}
-		</ChipSet>
-	</AutoComplete>
+	<AutoCompleteMultipleValues />
 </DemoContainer>
-<Code
-	value={`<AutoComplete
-	options={fruitOptions}
-	placeholder="Add fruit..."
-	style="width:340px"
-	label="Fruits"
-	name="fruit"
-	populated={fruits.length > 0}
-	bind:value={fruitValue}
-	onoptionselect={(option) => {
-		fruits.push(option)
-	}}
-	optionsFilter={(option) => {
-		return (
-			(!fruitValue ||
-				option.label.toLocaleLowerCase().includes(fruitValue.toLocaleLowerCase())) &&
-			!fruits.find((f) => f.value === option.value)
-		)
-	}}
->
-	<ChipSet chipsCount={fruits.length}>
-		{#each fruits as fruit, index (fruit.value)}
-			<InputChip
-				name="fruit"
-				value={fruit.value}
-				label={fruit.label}
-				ariaLabelRemove="Remove {fruit.label}"
-				onremove={() => {
-					if (index > -1) {
-						fruits.splice(index, 1)
-					}
-				}}
-			/>
-		{/each}
-	</ChipSet>
-</AutoComplete>`}
-/>
+<Code value={AutoCompleteMultipleValuesSource} />
 
 <h2 id="long-option-lists">
 	Long option lists<a href="#long-option-lists" aria-hidden="true" tabindex="-1">#</a>
@@ -245,10 +150,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td><code>menuOpen</code></td>
+			<td><code>open</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Bindable. Reflects whether the suggestion menu is open.</td>
+			<td>Bindable. Whether the suggestion menu is open. Set it to open or close the menu.</td>
 		</tr>
 		<tr>
 			<td><code>clampMenuWidth</code></td>

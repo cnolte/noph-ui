@@ -30,7 +30,7 @@
 
 	const secondaryStyle = $derived(
 		tabsContext.variant === 'secondary'
-			? '--np-indicator-radius: 0;--_indicator-gap: 0;--_indicator-height: 2px'
+			? '--np-tabs-indicator-radius: 0;--_indicator-gap: 0;--_indicator-height: 2px'
 			: '',
 	)
 
@@ -77,8 +77,8 @@
 			right: anchor(right);
 			bottom: anchor(bottom);
 			background-color: var(--np-color-primary);
-			border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-			border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			border-start-start-radius: var(--np-tabs-indicator-radius, var(--np-shape-corner-full));
+			border-start-end-radius: var(--np-tabs-indicator-radius, var(--np-shape-corner-full));
 			position-anchor: --np-tab-indicator;
 
 			@media (prefers-reduced-motion: no-preference) {

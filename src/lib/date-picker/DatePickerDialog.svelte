@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { afterTwoFrames } from '#lib/animation.js'
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Dialog from '#lib/dialog/Dialog.svelte'
+	import { syncOpenEffect } from '#lib/popover.svelte.js'
 	import Divider from '#lib/divider/Divider.svelte'
+	import { exitVisibility } from './exitVisibility.svelte.js'
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
 	import CalendarToday from '#lib/icons/CalendarToday.svelte'
 	import ChevronLeftIcon from '#lib/icons/ChevronLeftIcon.svelte'
@@ -29,7 +32,6 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import { afterTwoFrames } from './enterAnimation.js'
 	import type { DatePickerDialogProps, ISODate } from './types.ts'
 
 	let {
@@ -48,6 +50,7 @@
 		headline,
 		label = 'Date',
 		supportingText,
+		issues,
 		name,
 		form,
 		modeToggle = false,
@@ -76,6 +79,8 @@
 
 	let confirming = false
 	let monthBeforeOpen: ISODate | undefined
+
+	const exit = exitVisibility()
 
 	let todayValue = $derived(getToday())
 	let week = $derived(firstDayOfWeek ?? getFirstDayOfWeek(locale))
@@ -125,12 +130,25 @@
 		cancelYearEnter = afterTwoFrames(() => (yearEnter = false))
 	}
 
-	const isOpen = () => !!element?.matches(':popover-open')
+	/*
+	 * The same pair every overlay in the library exports. A trigger with `command="show-modal"` and
+	 * `commandfor` needs neither, so these are for the times there is no trigger to point at the
+	 * dialog. `open` follows either way, written back from the dialog's own toggle event.
+	 */
+	export const show = () => {
+		if (element && !element.open) element.showModal()
+	}
 
-	$effect(() => {
-		if (open && !isOpen()) element?.showPopover()
-		if (!open && isOpen()) element?.hidePopover()
-	})
+	export const close = () => {
+		if (element?.open) element.close()
+	}
+
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 
 	const setMonth = (date: Date) => {
 		displayMonth = toISODate(startOfMonth(date))
@@ -197,6 +215,7 @@
 		const nowOpen = event.newState === 'open'
 		open = nowOpen
 		if (nowOpen) {
+			exit.show()
 			monthBeforeOpen = displayMonth
 			confirming = false
 			pending = value ?? undefined
@@ -206,14 +225,16 @@
 			syncText()
 			focusCalendarWhenReady()
 		} else {
-			displayMonth = monthBeforeOpen
 			if (!confirming) oncancel?.()
 			confirming = false
+			// Handing the month back before the dialog has gone would step the calendar to another
+			// month in front of the user, so that waits for the fade as well.
+			exit.scheduleExit(element, () => (displayMonth = monthBeforeOpen))
 		}
 	}}
 >
 	<input class="np-date-picker-dialog-value" type="hidden" value={value ?? ''} {name} {form} />
-	{#if open}
+	{#if exit.visible}
 		<div class="np-date-picker-dialog-content">
 			<div class="np-date-picker-dialog-header">
 				<div class="np-date-picker-dialog-header-text">
@@ -247,6 +268,7 @@
 				<div class={['np-date-picker-dialog-input', modeEnter && modeEnter]}>
 					<TextField
 						{label}
+						{issues}
 						supportingText={supportingText ?? pattern}
 						value={text}
 						aria-invalid={inputInvalid ? 'true' : undefined}

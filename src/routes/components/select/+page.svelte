@@ -1,8 +1,28 @@
 <script lang="ts">
-	import Icon from '#lib/icons/Icon.svelte'
-	import { Select, NativeSelect, Option, Button } from '#lib/index.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import FilledSelectExample from './demos/FilledSelectExample.svelte'
+	import FilledSelectExampleSource from './demos/FilledSelectExample.svelte?raw'
+	import NativeSelectDisabled from './demos/NativeSelectDisabled.svelte'
+	import NativeSelectDisabledSource from './demos/NativeSelectDisabled.svelte?raw'
+	import NativeSelectUsage from './demos/NativeSelectUsage.svelte'
+	import NativeSelectUsageSource from './demos/NativeSelectUsage.svelte?raw'
+	import NativeSelectValidation from './demos/NativeSelectValidation.svelte'
+	import NativeSelectValidationSource from './demos/NativeSelectValidation.svelte?raw'
+	import OutlinedSelectExample from './demos/OutlinedSelectExample.svelte'
+	import OutlinedSelectExampleSource from './demos/OutlinedSelectExample.svelte?raw'
+	import SelectDisabled from './demos/SelectDisabled.svelte'
+	import SelectDisabledSource from './demos/SelectDisabled.svelte?raw'
+	import SelectIcons from './demos/SelectIcons.svelte'
+	import SelectIconsSource from './demos/SelectIcons.svelte?raw'
+	import SelectMultiple from './demos/SelectMultiple.svelte'
+	import SelectMultipleSource from './demos/SelectMultiple.svelte?raw'
+	import SelectUsage from './demos/SelectUsage.svelte'
+	import SelectUsageSource from './demos/SelectUsage.svelte?raw'
+	import SelectValidation from './demos/SelectValidation.svelte'
+	import SelectValidationSource from './demos/SelectValidation.svelte?raw'
+	import SelectVirtualList from './demos/SelectVirtualList.svelte'
+	import SelectVirtualListSource from './demos/SelectVirtualList.svelte?raw'
 </script>
 
 <svelte:head>
@@ -24,161 +44,30 @@
 </p>
 
 <DemoContainer>
-	<Select
-		label="Fruit"
-		name="fruit"
-		options={[
-			{ value: '', label: '' },
-			{ value: 'apple', label: 'Apple', selected: true },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-			{ value: 'cherry', label: 'Cherry' },
-			{ value: 'elderberry', label: 'Elderberry', disabled: true },
-			{ value: 'fig', label: 'Fig' },
-			{ value: 'grape', label: 'Grape' },
-		]}
-	/>
-	<Select
-		label="Fruit"
-		variant="filled"
-		name="fruit"
-		options={[
-			{ value: '', label: '', selected: true },
-			{ value: 'apple', label: 'Apple' },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-			{ value: 'cherry', label: 'Cherry' },
-			{ value: 'elderberry', label: 'Elderberry', disabled: true },
-			{ value: 'fig', label: 'Fig' },
-			{ value: 'grape', label: 'Grape' },
-		]}
-	/>
+	<SelectUsage />
 </DemoContainer>
-<Code
-	value={`<Select
-	label="Fruit"
-	name="fruit"
-	options={[
-		{ value: '', label: '' },
-		{ value: 'apple', label: 'Apple', selected: true },
-		{ value: 'apricot', label: 'Apricot' },
-		{ value: 'banana', label: 'Banana' },
-	]}
-/>
-<Select
-	label="Fruit"
-	variant="filled"
-	name="fruit"
-	options={[
-		{ value: '', label: '', selected: true },
-		{ value: 'apple', label: 'Apple' },
-		{ value: 'apricot', label: 'Apricot' },
-		{ value: 'banana', label: 'Banana' },
-	]}
-/>`}
-/>
+<Code value={SelectUsageSource} />
 
 <h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Select label="Fruit" name="fruit" disabled options={[{ value: '', label: '' }]} />
-	<Select
-		label="Fruit"
-		variant="filled"
-		name="fruit"
-		disabled
-		options={[{ value: '', label: '', selected: true }]}
-	/>
+	<SelectDisabled />
 </DemoContainer>
-<Code
-	value={`<Select
-	label="Fruit"
-	name="fruit"
-	disabled
-	options={[{ value: '', label: '' }]}
-/>
-<Select
-	label="Fruit"
-	variant="filled"
-	name="fruit"
-	disabled
-	options={[{ value: '', label: '', selected: true }]}
-/>`}
-/>
+<Code value={SelectDisabledSource} />
 
 <h2 id="validation">Validation<a href="#validation" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<form>
-		<Select
-			label="Genre"
-			name="genre"
-			required
-			options={[
-				{ value: '', label: '' },
-				{ value: 'rock', label: 'Rock' },
-				{ value: 'pop', label: 'Pop' },
-				{ value: 'jazz', label: 'Jazz' },
-			]}
-		/>
-		<div class="button-area">
-			<Button type="submit">Send</Button>
-		</div>
-	</form>
+	<SelectValidation />
 </DemoContainer>
 
-<Code
-	value={`<form>
-	<Select
-		label="Genre"
-		name="genre"
-		required
-		options={[
-			{ value: '', label: '' },
-			{ value: 'rock', label: 'Rock' },
-			{ value: 'pop', label: 'Pop' },
-			{ value: 'jazz', label: 'Jazz' },
-		]}
-	/>
-	<div class="button-area">
-		<Button type="submit">Send</Button>
-	</div>
-</form>`}
-/>
+<Code value={SelectValidationSource} />
 
 <h2 id="multiple-selection">
 	Multiple selection<a href="#multiple-selection" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<Select
-		label="Favorite fruit"
-		name="fruit"
-		style="max-width: 300px"
-		multiple
-		options={[
-			{ value: 'apple', label: 'Apple' },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-			{ value: 'cherry', label: 'Cherry' },
-			{ value: 'elderberry', label: 'Elderberry' },
-			{ value: 'fig', label: 'Fig' },
-		]}
-	/>
+	<SelectMultiple />
 </DemoContainer>
-<Code
-	value={`<Select
-		label="Favorite fruit"
-		name="fruit"
-		style="max-width: 300px"
-		multiple
-		options={[
-			{ value: 'apple', label: 'Apple' },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-			{ value: 'cherry', label: 'Cherry' },
-			{ value: 'elderberry', label: 'Elderberry' },
-			{ value: 'fig', label: 'Fig' },
-		]}
-	/>`}
-/>
+<Code value={SelectMultipleSource} />
 
 <h2 id="virtual-list">
 	Virtual list<a href="#virtual-list" aria-hidden="true" tabindex="-1">#</a>
@@ -190,95 +79,15 @@
 	<code>virtualThreshold</code>; lower it when your options are expensive to render.
 </p>
 <DemoContainer>
-	<Select
-		label="Virtual list"
-		name="virtual_list"
-		style="max-width: 300px"
-		options={[
-			...Array.from({ length: 4001 }, (_, i) => ({
-				value: `option${i + 1}`,
-				label: `Option ${i + 1}`,
-			})),
-		]}
-	/>
+	<SelectVirtualList />
 </DemoContainer>
-<Code
-	value={`<Select
-	label="Virtual list"
-	name="virtual_list"
-	style="max-width: 300px"
-	options={[
-		...Array.from({ length: 4001 }, (_, i) => ({
-			value: \`option\${i + 1}\`,
-			label: \`Option \${i + 1}\`,
-		})),
-	]}
-/>`}
-/>
+<Code value={SelectVirtualListSource} />
 
 <h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Select
-		label="Favorite fruit"
-		name="fruit"
-		options={[
-			{ value: '', label: '' },
-			{ value: 'apple', label: 'Apple' },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-		]}
-	>
-		{#snippet start()}
-			<Icon>favorite</Icon>
-		{/snippet}
-	</Select>
-	<Select
-		label="Favorite car"
-		name="car"
-		options={[
-			{ value: '', label: '' },
-			{ value: 'audi', label: 'Audi' },
-			{ value: 'bmw', label: 'BMW' },
-			{ value: 'mercedes', label: 'Mercedes' },
-			{ value: 'vw', label: 'Volkswagen' },
-		]}
-	>
-		{#snippet end()}
-			<Icon>favorite</Icon>
-		{/snippet}
-	</Select>
+	<SelectIcons />
 </DemoContainer>
-<Code
-	value={`<Select
-	label="Favorite fruit"
-	name="fruit"
-	options={[
-		{ value: '', label: '' },
-		{ value: 'apple', label: 'Apple' },
-		{ value: 'apricot', label: 'Apricot' },
-		{ value: 'banana', label: 'Banana' },
-	]}
->
-	{#snippet start()}
-		<Icon>favorite</Icon>
-	{/snippet}
-</Select>
-<Select
-	label="Favorite car"
-	name="car"
-	options={[
-		{ value: '', label: '' },
-		{ value: 'audi', label: 'Audi' },
-		{ value: 'bmw', label: 'BMW' },
-		{ value: 'mercedes', label: 'Mercedes' },
-		{ value: 'vw', label: 'Volkswagen' },
-	]}
->
-	{#snippet end()}
-		<Icon>favorite</Icon>
-	{/snippet}
-</Select>`}
-/>
+<Code value={SelectIconsSource} />
 
 <h2 id="native-select">
 	NativeSelect<a href="#native-select" aria-hidden="true" tabindex="-1">#</a>
@@ -297,91 +106,25 @@
 	agree.
 </p>
 <DemoContainer>
-	<NativeSelect label="Fruit" name="fruit">
-		<Option value=""></Option>
-		<Option value="apple">Apple</Option>
-		<Option value="apricot">Apricot</Option>
-		<Option value="banana">Banana</Option>
-		<Option value="cherry">Cherry</Option>
-		<Option value="elderberry" disabled>Elderberry</Option>
-		<Option value="fig">Fig</Option>
-		<Option value="grape">Grape</Option>
-	</NativeSelect>
-	<NativeSelect variant="filled" label="Fruit" name="fruit">
-		<Option value=""></Option>
-		<Option value="apple">Apple</Option>
-		<Option value="apricot">Apricot</Option>
-		<Option value="banana">Banana</Option>
-		<Option value="cherry">Cherry</Option>
-		<Option value="elderberry" disabled>Elderberry</Option>
-		<Option value="fig">Fig</Option>
-		<Option value="grape">Grape</Option>
-	</NativeSelect>
+	<NativeSelectUsage />
 </DemoContainer>
-<Code
-	value={`<NativeSelect label="Fruit" name="fruit">
-	<Option value=""></Option>
-	<Option value="apple">Apple</Option>
-	<Option value="apricot">Apricot</Option>
-	<Option value="banana">Banana</Option>
-</NativeSelect>
-<NativeSelect variant="filled" label="Fruit" name="fruit">
-	<Option value=""></Option>
-	<Option value="apple">Apple</Option>
-	<Option value="apricot">Apricot</Option>
-	<Option value="banana">Banana</Option>
-</NativeSelect>`}
-/>
+<Code value={NativeSelectUsageSource} />
 
 <h3 id="native-select-disabled">
 	Disabled<a href="#native-select-disabled" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<NativeSelect label="Fruit" name="fruit" disabled>
-		<Option value="apple">Apple</Option>
-	</NativeSelect>
-	<NativeSelect variant="filled" label="Fruit" name="fruit" disabled>
-		<Option value="apple">Apple</Option>
-	</NativeSelect>
+	<NativeSelectDisabled />
 </DemoContainer>
-<Code
-	value={`<NativeSelect label="Fruit" name="fruit" disabled>
-	<Option value="apple">Apple</Option>
-</NativeSelect>
-<NativeSelect variant="filled" label="Fruit" name="fruit" disabled>
-	<Option value="apple">Apple</Option>
-</NativeSelect>`}
-/>
+<Code value={NativeSelectDisabledSource} />
 
 <h3 id="native-select-validation">
 	Validation<a href="#native-select-validation" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<form>
-		<NativeSelect label="Genre" name="genre" required>
-			<Option value=""></Option>
-			<Option value="rock">Rock</Option>
-			<Option value="pop">Pop</Option>
-			<Option value="jazz">Jazz</Option>
-		</NativeSelect>
-		<div class="button-area">
-			<Button type="submit">Send</Button>
-		</div>
-	</form>
+	<NativeSelectValidation />
 </DemoContainer>
-<Code
-	value={`<form>
-	<NativeSelect label="Genre" name="genre" required>
-		<Option value=""></Option>
-		<Option value="rock">Rock</Option>
-		<Option value="pop">Pop</Option>
-		<Option value="jazz">Jazz</Option>
-	</NativeSelect>
-	<div class="button-area">
-		<Button type="submit">Send</Button>
-	</div>
-</form>`}
-/>
+<Code value={NativeSelectValidationSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="filled-select-tokens">
@@ -410,35 +153,9 @@
 	Filled select example<a href="#filled-select-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Select
-		variant="filled"
-		label="Filled"
-		options={[
-			{ value: '', label: '', selected: true },
-			{ value: 'apple', label: 'Apple' },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-		]}
-		--np-filled-select-text-field-container-shape="0"
-		--np-filled-select-text-field-container-color="var(--np-color-surface-container)"
-		--np-color-primary="var(--np-color-tertiary)"
-	/>
+	<FilledSelectExample />
 </DemoContainer>
-<Code
-	value={`<Select
-	variant="filled"
-	label="Filled"
-	options={[
-		{ value: '', label: '', selected: true },
-		{ value: 'apple', label: 'Apple' },
-		{ value: 'apricot', label: 'Apricot' },
-		{ value: 'banana', label: 'Banana' },
-	]}
-	--np-filled-select-text-field-container-shape="0"
-	--np-filled-select-text-field-container-color="var(--np-color-surface-container)"
-	--np-color-primary="var(--np-color-tertiary)"
-/>`}
-/>
+<Code value={FilledSelectExampleSource} />
 
 <h3 id="outlined-select-tokens">
 	Outlined select tokens<a href="#outlined-select-tokens" aria-hidden="true" tabindex="-1">#</a>
@@ -462,31 +179,9 @@
 	Outlined select example<a href="#outlined-select-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Select
-		options={[
-			{ value: '', label: '', selected: true },
-			{ value: 'apple', label: 'Apple' },
-			{ value: 'apricot', label: 'Apricot' },
-			{ value: 'banana', label: 'Banana' },
-		]}
-		label="Outlined"
-		--np-outlined-select-text-field-container-shape="0"
-		--np-color-primary="var(--np-color-tertiary)"
-	/>
+	<OutlinedSelectExample />
 </DemoContainer>
-<Code
-	value={`<Select
-	options={[
-		{ value: '', label: '', selected: true },
-		{ value: 'apple', label: 'Apple' },
-		{ value: 'apricot', label: 'Apricot' },
-		{ value: 'banana', label: 'Banana' },
-	]}
-	label="Outlined"
-	--np-outlined-select-text-field-container-shape="0"
-	--np-color-primary="var(--np-color-tertiary)"
-/>`}
-/>
+<Code value={OutlinedSelectExampleSource} />
 
 <h3 id="sizing-tokens">
 	Sizing tokens<a href="#sizing-tokens" aria-hidden="true" tabindex="-1">#</a>
@@ -782,11 +477,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.button-area {
-		display: flex;
-		justify-content: flex-end;
-		margin-top: 1rem;
-	}
-</style>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '#lib/internal/interest.css'
+	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import { on } from 'svelte/events'
 	import { MediaQuery } from 'svelte/reactivity'
 	import type { TooltipProps } from './types.ts'
@@ -57,7 +58,7 @@
 	const onAnchorFocus = (e: FocusEvent) => {
 		const target = e.currentTarget as HTMLElement
 		if (target.matches(':focus-visible')) {
-			showPopover()
+			show()
 		}
 	}
 
@@ -65,26 +66,28 @@
 	let overAnchor = false
 	let overTooltip = false
 
-	const showPopover = () => {
+	const controller = popoverController(() => element)
+
+	export const show = () => {
 		clearTimeout(hideTimeout)
-		if (element && !element.matches(':popover-open')) element.showPopover()
+		controller.show()
 	}
 
-	const hidePopover = () => {
+	export const close = () => {
 		clearTimeout(hideTimeout)
-		element?.hidePopover()
+		controller.close()
 	}
 
 	const scheduleHide = () => {
 		clearTimeout(hideTimeout)
 		hideTimeout = setTimeout(() => {
-			if (!overAnchor && !overTooltip) hidePopover()
+			if (!overAnchor && !overTooltip) close()
 		}, 500)
 	}
 
 	const onAnchorEnter = () => {
 		overAnchor = true
-		showPopover()
+		show()
 	}
 
 	const onAnchorLeave = () => {
@@ -103,11 +106,11 @@
 	}
 
 	const onAnchorBlur = () => {
-		if (!overAnchor && !overTooltip) hidePopover()
+		if (!overAnchor && !overTooltip) close()
 	}
 
 	const onEscape = (event: KeyboardEvent) => {
-		if (event.key === 'Escape' && open) hidePopover()
+		if (event.key === 'Escape' && open) close()
 	}
 
 	$effect(() => {
@@ -118,6 +121,13 @@
 			clearTimeout(hideTimeout)
 		}
 	})
+
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 </script>
 
 <div
@@ -144,7 +154,7 @@
 		max-width: 12.5rem;
 		word-wrap: break-word;
 		overflow-wrap: break-word;
-		margin: 4px 0;
+		margin: var(--np-tooltip-margin, 4px 0);
 		background: var(--np-color-inverse-surface);
 		color: var(--np-color-inverse-on-surface);
 		padding: 0.25rem 0.5rem;
@@ -153,8 +163,9 @@
 		line-height: 1rem;
 		font-size: 0.75rem;
 		justify-self: var(--np-tooltip-justify-self, anchor-center);
+		align-self: var(--np-tooltip-align-self, auto);
 		position-area: var(--np-tooltip-position-area, top);
-		position-try-fallbacks: flip-block;
+		position-try-fallbacks: var(--np-tooltip-position-try-fallbacks, flip-block);
 	}
 	.np-tooltip:popover-open {
 		opacity: 1;

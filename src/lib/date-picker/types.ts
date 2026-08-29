@@ -123,7 +123,7 @@ export interface TimeColumnProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
 
 export interface DatePickerDialogProps
 	extends
-		Omit<HTMLAttributes<HTMLDivElement>, 'onchange'>,
+		Omit<HTMLAttributes<HTMLDialogElement>, 'onchange'>,
 		DatePickerLocaleProps,
 		DatePickerRangeProps,
 		DatePickerCommonLabelProps,
@@ -131,7 +131,7 @@ export interface DatePickerDialogProps
 	value?: ISODate | null
 	displayMonth?: ISODate
 	open?: boolean
-	element?: HTMLDivElement
+	element?: HTMLDialogElement
 	name?: string
 	form?: string
 	title?: string
@@ -139,6 +139,7 @@ export interface DatePickerDialogProps
 	modeToggle?: boolean
 	label?: string
 	supportingText?: string
+	issues?: { message: string }[]
 	selectYearLabel?: string
 	calendarModeLabel?: string
 	inputModeLabel?: string
@@ -149,14 +150,18 @@ export interface DatePickerDialogProps
 
 export interface DateRangePickerProps
 	extends
-		Omit<HTMLAttributes<HTMLDivElement>, 'onchange'>,
+		Omit<HTMLAttributes<HTMLDialogElement>, 'onchange'>,
 		DatePickerLocaleProps,
 		DatePickerRangeProps,
 		DatePickerCommonLabelProps {
 	value?: DateRange
 	open?: boolean
-	element?: HTMLDivElement
+	element?: HTMLDialogElement
 	title?: string
+	headline?: string
+	name?: string
+	endName?: string
+	form?: string
 	startLabel?: string
 	endLabel?: string
 	onchange?: (value: DateRange) => void

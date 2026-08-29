@@ -18,7 +18,7 @@ const openMenu = async (props: {
 	coverAnchor?: boolean
 	menuStyle?: string
 }) => {
-	render(Harness, props)
+	await render(Harness, props)
 	await page.getByRole('button', { name: 'Open the menu' }).click()
 	await expect.poll(() => !!surface()?.matches(':popover-open')).toBe(true)
 	const element = surface()!
@@ -30,7 +30,7 @@ const openMenu = async (props: {
 	}
 }
 
-describe('placement', () => {
+describe('placement', async () => {
 	test('opens below the anchor while the menu fits there', async () => {
 		const { menu, anchor } = await openMenu({ top: 100, items: 3 })
 

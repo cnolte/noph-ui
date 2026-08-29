@@ -5,9 +5,9 @@ import TextField from './TextField.svelte'
 const input = () => document.querySelector<HTMLInputElement>('input')!
 const textarea = () => document.querySelector<HTMLTextAreaElement>('textarea')!
 
-describe('TextField aria wiring', () => {
-	test('keeps a consumer aria-describedby alongside the supporting text', () => {
-		render(TextField, {
+describe('TextField aria wiring', async () => {
+	test('keeps a consumer aria-describedby alongside the supporting text', async () => {
+		await render(TextField, {
 			label: 'Name',
 			supportingText: 'As on your passport',
 			'aria-describedby': 'outside-hint',
@@ -18,8 +18,8 @@ describe('TextField aria wiring', () => {
 		expect(describedby).toMatch(/supporting-text-/)
 	})
 
-	test('keeps a consumer aria-errormessage alongside an issue', () => {
-		render(TextField, {
+	test('keeps a consumer aria-errormessage alongside an issue', async () => {
+		await render(TextField, {
 			label: 'Name',
 			issues: [{ message: 'Required' }],
 			'aria-errormessage': 'outside-error',
@@ -31,14 +31,14 @@ describe('TextField aria wiring', () => {
 		expect(errormessage).toMatch(/supporting-text-/)
 	})
 
-	test('lets a consumer aria-invalid through when there is no issue', () => {
-		render(TextField, { label: 'Name', 'aria-invalid': 'true' })
+	test('lets a consumer aria-invalid through when there is no issue', async () => {
+		await render(TextField, { label: 'Name', 'aria-invalid': 'true' })
 
 		expect(input().getAttribute('aria-invalid')).toBe('true')
 	})
 
-	test('applies the same wiring to the textarea', () => {
-		render(TextField, {
+	test('applies the same wiring to the textarea', async () => {
+		await render(TextField, {
 			type: 'textarea',
 			label: 'Bio',
 			supportingText: 'Keep it short',

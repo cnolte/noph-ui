@@ -1,14 +1,37 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
-	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
-	import Menu from '#lib/menu/Menu.svelte'
-	import MenuItem from '#lib/menu/MenuItem.svelte'
-	import TextField from '#lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let chatPromptPlusBtn: HTMLElement | undefined = $state()
+	import CharacterCounter from './demos/CharacterCounter.svelte'
+	import CharacterCounterSource from './demos/CharacterCounter.svelte?raw'
+	import ChatPrompt from './demos/ChatPrompt.svelte'
+	import ChatPromptSource from './demos/ChatPrompt.svelte?raw'
+	import ConstraintValidation from './demos/ConstraintValidation.svelte'
+	import ConstraintValidationSource from './demos/ConstraintValidation.svelte?raw'
+	import Disabled from './demos/Disabled.svelte'
+	import DisabledSource from './demos/Disabled.svelte?raw'
+	import FilledTextFieldExample from './demos/FilledTextFieldExample.svelte'
+	import FilledTextFieldExampleSource from './demos/FilledTextFieldExample.svelte?raw'
+	import Icons from './demos/Icons.svelte'
+	import IconsSource from './demos/Icons.svelte?raw'
+	import InputType from './demos/InputType.svelte'
+	import InputTypeSource from './demos/InputType.svelte?raw'
+	import Labels from './demos/Labels.svelte'
+	import LabelsSource from './demos/Labels.svelte?raw'
+	import ManualValidation from './demos/ManualValidation.svelte'
+	import ManualValidationSource from './demos/ManualValidation.svelte?raw'
+	import OutlinedTextFieldExample from './demos/OutlinedTextFieldExample.svelte'
+	import OutlinedTextFieldExampleSource from './demos/OutlinedTextFieldExample.svelte?raw'
+	import PrefixAndSuffix from './demos/PrefixAndSuffix.svelte'
+	import PrefixAndSuffixSource from './demos/PrefixAndSuffix.svelte?raw'
+	import SupportingText from './demos/SupportingText.svelte'
+	import SupportingTextSource from './demos/SupportingText.svelte?raw'
+	import Textarea from './demos/Textarea.svelte'
+	import TextareaLines from './demos/TextareaLines.svelte'
+	import TextareaLinesSource from './demos/TextareaLines.svelte?raw'
+	import TextareaSource from './demos/Textarea.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -23,13 +46,9 @@
 	to facilitate user input.
 </p>
 <DemoContainer>
-	<TextField label="Label" value="Value" />
-	<TextField label="Label" value="Value" variant="filled" />
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<TextField label="Label" value="Value" />
-<TextField label="Label" value="Value" variant="filled" />`}
-/>
+<Code value={UsageSource} />
 <h3 id="input-type">Input type<a href="#input-type" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	The <code>type</code> attribute of a text field changes how the text field works, such as displaying
@@ -50,40 +69,20 @@
 	<li><code>type="textarea"</code></li>
 </ul>
 <DemoContainer>
-	<TextField label="Email" type="email" />
-	<TextField label="Password" type="password" />
+	<InputType />
 </DemoContainer>
-<Code
-	value={`<TextField label="Email" type="email" />
-<TextField label="Password" type="password" />`}
-/>
+<Code value={InputTypeSource} />
 <h3 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<TextField label="Label" disabled value="Value" />
-	<TextField label="Label" disabled value="Value" variant="filled" />
+	<Disabled />
 </DemoContainer>
-<Code
-	value={`<TextField label="Label" disabled value="Value" />
-<TextField label="Label" disabled value="Value" variant="filled" />`}
-/>
+<Code value={DisabledSource} />
 
 <h3 id="labels">Labels<a href="#labels" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<TextField label="Country" />
-	<TextField placeholder="email@domain.com" />
-	<label id="city-label">
-		City
-		<TextField aria-labelledby="city-label" />
-	</label>
+	<Labels />
 </DemoContainer>
-<Code
-	value={`<TextField label="Country" />
-<TextField placeholder="email@domain.com" />
-<label id="city-label">
-	City
-	<TextField aria-labelledby="city-label" />
-</label>`}
-/>
+<Code value={LabelsSource} />
 <blockquote>
 	<Icon>bookmark</Icon> Nesting text fields in labels without aria-labelledby is not currently supported.
 	If you want to avoid using an id, you can use aria-label instead.
@@ -94,18 +93,14 @@
 	<code>maxLines</code>, then scrolls.
 </p>
 <DemoContainer>
-	<TextField label="Message" type="textarea" />
-	<TextField label="Message" type="textarea" variant="filled" />
+	<Textarea />
 </DemoContainer>
-<Code
-	value={`<TextField label="Message" type="textarea" />
-<TextField label="Message" type="textarea" variant="filled" />`}
-/>
+<Code value={TextareaSource} />
 <p>Use <code>minLines</code> and <code>maxLines</code> to change that range.</p>
 <DemoContainer>
-	<TextField label="Bio" type="textarea" minLines={3} maxLines={6} />
+	<TextareaLines />
 </DemoContainer>
-<Code value={`<TextField label="Bio" type="textarea" minLines={3} maxLines={6} />`} />
+<Code value={TextareaLinesSource} />
 
 <h3 id="chat-prompt">Chat prompt<a href="#chat-prompt" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
@@ -113,158 +108,41 @@
 	leading "+" button below opens a menu, similar to ChatGPT's tools menu.
 </p>
 <DemoContainer>
-	<TextField placeholder="Ask anything" type="textarea" maxLines={8} style="width:22rem">
-		{#snippet start()}
-			<IconButton
-				title="Add"
-				style="anchor-name:--chat-prompt-plus"
-				popovertarget="chat-prompt-menu"
-				bind:element={chatPromptPlusBtn}
-			>
-				<Icon>add</Icon>
-			</IconButton>
-		{/snippet}
-		{#snippet end()}
-			<IconButton title="Send"><Icon>send</Icon></IconButton>
-		{/snippet}
-	</TextField>
+	<ChatPrompt />
 </DemoContainer>
-<Menu anchor={chatPromptPlusBtn} id="chat-prompt-menu" style="position-anchor:--chat-prompt-plus">
-	<MenuItem>
-		Web search
-		{#snippet start()}<Icon>language</Icon>{/snippet}
-	</MenuItem>
-	<MenuItem>
-		Connect apps
-		{#snippet start()}<Icon>webhook</Icon>{/snippet}
-	</MenuItem>
-</Menu>
-<Code
-	value={`<TextField placeholder="Ask anything" type="textarea" maxLines={8} style="width:22rem">
-	{#snippet start()}
-		<IconButton
-			title="Add"
-			style="anchor-name:--chat-prompt-plus"
-			popovertarget="chat-prompt-menu"
-			bind:element={chatPromptPlusBtn}
-		>
-			<Icon>add</Icon>
-		</IconButton>
-	{/snippet}
-	{#snippet end()}
-		<IconButton title="Send"><Icon>send</Icon></IconButton>
-	{/snippet}
-</TextField>
-<Menu anchor={chatPromptPlusBtn} id="chat-prompt-menu" style="position-anchor:--chat-prompt-plus">
-	<MenuItem>
-		Web search
-		{#snippet start()}<Icon>language</Icon>{/snippet}
-	</MenuItem>
-	<MenuItem>
-		Connect apps
-		{#snippet start()}<Icon>webhook</Icon>{/snippet}
-	</MenuItem>
-</Menu>`}
-/>
+<Code value={ChatPromptSource} />
 
 <h3 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer style="align-items:baseline">
-	<TextField placeholder="Search" type="search" inputmode="search">
-		{#snippet start()}<Icon>search</Icon>{/snippet}
-	</TextField>
-	<TextField label="Password" type="password">
-		{#snippet end()}
-			<IconButton toggle title="Toggle visibility">
-				{#snippet selectedIcon()}
-					<Icon>visibility_off</Icon>
-				{/snippet}
-				<Icon>visibility</Icon>
-			</IconButton>
-		{/snippet}
-	</TextField>
-	<TextField label="Username" aria-invalid issues={[{ message: 'Username not available' }]}>
-		{#snippet end()}
-			<Icon>error</Icon>
-		{/snippet}
-	</TextField>
+	<Icons />
 </DemoContainer>
-<Code
-	value={`<TextField placeholder="Search" type="search">
-	{#snippet start()}<Icon>search</Icon>{/snippet}
-</TextField>
-<TextField label="Password" type="password">
-	{#snippet end()}
-		<IconButton toggle title="Toggle visibility">
-			{#snippet selectedIcon()}
-				<Icon>visibility_off</Icon>
-			{/snippet}
-			<Icon>visibility</Icon>
-		</IconButton>
-	{/snippet}
-</TextField>
-<TextField label="Username" aria-invalid issues={[{ message: 'Username not available' }]}>
-	{#snippet end()}
-		<Icon>error</Icon>
-	{/snippet}
-</TextField>`}
-/>
+<Code value={IconsSource} />
 
 <h3 id="prefix-and-suffix">
 	Prefix and suffix<a href="#prefix-and-suffix" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<TextField
-		label="Amount"
-		value="0"
-		inputmode="numeric"
-		prefixText="$"
-		suffixText=".00"
-		type="number"
-	/>
+	<PrefixAndSuffix />
 </DemoContainer>
 
-<Code
-	value={`<TextField
-	label="Amount"
-	value="0"
-	prefixText="$"
-	suffixText=".00"
-	type="number"
-/>`}
-/>
+<Code value={PrefixAndSuffixSource} />
 <h3 id="supporting-text">
 	Supporting text<a href="#supporting-text" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<TextField label="Username" supportingText="Your username is your unique identifier." />
-	<TextField
-		label="Email"
-		type="email"
-		inputmode="email"
-		required
-		supportingText="Email is required"
-	/>
+	<SupportingText />
 </DemoContainer>
 
-<Code
-	value={`<TextField label="Username" supportingText="Your username is your unique identifier." />
-<TextField
-	label="Email"
-	type="email"
-	inputmode="email"
-	required
-	supportingText="Email is required"
-/>`}
-/>
+<Code value={SupportingTextSource} />
 
 <h3 id="character-counter">
 	Character counter<a href="#character-counter" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 
 <DemoContainer>
-	<TextField label="Name" maxlength={10} />
+	<CharacterCounter />
 </DemoContainer>
-<Code value={`<TextField label="Name" maxlength={10} />`} />
+<Code value={CharacterCounterSource} />
 
 <h3 id="validation">Validation<a href="#validation" aria-hidden="true" tabindex="-1">#</a></h3>
 <h4 id="constraint-validation">
@@ -272,50 +150,18 @@
 </h4>
 
 <DemoContainer>
-	<form>
-		<div style="display:flex;gap:1rem;flex-wrap: wrap;align-items: baseline;">
-			<TextField label="First name" required />
-			<TextField label="Last name" required pattern="[a-zA-Z]+" supportingText="Characters only" />
-		</div>
-		<div class="button-footer">
-			<Button variant="filled">Submit</Button>
-		</div>
-	</form>
+	<ConstraintValidation />
 </DemoContainer>
-<Code
-	value={`
-<form>
-	<TextField label="First name" required />
-	<TextField
-		label="Last name"
-		required
-		pattern="[a-zA-Z]+"
-		supportingText="Characters only"
-	/>
-	<Button>Submit</Button>
-</form>`}
-/>
+<Code value={ConstraintValidationSource} />
 
 <h4 id="manual-validation">
 	Manual validation<a href="#manual-validation" aria-hidden="true" tabindex="-1">#</a>
 </h4>
 
 <DemoContainer>
-	<TextField
-		label="Username"
-		aria-invalid
-		issues={[{ message: 'Username not available' }]}
-		value="eric20"
-	/>
+	<ManualValidation />
 </DemoContainer>
-<Code
-	value={`<TextField
-	label="Username"
-	aria-invalid
-	issues={[{ message: 'Username not available' }]}
-	value="eric20"
-/>`}
-/>
+<Code value={ManualValidationSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="filled-text-field-tokens">
@@ -353,25 +199,9 @@
 	>
 </h3>
 <DemoContainer>
-	<TextField
-		variant="filled"
-		label="Filled"
-		--np-filled-text-field-container-shape="0"
-		--np-filled-text-field-container-color="var(--np-color-surface-container)"
-		--np-filled-text-field-label-text-color="var(--np-color-tertiary)"
-		--np-filled-text-field-focus-active-indicator-color="var(--np-color-tertiary)"
-	/>
+	<FilledTextFieldExample />
 </DemoContainer>
-<Code
-	value={`<TextField
-	variant="filled"
-	label="Filled"
-	--np-filled-text-field-container-shape="0"
-	--np-filled-text-field-container-color="var(--np-color-surface-container)"
-	--np-filled-text-field-label-text-color="var(--np-color-tertiary)"
-	--np-filled-text-field-focus-active-indicator-color="var(--np-color-tertiary)"
-/>`}
-/>
+<Code value={FilledTextFieldExampleSource} />
 
 <h3 id="outlined-text-field-tokens">
 	Outlined text field tokens<a href="#outlined-text-field-tokens" aria-hidden="true" tabindex="-1"
@@ -428,21 +258,9 @@
 	>
 </h3>
 <DemoContainer>
-	<TextField
-		label="Outlined"
-		--np-outlined-text-field-container-shape="0"
-		--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
-		--np-outlined-text-field-focus-outline-color="var(--np-color-tertiary)"
-	/>
+	<OutlinedTextFieldExample />
 </DemoContainer>
-<Code
-	value={`<TextField
-	label="Outlined"
-	--np-outlined-text-field-container-shape="0"
-	--np-outlined-text-field-label-text-color="var(--np-color-tertiary)"
-	--np-outlined-text-field-focus-outline-color="var(--np-color-tertiary)"
-/>`}
-/>
+<Code value={OutlinedTextFieldExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -608,11 +426,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.button-footer {
-		display: flex;
-		justify-content: flex-end;
-		margin-top: 1rem;
-	}
-</style>

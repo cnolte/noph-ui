@@ -25,4 +25,5 @@ export interface SliderProps extends Omit<
 	element?: HTMLDivElement
 	inputElement?: HTMLInputElement
 	endInputElement?: HTMLInputElement
+	issues?: { message: string }[]
 }

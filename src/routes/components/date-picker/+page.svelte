@@ -1,71 +1,40 @@
 <script lang="ts">
-	import {
-		Button,
-		DatePickerDialog,
-		DateRangePicker,
-		DockedDatePicker,
-		formatDate,
-		IconButton,
-		parseISODate,
-		TextField,
-	} from '#lib/index.js'
-	import { CalendarToday } from '#lib/icons/index.js'
-	import type { DateRange } from '#lib/types.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let basic = $state<string | undefined>('2025-08-17')
-	let watched = $state<string | undefined>('2025-08-17')
-	let watchedLog = $state('')
-	let filled = $state<string | undefined>()
-	let german = $state<string | undefined>('2025-08-17')
-	let japanese = $state<string | undefined>('2025-08-17')
-	let mondayFirst = $state<string | undefined>('2025-08-17')
-	let bounded = $state<string | undefined>()
-	let booking = $state<string | undefined>()
-	let adjacent = $state<string | undefined>('2025-08-17')
-	let steered = $state<string | undefined>()
-	let steeredMonth = $state('2025-08-01')
-	let steeredOpen = $state(false)
-	let programmatic = $state<string | undefined>()
-	let programmaticOpen = $state(false)
-	let birthday = $state<string | undefined>()
-	let themed = $state<string | undefined>('2025-08-17')
-
-	let submitted = $state('')
-	let formIssues = $state<{ message: string }[]>([])
-	let formValue = $state<string | undefined>()
-
-	let dialogOpen = $state(false)
-	let dialogValue = $state<string | undefined>('2025-08-17')
-
-	let entryOpen = $state(false)
-	let entryValue = $state<string | undefined>()
-
-	let rangeOpen = $state(false)
-	let range = $state<DateRange>({})
-
-	let stayOpen = $state(false)
-	let stay = $state<DateRange>({})
-
-	const asText = (iso?: string) => {
-		const date = parseISODate(iso)
-		return date ? formatDate(date) : ''
-	}
-
-	const today = new Date()
-	const thisYear = today.getFullYear()
-	const isoToday = `${today.getFullYear()}-${`${today.getMonth() + 1}`.padStart(2, '0')}-${`${today.getDate()}`.padStart(2, '0')}`
-
-	const weekdaysOnly = (date: Date) => date.getDay() !== 0 && date.getDay() !== 6
-
-	const handleSubmit = (event: SubmitEvent) => {
-		event.preventDefault()
-		const data = new FormData(event.currentTarget as HTMLFormElement)
-		const value = data.get('deliveryDate')
-		formIssues = value ? [] : [{ message: 'Pick a delivery date.' }]
-		submitted = value ? `Submitted deliveryDate=${value}` : ''
-	}
+	import AdjacentMonthDays from './demos/AdjacentMonthDays.svelte'
+	import AdjacentMonthDaysSource from './demos/AdjacentMonthDays.svelte?raw'
+	import BoundingSelection from './demos/BoundingSelection.svelte'
+	import BoundingSelectionSource from './demos/BoundingSelection.svelte?raw'
+	import ControllingCalendar from './demos/ControllingCalendar.svelte'
+	import ControllingCalendarSource from './demos/ControllingCalendar.svelte?raw'
+	import DisablingIndividualDays from './demos/DisablingIndividualDays.svelte'
+	import DisablingIndividualDaysSource from './demos/DisablingIndividualDays.svelte?raw'
+	import FirstDayOfWeek from './demos/FirstDayOfWeek.svelte'
+	import FirstDayOfWeekSource from './demos/FirstDayOfWeek.svelte?raw'
+	import FormsAndValidation from './demos/FormsAndValidation.svelte'
+	import FormsAndValidationSource from './demos/FormsAndValidation.svelte?raw'
+	import KeyboardEntry from './demos/KeyboardEntry.svelte'
+	import KeyboardEntrySource from './demos/KeyboardEntry.svelte?raw'
+	import Localisation from './demos/Localisation.svelte'
+	import LocalisationSource from './demos/Localisation.svelte?raw'
+	import Modal from './demos/Modal.svelte'
+	import ModalSource from './demos/Modal.svelte?raw'
+	import OpeningItYourself from './demos/OpeningItYourself.svelte'
+	import OpeningItYourselfSource from './demos/OpeningItYourself.svelte?raw'
+	import Range from './demos/Range.svelte'
+	import RangeSource from './demos/Range.svelte?raw'
+	import ReactingToChange from './demos/ReactingToChange.svelte'
+	import ReactingToChangeSource from './demos/ReactingToChange.svelte?raw'
+	import RestrictingYearMenu from './demos/RestrictingYearMenu.svelte'
+	import RestrictingYearMenuSource from './demos/RestrictingYearMenu.svelte?raw'
+	import TextFieldVariants from './demos/TextFieldVariants.svelte'
+	import TextFieldVariantsSource from './demos/TextFieldVariants.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import TwoFields from './demos/TwoFields.svelte'
+	import TwoFieldsSource from './demos/TwoFields.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -73,76 +42,35 @@
 </svelte:head>
 
 <h1>Date pickers</h1>
+
 <p>
-	Date pickers let people choose a day from a calendar rather than typing one. Reach for one when
-	the day of the week, the position in the month or the distance from today matters, like a delivery
-	slot, a holiday or an appointment. For a date the person already knows by heart, such as a
-	birthday, the text field alone is usually faster. That is why every picker here keeps its input
-	editable.
+	Date pickers let users choose a date from a calendar while keeping the input editable. Use them
+	when calendar context matters; for dates users already know, typing is often faster.
 </p>
+
 <p>
-	Three components cover the Material 3 variants: <code>DockedDatePicker</code> anchors a calendar
-	under a text field, <code>DatePickerDialog</code> opens the same calendar as a modal, and
-	<code>DateRangePicker</code> selects a start and an end day. For a day and a time in one control,
-	see the <a class="link" href="/components/date-time-picker">date and time picker</a>.
+	<code>DockedDatePicker</code> opens a calendar below the field, <code>DatePickerDialog</code>
+	opens it in a modal, and
+	<code>DateRangePicker</code> selects a start and end date. For date and time selection, see the
+	<a class="link" href="/components/date-time-picker">date and time picker</a>.
 </p>
+
 <p>
-	Every picker uses the same value shape: an ISO <code>YYYY-MM-DD</code> string built from local
-	calendar fields, so it never slips a day across a timezone boundary. The docked and the modal
-	picker also keep a hidden input in sync, so passing <code>name</code> submits the value with the surrounding
-	form.
+	All pickers use ISO <code>YYYY-MM-DD</code> values based on local calendar fields. The docked and
+	modal pickers also support form submission through <code>name</code>.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
+
 <p>
-	<code>value</code> is bindable. Typing in the field and picking a day stay in sync; inside the
-	calendar the selection is provisional until <code>OK</code> confirms it, and
-	<code>Cancel</code> discards it.
-</p>
-<p>
-	The field stays yours while you type: a half-finished date is never rewritten, and
-	<code>value</code> simply holds nothing until the text describes a real, selectable day. Leaving
-	the field tidies a loose entry, so <code>8/1/2025</code> settles as <code>08/01/2025</code>. It
-	also marks the field invalid if what you typed is not a date it can take.
+	<code>value</code> is bindable and stays in sync with typing and calendar selection. Calendar
+	changes are confirmed with <code>OK</code> or discarded with <code>Cancel</code>. Invalid or
+	incomplete input does not update <code>value</code>.
 </p>
 <DemoContainer>
-	<DockedDatePicker bind:value={basic} label="Date" />
+	<Usage />
 </DemoContainer>
-<p>Value: <code>{basic ?? 'undefined'}</code></p>
-<Code
-	value={`<script lang="ts">
-	import { DockedDatePicker } from 'noph-ui'
-
-	let basic = $state<string | undefined>('2025-08-17')
-</` +
-		`script>
-
-<DockedDatePicker bind:value={basic} label="Date" />`}
-/>
-
-<h2 id="anatomy">Anatomy<a href="#anatomy" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>
-	The docked container follows the Material 3 measurements exactly, so it lines up with the rest of
-	a Material layout without nudging. Its height is not fixed: a docked picker sizes itself to the
-	month, so it is 460dp for a month that spills into six week rows and 48dp shorter for every row it
-	does not need. The height animates as you move between months.
-</p>
-<table>
-	<thead>
-		<tr>
-			<th>Part</th>
-			<th>Size</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr><td>Container</td><td>360dp wide, surface container high, 16dp corner</td></tr>
-		<tr><td>Header row</td><td>24dp, on surface variant</td></tr>
-		<tr><td>Weekday labels</td><td>24dp, with a 16dp gap to the grid</td></tr>
-		<tr><td>Date row</td><td>48dp, holding a 40dp state layer and container</td></tr>
-		<tr><td>Selection menu row</td><td>48dp, 24dp leading check, 16dp gutters</td></tr>
-		<tr><td>Action buttons</td><td>36dp, 12dp from the bottom edge</td></tr>
-	</tbody>
-</table>
+<Code value={UsageSource} />
 
 <h2 id="reacting-to-a-change">
 	Reacting to a change<a href="#reacting-to-a-change" aria-hidden="true" tabindex="-1">#</a>
@@ -152,20 +80,9 @@
 	calendar or from typing. It receives the ISO string, or <code>undefined</code> when the field is cleared.
 </p>
 <DemoContainer>
-	<DockedDatePicker
-		bind:value={watched}
-		label="Date"
-		onchange={(next) => (watchedLog = next ? `changed to ${next}` : 'cleared')}
-	/>
+	<ReactingToChange />
 </DemoContainer>
-<p>Last event: <code>{watchedLog || 'none yet'}</code></p>
-<Code
-	value={`<DockedDatePicker
-	bind:value={watched}
-	label="Date"
-	onchange={(next) => console.log(next)}
-/>`}
-/>
+<Code value={ReactingToChangeSource} />
 
 <h2 id="text-field-variants">
 	Text field variants<a href="#text-field-variants" aria-hidden="true" tabindex="-1">#</a>
@@ -175,13 +92,9 @@
 	<code>outlined</code> (the default) or <code>filled</code>.
 </p>
 <DemoContainer>
-	<DockedDatePicker bind:value={basic} label="Outlined" />
-	<DockedDatePicker bind:value={filled} label="Filled" variant="filled" />
+	<TextFieldVariants />
 </DemoContainer>
-<Code
-	value={`<DockedDatePicker bind:value label="Outlined" />
-<DockedDatePicker bind:value label="Filled" variant="filled" />`}
-/>
+<Code value={TextFieldVariantsSource} />
 
 <h2 id="localisation">
 	Localisation<a href="#localisation" aria-hidden="true" tabindex="-1">#</a>
@@ -193,13 +106,9 @@
 	<code>DD.MM.YYYY</code> and parses <code>17.08.2025</code>.
 </p>
 <DemoContainer>
-	<DockedDatePicker bind:value={german} label="Datum" locale="de-DE" />
-	<DockedDatePicker bind:value={japanese} label="日付" locale="ja-JP" />
+	<Localisation />
 </DemoContainer>
-<Code
-	value={`<DockedDatePicker bind:value label="Datum" locale="de-DE" />
-<DockedDatePicker bind:value label="日付" locale="ja-JP" />`}
-/>
+<Code value={LocalisationSource} />
 
 <h3 id="first-day-of-the-week">
 	First day of the week<a href="#first-day-of-the-week" aria-hidden="true" tabindex="-1">#</a>
@@ -210,9 +119,9 @@
 	<code>firstDayOfWeek</code> explicitly (0 = Sunday … 6 = Saturday) when the week start has to be certain.
 </p>
 <DemoContainer>
-	<DockedDatePicker bind:value={mondayFirst} label="Week starts Monday" firstDayOfWeek={1} />
+	<FirstDayOfWeek />
 </DemoContainer>
-<Code value={`<DockedDatePicker bind:value label="Week starts Monday" firstDayOfWeek={1} />`} />
+<Code value={FirstDayOfWeekSource} />
 
 <h2 id="bounding-the-selection">
 	Bounding the selection<a href="#bounding-the-selection" aria-hidden="true" tabindex="-1">#</a>
@@ -223,21 +132,9 @@
 	it.
 </p>
 <DemoContainer>
-	<DockedDatePicker
-		bind:value={bounded}
-		label="Within {thisYear}"
-		min="{thisYear}-01-01"
-		max="{thisYear}-12-31"
-	/>
+	<BoundingSelection />
 </DemoContainer>
-<Code
-	value={`<DockedDatePicker
-	bind:value={bounded}
-	label="Within {thisYear}"
-	min="{thisYear}-01-01"
-	max="{thisYear}-12-31"
-/>`}
-/>
+<Code value={BoundingSelectionSource} />
 
 <h3 id="disabling-individual-days">
 	Disabling individual days<a href="#disabling-individual-days" aria-hidden="true" tabindex="-1"
@@ -249,23 +146,9 @@
 	it for rules a range cannot express, such as weekends, public holidays or days already fully booked.
 </p>
 <DemoContainer>
-	<DockedDatePicker
-		bind:value={booking}
-		label="Appointment"
-		min={isoToday}
-		isDateEnabled={weekdaysOnly}
-	/>
+	<DisablingIndividualDays />
 </DemoContainer>
-<Code
-	value={`const weekdaysOnly = (date: Date) => date.getDay() !== 0 && date.getDay() !== 6
-
-<DockedDatePicker
-	bind:value={booking}
-	label="Appointment"
-	min={isoToday}
-	isDateEnabled={weekdaysOnly}
-/>`}
-/>
+<Code value={DisablingIndividualDaysSource} />
 
 <h3 id="restricting-the-year-menu">
 	Restricting the year menu<a href="#restricting-the-year-menu" aria-hidden="true" tabindex="-1"
@@ -278,21 +161,9 @@
 	birth, pair it with a <code>max</code> of today.
 </p>
 <DemoContainer>
-	<DockedDatePicker
-		bind:value={birthday}
-		label="Date of birth"
-		yearRange={[1920, today.getFullYear()]}
-		max={isoToday}
-	/>
+	<RestrictingYearMenu />
 </DemoContainer>
-<Code
-	value={`<DockedDatePicker
-	bind:value={birthday}
-	label="Date of birth"
-	yearRange={[1920, 2026]}
-	max={isoToday}
-/>`}
-/>
+<Code value={RestrictingYearMenuSource} />
 
 <h2 id="days-of-neighbouring-months">
 	Days of neighbouring months<a href="#days-of-neighbouring-months" aria-hidden="true" tabindex="-1"
@@ -300,99 +171,57 @@
 	>
 </h2>
 <p>
-	The calendar shows only the days of the displayed month and leaves the surrounding cells empty,
-	the way the Material calendar draws it. The docked specification sheets do fill those cells, so
-	<code>adjacentMonthDays</code> renders the leading and trailing days instead. Keyboard navigation crosses
-	the month boundary either way.
+	By default the calendar shows only the days of the displayed month and leaves the surrounding
+	cells empty. Set <code>adjacentMonthDays</code> to fill those cells with the leading and trailing days
+	of the neighbouring months instead. Keyboard navigation crosses the month boundary either way.
 </p>
 <DemoContainer>
-	<DockedDatePicker bind:value={adjacent} label="With adjacent days" adjacentMonthDays />
+	<AdjacentMonthDays />
 </DemoContainer>
-<Code
-	value={`<DockedDatePicker
-	bind:value={adjacent}
-	label="With adjacent days"
-	adjacentMonthDays
-/>`}
-/>
+<Code value={AdjacentMonthDaysSource} />
 
 <h2 id="controlling-the-calendar">
 	Controlling the calendar<a href="#controlling-the-calendar" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
 	<code>displayMonth</code> is the month on screen. It follows the selection until the person navigates,
-	and binding it lets you park the calendar somewhere useful, such as the start of a booking season. You
-	can also read back where they browsed to while the calendar is open: closing it restores whatever you
-	set, so the picker reopens where you put it rather than three years away.
+	and binding it lets you park the calendar on a specific month, such as the start of a booking season.
+	It also reports where they browsed to while the calendar is open, but closing it restores whatever you
+	set, so the picker always reopens where you put it.
 </p>
 <DemoContainer>
-	<DockedDatePicker
-		bind:value={steered}
-		bind:displayMonth={steeredMonth}
-		bind:open={steeredOpen}
-		label="Season"
-	/>
-	<Button
-		onclick={() => {
-			steeredMonth = '2026-12-01'
-			steeredOpen = true
-		}}
-	>
-		Show December
-	</Button>
+	<ControllingCalendar />
 </DemoContainer>
-<p>Showing: <code>{steeredMonth}</code></p>
-<Code
-	value={`<DockedDatePicker
-	bind:value={steered}
-	bind:displayMonth={steeredMonth}
-	bind:open={steeredOpen}
-	label="Season"
-/>
-<Button
-	onclick={() => {
-		steeredMonth = '2026-12-01'
-		steeredOpen = true
-	}}
->
-	Show December
-</Button>`}
-/>
+<Code value={ControllingCalendarSource} />
 
 <h3 id="opening-it-yourself">
 	Opening it yourself<a href="#opening-it-yourself" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	<code>open</code> is bindable, so the calendar can be opened from anywhere and read back when the person
-	dismisses it. Clicking outside still closes it, so drive it with a plain open button rather than a toggle.
+	The docked pickers keep their calendar in a popover of their own, so there is no
+	<code>id</code> for a trigger to point at. Open them with <code>show()</code> and
+	<code>close()</code>, the pair every overlay in the library exports: bind a reference with
+	<code>bind:this</code>, type it with <code>ReturnType&lt;typeof DockedDatePicker&gt;</code>, and
+	call through <code>?.</code> since it is <code>undefined</code> until the component has mounted.
+	<code>show()</code> on a <code>disabled</code> or <code>readonly</code> field does nothing.
 </p>
 <DemoContainer>
-	<DockedDatePicker bind:value={programmatic} bind:open={programmaticOpen} label="Date" />
-	<Button variant="outlined" onclick={() => (programmaticOpen = true)}>Open the calendar</Button>
+	<OpeningItYourself />
 </DemoContainer>
-<p>Open: <code>{programmaticOpen}</code></p>
-<Code
-	value={`<DockedDatePicker bind:value bind:open={isOpen} label="Date" />
-<Button onclick={() => (isOpen = true)}>Open the calendar</Button>`}
-/>
+<Code value={OpeningItYourselfSource} />
 
 <h2 id="forms-and-validation">
 	Forms and validation<a href="#forms-and-validation" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Passing a <code>name</code> submits the ISO value with the surrounding form through a hidden
-	input, so no JavaScript is needed to read it back. The constraints stay on the visible field
-	rather than that hidden one, so a blocked submit reports against a control the browser can focus
-	and point at, and the picker validates the way a native
-	<code>&lt;input type="date"&gt;</code> does.
+	Passing a <code>name</code> includes the ISO date value in form submissions. Validation stays on the
+	visible field, so browser validation feedback works as expected.
 </p>
 <p>
-	That means <code>:user-invalid</code> switches on at a submit attempt, which browsers do even for
-	a form marked <code>novalidate</code>, and never while a date is still being typed. The field is
-	additionally marked on blur, which the platform only does in Firefox, so the feedback is the same
-	everywhere. <code>invalidDateMessage</code> sets the text the browser reports.
-</p>
-<p>
+	Invalid dates are reported after submission or when the field loses focus. Use <code
+		>invalidDateMessage</code
+	>
+	to customize the validation message.
 	<code>issues</code> replaces the supporting text with your own messages and turns the field red, so
 	it pairs with whatever validation library the form already uses.
 </p>
@@ -404,48 +233,28 @@
 	up that way.
 </p>
 <DemoContainer>
-	<form onsubmit={handleSubmit} novalidate>
-		<DockedDatePicker
-			bind:value={formValue}
-			label="Delivery date"
-			name="deliveryDate"
-			issues={formIssues}
-			min={isoToday}
-			required
-		/>
-		<Button type="submit" variant="filled">Submit</Button>
-	</form>
+	<FormsAndValidation />
 </DemoContainer>
-<p>{submitted || 'Nothing submitted yet.'}</p>
-<Code
-	value={`<form onsubmit={handleSubmit} novalidate>
-	<DockedDatePicker
-		bind:value={formValue}
-		label="Delivery date"
-		name="deliveryDate"
-		issues={formIssues}
-		min={isoToday}
-		required
-	/>
-	<Button type="submit" variant="filled">Submit</Button>
-</form>`}
-/>
+<Code value={FormsAndValidationSource} />
 
 <h2 id="modal">Modal<a href="#modal" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>DatePickerDialog</code> is the same calendar in a modal, with the selection echoed in a headline
-	and a three-column year grid behind the month button. Prefer it on small screens, or when choosing the
-	date is the whole point of the step rather than one field among many.
+	and a three-column year grid behind the month button. Prefer it on small screens, or when picking the
+	date is the main task of the step rather than one field among many.
 </p>
 <DemoContainer>
-	<Button variant="filled" onclick={() => (dialogOpen = true)}>Pick a date</Button>
-	<DatePickerDialog bind:open={dialogOpen} bind:value={dialogValue} />
+	<Modal />
 </DemoContainer>
-<p>Value: <code>{dialogValue ?? 'undefined'}</code></p>
-<Code
-	value={`<Button onclick={() => (dialogOpen = true)}>Pick a date</Button>
-<DatePickerDialog bind:open={dialogOpen} bind:value={dialogValue} />`}
-/>
+<Code value={ModalSource} />
+<p>
+	The dialog is a native <code>&lt;dialog&gt;</code>, so a trigger opens it with
+	<code>command="show-modal"</code> pointed at its <code>id</code>, and
+	<code>command="close"</code> closes it. No state and no handler are involved, and it works before
+	the page has hydrated. Where there is no trigger to point at it, call <code>show()</code> and
+	<code>close()</code> on the component instead; <code>bind:open</code> is there to report the state rather
+	than to set it.
+</p>
 
 <h3 id="keyboard-entry-and-custom-wording">
 	Keyboard entry and custom wording<a
@@ -464,26 +273,9 @@
 	<code>false</code> yourself.
 </p>
 <DemoContainer>
-	<Button variant="filled" onclick={() => (entryOpen = true)}>Choose arrival</Button>
-	<DatePickerDialog
-		bind:open={entryOpen}
-		bind:value={entryValue}
-		title="Arrival date"
-		modeToggle
-		min={isoToday}
-		onconfirm={(next) => (submitted = next ? `Arriving ${next}` : '')}
-	/>
+	<KeyboardEntry />
 </DemoContainer>
-<Code
-	value={`<DatePickerDialog
-	bind:open={entryOpen}
-	bind:value={entryValue}
-	title="Arrival date"
-	modeToggle
-	min={isoToday}
-	onconfirm={(next) => console.log(next)}
-/>`}
-/>
+<Code value={KeyboardEntrySource} />
 
 <h2 id="range">Range<a href="#range" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -498,31 +290,16 @@
 	keys carry focus from one month into the next.
 </p>
 <p>
-	The picker takes the presentation the window allows. Below 600dp it fills the screen, square
+	The picker's presentation depends on the window width. Below 600dp it fills the screen, square
 	cornered and flat, and confirms from the top bar. From 600dp up it is an ordinary modal instead: a
-	dialog the width of the calendar, sitting in the scrim with rounded corners, the month list
-	scrolling inside it and <code>Cancel</code> and <code>Save</code> at the bottom. The switch is a media
-	query, so it costs nothing to render and the server sends what the browser shows. Narrow the window
-	to see it change.
+	rounded dialog the width of the calendar, sitting in the scrim with the month list scrolling
+	inside it and <code>Cancel</code> and <code>Save</code> at the bottom. The switch is a media query,
+	so the server can render the right one directly. Narrow the window to see it change.
 </p>
 <DemoContainer>
-	<Button variant="filled" onclick={() => (rangeOpen = true)}>Pick a range</Button>
-	<DateRangePicker bind:open={rangeOpen} bind:value={range} title="Select stay" />
+	<Range />
 </DemoContainer>
-<p>Value: <code>{range.start ?? 'undefined'} → {range.end ?? 'undefined'}</code></p>
-<Code
-	value={`<script lang="ts">
-	import { DateRangePicker } from 'noph-ui'
-	import type { DateRange } from 'noph-ui/types'
-
-	let range = $state<DateRange>({})
-	let rangeOpen = $state(false)
-</` +
-		`script>
-
-<Button onclick={() => (rangeOpen = true)}>Pick a range</Button>
-<DateRangePicker bind:open={rangeOpen} bind:value={range} title="Select stay" />`}
-/>
+<Code value={RangeSource} />
 
 <h3 id="two-fields">Two fields<a href="#two-fields" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
@@ -532,90 +309,15 @@
 	place the two edges live.
 </p>
 <p>
-	The calendar is the only editor, so the fields are read-only and simply read the range back
-	through
-	<code>formatDate</code>. That is the whole example: nothing mirrors the text and nothing has to be
-	kept in sync, because the two edges only ever change in one place. Clicking a field opens the
-	picker, and the calendar button does the same for the keyboard.
+	The calendar is the only editor, so the fields are read-only and simply display the range through
+	<code>formatDate</code>. Nothing needs to stay in sync, because the two edges only ever change in
+	one place. Clicking a field opens the picker, and the calendar button does the same for the
+	keyboard.
 </p>
-{#snippet stayCalendarButton(edge: string)}
-	<IconButton
-		type="button"
-		aria-label="Open the calendar for the {edge} date"
-		aria-haspopup="dialog"
-		aria-expanded={stayOpen}
-		onclick={() => (stayOpen = true)}
-	>
-		<CalendarToday />
-	</IconButton>
-{/snippet}
-{#snippet stayStartButton()}{@render stayCalendarButton('start')}{/snippet}
-{#snippet stayEndButton()}{@render stayCalendarButton('end')}{/snippet}
 <DemoContainer>
-	<TextField
-		label="Start"
-		readonly
-		value={asText(stay.start)}
-		onclick={() => (stayOpen = true)}
-		end={stayStartButton}
-	/>
-	<TextField
-		label="End"
-		readonly
-		value={asText(stay.end)}
-		onclick={() => (stayOpen = true)}
-		end={stayEndButton}
-	/>
-	<DateRangePicker bind:open={stayOpen} bind:value={stay} title="Select stay" />
+	<TwoFields />
 </DemoContainer>
-<p>Value: <code>{stay.start ?? 'undefined'} → {stay.end ?? 'undefined'}</code></p>
-<Code
-	value={`<script lang="ts">
-	import { DateRangePicker, formatDate, IconButton, parseISODate, TextField } from 'noph-ui'
-	import { CalendarToday } from 'noph-ui/icons'
-	import type { DateRange } from 'noph-ui/types'
-
-	let open = $state(false)
-	let stay = $state<DateRange>({})
-
-	const asText = (iso?: string) => {
-		const date = parseISODate(iso)
-		return date ? formatDate(date) : ''
-	}
-</` +
-		`script>
-
-{#snippet calendarButton(edge: string)}
-	<IconButton
-		type="button"
-		aria-label="Open the calendar for the {edge} date"
-		aria-haspopup="dialog"
-		aria-expanded={open}
-		onclick={() => (open = true)}
-	>
-		<CalendarToday />
-	</IconButton>
-{/snippet}
-{#snippet startButton()}{@render calendarButton('start')}{/snippet}
-{#snippet endButton()}{@render calendarButton('end')}{/snippet}
-
-<TextField
-	label="Start"
-	readonly
-	value={asText(stay.start)}
-	onclick={() => (open = true)}
-	end={startButton}
-/>
-<TextField
-	label="End"
-	readonly
-	value={asText(stay.end)}
-	onclick={() => (open = true)}
-	end={endButton}
-/>
-
-<DateRangePicker bind:open bind:value={stay} title="Select stay" />`}
-/>
+<Code value={TwoFieldsSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -729,27 +431,9 @@
 
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<DockedDatePicker
-		bind:value={themed}
-		label="Date"
-		--np-date-picker-date-selected-container-color="var(--np-color-tertiary)"
-		--np-date-picker-date-selected-label-color="var(--np-color-on-tertiary)"
-		--np-date-picker-date-today-outline-color="var(--np-color-tertiary)"
-		--np-date-picker-date-today-label-color="var(--np-color-tertiary)"
-		--np-date-picker-date-container-shape="var(--np-shape-corner-small)"
-	/>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<DockedDatePicker
-	bind:value
-	label="Date"
-	--np-date-picker-date-selected-container-color="var(--np-color-tertiary)"
-	--np-date-picker-date-selected-label-color="var(--np-color-on-tertiary)"
-	--np-date-picker-date-today-outline-color="var(--np-color-tertiary)"
-	--np-date-picker-date-today-label-color="var(--np-color-tertiary)"
-	--np-date-picker-date-container-shape="var(--np-shape-corner-small)"
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="motion-and-gestures">
 	Motion and gestures<a href="#motion-and-gestures" aria-hidden="true" tabindex="-1">#</a>
@@ -780,9 +464,8 @@
 		<tr>
 			<td>Month and year menus</td>
 			<td>
-				The list slides down over the calendar and fades in from 60% opacity, the way a blind comes
-				down. The calendar stays where it is underneath, so the panel never resizes, and the
-				steppers fade out while it is covered.
+				The list slides down over the calendar and fades in from 60% opacity. The calendar stays
+				underneath, so the panel never resizes, and the steppers fade out while it is covered.
 			</td>
 			<td><code>--np-motion-expressive-default-effects</code></td>
 		</tr>
@@ -854,6 +537,47 @@
 </p>
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<h3 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	All four pickers export the same pair, the one every overlay in the library exports. Bind a
+	reference with <code>bind:this</code> and type it with
+	<code>ReturnType&lt;typeof DockedDatePicker&gt;</code> or whichever picker it is; it is
+	<code>undefined</code> until the component has mounted, so call through <code>?.</code>.
+</p>
+<p>
+	Reach for these only where there is nothing to point a trigger at.
+	<code>DatePickerDialog</code> and <code>DateRangePicker</code> are native
+	<code>&lt;dialog&gt;</code> elements, so <code>command="show-modal"</code> and
+	<code>commandfor</code> open them from markup with no script at all. The docked pickers keep their
+	calendar in a popover of their own, with no <code>id</code> to point at, so they need these.
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Method</th>
+			<th>Type</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>show</code></td>
+			<td><code>() =&gt; void</code></td>
+			<td>
+				Opens the picker. Already open, it does nothing, and on a <code>disabled</code> or
+				<code>readonly</code> docked field it does nothing either.
+			</td>
+		</tr>
+		<tr>
+			<td><code>close</code></td>
+			<td><code>() =&gt; void</code></td>
+			<td>
+				Closes the picker and leaves focus where it is. Only a close the person asked for, through
+				the field or the cancel button, hands focus back to the input.
+			</td>
+		</tr>
+	</tbody>
+</table>
 <h3 id="dockeddatepicker">
 	DockedDatePicker<a href="#dockeddatepicker" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -1286,12 +1010,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	form {
-		display: flex;
-		align-items: flex-start;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-</style>

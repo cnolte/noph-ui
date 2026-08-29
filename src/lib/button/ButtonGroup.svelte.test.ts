@@ -13,38 +13,38 @@ const corners = (id: string) => {
 	}
 }
 
-describe('ButtonGroup', () => {
-	test('groups its buttons', () => {
-		render(Harness)
+describe('ButtonGroup', async () => {
+	test('groups its buttons', async () => {
+		await render(Harness)
 
 		expect(group().getAttribute('role')).toBe('group')
 		expect(group().getAttribute('aria-label')).toBe('Text style')
 		expect(byId('first').textContent).toContain('Work')
 	})
 
-	test('a standard group keeps the space of the spec between its buttons', () => {
-		render(Harness)
+	test('a standard group keeps the space of the spec between its buttons', async () => {
+		await render(Harness)
 
 		expect(getComputedStyle(group()).columnGap).toBe('12px')
 		expect(corners('first').start).toBe(corners('first').end)
 	})
 
-	test('a connected group moves its buttons together', () => {
-		render(Harness, { variant: 'connected' })
+	test('a connected group moves its buttons together', async () => {
+		await render(Harness, { variant: 'connected' })
 
 		expect(getComputedStyle(group()).columnGap).toBe('2px')
 	})
 
-	test('a connected group shortens the corners that meet another button', () => {
-		render(Harness, { variant: 'connected' })
+	test('a connected group shortens the corners that meet another button', async () => {
+		await render(Harness, { variant: 'connected' })
 
 		expect(corners('first')).toEqual({ start: '20px', end: '8px' })
 		expect(corners('middle')).toEqual({ start: '8px', end: '8px' })
 		expect(corners('last')).toEqual({ start: '8px', end: '20px' })
 	})
 
-	test('the corners a person sees are rounded, not only the ones in the style sheet', () => {
-		render(Harness, { variant: 'connected' })
+	test('the corners a person sees are rounded, not only the ones in the style sheet', async () => {
+		await render(Harness, { variant: 'connected' })
 		const first = byId('first')
 		const box = first.getBoundingClientRect()
 		const hit = (x: number, y: number) => document.elementFromPoint(x, y)?.closest('.np-button')
@@ -55,14 +55,14 @@ describe('ButtonGroup', () => {
 		expect(hit(box.left + 1, box.top + box.height / 2)).toBe(first)
 	})
 
-	test('the inner corners follow a custom shape', () => {
-		render(Harness, { variant: 'connected', style: '--np-button-group-inner-corner: 4px' })
+	test('the inner corners follow a custom shape', async () => {
+		await render(Harness, { variant: 'connected', style: '--np-button-group-inner-corner: 4px' })
 
 		expect(corners('middle')).toEqual({ start: '4px', end: '4px' })
 	})
 
-	test('a focused button is lifted over its neighbours', () => {
-		render(Harness, { variant: 'connected' })
+	test('a focused button is lifted over its neighbours', async () => {
+		await render(Harness, { variant: 'connected' })
 
 		byId('first').focus()
 
@@ -73,7 +73,7 @@ describe('ButtonGroup', () => {
 	})
 
 	test('reduced motion leaves the widths of the buttons alone', async () => {
-		render(Harness)
+		await render(Harness)
 		const first = byId('first')
 		const before = first.getBoundingClientRect().width
 

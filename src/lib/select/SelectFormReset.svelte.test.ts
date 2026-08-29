@@ -12,9 +12,9 @@ const resetAndSettle = async (form: HTMLFormElement) => {
 const currentForm = () => [...document.querySelectorAll('form')].at(-1)!
 const bound = () => document.querySelector('[data-testid=bound]')!.textContent
 
-describe('Select form reset', () => {
+describe('Select form reset', async () => {
 	test('drops a chosen value that no option declares as the default', async () => {
-		render(Form, { value: 'pro' })
+		await render(Form, { value: 'pro' })
 		const form = currentForm()
 		await expect.poll(() => new FormData(form).get('plan')).toBe('pro')
 
@@ -27,7 +27,7 @@ describe('Select form reset', () => {
 	})
 
 	test('restores the option marked selected', async () => {
-		render(Form, {
+		await render(Form, {
 			value: 'pro',
 			options: [
 				{ value: 'starter', label: 'Starter', selected: true },

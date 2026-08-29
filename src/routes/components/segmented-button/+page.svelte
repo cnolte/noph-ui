@@ -1,8 +1,14 @@
 <script lang="ts">
-	import SegmentedButton from '#lib/button/SegmentedButton.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import Disabled from './demos/Disabled.svelte'
+	import DisabledSource from './demos/Disabled.svelte?raw'
+	import Icons from './demos/Icons.svelte'
+	import IconsSource from './demos/Icons.svelte?raw'
+	import MultipleChoice from './demos/MultipleChoice.svelte'
+	import MultipleChoiceSource from './demos/MultipleChoice.svelte?raw'
+	import SingleChoice from './demos/SingleChoice.svelte'
+	import SingleChoiceSource from './demos/SingleChoice.svelte?raw'
 </script>
 
 <svelte:head>
@@ -14,220 +20,28 @@
 	Single choice<a href="#single-choice" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<SegmentedButton
-		name="demo"
-		options={[
-			{
-				label: 'Week',
-				selected: true,
-			},
-			{
-				label: 'Month',
-			},
-			{
-				label: 'Year',
-			},
-		]}
-	/>
+	<SingleChoice />
 </DemoContainer>
-<Code
-	value={`<SegmentedButton
-	name="demo"
-	options={[
-		{
-			label: 'Week',
-			selected: true,
-		},
-		{
-			label: 'Month',
-		},
-		{
-			label: 'Year',
-		},
-	]}
-/>`}
-/>
+<Code value={SingleChoiceSource} />
 <h2 id="multiple-choice">
 	Multiple choice<a href="#multiple-choice" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<SegmentedButton
-		name="demo2"
-		multiSelect
-		options={[
-			{
-				label: 'XS',
-			},
-			{
-				label: 'S',
-			},
-			{
-				label: 'M',
-			},
-			{
-				label: 'L',
-			},
-			{
-				label: 'XL',
-			},
-		]}
-	/>
+	<MultipleChoice />
 </DemoContainer>
-<Code
-	value={`<SegmentedButton
-	name="demo2"
-	multiSelect
-	options={[
-		{
-			label: 'XS',
-		},
-		{
-			label: 'S',
-		},
-		{
-			label: 'M',
-		},
-		{
-			label: 'L',
-		},
-		{
-			label: 'XL',
-		},
-	]}
-/>`}
-/>
+<Code value={MultipleChoiceSource} />
 
 <h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
 
-{#snippet darkIcon()}
-	<Icon>dark_mode</Icon>
-{/snippet}
-
-{#snippet lightIcon()}
-	<Icon>light_mode</Icon>
-{/snippet}
-
-{#snippet systemIcon()}
-	<Icon>brightness_medium</Icon>
-{/snippet}
 <DemoContainer style="flex-direction:column">
-	<SegmentedButton
-		name="demo3"
-		options={[
-			{
-				label: 'Dark',
-				icon: darkIcon,
-			},
-			{
-				label: 'System',
-				icon: systemIcon,
-				selected: true,
-			},
-			{
-				label: 'Light',
-				icon: lightIcon,
-			},
-		]}
-	/>
-	<SegmentedButton
-		name="demo4"
-		options={[
-			{
-				labelIcon: darkIcon,
-			},
-			{
-				labelIcon: systemIcon,
-				selected: true,
-			},
-			{
-				labelIcon: lightIcon,
-			},
-		]}
-	/>
+	<Icons />
 </DemoContainer>
-<Code
-	value={`{#snippet darkIcon()}
-	<Icon>dark_mode</Icon>
-{/snippet}
-
-{#snippet lightIcon()}
-	<Icon>light_mode</Icon>
-{/snippet}
-
-{#snippet systemIcon()}
-	<Icon>brightness_medium</Icon>
-{/snippet}
-<SegmentedButton
-	name="demo3"
-	options={[
-		{
-			label: 'Dark',
-			icon: darkIcon,
-		},
-		{
-			label: 'System',
-			icon: systemIcon,
-			selected: true,
-		},
-		{
-			label: 'Light',
-			icon: lightIcon,
-		},
-	]}
-/>
-<SegmentedButton
-	name="demo4"
-	options={[
-		{
-			labelIcon: darkIcon,
-		},
-		{
-			labelIcon: systemIcon,
-			selected: true,
-		},
-		{
-			labelIcon: lightIcon,
-		},
-	]}
-/>`}
-/>
+<Code value={IconsSource} />
 <h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<SegmentedButton
-		name="demo5"
-		options={[
-			{
-				label: 'Apple',
-				disabled: true,
-			},
-			{
-				label: 'Banana',
-				selected: true,
-			},
-			{
-				label: 'Orange',
-			},
-		]}
-	/>
+	<Disabled />
 </DemoContainer>
-<Code
-	value={`<SegmentedButton
-	name="demo4"
-	options={[
-		{
-			label: 'Apple',
-			disabled: true,
-		},
-		{
-			label: 'Banana',
-			selected: true,
-		},
-		{
-			label: 'Orange',
-		},
-	]}
-/>`}
-/>
+<Code value={DisabledSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>

@@ -3,7 +3,7 @@
 	import Button from '#lib/button/Button.svelte'
 
 	let {
-		elevated = false,
+		variant = 'outlined',
 		disabled = false,
 		label = '',
 		icon,
@@ -13,8 +13,6 @@
 </script>
 
 <Button
-	size="xs"
-	shape="square"
 	--np-elevated-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface))"
 	--np-outlined-button-label-text-color="var(--np-assist-chip-label-text-color, var(--np-color-on-surface))"
 	--np-outlined-button-outline-color="var(--np-assist-chip-outline-color, var(--np-color-outline-variant))"
@@ -27,9 +25,11 @@
 		: 'var(--np-color-primary)'}
 	style="letter-spacing: 0.006rem"
 	bind:element
-	variant={elevated ? 'elevated' : 'outlined'}
-	{disabled}
 	{...attributes}
+	size="xs"
+	shape="square"
+	{variant}
+	{disabled}
 	start={icon}
 >
 	{label}

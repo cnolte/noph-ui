@@ -1,10 +1,12 @@
 <script lang="ts">
-	import DemoContainer from '../../DemoContainer.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	import NavigationRail from '#lib/navigation-rail/NavigationRail.svelte'
-	import NavigationRailItem from '#lib/navigation-rail/NavigationRailItem.svelte'
-	let selection = $state(1)
+	import DemoContainer from '../../DemoContainer.svelte'
+	import Links from './demos/Links.svelte'
+	import LinksSource from './demos/Links.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -26,94 +28,22 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<NavigationRail>
-		<NavigationRailItem
-			selected={selection === 1}
-			onclick={() => {
-				selection = 1
-			}}
-			label="Videos"
-		>
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationRailItem>
-		<NavigationRailItem
-			selected={selection === 2}
-			onclick={() => {
-				selection = 2
-			}}
-			label="Styles"
-		>
-			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationRailItem>
-		<NavigationRailItem
-			selected={selection === 3}
-			onclick={() => {
-				selection = 3
-			}}
-			label="Settings"
-		>
-			{#snippet icon()}<Icon>settings</Icon>{/snippet}
-		</NavigationRailItem>
-	</NavigationRail>
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<NavigationRail>
-	<NavigationRailItem
-		selected={selection === 1}
-		onclick={() => {
-			selection = 1
-		}}
-		label="Videos"
-	>
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-	</NavigationRailItem>
-	<NavigationRailItem
-		selected={selection === 2}
-		onclick={() => {
-			selection = 2
-		}}
-		label="Styles"
-	>
-		{#snippet icon()}<Icon>palette</Icon>{/snippet}
-	</NavigationRailItem>
-	<NavigationRailItem
-		selected={selection === 3}
-		onclick={() => {
-			selection = 3
-		}}
-		label="Settings"
-	>
-		{#snippet icon()}<Icon>settings</Icon>{/snippet}
-	</NavigationRailItem>
-</NavigationRail>`}
-/>
+<Code value={UsageSource} />
 
 <h2 id="links">Links<a href="#links" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Pass an <code>href</code> and the item renders as an <code>&lt;a&gt;</code> instead of a
 	<code>&lt;button&gt;</code>. That is the right choice for real navigation: it gives the user a URL
-	to open in a new tab and it lets the browser do its job.
+	to open in a new tab and it lets the browser do its job. In a routed app, drive
+	<code>selected</code> from the current URL, for example <code>page.url.pathname === href</code>
+	with SvelteKit's <code>page</code> from <code>$app/state</code>.
 </p>
 <DemoContainer>
-	<NavigationRail>
-		<NavigationRailItem href="#videos" selected label="Videos">
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationRailItem>
-		<NavigationRailItem href="#styles" label="Styles">
-			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationRailItem>
-	</NavigationRail>
+	<Links />
 </DemoContainer>
-<Code
-	value={`<NavigationRail>
-	<NavigationRailItem href="/videos" selected={page.url.pathname === '/videos'} label="Videos">
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-	</NavigationRailItem>
-	<NavigationRailItem href="/styles" selected={page.url.pathname === '/styles'} label="Styles">
-		{#snippet icon()}<Icon>palette</Icon>{/snippet}
-	</NavigationRailItem>
-</NavigationRail>`}
-/>
+<Code value={LinksSource} />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
@@ -160,22 +90,9 @@
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<NavigationRail --np-navigation-rail-item-selected-font-weight="700">
-		<NavigationRailItem selected label="Videos">
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationRailItem>
-		<NavigationRailItem label="Styles">
-			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationRailItem>
-	</NavigationRail>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<NavigationRail --np-navigation-rail-item-selected-font-weight="700">
-	<NavigationRailItem selected label="Videos">
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-	</NavigationRailItem>
-</NavigationRail>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="navigationrail-attributes">

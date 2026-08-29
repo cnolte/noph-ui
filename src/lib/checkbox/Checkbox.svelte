@@ -21,9 +21,10 @@
 	let groupValue = $derived(
 		typeof value === 'string' || typeof value === 'number' ? value : undefined,
 	)
-	let grouped = $derived(Array.isArray(group) && groupValue !== undefined)
-	let groupChecked = $derived(
-		Array.isArray(group) && groupValue !== undefined ? group.includes(groupValue) : false,
+	// A grouped checkbox takes its checked state from the group, so it cannot also `bind:checked`.
+	// One controlled input covers both, with the change handler writing back whichever is in play.
+	let isChecked = $derived(
+		Array.isArray(group) && groupValue !== undefined ? group.includes(groupValue) : checked,
 	)
 
 	const onchange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
@@ -42,7 +43,11 @@
 
 <div
 	{style}
-	class={['np-container', hasError && !attributes.disabled && 'np-error', attributes.class]}
+	class={[
+		'np-checkbox-container',
+		hasError && !attributes.disabled && 'np-error',
+		attributes.class,
+	]}
 	bind:this={element}
 >
 	<div class="np-outline"></div>
@@ -55,37 +60,23 @@
 		{#if !attributes.disabled}
 			<Ripple forElement={inputEl} />
 		{/if}
-		{#if grouped}
-			<input
-				{...attributes}
-				{value}
-				class="np-input"
-				type="checkbox"
-				bind:indeterminate
-				bind:this={inputEl}
-				checked={groupChecked}
-				{onchange}
-				aria-invalid={hasError ? 'true' : ariaInvalid}
-				aria-checked={indeterminate ? 'mixed' : undefined}
-			/>
-		{:else}
-			<input
-				{...attributes}
-				{value}
-				class="np-input"
-				type="checkbox"
-				bind:indeterminate
-				bind:checked
-				bind:this={inputEl}
-				aria-invalid={hasError ? 'true' : ariaInvalid}
-				aria-checked={indeterminate ? 'mixed' : undefined}
-			/>
-		{/if}
+		<input
+			{...attributes}
+			{value}
+			class="np-input"
+			type="checkbox"
+			bind:indeterminate
+			bind:this={inputEl}
+			checked={isChecked}
+			{onchange}
+			aria-invalid={hasError ? 'true' : ariaInvalid}
+			aria-checked={indeterminate ? 'mixed' : undefined}
+		/>
 	</div>
 </div>
 
 <style>
-	.np-container {
+	.np-checkbox-container {
 		border-radius: var(--np-checkbox-container-shape, 2px);
 		display: inline-flex;
 		place-content: center;
@@ -102,7 +93,7 @@
 	:global(label) {
 		-webkit-tap-highlight-color: transparent;
 	}
-	.np-container:has(input:disabled) {
+	.np-checkbox-container:has(input:disabled) {
 		cursor: default;
 	}
 	.np-input {
@@ -148,18 +139,18 @@
 		border-width: 2px;
 		box-sizing: border-box;
 	}
-	.np-container:focus-within .np-outline,
-	.np-container:hover .np-outline {
+	.np-checkbox-container:focus-within .np-outline,
+	.np-checkbox-container:hover .np-outline {
 		border-color: var(--np-color-on-surface);
 		border-width: 2px;
 	}
-	.np-container:has(input:disabled) .np-outline {
+	.np-checkbox-container:has(input:disabled) .np-outline {
 		border-color: var(--np-color-on-surface);
 		border-width: 2px;
 		opacity: 0.38;
 	}
-	.np-container:has(input:disabled:checked) .np-outline,
-	.np-container:has(input:disabled:indeterminate) .np-outline {
+	.np-checkbox-container:has(input:disabled:checked) .np-outline,
+	.np-checkbox-container:has(input:disabled:indeterminate) .np-outline {
 		visibility: hidden;
 	}
 	.np-background {
@@ -173,17 +164,17 @@
 		transition-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15), linear;
 		transform: scale(0.6);
 	}
-	.np-container:has(input:indeterminate) .np-background,
-	.np-container:has(input:checked) .np-background,
-	.np-container:has(input:indeterminate) .np-icon,
-	.np-container:has(input:checked) .np-icon {
+	.np-checkbox-container:has(input:indeterminate) .np-background,
+	.np-checkbox-container:has(input:checked) .np-background,
+	.np-checkbox-container:has(input:indeterminate) .np-icon,
+	.np-checkbox-container:has(input:checked) .np-icon {
 		opacity: 1;
 		transition-duration: 350ms, 50ms;
 		transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1), linear;
 		transform: scale(1);
 	}
-	.np-container:has(input:disabled:checked) .np-background,
-	.np-container:has(input:disabled:indeterminate) .np-background {
+	.np-checkbox-container:has(input:disabled:checked) .np-background,
+	.np-checkbox-container:has(input:disabled:indeterminate) .np-background {
 		background: var(--np-color-on-surface);
 		opacity: 0.38;
 	}
@@ -208,23 +199,23 @@
 		height: 18px;
 		width: 18px;
 	}
-	.np-container:has(input:disabled) .np-icon {
+	.np-checkbox-container:has(input:disabled) .np-icon {
 		fill: var(--np-color-surface);
 	}
-	.np-container:has(input:checked) .mark.short,
-	.np-container:has(input:not(:checked):not(:indeterminate)) .mark.short {
+	.np-checkbox-container:has(input:checked) .mark.short,
+	.np-checkbox-container:has(input:not(:checked):not(:indeterminate)) .mark.short {
 		height: 5.6568542495px;
 	}
-	.np-container:has(input:indeterminate) .mark,
-	.np-container:has(input:checked) .mark {
+	.np-checkbox-container:has(input:indeterminate) .mark,
+	.np-checkbox-container:has(input:checked) .mark {
 		transition-property: none;
 	}
-	.np-container:has(input:checked) .mark,
-	.np-container:has(input:not(:checked):not(:indeterminate)) .mark {
+	.np-checkbox-container:has(input:checked) .mark,
+	.np-checkbox-container:has(input:not(:checked):not(:indeterminate)) .mark {
 		transform: scaleY(-1) translate(7px, -14px) rotate(45deg);
 	}
-	.np-container:has(input:indeterminate) .mark,
-	.np-container:has(input:checked) .mark {
+	.np-checkbox-container:has(input:indeterminate) .mark,
+	.np-checkbox-container:has(input:checked) .mark {
 		animation-duration: 350ms;
 		animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
 		transition-duration: 350ms;
@@ -241,11 +232,11 @@
 		transition-duration: 150ms;
 		transition-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
 	}
-	.np-container:has(input:checked) .mark.long {
+	.np-checkbox-container:has(input:checked) .mark.long {
 		animation-name: prev-unselected-to-checked;
 	}
-	.np-container:has(input:checked) .mark.long,
-	.np-container:has(input:not(:checked):not(:indeterminate)) .mark.long {
+	.np-checkbox-container:has(input:checked) .mark.long,
+	.np-checkbox-container:has(input:not(:checked):not(:indeterminate)) .mark.long {
 		width: 11.313708499px;
 	}
 	.mark.long {
@@ -253,7 +244,7 @@
 		transition-property: transform, width;
 		width: 10px;
 	}
-	.np-container:has(input:indeterminate) .mark {
+	.np-checkbox-container:has(input:indeterminate) .mark {
 		transform: scaleY(-1) translate(4px, -10px) rotate(0deg);
 	}
 	@keyframes prev-unselected-to-checked {
@@ -266,7 +257,7 @@
 			background-color: CanvasText;
 		}
 
-		.np-container:has(input:disabled:checked) .np-background {
+		.np-checkbox-container:has(input:disabled:checked) .np-background {
 			background-color: GrayText;
 			opacity: 1;
 		}
@@ -275,7 +266,7 @@
 			border-color: CanvasText;
 		}
 
-		.np-container:has(input:disabled) .np-outline {
+		.np-checkbox-container:has(input:disabled) .np-outline {
 			border-color: GrayText;
 			opacity: 1;
 		}

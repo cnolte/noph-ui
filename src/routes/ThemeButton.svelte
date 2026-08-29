@@ -40,7 +40,8 @@
 
 <IconButton
 	style="anchor-name:--palette-menu"
-	popovertarget="palette-menu"
+	command="toggle-popover"
+	commandfor="palette-menu"
 	title="Change theme"
 	bind:element={menuBtn}
 >

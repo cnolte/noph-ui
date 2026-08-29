@@ -1,7 +1,10 @@
 <script lang="ts">
-	import LoadingIndicator from '#lib/loading-indicator/LoadingIndicator.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -29,14 +32,9 @@
 	where the container keeps it legible, and leave it off when the indicator sits on a surface of its own.
 </p>
 <DemoContainer>
-	<LoadingIndicator aria-label="Loading" />
-	<LoadingIndicator aria-label="Loading" contained />
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<LoadingIndicator
-	aria-label="Loading"
-/>`}
-/>
+<Code value={UsageSource} />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
@@ -82,22 +80,9 @@
 	<code>--np-loading-indicator-size</code> without any further adjustment.
 </p>
 <DemoContainer>
-	<LoadingIndicator
-		--np-loading-indicator-color="var(--np-color-on-error-container)"
-		--np-loading-indicator-container-color="var(--np-color-error-container)"
-		--np-loading-indicator-size="5rem"
-		aria-label="Loading, custom"
-		contained
-	/>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<LoadingIndicator
-	--np-loading-indicator-color="var(--np-color-on-error-container)"
-	--np-loading-indicator-container-color="var(--np-color-error-container)"
-	--np-loading-indicator-size="5rem"
-	contained
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>

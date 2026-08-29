@@ -74,7 +74,6 @@
 	)
 
 	let field = $state<HTMLDivElement>()
-	let clientWidth = $state(0)
 	let menuOpen = $state(false)
 	let focusIndex = $state(-1)
 	let pendingFocus = false
@@ -230,6 +229,30 @@
 		}
 	}
 
+	const optionKeydown = (event: KeyboardEvent, option: SelectOption) => {
+		const key = event.key
+		if (key === 'ArrowDown') {
+			event.preventDefault()
+			moveFocus(1)
+		} else if (key === 'ArrowUp') {
+			event.preventDefault()
+			moveFocus(-1)
+		} else if (key === 'Home') {
+			event.preventDefault()
+			focusEdge(true)
+		} else if (key === 'End') {
+			event.preventDefault()
+			focusEdge(false)
+		} else if (key === 'Enter' || key === ' ') {
+			event.preventDefault()
+			handleOptionSelect(event, option)
+		} else if (key === 'Tab') {
+			menuElement?.hidePopover()
+		} else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+			performTypeahead(key)
+		}
+	}
+
 	const performTypeahead = (char: string) => {
 		const now = performance.now()
 		if (now - lastTypeTime > 700) typeBuffer = ''
@@ -268,7 +291,7 @@
 		: !label?.length
 			? '--top-space:1rem;--bottom-space:1rem;'
 			: '') + style}
-	class={['text-field', attributes.class]}
+	class={['np-text-field', attributes.class]}
 	bind:this={element}
 >
 	<!-- svelte-ignore a11y_autofocus -->
@@ -291,7 +314,6 @@
 		aria-activedescendant={activeDescendantId}
 		data-testid={attributes['data-testid']}
 		bind:this={field}
-		bind:clientWidth
 		autofocus={disabled ? false : autofocus}
 		onclick={(event) => {
 			const target = event.target as HTMLElement
@@ -453,93 +475,32 @@
 </div>
 
 {#snippet item(option: SelectOption, index: number)}
-	{#if Array.isArray(value) && multiple}
-		<Item
-			id="{uid}-opt-{index}"
-			onclick={(event) => {
-				handleOptionSelect(event, option)
-				field?.focus()
-			}}
-			tabindex={-1}
-			disabled={option.disabled}
-			aria-disabled={option.disabled}
-			role="option"
-			onkeydown={(event) => {
-				const key = event.key
-				if (key === 'ArrowDown') {
-					event.preventDefault()
-					moveFocus(1)
-				} else if (key === 'ArrowUp') {
-					event.preventDefault()
-					moveFocus(-1)
-				} else if (key === 'Home') {
-					event.preventDefault()
-					focusEdge(true)
-				} else if (key === 'End') {
-					event.preventDefault()
-					focusEdge(false)
-				} else if (key === 'Enter' || key === ' ') {
-					event.preventDefault()
-					handleOptionSelect(event, option)
-				} else if (key === 'Tab') {
-					menuElement?.hidePopover()
-				} else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-					performTypeahead(key)
-				}
-			}}
-			variant="button"
-			selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
-			aria-selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
-			>{option.label}
-			{#snippet start()}
-				<Check disabled={option.disabled} checked={value.includes(option.value)} />
-			{/snippet}
-		</Item>
-	{:else}
-		<Item
-			id="{uid}-opt-{index}"
-			onclick={(event) => {
-				handleOptionSelect(event, option)
-				field?.focus()
-			}}
-			tabindex={-1}
-			disabled={option.disabled}
-			aria-disabled={option.disabled}
-			role="option"
-			onkeydown={(event) => {
-				const key = event.key
-				if (key === 'ArrowDown') {
-					event.preventDefault()
-					moveFocus(1)
-				} else if (key === 'ArrowUp') {
-					event.preventDefault()
-					moveFocus(-1)
-				} else if (key === 'Home') {
-					event.preventDefault()
-					focusEdge(true)
-				} else if (key === 'End') {
-					event.preventDefault()
-					focusEdge(false)
-				} else if (key === 'Enter' || key === ' ') {
-					event.preventDefault()
-					handleOptionSelect(event, option)
-				} else if (key === 'Tab') {
-					menuElement?.hidePopover()
-				} else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-					performTypeahead(key)
-				}
-			}}
-			variant="button"
-			selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
-			aria-selected={Array.isArray(value) ? value.includes(option.value) : value === option.value}
-			>{option.label}
-		</Item>
-	{/if}
+	{@const isSelected = selectedSet.has(option.value)}
+	{#snippet check()}
+		<Check disabled={option.disabled} checked={isSelected} />
+	{/snippet}
+	<Item
+		id="{uid}-opt-{index}"
+		onclick={(event) => {
+			handleOptionSelect(event, option)
+			field?.focus()
+		}}
+		tabindex={-1}
+		disabled={option.disabled}
+		aria-disabled={option.disabled}
+		role="option"
+		onkeydown={(event) => optionKeydown(event, option)}
+		variant="button"
+		selected={isSelected}
+		aria-selected={isSelected}
+		start={multiple ? check : undefined}
+		>{option.label}
+	</Item>
 {/snippet}
 
 <Menu
 	id="listbox-{uid}"
-	style={`position-anchor:--${uid};${widthProp}:${clientWidth}px`}
+	style={`position-anchor:--${uid};${widthProp}:anchor-size(width)`}
 	role="listbox"
 	aria-multiselectable={multiple}
 	--np-menu-justify-self="none"
@@ -689,7 +650,7 @@
 		height: 100%;
 		position: relative;
 	}
-	.text-field {
+	.np-text-field {
 		display: inline-flex;
 		resize: both;
 		text-align: start;

@@ -4,16 +4,16 @@ import NavigationRail from './NavigationRail.svelte'
 
 const rail = () => document.querySelector<HTMLElement>('nav')!
 
-describe('NavigationRail', () => {
-	test('renders no "undefined" class when none is passed', () => {
-		render(NavigationRail)
+describe('NavigationRail', async () => {
+	test('renders no "undefined" class when none is passed', async () => {
+		await render(NavigationRail)
 
 		expect(rail().className).not.toContain('undefined')
 		expect(rail().classList.contains('np-navigation-rail')).toBe(true)
 	})
 
-	test('keeps a consumer class alongside its own', () => {
-		render(NavigationRail, { class: 'mine' })
+	test('keeps a consumer class alongside its own', async () => {
+		await render(NavigationRail, { class: 'mine' })
 
 		expect(rail().classList.contains('np-navigation-rail')).toBe(true)
 		expect(rail().classList.contains('mine')).toBe(true)

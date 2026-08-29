@@ -2,7 +2,6 @@
 	import '#lib/internal/focus-ring.css'
 	import Badge from '#lib/badge/Badge.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import { tick } from 'svelte'
 	import { getTabsContext } from './context.js'
 	import type { TabProps } from './types.ts'
 
@@ -24,16 +23,15 @@
 
 	const tabsContext = getTabsContext()
 
+	/*
+	 * The indicator follows the selection one flush behind, so the anchor it is tied to has moved
+	 * to the tab that is already marked selected rather than to one still being rendered.
+	 */
 	$effect(() => {
 		if (tabsContext.value === value) {
 			tabsContext.indicatorValue = value
 		}
 	})
-
-	const setIndicatorValue = async () => {
-		await tick()
-		tabsContext.indicatorValue = value
-	}
 </script>
 
 {#snippet content()}
@@ -47,7 +45,7 @@
 			{#if icon}
 				{#if badge && tabsContext.variant === 'primary' && !inlineIcon}
 					<div class="np-tab-icon-badge">
-						<Badge label={badgeLabel} ariaLabel={badgeAriaLabel} />
+						<Badge label={badgeLabel} aria-label={badgeAriaLabel} />
 						{@render icon?.()}
 					</div>
 				{:else}
@@ -58,7 +56,7 @@
 				<div style="--np-badge-position:static;">
 					<span class="np-tab-label-badge">{@render children?.()}</span><Badge
 						label={badgeLabel}
-						ariaLabel={badgeAriaLabel}
+						aria-label={badgeAriaLabel}
 					/>
 				</div>
 			{:else}
@@ -116,13 +114,11 @@
 		]}
 		onclick={(event) => {
 			tabsContext.value = value
-			setIndicatorValue()
 			onclick?.(event)
 		}}
 		onkeydown={(event) => {
 			if (event.key === 'Enter' || event.key === ' ') {
 				tabsContext.value = value
-				setIndicatorValue()
 			}
 			onkeydown?.(event)
 		}}
@@ -205,8 +201,8 @@
 	@supports not (anchor-name: --np-tab-indicator) {
 		.np-tab-content-active .np-indicator {
 			background-color: var(--np-color-primary);
-			border-start-start-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
-			border-start-end-radius: var(--np-indicator-radius, var(--np-shape-corner-full));
+			border-start-start-radius: var(--np-tabs-indicator-radius, var(--np-shape-corner-full));
+			border-start-end-radius: var(--np-tabs-indicator-radius, var(--np-shape-corner-full));
 		}
 	}
 

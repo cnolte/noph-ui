@@ -17,7 +17,7 @@ const openDialog = async () => {
 
 test('reserves six week rows whatever the month needs and toggles to keyboard entry', async () => {
 	// September 2025 fits in five rows, so a six row grid can only come from the reserved height.
-	setup({ value: '2025-09-15', modeToggle: true })
+	await setup({ value: '2025-09-15', modeToggle: true })
 	await openDialog()
 
 	await expect.poll(() => count('.np-calendar tbody tr')).toBe(6)
@@ -29,8 +29,22 @@ test('reserves six week rows whatever the month needs and toggles to keyboard en
 	await expect.element(grid('September 2025')).toBeVisible()
 })
 
+test('the content outlives the close instead of emptying the dialog before it fades', async () => {
+	await setup({ value: '2025-08-17' })
+	await openDialog()
+	const dialog = document.querySelector<HTMLDialogElement>('dialog.np-date-picker-dialog')!
+
+	await action('Cancel').click()
+	await expect.poll(() => count('.np-date-picker-dialog-content')).toBe(0)
+
+	// The dialog fades itself out after it has closed. Content that goes on the close leaves that
+	// fade playing on an empty box, so it may only go once the fade is over.
+	expect(dialog.open).toBe(false)
+	expect(dialog.getAnimations()).toHaveLength(0)
+})
+
 test('moves focus into the grid on open', async () => {
-	setup({ value: '2025-08-17' })
+	await setup({ value: '2025-08-17' })
 	await openDialog()
 
 	await expect.element(action('Sunday, August 17, 2025, selected')).toHaveFocus()
@@ -42,7 +56,7 @@ test('moves focus into the grid on open', async () => {
 })
 
 test('the year grid replaces the calendar and returns to it', async () => {
-	setup({ value: '2025-08-17' })
+	await setup({ value: '2025-08-17' })
 	await openDialog()
 
 	await page.getByRole('button', { name: /^Select year/ }).click()
@@ -55,7 +69,7 @@ test('the year grid replaces the calendar and returns to it', async () => {
 })
 
 test('confirm commits the pending day and cancel leaves the value alone', async () => {
-	setup({ value: '2025-08-17' })
+	await setup({ value: '2025-08-17' })
 	await openDialog()
 
 	await action('Friday, August 8, 2025').click()

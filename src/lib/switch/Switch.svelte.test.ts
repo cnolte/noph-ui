@@ -16,9 +16,9 @@ const handleOffset = () => {
 	return transform === 'none' ? 0 : new DOMMatrix(transform).e
 }
 
-describe('Switch', () => {
+describe('Switch', async () => {
 	test('reads its appearance off the checkbox rather than a class', async () => {
-		render(Switch, { selected: false, icons: 'both' })
+		await render(Switch, { selected: false, icons: 'both' })
 		const unselectedTrack = getComputedStyle(track()).backgroundColor
 		expect(handleOffset()).toBe(0)
 
@@ -28,8 +28,8 @@ describe('Switch', () => {
 		expect(getComputedStyle(track()).backgroundColor).not.toBe(unselectedTrack)
 	})
 
-	test('swaps the icon off the checkbox alone', () => {
-		render(Switch, { selected: false, icons: 'both' })
+	test('swaps the icon off the checkbox alone', async () => {
+		await render(Switch, { selected: false, icons: 'both' })
 		expect(visibleIcons()).toHaveLength(1)
 		const unselected = visibleIcons()[0]
 
@@ -39,8 +39,8 @@ describe('Switch', () => {
 		expect(visibleIcons()[0]).not.toBe(unselected)
 	})
 
-	test('shows an icon only when on with icons="selected"', () => {
-		render(Switch, { selected: false, icons: 'selected' })
+	test('shows an icon only when on with icons="selected"', async () => {
+		await render(Switch, { selected: false, icons: 'selected' })
 		expect(visibleIcons()).toHaveLength(0)
 
 		input().checked = true
@@ -49,7 +49,7 @@ describe('Switch', () => {
 	})
 
 	test('moves the handle on a click', async () => {
-		render(Switch, { selected: false })
+		await render(Switch, { selected: false })
 		expect(handleOffset()).toBe(0)
 
 		await page.getByRole('switch').click()

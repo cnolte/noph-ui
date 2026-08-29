@@ -1,10 +1,8 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
-	import Menu from '#lib/menu/Menu.svelte'
-	import MenuItem from '#lib/menu/MenuItem.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-	let menuBtn: HTMLElement | undefined = $state()
+	import MenuUsage from './demos/MenuUsage.svelte'
+	import MenuUsageSource from './demos/MenuUsage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -19,46 +17,26 @@
 	<kbd>Escape</kbd>.
 </p>
 <p>
-	Two things connect a menu to its anchor. <code>popovertarget</code> on the trigger opens it, and
-	CSS anchor positioning places it: give the trigger an <code>anchor-name</code> and point the menu
-	at it with <code>position-anchor</code>. Pass the same element as the <code>anchor</code> prop so the
-	menu can size itself to the space that is actually left on screen.
+	Two things connect a menu to its anchor. <code>command="toggle-popover"</code> and
+	<code>commandfor</code> on the trigger open it, with no script involved, and CSS anchor
+	positioning places it: give the trigger an <code>anchor-name</code> and point the menu at it with
+	<code>position-anchor</code>. Pass the same element as the <code>anchor</code> prop so the menu can
+	size itself to the space that is actually left on screen.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Button style="anchor-name:--city-menu" popovertarget="browser-menu" bind:element={menuBtn}>
-		Open menu
-	</Button>
-	<Menu anchor={menuBtn} id="browser-menu" style="position-anchor:--city-menu;max-width: 300px">
-		<MenuItem>New York</MenuItem>
-		<MenuItem>Los Angeles</MenuItem>
-		<MenuItem>Berlin</MenuItem>
-		<MenuItem>London</MenuItem>
-	</Menu>
+	<MenuUsage />
 </DemoContainer>
-<Code
-	value={`<script lang="ts">
-	let menuBtn = $state<HTMLElement>()
-</` +
-		`script>
-<Button style="anchor-name:--city-menu" popovertarget="browser-menu" bind:element={menuBtn}>
-	Open menu
-</Button>
-<Menu anchor={menuBtn} id="browser-menu" style="position-anchor:--city-menu;max-width: 300px">
-	<MenuItem>New York</MenuItem>
-	<MenuItem>Los Angeles</MenuItem>
-	<MenuItem>Berlin</MenuItem>
-	<MenuItem>London</MenuItem>
-</Menu>`}
-/>
+<Code value={MenuUsageSource} />
 
 <h2 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Besides the native <code>popovertarget</code> attribute, you can open and close the menu
-	imperatively. Bind a reference with <code>bind:this</code> and type it with
+	Where a trigger cannot carry <code>commandfor</code>, open and close the menu imperatively
+	instead. Bind a reference with <code>bind:this</code> and type it with
 	<code>ReturnType&lt;typeof Menu&gt;</code>; it is <code>undefined</code> until the component has
-	mounted, so call through <code>?.</code>.
+	mounted, so call through <code>?.</code>. Prefer the attributes where you have the choice, and
+	leave <code>bind:open</code> to report the state rather than to set it.
 </p>
 <Code
 	value={`<script lang="ts">
@@ -69,7 +47,7 @@
 <Menu bind:this={menu} anchor={menuBtn}>
 	<MenuItem>New York</MenuItem>
 </Menu>
-<Button onclick={() => menu?.showPopover()}>Open menu</Button>`}
+<Button onclick={() => menu?.show()}>Open menu</Button>`}
 />
 <table>
 	<thead>
@@ -81,12 +59,12 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>showPopover</code></td>
+			<td><code>show</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>Opens the menu.</td>
 		</tr>
 		<tr>
-			<td><code>hidePopover</code></td>
+			<td><code>close</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>Closes the menu.</td>
 		</tr>
@@ -115,12 +93,11 @@
 <h2 id="placement">Placement<a href="#placement" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	A menu opens on the side of the anchor you asked for, below it by default, and moves out of the
-	way on its own when that side is too small. It flips to the opposite side of the anchor when the
-	menu would not fit there, and to the other side of it along the inline axis when the menu would
-	run off the edge of the window. When neither side of the anchor is tall enough, the menu takes the
-	whole height of the window and sits over the anchor, so a tall menu is shown in full instead of
-	being squeezed into the larger of two small gaps. Only a menu longer than the window itself stays
-	on the roomier side and scrolls, since covering the anchor would not buy anything there.
+	way on its own when that side is too small: it flips to the opposite side when the menu would not
+	fit, and slides along the inline axis when it would run off the edge of the window. When neither
+	side has room, the menu takes the full height of the window and sits over the anchor instead of
+	squeezing into whichever gap is bigger. Only a menu taller than the window stays on the roomier
+	side and scrolls, since covering the anchor would not help there.
 </p>
 <p>
 	The <code>anchor</code> prop is what makes this work: it is the element the menu measures the room against.
@@ -190,10 +167,10 @@
 	<code>--np-menu-position-area</code> takes any CSS <code>position-area</code> value and decides
 	which side of the anchor the menu opens on. Whatever you pick, the menu still moves as
 	<a class="link" href="#placement">Placement</a> describes when that side is too small.
-	<code>--np-menu-over-anchor-position-area</code> is the area used for the last of those steps, the
-	one that spans the height over the anchor; keep <code>span-all</code> in the block axis and repeat
-	whatever the inline half of <code>--np-menu-position-area</code> says, so the menu stays lined up
-	the same way. The items themselves are styled through the
+	<code>--np-menu-over-anchor-position-area</code> is the area used for that last fallback, when the
+	menu spans the full height over the anchor. Keep <code>span-all</code> in the block axis and
+	repeat the inline half of <code>--np-menu-position-area</code>, so the menu stays lined up the
+	same way. The items themselves are styled through the
 	<a class="link" href="/components/list">list tokens</a>.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -232,8 +209,8 @@
 			<td><code>HTMLElement | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>The element the menu belongs to. It is what the room on screen is measured around, so it
-				decides how tall the menu may be and which way it moves when a side is too small.</td
+				>The element the menu belongs to. Room on screen is measured against it, which decides how
+				tall the menu may be and which way it moves when a side is too small.</td
 			>
 		</tr>
 		<tr>

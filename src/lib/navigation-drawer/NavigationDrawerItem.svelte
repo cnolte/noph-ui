@@ -7,7 +7,8 @@
 	let {
 		selected = false,
 		label,
-		badgeLabelText,
+		badgeLabel,
+		badgeAriaLabel,
 		icon,
 		element = $bindable(),
 		...attributes
@@ -24,8 +25,14 @@
 		{/if}
 	</div>
 	<div class="np-navigation-drawer-item-label">{label}</div>
-	{#if badgeLabelText}
-		<div class="np-navigation-drawer-item-badge">{badgeLabelText}</div>
+	{#if badgeLabel}
+		<div
+			class="np-navigation-drawer-item-badge"
+			role={badgeAriaLabel ? 'status' : undefined}
+			aria-label={badgeAriaLabel}
+		>
+			{badgeLabel}
+		</div>
 	{/if}
 {/snippet}
 

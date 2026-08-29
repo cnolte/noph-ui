@@ -9,14 +9,20 @@
 		element = $bindable(),
 		group = $bindable(),
 		style,
+		issues,
 		...attributes
 	}: RadioProps = $props()
 
 	let inputEl = $state<HTMLInputElement>()
 	const uid = $props.id()
+	let hasError = $derived(!!issues?.length)
 </script>
 
-<div {style} class={['np-container', attributes.class]} bind:this={element}>
+<div
+	{style}
+	class={['np-radio-container', hasError && !attributes.disabled && 'np-error', attributes.class]}
+	bind:this={element}
+>
 	{#if !attributes.disabled}
 		<Ripple forElement={inputEl} class="np-radio-ripple" />
 	{/if}
@@ -70,7 +76,7 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
-	.np-container {
+	.np-radio-container {
 		margin: max(0px, (40px - var(--np-radio-icon-size, 20px))/2);
 		display: inline-flex;
 		vertical-align: top;
@@ -84,7 +90,7 @@
 		cursor: pointer;
 	}
 
-	.np-container:has(input:disabled) {
+	.np-radio-container:has(input:disabled) {
 		cursor: default;
 	}
 
@@ -94,11 +100,11 @@
 		position: absolute;
 	}
 
-	.np-container:has(input:checked) .np-radio-icon {
+	.np-radio-container:has(input:checked) .np-radio-icon {
 		fill: var(--np-radio-selected-icon-color, var(--np-color-primary));
 	}
 
-	.np-container:has(input:disabled) .np-radio-icon {
+	.np-radio-container:has(input:disabled) .np-radio-icon {
 		fill: var(--np-color-on-surface);
 		opacity: 0.38;
 	}
@@ -109,7 +115,7 @@
 		transition: opacity 50ms linear;
 	}
 
-	.np-container:has(input:checked) .inner.circle {
+	.np-radio-container:has(input:checked) .inner.circle {
 		animation: 300ms cubic-bezier(0.05, 0.7, 0.1, 1) 0s 1 normal none running inner-circle-grow;
 		opacity: 1;
 	}
@@ -123,7 +129,20 @@
 		}
 	}
 
-	.np-container:has(input:focus-visible) {
+	.np-error .np-radio-icon {
+		fill: var(--np-color-error);
+	}
+
+	.np-error:has(input:checked) .np-radio-icon {
+		fill: var(--np-color-error);
+	}
+
+	.np-error {
+		--np-ripple-hover-color: var(--np-color-error);
+		--np-ripple-pressed-color: var(--np-color-error);
+	}
+
+	.np-radio-container:has(input:focus-visible) {
 		outline-style: solid;
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;

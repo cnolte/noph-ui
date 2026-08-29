@@ -10,7 +10,7 @@
 		value = $bindable(),
 		variant = 'outlined',
 		element = $bindable(),
-		menuOpen = $bindable(false),
+		open = $bindable(false),
 		populated,
 		clampMenuWidth = false,
 		optionsFilter,
@@ -19,6 +19,7 @@
 			finalPopulated = populated
 			menuElement.hidePopover()
 		},
+		style,
 		onkeydown,
 		onclick,
 		oninput,
@@ -36,7 +37,6 @@
 	let displayOptions = $derived(query === '' && !optionsFilter ? options : options.filter(filterFn))
 	let useVirtualList = $derived(displayOptions.length > virtualThreshold)
 	let widthProp = $derived(clampMenuWidth || useVirtualList ? 'width' : 'min-width')
-	let clientWidth = $state(0)
 	let menuElement = $state<HTMLDivElement>()
 	let finalPopulated = $derived(populated)
 	let activeIndex = $state(NO_INDEX)
@@ -74,7 +74,7 @@
 			activeIndex = NO_INDEX
 			return
 		}
-		if (!menuOpen || activeIndex < 0) return
+		if (!open || activeIndex < 0) return
 		const id = `${uid}-opt-${activeIndex}`
 		const optEl = document.getElementById(id)
 		if (optEl) {
@@ -135,14 +135,13 @@
 	autocomplete="off"
 	{variant}
 	populated={finalPopulated}
-	bind:clientWidth
 	bind:value
-	style="anchor-name:--{uid};"
+	style="anchor-name:--{uid};{style ?? ''}"
 	role="combobox"
 	aria-controls="listbox-{uid}"
-	aria-expanded={menuOpen}
+	aria-expanded={open}
 	aria-autocomplete="list"
-	aria-activedescendant={menuOpen && activeIndex >= 0 ? `${uid}-opt-${activeIndex}` : undefined}
+	aria-activedescendant={open && activeIndex >= 0 ? `${uid}-opt-${activeIndex}` : undefined}
 	aria-haspopup="listbox"
 	onclick={(event) => {
 		finalPopulated = true
@@ -159,7 +158,7 @@
 			menuElement?.hidePopover()
 			return
 		}
-		if (event.key === 'Escape' && menuOpen) {
+		if (event.key === 'Escape' && open) {
 			menuElement?.hidePopover()
 			activeIndex = NO_INDEX
 			event.preventDefault()
@@ -189,7 +188,7 @@
 			event.preventDefault()
 			return
 		}
-		if (event.key === 'Enter' && menuOpen && activeIndex >= 0) {
+		if (event.key === 'Enter' && open && activeIndex >= 0) {
 			const opt = displayOptions[activeIndex]
 			if (opt) {
 				selectOption(opt)
@@ -203,7 +202,7 @@
 />
 <Menu
 	id="listbox-{uid}"
-	style="position-anchor:--{uid};{widthProp}:{clientWidth}px"
+	style="position-anchor:--{uid};{widthProp}:anchor-size(width)"
 	role="listbox"
 	class={[!displayOptions.length && 'np-auto-complete-empty']}
 	coverAnchor={false}
@@ -214,7 +213,7 @@
 		? 'var(--np-outlined-select-text-field-container-shape)'
 		: 'var(--np-filled-select-text-field-container-shape)'}
 	anchor={element}
-	bind:open={menuOpen}
+	bind:open
 	ontoggle={(e) => {
 		if (e.newState === 'closed') {
 			activeIndex = NO_INDEX

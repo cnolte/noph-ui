@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
+	import Badge from '#lib/badge/Badge.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationRailItemProps } from './types.ts'
@@ -8,6 +9,9 @@
 		selected,
 		icon,
 		label,
+		badge = false,
+		badgeLabel,
+		badgeAriaLabel,
 		element = $bindable(),
 		...attributes
 	}: NavigationRailItemProps = $props()
@@ -20,6 +24,11 @@
 	<div class="np-navigation-action-icon">
 		<Ripple forElement={touchEl} />
 		{@render icon()}
+		{#if badge}
+			<div class="np-navigation-action-badge">
+				<Badge label={badgeLabel} aria-label={badgeAriaLabel} />
+			</div>
+		{/if}
 	</div>
 	<div class="np-navigation-action-label">{label}</div>
 	<span class="np-touch" bind:this={touchEl}></span>
@@ -91,6 +100,13 @@
 		font-weight: var(--np-navigation-rail-item-font-weight, 500);
 		transition: color var(--np-motion-expressive-default-effects);
 		color: var(--np-color-on-surface-variant);
+	}
+	.np-navigation-action-badge {
+		--np-badge-top: 0;
+		--np-badge-end: 0.75rem;
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
 	}
 	.np-navigation-action-selected .np-navigation-action-icon {
 		color: var(--np-color-on-secondary-container);

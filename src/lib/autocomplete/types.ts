@@ -15,5 +15,5 @@ export interface AutoCompleteProps extends Omit<TextFieldProps, 'clientWidth' | 
 	onoptionselect?: (option: AutoCompleteOption, menuElement: HTMLDivElement) => void
 	clampMenuWidth?: boolean
 	virtualThreshold?: number
-	menuOpen?: boolean
+	open?: boolean
 }

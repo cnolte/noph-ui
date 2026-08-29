@@ -4,8 +4,10 @@
 	import Dialog from '#lib/dialog/Dialog.svelte'
 	import Divider from '#lib/divider/Divider.svelte'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
+	import { syncOpenEffect } from '#lib/popover.svelte.js'
 	import { tick } from 'svelte'
 	import Calendar from './Calendar.svelte'
+	import { exitVisibility } from './exitVisibility.svelte.js'
 	import {
 		clampDate,
 		compareDays,
@@ -34,6 +36,10 @@
 		isDateEnabled,
 		adjacentMonthDays = false,
 		title = 'Select range',
+		headline,
+		name,
+		endName,
+		form,
 		startLabel = 'Start date',
 		endLabel = 'End date',
 		cancelLabel = 'Cancel',
@@ -51,6 +57,8 @@
 	let pending = $state.raw<DateRange>({})
 	let focusedDay = $state<Date | undefined>(undefined)
 	let confirming = false
+
+	const exit = exitVisibility()
 
 	let todayValue = $derived(getToday())
 	let week = $derived(firstDayOfWeek ?? getFirstDayOfWeek(locale))
@@ -108,12 +116,25 @@
 		if (target && scroller) scroller.scrollTop = target.offsetTop
 	}
 
-	const isOpen = () => !!element?.matches(':popover-open')
+	/*
+	 * The same pair every overlay in the library exports. A trigger with `command="show-modal"` and
+	 * `commandfor` needs neither, so these are for the times there is no trigger to point at the
+	 * dialog. `open` follows either way, written back from the dialog's own toggle event.
+	 */
+	export const show = () => {
+		if (element && !element.open) element.showModal()
+	}
 
-	$effect(() => {
-		if (open && !isOpen()) element?.showPopover()
-		if (!open && isOpen()) element?.hidePopover()
-	})
+	export const close = () => {
+		if (element?.open) element.close()
+	}
+
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 
 	let prepending = false
 
@@ -176,6 +197,7 @@
 		const nowOpen = event.newState === 'open'
 		open = nowOpen
 		if (nowOpen) {
+			exit.show()
 			confirming = false
 			pending = { ...value }
 			focusedDay = undefined
@@ -184,10 +206,19 @@
 		} else {
 			if (!confirming) oncancel?.()
 			confirming = false
+			exit.scheduleExit(element)
 		}
 	}}
 >
-	{#if open}
+	<input class="np-date-range-picker-value" type="hidden" value={value.start ?? ''} {name} {form} />
+	<input
+		class="np-date-range-picker-value"
+		type="hidden"
+		value={value.end ?? ''}
+		name={endName}
+		{form}
+	/>
+	{#if exit.visible}
 		<div class="np-date-range-picker-content">
 			<div class="np-date-range-picker-header">
 				<div class="np-date-range-picker-top-bar">
@@ -201,9 +232,13 @@
 				<div class="np-date-range-picker-header-text">
 					<span class="np-date-range-picker-title">{title}</span>
 					<h2 class="np-date-range-picker-headline">
-						<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
-						<span aria-hidden="true">–</span>
-						<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
+						{#if headline}
+							<span>{headline}</span>
+						{:else}
+							<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
+							<span aria-hidden="true">–</span>
+							<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
+						{/if}
 					</h2>
 				</div>
 			</div>
@@ -248,7 +283,7 @@
 	{/if}
 
 	{#snippet actions()}
-		{#if open}
+		{#if exit.visible}
 			<Button type="button" variant="text" onclick={cancel}>{cancelLabel}</Button>
 			<Button type="button" variant="text" disabled={!canConfirm} onclick={confirm}>
 				{confirmLabel}

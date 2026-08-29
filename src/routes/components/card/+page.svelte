@@ -1,8 +1,14 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
-	import Card from '#lib/card/Card.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import ElevatedCard from './demos/ElevatedCard.svelte'
+	import ElevatedCardSource from './demos/ElevatedCard.svelte?raw'
+	import FilledCard from './demos/FilledCard.svelte'
+	import FilledCardSource from './demos/FilledCard.svelte?raw'
+	import OutlinedCard from './demos/OutlinedCard.svelte'
+	import OutlinedCardSource from './demos/OutlinedCard.svelte?raw'
+	import Types from './demos/Types.svelte'
+	import TypesSource from './demos/Types.svelte?raw'
 </script>
 
 <svelte:head>
@@ -13,192 +19,28 @@
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer style="width: calc(100% - 2rem)">
-	<div class="cards" style="width:100%;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));">
-		<Card
-			type="button"
-			variant="elevated"
-			headline="Elevated"
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-			image="/pollock.avif"
-		></Card>
-		<Card
-			type="button"
-			variant="filled"
-			headline="Filled card"
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-			image="/pollock2.avif"
-		></Card>
-		<Card
-			type="button"
-			variant="outlined"
-			headline="Outlined card"
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-			image="/pollock3.avif"
-		></Card>
-	</div>
+	<Types />
 </DemoContainer>
-<Code
-	value={`<Card
-	type="button"
-	variant="elevated"
-	headline="Elevated"
-	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-	image="/pollock.avif"
-></Card>
-<Card
-	type="button"
-	variant="filled"
-	headline="Filled card"
-	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-	image="/pollock2.avif"
-></Card>
-<Card
-	type="button"
-	variant="outlined"
-	headline="Outlined card"
-	supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-	image="/pollock3.avif"
-></Card>`}
-/>
-{#snippet action()}
-	<Button variant="filled">Action</Button>
-{/snippet}
+<Code value={TypesSource} />
 <h2 id="elevated-card">
 	Elevated card<a href="#elevated-card" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<div class="cards">
-		<Card
-			type="text"
-			variant="elevated"
-			headline="Elevated"
-			subhead="Subhead"
-			{action}
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-		></Card>
-		<Card
-			type="text"
-			variant="elevated"
-			disabled
-			headline="Elevated disabled"
-			subhead="Subhead"
-			{action}
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-		></Card>
-	</div>
+	<ElevatedCard />
 </DemoContainer>
-<Code
-	value={`{#snippet action()}
-	<Button variant="filled">Action</Button>
-{/snippet}
-<Card
-  type="text"
-  variant="elevated"
-  headline="Elevated"
-  subhead="Subhead"
-  {action}
-  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-></Card>
-<Card
-  type="text"
-  variant="elevated"
-  disabled
-  headline="Elevated disabled"
-  subhead="Subhead"
-  {action}
-  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-></Card>`}
-/>
+<Code value={ElevatedCardSource} />
 <h2 id="filled-card">Filled card<a href="#filled-card" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<div class="cards">
-		<Card
-			type="text"
-			variant="filled"
-			headline="Filled"
-			subhead="Subhead"
-			{action}
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-		></Card>
-		<Card
-			type="text"
-			variant="filled"
-			disabled
-			headline="Filled disabled"
-			subhead="Subhead"
-			{action}
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-		></Card>
-	</div>
+	<FilledCard />
 </DemoContainer>
-<Code
-	value={`{#snippet action()}
-	<Button variant="filled">Action</Button>
-{/snippet}
-<Card
-  type="text"
-  variant="filled"
-  headline="Filled"
-  subhead="Subhead"
-  {action}
-  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-></Card>
-<Card
-  type="text"
-  variant="filled"
-  disabled
-  headline="Filled disabled"
-  subhead="Subhead"
-  {action}
-  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-></Card>`}
-/>
+<Code value={FilledCardSource} />
 <h2 id="outlined-card">
 	Outlined card<a href="#outlined-card" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<div class="cards">
-		<Card
-			type="text"
-			variant="outlined"
-			headline="Outlined"
-			subhead="Subhead"
-			{action}
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-		></Card>
-		<Card
-			type="text"
-			variant="outlined"
-			disabled
-			headline="Outlined disabled"
-			subhead="Subhead"
-			{action}
-			supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-		></Card>
-	</div>
+	<OutlinedCard />
 </DemoContainer>
-<Code
-	value={`{#snippet action()}
-	<Button variant="filled">Action</Button>
-{/snippet}
-<Card
-  type="text"
-  variant="outlined"
-  headline="Outlined"
-  subhead="Subhead"
-  {action}
-  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-></Card>
-<Card
-  type="text"
-  variant="outlined"
-  disabled
-  headline="Outlined disabled"
-  subhead="Subhead"
-  {action}
-  supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
-></Card>`}
-/>
+<Code value={OutlinedCardSource} />
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="elevated-card-tokens">
 	Elevated card tokens<a href="#elevated-card-tokens" aria-hidden="true" tabindex="-1">#</a>
@@ -364,11 +206,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.cards {
-		display: grid;
-		gap: 0.5rem;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	}
-</style>

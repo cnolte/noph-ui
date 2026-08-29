@@ -15,7 +15,7 @@
 	import { tocSections } from './tocSections.ts'
 
 	let { children } = $props()
-	let popover: HTMLElement | undefined = $state()
+	let drawer: ReturnType<typeof NavigationDrawer> | undefined = $state()
 
 	let sections = $derived(tocSections[page.route.id ?? ''] ?? [])
 	let hasToc = $derived(sections.length > 0)
@@ -30,8 +30,12 @@
 
 <header class="layout-btn">
 	<div class="inner-header">
-		<IconButton popovertarget="mobile-drawer" variant="text" title="Open" class="menu-btn"
-			><Icon>menu</Icon></IconButton
+		<IconButton
+			command="show-modal"
+			commandfor="mobile-drawer"
+			variant="text"
+			title="Open"
+			class="menu-btn"><Icon>menu</Icon></IconButton
 		>
 		<a href={resolve('/')} class="logo">
 			<Logo />
@@ -60,8 +64,7 @@
 </NavigationDrawer>
 <NavigationDrawer
 	--np-navigation-drawer-item-font-size="1rem"
-	bind:element={popover}
-	popover="auto"
+	bind:this={drawer}
 	id="mobile-drawer"
 	class={['scroll-wrapper']}
 	backdrop
@@ -69,7 +72,8 @@
 >
 	<IconButton
 		style="margin-inline-start: 1rem"
-		popovertarget="mobile-drawer"
+		command="close"
+		commandfor="mobile-drawer"
 		variant="text"
 		title="Close"
 	>
@@ -77,7 +81,7 @@
 	</IconButton>
 	<MainNavigation
 		onclose={() => {
-			popover?.hidePopover()
+			drawer?.close()
 		}}
 	/>
 </NavigationDrawer>
@@ -195,7 +199,7 @@
 		:global(.main-nav) {
 			display: block;
 		}
-		:global(.nav[popover]) {
+		:global(dialog.nav) {
 			display: none;
 		}
 		:global(.menu-btn) {

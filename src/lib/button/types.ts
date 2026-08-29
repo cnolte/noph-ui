@@ -1,9 +1,14 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type {
+	HTMLAnchorAttributes,
+	HTMLAttributes,
+	HTMLButtonAttributes,
+	MouseEventHandler,
+} from 'svelte/elements'
 
 export type ButtonElement = HTMLButtonElement | HTMLAnchorElement
 
-interface BaseButtonProps
+export interface BaseButtonProps
 	extends
 		HTMLAttributes<ButtonElement>,
 		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
@@ -36,7 +41,25 @@ export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
 	expandedRatio?: number
 	compressionLimit?: number
 	element?: HTMLElement
-	children?: Snippet
+}
+
+export interface SplitButtonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onclick'> {
+	/** Text of the leading action. */
+	label?: string
+	/** Leading icon on the action half. */
+	icon?: Snippet
+	/** Menu items for the trailing half. Rendered inside a `Menu`. */
+	menu?: Snippet<[string]>
+	variant?: Exclude<ButtonProps['variant'], 'text'>
+	size?: BaseButtonProps['size']
+	disabled?: boolean | null
+	/** Bindable. Whether the menu is open. */
+	open?: boolean
+	/** Accessible name for the trailing half, which shows only a caret. */
+	menuLabel?: string
+	/** The action half's click handler. The trailing half opens the menu instead. */
+	onclick?: MouseEventHandler<ButtonElement>
+	element?: HTMLElement
 }
 
 export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
@@ -52,4 +75,5 @@ export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
 	}[]
 	group?: string | number | (string | number)[] | null
 	element?: HTMLElement
+	issues?: { message: string }[]
 }

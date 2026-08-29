@@ -1,10 +1,12 @@
 <script lang="ts">
-	import Divider from '#lib/divider/Divider.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
-	import List from '#lib/list/List.svelte'
-	import ListItem from '#lib/list/ListItem.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import IconItem from './demos/IconItem.svelte'
+	import IconItemSource from './demos/IconItem.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -14,99 +16,15 @@
 <h1>Lists</h1>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<List style="max-width:300px">
-		<ListItem>Browsers</ListItem>
-		<Divider />
-		<ListItem>Chrome</ListItem>
-		<ListItem>Safari</ListItem>
-		<ListItem
-			>{#snippet supportingText()}
-				Firefox is the spiritual successor of Netscape Navigator.
-			{/snippet}Firefox</ListItem
-		>
-		<ListItem variant="button"
-			>{#snippet end()}
-				<Icon>open_in_new</Icon>
-			{/snippet}
-			{#snippet supportingText()}
-				This will open a new tab
-			{/snippet}Compare benchmarks</ListItem
-		>
-	</List>
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<List style="max-width:300px">
-	<ListItem>Browsers</ListItem>
-	<Divider />
-	<ListItem>Chrome</ListItem>
-	<ListItem>Safari</ListItem>
-	<ListItem>
-		Firefox
-		{#snippet supportingText()}
-			Firefox is the spiritual successor of Netscape Navigator.
-		{/snippet}
-	</ListItem>
-	<ListItem variant="button">
-		Compare benchmarks
-		{#snippet supportingText()}
-			This will open a new tab
-		{/snippet}
-		{#snippet end()}
-			<Icon>open_in_new</Icon>
-		{/snippet}
-	</ListItem>
-</List>`}
-/>
+<Code value={UsageSource} />
 <h2 id="icon-item">Icon item<a href="#icon-item" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<List style="max-width:300px">
-		<ListItem>
-			Account
-			{#snippet start()}
-				<Icon>person</Icon>
-			{/snippet}
-		</ListItem>
-		<Divider />
-		<ListItem>
-			Setting
-			{#snippet start()}
-				<Icon>settings</Icon>
-			{/snippet}
-		</ListItem>
-		<Divider />
-		<ListItem>
-			Sign out
-			{#snippet start()}
-				<Icon>logout</Icon>
-			{/snippet}
-		</ListItem>
-	</List>
+	<IconItem />
 </DemoContainer>
 
-<Code
-	value={`<List style="max-width:300px">
-	<ListItem>
-		Account
-		{#snippet start()}
-			<Icon>person</Icon>
-		{/snippet}
-	</ListItem>
-	<Divider />
-	<ListItem>
-		Setting
-		{#snippet start()}
-			<Icon>settings</Icon>
-		{/snippet}
-	</ListItem>
-	<Divider />
-	<ListItem>
-		Sign out
-		{#snippet start()}
-			<Icon>logout</Icon>
-		{/snippet}
-	</ListItem>
-</List>`}
-/>
+<Code value={IconItemSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -146,31 +64,9 @@
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<List style="max-width:300px">
-		<ListItem
-			--np-item-container-height="3rem"
-			--np-item-label-text-color="var(--np-color-tertiary)"
-			--np-item-leading-icon-color="var(--np-color-tertiary)"
-		>
-			Account
-			{#snippet start()}
-				<Icon>person</Icon>
-			{/snippet}
-		</ListItem>
-	</List>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<ListItem
-	--np-item-container-height="3rem"
-	--np-item-label-text-color="var(--np-color-tertiary)"
-	--np-item-leading-icon-color="var(--np-color-tertiary)"
->
-	Account
-	{#snippet start()}
-		<Icon>person</Icon>
-	{/snippet}
-</ListItem>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>

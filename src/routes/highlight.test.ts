@@ -47,3 +47,18 @@ test('a comment-only snippet does not loop or throw', () => {
 test('bash commands are still detected', () => {
 	expect(highlight('npm install noph-ui')).toContain('token function')
 })
+
+test('a full component with a script block highlights the script as TypeScript and the rest as markup', () => {
+	const result = highlight(`<script lang="ts">
+	import { FilterChip } from '#lib/index.js'
+
+	let filterGroup = $state<string[]>([])
+</script>
+
+<FilterChip label="Running" bind:group={filterGroup} />`)
+	expect(result).toContain('<span class="token keyword">import</span>')
+	expect(result).toContain('<span class="token string">\'#lib/index.js\'</span>')
+	expect(result).not.toContain('token tag">string[]')
+	expect(result).toContain('token tag')
+	expect(result).toContain('<span class="token attr-name">label</span>')
+})

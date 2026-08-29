@@ -6,7 +6,14 @@
 	let { value }: { value: string } = $props()
 	let selected = $state(false)
 	let announcement = $state('')
-	let highlighted = $derived(highlight(value))
+
+	let displayValue = $derived(
+		value
+			.replaceAll("'#lib/icons/index.js'", "'noph-ui/icons'")
+			.replaceAll("'#lib/types.js'", "'noph-ui/types'")
+			.replaceAll("'#lib/index.js'", "'noph-ui'"),
+	)
+	let highlighted = $derived(highlight(displayValue))
 </script>
 
 <div class="code-wrapper">
@@ -17,7 +24,7 @@
 			toggle
 			bind:selected
 			onclick={() => {
-				navigator.clipboard.writeText(value)
+				navigator.clipboard.writeText(displayValue)
 				announcement = 'Copied to clipboard'
 			}}
 			onmouseleave={() => {

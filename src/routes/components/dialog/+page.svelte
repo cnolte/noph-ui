@@ -1,12 +1,10 @@
 <script lang="ts">
 	import DemoContainer from '../../DemoContainer.svelte'
-	import Dialog from '#lib/dialog/Dialog.svelte'
-	import Button from '#lib/button/Button.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	let dialog: ReturnType<typeof Dialog> | undefined = $state()
-	let longDialog: ReturnType<typeof Dialog> | undefined = $state()
-	const paragraphs = Array.from({ length: 12 }, (_, index) => index + 1)
+	import ScrollableContent from './demos/ScrollableContent.svelte'
+	import ScrollableContentSource from './demos/ScrollableContent.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -16,8 +14,9 @@
 <h1>Dialogs</h1>
 <p>
 	A dialog interrupts to ask for a decision or to show information that needs an answer before
-	anything else can happen. It is a native popover in the top layer, so opening it is a matter of
-	pointing a trigger at it with <code>popovertarget</code>; the browser handles
+	anything else can happen. It is a native <code>&lt;dialog&gt;</code> in the top layer, so opening
+	it is a matter of pointing a trigger at it with <code>command="show-modal"</code> and
+	<code>commandfor</code>; the browser handles
 	<kbd>Escape</kbd> and the light dismiss.
 </p>
 <p>
@@ -27,66 +26,9 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Button popovertarget="simple-dialog">Show dialog</Button>
-	<Dialog
-		bind:this={dialog}
-		headline="Reset settings?"
-		supportingText="This will reset your app preferences back to their default settings."
-		id="simple-dialog"
-		divider
-	>
-		{#snippet icon()}
-			<Icon>settings</Icon>
-		{/snippet}
-		{#snippet actions()}
-			<Button
-				onclick={() => {
-					dialog?.hidePopover()
-				}}
-				variant="text">Cancel</Button
-			>
-			<Button
-				onclick={() => {
-					dialog?.hidePopover()
-				}}
-				variant="text">Accept</Button
-			>
-		{/snippet}
-	</Dialog>
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<script lang="ts">
-	let dialog: ReturnType<typeof Dialog> | undefined = $state()
-</` +
-		`script>
-
-<Button popovertarget="simple-dialog">Show dialog</Button>
-<Dialog
-	bind:this={dialog}
-	headline="Reset settings?"
-	supportingText="This will reset your app preferences back to their default settings."
-	id="simple-dialog"
-	divider
->
-	{#snippet icon()}
-		<Icon>settings</Icon>
-	{/snippet}
-	{#snippet actions()}
-		<Button
-			onclick={() => {
-				dialog?.hidePopover()
-			}}
-			variant="text">Cancel</Button
-		>
-		<Button
-			onclick={() => {
-				dialog?.hidePopover()
-			}}
-			variant="text">Accept</Button
-		>
-	{/snippet}
-</Dialog>`}
-/>
+<Code value={UsageSource} />
 
 <h2 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -104,12 +46,12 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>showPopover</code></td>
+			<td><code>show</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>Shows the dialog.</td>
 		</tr>
 		<tr>
-			<td><code>hidePopover</code></td>
+			<td><code>close</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>Hides the dialog.</td>
 		</tr>
@@ -125,33 +67,9 @@
 	itself never grows past the viewport.
 </p>
 <DemoContainer>
-	<Button popovertarget="scrolling-dialog">Show terms</Button>
-	<Dialog
-		bind:this={longDialog}
-		headline="Terms of service"
-		id="scrolling-dialog"
-		divider
-		--np-dialog-container-width="32rem"
-	>
-		{#each paragraphs as paragraph (paragraph)}
-			<p>
-				Paragraph {paragraph}. Consecutive paragraphs make the body taller than the dialog, which is
-				what puts the scroll bar on the content instead of on the page.
-			</p>
-		{/each}
-		{#snippet actions()}
-			<Button onclick={() => longDialog?.hidePopover()} variant="text">Close</Button>
-		{/snippet}
-	</Dialog>
+	<ScrollableContent />
 </DemoContainer>
-<Code
-	value={`<Dialog headline="Terms of service" id="terms" divider>
-	<p>...</p>
-	{#snippet actions()}
-		<Button variant="text" onclick={() => dialog?.hidePopover()}>Close</Button>
-	{/snippet}
-</Dialog>`}
-/>
+<Code value={ScrollableContentSource} />
 
 <h2 id="without-animation">
 	Without animation<a href="#without-animation" aria-hidden="true" tabindex="-1">#</a>

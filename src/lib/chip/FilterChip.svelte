@@ -9,25 +9,30 @@
 	let {
 		selected = $bindable(),
 		removable = false,
-		elevated = false,
+		variant = 'outlined',
 		disabled = false,
 		label = '',
 		icon,
 		element = $bindable(),
-		ariaLabelRemove = 'Remove',
+		removeAriaLabel = 'Remove',
 		onremove,
 		name,
 		value,
 		group = $bindable(),
 		defaultSelected,
+		issues,
+		'aria-invalid': ariaInvalid,
 		...attributes
 	}: FilterChipProps = $props()
 
+	let hasError = $derived(!!issues?.length)
+
 	let chipLabel: HTMLLabelElement | undefined = $state()
 
-	let grouped = $derived(Array.isArray(group) && value !== undefined)
-	let groupChecked = $derived(
-		Array.isArray(group) && value !== undefined ? group.includes(value) : false,
+	// A grouped chip takes its checked state from the group, so it cannot also `bind:checked`. One
+	// controlled input covers both, with the change handler writing back whichever is in play.
+	let isChecked = $derived(
+		Array.isArray(group) && value !== undefined ? group.includes(value) : selected,
 	)
 
 	const onchange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
@@ -48,10 +53,11 @@
 	bind:this={element}
 	class={[
 		'np-filter-chip',
-		elevated ? 'np-filter-chip-elevated' : 'np-filter-chip-default',
+		variant === 'elevated' ? 'np-filter-chip-elevated' : 'np-filter-chip-default',
 		icon ? 'np-filter-chip-icon' : '',
 		removable ? 'np-filter-chip-removable' : '',
 		disabled ? 'np-filter-chip-disabled' : '',
+		hasError && !disabled && 'np-chip-error',
 		attributes.class,
 	]}
 >
@@ -65,26 +71,16 @@
 			<CheckIcon width={18} height={18} />
 		</div>
 		<div class="np-chip-label">{label}</div>
-		{#if grouped}
-			<input
-				type="checkbox"
-				checked={groupChecked}
-				{onchange}
-				{value}
-				{name}
-				{disabled}
-				defaultChecked={defaultSelected}
-			/>
-		{:else}
-			<input
-				type="checkbox"
-				bind:checked={selected}
-				{value}
-				{name}
-				{disabled}
-				defaultChecked={defaultSelected}
-			/>
-		{/if}
+		<input
+			type="checkbox"
+			checked={isChecked}
+			{onchange}
+			{value}
+			{name}
+			{disabled}
+			defaultChecked={defaultSelected}
+			aria-invalid={hasError ? 'true' : ariaInvalid}
+		/>
 	</label>
 	{#if !disabled}
 		<Ripple forElement={chipLabel} />
@@ -95,7 +91,7 @@
 			type="button"
 			size="xs"
 			--np-icon-button-icon-size="1.125rem"
-			aria-label={ariaLabelRemove}
+			aria-label={removeAriaLabel}
 			onclick={onremove}
 		>
 			<CloseIcon />
@@ -190,6 +186,18 @@
 		outline-color: var(--np-filter-chip-outline-color, var(--np-color-outline-variant));
 		outline-width: 1px;
 		outline-offset: -1px;
+	}
+	.np-chip-error {
+		--np-filter-chip-outline-color: var(--np-color-error);
+		--np-ripple-hover-color: var(--np-color-error);
+		--np-ripple-pressed-color: var(--np-color-error);
+		color: var(--np-color-error);
+	}
+	.np-chip-error:has(input:checked)::before {
+		background-color: var(--np-color-error-container);
+	}
+	.np-chip-error:has(input:checked) {
+		color: var(--np-color-on-error-container);
 	}
 	.np-filter-chip:has(input:checked)::before {
 		outline-color: transparent;

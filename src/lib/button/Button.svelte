@@ -1,9 +1,9 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
+	import { pressMorph } from '#lib/press.svelte.js'
 	import CircularProgress from '#lib/progress/CircularProgress.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
-	import { onMount } from 'svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { ButtonProps } from './types.ts'
 
@@ -30,22 +30,12 @@
 
 	const tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
 
-	let pressed = $state(false)
-	let pressedTimeout: ReturnType<typeof setTimeout>
+	const morph = pressMorph()
 
 	const handlePress = () => {
 		if (disabled || loading) return
-		pressed = true
-		pressedTimeout = setTimeout(() => {
-			pressed = false
-		}, 100)
+		morph.press()
 	}
-
-	onMount(() => {
-		return () => {
-			clearTimeout(pressedTimeout)
-		}
-	})
 </script>
 
 {#snippet content()}
@@ -95,7 +85,7 @@
 			selected && 'selected',
 			'enabled',
 			variant,
-			pressed && 'pressed',
+			morph.pressed && 'pressed',
 			attributes.class,
 		]}
 	>
@@ -128,7 +118,7 @@
 			selected && 'selected',
 			loading && 'np-loading',
 			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
-			pressed && 'pressed',
+			morph.pressed && 'pressed',
 			attributes.class,
 		]}
 	>

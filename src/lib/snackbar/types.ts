@@ -6,9 +6,10 @@ export interface SnackbarProps extends HTMLAttributes<HTMLDivElement> {
 	open?: boolean
 	supportingText?: string | undefined
 	actionLabel?: string | undefined
-	onActionClick?: (event: Event) => void
+	onactionclick?: (event: Event) => void
 	icon?: Snippet | undefined
-	onIconClick?: (event: Event) => void
+	oniconclick?: (event: Event) => void
+	iconAriaLabel?: string
 	timeout?: number
 	element?: HTMLElement
 	popover?: 'auto' | 'manual'

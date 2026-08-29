@@ -43,15 +43,15 @@ const heightsWhile = async (swap: () => Promise<void>) => {
 	return [Math.min(...seen), Math.max(...seen)]
 }
 
-describe('text field', () => {
+describe('text field', async () => {
 	test('shows the value as a date and a time of the locale', async () => {
-		setup()
+		await setup()
 		await expect.element(field()).toHaveValue('08/17/2025, 02:30 PM')
 		await expect.element(page.getByText('MM/DD/YYYY, hh:mm AM/PM')).toBeInTheDocument()
 	})
 
 	test('commits a loosely typed entry and normalises it on blur', async () => {
-		setup({ value: undefined })
+		await setup({ value: undefined })
 		await field().fill('8/1/2025 2:05 pm')
 		await expect.element(boundValue()).toHaveTextContent('2025-08-01T14:05')
 
@@ -61,7 +61,7 @@ describe('text field', () => {
 	})
 
 	test('holds the value back until the time is there too', async () => {
-		setup({ value: undefined })
+		await setup({ value: undefined })
 		await field().fill('08/17/2025')
 		await expect.element(boundValue()).toHaveTextContent('undefined')
 
@@ -70,7 +70,7 @@ describe('text field', () => {
 	})
 
 	test('keeps text that is not a real moment and flags it on blur', async () => {
-		setup()
+		await setup()
 		await field().fill('08/17/2025, 25:99 PM')
 		await expect.element(field()).not.toHaveAttribute('aria-invalid', 'true')
 
@@ -81,7 +81,7 @@ describe('text field', () => {
 	})
 
 	test('rejects a moment outside min and max', async () => {
-		setup({ value: undefined, min: '2025-08-17T09:00', max: '2025-08-17T17:00' })
+		await setup({ value: undefined, min: '2025-08-17T09:00', max: '2025-08-17T17:00' })
 
 		await field().fill('08/17/2025, 08:30 AM')
 		input().blur()
@@ -95,9 +95,9 @@ describe('text field', () => {
 	})
 })
 
-describe('time columns', () => {
+describe('time columns', async () => {
 	test('opens on the time of the value', async () => {
-		setup()
+		await setup()
 		await openPicker()
 
 		await expect.element(option('02', 'Hour')).toHaveAttribute('aria-selected', 'true')
@@ -106,7 +106,7 @@ describe('time columns', () => {
 	})
 
 	test('commits the day and the time together on OK', async () => {
-		setup()
+		await setup()
 		await openPicker()
 
 		await action('Friday, August 8, 2025').click()
@@ -121,7 +121,7 @@ describe('time columns', () => {
 	})
 
 	test('leaves the value alone on Cancel', async () => {
-		setup()
+		await setup()
 		await openPicker()
 
 		await option('45', 'Minute').click()
@@ -131,7 +131,7 @@ describe('time columns', () => {
 	})
 
 	test('keeps the minute while the hour and the half day move', async () => {
-		setup()
+		await setup()
 		await openPicker()
 
 		await option('11', 'Hour').click()
@@ -141,7 +141,7 @@ describe('time columns', () => {
 	})
 
 	test('reads midnight as the twelfth hour of AM', async () => {
-		setup()
+		await setup()
 		await openPicker()
 
 		await option('12', 'Hour').click()
@@ -152,7 +152,7 @@ describe('time columns', () => {
 	})
 
 	test('steps the minutes as asked', async () => {
-		setup({ minuteStep: 15 })
+		await setup({ minuteStep: 15 })
 		await openPicker()
 
 		await expect.poll(() => column('Minute').getByRole('option').all().length).toBe(4)
@@ -162,7 +162,7 @@ describe('time columns', () => {
 	})
 
 	test('moves between the values of a column with the arrow keys', async () => {
-		setup()
+		await setup()
 		await openPicker()
 
 		await option('30', 'Minute').click()
@@ -173,7 +173,7 @@ describe('time columns', () => {
 	})
 
 	test('drops the day period column on a 24 hour locale', async () => {
-		setup({ locale: 'de-DE' })
+		await setup({ locale: 'de-DE' })
 		await expect.element(field()).toHaveValue('17.08.2025, 14:30')
 		await openPicker()
 
@@ -185,9 +185,9 @@ describe('time columns', () => {
 	})
 })
 
-describe('bounds', () => {
+describe('bounds', async () => {
 	test('offers only the hours a boundary day still has', async () => {
-		setup({ locale: 'de-DE', value: '2025-08-17T12:00', min: '2025-08-17T09:00' })
+		await setup({ locale: 'de-DE', value: '2025-08-17T12:00', min: '2025-08-17T09:00' })
 		await openPicker()
 
 		await expect.element(option('08', 'Hour')).toHaveAttribute('aria-disabled', 'true')
@@ -195,7 +195,7 @@ describe('bounds', () => {
 	})
 
 	test('pulls the time up to the first minute a newly picked day allows', async () => {
-		setup({ locale: 'de-DE', value: '2025-08-18T08:00', min: '2025-08-17T09:30' })
+		await setup({ locale: 'de-DE', value: '2025-08-18T08:00', min: '2025-08-17T09:30' })
 		await openPicker()
 
 		await action('Sonntag, 17. August 2025').click()
@@ -204,16 +204,16 @@ describe('bounds', () => {
 	})
 
 	test('leaves the hours of a day inside the range alone', async () => {
-		setup({ locale: 'de-DE', value: '2025-08-18T08:00', min: '2025-08-17T09:30' })
+		await setup({ locale: 'de-DE', value: '2025-08-18T08:00', min: '2025-08-17T09:30' })
 		await openPicker()
 
 		await expect.element(option('00', 'Hour')).not.toHaveAttribute('aria-disabled', 'true')
 	})
 })
 
-describe('month and year menus', () => {
+describe('month and year menus', async () => {
 	test('the calendar under the list is out of reach', async () => {
-		setup()
+		await setup()
 		await openPicker()
 		await page.getByRole('button', { name: /^Select month/ }).click()
 
@@ -228,7 +228,7 @@ describe('month and year menus', () => {
 	})
 
 	test('the panel keeps its height through every view, so the time columns hold still', async () => {
-		setup()
+		await setup()
 		await openPicker()
 		const days = height()
 		const months = () => page.getByRole('button', { name: /^Select month/ }).click()
@@ -241,9 +241,9 @@ describe('month and year menus', () => {
 	})
 })
 
-describe('placement', () => {
+describe('placement', async () => {
 	test('shows the whole panel over a field in the middle of the window', async () => {
-		setup({ style: 'margin-top:400px' })
+		await setup({ style: 'margin-top:400px' })
 		await openPicker()
 
 		const menu = document.querySelector<HTMLElement>('.np-docked-date-time-picker-menu')!
@@ -258,9 +258,9 @@ describe('placement', () => {
 	})
 })
 
-describe('form', () => {
+describe('form', async () => {
 	test('submits the moment through a hidden input', async () => {
-		render(Form, { locale: 'en-US', value: VALUE })
+		await render(Form, { locale: 'en-US', value: VALUE })
 		await page.getByRole('button', { name: 'Submit' }).click()
 		await expect
 			.element(page.getByTestId('submitted'))
@@ -268,11 +268,11 @@ describe('form', () => {
 	})
 })
 
-describe('layout', () => {
-	test('fills a stretching flex column like a plain text field', () => {
-		render(Layout)
+describe('layout', async () => {
+	test('fills a stretching flex column like a plain text field', async () => {
+		await render(Layout)
 
-		const widths = [...document.querySelectorAll<HTMLElement>('.text-field')].map((field) =>
+		const widths = [...document.querySelectorAll<HTMLElement>('.np-text-field')].map((field) =>
 			Math.round(field.getBoundingClientRect().width),
 		)
 

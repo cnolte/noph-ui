@@ -84,7 +84,23 @@ function highlightExpression(expression: string): string {
 	)
 }
 
+const scriptBlockPattern = /^(<script[^>]*>)\r?\n([\s\S]*?)\r?\n(<\/script>)\r?\n*/
+
 export function highlight(code: string): string {
+	const scriptMatch = scriptBlockPattern.exec(code)
+	if (scriptMatch) {
+		const [full, openTag, scriptContent, closeTag] = scriptMatch
+		const rest = code.slice(full.length)
+		return (
+			Prism.highlight(openTag, languages.markup, 'markup') +
+			'\n' +
+			Prism.highlight(scriptContent, languages.typescript, 'typescript') +
+			'\n' +
+			Prism.highlight(closeTag, languages.markup, 'markup') +
+			(rest.trim() ? '\n\n' + highlight(rest) : '')
+		)
+	}
+
 	const lang = detectLanguage(code)
 	if (lang !== 'markup') return Prism.highlight(code, languages[lang], lang)
 

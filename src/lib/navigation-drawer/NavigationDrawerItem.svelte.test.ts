@@ -5,21 +5,21 @@ import NavigationDrawerItem from './NavigationDrawerItem.svelte'
 const link = () => document.querySelector('a')
 const button = () => document.querySelector('button')
 
-describe('NavigationDrawerItem', () => {
-	test('renders a button when href is undefined', () => {
-		render(NavigationDrawerItem, { label: 'Home', href: undefined })
+describe('NavigationDrawerItem', async () => {
+	test('renders a button when href is undefined', async () => {
+		await render(NavigationDrawerItem, { label: 'Home', href: undefined })
 		expect(link()).toBeNull()
 		expect(button()).not.toBeNull()
 	})
 
-	test('renders a button when href is null', () => {
-		render(NavigationDrawerItem, { label: 'Home', href: null })
+	test('renders a button when href is null', async () => {
+		await render(NavigationDrawerItem, { label: 'Home', href: null })
 		expect(link()).toBeNull()
 		expect(button()).not.toBeNull()
 	})
 
-	test('renders a link when href is set', () => {
-		render(NavigationDrawerItem, { label: 'Home', href: '/home' })
+	test('renders a link when href is set', async () => {
+		await render(NavigationDrawerItem, { label: 'Home', href: '/home' })
 		expect(button()).toBeNull()
 		expect(link()?.getAttribute('href')).toBe('/home')
 	})

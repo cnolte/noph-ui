@@ -1,7 +1,10 @@
-<script>
-	import Ripple from '#lib/ripple/Ripple.svelte'
+<script lang="ts">
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -12,26 +15,9 @@
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	Click inside the container to see the ripple effect:
-	<div class="ripple-container">
-		<Ripple />
-	</div>
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<style>
-	.ripple-container {
-		position: relative;
-		overflow: hidden;
-		height: 2.5rem;
-		width: 7rem;
-		border-width: 2px;
-		border-style: solid;
-		border-color: currentColor;
-	}
-</style>
-<div class="ripple-container">
-	<Ripple />
-</div>`}
-/>
+<Code value={UsageSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -67,31 +53,10 @@
 </table>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<div class="ripple-container theming-example">
-		<Ripple />
-	</div>
+	<ThemingExample />
 </DemoContainer>
 
-<Code
-	value={`<style>
-	.theming-example {
-		--np-ripple-hover-color: var(--np-color-primary);
-		--np-ripple-pressed-color: var(--np-color-primary);
-	}
-	.ripple-container {
-		position: relative;
-		overflow: hidden;
-		height: 2.5rem;
-		width: 7rem;
-		border-width: 2px;
-		border-style: solid;
-		border-color: currentColor;
-	}
-</style>
-<div class="ripple-container theming-example">
-	<Ripple />
-</div>`}
-/>
+<Code value={ThemingExampleSource} />
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -147,20 +112,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.theming-example {
-		--np-ripple-hover-color: var(--np-color-primary);
-		--np-ripple-pressed-color: var(--np-color-primary);
-	}
-	.ripple-container {
-		position: relative;
-		overflow: hidden;
-		height: 2.5rem;
-		width: 7rem;
-		border-width: 1px;
-		border-radius: 0.25rem;
-		border-style: solid;
-		border-color: currentColor;
-	}
-</style>

@@ -1,7 +1,14 @@
 <script lang="ts">
-	import Switch from '#lib/switch/Switch.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import Disable from './demos/Disable.svelte'
+	import DisableSource from './demos/Disable.svelte?raw'
+	import Icons from './demos/Icons.svelte'
+	import IconsSource from './demos/Icons.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -11,28 +18,24 @@
 <h1>Switch</h1>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Switch />
+	<Usage />
 </DemoContainer>
 
-<Code value="<Switch />" />
+<Code value={UsageSource} />
 
 <h2 id="disable">Disable<a href="#disable" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Switch disabled />
+	<Disable />
 </DemoContainer>
 
-<Code value="<Switch disabled />" />
+<Code value={DisableSource} />
 
 <h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Switch icons="selected" />
-	<Switch icons="both" />
+	<Icons />
 </DemoContainer>
 
-<Code
-	value={`<Switch icons="selected" />
-<Switch icons="both" />`}
-/>
+<Code value={IconsSource} />
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -44,88 +47,74 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><code>--np-comp-switch-selected-track-color</code></td>
+			<td><code>--np-switch-selected-track-color</code></td>
 			<td><code>--np-color-primary</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-selected-handle-color</code></td>
+			<td><code>--np-switch-selected-handle-color</code></td>
 			<td><code>--np-color-on-primary</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-selected-icon-color</code></td>
+			<td><code>--np-switch-selected-icon-color</code></td>
 			<td><code>--np-color-primary</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-unselected-track-color</code></td>
+			<td><code>--np-switch-unselected-track-color</code></td>
 			<td><code>--np-color-surface-container-highest</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-unselected-track-outline-color</code></td>
+			<td><code>--np-switch-unselected-track-outline-color</code></td>
 			<td><code>--np-color-outline</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-unselected-handle-color</code></td>
+			<td><code>--np-switch-unselected-handle-color</code></td>
 			<td><code>--np-color-outline</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-handle-shape</code></td>
+			<td><code>--np-switch-handle-shape</code></td>
 			<td><code>--np-shape-corner-full</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-state-layer-shape</code></td>
+			<td><code>--np-switch-state-layer-shape</code></td>
 			<td><code>--np-shape-corner-full</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-state-layer-size</code></td>
+			<td><code>--np-switch-state-layer-size</code></td>
 			<td><code>2.5rem</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-disabled-unselected-track-color</code></td>
+			<td><code>--np-switch-disabled-unselected-track-color</code></td>
 			<td><code>--np-color-surface-container-highest</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-disabled-selected-track-color</code></td>
+			<td><code>--np-switch-disabled-selected-track-color</code></td>
 			<td><code>--np-color-on-surface</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-disabled-track-opacity</code></td>
+			<td><code>--np-switch-disabled-track-opacity</code></td>
 			<td><code>0.12</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-disabled-unselected-handle-opacity</code></td>
+			<td><code>--np-switch-disabled-unselected-handle-opacity</code></td>
 			<td><code>0.38</code></td>
 		</tr>
 		<tr>
-			<td><code>--np-comp-switch-disabled-selected-handle-opacity</code></td>
+			<td><code>--np-switch-disabled-selected-handle-opacity</code></td>
 			<td><code>1</code></td>
 		</tr>
 	</tbody>
 </table>
 <p>
-	<code>--np-comp-switch-selected-icon-color</code> colors the icon inside the handle, which only
-	shows with <code>icons="selected"</code> or <code>icons="both"</code>. The
+	<code>--np-switch-selected-icon-color</code> colors the icon inside the handle, which only shows
+	with <code>icons="selected"</code> or <code>icons="both"</code>. The
 	<code>disabled</code> tokens take a colour and an opacity separately, because the disabled switch is
 	drawn by fading the same colours rather than by swapping in pre-faded ones.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<Switch
-		selected
-		icons="both"
-		--np-comp-switch-selected-track-color="var(--np-color-tertiary)"
-		--np-comp-switch-selected-handle-color="var(--np-color-on-tertiary)"
-		--np-comp-switch-selected-icon-color="var(--np-color-tertiary)"
-	/>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<Switch
-	selected
-	icons="both"
-	--np-comp-switch-selected-track-color="var(--np-color-tertiary)"
-	--np-comp-switch-selected-handle-color="var(--np-color-on-tertiary)"
-	--np-comp-switch-selected-icon-color="var(--np-color-tertiary)"
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="switch">Switch<a href="#switch" aria-hidden="true" tabindex="-1">#</a></h3>
 

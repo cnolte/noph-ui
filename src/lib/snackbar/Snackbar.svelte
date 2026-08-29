@@ -1,70 +1,81 @@
 <script lang="ts">
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
+	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { SnackbarProps } from './types.ts'
 
 	let {
 		label,
 		supportingText,
 		actionLabel,
-		onActionClick,
+		onactionclick,
 		icon,
-		onIconClick = () => {
-			element?.hidePopover()
-		},
+		iconAriaLabel = 'Close',
+		oniconclick = () => close(),
 		open = $bindable(false),
-		onbeforetoggle,
+		ontoggle,
 		timeout = 4000,
 		element = $bindable(),
 		popover = 'manual',
 		...attributes
 	}: SnackbarProps = $props()
 
-	let timeoutId: ReturnType<typeof setTimeout> | undefined
-	const uid = $props.id()
+	let hovered = $state(false)
+	let focused = $state(false)
 
-	export const showPopover = () => {
-		element?.showPopover()
-	}
+	const controller = popoverController(() => element)
 
-	export const hidePopover = () => {
-		element?.hidePopover()
-	}
+	export const show = () => controller.show()
+	export const close = () => controller.close()
 
-	const startTimer = () => {
-		clearTimeout(timeoutId)
-		if (!open || timeout <= 0) return
-		timeoutId = setTimeout(() => {
-			element?.hidePopover()
-		}, timeout)
-	}
+	/*
+	 * `toggle` fires once the popover has settled, so `open` coming back from the DOM already
+	 * matches it and this does nothing. Syncing on `beforetoggle` instead would land in the middle
+	 * of the browser's show operation, where `showPopover()` throws.
+	 */
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 
-	const pauseTimer = () => clearTimeout(timeoutId)
-
-	$effect(() => () => clearTimeout(timeoutId))
+	/*
+	 * The timeout lives and dies with the snackbar being open, so there is no timer to clear by
+	 * hand: closing early or unmounting runs the cleanup. It holds while the snackbar is hovered or
+	 * keeps focus, and starts over once the snackbar is left alone, so an action stays reachable.
+	 */
+	$effect(() => {
+		if (!open || hovered || focused || timeout <= 0) return
+		const timeoutId = setTimeout(close, timeout)
+		return () => clearTimeout(timeoutId)
+	})
 </script>
 
+<!--
+	`alert` is an atomic live region, so a screen reader reads the whole snackbar out when it appears,
+	label and supporting text together. It needs no name of its own for that, and the ARIA alert
+	pattern gives it none: naming the region after an element inside it only risks that text being
+	announced twice. A caller's own `aria-label` reaches the element through `attributes`.
+-->
 <div
 	{...attributes}
 	{popover}
 	class={['np-snackbar', attributes.class]}
 	bind:this={element}
 	role="alert"
-	aria-labelledby="np-snackbar-label-{uid}"
-	onpointerenter={pauseTimer}
-	onpointerleave={startTimer}
-	onfocusin={pauseTimer}
-	onfocusout={startTimer}
-	onbeforetoggle={(event) => {
-		let { newState } = event
-		open = newState === 'open'
-		startTimer()
-		onbeforetoggle?.(event)
+	onpointerenter={() => (hovered = true)}
+	onpointerleave={() => (hovered = false)}
+	onfocusin={() => (focused = true)}
+	onfocusout={() => (focused = false)}
+	ontoggle={(event) => {
+		open = event.newState === 'open'
+		ontoggle?.(event)
 	}}
 >
 	<div class="np-snackbar-inner">
 		<div class="np-snackbar-label-container">
-			<div id="np-snackbar-label-{uid}" class="np-snackbar-label">{label}</div>
+			<div class="np-snackbar-label">{label}</div>
 			{#if supportingText}
 				<div class="np-snackbar-supporting-text">{supportingText}</div>
 			{/if}
@@ -74,7 +85,7 @@
 				variant="text"
 				--np-text-button-label-text-color="var(--np-snackbar-action-color, var(--np-color-inverse-primary))"
 				aria-label={actionLabel}
-				onclick={onActionClick}
+				onclick={onactionclick}
 			>
 				{actionLabel}
 			</Button>
@@ -83,8 +94,8 @@
 			<div class="np-snackbar-icon-container">
 				<IconButton
 					--np-icon-button-icon-color="var(--np-snackbar-text-color, var(--np-color-inverse-on-surface))"
-					aria-label="Close"
-					onclick={onIconClick}
+					aria-label={iconAriaLabel}
+					onclick={oniconclick}
 				>
 					{@render icon()}</IconButton
 				>

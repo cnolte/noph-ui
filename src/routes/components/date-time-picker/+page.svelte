@@ -1,24 +1,18 @@
 <script lang="ts">
-	import { Button, DockedDateTimePicker } from '#lib/index.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let meeting = $state<string | undefined>('2025-08-17T14:30')
-	let shift = $state<string | undefined>()
-	let germanMoment = $state<string | undefined>('2025-08-17T14:30')
-	let themed = $state<string | undefined>('2025-08-17T14:30')
-
-	let submitted = $state('')
-	let formIssues = $state<{ message: string }[]>([])
-	let formValue = $state<string | undefined>()
-
-	const handleSubmit = (event: SubmitEvent) => {
-		event.preventDefault()
-		const data = new FormData(event.currentTarget as HTMLFormElement)
-		const value = data.get('startsAt')
-		formIssues = value ? [] : [{ message: 'Pick a start time.' }]
-		submitted = value ? `Submitted startsAt=${value}` : ''
-	}
+	import BoundingMoment from './demos/BoundingMoment.svelte'
+	import BoundingMomentSource from './demos/BoundingMoment.svelte?raw'
+	import FormsAndValidation from './demos/FormsAndValidation.svelte'
+	import FormsAndValidationSource from './demos/FormsAndValidation.svelte?raw'
+	import Localisation from './demos/Localisation.svelte'
+	import LocalisationSource from './demos/Localisation.svelte?raw'
+	import MinutesAndClock from './demos/MinutesAndClock.svelte'
+	import MinutesAndClockSource from './demos/MinutesAndClock.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -28,48 +22,33 @@
 <h1>Date and time pickers</h1>
 <p>
 	<code>DockedDateTimePicker</code> is the docked
-	<a class="link" href="/components/date-picker">date picker</a> with the time next to the calendar:
-	a column of hours, one of minutes and, on a 12 hour locale, one for AM and PM. It is the shape a
-	browser gives an <code>&lt;input type="datetime-local"&gt;</code>, and it is deliberately not the
-	Material clock dial, which is built for a thumb rather than a pointer. Reach for it when the day
-	and the time belong to one decision, like the start of a meeting or a shift.
+	<a class="link" href="/components/date-picker">date picker</a> with time columns next to the calendar:
+	hours, minutes and, on a 12 hour locale, AM or PM. Use it whenever a day and a time belong to one decision,
+	such as scheduling a meeting or a shift.
 </p>
 <p>
-	<code>value</code> is a local <code>YYYY-MM-DDTHH:mm</code> string, the day-precision
-	<code>YYYY-MM-DD</code> of the other pickers extended by a time. It is built from local calendar fields,
-	so it never slips a day across a timezone boundary.
+	<code>value</code> is a local <code>YYYY-MM-DDTHH:mm</code> string, built from local calendar fields
+	so it never shifts a day across a timezone boundary.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>value</code> is bindable. Typing in the field and picking a day and a time stay in sync;
-	inside the panel the selection is provisional until <code>OK</code> confirms it, and
-	<code>Cancel</code> discards it. Everything the date side does is unchanged, including typing in
-	the field, and the time is confirmed by the same <code>OK</code>.
+	<code>value</code> is bindable and stays in sync with typing and calendar or column selection.
+	Picking in the panel is provisional until <code>OK</code> confirms it, and <code>Cancel</code>
+	discards it.
 </p>
 <p>
-	The field holds the value in the format of the locale, and it only becomes a value once the text
-	describes a whole moment, so a date with no time yet leaves it empty. On a 12 hour clock the day
-	period has to be typed too: <code>08/17/2025, 07:30</code> is two different moments, and picking one
-	silently is worse than waiting for the rest.
+	The field only becomes a value once the typed text describes a whole moment, so a date without a
+	time leaves it empty. On a 12 hour clock the day period has to be typed too, since
+	<code>08/17/2025, 07:30</code> could mean two different moments.
 </p>
 <DemoContainer>
-	<DockedDateTimePicker bind:value={meeting} label="Starts at" />
+	<Usage />
 </DemoContainer>
-<p>Value: <code>{meeting ?? 'undefined'}</code></p>
-<Code
-	value={`<script lang="ts">
-	import { DockedDateTimePicker } from 'noph-ui'
-
-	let meeting = $state<string | undefined>('2025-08-17T14:30')
-</` +
-		`script>
-
-<DockedDateTimePicker bind:value={meeting} label="Starts at" />`}
-/>
+<Code value={UsageSource} />
 <p>
 	Below 600dp the columns move under the calendar instead of beside it, so the panel still fits a
-	phone. The switch is a media query, like the range picker's. Narrow the window to see it change.
+	phone. The switch is a media query. Narrow the window to see it change.
 </p>
 
 <h2 id="minutes-and-the-clock">
@@ -77,73 +56,44 @@
 </h2>
 <p>
 	<code>minuteStep</code> sets how finely the minute column is cut, five minutes by default. It only
-	governs the column: a minute typed into the field is taken exactly as it is, and a value the app
-	sets keeps whatever minute it holds. <code>defaultTime</code> is the time a first pick starts from
-	when the field is still empty, and <code>hour12</code> overrides the clock the locale would choose.
+	governs the column: a typed or preset minute is kept exactly as given.
+	<code>defaultTime</code> is the time the columns open on while the field is empty, and
+	<code>hour12</code> overrides the clock the locale would choose.
 </p>
 <DemoContainer>
-	<DockedDateTimePicker
-		bind:value={shift}
-		label="Shift start"
-		minuteStep={15}
-		defaultTime="09:00"
-		hour12={false}
-	/>
+	<MinutesAndClock />
 </DemoContainer>
-<p>Value: <code>{shift ?? 'undefined'}</code></p>
-<Code
-	value={`<DockedDateTimePicker
-	bind:value={shift}
-	label="Shift start"
-	minuteStep={15}
-	defaultTime="09:00"
-	hour12={false}
-/>`}
-/>
+<Code value={MinutesAndClockSource} />
 
 <h2 id="localisation">
 	Localisation<a href="#localisation" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Left to itself the clock follows the locale, and so does everything around it: the order of the
-	fields, the digits, the names of the day periods and whether there is a third column at all.
-	<code>locale</code> takes a BCP 47 tag, and <code>firstDayOfWeek</code> overrides the week start the
-	locale implies, exactly as on the date picker.
+	Left to itself the clock follows the locale, including the order of fields, the digits, the
+	day-period names, and whether there is an AM/PM column at all. <code>locale</code> takes a BCP 47
+	tag, and <code>firstDayOfWeek</code> overrides the week start, exactly as on the date picker.
 </p>
 <DemoContainer>
-	<DockedDateTimePicker bind:value={germanMoment} locale="de-DE" label="Beginnt am" />
+	<Localisation />
 </DemoContainer>
-<Code
-	value={`<DockedDateTimePicker bind:value={germanMoment} locale="de-DE" label="Beginnt am" />`}
-/>
+<Code value={LocalisationSource} />
 
 <h2 id="bounding-a-moment">
 	Bounding a moment<a href="#bounding-a-moment" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
 	<code>min</code> and <code>max</code> take a whole moment here, not only a day. Days outside the
-	range are unselectable, and on the first and the last day the hours and minutes outside it are
-	greyed out too. Picking such a day pulls the time to the nearest minute that day still allows, so
-	the selection is never a moment the bounds refuse. A bare <code>YYYY-MM-DD</code> still works: as
-	<code>min</code> it means the start of that day, as <code>max</code> the end of it.
+	range are unselectable, and on the first and last day the hours and minutes outside it are greyed
+	out too. Picking such a day snaps the time to the nearest minute that day still allows. A bare
+	<code>YYYY-MM-DD</code> still works: as <code>min</code> it means the start of that day, as
+	<code>max</code> the end of it.
 </p>
 <DemoContainer>
-	<DockedDateTimePicker
-		value="2025-08-18T10:00"
-		label="Appointment"
-		min="2025-08-18T09:30"
-		max="2025-08-20T16:00"
-	/>
+	<BoundingMoment />
 </DemoContainer>
-<Code
-	value={`<DockedDateTimePicker
-	label="Appointment"
-	min="2025-08-18T09:30"
-	max="2025-08-20T16:00"
-/>`}
-/>
+<Code value={BoundingMomentSource} />
 <p>
-	<code>isDateEnabled</code> is called with the full moment rather than a bare day, so a rule can turn
+	<code>isDateEnabled</code> is called with the full moment rather than a bare day, so a rule can depend
 	on the time as well as the date.
 </p>
 
@@ -152,37 +102,16 @@
 </h2>
 <p>
 	Passing a <code>name</code> submits the ISO moment with the surrounding form through a hidden
-	input, and the constraints stay on the visible field, so a blocked submit reports against a
-	control the browser can focus. The timing is the same as on the
-	<a class="link" href="/components/date-picker#forms-and-validation">date picker</a>:
-	<code>:user-invalid</code> switches on at a submit attempt and on blur, never while a moment is
-	still being typed. <code>issues</code> replaces the supporting text with your own messages.
+	input, and validation stays on the visible field, so a blocked submit reports against a control
+	the browser can focus. The timing matches the
+	<a class="link" href="/components/date-picker#forms-and-validation">date picker</a>: validation
+	feedback appears on submit or blur, never while a moment is still being typed.
+	<code>issues</code> replaces the supporting text with your own messages.
 </p>
 <DemoContainer>
-	<form onsubmit={handleSubmit} novalidate>
-		<DockedDateTimePicker
-			bind:value={formValue}
-			label="Starts at"
-			name="startsAt"
-			issues={formIssues}
-			required
-		/>
-		<Button type="submit" variant="filled">Submit</Button>
-	</form>
+	<FormsAndValidation />
 </DemoContainer>
-<p>{submitted || 'Nothing submitted yet.'}</p>
-<Code
-	value={`<form onsubmit={handleSubmit} novalidate>
-	<DockedDateTimePicker
-		bind:value={formValue}
-		label="Starts at"
-		name="startsAt"
-		issues={formIssues}
-		required
-	/>
-	<Button type="submit" variant="filled">Submit</Button>
-</form>`}
-/>
+<Code value={FormsAndValidationSource} />
 
 <h2 id="shared-with-the-date-picker">
 	Shared with the date picker<a href="#shared-with-the-date-picker" aria-hidden="true" tabindex="-1"
@@ -202,10 +131,13 @@
 	<a class="link" href="/components/date-picker#days-of-neighbouring-months"
 		>days of neighbouring months</a
 	>
-	and
+	,
 	<a class="link" href="/components/date-picker#controlling-the-calendar"
 		>controlling the calendar</a
-	>. For a day on its own, a modal, or a start and an end day, use
+	>
+	and the
+	<a class="link" href="/components/date-picker#methods">show() and close() methods</a>. For a day
+	on its own, a modal, or a start and an end day, use
 	<a class="link" href="/components/date-picker"
 		>DockedDatePicker, DatePickerDialog or DateRangePicker</a
 	>.
@@ -255,27 +187,9 @@
 
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<DockedDateTimePicker
-		bind:value={themed}
-		label="Starts at"
-		--np-date-picker-time-selected-container-color="var(--np-color-tertiary)"
-		--np-date-picker-time-selected-label-color="var(--np-color-on-tertiary)"
-		--np-date-picker-date-selected-container-color="var(--np-color-tertiary)"
-		--np-date-picker-date-selected-label-color="var(--np-color-on-tertiary)"
-		--np-docked-date-time-picker-column-width="5rem"
-	/>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<DockedDateTimePicker
-	bind:value
-	label="Starts at"
-	--np-date-picker-time-selected-container-color="var(--np-color-tertiary)"
-	--np-date-picker-time-selected-label-color="var(--np-color-on-tertiary)"
-	--np-date-picker-date-selected-container-color="var(--np-color-tertiary)"
-	--np-date-picker-date-selected-label-color="var(--np-color-on-tertiary)"
-	--np-docked-date-time-picker-column-width="5rem"
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="motion-and-gestures">
 	Motion and gestures<a href="#motion-and-gestures" aria-hidden="true" tabindex="-1">#</a>
@@ -283,14 +197,11 @@
 <p>
 	The calendar half moves exactly as the
 	<a class="link" href="/components/date-picker#motion-and-gestures">date picker</a> does, on the
-	theme's own motion tokens, and the month and year lists slide down over the calendar rather than
-	in its place, so opening one leaves the panel the same size and the columns beside it where they
-	are. The time columns add nothing of their own beyond a colour cross-fade on the selection: they
-	scroll, and they open centred on the selected value so the values around it are in view. After
-	that they only scroll as far as they have to, because pulling the list back to the middle under a
-	pointer that is still picking makes the next click land somewhere else. Every transition is
-	wrapped in
-	<code>prefers-reduced-motion: no-preference</code>.
+	theme's own motion tokens. The month and year lists slide down over the calendar rather than
+	replacing it, so opening one leaves the panel the same size and the columns in place. The time
+	columns cross-fade the selected colour and open centred on the selected value. After that they
+	only scroll as far as you scroll them, so an in-progress pick is never pulled back to centre.
+	Every transition is wrapped in <code>prefers-reduced-motion: no-preference</code>.
 </p>
 
 <h2 id="accessibility">
@@ -298,10 +209,10 @@
 </h2>
 <p>
 	Each time column is a <code>role="listbox"</code> of <code>role="option"</code> buttons with a
-	single roving tab stop, so the three columns are three stops in the tab order rather than a
-	hundred and twenty. The selected option carries <code>aria-selected</code>, and an option outside
-	<code>min</code> and <code>max</code> carries <code>aria-disabled</code> so it is still readable
-	rather than skipped. <code>hourLabel</code>, <code>minuteLabel</code> and
+	single roving tab stop, so the three columns are three stops in the tab order rather than over a
+	hundred. The selected option carries <code>aria-selected</code>, and an option outside
+	<code>min</code> and <code>max</code> carries <code>aria-disabled</code> so it stays readable
+	rather than being skipped. <code>hourLabel</code>, <code>minuteLabel</code> and
 	<code>dayPeriodLabel</code> name the columns.
 </p>
 <table>
@@ -326,6 +237,12 @@
 </p>
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	It exports the same <code>show()</code> and <code>close()</code> as the other pickers. The
+	calendar lives in a popover with no <code>id</code> for a trigger to point at, so these are how a
+	page opens it; <code>open</code> reports whether it is showing. See
+	<a class="link" href="/components/date-picker#methods">the date picker's methods</a>.
+</p>
 <h3 id="dockeddatetimepicker">
 	DockedDateTimePicker<a href="#dockeddatetimepicker" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -466,12 +383,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	form {
-		display: flex;
-		align-items: flex-start;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-</style>

@@ -1,13 +1,26 @@
 <script lang="ts">
-	import Icon from '#lib/icons/Icon.svelte'
-	import Slider from '#lib/slider/Slider.svelte'
-	import type { SliderSize } from '#lib/slider/types.js'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	const sizes: SliderSize[] = ['xs', 's', 'm', 'l', 'xl']
-
-	let volume = $state(40)
+	import Disabled from './demos/Disabled.svelte'
+	import DisabledSource from './demos/Disabled.svelte?raw'
+	import InsetIcon from './demos/InsetIcon.svelte'
+	import InsetIconSource from './demos/InsetIcon.svelte?raw'
+	import Orientation from './demos/Orientation.svelte'
+	import OrientationSource from './demos/Orientation.svelte?raw'
+	import RightToLeft from './demos/RightToLeft.svelte'
+	import RightToLeftSource from './demos/RightToLeft.svelte?raw'
+	import Sizes from './demos/Sizes.svelte'
+	import SizesSource from './demos/Sizes.svelte?raw'
+	import StepsAndStopIndicators from './demos/StepsAndStopIndicators.svelte'
+	import StepsAndStopIndicatorsSource from './demos/StepsAndStopIndicators.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
+	import ValueIndicator from './demos/ValueIndicator.svelte'
+	import ValueIndicatorSource from './demos/ValueIndicator.svelte?raw'
+	import Variants from './demos/Variants.svelte'
+	import VariantsSource from './demos/Variants.svelte?raw'
 </script>
 
 <svelte:head>
@@ -32,11 +45,9 @@
 	<code>min</code>/<code>max</code> (<code>0</code> to <code>100</code> unless you say otherwise).
 </p>
 <DemoContainer>
-	<div class="stack">
-		<Slider value={40} aria-label="Volume" />
-	</div>
+	<Usage />
 </DemoContainer>
-<Code value={`<Slider value={40} aria-label="Volume" />`} />
+<Code value={UsageSource} />
 
 <h2 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>Three ways to read the track, all sharing the same handle and gap anatomy:</p>
@@ -52,29 +63,9 @@
 	</li>
 </ul>
 <DemoContainer>
-	<div class="stack">
-		<Slider value={40} aria-label="Standard" />
-		<Slider centered value={20} aria-label="Centered" />
-		<Slider
-			range
-			value={30}
-			endValue={70}
-			aria-label="Minimum price"
-			endInputAttributes={{ 'aria-label': 'Maximum price' }}
-		/>
-	</div>
+	<Variants />
 </DemoContainer>
-<Code
-	value={`<Slider value={40} aria-label="Standard" />
-<Slider centered value={20} aria-label="Centered" />
-<Slider
-	range
-	value={30}
-	endValue={70}
-	aria-label="Minimum price"
-	endInputAttributes={{ 'aria-label': 'Maximum price' }}
-/>`}
-/>
+<Code value={VariantsSource} />
 
 <h2 id="sizes">Sizes<a href="#sizes" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -84,19 +75,9 @@
 	The default is <code>xs</code>.
 </p>
 <DemoContainer>
-	<div class="stack wide">
-		{#each sizes as size (size)}
-			<Slider {size} value={50} aria-label="Size {size}" />
-		{/each}
-	</div>
+	<Sizes />
 </DemoContainer>
-<Code
-	value={`<Slider size="xs" value={50} />
-<Slider size="s" value={50} />
-<Slider size="m" value={50} />
-<Slider size="l" value={50} />
-<Slider size="xl" value={50} />`}
-/>
+<Code value={SizesSource} />
 <table>
 	<thead>
 		<tr>
@@ -123,22 +104,9 @@
 	same writing mode, so <kbd>↑</kbd>/<kbd>↓</kbd> keep working the way you would expect.
 </p>
 <DemoContainer>
-	<div class="row">
-		<Slider orientation="vertical" value={60} aria-label="Brightness" />
-		<Slider orientation="vertical" size="m" value={60} aria-label="Brightness" />
-		<Slider
-			orientation="vertical"
-			size="l"
-			--np-slider-length="9rem"
-			value={60}
-			aria-label="Brightness"
-		/>
-	</div>
+	<Orientation />
 </DemoContainer>
-<Code
-	value={`<Slider orientation="vertical" value={60} aria-label="Brightness" />
-<Slider orientation="vertical" size="l" --np-slider-length="9rem" value={60} />`}
-/>
+<Code value={OrientationSource} />
 
 <h2 id="steps-and-stop-indicators">
 	Steps and stop indicators<a href="#steps-and-stop-indicators" aria-hidden="true" tabindex="-1"
@@ -155,15 +123,9 @@
 	keeps it aligned with the tick it selects.
 </p>
 <DemoContainer>
-	<div class="stack">
-		<Slider step={25} ticks value={50} min={0} max={100} aria-label="Rating" />
-		<Slider step={10} ticks size="m" value={40} aria-label="Volume in tens" />
-	</div>
+	<StepsAndStopIndicators />
 </DemoContainer>
-<Code
-	value={`<Slider step={25} ticks value={50} aria-label="Rating" />
-<Slider step={10} ticks size="m" value={40} aria-label="Volume in tens" />`}
-/>
+<Code value={StepsAndStopIndicatorsSource} />
 
 <h2 id="value-indicator">
 	Value indicator<a href="#value-indicator" aria-hidden="true" tabindex="-1">#</a>
@@ -178,21 +140,9 @@
 	<code>format</code>.
 </p>
 <DemoContainer>
-	<div class="stack with-label">
-		<Slider labeled step={1} value={40} aria-label="Volume" />
-		<Slider
-			labeled
-			size="m"
-			value={60}
-			format={(v) => `${Math.round(v)}%`}
-			aria-label="Brightness"
-		/>
-	</div>
+	<ValueIndicator />
 </DemoContainer>
-<Code
-	value={`<Slider labeled step={1} value={40} aria-label="Volume" />
-<Slider labeled size="m" value={60} format={(v) => \`\${Math.round(v)}%\`} aria-label="Brightness" />`}
-/>
+<Code value={ValueIndicatorSource} />
 
 <h2 id="inset-icon">Inset icon<a href="#inset-icon" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -208,35 +158,15 @@
 	slider below to the start and the icon becomes <code>volume_off</code>.
 </p>
 <DemoContainer>
-	<div class="stack">
-		<Slider size="m" bind:value={volume} aria-label="Volume">
-			{#snippet icon()}
-				<Icon>{volume === 0 ? 'volume_off' : 'volume_up'}</Icon>
-			{/snippet}
-		</Slider>
-		<Slider size="xl" value={60} aria-label="Brightness">
-			{#snippet icon()}
-				<Icon>light_mode</Icon>
-			{/snippet}
-		</Slider>
-	</div>
+	<InsetIcon />
 </DemoContainer>
-<Code
-	value={`<Slider size="m" bind:value={volume} aria-label="Volume">
-	{#snippet icon()}
-		<Icon>{volume === 0 ? 'volume_off' : 'volume_up'}</Icon>
-	{/snippet}
-</Slider>`}
-/>
+<Code value={InsetIconSource} />
 
 <h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<div class="stack">
-		<Slider disabled value={40} aria-label="Disabled" />
-		<Slider disabled range value={20} endValue={70} aria-label="Disabled range" />
-	</div>
+	<Disabled />
 </DemoContainer>
-<Code value={`<Slider disabled value={40} aria-label="Disabled" />`} />
+<Code value={DisabledSource} />
 
 <h2 id="right-to-left">
 	Right-to-left<a href="#right-to-left" aria-hidden="true" tabindex="-1">#</a>
@@ -247,12 +177,9 @@
 	inherited <code>dir</code>.
 </p>
 <DemoContainer>
-	<div class="stack" dir="rtl">
-		<Slider value={60} aria-label="Volume, right to left" />
-		<Slider range value={30} endValue={70} aria-label="Price, right to left" />
-	</div>
+	<RightToLeft />
 </DemoContainer>
-<Code value={`<div dir="rtl">\n\t<Slider value={60} />\n</div>`} />
+<Code value={RightToLeftSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -364,26 +291,9 @@
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<div class="stack">
-		<Slider
-			--np-slider-active-track-color="var(--np-color-error)"
-			--np-slider-inactive-track-color="var(--np-color-error-container)"
-			--np-slider-handle-color="var(--np-color-error)"
-			--np-slider-track-shape="0.25rem"
-			value={40}
-			aria-label="Slider custom"
-		/>
-	</div>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<Slider
-	--np-slider-active-track-color="var(--np-color-error)"
-	--np-slider-inactive-track-color="var(--np-color-error-container)"
-	--np-slider-handle-color="var(--np-color-error)"
-	--np-slider-track-shape="0.25rem"
-	value={40}
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
@@ -538,24 +448,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.stack {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-		min-width: min(22rem, 70vw);
-	}
-	.stack.wide {
-		gap: 2.5rem;
-	}
-	.stack.with-label {
-		padding-block-start: 2.5rem;
-		gap: 3rem;
-	}
-	.row {
-		display: flex;
-		align-items: flex-end;
-		gap: 2.5rem;
-	}
-</style>

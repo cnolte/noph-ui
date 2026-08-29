@@ -1,7 +1,16 @@
 <script lang="ts">
-	import Checkbox from '#lib/checkbox/Checkbox.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import Disabled from './demos/Disabled.svelte'
+	import DisabledSource from './demos/Disabled.svelte?raw'
+	import Error from './demos/Error.svelte'
+	import ErrorSource from './demos/Error.svelte?raw'
+	import Label from './demos/Label.svelte'
+	import LabelSource from './demos/Label.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
+	import Usage from './demos/Usage.svelte'
+	import UsageSource from './demos/Usage.svelte?raw'
 </script>
 
 <svelte:head>
@@ -11,50 +20,28 @@
 <h1>Checkbox</h1>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Checkbox aria-label="Unchecked" />
-	<Checkbox aria-label="Checked" checked />
-	<Checkbox aria-label="Indeterminate" indeterminate />
+	<Usage />
 </DemoContainer>
-<Code
-	value={`<Checkbox />
-<Checkbox checked />
-<Checkbox indeterminate />`}
-/>
+<Code value={UsageSource} />
 <h2 id="disabled">Disabled<a href="#disabled" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Checkbox aria-label="Unchecked" disabled />
-	<Checkbox aria-label="Checked" disabled checked />
-	<Checkbox aria-label="Indeterminate" disabled indeterminate />
+	<Disabled />
 </DemoContainer>
-<Code
-	value={`<Checkbox disabled />
-<Checkbox checked disabled />
-<Checkbox indeterminate disabled />`}
-/>
+<Code value={DisabledSource} />
 <h2 id="error">Error<a href="#error" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Checkbox aria-label="Unchecked" issues={[{ message: 'Required' }]} />
-	<Checkbox aria-label="Checked" checked issues={[{ message: 'Required' }]} />
-	<Checkbox aria-label="Indeterminate" indeterminate issues={[{ message: 'Required' }]} />
+	<Error />
 </DemoContainer>
-<Code
-	value={`<Checkbox issues={[{ message: 'Required' }]} />
-<Checkbox checked issues={[{ message: 'Required' }]} />
-<Checkbox indeterminate issues={[{ message: 'Required' }]} />`}
-/>
+<Code value={ErrorSource} />
 <p>
 	<code>issues</code> is shaped like a SvelteKit remote form's field issues, so passing a field's
 	<code>issues()</code> straight through is enough to drive the error state.
 </p>
 <h3 id="label">Label<a href="#label" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<label style="display: flex; align-items: center"><Checkbox />Checkbox one</label>
-	<label style="display: flex; align-items: center"><Checkbox />Checkbox two</label>
+	<Label />
 </DemoContainer>
-<Code
-	value={`<label><Checkbox />Checkbox one</label>
-<label><Checkbox />Checkbox two</label>`}
-/>
+<Code value={LabelSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -93,24 +80,9 @@
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<Checkbox
-		checked
-		aria-label="Themed checkbox"
-		--np-checkbox-container-shape="10px"
-		--np-checkbox-outline-color="var(--np-color-tertiary)"
-		--np-checkbox-selected-container-color="var(--np-color-error)"
-		--np-checkbox-selected-icon-color="var(--np-color-on-error)"
-	/>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<Checkbox
-	checked
-	--np-checkbox-container-shape="10px"
-	--np-checkbox-outline-color="var(--np-color-tertiary)"
-	--np-checkbox-selected-container-color="var(--np-color-error)"
-	--np-checkbox-selected-icon-color="var(--np-color-on-error)"
-/>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>

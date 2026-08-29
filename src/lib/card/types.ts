@@ -9,7 +9,7 @@ export interface CardProps
 		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
 		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
 	variant?: 'elevated' | 'filled' | 'outlined'
-	disabled?: boolean
+	disabled?: boolean | null
 	image?: string | null
 	element?: HTMLElement
 	headline?: string | null

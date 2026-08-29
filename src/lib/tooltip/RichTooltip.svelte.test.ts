@@ -12,9 +12,9 @@ const settled = (el: HTMLElement) => Promise.all(el.getAnimations().map((a) => a
 
 const parts = () => ({ anchor: byId('rich-anchor'), tooltip: byId('rich-tip') })
 
-describe('opening and dismissing', () => {
+describe('opening and dismissing', async () => {
 	test('a click opens it below the control and keeps it open', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await click(anchor)
@@ -33,7 +33,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('the keyboard opens it the way a click does, and focus alone does not', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await click(byId('away'))
@@ -47,7 +47,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('hovering the control is not a trigger', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await hover(anchor)
@@ -56,7 +56,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('once open it stays when the pointer leaves the control', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await click(anchor)
@@ -68,7 +68,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('setting open opens it, anchored to the control all the same', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await click(byId('open-it'))
@@ -82,7 +82,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('a control that renders after the tooltip still anchors a scripted open', async () => {
-		render(Harness)
+		await render(Harness)
 		const tooltip = byId('late-tip')
 
 		await click(byId('open-late'))
@@ -97,7 +97,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('escape dismisses it, and so does a click outside', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await click(anchor)
@@ -112,7 +112,7 @@ describe('opening and dismissing', () => {
 	})
 
 	test('open reflects the state it is in', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		expect(byId('open-state').textContent).toBe('false')
@@ -124,9 +124,9 @@ describe('opening and dismissing', () => {
 	})
 })
 
-describe('content and semantics', () => {
+describe('content and semantics', async () => {
 	test('carries the tooltip role, its subhead and an action', async () => {
-		render(Harness)
+		await render(Harness)
 		const { tooltip } = parts()
 
 		expect(tooltip.getAttribute('role')).toBe('tooltip')
@@ -137,7 +137,7 @@ describe('content and semantics', () => {
 	})
 
 	test('the keyboard reaches the action inside it', async () => {
-		render(Harness)
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		await click(anchor)
@@ -149,13 +149,17 @@ describe('content and semantics', () => {
 	})
 
 	test('needs no JavaScript: a copy of the markup with no listeners still opens', async () => {
-		render(Harness)
+		// `popovertarget` rather than the `commandfor` the harness uses, so the older attribute pair
+		// is covered too. Both name a control the same way.
+		await render(Harness)
 		const { anchor, tooltip } = parts()
 
 		const control = anchor.cloneNode(true) as HTMLElement
 		const panel = tooltip.cloneNode(true) as HTMLElement
 		control.id = 'copied-anchor'
 		panel.id = 'copied-tip'
+		control.removeAttribute('command')
+		control.removeAttribute('commandfor')
 		control.setAttribute('popovertarget', panel.id)
 		control.setAttribute('popovertargetaction', 'show')
 		const room = document.createElement('div')

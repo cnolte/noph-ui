@@ -52,8 +52,8 @@ test('a rich tooltip is complete in the server markup too', () => {
 	const { body } = render(RichHarness)
 
 	const control = attributesOf(body, 'rich-anchor')
-	expect(control).toContain('popovertarget="rich-tip"')
-	expect(control).toContain('popovertargetaction="show"')
+	expect(control).toContain('command="show-popover"')
+	expect(control).toContain('commandfor="rich-tip"')
 
 	const panel = attributesOf(body, 'rich-tip')
 	expect(panel).toContain('popover="auto"')

@@ -15,8 +15,8 @@
 	<button id="away">away</button>
 	<IconButton
 		id="rich-anchor"
-		popovertarget="rich-tip"
-		popovertargetaction="show"
+		command="show-popover"
+		commandfor="rich-tip"
 		aria-label="More information"
 	>
 		<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" /></svg>
@@ -41,8 +41,8 @@
 	{#if lateControl}
 		<IconButton
 			id="late-anchor"
-			popovertarget="late-tip"
-			popovertargetaction="show"
+			command="show-popover"
+			commandfor="late-tip"
 			aria-label="More information"
 		>
 			<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" /></svg>

@@ -2,41 +2,15 @@
 	import CheckIcon from '#lib/icons/CheckIcon.svelte'
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { Attachment } from 'svelte/attachments'
-	import type { HTMLAttributes } from 'svelte/elements'
+	import { revealSelected, tabStop } from './optionList.js'
+	import type { TimeColumnProps } from './types.ts'
 
-	interface SelectionOption {
-		value: number
-		label: string
-		disabled?: boolean
-	}
-
-	interface SelectionListProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onselect'> {
-		options: SelectionOption[]
-		value?: number
-		onselect?: (value: number) => void
-	}
-
-	let { options, value, onselect, ...attributes }: SelectionListProps = $props()
+	let { options, value, onselect, ...attributes }: TimeColumnProps = $props()
 
 	const handleKeydown = arrowKeyNav('[role="option"]')
+	const reveal = revealSelected(true)
 
-	let tabStopValue = $derived.by(() => {
-		if (options.some((option) => option.value === value)) return value
-		const offered = options.filter((option) => !option.disabled)
-		const pool = offered.length ? offered : options
-		if (!pool.length) return undefined
-		if (value === undefined) return pool[0].value
-		return pool.reduce((nearest, option) =>
-			Math.abs(option.value - value) < Math.abs(nearest.value - value) ? option : nearest,
-		).value
-	})
-
-	const centerInList: Attachment<HTMLElement> = (element) => {
-		const list = element.closest<HTMLElement>('.np-date-picker-selection-list')
-		if (!list) return
-		list.scrollTop = element.offsetTop - list.clientHeight / 2 + element.offsetHeight / 2
-	}
+	let tabStopValue = $derived(tabStop(options, value))
 </script>
 
 <div
@@ -49,7 +23,7 @@
 	{#each options as option (option.value)}
 		{@const selected = option.value === value}
 		<button
-			{@attach selected && centerInList}
+			{@attach selected && reveal}
 			type="button"
 			role="option"
 			aria-selected={selected}

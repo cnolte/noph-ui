@@ -20,7 +20,7 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import { afterTwoFrames } from './enterAnimation.js'
+	import { afterTwoFrames } from '#lib/animation.js'
 	import type { CalendarProps } from './types.ts'
 
 	let {

@@ -12,7 +12,7 @@ const open = async (props: {
 	positionArea?: string
 	justifySelf?: string
 }) => {
-	render(Harness, props)
+	await render(Harness, props)
 	const anchor = byId('placement-anchor')
 	const tooltip = byId('placement-tip')
 	await page.elementLocator(anchor).click()

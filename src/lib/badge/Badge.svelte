@@ -1,7 +1,12 @@
 <script lang="ts">
 	import type { BadgeProps } from './types.ts'
 
-	let { label, ariaLabel, element = $bindable(), ...attributes }: BadgeProps = $props()
+	let {
+		label,
+		'aria-label': ariaLabel,
+		element = $bindable(),
+		...attributes
+	}: BadgeProps = $props()
 </script>
 
 <div

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import ThemeGenerator from '../../ThemeGenerator.svelte'
+	import ComponentOverride from './demos/ComponentOverride.svelte'
+	import ComponentOverrideSource from './demos/ComponentOverride.svelte?raw'
 </script>
 
 <svelte:head>
@@ -68,104 +69,6 @@
 </p>
 <ThemeGenerator />
 
-<h3 id="generating-a-scheme-in-code">
-	Generating a scheme in code<a href="#generating-a-scheme-in-code" aria-hidden="true" tabindex="-1"
-		>#</a
-	>
-</h3>
-<p>
-	The generator is roughly twenty lines on top of
-	<a
-		class="link"
-		href="https://github.com/deminearchiver/material-color-utilities-typescript"
-		target="_blank"
-	>
-		material-color-utilities
-	</a>. Install it as a dev dependency. It produces CSS, so it never reaches your users and Noph UI
-	stays free of runtime dependencies.
-</p>
-<Code value="npm install -D @materialx/material-color-utilities" />
-<p>
-	Build one scheme per color scheme from the same source color, then write both hex values into a
-	<code>light-dark()</code> pair. Role names map to tokens by turning camel case into dashes, so
-	<code>onPrimaryContainer</code> becomes <code>--np-color-on-primary-container</code>.
-</p>
-<Code
-	value={`import {
-	argbFromHex,
-	DynamicScheme,
-	Hct,
-	hexFromArgb,
-	SpecVersion,
-	Variant,
-} from '@materialx/material-color-utilities'
-
-const options = {
-	sourceColorHct: Hct.fromInt(argbFromHex('#5fb9e9')),
-	variant: Variant.CONTENT,
-	specVersion: SpecVersion.SPEC_2025,
-	contrastLevel: 0,
-}
-
-const light = DynamicScheme.from({ ...options, isDark: false })
-const dark = DynamicScheme.from({ ...options, isDark: true })
-
-const token = (role) => '--np-color-' + role.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
-
-const declarations = ['primary', 'onPrimary', 'primaryContainer', 'onPrimaryContainer'].map(
-	(role) =>
-		token(role) + ': light-dark(' + hexFromArgb(light[role]) + ', ' + hexFromArgb(dark[role]) + ');',
-)
-
-console.log(':root {\\n\\t' + declarations.join('\\n\\t') + '\\n}')`}
-/>
-<p>
-	Write the result to a CSS file and import it instead of <code>noph-ui/defaultTheme</code>, or set
-	the properties on <code>document.documentElement</code> to switch themes without a reload.
-</p>
-
-<h3 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>
-	The variant decides how far the palette travels from the source color. Try each one in the
-	generator above, the differences are easier to see than to describe.
-</p>
-<table>
-	<thead>
-		<tr><th>Variant</th><th>Character</th></tr>
-	</thead>
-	<tbody>
-		<tr
-			><td><code>CONTENT</code></td><td>Keeps the source color itself, good for brand colors</td
-			></tr
-		>
-		<tr
-			><td><code>FIDELITY</code></td><td>Like content, with tighter fidelity to the source hue</td
-			></tr
-		>
-		<tr><td><code>TONAL_SPOT</code></td><td>The classic Material You look, moderate chroma</td></tr>
-		<tr><td><code>VIBRANT</code></td><td>High chroma accents around the source hue</td></tr>
-		<tr
-			><td><code>EXPRESSIVE</code></td><td>Shifts hue away from the source for a playful palette</td
-			></tr
-		>
-		<tr><td><code>NEUTRAL</code></td><td>Barely colorful, close to grey</td></tr>
-		<tr><td><code>MONOCHROME</code></td><td>Greyscale, no chroma at all</td></tr>
-		<tr><td><code>RAINBOW</code></td><td>Neutral surfaces with colorful accents</td></tr>
-		<tr
-			><td><code>FRUIT_SALAD</code></td><td
-				>Hue shifted primary and secondary, the loudest option</td
-			></tr
-		>
-	</tbody>
-</table>
-
-<h3 id="contrast">Contrast<a href="#contrast" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>
-	<code>contrastLevel</code> runs from <code>-1</code> to <code>1</code>. Zero is the design as
-	specified, one is maximum contrast, minus one the lowest. Raising it is the quickest way to meet a
-	stricter contrast requirement without picking new colors by hand.
-</p>
-
 <h3 id="spec-versions">
 	Spec versions<a href="#spec-versions" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -225,46 +128,6 @@ setTheme({ '--np-color-primary': 'light-dark(#00668c, #75ceff)' })`}
 <p>
 	Call <code>removeProperty</code> with the same token names to fall back to the stylesheet again.
 </p>
-
-<h2 id="color-roles">Color roles<a href="#color-roles" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>
-	Roles come in families. Every accent family has a base color, an <code>on-</code> color for
-	content drawn on top of it, a container variant and an <code>on-</code> color for that container. The
-	generator above lists all 54 with the values your current settings produce.
-</p>
-<table>
-	<thead>
-		<tr><th>Family</th><th>What it is for</th></tr>
-	</thead>
-	<tbody>
-		<tr><td>Primary</td><td>The main action and anything that should read as branded</td></tr>
-		<tr><td>Secondary</td><td>Supporting components that should stay quieter than primary</td></tr>
-		<tr><td>Tertiary</td><td>Accents that need to contrast with primary</td></tr>
-		<tr><td>Error</td><td>Validation, destructive actions</td></tr>
-		<tr
-			><td>Surface</td><td
-				>Backgrounds, from <code>surface-container-lowest</code> up to <code>highest</code></td
-			></tr
-		>
-		<tr
-			><td>Outline</td><td
-				>Borders and dividers, <code>outline-variant</code> for the subtle ones</td
-			></tr
-		>
-		<tr><td>Inverse</td><td>Inverted surfaces such as snackbars and value labels</td></tr>
-		<tr><td>Fixed</td><td>Colors that keep the same value in both schemes</td></tr>
-		<tr
-			><td>Palette key colors</td><td>The key color of each tonal palette, useful for tooling</td
-			></tr
-		>
-		<tr
-			><td>Utility</td><td
-				><code>background</code>, <code>shadow</code>, <code>scrim</code> and
-				<code>surface-tint</code></td
-			></tr
-		>
-	</tbody>
-</table>
 
 <h2 id="shape-tokens">
 	Shape tokens<a href="#shape-tokens" aria-hidden="true" tabindex="-1">#</a>
@@ -340,37 +203,6 @@ box-shadow: var(--np-elevation-3);`}
 	a single instance, or on any ancestor to restyle a whole region.
 </p>
 <DemoContainer>
-	<Button variant="filled">Default</Button>
-	<Button
-		variant="filled"
-		--np-filled-button-container-color="var(--np-color-tertiary)"
-		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
-	>
-		Tertiary
-	</Button>
-	<Button variant="filled" shape="square" --np-button-shape="var(--np-shape-corner-extra-small)">
-		Square
-	</Button>
+	<ComponentOverride />
 </DemoContainer>
-<Code
-	value={`<Button variant="filled">Default</Button>
-<Button
-	variant="filled"
-	--np-filled-button-container-color="var(--np-color-tertiary)"
-	--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
->
-	Tertiary
-</Button>
-<Button variant="filled" shape="square" --np-button-shape="var(--np-shape-corner-extra-small)">
-	Square
-</Button>`}
-/>
-<p>
-	Read the token a component documents before you set it. <code>--np-button-shape</code> holds the
-	corner radius of the <em>square</em> button shape, so it only takes effect together with
-	<code>shape="square"</code>. A round button is a pill, and its radius follows its height.
-</p>
-<p>
-	Point these at theme tokens rather than raw hex values and your overrides keep working when the
-	theme changes. Each component page lists the properties it understands in its own Theming section.
-</p>
+<Code value={ComponentOverrideSource} />

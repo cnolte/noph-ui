@@ -10,13 +10,16 @@
 		multiSelect = false,
 		element = $bindable(),
 		group = $bindable(),
+		issues,
 		...attributes
 	}: SegmentedButtonProps = $props()
+
+	let hasError = $derived(!!issues?.length)
 </script>
 
 <div
 	{...attributes}
-	class={['np-segmented-buttons', attributes.class]}
+	class={['np-segmented-buttons', hasError && 'np-error', attributes.class]}
 	bind:this={element}
 	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"
 >
@@ -93,6 +96,17 @@
 		border: 1px solid var(--np-color-outline);
 		border-radius: var(--np-shape-corner-full);
 		overflow-x: auto;
+	}
+
+	.np-segmented-buttons.np-error {
+		--np-ripple-hover-color: var(--np-color-error);
+		--np-ripple-pressed-color: var(--np-color-error);
+		border-color: var(--np-color-error);
+		color: var(--np-color-error);
+	}
+
+	.np-error .np-segmented-button {
+		border-inline-end-color: var(--np-color-error);
 	}
 
 	.np-segmented-button {

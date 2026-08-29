@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Divider from '#lib/divider/Divider.svelte'
+	import { syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { DialogProps } from './types.ts'
 
 	let {
 		element = $bindable(),
+		open = $bindable(),
 		quick = false,
 		children,
 		headline,
@@ -12,82 +14,63 @@
 		actions,
 		divider,
 		ontoggle,
-		// Naming attributes belong on the element that carries role="dialog", not on the popover
-		// container the rest of the attributes are spread onto.
-		'aria-label': ariaLabel,
 		'aria-labelledby': ariaLabelledby,
 		...attributes
 	}: DialogProps = $props()
 
 	const uid = $props.id()
 
-	let dialogEl: HTMLDivElement | undefined = $state()
-	let previouslyFocused: HTMLElement | undefined
-	let inerted: HTMLElement[] = []
-
-	export const showPopover = () => {
-		element?.showPopover()
+	/*
+	 * A modal dialog can only be opened from script or from a `command` button; `<dialog open>` on
+	 * its own is the non-modal kind, with no focus trap and no backdrop.
+	 */
+	export const show = () => {
+		if (element && !element.open) element.showModal()
 	}
 
-	export const hidePopover = () => {
-		element?.hidePopover()
+	export const close = () => {
+		element?.close()
 	}
 
-	const trapFocus = () => {
-		if (!element) return
-		previouslyFocused = document.activeElement as HTMLElement | undefined
-		for (let node: HTMLElement | null = element; node && node !== document.body;) {
-			const parent: HTMLElement | null = node.parentElement
-			if (!parent) break
-			for (const sibling of parent.children) {
-				if (sibling === node || !(sibling instanceof HTMLElement) || sibling.inert) continue
-				sibling.inert = true
-				inerted.push(sibling)
-			}
-			node = parent
-		}
-		dialogEl?.focus()
-	}
-
-	const releaseFocus = () => {
-		for (const node of inerted) node.inert = false
-		inerted = []
-		previouslyFocused?.focus?.()
-		previouslyFocused = undefined
-	}
+	syncOpenEffect(
+		() => element,
+		() => open,
+		show,
+		close,
+	)
 </script>
 
-<div
+<!--
+	A `dialog`, not a popover. `showModal()` keeps everything outside inert for as long as the dialog
+	is open, including anything added to the page while it is open, and hands focus back on close.
+	`::backdrop` is the scrim and `closedby="any"` the click-outside-to-close. Where `closedby` is
+	unsupported the click handler below covers it: a click on the backdrop is reported against the
+	dialog itself.
+-->
+<dialog
 	bind:this={element}
 	{...attributes}
-	popover="auto"
+	tabindex="-1"
+	closedby="any"
+	aria-labelledby={ariaLabelledby ?? (headline ? `${uid}-dialog-headline` : undefined)}
+	aria-describedby={supportingText ? `${uid}-dialog-supporting-text` : undefined}
+	class={['np-dialog-container', !quick && 'np-animate', attributes.class]}
 	ontoggle={(event) => {
-		if (event.newState === 'open') {
-			trapFocus()
-		} else {
-			releaseFocus()
-		}
+		open = event.newState === 'open'
+		/*
+		 * Without this the browser autofocuses the first focusable descendant, one of the actions,
+		 * which can be a destructive one. Focus the dialog itself instead, so nothing is focused
+		 * that the user didn't choose to interact with.
+		 */
+		if (event.newState === 'open') element?.focus()
 		ontoggle?.(event)
 	}}
-	class={['np-dialog-container', !quick && 'np-animate', attributes.class]}
+	onclick={(event) => {
+		attributes.onclick?.(event)
+		if (event.target === element) close()
+	}}
 >
-	<div
-		role="none"
-		class="np-backdrop"
-		onclick={() => {
-			hidePopover()
-		}}
-	></div>
-	<div
-		bind:this={dialogEl}
-		class="np-dialog"
-		role="dialog"
-		tabindex="-1"
-		aria-modal="true"
-		aria-label={ariaLabel}
-		aria-labelledby={ariaLabelledby ?? (headline ? `${uid}-dialog-headline` : undefined)}
-		aria-describedby={supportingText ? `${uid}-dialog-supporting-text` : undefined}
-	>
+	<div class="np-dialog">
 		{#if icon}
 			<div class="np-dialog-icon">
 				{@render icon()}
@@ -119,19 +102,36 @@
 			</div>
 		{/if}
 	</div>
-</div>
+</dialog>
 
 <style>
 	.np-dialog-container {
 		background: transparent;
 		border: none;
+		/* Focus lands here on open only to stay off the actions, not as something to show. */
+		outline: none;
 		margin: auto;
 		padding: var(--np-dialog-inset, 2rem 1rem);
 		box-sizing: border-box;
 		min-width: var(--np-dialog-container-min-width, 19.5rem);
 		width: var(--np-dialog-container-width, 37rem);
 		max-width: 100%;
+		max-height: none;
+		overflow: visible;
+		color: var(--np-color-on-surface);
 	}
+	/* A closed dialog is `display: none` from the user agent, which the enter transition needs. */
+	.np-dialog-container:not([open]) {
+		display: none;
+	}
+	/*
+	 * The exit transition holds the dialog in the top layer after it has closed, where it would go on
+	 * taking the clicks meant for the page behind it.
+	 */
+	.np-animate:not([open]) {
+		pointer-events: none;
+	}
+
 	.np-dialog {
 		border: 0;
 		background-color: var(--np-dialog-container-color, var(--np-color-surface));
@@ -154,27 +154,36 @@
 		flex-direction: column;
 	}
 
-	.np-animate[popover] {
+	.np-dialog-container::backdrop {
+		background-color: var(--np-color-scrim);
+		opacity: 0.32;
+	}
+
+	.np-animate {
 		transition:
 			opacity var(--np-motion-expressive-slow-effects),
 			display var(--np-motion-expressive-slow-effects) allow-discrete,
 			overlay var(--np-motion-expressive-slow-effects) allow-discrete;
 		opacity: 0;
 	}
-	.np-animate[popover]:popover-open {
+	.np-animate[open] {
 		opacity: 1;
 		@starting-style {
 			opacity: 0;
 		}
 	}
-	.np-dialog-container[popover] .np-backdrop {
-		inset: 0;
-		position: fixed;
-		background-color: var(--np-color-scrim);
-		opacity: 0.32;
+	.np-animate::backdrop {
+		transition:
+			opacity var(--np-motion-expressive-slow-effects),
+			display var(--np-motion-expressive-slow-effects) allow-discrete,
+			overlay var(--np-motion-expressive-slow-effects) allow-discrete;
+		opacity: 0;
 	}
-	.np-dialog:focus-visible {
-		outline: none;
+	.np-animate[open]::backdrop {
+		opacity: 0.32;
+		@starting-style {
+			opacity: 0;
+		}
 	}
 
 	.np-dialog-icon {

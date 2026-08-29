@@ -54,8 +54,12 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 
 **Actions**
 [Buttons](https://noph.dev/components/button) &middot;
+[Button group](https://noph.dev/components/button-group) &middot;
+[FAB](https://noph.dev/components/fab) &middot;
 [Icon buttons](https://noph.dev/components/icon-button) &middot;
 [Segmented buttons](https://noph.dev/components/segmented-button) &middot;
+[Split button](https://noph.dev/components/split-button) &middot;
+[Toolbar](https://noph.dev/components/toolbar) &middot;
 [Ripple](https://noph.dev/components/ripple)
 
 **Inputs & selection**
@@ -65,6 +69,7 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 [DatePicker](https://noph.dev/components/date-picker) &middot;
 [DateTimePicker](https://noph.dev/components/date-time-picker) &middot;
 [Radio](https://noph.dev/components/radio) &middot;
+[Search](https://noph.dev/components/search) &middot;
 [Select](https://noph.dev/components/select) &middot;
 [Slider](https://noph.dev/components/slider) &middot;
 [Switch](https://noph.dev/components/switch) &middot;
@@ -72,8 +77,10 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 
 **Navigation**
 [Menus](https://noph.dev/components/menu) &middot;
+[Navigation Bar](https://noph.dev/components/navigation-bar) &middot;
 [Navigation Drawer](https://noph.dev/components/navigation-drawer) &middot;
 [Navigation Rail](https://noph.dev/components/navigation-rail) &middot;
+[App bar](https://noph.dev/components/app-bar) &middot;
 [Tabs](https://noph.dev/components/tabs)
 
 **Communication**
@@ -82,9 +89,11 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 [Loading indicator](https://noph.dev/components/loading-indicator) &middot;
 [Progress indicators](https://noph.dev/components/progress) &middot;
 [Snackbar](https://noph.dev/components/snackbar) &middot;
-[Tooltips](https://noph.dev/components/tooltip)
+[Tooltips](https://noph.dev/components/tooltip) &middot;
+[Rich tooltip](https://noph.dev/components/tooltip#rich-tooltip)
 
 **Containment**
 [Cards](https://noph.dev/components/card) &middot;
 [Divider](https://noph.dev/components/divider) &middot;
+[Sheets](https://noph.dev/components/sheet) &middot;
 [Lists](https://noph.dev/components/list)

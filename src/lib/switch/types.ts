@@ -9,4 +9,5 @@ export interface SwitchProps extends Omit<
 	icons?: 'selected' | 'both'
 	inputElement?: HTMLInputElement
 	element?: HTMLDivElement
+	issues?: { message: string }[]
 }

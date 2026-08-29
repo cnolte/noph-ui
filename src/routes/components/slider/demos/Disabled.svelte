@@ -1,0 +1,17 @@
+<script lang="ts">
+	import { Slider } from '#lib/index.js'
+</script>
+
+<div class="stack">
+	<Slider disabled value={40} aria-label="Disabled" />
+	<Slider disabled range value={20} endValue={70} aria-label="Disabled range" />
+</div>
+
+<style>
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		min-width: min(22rem, 70vw);
+	}
+</style>

@@ -12,13 +12,16 @@
 		icon,
 		element = $bindable(),
 		actionElement = $bindable(),
-		ariaLabelRemove = 'Remove',
+		removeAriaLabel = 'Remove',
 		onclick,
 		onremove,
 		name,
 		value,
+		issues,
 		...attributes
 	}: InputChipProps = $props()
+
+	let hasError = $derived(!!issues?.length)
 </script>
 
 <div
@@ -30,6 +33,7 @@
 		icon ? 'np-input-chip-icon' : '',
 		disabled ? 'np-input-chip-disabled' : '',
 		selected ? 'np-input-chip-selected' : '',
+		hasError && !disabled && 'np-chip-error',
 		attributes.class,
 	]}
 >
@@ -57,7 +61,7 @@
 		type="button"
 		size="xs"
 		--np-icon-button-icon-size="1.125rem"
-		aria-label={ariaLabelRemove}
+		aria-label={removeAriaLabel}
 		onclick={onremove}
 	>
 		<CloseIcon />
@@ -76,6 +80,13 @@
 		--np-ripple-pressed-opacity: 0.1;
 		padding-inline-end: 1px;
 		min-width: 0;
+	}
+	.np-chip-error {
+		--np-input-chip-outline-color: var(--np-color-error);
+		--np-icon-button-icon-color: var(--np-color-error);
+		--np-ripple-hover-color: var(--np-color-error);
+		--np-ripple-pressed-color: var(--np-color-error);
+		color: var(--np-color-error);
 	}
 	.np-input-chip-label {
 		appearance: none;

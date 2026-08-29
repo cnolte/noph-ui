@@ -1,11 +1,18 @@
 <script lang="ts">
-	import { page } from '$app/state'
-	import { Icon } from '#lib/icons/index.js'
-	import Tab from '#lib/tabs/Tab.svelte'
-	import Tabs from '#lib/tabs/Tabs.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-	let value = $state('videos')
+	import Links from './demos/Links.svelte'
+	import LinksSource from './demos/Links.svelte?raw'
+	import PrimaryTabs from './demos/PrimaryTabs.svelte'
+	import PrimaryTabsSource from './demos/PrimaryTabs.svelte?raw'
+	import PrimaryTabsIcons from './demos/PrimaryTabsIcons.svelte'
+	import PrimaryTabsIconsSource from './demos/PrimaryTabsIcons.svelte?raw'
+	import SecondaryTabs from './demos/SecondaryTabs.svelte'
+	import SecondaryTabsSource from './demos/SecondaryTabs.svelte?raw'
+	import SecondaryTabsIcons from './demos/SecondaryTabsIcons.svelte'
+	import SecondaryTabsIconsSource from './demos/SecondaryTabsIcons.svelte?raw'
+	import Selection from './demos/Selection.svelte'
+	import SelectionSource from './demos/Selection.svelte?raw'
 </script>
 
 <svelte:head>
@@ -25,74 +32,26 @@
 	Primary tabs<a href="#primary-tabs" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Tabs value="videos">
-		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-		<Tab value="theme">Theme</Tab>
-		<Tab badge value="settings">Settings</Tab>
-	</Tabs>
+	<PrimaryTabs />
 </DemoContainer>
-<Code
-	value={`<Tabs value="videos">
-	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-	<Tab value="theme">Theme</Tab>
-	<Tab badge value="settings">Settings</Tab>
-</Tabs>`}
-/>
+<Code value={PrimaryTabsSource} />
 <h4 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h4>
 <DemoContainer>
-	<Tabs value="videos">
-		<Tab badge badgeLabel="2" value="videos">
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
-		</Tab>
-		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
-	</Tabs>
+	<PrimaryTabsIcons />
 </DemoContainer>
-<Code
-	value={`<Tabs value="videos">
-	<Tab badge badgeLabel="2" value="videos">
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
-	</Tab>
-	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
-</Tabs>`}
-/>
+<Code value={PrimaryTabsIconsSource} />
 <h3 id="secondary-tabs">
 	Secondary tabs<a href="#secondary-tabs" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Tabs variant="secondary" value="videos">
-		<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-		<Tab value="theme">Theme</Tab>
-		<Tab badge value="settings">Settings</Tab>
-	</Tabs>
+	<SecondaryTabs />
 </DemoContainer>
-<Code
-	value={`<Tabs variant="secondary" value="videos">
-	<Tab badge badgeLabel="2" value="videos">Videos</Tab>
-	<Tab value="theme">Theme</Tab>
-	<Tab badge value="settings">Settings</Tab>
-</Tabs>`}
-/>
+<Code value={SecondaryTabsSource} />
 <h4 id="icons-2">Icons<a href="#icons-2" aria-hidden="true" tabindex="-1">#</a></h4>
 <DemoContainer>
-	<Tabs variant="secondary" value="videos">
-		<Tab badge badgeLabel="2" value="videos">
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
-		</Tab>
-		<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-		<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
-	</Tabs>
+	<SecondaryTabsIcons />
 </DemoContainer>
-<Code
-	value={`<Tabs variant="secondary" value="videos">
-	<Tab badge badgeLabel="2" value="videos">
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}Videos
-	</Tab>
-	<Tab value="theme">{#snippet icon()}<Icon>palette</Icon>{/snippet}Theme</Tab>
-	<Tab badge value="settings">{#snippet icon()}<Icon>settings</Icon>{/snippet}Settings</Tab>
-</Tabs>`}
-/>
+<Code value={SecondaryTabsIconsSource} />
 <h3 id="selection">Selection<a href="#selection" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	The <code>value</code> prop on <code>&lt;Tabs&gt;</code> determines which tab is currently
@@ -104,23 +63,9 @@
 	tab in your component state.
 </p>
 <DemoContainer>
-	<div>
-		<Tabs bind:value>
-			<Tab value="videos">Videos</Tab>
-			<Tab value="theme">Theme</Tab>
-			<Tab value="settings">Settings</Tab>
-		</Tabs>
-		<div style="margin-top:1rem;font-size:0.825rem">Selected tab: {value}</div>
-	</div>
+	<Selection />
 </DemoContainer>
-<Code
-	value={`<Tabs bind:value>
-	<Tab value="videos">Videos</Tab>
-	<Tab value="theme">Theme</Tab>
-	<Tab value="settings">Settings</Tab>
-</Tabs>
-<div>Selected tab: {value}</div>`}
-/>
+<Code value={SelectionSource} />
 
 <h3 id="links">Links<a href="#links" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
@@ -131,23 +76,9 @@
 	This approach is especially useful for SSR and deep linking.
 </p>
 <DemoContainer>
-	<div>
-		<Tabs variant="secondary" value={page.url.searchParams.get('tab') || 'videos'}>
-			<Tab data-sveltekit-noscroll href="/components/tabs?tab=videos" value="videos">Videos</Tab>
-			<Tab data-sveltekit-noscroll href="/components/tabs?tab=theme" value="theme">Theme</Tab>
-			<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">
-				Settings
-			</Tab>
-		</Tabs>
-	</div>
+	<Links />
 </DemoContainer>
-<Code
-	value={`<Tabs variant="secondary" value={page.url.searchParams.get('tab') || 'videos'}>
-	<Tab data-sveltekit-noscroll href="/components/tabs?tab=videos" value="videos">Videos</Tab>
-	<Tab data-sveltekit-noscroll href="/components/tabs?tab=theme" value="theme">Theme</Tab>
-	<Tab data-sveltekit-noscroll href="/components/tabs?tab=settings" value="settings">Settings</Tab>
-</Tabs>`}
-/>
+<Code value={LinksSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tabs">Tabs<a href="#tabs" aria-hidden="true" tabindex="-1">#</a></h3>

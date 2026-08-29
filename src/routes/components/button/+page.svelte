@@ -3,6 +3,34 @@
 	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import ElevatedButton from './demos/ElevatedButton.svelte'
+	import ElevatedButtonSource from './demos/ElevatedButton.svelte?raw'
+	import ElevatedButtonExample from './demos/ElevatedButtonExample.svelte'
+	import ElevatedButtonExampleSource from './demos/ElevatedButtonExample.svelte?raw'
+	import FilledButton from './demos/FilledButton.svelte'
+	import FilledButtonSource from './demos/FilledButton.svelte?raw'
+	import FilledButtonExample from './demos/FilledButtonExample.svelte'
+	import FilledButtonExampleSource from './demos/FilledButtonExample.svelte?raw'
+	import IconSlots from './demos/IconSlots.svelte'
+	import IconSlotsSource from './demos/IconSlots.svelte?raw'
+	import Loading from './demos/Loading.svelte'
+	import LoadingSource from './demos/Loading.svelte?raw'
+	import OutlinedButton from './demos/OutlinedButton.svelte'
+	import OutlinedButtonSource from './demos/OutlinedButton.svelte?raw'
+	import OutlinedButtonExample from './demos/OutlinedButtonExample.svelte'
+	import OutlinedButtonExampleSource from './demos/OutlinedButtonExample.svelte?raw'
+	import Size from './demos/Size.svelte'
+	import SizeSource from './demos/Size.svelte?raw'
+	import TextButton from './demos/TextButton.svelte'
+	import TextButtonSource from './demos/TextButton.svelte?raw'
+	import TextButtonExample from './demos/TextButtonExample.svelte'
+	import TextButtonExampleSource from './demos/TextButtonExample.svelte?raw'
+	import Toggle from './demos/Toggle.svelte'
+	import ToggleSource from './demos/Toggle.svelte?raw'
+	import TonalButton from './demos/TonalButton.svelte'
+	import TonalButtonSource from './demos/TonalButton.svelte?raw'
+	import TonalButtonExample from './demos/TonalButtonExample.svelte'
+	import TonalButtonExampleSource from './demos/TonalButtonExample.svelte?raw'
 </script>
 
 <svelte:head>
@@ -22,140 +50,62 @@
 	Elevated button<a href="#elevated-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<Button variant="elevated">Elevated</Button>
-	<Button variant="elevated" disabled>Disabled</Button>
+	<ElevatedButton />
 </DemoContainer>
-<Code
-	value={`<Button variant="elevated">Elevated</Button>
-<Button variant="elevated" disabled>Disabled</Button>`}
-/>
+<Code value={ElevatedButtonSource} />
 <h2 id="filled-button">
 	Filled button<a href="#filled-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<Button variant="filled">Filled</Button>
-	<Button variant="filled" disabled>Disabled</Button>
+	<FilledButton />
 </DemoContainer>
-<Code
-	value={`<Button variant="filled">Filled</Button>
-<Button variant="filled" disabled>Disabled</Button>`}
-/>
+<Code value={FilledButtonSource} />
 <h2 id="tonal-button">
 	Tonal button<a href="#tonal-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 
 <DemoContainer>
-	<Button variant="tonal">Tonal</Button>
-	<Button variant="tonal" disabled>Disabled</Button>
+	<TonalButton />
 </DemoContainer>
-<Code
-	value={`<Button variant="tonal">Tonal</Button>
-<Button variant="tonal" disabled>Disabled</Button>`}
-/>
+<Code value={TonalButtonSource} />
 <h2 id="outlined-button">
 	Outlined button<a href="#outlined-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 
 <DemoContainer>
-	<Button variant="outlined">Outlined</Button>
-	<Button variant="outlined" disabled>Disabled</Button>
+	<OutlinedButton />
 </DemoContainer>
-<Code
-	value={`<Button variant="outlined">Outlined</Button>
-<Button variant="outlined" disabled>Disabled</Button>`}
-/>
+<Code value={OutlinedButtonSource} />
 <h2 id="text-button">Text button<a href="#text-button" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer>
-	<Button variant="text">Text</Button>
-	<Button variant="text" disabled>Disabled</Button>
+	<TextButton />
 </DemoContainer>
-<Code
-	value={`<Button variant="text">Text</Button>
-<Button variant="text" disabled>Disabled</Button>`}
-/>
+<Code value={TextButtonSource} />
 <h2 id="icon">Icon<a href="#icon" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Button variant="tonal">
-		{#snippet start()}
-			<Icon>send</Icon>
-		{/snippet}Send</Button
-	>
-	<Button variant="text">
-		{#snippet end()}
-			<Icon>open_in_new</Icon>
-		{/snippet}Open</Button
-	>
+	<IconSlots />
 </DemoContainer>
-<Code
-	value={`<Button>
-	{#snippet start()}
-		<Icon>send</Icon>
-	{/snippet}
-	Send
-</Button>
-<Button>
-	{#snippet end()}
-		<Icon>open_in_new</Icon>
-	{/snippet}
-	Open
-</Button>`}
-/>
+<Code value={IconSlotsSource} />
 <h2 id="loading">Loading<a href="#loading" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
-	<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
-	<Button loading loadingAriaLabel="Loading text" variant="text">Text</Button>
+	<Loading />
 </DemoContainer>
-<Code
-	value={`<Button loading loadingAriaLabel="Loading elevated" variant="elevated">Elevated</Button>
-<Button loading loadingAriaLabel="Loading outlined" variant="outlined">Outlined</Button>
-<Button loading loadingAriaLabel="Loading text" variant="text">Text</Button>`}
-/>
+<Code value={LoadingSource} />
 <blockquote>
 	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
 	when using the loading state.
 </blockquote>
 <h2 id="size">Size<a href="#size" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<Button size="xs">{#snippet start()} <Icon>add</Icon>{/snippet}Extra small</Button>
-	<Button size="s">{#snippet start()} <Icon>add</Icon>{/snippet}Small</Button>
-	<Button size="m">{#snippet start()} <Icon>add</Icon>{/snippet}Medium</Button>
-	<Button size="l">{#snippet start()} <Icon>add</Icon>{/snippet}Large</Button>
-	<Button size="xl">{#snippet start()} <Icon>add</Icon>{/snippet}Extra large</Button>
+	<Size />
 </DemoContainer>
-<Code
-	value={`<Button size="xs">Extra small</Button>
-<Button size="s">Small</Button>
-<Button size="m">Medium</Button>
-<Button size="l">Large</Button>
-<Button size="xl">Extra large</Button>`}
-/>
+<Code value={SizeSource} />
 <h2 id="toggle">Toggle<a href="#toggle" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer style="flex-direction: column">
-	<div class="button-list">
-		<Button toggle variant="elevated"
-			>{#snippet start()}
-				<Icon>send</Icon>
-			{/snippet}Elevated</Button
-		>
-		<Button toggle variant="filled">Filled</Button>
-		<Button toggle variant="tonal">Tonal</Button>
-		<Button toggle variant="outlined">Outlined</Button>
-	</div>
-	<div class="button-list">
-		<Button toggle selected variant="elevated">Elevated</Button>
-		<Button toggle selected variant="filled">Filled</Button>
-		<Button toggle selected variant="tonal">Tonal</Button>
-		<Button toggle selected variant="outlined">Outlined</Button>
-	</div>
+	<Toggle />
 </DemoContainer>
-<Code
-	value={`<Button toggle selected variant="elevated">Elevated</Button>
-<Button toggle selected variant="filled">Filled</Button>
-<Button toggle selected variant="tonal">Tonal</Button>
-<Button toggle selected variant="outlined">Outlined</Button>`}
-/>
+<Code value={ToggleSource} />
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <h3 id="elevated-button-tokens">
@@ -183,18 +133,9 @@
 	Elevated button example<a href="#elevated-button-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button variant="elevated" --np-elevated-button-label-text-color="var(--np-color-tertiary)">
-		Custom button
-	</Button>
+	<ElevatedButtonExample />
 </DemoContainer>
-<Code
-	value={`<Button
-	variant="elevated"
-	--np-elevated-button-label-text-color="var(--np-color-tertiary)"
->
-	Custom button
-</Button>`}
-/>
+<Code value={ElevatedButtonExampleSource} />
 
 <h3 id="filled-button-tokens">
 	Filled button tokens<a href="#filled-button-tokens" aria-hidden="true" tabindex="-1">#</a>
@@ -221,24 +162,9 @@
 	Filled button example<a href="#filled-button-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button
-		variant="filled"
-		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
-		--np-filled-button-container-color="var(--np-color-tertiary)"
-	>
-		Custom button
-	</Button>
+	<FilledButtonExample />
 </DemoContainer>
-<Code
-	value={`
-	<Button
-		variant="filled"
-		--np-filled-button-label-text-color="var(--np-color-on-tertiary)"
-		--np-filled-button-container-color="var(--np-color-tertiary)"
-	>
-		Custom button
-	</Button>`}
-/>
+<Code value={FilledButtonExampleSource} />
 
 <h3 id="tonal-button-tokens">
 	Tonal button tokens<a href="#tonal-button-tokens" aria-hidden="true" tabindex="-1">#</a>
@@ -265,23 +191,9 @@
 	Tonal button example<a href="#tonal-button-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button
-		variant="tonal"
-		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
-		--np-tonal-button-container-color="var(--np-color-tertiary-fixed)"
-	>
-		Custom button
-	</Button>
+	<TonalButtonExample />
 </DemoContainer>
-<Code
-	value={`<Button
-		variant="tonal"
-		--np-tonal-button-label-text-color="var(--np-color-on-tertiary-fixed)"
-		--np-tonal-button-container-color="var(--np-color-tertiary-fixed)"
-	>
-		Custom button
-	</Button>`}
-/>
+<Code value={TonalButtonExampleSource} />
 <h3 id="outlined-button-tokens">
 	Outlined button tokens<a href="#outlined-button-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -307,18 +219,9 @@
 	Outlined button example<a href="#outlined-button-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button variant="outlined" --np-outlined-button-label-text-color="var(--np-color-tertiary)">
-		Custom button
-	</Button>
+	<OutlinedButtonExample />
 </DemoContainer>
-<Code
-	value={`<Button
-	variant="outlined"
-	--np-outlined-button-label-text-color="var(--np-color-tertiary)"
->
-	Custom button
-</Button>`}
-/>
+<Code value={OutlinedButtonExampleSource} />
 <h3 id="text-button-tokens">
 	Text button tokens<a href="#text-button-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -383,18 +286,9 @@
 	Text button example<a href="#text-button-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<Button variant="text" --np-text-button-label-text-color="var(--np-color-tertiary)">
-		Custom button
-	</Button>
+	<TextButtonExample />
 </DemoContainer>
-<Code
-	value={`<Button
-	variant="text"
-	--np-text-button-label-text-color="var(--np-color-tertiary)"
->
-	Custom button
-</Button>`}
-/>
+<Code value={TextButtonExampleSource} />
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -512,11 +406,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.button-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-</style>

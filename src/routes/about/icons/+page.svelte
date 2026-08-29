@@ -1,11 +1,10 @@
 <script>
-	import IconButton from '#lib/button/IconButton.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
-	import TextField from '#lib/text-field/TextField.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
-
-	let toggleFilled = $state(false)
+	import IconButtonAndTextField from './demos/IconButtonAndTextField.svelte'
+	import IconButtonAndTextFieldSource from './demos/IconButtonAndTextField.svelte?raw'
+	import IconSettingsToggle from './demos/IconSettingsToggle.svelte'
+	import IconSettingsToggleSource from './demos/IconSettingsToggle.svelte?raw'
 </script>
 
 <svelte:head>
@@ -34,17 +33,9 @@
 	<code>TextField</code>.
 </p>
 <DemoContainer>
-	<IconButton variant="filled"><Icon>search</Icon></IconButton>
-	<TextField label="Search">{#snippet start()}<Icon>search</Icon>{/snippet}</TextField>
+	<IconButtonAndTextField />
 </DemoContainer>
-<Code
-	value={`<IconButton variant="filled">
-  <Icon>search</Icon>
-</IconButton>
-<TextField label="Search">
-  {#snippet start()}<Icon>search</Icon>{/snippet}
-</TextField>`}
-/>
+<Code value={IconButtonAndTextFieldSource} />
 <p>
 	You can also control the font settings, for example, for animations. Click on the following <code
 		>IconButton</code
@@ -52,23 +43,9 @@
 	to see the animation:
 </p>
 <DemoContainer>
-	<IconButton onclick={() => (toggleFilled = !toggleFilled)}>
-		<Icon
-			--np-icon-settings={toggleFilled ? "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" : undefined}
-		>
-			favorite
-		</Icon>
-	</IconButton>
+	<IconSettingsToggle />
 </DemoContainer>
-<Code
-	value={`<IconButton onclick={() => (toggleFilled = !toggleFilled)}>
-  <Icon
-    --np-icon-settings={toggleFilled ? "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" : undefined}
-  >
-    favorite
-  </Icon>
-</IconButton>`}
-/>
+<Code value={IconSettingsToggleSource} />
 <h2 id="svg-icons">SVG icons<a href="#svg-icons" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>To use custom SVG icons, you can import them or use inline SVGs as shown below:</p>
 <Code

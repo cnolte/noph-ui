@@ -54,7 +54,7 @@
 				(children ? '--top-space:2rem;--bottom-space:1rem;' : '')) +
 		`--_min-height:calc(${minLines} * 1lh);--_max-height:${`calc(${maxLines} * 1lh)`};` +
 		style}
-	class={['text-field', attributes.class]}
+	class={['np-text-field', attributes.class]}
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
@@ -279,7 +279,7 @@
 		height: 100%;
 		position: relative;
 	}
-	.text-field {
+	.np-text-field {
 		display: inline-flex;
 		text-align: start;
 	}

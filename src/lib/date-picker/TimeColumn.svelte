@@ -1,40 +1,15 @@
 <script lang="ts">
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { Attachment } from 'svelte/attachments'
+	import { revealSelected, tabStop } from './optionList.js'
 	import type { TimeColumnProps } from './types.ts'
 
 	let { options, value, onselect, ...attributes }: TimeColumnProps = $props()
 
 	const handleKeydown = arrowKeyNav('[role="option"]')
+	const reveal = revealSelected()
 
-	let tabStopValue = $derived.by(() => {
-		if (options.some((option) => option.value === value)) return value
-		const offered = options.filter((option) => !option.disabled)
-		const pool = offered.length ? offered : options
-		if (!pool.length) return undefined
-		if (value === undefined) return pool[0].value
-		return pool.reduce((nearest, option) =>
-			Math.abs(option.value - value) < Math.abs(nearest.value - value) ? option : nearest,
-		).value
-	})
-
-	let centred = false
-
-	const revealSelected: Attachment<HTMLElement> = (element) => {
-		const column = element.parentElement
-		if (!column) return
-		const top = element.offsetTop
-		const bottom = top + element.offsetHeight
-		if (!centred) {
-			centred = true
-			column.scrollTop = top - column.clientHeight / 2 + element.offsetHeight / 2
-		} else if (top < column.scrollTop) {
-			column.scrollTop = top
-		} else if (bottom > column.scrollTop + column.clientHeight) {
-			column.scrollTop = bottom - column.clientHeight
-		}
-	}
+	let tabStopValue = $derived(tabStop(options, value))
 </script>
 
 <div
@@ -47,7 +22,7 @@
 	{#each options as option (option.value)}
 		{@const selected = option.value === value}
 		<button
-			{@attach selected && revealSelected}
+			{@attach selected && reveal}
 			type="button"
 			role="option"
 			aria-selected={selected}

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import DemoContainer from '../../DemoContainer.svelte'
-	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
-	import NavigationDrawer from '#lib/navigation-drawer/NavigationDrawer.svelte'
-	import NavigationDrawerItem from '#lib/navigation-drawer/NavigationDrawerItem.svelte'
-	import Button from '#lib/button/Button.svelte'
-	let selection = $state(1)
+	import ModalDrawer from './demos/ModalDrawer.svelte'
+	import ModalDrawerSource from './demos/ModalDrawer.svelte?raw'
+	import StandardDrawer from './demos/StandardDrawer.svelte'
+	import StandardDrawerSource from './demos/StandardDrawer.svelte?raw'
+	import ThemingExample from './demos/ThemingExample.svelte'
+	import ThemingExampleSource from './demos/ThemingExample.svelte?raw'
 </script>
 
 <svelte:head>
@@ -27,145 +28,23 @@
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer>
-	<Button popovertarget="demo-drawer">Open nav</Button>
-	<NavigationDrawer id="demo-drawer" modal backdrop>
-		<NavigationDrawerItem
-			selected={selection === 1}
-			onclick={() => {
-				selection = 1
-			}}
-			label="Videos"
-			badgeLabelText="+100"
-		>
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationDrawerItem>
-		<NavigationDrawerItem
-			selected={selection === 2}
-			onclick={() => {
-				selection = 2
-			}}
-			label="Styles"
-		>
-			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationDrawerItem>
-		<NavigationDrawerItem
-			selected={selection === 3}
-			onclick={() => {
-				selection = 3
-			}}
-			label="Settings"
-		>
-			{#snippet icon()}<Icon>settings</Icon>{/snippet}
-		</NavigationDrawerItem>
-	</NavigationDrawer>
+	<ModalDrawer />
 </DemoContainer>
 
-<Code
-	value={`<Button popovertarget="demo-drawer">Open nav</Button>
-<NavigationDrawer id="demo-drawer" modal backdrop>
-	<NavigationDrawerItem
-		selected={selection === 1}
-		onclick={() => {
-			selection = 1
-		}}
-		label="Videos"
-		badgeLabelText="+100"
-	>
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-	</NavigationDrawerItem>
-	<NavigationDrawerItem
-		selected={selection === 2}
-		onclick={() => {
-			selection = 2
-		}}
-		label="Styles"
-	>
-		{#snippet icon()}<Icon>palette</Icon>{/snippet}
-	</NavigationDrawerItem>
-	<NavigationDrawerItem
-		selected={selection === 3}
-		onclick={() => {
-			selection = 3
-		}}
-		label="Settings"
-	>
-		{#snippet icon()}<Icon>settings</Icon>{/snippet}
-	</NavigationDrawerItem>
-</NavigationDrawer>`}
-/>
+<Code value={ModalDrawerSource} />
 
 <DemoContainer>
-	<NavigationDrawer --np-navigation-drawer-height="200px">
-		<NavigationDrawerItem
-			selected={selection === 1}
-			onclick={() => {
-				selection = 1
-			}}
-			label="Videos"
-			badgeLabelText="+100"
-		>
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationDrawerItem>
-		<NavigationDrawerItem
-			selected={selection === 2}
-			onclick={() => {
-				selection = 2
-			}}
-			label="Styles"
-		>
-			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationDrawerItem>
-		<NavigationDrawerItem
-			selected={selection === 3}
-			onclick={() => {
-				selection = 3
-			}}
-			label="Settings"
-		>
-			{#snippet icon()}<Icon>settings</Icon>{/snippet}
-		</NavigationDrawerItem>
-	</NavigationDrawer>
+	<StandardDrawer />
 </DemoContainer>
-<Code
-	value={`<NavigationDrawer --np-navigation-drawer-height="200px">
-  <NavigationDrawerItem
-    selected={selection === 1}
-    onclick={() => {
-      selection = 1
-    }}
-    label="Videos"
-    badgeLabelText="+100"
-  >
-    {#snippet icon()}<Icon>videocam</Icon>{/snippet}
-  </NavigationDrawerItem>
-  <NavigationDrawerItem
-    selected={selection === 2}
-    onclick={() => {
-      selection = 2
-    }}
-    label="Styles"
-  >
-    {#snippet icon()}<Icon>palette</Icon>{/snippet}
-  </NavigationDrawerItem>
-  <NavigationDrawerItem
-    selected={selection === 3}
-    onclick={() => {
-      selection = 3
-    }}
-    label="Settings"
-  >
-    {#snippet icon()}<Icon>settings</Icon>{/snippet}
-  </NavigationDrawerItem>
-</NavigationDrawer>`}
-/>
+<Code value={StandardDrawerSource} />
 
 <h2 id="opening-a-modal-drawer">
 	Opening a modal drawer<a href="#opening-a-modal-drawer" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	A modal drawer is a native popover. The simplest way to open it is <code>popovertarget</code> on the
-	trigger, as in the example above. When you need to open or close it from code, bind the element and
-	call the popover methods on it.
+	A modal drawer is a native <code>&lt;dialog&gt;</code>. The simplest way to open it is
+	<code>command="show-modal"</code> and <code>commandfor</code> on the trigger, as in the example above.
+	When you need to open or close it from code, bind the element and call the popover methods on it.
 </p>
 <Code
 	value={`<script lang="ts">
@@ -173,9 +52,9 @@
 </` +
 		`script>
 
-<Button onclick={() => drawer?.showPopover()}>Menu</Button>
+<Button onclick={() => drawer?.show()}>Menu</Button>
 <NavigationDrawer bind:element={drawer} modal backdrop>
-	<NavigationDrawerItem label="Videos" onclick={() => drawer?.hidePopover()} />
+	<NavigationDrawerItem label="Videos" onclick={() => drawer?.close()} />
 </NavigationDrawer>`}
 />
 <p>
@@ -254,31 +133,9 @@
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
-	<NavigationDrawer
-		--np-navigation-drawer-height="200px"
-		--np-navigation-drawer-width="16rem"
-		--np-navigation-drawer-background="var(--np-color-surface-container-highest)"
-		--np-navigation-drawer-item-container-shape="0.5rem"
-	>
-		<NavigationDrawerItem selected label="Videos">
-			{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-		</NavigationDrawerItem>
-		<NavigationDrawerItem label="Styles">
-			{#snippet icon()}<Icon>palette</Icon>{/snippet}
-		</NavigationDrawerItem>
-	</NavigationDrawer>
+	<ThemingExample />
 </DemoContainer>
-<Code
-	value={`<NavigationDrawer
-	--np-navigation-drawer-width="16rem"
-	--np-navigation-drawer-background="var(--np-color-surface-container-highest)"
-	--np-navigation-drawer-item-container-shape="0.5rem"
->
-	<NavigationDrawerItem selected label="Videos">
-		{#snippet icon()}<Icon>videocam</Icon>{/snippet}
-	</NavigationDrawerItem>
-</NavigationDrawer>`}
-/>
+<Code value={ThemingExampleSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="navigationdrawer-attributes">
@@ -287,9 +144,11 @@
 	>
 </h3>
 <p>
-	Everything else you pass is forwarded to the <code>&lt;nav&gt;</code> element, so
-	<code>id</code>, <code>aria-label</code>, <code>class</code>, <code>style</code> and
-	<code>ontoggle</code> work as expected.
+	Everything else you pass is forwarded to the root element, the <code>&lt;nav&gt;</code> for a
+	standard drawer and the <code>&lt;dialog&gt;</code> for a modal one, so <code>id</code>,
+	<code>class</code>, <code>style</code> and <code>ontoggle</code> work as expected.
+	<code>aria-label</code> and <code>aria-labelledby</code> always land on the
+	<code>&lt;nav&gt;</code>, so the navigation landmark is what gets named.
 </p>
 <table>
 	<thead>
@@ -325,7 +184,7 @@
 			<td><code>undefined</code></td>
 			<td>
 				Bindable reference to the <code>&lt;nav&gt;</code>. Use it to call
-				<code>showPopover()</code> and <code>hidePopover()</code>.
+				<code>show()</code> and <code>close()</code>.
 			</td>
 		</tr>
 	</tbody>
@@ -370,7 +229,7 @@
 			<td>Marks the current destination and sets <code>aria-current="page"</code>.</td>
 		</tr>
 		<tr>
-			<td><code>badgeLabelText</code></td>
+			<td><code>badgeLabel</code></td>
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Trailing text, for a count such as <code>"+100"</code>.</td>

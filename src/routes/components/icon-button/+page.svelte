@@ -3,6 +3,36 @@
 	import Icon from '#lib/icons/Icon.svelte'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import FilledIconButton from './demos/FilledIconButton.svelte'
+	import FilledIconButtonSource from './demos/FilledIconButton.svelte?raw'
+	import FilledIconButtonThemingExample from './demos/FilledIconButtonThemingExample.svelte'
+	import FilledIconButtonThemingExampleSource from './demos/FilledIconButtonThemingExample.svelte?raw'
+	import FilledToggleIconButtonThemingExample from './demos/FilledToggleIconButtonThemingExample.svelte'
+	import FilledToggleIconButtonThemingExampleSource from './demos/FilledToggleIconButtonThemingExample.svelte?raw'
+	import IconButtonLoading from './demos/IconButtonLoading.svelte'
+	import IconButtonLoadingSource from './demos/IconButtonLoading.svelte?raw'
+	import IconButtonShapes from './demos/IconButtonShapes.svelte'
+	import IconButtonShapesSource from './demos/IconButtonShapes.svelte?raw'
+	import IconButtonSizes from './demos/IconButtonSizes.svelte'
+	import IconButtonSizesSource from './demos/IconButtonSizes.svelte?raw'
+	import IconButtonThemingExample from './demos/IconButtonThemingExample.svelte'
+	import IconButtonThemingExampleSource from './demos/IconButtonThemingExample.svelte?raw'
+	import IconButtonToggle from './demos/IconButtonToggle.svelte'
+	import IconButtonToggleSource from './demos/IconButtonToggle.svelte?raw'
+	import IconButtonTooltip from './demos/IconButtonTooltip.svelte'
+	import IconButtonTooltipSource from './demos/IconButtonTooltip.svelte?raw'
+	import IconButtonWidths from './demos/IconButtonWidths.svelte'
+	import IconButtonWidthsSource from './demos/IconButtonWidths.svelte?raw'
+	import OutlinedIconButton from './demos/OutlinedIconButton.svelte'
+	import OutlinedIconButtonSource from './demos/OutlinedIconButton.svelte?raw'
+	import OutlinedIconButtonThemingExample from './demos/OutlinedIconButtonThemingExample.svelte'
+	import OutlinedIconButtonThemingExampleSource from './demos/OutlinedIconButtonThemingExample.svelte?raw'
+	import TextIconButton from './demos/TextIconButton.svelte'
+	import TextIconButtonSource from './demos/TextIconButton.svelte?raw'
+	import TonalIconButton from './demos/TonalIconButton.svelte'
+	import TonalIconButtonSource from './demos/TonalIconButton.svelte?raw'
+	import TonalIconButtonThemingExample from './demos/TonalIconButtonThemingExample.svelte'
+	import TonalIconButtonThemingExampleSource from './demos/TonalIconButtonThemingExample.svelte?raw'
 </script>
 
 <svelte:head>
@@ -22,179 +52,69 @@
 </DemoContainer>
 <h2 id="icon-button">Icon button<a href="#icon-button" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<IconButton aria-label="Icon button"><Icon>check</Icon></IconButton>
-	<IconButton aria-label="Disabled icon button" disabled><Icon>check</Icon></IconButton>
+	<TextIconButton />
 </DemoContainer>
-<Code
-	value={`<IconButton><Icon>check</Icon></IconButton>
-<IconButton disabled><Icon>check</Icon></IconButton>`}
-/>
+<Code value={TextIconButtonSource} />
 <h2 id="filled-icon-button">
 	Filled icon button<a href="#filled-icon-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<IconButton aria-label="Filled icon button" variant="filled"><Icon>check</Icon></IconButton>
-	<IconButton aria-label="Disabled filled icon button" variant="filled" disabled
-		><Icon>check</Icon></IconButton
-	>
+	<FilledIconButton />
 </DemoContainer>
-<Code
-	value={`<IconButton variant="filled"><Icon>check</Icon></IconButton>
-<IconButton variant="filled" disabled><Icon>check</Icon></IconButton>`}
-/>
+<Code value={FilledIconButtonSource} />
 <h2 id="tonal-icon-button">
 	Tonal icon button<a href="#tonal-icon-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<IconButton aria-label="Tonal icon button" variant="tonal"><Icon>check</Icon></IconButton>
-	<IconButton aria-label="Disabled tonal icon button" variant="tonal" disabled>
-		<Icon>check</Icon>
-	</IconButton>
+	<TonalIconButton />
 </DemoContainer>
-<Code
-	value={`<IconButton aria-label="Tonal icon button" variant="tonal"><Icon>check</Icon></IconButton>
-<IconButton aria-label="Disabled tonal icon button" variant="tonal" disabled>
-	<Icon>check</Icon>
-</IconButton>`}
-/>
+<Code value={TonalIconButtonSource} />
 <h2 id="outlined-icon-button">
 	Outlined icon button<a href="#outlined-icon-button" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <DemoContainer>
-	<IconButton aria-label="Outlined icon button" variant="outlined"><Icon>check</Icon></IconButton>
-	<IconButton aria-label="Disabled outlined icon button" variant="outlined" disabled
-		><Icon>check</Icon></IconButton
-	>
+	<OutlinedIconButton />
 </DemoContainer>
-<Code
-	value={`<IconButton variant="outlined"><Icon>check</Icon></IconButton>
-<IconButton variant="outlined" disabled><Icon>check</Icon></IconButton>`}
-/>
+<Code value={OutlinedIconButtonSource} />
 <h2 id="size">Size<a href="#size" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<IconButton variant="outlined" aria-label="Extra small" size="xs"><Icon>add</Icon></IconButton>
-	<IconButton variant="outlined" aria-label="Small" size="s"><Icon>add</Icon></IconButton>
-	<IconButton variant="outlined" aria-label="Medium" size="m"><Icon>add</Icon></IconButton>
-	<IconButton variant="outlined" aria-label="Large" size="l"><Icon>add</Icon></IconButton>
-	<IconButton variant="outlined" aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>
+	<IconButtonSizes />
 </DemoContainer>
-<Code
-	value={`<IconButton aria-label="Extra small" size="xs"><Icon>add</Icon></IconButton>
-<IconButton aria-label="Small" size="s"><Icon>add</Icon></IconButton>
-<IconButton aria-label="Medium" size="m"><Icon>add</Icon></IconButton>
-<IconButton aria-label="Large" size="l"><Icon>add</Icon></IconButton>
-<IconButton aria-label="Extra large" size="xl"><Icon>add</Icon></IconButton>`}
-/>
+<Code value={IconButtonSizesSource} />
 <h2 id="shape">Shape<a href="#shape" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Icon buttons come in two shapes. The shape morphs while the button is pressed and stays square
 	while a toggle button is selected.
 </p>
 <DemoContainer>
-	<IconButton variant="outlined" aria-label="Round" shape="round"><Icon>bookmark</Icon></IconButton>
-	<IconButton variant="outlined" aria-label="Square" shape="square"
-		><Icon>bookmark</Icon></IconButton
-	>
+	<IconButtonShapes />
 </DemoContainer>
-<Code
-	value={`<IconButton aria-label="Round" shape="round"><Icon>bookmark</Icon></IconButton>
-<IconButton aria-label="Square" shape="square"><Icon>bookmark</Icon></IconButton>`}
-/>
+<Code value={IconButtonShapesSource} />
 <h2 id="width">Width<a href="#width" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>The width can be adjusted independently of the size. The height stays the same.</p>
 <DemoContainer>
-	<IconButton variant="filled" aria-label="Narrow" width="narrow"><Icon>more_vert</Icon></IconButton
-	>
-	<IconButton variant="filled" aria-label="Default" width="default"
-		><Icon>more_vert</Icon></IconButton
-	>
-	<IconButton variant="filled" aria-label="Wide" width="wide"><Icon>more_vert</Icon></IconButton>
+	<IconButtonWidths />
 </DemoContainer>
-<Code
-	value={`<IconButton aria-label="Narrow" width="narrow"><Icon>more_vert</Icon></IconButton>
-<IconButton aria-label="Default" width="default"><Icon>more_vert</Icon></IconButton>
-<IconButton aria-label="Wide" width="wide"><Icon>more_vert</Icon></IconButton>`}
-/>
+<Code value={IconButtonWidthsSource} />
 <h2 id="toggle">Toggle<a href="#toggle" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer style="flex-direction: column">
-	<div class="icon-list">
-		<IconButton aria-label="Unselected icon button" toggle><Icon>settings</Icon></IconButton>
-		<IconButton aria-label="Unselected filled icon button" variant="filled" toggle
-			><Icon>settings</Icon></IconButton
-		>
-		<IconButton aria-label="Unselected tonal icon button" variant="tonal" toggle
-			><Icon>settings</Icon></IconButton
-		>
-		<IconButton aria-label="Unselected outlined icon button" variant="outlined" toggle
-			><Icon>settings</Icon></IconButton
-		>
-	</div>
-	<div class="icon-list">
-		<IconButton aria-label="Selected icon button" toggle selected><Icon>settings</Icon></IconButton>
-		<IconButton aria-label="Selected filled icon button" variant="filled" toggle selected
-			><Icon>settings</Icon></IconButton
-		>
-		<IconButton aria-label="Selected tonal icon button" variant="tonal" toggle selected
-			><Icon>settings</Icon></IconButton
-		>
-		<IconButton aria-label="Selected outlined icon button" variant="outlined" toggle selected
-			><Icon>settings</Icon></IconButton
-		>
-	</div>
+	<IconButtonToggle />
 </DemoContainer>
-<Code
-	value={`{#snippet selectedIcon()}
-	<Icon>check</Icon>
-{/snippet}
-<div>
-	<IconButton {selectedIcon} toggle><Icon>close</Icon></IconButton>
-	<IconButton {selectedIcon} variant="filled" toggle><Icon>close</Icon></IconButton>
-	<IconButton {selectedIcon} variant="tonal" toggle><Icon>close</Icon></IconButton>
-	<IconButton {selectedIcon} variant="outlined" toggle><Icon>close</Icon></IconButton>
-</div>
-<div>
-	<IconButton {selectedIcon} toggle selected><Icon>close</Icon></IconButton>
-	<IconButton {selectedIcon} variant="filled" toggle selected><Icon>close</Icon></IconButton>
-	<IconButton {selectedIcon} variant="tonal" toggle selected><Icon>close</Icon></IconButton>
-	<IconButton {selectedIcon} variant="outlined" toggle selected><Icon>close</Icon></IconButton>
-</div>`}
-/>
+<Code value={IconButtonToggleSource} />
 <h2 id="loading">Loading<a href="#loading" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<IconButton loading loadingAriaLabel="Loading text"><Icon>check</Icon></IconButton>
-	<IconButton loading loadingAriaLabel="Loading filled" variant="filled"
-		><Icon>check</Icon></IconButton
-	>
-	<IconButton loading loadingAriaLabel="Loading tonal" variant="tonal"
-		><Icon>check</Icon></IconButton
-	>
-	<IconButton loading loadingAriaLabel="Loading outlined" variant="outlined"
-		><Icon>check</Icon></IconButton
-	>
+	<IconButtonLoading />
 </DemoContainer>
-<Code
-	value={`<IconButton loading loadingAriaLabel="Loading text"><Icon>check</Icon></IconButton>
-<IconButton loading loadingAriaLabel="Loading filled" variant="filled">
-	<Icon>check</Icon>
-</IconButton>
-<IconButton loading loadingAriaLabel="Loading tonal" variant="tonal">
-	<Icon>check</Icon>
-</IconButton>
-<IconButton loading loadingAriaLabel="Loading outlined" variant="outlined">
-	<Icon>check</Icon>
-</IconButton>`}
-/>
+<Code value={IconButtonLoadingSource} />
 <blockquote>
 	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
 	when using the loading state.
 </blockquote>
 <h2 id="tooltip">Tooltip<a href="#tooltip" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
-	<IconButton title="Icon button with tooltip" variant="filled"><Icon>check</Icon></IconButton>
+	<IconButtonTooltip />
 </DemoContainer>
-<Code
-	value="<IconButton title=&quot;Icon button with tooltip&quot; variant=&quot;filled&quot;><Icon>check</Icon></IconButton>"
-/>
+<Code value={IconButtonTooltipSource} />
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="icon-button-tokens">
@@ -231,23 +151,9 @@
 	Icon button example<a href="#icon-button-example" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <DemoContainer>
-	<IconButton
-		aria-label="Custom icon button"
-		--np-icon-button-icon-color="var(--np-color-tertiary)"
-		--np-icon-button-icon-size="32px"
-	>
-		<Icon>close</Icon>
-	</IconButton>
+	<IconButtonThemingExample />
 </DemoContainer>
-<Code
-	value={`<IconButton
-	aria-label="Custom icon button"
-	--np-icon-button-icon-color="var(--np-color-tertiary)"
-	--np-icon-button-icon-size="32px"
->
-	<Icon>close</Icon>
-</IconButton>`}
-/>
+<Code value={IconButtonThemingExampleSource} />
 <h3 id="filled-icon-button-tokens">
 	Filled icon button tokens<a href="#filled-icon-button-tokens" aria-hidden="true" tabindex="-1"
 		>#</a
@@ -282,27 +188,9 @@
 	>
 </h3>
 <DemoContainer>
-	<IconButton
-		aria-label="Custom filled icon button"
-		--np-filled-icon-button-container-color="var(--np-color-tertiary)"
-		--np-filled-icon-button-icon-color="var(--np-color-on-tertiary)"
-		--np-icon-button-icon-size="32px"
-		variant="filled"
-	>
-		<Icon>close</Icon>
-	</IconButton>
+	<FilledIconButtonThemingExample />
 </DemoContainer>
-<Code
-	value={`<IconButton
-	aria-label="Custom filled icon button"
-	--np-filled-icon-button-container-color="var(--np-color-tertiary)"
-	--np-filled-icon-button-icon-color="var(--np-color-on-tertiary)"
-	--np-icon-button-icon-size="32px"
-	variant="filled"
->
-	<Icon>close</Icon>
-</IconButton>`}
-/>
+<Code value={FilledIconButtonThemingExampleSource} />
 <h3 id="filled-toggle-icon-button-tokens">
 	Filled toggle icon button tokens<a
 		href="#filled-toggle-icon-button-tokens"
@@ -349,29 +237,9 @@
 	>
 </h3>
 <DemoContainer>
-	<IconButton
-		aria-label="Custom toggle icon button"
-		toggle
-		selected
-		--np-filled-icon-button-selected-container-color="var(--np-color-tertiary-container)"
-		--np-filled-icon-button-selected-icon-color="var(--np-color-on-tertiary-container)"
-		variant="filled"
-	>
-		<Icon>favorite</Icon>
-	</IconButton>
+	<FilledToggleIconButtonThemingExample />
 </DemoContainer>
-<Code
-	value={`<IconButton
-	aria-label="Custom toggle icon button"
-	toggle
-	selected
-	--np-filled-icon-button-selected-container-color="var(--np-color-tertiary-container)"
-	--np-filled-icon-button-selected-icon-color="var(--np-color-on-tertiary-container)"
-	variant="filled"
->
-	<Icon>favorite</Icon>
-</IconButton>`}
-/>
+<Code value={FilledToggleIconButtonThemingExampleSource} />
 <h3 id="tonal-icon-buttons-tokens">
 	Tonal icon buttons tokens<a href="#tonal-icon-buttons-tokens" aria-hidden="true" tabindex="-1"
 		>#</a
@@ -406,27 +274,9 @@
 	>
 </h3>
 <DemoContainer>
-	<IconButton
-		aria-label="Custom tonal icon button"
-		--np-tonal-icon-button-container-color="var(--np-color-tertiary-container)"
-		--np-tonal-icon-button-icon-color="var(--np-color-on-tertiary)"
-		--np-icon-button-icon-size="32px"
-		variant="tonal"
-	>
-		<Icon>close</Icon>
-	</IconButton>
+	<TonalIconButtonThemingExample />
 </DemoContainer>
-<Code
-	value={`<IconButton
-	aria-label="Custom tonal icon button"
-	--np-tonal-icon-button-container-color="var(--np-color-tertiary-container)"
-	--np-tonal-icon-button-icon-color="var(--np-color-on-tertiary)"
-	--np-icon-button-icon-size="32px"
-	variant="tonal"
->
-	<Icon>close</Icon>
-</IconButton>`}
-/>
+<Code value={TonalIconButtonThemingExampleSource} />
 <h3 id="outlined-icon-button-tokens">
 	Outlined icon button tokens<a href="#outlined-icon-button-tokens" aria-hidden="true" tabindex="-1"
 		>#</a
@@ -459,25 +309,9 @@
 	>
 </h3>
 <DemoContainer>
-	<IconButton
-		aria-label="Custom outlined icon button"
-		--np-outlined-icon-button-outline-color="var(--np-color-tertiary)"
-		--np-icon-button-icon-size="32px"
-		variant="outlined"
-	>
-		<Icon>close</Icon>
-	</IconButton>
+	<OutlinedIconButtonThemingExample />
 </DemoContainer>
-<Code
-	value={`<IconButton
-	aria-label="Custom outlined icon button"
-	--np-outlined-icon-button-outline-color="var(--np-color-tertiary)"
-	--np-icon-button-icon-size="32px"
-	variant="outlined"
->
-	<Icon>close</Icon>
-</IconButton>`}
-/>
+<Code value={OutlinedIconButtonThemingExampleSource} />
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="props">Props<a href="#props" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
@@ -582,11 +416,3 @@
 		</tr>
 	</tbody>
 </table>
-
-<style>
-	.icon-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-	}
-</style>

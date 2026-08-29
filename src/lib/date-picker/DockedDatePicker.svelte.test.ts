@@ -10,8 +10,7 @@ const VALUE = '2025-08-17'
 const setup = (props: Record<string, unknown> = {}) =>
 	render(Harness, { locale: 'en-US', value: VALUE, ...props })
 
-const setupForm = (props: Record<string, unknown> = {}) =>
-	render(Form, { locale: 'en-US', ...props })
+const setupForm = (props: Record<string, unknown> = {}) => render(Form, { locale: 'en-US', ...props })
 
 const field = () => page.getByRole('textbox')
 const input = () => field().element() as HTMLInputElement
@@ -45,9 +44,9 @@ const heightsWhile = async (swap: () => Promise<void>) => {
 	return [Math.min(...seen), Math.max(...seen)]
 }
 
-describe('text field', () => {
+describe('text field', async () => {
 	test('stays editable while a date is being typed', async () => {
-		setup()
+		await setup()
 		await expect.element(field()).toHaveValue('08/17/2025')
 
 		await field().click()
@@ -65,7 +64,7 @@ describe('text field', () => {
 	})
 
 	test('commits a loosely typed date and normalises it on blur', async () => {
-		setup({ value: undefined })
+		await setup({ value: undefined })
 		await field().fill('8/1/2025')
 		await expect.element(boundValue()).toHaveTextContent('2025-08-01')
 
@@ -75,7 +74,7 @@ describe('text field', () => {
 	})
 
 	test('clears the value when the field is emptied', async () => {
-		setup()
+		await setup()
 		await field().fill('')
 		input().blur()
 		await expect.element(boundValue()).toHaveTextContent('undefined')
@@ -83,7 +82,7 @@ describe('text field', () => {
 	})
 
 	test('keeps text that is not a real date and flags it on blur', async () => {
-		setup()
+		await setup()
 		await field().fill('99/99/2025')
 		await expect.element(field()).not.toHaveAttribute('aria-invalid', 'true')
 
@@ -94,7 +93,7 @@ describe('text field', () => {
 	})
 
 	test('rejects a date outside min and max without discarding the text', async () => {
-		setup({ value: undefined, min: '2025-01-01', max: '2025-12-31' })
+		await setup({ value: undefined, min: '2025-01-01', max: '2025-12-31' })
 
 		await field().fill('06/15/2024')
 		input().blur()
@@ -109,16 +108,16 @@ describe('text field', () => {
 	})
 
 	test('parses the field order of the picker locale', async () => {
-		setup({ locale: 'de-DE', value: undefined })
+		await setup({ locale: 'de-DE', value: undefined })
 		await field().fill('24.12.2025')
 		input().blur()
 		await expect.element(boundValue()).toHaveTextContent('2025-12-24')
 	})
 })
 
-describe('calendar', () => {
+describe('calendar', async () => {
 	test('commits the selection on OK and leaves it on Cancel', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await action('Friday, August 8, 2025').click()
@@ -134,7 +133,7 @@ describe('calendar', () => {
 	})
 
 	test('names the selected day as selected', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await expect
@@ -143,7 +142,7 @@ describe('calendar', () => {
 	})
 
 	test('reopens on the month of the value rather than the last one browsed', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 		await expect.element(grid('August 2025')).toBeVisible()
 
@@ -159,7 +158,7 @@ describe('calendar', () => {
 	})
 
 	test('keeps the M3 date grid measurements', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await expect.poll(() => Math.round(container()!.getBoundingClientRect().width)).toBe(360)
@@ -174,7 +173,7 @@ describe('calendar', () => {
 	})
 
 	test('sizes itself to the week rows the month needs', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await expect.poll(() => count('.np-calendar tbody tr')).toBe(6)
@@ -187,7 +186,7 @@ describe('calendar', () => {
 	})
 
 	test('shows only the days of the displayed month', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await expect.poll(() => count('.np-calendar-day')).toBe(31)
@@ -195,7 +194,7 @@ describe('calendar', () => {
 	})
 
 	test('fills the neighbouring cells when asked to', async () => {
-		setup({ adjacentMonthDays: true })
+		await setup({ adjacentMonthDays: true })
 		await openCalendar()
 
 		await expect.poll(() => count('.np-calendar-day')).toBe(42)
@@ -203,9 +202,9 @@ describe('calendar', () => {
 	})
 })
 
-describe('month and year menus', () => {
+describe('month and year menus', async () => {
 	test('disables the opposite button and hides the steppers', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await page.getByRole('button', { name: /^Select month/ }).click()
@@ -217,7 +216,7 @@ describe('month and year menus', () => {
 	})
 
 	test('picking a month returns to the day grid', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		await page.getByRole('button', { name: /^Select month/ }).click()
@@ -227,7 +226,7 @@ describe('month and year menus', () => {
 	})
 
 	test('offers the configured year range', async () => {
-		setup({ yearRange: [1920, 2000] })
+		await setup({ yearRange: [1920, 2000] })
 		await openCalendar()
 
 		await page.getByRole('button', { name: /^Select year/ }).click()
@@ -235,7 +234,7 @@ describe('month and year menus', () => {
 	})
 
 	test('the calendar under the list is out of reach', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 		await page.getByRole('button', { name: /^Select year/ }).click()
 
@@ -250,7 +249,7 @@ describe('month and year menus', () => {
 	})
 
 	test('picking a year hands focus on to the calendar', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 		await page.getByRole('button', { name: /^Select year/ }).click()
 		await page.getByRole('option', { name: '2027' }).click()
@@ -261,7 +260,7 @@ describe('month and year menus', () => {
 	})
 
 	test('the list never covers the focus ring of the header buttons', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 		await page.getByRole('button', { name: /^Select year/ }).click()
 
@@ -271,7 +270,7 @@ describe('month and year menus', () => {
 	})
 
 	test('the panel keeps its height through every view, so nothing jumps', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 		const days = height()
 		const months = () => page.getByRole('button', { name: /^Select month/ }).click()
@@ -284,9 +283,9 @@ describe('month and year menus', () => {
 	})
 })
 
-describe('keyboard and pointer', () => {
+describe('keyboard and pointer', async () => {
 	test('arrow keys move across the month boundary and keep focus', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		document.querySelector<HTMLElement>('.np-calendar-day[tabindex="0"]')!.focus()
@@ -303,7 +302,7 @@ describe('keyboard and pointer', () => {
 	})
 
 	test('a horizontal swipe pages between months', async () => {
-		setup()
+		await setup()
 		await openCalendar()
 
 		const calendar = document.querySelector<HTMLElement>('.np-calendar')!
@@ -328,7 +327,7 @@ describe('keyboard and pointer', () => {
 	})
 
 	test('open is bindable in both directions', async () => {
-		setup()
+		await setup()
 		const state = page.getByTestId('bound-open')
 		await expect.element(state).toHaveTextContent('false')
 
@@ -342,7 +341,7 @@ describe('keyboard and pointer', () => {
 	})
 
 	test('displayMonth reports where the calendar was browsed and is restored on close', async () => {
-		setup({ displayMonth: '2025-12-01' })
+		await setup({ displayMonth: '2025-12-01' })
 		await openCalendar()
 		await expect.element(grid('December 2025')).toBeVisible()
 
@@ -355,9 +354,9 @@ describe('keyboard and pointer', () => {
 	})
 })
 
-describe('placement', () => {
+describe('placement', async () => {
 	test('shows the whole calendar over a field in the middle of the window', async () => {
-		setup({ style: 'margin-top:400px' })
+		await setup({ style: 'margin-top:400px' })
 		await openCalendar()
 
 		const menu = document.querySelector<HTMLElement>('.np-docked-date-picker-menu')!
@@ -372,9 +371,9 @@ describe('placement', () => {
 	})
 })
 
-describe('forms', () => {
+describe('forms', async () => {
 	test('submits the ISO value and surfaces issues', async () => {
-		setupForm()
+		await setupForm()
 
 		await action('Submit').click()
 		await expect.element(page.getByRole('alert')).toHaveTextContent('Pick a delivery date.')
@@ -387,7 +386,7 @@ describe('forms', () => {
 	})
 
 	test('matches native :user-invalid semantics on a novalidate form', async () => {
-		setupForm({ required: true })
+		await setupForm({ required: true })
 		const userInvalid = () => input().matches(':user-invalid')
 
 		await expect.poll(userInvalid).toBe(false)
@@ -404,7 +403,7 @@ describe('forms', () => {
 	})
 
 	test('a required picker reports against the visible field, not the hidden value', async () => {
-		setupForm({ required: true })
+		await setupForm({ required: true })
 
 		await expect.element(field()).toHaveAttribute('required', '')
 		const hidden = document.querySelector<HTMLInputElement>('.np-docked-date-picker-value')!
@@ -414,7 +413,7 @@ describe('forms', () => {
 	})
 
 	test('the calendar actions do not submit the form around the picker', async () => {
-		setupForm()
+		await setupForm()
 		await openCalendar()
 
 		await action('Cancel').click()
@@ -429,7 +428,7 @@ describe('forms', () => {
 	})
 
 	test('an unusable date sets a validation message the browser can report', async () => {
-		setupForm()
+		await setupForm()
 		const message = () => input().validationMessage
 
 		await field().fill('99/99/2026')
@@ -440,11 +439,11 @@ describe('forms', () => {
 	})
 })
 
-describe('layout', () => {
-	test('fills a stretching flex column like a plain text field', () => {
-		render(Layout)
+describe('layout', async () => {
+	test('fills a stretching flex column like a plain text field', async () => {
+		await render(Layout)
 
-		const widths = [...document.querySelectorAll<HTMLElement>('.text-field')].map((field) =>
+		const widths = [...document.querySelectorAll<HTMLElement>('.np-text-field')].map((field) =>
 			Math.round(field.getBoundingClientRect().width),
 		)
 
