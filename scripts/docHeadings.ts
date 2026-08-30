@@ -10,6 +10,8 @@ export const ROOT_PAGE = 'src/routes/+page.svelte'
 
 export const MANIFEST = 'src/routes/tocSections.ts'
 
+export const SEARCH_INDEX = 'src/routes/searchIndex.ts'
+
 export interface Heading {
 	tag: string
 	text: string
@@ -182,8 +184,168 @@ export const sectionsOf = (source: string): Section[] =>
 			level: Number(heading.tag.slice(1)),
 		}))
 
+const deepText = (value: unknown): string => {
+	if (Array.isArray(value)) return value.map(deepText).join('')
+	if (!isNode(value)) return ''
+	if (value.type === 'Text' && typeof value.data === 'string') return value.data
+	if (isAnchor(value)) return ''
+	let text = ''
+	for (const key of CHILD_KEYS) if (key in value) text += deepText(value[key])
+	return text
+}
+
+const collapse = (text: string) => text.replace(/\s+/g, ' ').trim()
+
+const BODY_LENGTH = 180
+
+const clamp = (text: string): string => {
+	if (text.length <= BODY_LENGTH) return text
+	const cut = text.slice(0, BODY_LENGTH)
+	const space = cut.lastIndexOf(' ')
+	return `${(space > BODY_LENGTH * 0.6 ? cut.slice(0, space) : cut).trimEnd()}…`
+}
+
+const TERM_LENGTH = 48
+
+const TERMS_PER_SECTION = 24
+
+interface Chunk {
+	kind: 'heading' | 'body' | 'term'
+	tag: string
+	id: string | undefined
+	text: string
+}
+
+const chunksOf = (source: string): Chunk[] => {
+	const chunks: Chunk[] = []
+	walk(fragmentOf(source), (node) => {
+		if (node.type !== 'RegularElement' || typeof node.name !== 'string') return
+		const kind =
+			node.name === 'h1' || HEADING_TAGS.includes(node.name)
+				? 'heading'
+				: node.name === 'p'
+					? 'body'
+					: node.name === 'code'
+						? 'term'
+						: undefined
+		if (kind === undefined) return
+		chunks.push({
+			kind,
+			tag: node.name,
+			id: attribute(node, 'id')?.value,
+			text: collapse(deepText(node.fragment)),
+		})
+	})
+	return chunks
+}
+
+export interface IndexSection {
+	id: string
+	text: string
+	level: number
+	body: string
+	terms: string[]
+}
+
+export interface IndexPage {
+	route: string
+	title: string
+	body: string
+	terms: string[]
+	sections: IndexSection[]
+}
+
+interface Bucket {
+	body: string
+	terms: Set<string>
+}
+
+const drain = (bucket: Bucket): string[] => [...bucket.terms].slice(0, TERMS_PER_SECTION)
+
+export const indexPageOf = (route: string, source: string): IndexPage => {
+	const page: Bucket = { body: '', terms: new Set() }
+	const sections: (IndexSection & { bucket: Bucket })[] = []
+	let title = ''
+	let current: Bucket | undefined
+
+	for (const chunk of chunksOf(source)) {
+		if (chunk.kind === 'heading') {
+			if (chunk.tag === 'h1') {
+				title ||= chunk.text
+				current = undefined
+			} else if (LISTED_TAGS.includes(chunk.tag) && chunk.id !== undefined) {
+				const bucket: Bucket = { body: '', terms: new Set() }
+				sections.push({
+					id: chunk.id,
+					text: chunk.text,
+					level: Number(chunk.tag.slice(1)),
+					body: '',
+					terms: [],
+					bucket,
+				})
+				current = bucket
+			} else {
+				current?.terms.add(chunk.text)
+			}
+			continue
+		}
+		const bucket = current ?? page
+		if (chunk.kind === 'body') bucket.body ||= clamp(chunk.text)
+		else if (chunk.text && chunk.text.length <= TERM_LENGTH) bucket.terms.add(chunk.text)
+	}
+
+	return {
+		route,
+		title,
+		body: page.body,
+		terms: drain(page),
+		sections: sections.map(({ bucket, ...section }) => ({
+			...section,
+			body: bucket.body,
+			terms: drain(bucket),
+		})),
+	}
+}
+
 const quote = (value: string) =>
 	value.includes("'") ? JSON.stringify(value) : `'${value.replace(/\\/g, '\\\\')}'`
+
+const quoteList = (values: string[]) => `[${values.map(quote).join(', ')}]`
+
+export const searchIndexSource = (pages: IndexPage[]): string => {
+	const entries = pages
+		.filter((page) => page.title !== '')
+		.map((page) => {
+			const sections = page.sections
+				.map(
+					(section) =>
+						`\t\t\t{\n\t\t\t\tid: ${quote(section.id)},\n\t\t\t\ttext: ${quote(section.text)},\n\t\t\t\tlevel: ${section.level},\n\t\t\t\tbody: ${quote(section.body)},\n\t\t\t\tterms: ${quoteList(section.terms)},\n\t\t\t},`,
+				)
+				.join('\n')
+			return `\t{\n\t\troute: ${quote(page.route)},\n\t\ttitle: ${quote(page.title)},\n\t\tbody: ${quote(page.body)},\n\t\tterms: ${quoteList(page.terms)},\n\t\tsections: [\n${sections}\n\t\t],\n\t},`
+		})
+		.join('\n')
+	return `export interface SearchSection {
+	id: string
+	text: string
+	level: number
+	body: string
+	terms: string[]
+}
+
+export interface SearchPage {
+	route: string
+	title: string
+	body: string
+	terms: string[]
+	sections: SearchSection[]
+}
+
+export const searchIndex: SearchPage[] = [
+${entries}
+]
+`
+}
 
 export const manifestSource = (pages: Map<string, Section[]>): string => {
 	const entries = [...pages]

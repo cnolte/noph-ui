@@ -39,6 +39,7 @@
 			<Icon>content_copy</Icon></IconButton
 		>
 		<span class="np-sr-only" aria-live="polite">{announcement}</span>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -- highlighted is markup we generate ourselves from the code we ship -->
 		<pre><code>{@html highlighted}</code></pre>
 	</div>
 </div>

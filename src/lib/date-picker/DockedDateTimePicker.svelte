@@ -49,6 +49,7 @@
 	let {
 		value = $bindable(),
 		defaultValue,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars -- pulled out of the rest props on purpose
 		type,
 		'aria-invalid': ariaInvalid,
 		style,

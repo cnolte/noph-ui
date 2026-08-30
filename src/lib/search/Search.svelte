@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from 'svelte'
 	import '#lib/internal/focus-ring.css'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import ArrowBackIcon from '#lib/icons/ArrowBackIcon.svelte'
@@ -34,6 +35,18 @@
 
 	let pointerFocus = false
 	let focusRing = $state(false)
+
+	export const show = async () => {
+		expanded = true
+		pointerFocus = true
+		await tick()
+		inputElement?.focus()
+	}
+
+	export const close = () => {
+		expanded = false
+		inputElement?.blur()
+	}
 </script>
 
 <div
@@ -387,5 +400,15 @@
 	}
 	.np-search-divided.np-search-full-screen.np-search-expanded .np-search-bar {
 		height: 4.5rem;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		@starting-style {
+			.np-search-full-screen.np-search-expanded,
+			.np-search-divided.np-search-full-screen.np-search-expanded {
+				padding-block-start: 0;
+				padding-inline: var(--np-search-pane-margin, 1.5rem);
+			}
+		}
 	}
 </style>

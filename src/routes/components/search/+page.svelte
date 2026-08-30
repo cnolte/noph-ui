@@ -5,6 +5,8 @@
 	import LayoutSource from './demos/Layout.svelte?raw'
 	import Motion from './demos/Motion.svelte'
 	import MotionSource from './demos/Motion.svelte?raw'
+	import OpeningItYourself from './demos/OpeningItYourself.svelte'
+	import OpeningItYourselfSource from './demos/OpeningItYourself.svelte?raw'
 	import Styles from './demos/Styles.svelte'
 	import StylesSource from './demos/Styles.svelte?raw'
 	import TrailingIcons from './demos/TrailingIcons.svelte'
@@ -118,6 +120,21 @@
 </AppBar>`}
 />
 
+<h2 id="opening-it-yourself">
+	Opening it yourself<a href="#opening-it-yourself" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	Focusing the field opens the view, so most of the time nothing is needed from you. Where the bar
+	has no room to sit at rest, a narrow app bar say, a trigger elsewhere can open it through
+	<code>show</code>, and <code>close</code> puts it away again. Both take care of the caret, and
+	<code>show</code> waits for the bar to be in the document before it moves focus there, so a bar that
+	is hidden until it opens still works.
+</p>
+<DemoContainer style="overflow:visible">
+	<OpeningItYourself />
+</DemoContainer>
+<Code value={OpeningItYourselfSource} />
+
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>
@@ -166,6 +183,27 @@
 	Renders a <code>&lt;div&gt;</code> holding the field and its results, and takes its attributes.
 	<code>bind:element</code> gives you that wrapper and <code>bind:inputElement</code> the input.
 </p>
+<h3 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h3>
+<table>
+	<thead>
+		<tr><th>Method</th><th>Description</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>show()</code></td>
+			<td
+				>Opens the view and moves focus into the field. Returns a promise that settles once the
+				field has it.</td
+			>
+		</tr>
+		<tr>
+			<td><code>close()</code></td>
+			<td>Closes the view and takes focus off the field.</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>
 	<thead>
 		<tr><th>Attribute</th><th>Type</th><th>Default</th><th>Description</th></tr>

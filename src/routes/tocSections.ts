@@ -353,8 +353,11 @@ export const tocSections: Record<string, TocSection[]> = {
 		{ id: 'layout', text: 'Layout', level: 2 },
 		{ id: 'motion', text: 'Motion', level: 2 },
 		{ id: 'search-app-bar', text: 'Search app bar', level: 2 },
+		{ id: 'opening-it-yourself', text: 'Opening it yourself', level: 2 },
 		{ id: 'theming', text: 'Theming', level: 2 },
 		{ id: 'api', text: 'API', level: 2 },
+		{ id: 'methods', text: 'Methods', level: 3 },
+		{ id: 'attributes', text: 'Attributes', level: 3 },
 	],
 	'/components/segmented-button': [
 		{ id: 'single-choice', text: 'Single choice', level: 2 },

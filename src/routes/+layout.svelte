@@ -7,6 +7,7 @@
 	import NavigationDrawer from '#lib/navigation-drawer/NavigationDrawer.svelte'
 	import '#lib/themes/defaultTheme.css'
 	import '../app.css'
+	import DocsSearch from './DocsSearch.svelte'
 	import GitHubMark from './GitHubMark.svelte'
 	import Logo from './Logo.svelte'
 	import MainNavigation from './MainNavigation.svelte'
@@ -42,6 +43,7 @@
 			<div class="logo-label">Noph UI</div>
 		</a>
 		<div class="spacer"></div>
+		<DocsSearch />
 		<IconButton
 			variant="text"
 			title="GitHub repository"

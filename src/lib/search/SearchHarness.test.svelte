@@ -20,10 +20,12 @@
 		width?: string
 		resultsRole?: string
 	} = $props()
+	let search: ReturnType<typeof Search> | undefined = $state()
 </script>
 
 <div style="width:{width}">
 	<Search
+		bind:this={search}
 		bind:value
 		bind:expanded
 		{variant}
@@ -36,5 +38,8 @@
 		<Item variant="button">Mexican dishes</Item>
 	</Search>
 </div>
+
+<button onclick={() => search?.show()}>Trigger open</button>
+<button onclick={() => search?.close()}>Trigger close</button>
 
 <span data-testid="searched">{searched}</span>

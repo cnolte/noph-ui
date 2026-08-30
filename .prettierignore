@@ -13,3 +13,4 @@ bun.lockb
 # Miscellaneous
 /static/
 src/routes/tocSections.ts
+src/routes/searchIndex.ts

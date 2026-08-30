@@ -196,6 +196,34 @@ describe('Search', async () => {
 		await expect.poll(() => getComputedStyle(root()).position).toBe('fixed')
 	})
 
+	test('a trigger outside the bar opens the view and puts the caret in the field', async () => {
+		await render(Harness)
+
+		await page.getByRole('button', { name: 'Trigger open' }).click()
+
+		await expect.poll(() => root().classList.contains('np-search-expanded')).toBe(true)
+		await expect.poll(() => document.activeElement).toBe(input())
+	})
+
+	test('a trigger outside the bar closes the view and lets the field go', async () => {
+		await render(Harness)
+		await page.getByRole('button', { name: 'Trigger open' }).click()
+		await expect.poll(() => root().classList.contains('np-search-expanded')).toBe(true)
+
+		await page.getByRole('button', { name: 'Trigger close' }).click()
+
+		await expect.poll(() => root().classList.contains('np-search-expanded')).toBe(false)
+		await expect.poll(() => document.activeElement).not.toBe(input())
+	})
+
+	test('a trigger leaves no focus ring behind, the way a click on the bar does not', async () => {
+		await render(Harness)
+
+		await page.getByRole('button', { name: 'Trigger open' }).click()
+
+		await expect.poll(() => bar().classList.contains('np-search-focus-ring')).toBe(false)
+	})
+
 	test('only the divided full screen header grows to 72dp', async () => {
 		const { rerender } = await render(Harness, {
 			expanded: true,

@@ -1,9 +1,13 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import {
 	docPages,
+	type IndexPage,
+	indexPageOf,
 	MANIFEST,
 	manifestSource,
 	routeIdOf,
+	SEARCH_INDEX,
+	searchIndexSource,
 	type Section,
 	sectionsOf,
 	withAnchors,
@@ -11,6 +15,7 @@ import {
 
 const changed: string[] = []
 const sections = new Map<string, Section[]>()
+const pages: IndexPage[] = []
 
 for (const file of docPages()) {
 	const source = readFileSync(file, 'utf8')
@@ -19,17 +24,26 @@ for (const file of docPages()) {
 		writeFileSync(file, next)
 		changed.push(file)
 	}
-	sections.set(routeIdOf(file), sectionsOf(next))
+	const route = routeIdOf(file)
+	sections.set(route, sectionsOf(next))
+	pages.push(indexPageOf(route, next))
 }
 
-const manifest = manifestSource(sections)
-const manifestChanged = !existsSync(MANIFEST) || readFileSync(MANIFEST, 'utf8') !== manifest
-if (manifestChanged) writeFileSync(MANIFEST, manifest)
+const written: string[] = []
+
+const sync = (file: string, contents: string) => {
+	if (existsSync(file) && readFileSync(file, 'utf8') === contents) return
+	writeFileSync(file, contents)
+	written.push(file)
+}
+
+sync(MANIFEST, manifestSource(sections))
+sync(SEARCH_INDEX, searchIndexSource(pages))
 
 for (const file of changed) console.log(`ids added: ${file}`)
-if (manifestChanged) console.log(`rewritten: ${MANIFEST}`)
-if (changed.length === 0 && !manifestChanged) {
-	console.log('Headings and table of contents are in sync.')
+for (const file of written) console.log(`rewritten: ${file}`)
+if (changed.length === 0 && written.length === 0) {
+	console.log('Headings, table of contents and search index are in sync.')
 } else {
 	console.log('\nRun npm run format next.')
 }
