@@ -14,7 +14,11 @@
 </script>
 
 <svelte:head>
-	<title>Navigation bar - Noph UI</title>
+	<title>Navigation bar - Material 3 bottom nav for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 navigation bar for Svelte: three to five top level destinations along the bottom of a compact screen, with badges, labels and link support."
+	/>
 </svelte:head>
 
 <h1>Navigation bar</h1>
@@ -123,6 +127,20 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The bar renders a <code>&lt;nav&gt;</code> landmark. Give it an <code>aria-label</code> when the
+	page has more than one, so screen reader users can tell the main navigation from the rest. The
+	selected item carries <code>aria-current="page"</code>.
+</p>
+<p>
+	The items share a single tab stop. Tab moves into the bar and out again, and the left and right
+	arrow keys move between destinations, with Home and End jumping to the ends. Items are links when
+	you pass <code>href</code>, which keeps middle click and open in new tab working. A badge on an
+	item needs <code>badgeAriaLabel</code> to be more than decoration.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="navigationbar-attributes">
 	NavigationBar attributes<a href="#navigationbar-attributes" aria-hidden="true" tabindex="-1">#</a>

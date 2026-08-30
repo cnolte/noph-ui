@@ -14,7 +14,11 @@
 </script>
 
 <svelte:head>
-	<title>Snackbar - Noph UI</title>
+	<title>Snackbar - Material 3 snackbar and toast for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 snackbar for Svelte, built on the Popover API: a brief message at the edge of the screen with an optional action, one or two lines, timed or manual."
+	/>
 </svelte:head>
 <h1>Snackbar</h1>
 <p>

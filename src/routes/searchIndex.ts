@@ -72,6 +72,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['app.css'],
 			},
 			{
+				id: 'icons',
+				text: 'Icons',
+				level: 2,
+				body: 'Buttons, fields and navigation take an icon wherever Material 3 asks for one, and the Icon component draws it from the Material Symbols font. That font is not part of the package,…',
+				terms: ['Icon', 'app.html', 'search', 'home'],
+			},
+			{
 				id: 'put-it-together',
 				text: 'Put it together',
 				level: 2,
@@ -208,6 +215,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['--np-app-bar-container-color', '--np-app-bar-headline-color'],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The bar renders a <header>. At the top level of a page that makes it the banner landmark, so keep it out of <main>. The headline is styled text, not a heading, which leaves the…',
+				terms: ['<header>', '<main>', '<h1>', 'aria-hidden', 'leading', 'trailing', 'title'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -290,7 +304,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/badge',
 		title: 'Badges',
-		body: '',
+		body: 'A badge marks an icon or a navigation item with news: a dot for something new, a number for how much of it there is. Keep it to a count someone can act on.',
 		terms: [],
 		sections: [
 			{
@@ -327,6 +341,20 @@ export const searchIndex: SearchPage[] = [
 				level: 3,
 				body: '',
 				terms: [],
+			},
+			{
+				id: 'theming',
+				text: 'Theming',
+				level: 2,
+				body: 'A badge takes its colors from the error role, so it stays legible in both color schemes without any work. Position it with the custom properties below when the element underneath…',
+				terms: ['--np-badge-position', 'absolute', '--np-badge-top', '0', '--np-badge-start', 'auto', '--np-badge-end', '--np-color-error', '--np-color-on-error'],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'A badge is decorative by default: it renders aria-hidden, because a number floating beside an icon means nothing on its own. The icon button or navigation item it sits on carries…',
+				terms: ['aria-hidden', 'aria-label', 'role="status"', '3 unread messages', '3'],
 			},
 			{
 				id: 'api',
@@ -407,6 +435,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The group renders role="group", which ties the buttons together without taking their individual names away. Pass a aria-label to say what the group is for, or your own role where…',
+				terms: ['role="group"', 'aria-label', 'role', 'radiogroup', 'title'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -425,7 +460,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/button',
 		title: 'Buttons',
-		body: '',
+		body: 'Buttons let people take an action with one tap. Material 3 gives five styles, and the one you pick says how much weight the action carries on the screen: filled for the one action…',
 		terms: [],
 		sections: [
 			{
@@ -583,6 +618,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'A button renders a native <button>, or an <a> as soon as you pass href, so the role, the keyboard and the focus ring come from the platform. Label it with its text content…',
+				terms: ['<button>', '<a>', 'href', 'title', 'toggle', 'aria-pressed', 'loading', 'aria-busy', 'loadingAriaLabel'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -608,7 +650,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/card',
 		title: 'Cards',
-		body: '',
+		body: 'A card groups content and actions about one subject. Material 3 gives three styles, elevated, filled and outlined, which differ in how far the card lifts off the background rather…',
 		terms: [],
 		sections: [
 			{
@@ -668,6 +710,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['--np-outlined-card-container-shape', '--np-shape-corner-medium', '--np-outlined-card-container-color', '--np-color-surface'],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'A plain card is a <div>: it holds content and takes no focus. Give it type="button" or type="link" only when the whole card really is one target, and it renders a <button> or an…',
+				terms: ['<div>', 'type="button"', 'type="link"', '<button>', '<a>', 'aria-disabled'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -686,7 +735,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/checkbox',
 		title: 'Checkbox',
-		body: '',
+		body: 'A checkbox turns one option on or off, and a group of them lets people pick any number of options at once. For a single choice out of several use a radio, and for a setting that…',
 		terms: [],
 		sections: [
 			{
@@ -732,6 +781,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: "The component renders a native <input type=\"checkbox\"> with the Material 3 drawing on top, so checked, focus, the space key and form submission are the browser's work, not ours.",
+				terms: ['<input type="checkbox">', '<label>', 'aria-label', 'aria-checked="mixed"', 'issues', 'aria-invalid'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -750,7 +806,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/chip',
 		title: 'Chips',
-		body: '',
+		body: 'Chips are compact actions and choices in the flow of the content. Material 3 has four: assist for a helpful action, suggestion for something the app proposes, filter for narrowing…',
 		terms: [],
 		sections: [
 			{
@@ -1272,7 +1328,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Accessibility',
 				level: 2,
 				body: 'The surface renders role="dialog" with aria-modal="true". The headline labels it through aria-labelledby and the supportingText describes it through aria-describedby, so both are…',
-				terms: ['role="dialog"', 'aria-modal="true"', 'headline', 'aria-labelledby', 'supportingText', 'aria-describedby', 'aria-label', 'inert'],
+				terms: ['role="dialog"', 'aria-modal="true"', 'headline', 'aria-labelledby', 'supportingText', 'aria-describedby', 'h1', 'headlineLevel', 'aria-label', 'inert'],
 			},
 			{
 				id: 'theming',
@@ -1293,14 +1349,14 @@ export const searchIndex: SearchPage[] = [
 				text: 'Attributes',
 				level: 3,
 				body: 'Everything else you pass is forwarded to the popover element, so id, class, style and event handlers such as ontoggle work as expected.',
-				terms: ['id', 'class', 'style', 'ontoggle', 'headline', 'string | undefined', 'undefined', 'aria-label', 'supportingText', 'icon', 'Snippet | undefined', 'actions', 'divider', 'boolean | undefined', 'quick', 'boolean', 'false', 'element', 'HTMLElement | undefined'],
+				terms: ['id', 'class', 'style', 'ontoggle', 'headline', 'string | undefined', 'undefined', 'aria-label', 'headlineLevel', '1 | 2 | 3 | 4 | 5 | 6', '2', 'supportingText', 'icon', 'Snippet | undefined', 'actions', 'divider', 'boolean | undefined', 'quick', 'boolean', 'false', 'element', 'HTMLElement | undefined'],
 			},
 		],
 	},
 	{
 		route: '/components/divider',
 		title: 'Divider',
-		body: '',
+		body: 'A divider is a thin rule that separates content, in a list or between the sections of a layout. Reach for one only where whitespace is not enough on its own.',
 		terms: [],
 		sections: [
 			{
@@ -1323,6 +1379,13 @@ export const searchIndex: SearchPage[] = [
 				level: 3,
 				body: '',
 				terms: [],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The divider renders role="separator", which is what a screen reader announces when it separates groups that belong to different topics, a list of accounts from a list of settings…',
+				terms: ['role="separator"', 'aria-hidden="true"'],
 			},
 			{
 				id: 'api',
@@ -1417,6 +1480,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['--np-fab-container-color', 'variant', '--np-fab-icon-color', '--np-fab-shape', 'shape', '--np-fab-pressed-shape', '--np-fab-elevation', 'lowered'],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The FAB renders a native <button>, or an <a> with href. It usually shows an icon alone, so the label is what gives it a name, and the same text becomes its tooltip.',
+				terms: ['<button>', '<a>', 'href', 'label'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -1442,7 +1512,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/icon-button',
 		title: 'Icon buttons',
-		body: '',
+		body: 'An icon button is a single action drawn as an icon, for toolbars, app bars and anywhere a word would not fit. It comes in the same four styles as a button, and in a toggle variant…',
 		terms: [],
 		sections: [
 			{
@@ -1600,6 +1670,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'An icon button renders a native <button>, or an <a> with href. Nothing in an icon carries a name, so title is not optional here: it becomes both the accessible name and the…',
+				terms: ['<button>', '<a>', 'href', 'title', 'toggle', 'aria-pressed', 'loading', 'aria-busy', 'loadingAriaLabel'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -1618,7 +1695,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/list',
 		title: 'Lists',
-		body: '',
+		body: 'A list is a run of rows with text and, where they earn it, an icon, an avatar or a control. Rows can be read only, act on the page or navigate, and the variant you pick decides…',
 		terms: [],
 		sections: [
 			{
@@ -1676,6 +1753,13 @@ export const searchIndex: SearchPage[] = [
 				level: 3,
 				body: 'Everything else you pass is forwarded to the <ul> element, so class, style and the usual event handlers work as expected.',
 				terms: ['<ul>', 'class', 'style', 'element', 'HTMLUListElement | undefined', 'undefined'],
+			},
+			{
+				id: 'item',
+				text: 'Item',
+				level: 3,
+				body: 'ListItem is an Item wrapped in an <li>. Where a row is not part of a <ul>, in search results, a sheet or a card, import Item instead and skip the wrapper. It takes the same…',
+				terms: ['ListItem', 'Item', '<li>', '<ul>'],
 			},
 			{
 				id: 'listitem-attributes',
@@ -1854,6 +1938,13 @@ export const searchIndex: SearchPage[] = [
 				level: 2,
 				body: '',
 				terms: ['--np-navigation-bar-container-color', '--np-navigation-bar-item-active-indicator-color', '--np-navigation-bar-item-font-weight', '--np-navigation-bar-item-selected-font-weight'],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The bar renders a <nav> landmark. Give it an aria-label when the page has more than one, so screen reader users can tell the main navigation from the rest. The selected item…',
+				terms: ['<nav>', 'aria-label', 'aria-current="page"', 'href', 'badgeAriaLabel'],
 			},
 			{
 				id: 'api',
@@ -2129,7 +2220,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/radio',
 		title: 'Radio button',
-		body: '',
+		body: 'Radio buttons let people pick exactly one option from a set they can all see at once. Beyond a handful of options a select keeps the screen calmer.',
 		terms: [],
 		sections: [
 			{
@@ -2161,6 +2252,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'Each radio is a native <input type="radio">. Radios that share a name form one group, and the browser gives that group its arrow key navigation, its single tab stop and its form…',
+				terms: ['<input type="radio">', 'name', '<label>', 'aria-label', '<fieldset>', '<legend>'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -2179,7 +2277,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/ripple',
 		title: 'Ripple',
-		body: '',
+		body: 'The ripple is the state layer Material 3 puts under a press: hover, focus and a wave that follows the pointer. Every interactive component here already carries one, and this page…',
 		terms: [],
 		sections: [
 			{
@@ -2209,6 +2307,13 @@ export const searchIndex: SearchPage[] = [
 				level: 3,
 				body: '',
 				terms: [],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The ripple is decoration. It renders aria-hidden and takes no pointer events, so it stays out of the accessibility tree and never swallows a click meant for the control underneath.',
+				terms: ['aria-hidden', 'prefers-reduced-motion'],
 			},
 			{
 				id: 'api',
@@ -2303,6 +2408,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['--np-search-container-color', '--np-search-view-background-color', '--np-search-shape', '--np-search-width', '--np-search-pane-margin', '--np-search-view-margin', '--np-search-results-shape', '--np-search-results-max-height', '--np-search-z-index', '--np-search-divider-color', '--np-search-focus-indicator-color'],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The field is a native <input type="search"> named by label. The clear button and the back arrow are named by clearLabel and backLabel, so all three can be translated.',
+				terms: ['<input type="search">', 'label', 'clearLabel', 'backLabel'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -2328,7 +2440,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/segmented-button',
 		title: 'Segmented buttons',
-		body: '',
+		body: 'A segmented button holds two to five related options in one connected control, for choosing a view or filtering what is on screen. Use it where the options are short and worth…',
 		terms: [],
 		sections: [
 			{
@@ -2358,6 +2470,20 @@ export const searchIndex: SearchPage[] = [
 				level: 2,
 				body: '',
 				terms: [],
+			},
+			{
+				id: 'theming',
+				text: 'Theming',
+				level: 2,
+				body: 'The segmented button carries no custom properties of its own. It is drawn entirely from the Material 3 color roles, so it follows the theme wherever it sits, and overriding a role…',
+				terms: ['--np-color-secondary-container', '--np-color-on-secondary-container', '--np-color-on-surface', '--np-color-outline', '--np-color-error', 'issues', '--np-shape-corner-full'],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'Every segment is a native <input> inside a <label>: radios for single choice, checkboxes for multiSelect. Selection, the arrow keys of a radio group, the space key and form…',
+				terms: ['<input>', '<label>', 'multiSelect', 'label', 'labelIcon'],
 			},
 			{
 				id: 'api',
@@ -2494,6 +2620,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['--np-select-min-width', '210px', '--np-select-max-width', '100%', 'NativeSelect'],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'Select renders the field as a role="combobox" with aria-expanded, aria-controls and aria-activedescendant, and the popup as a role="listbox" whose options carry aria-selected.…',
+				terms: ['Select', 'role="combobox"', 'aria-expanded', 'aria-controls', 'aria-activedescendant', 'role="listbox"', 'aria-selected', 'label', 'aria-describedby', 'issues', 'role="alert"', 'NativeSelect', '<select>'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -2572,11 +2705,18 @@ export const searchIndex: SearchPage[] = [
 				terms: ['--np-sheet-container-color', '--np-sheet-shape', '--np-sheet-size', '--np-sheet-handle-color', '--np-sheet-elevation'],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The sheet is a native <dialog>. A modal sheet opens with showModal, so the browser keeps focus inside it, marks the rest of the page inert and closes it on Escape or a click on…',
+				terms: ['<dialog>', 'showModal', 'inert', 'headline', 'aria-labelledby', 'headlineLevel', 'aria-label', 'action'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
 				body: 'Renders a <dialog> and takes its attributes. bind:element gives you that element, and show() and close() open and close it from outside.',
-				terms: ['<dialog>', 'bind:element', 'show()', 'close()', 'open', 'boolean', 'false', 'modal', 'true', 'placement', "'bottom' | 'top' | 'start' | 'end'", "'bottom'", 'handle', 'headline', 'string | undefined', 'undefined', 'action', 'Snippet | undefined'],
+				terms: ['<dialog>', 'bind:element', 'show()', 'close()', 'open', 'boolean', 'false', 'modal', 'true', 'placement', "'bottom' | 'top' | 'start' | 'end'", "'bottom'", 'handle', 'headline', 'string | undefined', 'undefined', 'headlineLevel', '1 | 2 | 3 | 4 | 5 | 6', '2', 'action', 'Snippet | undefined'],
 			},
 		],
 	},
@@ -2813,6 +2953,20 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'theming',
+				text: 'Theming',
+				level: 2,
+				body: 'A split button is two buttons in a group, so it is themed through the button tokens of the variant you picked: --np-filled-button-container-color and its siblings reach both…',
+				terms: ['--np-filled-button-container-color', '--np-shape-corner-full'],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'Both halves are real buttons in a role="group". The leading half is named by its label, and the caret is named by menuLabel, since nothing in an arrow says what it opens. Give…',
+				terms: ['role="group"', 'label', 'menuLabel', 'More send options', 'aria-haspopup="menu"', 'aria-expanded'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -2824,7 +2978,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/switch',
 		title: 'Switch',
-		body: '',
+		body: 'A switch turns a setting on or off, and the change applies at once, with nothing to confirm. Where a choice only takes effect once a form is submitted, use a checkbox instead.',
 		terms: [],
 		sections: [
 			{
@@ -2870,6 +3024,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The switch is a native checkbox reporting role="switch", so it is announced as on or off rather than checked. Space toggles it, and Enter does too, which is what people expect…',
+				terms: ['role="switch"', '<label>', 'aria-label', 'Auto refresh'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -2895,7 +3056,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/tabs',
 		title: 'Tabs',
-		body: '',
+		body: 'Tabs switch between views that sit at the same level of one screen. Primary tabs sit at the top of the content, secondary tabs divide what is inside one of those views.',
 		terms: [],
 		sections: [
 			{
@@ -2934,6 +3095,20 @@ export const searchIndex: SearchPage[] = [
 				terms: ['href', '<Tab>', 'value'],
 			},
 			{
+				id: 'theming',
+				text: 'Theming',
+				level: 2,
+				body: 'Tabs are drawn from the color roles: --np-color-primary for the indicator and the selected label, --np-color-on-surface-variant for the rest, and --np-color-secondary for the…',
+				terms: ['--np-color-primary', '--np-color-on-surface-variant', '--np-color-secondary', '--np-tabs-indicator-radius', '--np-shape-corner-full', '0'],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The strip renders role="tablist" and each tab role="tab" with aria-selected. The tabs share one tab stop: the left and right arrow keys move between them, Home and End jump to the…',
+				terms: ['role="tablist"', 'role="tab"', 'aria-selected', 'controls', 'role="tabpanel"', 'href', 'badgeAriaLabel'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -2959,7 +3134,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/text-field',
 		title: 'Text fields',
-		body: '',
+		body: 'Text fields let people enter and edit text. Material 3 gives two styles, filled and outlined, and both carry the label, supporting text and validation that a real form needs.',
 		terms: [],
 		sections: [
 			{
@@ -3082,6 +3257,13 @@ export const searchIndex: SearchPage[] = [
 				terms: [],
 			},
 			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The field is wrapped in a <label>, so the label text names it without any for and id wiring, and clicking the label puts the caret in the field. Underneath sits a native <input>…',
+				terms: ['<label>', 'label', 'for', 'id', '<input>', '<textarea>', 'aria-describedby', 'errorText', 'issues', 'aria-errormessage', 'role="alert"', 'noAsterisk'],
+			},
+			{
 				id: 'api',
 				text: 'API',
 				level: 2,
@@ -3144,6 +3326,13 @@ export const searchIndex: SearchPage[] = [
 				level: 2,
 				body: '',
 				terms: ['--np-toolbar-container-color', '--np-toolbar-color', '--np-toolbar-shape', '--np-toolbar-elevation', '--np-toolbar-gap', '--np-toolbar-inset'],
+			},
+			{
+				id: 'accessibility',
+				text: 'Accessibility',
+				level: 2,
+				body: 'The toolbar renders role="toolbar" with aria-orientation set from orientation. Give it an aria-label, Text formatting for instance, because a toolbar without a name is announced…',
+				terms: ['role="toolbar"', 'aria-orientation', 'orientation', 'aria-label', 'Text formatting', 'title'],
 			},
 			{
 				id: 'api',

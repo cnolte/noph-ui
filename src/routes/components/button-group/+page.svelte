@@ -17,7 +17,11 @@
 </script>
 
 <svelte:head>
-	<title>Button groups - Noph UI</title>
+	<title>Button groups - Material 3 button group for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 button group for Svelte: buttons or icon buttons that react as one, connected or spaced, with single and multiple choice and expressive press motion."
+	/>
 </svelte:head>
 
 <h1>Button groups</h1>
@@ -94,6 +98,19 @@
 	<ThemingExample />
 </DemoContainer>
 <Code value={ThemingExampleSource} />
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The group renders <code>role="group"</code>, which ties the buttons together without taking their
+	individual names away. Pass a <code>aria-label</code> to say what the group is for, or your own
+	<code>role</code> where the buttons mean something more specific, <code>radiogroup</code> for instance.
+</p>
+<p>
+	Tab reaches every button in the group, and the press motion runs for the space and enter keys the
+	same way it does for a pointer, so a keyboard user sees the same feedback. Buttons that only carry
+	an icon still need a <code>title</code>.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="props">Props<a href="#props" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>

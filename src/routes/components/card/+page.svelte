@@ -12,10 +12,19 @@
 </script>
 
 <svelte:head>
-	<title>Cards - Noph UI</title>
+	<title>Cards - Material 3 card component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Material 3 cards for Svelte in the elevated, filled and outlined styles, themable down to the container color, shape and elevation of each one."
+	/>
 </svelte:head>
 
 <h1>Cards</h1>
+<p>
+	A card groups content and actions about one subject. Material 3 gives three styles, elevated,
+	filled and outlined, which differ in how far the card lifts off the background rather than in what
+	it can hold.
+</p>
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 
 <DemoContainer style="width: calc(100% - 2rem)">
@@ -106,6 +115,20 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	A plain card is a <code>&lt;div&gt;</code>: it holds content and takes no focus. Give it
+	<code>type="button"</code> or <code>type="link"</code> only when the whole card really is one
+	target, and it renders a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code> instead.
+</p>
+<p>
+	A card that only wraps its own buttons and links should stay a plain card. Nesting controls inside
+	a clickable card leaves a screen reader with a target inside a target, and there is no way to
+	reach the inner one. A disabled clickable card keeps <code>aria-disabled</code> and steps out of the
+	tab order.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>

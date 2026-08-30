@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { AppBar, IconButton, Search } from '#lib/index.js'
+	import { AppBar, IconButton, Item, Search } from '#lib/index.js'
 	import { Icon } from '#lib/icons/index.js'
-	import Item from '#lib/list/Item.svelte'
 
 	const dishes = ['Simple Classic Tacos', 'Mexican street corn', 'Chilaquiles verdes']
 

@@ -36,10 +36,19 @@
 </script>
 
 <svelte:head>
-	<title>Icon buttons - Noph UI</title>
+	<title>Icon buttons - Material 3 icon button for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Material 3 icon buttons for Svelte: standard, filled, tonal and outlined, in five sizes and two widths, with toggle, loading and a built in tooltip."
+	/>
 </svelte:head>
 
 <h1>Icon buttons</h1>
+<p>
+	An icon button is a single action drawn as an icon, for toolbars, app bars and anywhere a word
+	would not fit. It comes in the same four styles as a button, and in a toggle variant for a state
+	that stays.
+</p>
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<IconButton aria-label="Icon button"><Icon>favorite</Icon></IconButton>
@@ -312,6 +321,20 @@
 	<OutlinedIconButtonThemingExample />
 </DemoContainer>
 <Code value={OutlinedIconButtonThemingExampleSource} />
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	An icon button renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> with
+	<code>href</code>. Nothing in an icon carries a name, so <code>title</code> is not optional here: it
+	becomes both the accessible name and the tooltip.
+</p>
+<p>
+	<code>toggle</code> reports the state with <code>aria-pressed</code>, so use it for a control that
+	stays on, a bookmark or a mute button, and write a title that holds for both states.
+	<code>loading</code> sets <code>aria-busy</code> and names the spinner with
+	<code>loadingAriaLabel</code>.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="props">Props<a href="#props" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>

@@ -7,6 +7,7 @@ export interface SheetProps extends Omit<HTMLDialogAttributes, 'open'> {
 	placement?: 'bottom' | 'top' | 'start' | 'end'
 	handle?: boolean
 	headline?: string
+	headlineLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	action?: Snippet
 	element?: HTMLDialogElement
 }

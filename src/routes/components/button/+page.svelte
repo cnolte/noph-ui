@@ -34,10 +34,19 @@
 </script>
 
 <svelte:head>
-	<title>Buttons - Noph UI</title>
+	<title>Buttons - Material 3 button component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Material 3 buttons for Svelte in all five styles: elevated, filled, tonal, outlined and text, with icons, loading state, five sizes and a toggle variant."
+	/>
 </svelte:head>
 
 <h1>Buttons</h1>
+<p>
+	Buttons let people take an action with one tap. Material 3 gives five styles, and the one you pick
+	says how much weight the action carries on the screen: filled for the one action a screen is
+	about, tonal and elevated below it, outlined and text for everything secondary.
+</p>
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Button variant="elevated">{#snippet start()} <Icon>add</Icon>{/snippet}Elevated</Button>
@@ -289,6 +298,20 @@
 	<TextButtonExample />
 </DemoContainer>
 <Code value={TextButtonExampleSource} />
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	A button renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> as soon as you
+	pass <code>href</code>, so the role, the keyboard and the focus ring come from the platform. Label
+	it with its text content wherever you can.
+</p>
+<p>
+	A button showing only an icon needs <code>title</code>. It becomes the accessible name and the
+	tooltip in one go. <code>toggle</code> reports the state through <code>aria-pressed</code>,
+	<code>loading</code> sets <code>aria-busy</code> and names the spinner with
+	<code>loadingAriaLabel</code>, and a disabled button is really disabled rather than dimmed.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>

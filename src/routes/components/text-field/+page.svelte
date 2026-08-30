@@ -35,10 +35,18 @@
 </script>
 
 <svelte:head>
-	<title>Text fields - Noph UI</title>
+	<title>Text fields - Material 3 text input for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 text field for Svelte, filled or outlined: icons, prefixes, supporting text, a character counter, an auto growing textarea and validation."
+	/>
 </svelte:head>
 
 <h1>Text fields</h1>
+<p>
+	Text fields let people enter and edit text. Material 3 gives two styles, filled and outlined, and
+	both carry the label, supporting text and validation that a real form needs.
+</p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -262,6 +270,22 @@
 </DemoContainer>
 <Code value={OutlinedTextFieldExampleSource} />
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The field is wrapped in a <code>&lt;label&gt;</code>, so the <code>label</code> text names it
+	without any <code>for</code> and <code>id</code> wiring, and clicking the label puts the caret in
+	the field. Underneath sits a native <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code>,
+	which is what carries type, required, the keyboard and autofill.
+</p>
+<p>
+	Supporting text is tied to the field with <code>aria-describedby</code>. An error, from
+	<code>errorText</code> or from <code>issues</code>, switches that to
+	<code>aria-errormessage</code> and announces the message through <code>role="alert"</code>. A
+	required field is marked with an asterisk, which <code>noAsterisk</code> removes when your form says
+	so elsewhere.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>

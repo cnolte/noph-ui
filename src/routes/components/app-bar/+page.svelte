@@ -10,7 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>App bar - Noph UI</title>
+	<title>App bar - Material 3 top app bar for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 top app bar for Svelte: the screen name and its actions across the top, in the small, medium, large and search variants, collapsing as the page scrolls."
+	/>
 </svelte:head>
 
 <h1>App bar</h1>
@@ -84,6 +88,20 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The bar renders a <code>&lt;header&gt;</code>. At the top level of a page that makes it the banner
+	landmark, so keep it out of <code>&lt;main&gt;</code>. The headline is styled text, not a heading,
+	which leaves the page free to keep its own <code>&lt;h1&gt;</code> where it belongs.
+</p>
+<p>
+	The medium and large variants carry a second copy of the title in the first row, the one that
+	fades in as the bar collapses. That copy is <code>aria-hidden</code>, so the title is announced
+	once. Everything you put in <code>leading</code> and <code>trailing</code> keeps its own name:
+	give each icon button a <code>title</code>.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="topappbar-attributes">
 	AppBar attributes<a href="#topappbar-attributes" aria-hidden="true" tabindex="-1">#</a>

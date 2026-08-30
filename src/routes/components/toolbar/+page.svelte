@@ -12,7 +12,11 @@
 </script>
 
 <svelte:head>
-	<title>Toolbar - Noph UI</title>
+	<title>Toolbar - Material 3 toolbar component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 Expressive toolbar for Svelte: the frequently used actions of a page, docked or floating, horizontal or vertical, in two color roles."
+	/>
 </svelte:head>
 
 <h1>Toolbar</h1>
@@ -75,6 +79,19 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The toolbar renders <code>role="toolbar"</code> with <code>aria-orientation</code> set from
+	<code>orientation</code>. Give it an <code>aria-label</code>, <code>Text formatting</code> for instance,
+	because a toolbar without a name is announced as a nameless group of buttons.
+</p>
+<p>
+	Its buttons share one tab stop, the way the ARIA pattern asks: Tab moves into the toolbar and out
+	again, the arrow keys move along it, and Home and End jump to the ends. Each button inside still
+	needs its own <code>title</code>.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Renders a <code>&lt;div role="toolbar"&gt;</code> and takes its attributes. Give it an

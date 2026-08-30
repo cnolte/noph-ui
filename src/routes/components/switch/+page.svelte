@@ -12,10 +12,19 @@
 </script>
 
 <svelte:head>
-	<title>Switch - Noph UI</title>
+	<title>Switch - Material 3 toggle switch for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 switch for Svelte, built on a native checkbox: an instant on or off toggle, with optional icons on the handle and a disabled state."
+	/>
 </svelte:head>
 
 <h1>Switch</h1>
+<p>
+	A switch turns a setting on or off, and the change applies at once, with nothing to confirm. Where
+	a choice only takes effect once a form is submitted, use a
+	<a class="link" href="/components/checkbox">checkbox</a> instead.
+</p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Usage />
@@ -115,6 +124,20 @@
 	<ThemingExample />
 </DemoContainer>
 <Code value={ThemingExampleSource} />
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The switch is a native checkbox reporting <code>role="switch"</code>, so it is announced as on or
+	off rather than checked. Space toggles it, and Enter does too, which is what people expect from a
+	setting that applies at once.
+</p>
+<p>
+	It carries no label of its own: wrap it in a <code>&lt;label&gt;</code> or pass
+	<code>aria-label</code>. Write that name for the setting, <code>Auto refresh</code>, not for the
+	current state. The optional icons on the handle are decoration, and a screen reader never reads
+	them.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="switch">Switch<a href="#switch" aria-hidden="true" tabindex="-1">#</a></h3>
 

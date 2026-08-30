@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { IconButton, Search } from '#lib/index.js'
+	import { IconButton, Item, Search } from '#lib/index.js'
 	import { Icon } from '#lib/icons/index.js'
-	import Item from '#lib/list/Item.svelte'
 </script>
 
 <div style="width:26rem;max-width:100%">

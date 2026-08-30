@@ -7,7 +7,11 @@
 </script>
 
 <svelte:head>
-	<title>Remote functions - Noph UI</title>
+	<title>Remote functions - Material 3 forms for SvelteKit - Noph UI</title>
+	<meta
+		name="description"
+		content="Wire SvelteKit remote functions to Material 3 form components in Svelte. Text fields, selects, checkboxes and date pickers take the validation issues as they are."
+	/>
 </svelte:head>
 
 <h1>Remote functions</h1>

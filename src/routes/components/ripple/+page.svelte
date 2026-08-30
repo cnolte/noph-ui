@@ -8,10 +8,19 @@
 </script>
 
 <svelte:head>
-	<title>Ripple - Noph UI</title>
+	<title>Ripple - Material 3 ripple effect for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 ripple for Svelte: the press and hover state layer that the components use, ready to drop onto a surface of your own."
+	/>
 </svelte:head>
 
 <h1>Ripple</h1>
+<p>
+	The ripple is the state layer Material 3 puts under a press: hover, focus and a wave that follows
+	the pointer. Every interactive component here already carries one, and this page is for putting
+	the same feedback on a surface of your own.
+</p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	Click inside the container to see the ripple effect:
@@ -57,6 +66,18 @@
 </DemoContainer>
 
 <Code value={ThemingExampleSource} />
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The ripple is decoration. It renders <code>aria-hidden</code> and takes no pointer events, so it stays
+	out of the accessibility tree and never swallows a click meant for the control underneath.
+</p>
+<p>
+	It follows <code>prefers-reduced-motion</code> and stops animating for anyone who asks for less movement.
+	Because it only draws a state layer, the element you put it on still has to be a real control, with
+	a role, a name and a focus ring of its own.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
 <table>

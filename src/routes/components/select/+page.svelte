@@ -26,7 +26,11 @@
 </script>
 
 <svelte:head>
-	<title>Select - Noph UI</title>
+	<title>Select - Material 3 select and listbox for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 select for Svelte: a listbox it renders itself, with icons, multiple selection and a virtual list, plus a native select variant styled to match."
+	/>
 </svelte:head>
 
 <h1>Select</h1>
@@ -207,6 +211,22 @@
 </table>
 <p>These tokens apply to <code>NativeSelect</code> as well.</p>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	<code>Select</code> renders the field as a <code>role="combobox"</code> with
+	<code>aria-expanded</code>, <code>aria-controls</code> and <code>aria-activedescendant</code>, and
+	the popup as a <code>role="listbox"</code> whose options carry <code>aria-selected</code>. Arrow
+	keys, Home, End, typeahead, Enter and Escape are wired to that, and the field is named by
+	<code>label</code>.
+</p>
+<p>
+	Supporting text is tied to the field through <code>aria-describedby</code>, and an error from
+	<code>issues</code> is announced through <code>role="alert"</code>. Where none of the extras are
+	needed, <code>NativeSelect</code> keeps a real <code>&lt;select&gt;</code>, which brings the
+	platform picker with it, mobile included.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="select-attributes">
 	Select attributes<a href="#select-attributes" aria-hidden="true" tabindex="-1">#</a>

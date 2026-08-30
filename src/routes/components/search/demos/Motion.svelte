@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Search } from '#lib/index.js'
-	import Item from '#lib/list/Item.svelte'
+	import { Item, Search } from '#lib/index.js'
 </script>
 
 <div style="width:26rem;max-width:100%">

@@ -37,7 +37,11 @@
 </script>
 
 <svelte:head>
-	<title>Noph UI - The Ultimate Material 3 Expressive UI Library for Svelte</title>
+	<title>Noph UI - Material 3 Expressive components for Svelte</title>
+	<meta
+		name="description"
+		content="Noph UI is a Material 3 Expressive component library for Svelte and SvelteKit: server rendered, themed from a single color, and shipped with zero dependencies."
+	/>
 	<link rel="canonical" href="https://noph.dev/" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://noph.dev/" />

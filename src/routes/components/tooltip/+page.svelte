@@ -10,7 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>Tooltips - Noph UI</title>
+	<title>Tooltips - Material 3 tooltip component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 tooltip for Svelte, plain or rich: an explanation in the top layer that nothing clips, driven by the browser wherever it can be."
+	/>
 </svelte:head>
 
 <h1>Tooltips</h1>

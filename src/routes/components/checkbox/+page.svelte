@@ -14,10 +14,21 @@
 </script>
 
 <svelte:head>
-	<title>Checkbox - Noph UI</title>
+	<title>Checkbox - Material 3 checkbox for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 checkbox for Svelte, built on a native input: labels, the indeterminate state, disabled and error states, and validation from remote functions."
+	/>
 </svelte:head>
 
 <h1>Checkbox</h1>
+<p>
+	A checkbox turns one option on or off, and a group of them lets people pick any number of options
+	at once. For a single choice out of several use a <a class="link" href="/components/radio"
+		>radio</a
+	>, and for a setting that applies at once a
+	<a class="link" href="/components/switch">switch</a>.
+</p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Usage />
@@ -84,6 +95,19 @@
 </DemoContainer>
 <Code value={ThemingExampleSource} />
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The component renders a native <code>&lt;input type="checkbox"&gt;</code> with the Material 3 drawing
+	on top, so checked, focus, the space key and form submission are the browser's work, not ours.
+</p>
+<p>
+	It brings no label of its own. Wrap it in a <code>&lt;label&gt;</code>, as the
+	<a class="link" href="#label">Label</a> example does, or pass <code>aria-label</code>. The
+	indeterminate state reports <code>aria-checked="mixed"</code>, and <code>issues</code> sets
+	<code>aria-invalid</code> so the error reaches assistive technology and not only the eye.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>

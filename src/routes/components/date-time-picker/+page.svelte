@@ -16,7 +16,11 @@
 </script>
 
 <svelte:head>
-	<title>Date and time pickers - Noph UI</title>
+	<title>Date time picker - Material 3 picker for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 date and time picker for Svelte: a calendar with hour and minute columns beside it, localised, bounded, and ready for remote function validation."
+	/>
 </svelte:head>
 
 <h1>Date and time pickers</h1>

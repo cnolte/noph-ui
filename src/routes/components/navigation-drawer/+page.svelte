@@ -10,7 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>Navigation drawer - Noph UI</title>
+	<title>Navigation drawer - Material 3 drawer for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 navigation drawer for Svelte, standard or modal: top level navigation for wide screens with room for labels, groups and counts."
+	/>
 </svelte:head>
 
 <h1>Navigation drawer</h1>

@@ -38,7 +38,11 @@
 </script>
 
 <svelte:head>
-	<title>Date pickers - Noph UI</title>
+	<title>Date pickers - Material 3 date picker for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 date picker for Svelte: docked, modal and range, with keyboard entry, localisation, bounded selections and validation from remote functions."
+	/>
 </svelte:head>
 
 <h1>Date pickers</h1>

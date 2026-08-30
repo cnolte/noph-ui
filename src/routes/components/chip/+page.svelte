@@ -36,10 +36,19 @@
 </script>
 
 <svelte:head>
-	<title>Chips - Noph UI</title>
+	<title>Chips - Material 3 chip components for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Material 3 chips for Svelte: assist, suggestion, filter and input chips in a chip set, removable, selectable and usable as links."
+	/>
 </svelte:head>
 
 <h1>Chips</h1>
+<p>
+	Chips are compact actions and choices in the flow of the content. Material 3 has four: assist for
+	a helpful action, suggestion for something the app proposes, filter for narrowing a list, and
+	input for what someone has already entered.
+</p>
 
 <h2 id="assist-chip">Assist chip<a href="#assist-chip" aria-hidden="true" tabindex="-1">#</a></h2>
 

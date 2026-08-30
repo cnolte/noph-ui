@@ -10,10 +10,18 @@
 </script>
 
 <svelte:head>
-	<title>Radio button - Noph UI</title>
+	<title>Radio button - Material 3 radio for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 radio button for Svelte, built on a native input: grouped choices with labels, keyboard navigation and validation from remote functions."
+	/>
 </svelte:head>
 
 <h1>Radio button</h1>
+<p>
+	Radio buttons let people pick exactly one option from a set they can all see at once. Beyond a
+	handful of options a <a class="link" href="/components/select">select</a> keeps the screen calmer.
+</p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Usage />
@@ -54,6 +62,19 @@
 </DemoContainer>
 <Code value={ThemingExampleSource} />
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	Each radio is a native <code>&lt;input type="radio"&gt;</code>. Radios that share a
+	<code>name</code> form one group, and the browser gives that group its arrow key navigation, its single
+	tab stop and its form behaviour.
+</p>
+<p>
+	The component brings no label of its own, so wrap each radio in a <code>&lt;label&gt;</code> or
+	pass <code>aria-label</code>. Where the group as a whole needs a question above it, put the radios
+	in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
 	<thead>

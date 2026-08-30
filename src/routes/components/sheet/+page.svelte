@@ -10,7 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>Sheets - Noph UI</title>
+	<title>Sheets - Material 3 bottom and side sheets for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 sheet for Svelte: a surface docked to an edge of the screen, modal or standard, from the bottom or a side, with a drag handle and expressive motion."
+	/>
 </svelte:head>
 
 <h1>Sheets</h1>
@@ -80,6 +84,21 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The sheet is a native <code>&lt;dialog&gt;</code>. A modal sheet opens with
+	<code>showModal</code>, so the browser keeps focus inside it, marks the rest of the page
+	<code>inert</code> and closes it on Escape or a click on the scrim. A standard sheet stays part of the
+	page, and focus moves in and out of it as usual.
+</p>
+<p>
+	The <code>headline</code> names the sheet through <code>aria-labelledby</code> and renders as a
+	level two heading, which <code>headlineLevel</code> moves where your page outline needs it. A
+	sheet without a headline should carry <code>aria-label</code>. The drag handle is decoration and
+	is hidden from assistive technology, so keep a real close action in <code>action</code> or in the content.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Renders a <code>&lt;dialog&gt;</code> and takes its attributes. <code>bind:element</code> gives
@@ -119,6 +138,14 @@
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Names the sheet, and is what assistive technology announces.</td>
+		</tr>
+		<tr>
+			<td><code>headlineLevel</code></td>
+			<td><code>1 | 2 | 3 | 4 | 5 | 6</code></td>
+			<td><code>2</code></td>
+			<td>
+				Heading level the <code>headline</code> renders as. Move it where your page outline needs it.
+			</td>
 		</tr>
 		<tr>
 			<td><code>action</code></td>

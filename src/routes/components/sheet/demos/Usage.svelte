@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { Button, IconButton, Sheet } from '#lib/index.js'
+	import { Button, IconButton, Item, Sheet } from '#lib/index.js'
 	import { Icon } from '#lib/icons/index.js'
-	import Item from '#lib/list/Item.svelte'
 </script>
 
 <Button command="show-modal" commandfor="bottom-sheet">Open bottom sheet</Button>

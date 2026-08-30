@@ -8,7 +8,11 @@
 </script>
 
 <svelte:head>
-	<title>Auto complete - Noph UI</title>
+	<title>Autocomplete - Material 3 combobox for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 autocomplete for Svelte: a text field that suggests options as you type, keeps what the user typed as the value and wires up the combobox roles for you."
+	/>
 </svelte:head>
 
 <h1>Auto complete</h1>

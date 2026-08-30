@@ -24,6 +24,20 @@ describe('Sheet', async () => {
 		await expect.poll(() => sheet().open).toBe(false)
 	})
 
+	test('the headline is a level two heading, and takes another level when asked', async () => {
+		const { rerender } = await render(Harness, { open: true })
+
+		expect(document.querySelector('h2.np-sheet-headline')?.textContent?.trim()).toBe(
+			'Sheet headline',
+		)
+
+		await rerender({ open: true, headlineLevel: 3 })
+
+		expect(document.querySelector('h3.np-sheet-headline')?.textContent?.trim()).toBe(
+			'Sheet headline',
+		)
+	})
+
 	test('a modal sheet is named by its headline', async () => {
 		await render(Harness, { open: true })
 		await expect.poll(() => sheet().open).toBe(true)

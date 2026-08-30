@@ -22,13 +22,6 @@
 	let hasToc = $derived(sections.length > 0)
 </script>
 
-<svelte:head>
-	<meta
-		name="description"
-		content="Noph UI is a modern, powerful UI library for Svelte 5, fully aligned with the Material 3 guidelines."
-	/>
-</svelte:head>
-
 <header class="layout-btn">
 	<div class="inner-header">
 		<IconButton

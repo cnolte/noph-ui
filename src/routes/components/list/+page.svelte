@@ -10,10 +10,19 @@
 </script>
 
 <svelte:head>
-	<title>Lists - Noph UI</title>
+	<title>Lists - Material 3 list components for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Material 3 lists for Svelte: rows with leading and trailing content, supporting text, and a choice of text, button or link so the right element ends up in the DOM."
+	/>
 </svelte:head>
 
 <h1>Lists</h1>
+<p>
+	A list is a run of rows with text and, where they earn it, an icon, an avatar or a control. Rows
+	can be read only, act on the page or navigate, and the variant you pick decides which element ends
+	up in the DOM.
+</p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
 	<Usage />
@@ -109,6 +118,22 @@
 		</tr>
 	</tbody>
 </table>
+<h3 id="item">Item<a href="#item" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	<code>ListItem</code> is an <code>Item</code> wrapped in an <code>&lt;li&gt;</code>. Where a row
+	is not part of a <code>&lt;ul&gt;</code>, in search results, a sheet or a card, import
+	<code>Item</code> instead and skip the wrapper. It takes the same attributes as
+	<code>ListItem</code> below.
+</p>
+<!-- eslint-disable no-useless-escape -- the escape keeps the closing script tag from ending the surrounding block -->
+<Code
+	value={`<script lang="ts">
+	import { Item } from '#lib/index.js'
+<\/script>
+
+<Item variant="link" href="/components/list">Lists</Item>`}
+/>
+
 <h3 id="listitem-attributes">
 	ListItem attributes<a href="#listitem-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>

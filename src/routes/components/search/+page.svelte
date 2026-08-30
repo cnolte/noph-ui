@@ -16,7 +16,11 @@
 </script>
 
 <svelte:head>
-	<title>Search - Noph UI</title>
+	<title>Search - Material 3 search bar for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 search bar and search view for Svelte: docked or full screen, contained or divided, with results you fill and combobox semantics when they fit."
+	/>
 </svelte:head>
 
 <h1>Search</h1>
@@ -127,8 +131,9 @@
 	Focusing the field opens the view, so most of the time nothing is needed from you. Where the bar
 	has no room to sit at rest, a narrow app bar say, a trigger elsewhere can open it through
 	<code>show</code>, and <code>close</code> puts it away again. Both take care of the caret, and
-	<code>show</code> waits for the bar to be in the document before it moves focus there, so a bar that
-	is hidden until it opens still works.
+	<code>show</code> puts the bar in the document before it moves focus there, so a bar that is
+	hidden until it opens still works. It does that synchronously, which is what lets Safari on iOS
+	open the keyboard: the tap that called <code>show</code> is still on the stack.
 </p>
 <DemoContainer style="overflow:visible">
 	<OpeningItYourself />
@@ -178,6 +183,21 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The field is a native <code>&lt;input type="search"&gt;</code> named by <code>label</code>. The
+	clear button and the back arrow are named by <code>clearLabel</code> and <code>backLabel</code>,
+	so all three can be translated.
+</p>
+<p>
+	Focus opens the view and moving focus out of it closes it again, which keeps the keyboard and the
+	pointer in step. Escape closes it from the field and leaves the query alone. Results are yours to
+	fill, so the roles inside are yours too: see <a class="link" href="#semantics">Semantics</a> for
+	when to make them a listbox, and reach for
+	<a class="link" href="/components/autocomplete">autocomplete</a> when arrow keys should walk the options.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Renders a <code>&lt;div&gt;</code> holding the field and its results, and takes its attributes.
@@ -191,10 +211,7 @@
 	<tbody>
 		<tr>
 			<td><code>show()</code></td>
-			<td
-				>Opens the view and moves focus into the field. Returns a promise that settles once the
-				field has it.</td
-			>
+			<td>Opens the view and moves focus into the field, both before it returns.</td>
 		</tr>
 		<tr>
 			<td><code>close()</code></td>

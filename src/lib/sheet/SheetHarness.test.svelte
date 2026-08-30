@@ -8,15 +8,17 @@
 		modal = true,
 		placement = 'bottom',
 		handle = true,
+		headlineLevel,
 	}: {
 		open?: boolean
 		modal?: boolean
 		placement?: SheetProps['placement']
 		handle?: boolean
+		headlineLevel?: SheetProps['headlineLevel']
 	} = $props()
 </script>
 
-<Sheet bind:open {modal} {placement} {handle} headline="Sheet headline">
+<Sheet bind:open {modal} {placement} {handle} {headlineLevel} headline="Sheet headline">
 	{#snippet action()}
 		<Button data-testid="sheet-action">Close</Button>
 	{/snippet}

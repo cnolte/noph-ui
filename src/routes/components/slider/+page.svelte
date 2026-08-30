@@ -24,7 +24,11 @@
 </script>
 
 <svelte:head>
-	<title>Slider - Noph UI</title>
+	<title>Slider - Material 3 slider component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 slider for Svelte: single and range, horizontal or vertical, in three sizes, with steps, stop indicators, a value indicator and inset icons."
+	/>
 </svelte:head>
 
 <h1>Slider</h1>

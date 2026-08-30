@@ -22,7 +22,11 @@
 </script>
 
 <svelte:head>
-	<title>Progress indicators - Noph UI</title>
+	<title>Progress indicators - Material 3 progress for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Material 3 progress indicators for Svelte: linear and circular, determinate and indeterminate, with the expressive wavy track, buffers and four color cycling."
+	/>
 </svelte:head>
 
 <h1>Progress indicators</h1>

@@ -3,7 +3,11 @@
 </script>
 
 <svelte:head>
-	<title>Quick start - Noph UI</title>
+	<title>Quick start - Material 3 components for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Install Noph UI and get Material 3 components running in a Svelte or SvelteKit app: package, default theme, icon font and a first button."
+	/>
 </svelte:head>
 
 <h1>Quick start</h1>
@@ -65,6 +69,25 @@
 	...
 }`}
 />
+
+<h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	Buttons, fields and navigation take an icon wherever Material 3 asks for one, and the
+	<code>Icon</code>
+	component draws it from the Material Symbols font. That font is not part of the package, so load it
+	in your <code>app.html</code> before the first icon shows up, otherwise its name is what you see.
+	Ask Google Fonts for the icons you use, here <code>search</code> and <code>home</code>:
+</p>
+<Code
+	value={`<link
+	rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=search,home"
+/>`}
+/>
+<p>
+	<a class="link" href="/about/icons">Icons</a> covers the font settings, and how to pass your own SVG
+	instead.
+</p>
 
 <h2 id="put-it-together">
 	Put it together<a href="#put-it-together" aria-hidden="true" tabindex="-1">#</a>

@@ -6,7 +6,11 @@
 </script>
 
 <svelte:head>
-	<title>Menus - Noph UI</title>
+	<title>Menus - Material 3 menu component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 menu for Svelte, built on the Popover API: choices on a temporary surface anchored to the control that opened it, never clipped, with keyboard support."
+	/>
 </svelte:head>
 
 <h1>Menus</h1>

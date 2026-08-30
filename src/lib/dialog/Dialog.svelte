@@ -9,6 +9,7 @@
 		quick = false,
 		children,
 		headline,
+		headlineLevel = 2,
 		icon,
 		supportingText,
 		actions,
@@ -61,13 +62,14 @@
 			</div>
 		{/if}
 		{#if headline}
-			<h1
+			<svelte:element
+				this={`h${headlineLevel}`}
 				id="{uid}-dialog-headline"
 				class="np-dialog-headline"
 				style={icon ? 'text-align: center' : ''}
 			>
 				{headline}
-			</h1>
+			</svelte:element>
 		{/if}
 		{#if supportingText}
 			<p id="{uid}-dialog-supporting-text" class="np-dialog-supporting-text">{supportingText}</p>

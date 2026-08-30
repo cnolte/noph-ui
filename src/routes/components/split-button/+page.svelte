@@ -10,7 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>Split button - Noph UI</title>
+	<title>Split button - Material 3 split button for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 split button for Svelte: a default action beside a caret that opens the alternatives, in every button style and with expressive press motion."
+	/>
 </svelte:head>
 
 <h1>Split button</h1>
@@ -47,6 +51,33 @@
 </DemoContainer>
 <Code value={WithIconSource} />
 
+<h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	A split button is two buttons in a group, so it is themed through the
+	<a class="link" href="/components/button">button</a> tokens of the variant you picked:
+	<code>--np-filled-button-container-color</code> and its siblings reach both halves.
+</p>
+<p>
+	The shape comes from <code>--np-shape-corner-full</code>, and the two halves keep the small inner
+	corners that Material 3 Expressive asks for. The caret rotates and the halves swap their shape on
+	press through the expressive motion tokens, and all of it stops for anyone who prefers reduced
+	motion.
+</p>
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	Both halves are real buttons in a <code>role="group"</code>. The leading half is named by its
+	<code>label</code>, and the caret is named by <code>menuLabel</code>, since nothing in an arrow
+	says what it opens. Give <code>menuLabel</code> a name that fits the action,
+	<code>More send options</code> rather than the default.
+</p>
+<p>
+	The caret carries <code>aria-haspopup="menu"</code> and <code>aria-expanded</code>, and opens the
+	<a class="link" href="/components/menu">menu</a>, which brings its own arrow key navigation and
+	returns focus to the caret when it closes. Tab reaches both halves, so a keyboard user can take
+	the default action without ever opening the menu.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Renders a connected <a class="link" href="/components/button-group">ButtonGroup</a> holding the

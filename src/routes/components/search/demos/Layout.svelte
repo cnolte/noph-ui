@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Search } from '#lib/index.js'
-	import Item from '#lib/list/Item.svelte'
+	import { Item, Search } from '#lib/index.js'
 
 	const dishes = ['Simple Classic Tacos', 'Mexican street corn', 'Chilaquiles verdes']
 

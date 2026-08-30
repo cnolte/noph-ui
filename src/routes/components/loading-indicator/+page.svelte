@@ -8,7 +8,11 @@
 </script>
 
 <svelte:head>
-	<title>Loading indicator - Noph UI</title>
+	<title>Loading indicator - Material 3 spinner for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 Expressive loading indicator for Svelte: a spinner that morphs through shapes while it turns, for short waits inside a page."
+	/>
 </svelte:head>
 
 <h1>Loading indicator</h1>

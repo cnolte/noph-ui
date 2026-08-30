@@ -24,7 +24,11 @@
 </script>
 
 <svelte:head>
-	<title>FAB - Noph UI</title>
+	<title>FAB - Material 3 floating action button for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 floating action button for Svelte: three sizes, three color roles, extended and lowered variants, a FAB menu, and use as a link."
+	/>
 </svelte:head>
 
 <h1>FAB</h1>
@@ -171,6 +175,19 @@
 	</tbody>
 </table>
 
+<h2 id="accessibility">
+	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
+</h2>
+<p>
+	The FAB renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> with
+	<code>href</code>. It usually shows an icon alone, so the <code>label</code> is what gives it a name,
+	and the same text becomes its tooltip.
+</p>
+<p>
+	An extended FAB shows the label as text and is named by it. Keep the FAB late in the DOM, where it
+	sits visually, so the tab order matches the screen, and remember that one screen has one FAB: two
+	of them leave people guessing which action the screen is about.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="fab-attributes">
 	Fab attributes<a href="#fab-attributes" aria-hidden="true" tabindex="-1">#</a>

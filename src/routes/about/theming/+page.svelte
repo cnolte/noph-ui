@@ -7,7 +7,11 @@
 </script>
 
 <svelte:head>
-	<title>Theming - Noph UI</title>
+	<title>Theming - Material 3 color roles for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="Theme Material 3 components in Svelte from one source color. Every color, shape, motion and elevation role is a CSS custom property you can change at runtime."
+	/>
 </svelte:head>
 
 <h1>Theming</h1>

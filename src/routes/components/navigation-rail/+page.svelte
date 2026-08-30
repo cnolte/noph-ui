@@ -10,7 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>Navigation rail - Noph UI</title>
+	<title>Navigation rail - Material 3 side nav for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 navigation rail for Svelte: a narrow vertical strip of destinations that stays beside the content on medium sized screens."
+	/>
 </svelte:head>
 
 <h1>Navigation rail</h1>

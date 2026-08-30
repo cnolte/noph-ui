@@ -8,7 +8,11 @@
 </script>
 
 <svelte:head>
-	<title>Dialogs - Noph UI</title>
+	<title>Dialogs - Material 3 dialog component for Svelte - Noph UI</title>
+	<meta
+		name="description"
+		content="The Material 3 dialog for Svelte, built on the native dialog element in the top layer: headline, supporting text, actions, scrollable content and expressive motion."
+	/>
 </svelte:head>
 
 <h1>Dialogs</h1>
@@ -94,6 +98,11 @@
 	<code>headline</code>
 	labels it through <code>aria-labelledby</code> and the <code>supportingText</code> describes it
 	through <code>aria-describedby</code>, so both are announced when the dialog opens.
+</p>
+<p>
+	The headline is a level two heading, low enough to sit under the page's own <code>h1</code>. A
+	page that nests it deeper can say so with <code>headlineLevel</code>, which keeps the document
+	outline in order.
 </p>
 <p>
 	A dialog that brings its own heading can leave <code>headline</code> out and name itself with
@@ -209,6 +218,14 @@
 			<td>
 				Title of the dialog, and its accessible name. Leave it out for a dialog that brings its own
 				heading, and pass <code>aria-label</code> instead.
+			</td>
+		</tr>
+		<tr>
+			<td><code>headlineLevel</code></td>
+			<td><code>1 | 2 | 3 | 4 | 5 | 6</code></td>
+			<td><code>2</code></td>
+			<td>
+				Heading level the <code>headline</code> renders as. Move it where your page outline needs it.
 			</td>
 		</tr>
 		<tr>

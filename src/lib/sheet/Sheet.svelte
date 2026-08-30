@@ -8,6 +8,7 @@
 		placement = 'bottom',
 		handle = true,
 		headline,
+		headlineLevel = 2,
 		action,
 		children,
 		element = $bindable(),
@@ -63,7 +64,9 @@
 	{#if headline || action}
 		<div class="np-sheet-header">
 			{#if headline}
-				<h2 id={headlineId} class="np-sheet-headline">{headline}</h2>
+				<svelte:element this={`h${headlineLevel}`} id={headlineId} class="np-sheet-headline">
+					{headline}
+				</svelte:element>
 			{/if}
 			{#if action}
 				<div class="np-sheet-action">{@render action()}</div>
