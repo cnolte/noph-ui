@@ -1446,7 +1446,7 @@ export const searchIndex: SearchPage[] = [
 			},
 			{
 				id: 'extended',
-				text: 'Extended',
+				text: 'Extended FAB',
 				level: 2,
 				body: 'An extended FAB shows its label as text, so it names itself and needs no tooltip. Use it when the action is not obvious from an icon alone.',
 				terms: [],

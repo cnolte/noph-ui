@@ -95,7 +95,7 @@
 </DemoContainer>
 <Code value={LoweredSource} />
 
-<h2 id="extended">Extended<a href="#extended" aria-hidden="true" tabindex="-1">#</a></h2>
+<h2 id="extended">Extended FAB<a href="#extended" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	An extended FAB shows its label as text, so it names itself and needs no tooltip. Use it when the
 	action is not obvious from an icon alone.

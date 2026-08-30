@@ -231,6 +231,7 @@
 		}
 		.docs-search-slot {
 			display: block;
+			--np-search-container-color: var(--np-color-surface-container-highest);
 			--np-search-pane-margin: 0.5rem;
 			--np-search-view-margin: 0rem;
 			--np-search-results-max-height: min(60dvh, 32rem);
@@ -310,7 +311,8 @@
 		min-width: 1.25rem;
 		padding-inline: 0.25rem;
 		border-radius: var(--np-shape-corner-extra-small);
-		background-color: var(--np-color-surface-container-highest);
+		border: 1px solid var(--np-color-outline-variant);
+		background-color: var(--np-color-surface-container);
 		font: inherit;
 		font-size: 0.75rem;
 		line-height: 1.25rem;

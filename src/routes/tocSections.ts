@@ -223,7 +223,7 @@ export const tocSections: Record<string, TocSection[]> = {
 		{ id: 'colors', text: 'Colors', level: 2 },
 		{ id: 'shape', text: 'Shape', level: 2 },
 		{ id: 'lowered', text: 'Lowered', level: 2 },
-		{ id: 'extended', text: 'Extended', level: 2 },
+		{ id: 'extended', text: 'Extended FAB', level: 2 },
 		{ id: 'collapsing', text: 'Collapsing', level: 3 },
 		{ id: 'fab-menu', text: 'FAB menu', level: 2 },
 		{ id: 'as-link', text: 'As link', level: 2 },
