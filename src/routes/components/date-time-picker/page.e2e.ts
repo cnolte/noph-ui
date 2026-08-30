@@ -5,16 +5,18 @@ test('the date and time picker takes a day and a time together', async ({ page }
 	page.on('pageerror', (error) => errors.push(error.message))
 
 	await page.goto('/components/date-time-picker')
-	await expect(page).toHaveTitle('Date and time pickers - Noph UI')
+	await expect(page).toHaveTitle('Date time picker - Material 3 picker for Svelte - Noph UI')
 	await expect(page.getByRole('heading', { name: 'Date and time pickers', level: 1 })).toBeVisible()
 	await page.waitForLoadState('networkidle')
 
-	const picker = page.locator('.np-docked-date-time-picker').first()
-	const input = picker.locator('input:not([type=hidden])')
+	// The field sits inside its label, so the accessible name carries the trailing button and the
+	// supporting text after the label text. Match the start of it.
+	const input = page.getByRole('textbox', { name: /^Starts at\b/ }).first()
 	await expect(input).toHaveValue('08/17/2025, 02:30 PM')
 
-	await picker.getByRole('button', { name: 'Show date and time picker' }).click()
-	const panel = page.locator('.np-docked-date-time-picker-container')
+	await page.getByRole('button', { name: 'Show date and time picker' }).first().click()
+	// Only the open picker is in the accessibility tree, so the label is enough to find it.
+	const panel = page.getByRole('dialog', { name: 'Starts at', exact: true })
 	await expect(panel).toBeVisible()
 
 	await panel.getByRole('button', { name: 'Friday, August 8, 2025' }).click()
@@ -24,9 +26,8 @@ test('the date and time picker takes a day and a time together', async ({ page }
 	await panel.getByRole('button', { name: 'OK', exact: true }).click()
 
 	await expect(input).toHaveValue('08/08/2025, 09:45 AM')
-	await expect(page.locator('.np-docked-date-time-picker-value').first()).toHaveValue(
-		'2025-08-08T09:45',
-	)
+	// The Usage demo prints the bound value, so the hidden form input needs no CSS hook.
+	await expect(page.getByText('2025-08-08T09:45', { exact: true })).toBeVisible()
 
 	expect(errors).toEqual([])
 })

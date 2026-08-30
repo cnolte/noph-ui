@@ -1,4 +1,5 @@
 import type { Attachment } from 'svelte/attachments'
+import { on } from 'svelte/events'
 
 const focusable = (items: HTMLElement[]) => items.filter((item) => !item.matches(':disabled'))
 
@@ -39,7 +40,7 @@ export const rovingTabindex = (
 		}
 
 		sync()
-		node.addEventListener('focusin', onFocusIn)
+		const offFocusIn = on(node, 'focusin', onFocusIn)
 		const observer = new MutationObserver(sync)
 		observer.observe(node, {
 			attributes: true,
@@ -49,7 +50,7 @@ export const rovingTabindex = (
 		})
 
 		return () => {
-			node.removeEventListener('focusin', onFocusIn)
+			offFocusIn()
 			observer.disconnect()
 		}
 	}

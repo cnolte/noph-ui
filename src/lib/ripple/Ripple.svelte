@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { forcedColors, reducedMotion } from '#lib/media.js'
+	import type { Attachment } from 'svelte/attachments'
 	import { on } from 'svelte/events'
-	import { MediaQuery } from 'svelte/reactivity'
 	import type { RippleProps } from './types.ts'
 
 	let {
@@ -22,8 +23,6 @@
 	const ANIMATION_FILL = 'forwards'
 	const EASING_STANDARD = 'cubic-bezier(0.2, 0, 0, 1)'
 	const TOUCH_DELAY_MS = 150
-
-	const reducedMotion = new MediaQuery('(prefers-reduced-motion: reduce)', false)
 
 	let rippleSize = $state('')
 	let rippleScale = $state('')
@@ -280,14 +279,13 @@
 		}
 	}
 
-	$effect(() => {
-		const forcedColors = window?.matchMedia('(forced-colors: active)')
-		if (forcedColors.matches) return
-		const target = forElement ?? element?.parentElement
+	const listen: Attachment<HTMLElement> = (node) => {
+		if (forcedColors.current) return
+		const target = forElement ?? node.parentElement
 		if (target) {
 			return addEvents(target)
 		}
-	})
+	}
 </script>
 
 <div
@@ -300,6 +298,7 @@
 		attributes.class,
 	]}
 	bind:this={element}
+	{@attach listen}
 ></div>
 
 <style>

@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { coarsePointer } from '#lib/media.js'
 	import '#lib/internal/interest.css'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import { on } from 'svelte/events'
-	import { MediaQuery } from 'svelte/reactivity'
 	import type { TooltipProps } from './types.ts'
 
 	let {
@@ -13,8 +13,6 @@
 		...attributes
 	}: TooltipProps = $props()
 	const uid = $props.id()
-
-	let isTouch = new MediaQuery('(hover: none) and (pointer: coarse)', false)
 
 	const isInterestInvoker = (anchor: Element) =>
 		'interestForElement' in anchor &&
@@ -42,7 +40,7 @@
 		if (!anchorName) {
 			anchor.style.setProperty('anchor-name', generatedId)
 		}
-		if (isTouch.current) return
+		if (coarsePointer.current) return
 		const mouseEnter = on(anchor, 'mouseenter', onAnchorEnter)
 		const mouseLeave = on(anchor, 'mouseleave', onAnchorLeave)
 		const focus = on(anchor, 'focus', onAnchorFocus)

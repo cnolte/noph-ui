@@ -1,5 +1,6 @@
 <script lang="ts" generics="T">
-	import { onMount, tick, type Snippet } from 'svelte'
+	import { tick, type Snippet } from 'svelte'
+	import type { Attachment } from 'svelte/attachments'
 	import type { HTMLAttributes } from 'svelte/elements'
 
 	interface VirtualListProps extends HTMLAttributes<HTMLDivElement> {
@@ -28,16 +29,19 @@
 
 	let rows: HTMLCollectionOf<HTMLElement> | undefined = $state()
 	let viewport: HTMLElement | undefined = $state()
-	let contents: HTMLDivElement | undefined = $state()
 	let viewport_height: number = $state(0)
-	let mounted = $state()
 
 	let top = $state(0)
 	let bottom = $state(0)
-	let average_height: number = $derived(itemHeight || 0)
+	let measured_height = $state(0)
+	let average_height: number = $derived(itemHeight || measured_height)
+
+	const collectRows: Attachment<HTMLDivElement> = (node) => {
+		rows = node.children as HTMLCollectionOf<HTMLElement>
+	}
 
 	$effect(() => {
-		if (mounted) {
+		if (rows) {
 			refresh(items, viewport_height, itemHeight)
 		}
 	})
@@ -77,7 +81,7 @@
 		end = i
 
 		const remaining = items.length - end
-		average_height = end ? (top + content_height) / end : average_height || itemHeight || 0
+		measured_height = end ? (top + content_height) / end : average_height || itemHeight || 0
 
 		bottom = remaining * average_height
 		height_map.length = items.length
@@ -134,7 +138,7 @@
 		end = i
 
 		const remaining = items.length - end
-		average_height = end ? y / end : average_height || itemHeight || 0
+		measured_height = end ? y / end : average_height || itemHeight || 0
 
 		height_map.fill(average_height, i, items.length)
 		bottom = remaining * average_height
@@ -158,11 +162,6 @@
 		await tick()
 		rendered?.({ start, end })
 	}
-
-	onMount(() => {
-		rows = contents?.children as HTMLCollectionOf<HTMLElement>
-		mounted = true
-	})
 </script>
 
 <svelte-virtual-list-viewport
@@ -172,7 +171,7 @@
 	tabindex="-1"
 	style="height: {height};"
 >
-	<div bind:this={contents} style="padding-top: {top}px; padding-bottom: {bottom}px;">
+	<div {@attach collectRows} style="padding-top: {top}px; padding-bottom: {bottom}px;">
 		{#each visible as entry (entry.index)}
 			{@render row(entry.data, entry.index)}
 		{/each}

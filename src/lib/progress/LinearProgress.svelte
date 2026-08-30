@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity'
+	import { reducedMotion } from '#lib/media.js'
 	import type { LinearProgressProps } from './types.ts'
 
 	let {
@@ -21,7 +21,6 @@
 	const DETERMINATE_WAVELENGTH = 40
 	const INDETERMINATE_WAVELENGTH = 20
 
-	const reducedMotion = new MediaQuery('(prefers-reduced-motion: reduce)', false)
 	let wave = $derived(wavy && !reducedMotion.current)
 
 	let wavelength = $derived(indeterminate ? INDETERMINATE_WAVELENGTH : DETERMINATE_WAVELENGTH)

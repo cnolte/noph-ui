@@ -3,8 +3,10 @@
 	import DateRangePicker from './DateRangePicker.svelte'
 	import DockedDatePicker from './DockedDatePicker.svelte'
 	import DockedDateTimePicker from './DockedDateTimePicker.svelte'
+	import DockedTimePicker from '#lib/time-picker/DockedTimePicker.svelte'
+	import TimePickerDialog from '#lib/time-picker/TimePickerDialog.svelte'
 
-	type Which = 'dialog' | 'range' | 'docked' | 'dockedTime'
+	type Which = 'dialog' | 'range' | 'docked' | 'dockedTime' | 'timeDialog' | 'dockedTimeOnly'
 
 	let {
 		which,
@@ -24,6 +26,10 @@
 	<DateRangePicker bind:this={picker} bind:open />
 {:else if which === 'docked'}
 	<DockedDatePicker bind:this={picker} bind:open {disabled} label="Date" />
+{:else if which === 'timeDialog'}
+	<TimePickerDialog bind:this={picker} bind:open />
+{:else if which === 'dockedTimeOnly'}
+	<DockedTimePicker bind:this={picker} bind:open {disabled} label="Time" />
 {:else}
 	<DockedDateTimePicker bind:this={picker} bind:open {disabled} label="When" />
 {/if}

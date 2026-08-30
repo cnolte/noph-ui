@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { reducedMotion } from '#lib/media.js'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import { PRESS_DURATION } from '#lib/press.svelte.js'
 	import { onMount } from 'svelte'
-	import { MediaQuery } from 'svelte/reactivity'
 	import Fab from './Fab.svelte'
 	import type { FabMenuProps } from './types.ts'
 
@@ -27,7 +27,6 @@
 	const anchorName = `--np-fab-menu-${uid}`
 
 	let menuElement: HTMLDivElement | undefined = $state()
-	const reducedMotion = new MediaQuery('(prefers-reduced-motion: reduce)', false)
 
 	const ITEMS = 'button, a[href], [role="menuitem"]'
 	const attach = rovingTabindex(ITEMS)

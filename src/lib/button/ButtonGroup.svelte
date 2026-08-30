@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { reducedMotion } from '#lib/media.js'
 	import { onMount } from 'svelte'
-	import { MediaQuery } from 'svelte/reactivity'
 	import { expandedWidths, parseMotion, resolveItem } from './buttonGroup.ts'
 	import type { ButtonGroupProps } from './types.ts'
 
@@ -12,8 +12,6 @@
 		children,
 		...attributes
 	}: ButtonGroupProps = $props()
-
-	const reducedMotion = new MediaQuery('(prefers-reduced-motion: reduce)', false)
 
 	const settleRatio = 0.75
 

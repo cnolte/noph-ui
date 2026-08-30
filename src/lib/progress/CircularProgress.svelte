@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity'
+	import { reducedMotion } from '#lib/media.js'
+	import type { Attachment } from 'svelte/attachments'
 	import type { CircularProgressProps } from './types.ts'
 
 	let {
@@ -44,15 +45,13 @@
 		return d + 'Z'
 	}
 
-	let waveEl = $state<SVGPathElement>()
 	const wavePath = buildWavePath(0, DEFAULT_STROKE_PERCENT)
 
-	const reducedMotion = new MediaQuery('(prefers-reduced-motion: reduce)', false)
 	let wave = $derived(wavy && !reducedMotion.current)
 
-	$effect(() => {
-		if (!wave || !waveEl) return
-		const path = waveEl
+	// Attached to the path itself, so the loop starts and stops with the node the two branches render
+	// rather than racing a shared `bind:this` when the determinate branch swaps.
+	const animateWave: Attachment<SVGPathElement> = (path) => {
 		const strokePercent =
 			parseFloat(
 				getComputedStyle(path).getPropertyValue('--np-circular-progress-active-indicator-width'),
@@ -64,7 +63,7 @@
 		}
 		raf = requestAnimationFrame(frame)
 		return () => cancelAnimationFrame(raf)
-	})
+	}
 
 	const clamp = (n: number) => Math.min(100, Math.max(0, n))
 	let activeLength = $derived(clamp((value / max) * 100))
@@ -93,7 +92,7 @@
 				{/if}
 				{#if wave}
 					<path
-						bind:this={waveEl}
+						{@attach animateWave}
 						class="active-track spinner-arc wave"
 						d={wavePath}
 						pathLength="100"
@@ -108,7 +107,8 @@
 					<circle class="track" pathLength="100"></circle>
 				{/if}
 				{#if wave}
-					<path bind:this={waveEl} class="active-track wave" d={wavePath} pathLength="100"></path>
+					<path {@attach animateWave} class="active-track wave" d={wavePath} pathLength="100"
+					></path>
 				{:else}
 					<circle class="active-track" pathLength="100"></circle>
 				{/if}

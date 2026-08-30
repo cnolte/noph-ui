@@ -4,7 +4,7 @@
 	import Divider from '#lib/divider/Divider.svelte'
 	import CalendarToday from '#lib/icons/CalendarToday.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
-	import { onFormReset } from '#lib/form-reset.js'
+	import { formReset } from '#lib/form-reset.js'
 	import { syncOpenEffect } from '#lib/popover.svelte.js'
 	import TextField from '#lib/text-field/TextField.svelte'
 	import { onMount, tick } from 'svelte'
@@ -197,8 +197,6 @@
 		})
 	}
 
-	$effect(() => onFormReset(valueInput, restoreDefault))
-
 	const isShowing = () => !!menuElement?.matches(':popover-open')
 
 	const openPicker = () => {
@@ -343,6 +341,7 @@
 </TextField>
 <input
 	bind:this={valueInput}
+	{@attach formReset(restoreDefault)}
 	class="np-docked-date-picker-value"
 	type="hidden"
 	value={current ?? ''}

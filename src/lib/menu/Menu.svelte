@@ -13,6 +13,7 @@
 		open = $bindable(),
 		style,
 		popover = 'auto',
+		role = 'menu',
 		anchor,
 		coverAnchor = true,
 		ontoggle,
@@ -71,7 +72,7 @@
 <svelte:window bind:innerHeight onresize={refreshValues} />
 <div
 	{...attributes}
-	role="menu"
+	{role}
 	bind:this={element}
 	ontoggle={(event) => {
 		let { newState } = event

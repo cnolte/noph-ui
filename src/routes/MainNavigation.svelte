@@ -236,6 +236,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Time pickers"
+	href="/components/time-picker"
+	selected={page.url.pathname === '/components/time-picker'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Toolbar"
 	href="/components/toolbar"
 	selected={page.url.pathname === '/components/toolbar'}

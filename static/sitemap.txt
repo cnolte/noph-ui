@@ -36,5 +36,6 @@ https://noph.dev/components/split-button
 https://noph.dev/components/switch
 https://noph.dev/components/tabs
 https://noph.dev/components/text-field
+https://noph.dev/components/time-picker
 https://noph.dev/components/toolbar
 https://noph.dev/components/tooltip

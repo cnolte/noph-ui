@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { untrack } from 'svelte'
 	import Divider from '#lib/divider/Divider.svelte'
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import { setTabsContext } from './context.js'
@@ -13,19 +12,27 @@
 		...attributes
 	}: TabsProps = $props()
 
-	let tabsContext = $state<TabsContext>({
-		value,
-		indicatorValue: value,
-		variant: untrack(() => variant),
-	})
-	$effect(() => {
-		value = tabsContext.value
-	})
-
-	$effect(() => {
-		tabsContext.value = value
-		tabsContext.variant = variant
-	})
+	let indicatorValue = $state(value)
+	const tabsContext: TabsContext = {
+		get value() {
+			return value
+		},
+		set value(next) {
+			value = next
+		},
+		get indicatorValue() {
+			return indicatorValue
+		},
+		set indicatorValue(next) {
+			indicatorValue = next
+		},
+		get variant() {
+			return variant
+		},
+		set variant(next) {
+			variant = next
+		},
+	}
 	setTabsContext(tabsContext)
 
 	const secondaryStyle = $derived(

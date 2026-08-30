@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onFormReset } from '#lib/form-reset.js'
+	import { formReset } from '#lib/form-reset.js'
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
 	import Item from '#lib/list/Item.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
@@ -63,15 +63,12 @@
 	let menuElement = $state<HTMLDivElement>()
 	let anchorElement = $state<HTMLDivElement>()
 
-	$effect(() =>
-		onFormReset(selectElement, () => {
-			queueMicrotask(() => {
-				value = multiple
-					? options.filter((option) => option.selected).map((option) => option.value)
-					: options.find((option) => option.selected)?.value
-			})
-		}),
-	)
+	const restoreDefault = () =>
+		queueMicrotask(() => {
+			value = multiple
+				? options.filter((option) => option.selected).map((option) => option.value)
+				: options.find((option) => option.selected)?.value
+		})
 
 	let field = $state<HTMLDivElement>()
 	let menuOpen = $state(false)
@@ -421,6 +418,7 @@
 								{oninput}
 								bind:value
 								bind:this={selectElement}
+								{@attach formReset(restoreDefault)}
 							>
 								{#each selectedOption as option, index (index)}
 									<option class="np-option" value={option.value} selected={option.selected}
@@ -440,6 +438,7 @@
 								{oninput}
 								bind:value
 								bind:this={selectElement}
+								{@attach formReset(restoreDefault)}
 							>
 								{#each selectedOption as option, index (index)}
 									<option value={option.value} selected={option.selected}>{option.label}</option>

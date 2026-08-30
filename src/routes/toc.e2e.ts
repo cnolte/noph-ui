@@ -22,11 +22,13 @@ test('the list of sections follows the page', async ({ page }) => {
 	const box = await heading.boundingBox()
 	expect(box?.y).toBeGreaterThanOrEqual(HEADER_HEIGHT)
 
+	// :target-current has no role or attribute a locator can reach, so this one stays in the page.
 	const highlighted = await page.evaluate(() => {
+		const list = document.querySelector('nav[aria-labelledby="toc-title"]')
 		const native = CSS.supports('selector(:target-current)')
-			? document.querySelector('.toc a:target-current')
+			? list?.querySelector('a:target-current')
 			: null
-		return (native ?? document.querySelector('.toc a[aria-current]'))?.textContent?.trim()
+		return (native ?? list?.querySelector('a[aria-current]'))?.textContent?.trim()
 	})
 	expect(highlighted).toBe('Two fields')
 
@@ -42,7 +44,8 @@ test('a shared deep link lands on the right heading', async ({ page }) => {
 	await page.goto('/components/chip#disabled-2')
 	await page.waitForLoadState('networkidle')
 
-	const filterSection = page.locator('#disabled-2')
+	// The chip page has three headings named Disabled; the deep link points at the second.
+	const filterSection = page.getByRole('heading', { name: 'Disabled', exact: true }).nth(1)
 	await expect(filterSection).toBeInViewport()
 	const box = await filterSection.boundingBox()
 	expect(box?.y).toBeGreaterThanOrEqual(HEADER_HEIGHT)

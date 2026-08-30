@@ -73,7 +73,8 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 [Select](https://noph.dev/components/select) &middot;
 [Slider](https://noph.dev/components/slider) &middot;
 [Switch](https://noph.dev/components/switch) &middot;
-[Text fields](https://noph.dev/components/text-field)
+[Text fields](https://noph.dev/components/text-field) &middot;
+[TimePicker](https://noph.dev/components/time-picker)
 
 **Navigation**
 [Menus](https://noph.dev/components/menu) &middot;

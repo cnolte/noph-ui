@@ -5,6 +5,28 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.47.0] - 2026-08-30
+
+### Added
+
+- **TimePicker** (new component): the Material 3 time picker, as
+  `DockedTimePicker` (a text field with the picker in a popover),
+  `TimePickerDialog` (a modal) and `ClockDial` (the dial on its own). Carries a
+  draggable clock dial and a typed input mode, 12 and 24 hour clocks with two
+  rings for the latter, vertical and horizontal layouts, `minuteStep`,
+  `min`/`max` and `isTimeEnabled` bounds, and form submission of an `HH:mm`
+  value.
+- **Time helpers**: `parseISOTime`, `formatMinutes`, `parseTimeInput`,
+  `getTimePattern`, `clampMinutes`, `isMinuteWithin` and `snapToStep`, exported
+  alongside the existing date helpers.
+
+### Fixed
+
+- **Menu**: a `role` passed to `Menu` is used instead of being overwritten with
+  `menu`. The docked date, date and time, and time pickers now expose their
+  popover as a `dialog`, and `Select` and `AutoComplete` expose theirs as a
+  `listbox`, as their triggers already announce.
+
 ## [0.46.1] - 2026-08-30
 
 ### Fixed

@@ -16,6 +16,15 @@ import {
 	uses12HourClock,
 	withMinutes,
 } from './dateUtils.js'
+import {
+	clampMinutes,
+	formatMinutes,
+	getTimePattern,
+	isMinuteWithin,
+	parseISOTime,
+	parseTimeInput,
+	snapToStep,
+} from './timeUtils.js'
 
 describe('toISODateTime / parseISODateTime', () => {
 	it('round trips a local moment without shifting across timezones', () => {
@@ -152,5 +161,122 @@ describe('parseDateTimeInput', () => {
 		expect(parseDateTimeInput('08/17/2025', 'en-US', true)).toBeUndefined()
 		expect(parseDateTimeInput('', 'en-US', true)).toBeUndefined()
 		expect(parseDateTimeInput('17/08/25, 14:30', 'de-DE', false)).toBeUndefined()
+	})
+})
+
+describe('parseISOTime', () => {
+	it('reads a wall clock time as minutes since midnight', () => {
+		expect(parseISOTime('00:00')).toBe(0)
+		expect(parseISOTime('14:30')).toBe(870)
+		expect(parseISOTime('23:59')).toBe(1439)
+	})
+
+	it('takes a single digit hour and drops seconds', () => {
+		expect(parseISOTime('9:05')).toBe(545)
+		expect(parseISOTime('14:30:45')).toBe(870)
+	})
+
+	it('takes minutes since midnight straight through', () => {
+		expect(parseISOTime(870)).toBe(870)
+		expect(parseISOTime(0)).toBe(0)
+		expect(parseISOTime(1440)).toBeUndefined()
+		expect(parseISOTime(-1)).toBeUndefined()
+	})
+
+	it('refuses a time the clock cannot hold, or nothing at all', () => {
+		expect(parseISOTime('24:00')).toBeUndefined()
+		expect(parseISOTime('14:60')).toBeUndefined()
+		expect(parseISOTime('2:30 PM')).toBeUndefined()
+		expect(parseISOTime('')).toBeUndefined()
+		expect(parseISOTime(undefined)).toBeUndefined()
+		expect(parseISOTime(null)).toBeUndefined()
+	})
+})
+
+describe('clampMinutes / isMinuteWithin', () => {
+	it('pulls a minute back to the nearer end of the range', () => {
+		expect(clampMinutes(500, 540, 1020)).toBe(540)
+		expect(clampMinutes(1100, 540, 1020)).toBe(1020)
+		expect(clampMinutes(600, 540, 1020)).toBe(600)
+	})
+
+	it('leaves a minute alone when there is no bound on that side', () => {
+		expect(clampMinutes(0, undefined, 1020)).toBe(0)
+		expect(clampMinutes(1439, 540, undefined)).toBe(1439)
+	})
+
+	it('takes the ends of the range and refuses a minute outside it', () => {
+		expect(isMinuteWithin(540, 540, 1020)).toBe(true)
+		expect(isMinuteWithin(1020, 540, 1020)).toBe(true)
+		expect(isMinuteWithin(539, 540, 1020)).toBe(false)
+		expect(isMinuteWithin(1021, 540, 1020)).toBe(false)
+		expect(isMinuteWithin(0)).toBe(true)
+	})
+})
+
+describe('snapToStep', () => {
+	it('rounds the minute to the nearest step', () => {
+		expect(snapToStep(872, 5)).toBe(870)
+		expect(snapToStep(873, 5)).toBe(875)
+		expect(snapToStep(900, 15)).toBe(900)
+		expect(snapToStep(908, 15)).toBe(915)
+	})
+
+	it('holds the hour rather than rolling into the next one', () => {
+		expect(snapToStep(898, 5)).toBe(895)
+		expect(snapToStep(1439, 15)).toBe(1425)
+		expect(snapToStep(59, 30)).toBe(30)
+	})
+
+	it('leaves every minute reachable at a step of one', () => {
+		expect(snapToStep(871, 1)).toBe(871)
+		expect(snapToStep(871, 0)).toBe(871)
+	})
+})
+
+describe('formatMinutes / getTimePattern', () => {
+	it('formats in the fields and the order of the locale', () => {
+		expect(formatMinutes(870, 'en-US', true)).toBe('02:30 PM')
+		expect(formatMinutes(870, 'de-DE', false)).toBe('14:30')
+		expect(formatMinutes(0, 'en-US', true)).toBe('12:00 AM')
+	})
+
+	it('describes that same shape as a hint', () => {
+		expect(getTimePattern('en-US', true)).toBe('hh:mm AM/PM')
+		expect(getTimePattern('de-DE', false)).toBe('HH:mm')
+	})
+})
+
+describe('parseTimeInput', () => {
+	it('reads the field order of the locale', () => {
+		expect(parseTimeInput('02:30 PM', 'en-US', true)).toBe(870)
+		expect(parseTimeInput('14:30', 'de-DE', false)).toBe(870)
+	})
+
+	it('takes a loosely typed entry', () => {
+		expect(parseTimeInput('2:05 pm', 'en-US', true)).toBe(845)
+		expect(parseTimeInput('9:5', 'de-DE', false)).toBe(545)
+	})
+
+	it('reads midnight and noon off the day period', () => {
+		expect(parseTimeInput('12:00 AM', 'en-US', true)).toBe(0)
+		expect(parseTimeInput('12:00 PM', 'en-US', true)).toBe(720)
+	})
+
+	it('waits for the day period rather than guessing a half of the day', () => {
+		expect(parseTimeInput('02:30', 'en-US', true)).toBeUndefined()
+		expect(parseTimeInput('02:30 AM PM', 'en-US', true)).toBeUndefined()
+	})
+
+	it('refuses an hour the clock cannot hold', () => {
+		expect(parseTimeInput('13:30 PM', 'en-US', true)).toBeUndefined()
+		expect(parseTimeInput('00:30 AM', 'en-US', true)).toBeUndefined()
+		expect(parseTimeInput('24:30', 'de-DE', false)).toBeUndefined()
+		expect(parseTimeInput('14:60', 'de-DE', false)).toBeUndefined()
+	})
+
+	it('refuses anything that is not a full entry', () => {
+		expect(parseTimeInput('14', 'de-DE', false)).toBeUndefined()
+		expect(parseTimeInput('', 'de-DE', false)).toBeUndefined()
 	})
 })

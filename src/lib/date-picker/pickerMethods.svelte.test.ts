@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { render } from 'vitest-browser-svelte'
 import Harness from './PickerMethodsHarness.test.svelte'
 
-const WHICH = ['dialog', 'range', 'docked', 'dockedTime'] as const
+const WHICH = ['dialog', 'range', 'docked', 'dockedTime', 'timeDialog', 'dockedTimeOnly'] as const
 
 const isOpen = () => {
 	const dialog = document.querySelector('dialog')
@@ -46,7 +46,7 @@ describe.each(WHICH)('%s show() and close()', async (which) => {
 	})
 })
 
-describe.each(['docked', 'dockedTime'] as const)('disabled %s', async (which) => {
+describe.each(['docked', 'dockedTime', 'dockedTimeOnly'] as const)('disabled %s', async (which) => {
 	test('show() leaves it closed', async () => {
 		await render(Harness, { which, disabled: true })
 

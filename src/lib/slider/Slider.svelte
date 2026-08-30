@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Attachment } from 'svelte/attachments'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { SliderProps } from './types.ts'
 
@@ -107,7 +108,6 @@
 	let dragging = $state<'start' | 'end' | null>(null)
 	let tracking = $state(false)
 	let trackElement = $state<HTMLDivElement>()
-	let activeLaneElement = $state<HTMLDivElement>()
 	let iconElement = $state<HTMLSpanElement>()
 	let iconFits = $state(true)
 	let pointerFocused = $state(false)
@@ -133,9 +133,8 @@
 	bindLabel(() => startLabelElement, 'start')
 	bindLabel(() => endLabelElement, 'end')
 
-	$effect(() => {
-		if (!icon || !activeLaneElement) return
-		const lane = activeLaneElement
+	const fitIcon: Attachment<HTMLDivElement> = (lane) => {
+		if (!icon) return
 		const inlineOf = (r: DOMRect) => (orientation === 'vertical' ? r.height : r.width)
 		const measure = () => {
 			if (!iconElement) return
@@ -148,7 +147,7 @@
 		observer.observe(lane)
 		measure()
 		return () => observer.disconnect()
-	})
+	}
 
 	const fractionFromEvent = (e: PointerEvent) => {
 		if (!trackElement) return 0
@@ -279,7 +278,7 @@
 				<span class="np-slider-stop np-slider-stop-start"></span>
 			</div>
 		{/if}
-		<div class="np-slider-lane np-slider-active" bind:this={activeLaneElement}>
+		<div class="np-slider-lane np-slider-active" {@attach fitIcon}>
 			{#if icon && iconFits}
 				<span class="np-slider-icon" bind:this={iconElement}>{@render icon()}</span>
 			{/if}
