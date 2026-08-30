@@ -35,6 +35,7 @@
 
 	let pointerFocus = false
 	let focusRing = $state(false)
+	let pointerInside = false
 
 	export const show = async () => {
 		expanded = true
@@ -48,6 +49,14 @@
 		inputElement?.blur()
 	}
 </script>
+
+<svelte:window
+	onpointerdown={(event) => {
+		pointerInside = event.target instanceof Node && element?.contains(event.target) === true
+	}}
+	onpointercancel={() => (pointerInside = false)}
+	onclick={() => (pointerInside = false)}
+/>
 
 <div
 	{...attributes}
@@ -65,7 +74,8 @@
 	}}
 	onfocusout={(event) => {
 		const next = event.relatedTarget
-		if (expanded && !(next instanceof Node && element?.contains(next))) expanded = false
+		if (expanded && !pointerInside && !(next instanceof Node && element?.contains(next)))
+			expanded = false
 		attributes.onfocusout?.(event)
 	}}
 >

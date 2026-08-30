@@ -144,6 +144,31 @@ describe('Search', async () => {
 		outside.remove()
 	})
 
+	test('a tap on a result keeps it open long enough for the click, the way iOS blurs first', async () => {
+		await render(Harness, { expanded: true })
+		const result = document.querySelector<HTMLElement>('.np-search-results button')!
+		let clicked = false
+		result.addEventListener('click', () => (clicked = true))
+
+		input().focus()
+		result.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+		input().blur()
+
+		expect(root().classList.contains('np-search-expanded')).toBe(true)
+		result.click()
+		expect(clicked).toBe(true)
+	})
+
+	test('a tap outside still closes it once the field is blurred', async () => {
+		await render(Harness, { expanded: true })
+
+		input().focus()
+		document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+		input().blur()
+
+		await expect.poll(() => root().classList.contains('np-search-expanded')).toBe(false)
+	})
+
 	test('focus moving into the results keeps it open', async () => {
 		await render(Harness, { expanded: true })
 
