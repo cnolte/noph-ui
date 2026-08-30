@@ -10,6 +10,7 @@
 		view = 'docked',
 		searched = $bindable(''),
 		width = 'auto',
+		hiddenAtRest = false,
 		resultsRole,
 	}: {
 		value?: string
@@ -18,12 +19,13 @@
 		view?: SearchProps['view']
 		searched?: string
 		width?: string
+		hiddenAtRest?: boolean
 		resultsRole?: string
 	} = $props()
 	let search: ReturnType<typeof Search> | undefined = $state()
 </script>
 
-<div style="width:{width}">
+<div class={[hiddenAtRest && !expanded && 'resting']} style="width:{width}">
 	<Search
 		bind:this={search}
 		bind:value
@@ -43,3 +45,9 @@
 <button onclick={() => search?.close()}>Trigger close</button>
 
 <span data-testid="searched">{searched}</span>
+
+<style>
+	.resting {
+		display: none;
+	}
+</style>

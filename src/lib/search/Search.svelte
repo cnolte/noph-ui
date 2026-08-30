@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tick } from 'svelte'
+	import { flushSync } from 'svelte'
 	import '#lib/internal/focus-ring.css'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import ArrowBackIcon from '#lib/icons/ArrowBackIcon.svelte'
@@ -37,10 +37,10 @@
 	let focusRing = $state(false)
 	let pointerInside = false
 
-	export const show = async () => {
+	export const show = () => {
 		expanded = true
 		pointerFocus = true
-		await tick()
+		flushSync()
 		inputElement?.focus()
 	}
 

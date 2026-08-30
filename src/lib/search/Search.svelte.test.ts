@@ -230,6 +230,15 @@ describe('Search', async () => {
 		await expect.poll(() => document.activeElement).toBe(input())
 	})
 
+	test('a trigger reaches the field even when the host is hidden until it opens', async () => {
+		await render(Harness, { hiddenAtRest: true })
+
+		await page.getByRole('button', { name: 'Trigger open' }).click()
+
+		await expect.poll(() => root().classList.contains('np-search-expanded')).toBe(true)
+		expect(document.activeElement).toBe(input())
+	})
+
 	test('a trigger outside the bar closes the view and lets the field go', async () => {
 		await render(Harness)
 		await page.getByRole('button', { name: 'Trigger open' }).click()
