@@ -48,7 +48,7 @@
 	<meta property="og:title" content="Noph UI - Material 3 Expressive components for Svelte" />
 	<meta
 		property="og:description"
-		content="Material 3 Expressive components for Svelte. Dynamic theming from a single color, zero dependencies, 48 components."
+		content="Full Material 3 Expressive coverage for Svelte. Built for SvelteKit remote functions, themed from a single color, zero dependencies."
 	/>
 	<meta name="twitter:card" content="summary" />
 </svelte:head>
@@ -59,8 +59,8 @@
 		<h1 class="header">Noph UI</h1>
 		<p class="sub-header">Material 3 Expressive components for Svelte</p>
 		<p class="hero-text">
-			Themed from a single color, shipped without a single runtime dependency, and built for
-			SvelteKit's remote functions.
+			Pick one source color and all 54 Material 3 color roles follow, in light and dark, with the
+			springy motion the Expressive spec asks for.
 		</p>
 		<div class="hero-actions">
 			<Button
@@ -72,15 +72,6 @@
 			>
 				Get started
 			</Button>
-			<Button
-				variant="outlined"
-				size="m"
-				href={resolve('/components/button')}
-				--np-outlined-button-label-text-color="var(--np-color-on-primary-container)"
-				--np-outlined-button-outline-color="var(--np-color-on-primary-container)"
-			>
-				Browse components
-			</Button>
 		</div>
 	</div>
 	<div class="hero-art" aria-hidden="true">
@@ -89,16 +80,11 @@
 		<MorphShape class="art front" duration={21} scale={0.82} />
 		<div class="art-logo"><Logo /></div>
 	</div>
-	<dl class="stats">
-		<div>
-			<dt>48</dt>
-			<dd>components</dd>
-		</div>
-		<div>
-			<dt>0</dt>
-			<dd>dependencies</dd>
-		</div>
-	</dl>
+	<ul class="highlights">
+		<li><Icon>check</Icon>Full Material 3 Expressive coverage</li>
+		<li><Icon>check</Icon>Built for remote functions</li>
+		<li><Icon>check</Icon>Zero dependencies</li>
+	</ul>
 </section>
 
 <h2>Real components, right here</h2>
@@ -116,11 +102,11 @@
 		type="text"
 		variant="elevated"
 		class="feature"
-		headline="Server side rendering"
-		supportingText="Components render to HTML on the server, so the first paint does not wait for JavaScript. Good for load times, good for search engines."
+		headline="The whole spec, covered"
+		supportingText="Every component family in Material 3 Expressive is here: buttons, FABs and split buttons, text fields and pickers, navigation bars, rails and drawers, sheets, snackbars and the rest. Nothing to fill in yourself."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
-		<div class="feature-icon"><Icon>language</Icon></div>
+		<div class="feature-icon"><Icon>verified</Icon></div>
 	</Card>
 	<Card
 		type="link"
@@ -341,22 +327,28 @@
 		width: 5rem;
 		height: 5rem;
 	}
-	.stats {
+	.highlights {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 1.5rem 2.5rem;
+		gap: 0.75rem;
 		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
-	.stats dt {
-		font-size: 2rem;
+	.highlights li {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		font-size: 0.9375rem;
 		font-weight: 500;
-		line-height: 1.1;
+		line-height: 1.25rem;
+		border-radius: var(--np-shape-corner-full);
+		border: 1px solid color-mix(in oklab, var(--np-color-on-primary-container) 20%, transparent);
+		background-color: color-mix(in oklab, var(--np-color-on-primary-container) 8%, transparent);
 	}
-	.stats dd {
-		margin: 0;
-		font-size: 0.875rem;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
+	.highlights :global(.np-icon) {
+		--np-icon-size: 1.125rem;
 	}
 
 	.lead {
@@ -455,7 +447,7 @@
 			font-size: 2.25rem;
 			line-height: 2.5rem;
 		}
-		.stats {
+		.highlights {
 			grid-column: 1 / -1;
 			padding-top: 1rem;
 		}
@@ -470,7 +462,7 @@
 	@media (prefers-reduced-motion: no-preference) {
 		.hero-copy > *,
 		.hero-art,
-		.stats {
+		.highlights {
 			animation: rise var(--np-motion-expressive-slow-spatial) backwards;
 		}
 		.hero-copy > :nth-child(2) {
@@ -488,7 +480,7 @@
 		.hero-art {
 			animation-delay: 120ms;
 		}
-		.stats {
+		.highlights {
 			animation-delay: 300ms;
 		}
 	}

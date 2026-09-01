@@ -74,6 +74,12 @@
 />
 <NavigationDrawerItem
 	onclick={onclose}
+	label="Carousel"
+	href="/components/carousel"
+	selected={page.url.pathname === '/components/carousel'}
+/>
+<NavigationDrawerItem
+	onclick={onclose}
 	label="Checkbox"
 	href="/components/checkbox"
 	selected={page.url.pathname === '/components/checkbox'}

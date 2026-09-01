@@ -95,6 +95,7 @@ Live demos and usage examples for every component are available on [noph.dev](ht
 
 **Containment**
 [Cards](https://noph.dev/components/card) &middot;
+[Carousel](https://noph.dev/components/carousel) &middot;
 [Divider](https://noph.dev/components/divider) &middot;
 [Sheets](https://noph.dev/components/sheet) &middot;
 [Lists](https://noph.dev/components/list)

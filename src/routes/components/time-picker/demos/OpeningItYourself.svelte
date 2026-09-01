@@ -6,7 +6,6 @@
 </script>
 
 <Button variant="filled" onclick={() => picker?.show()}>Show</Button>
-<Button variant="outlined" onclick={() => picker?.close()}>Close</Button>
 
 <TimePickerDialog bind:this={picker} bind:value hour12 />
 

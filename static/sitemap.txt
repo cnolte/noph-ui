@@ -9,6 +9,7 @@ https://noph.dev/components/badge
 https://noph.dev/components/button
 https://noph.dev/components/button-group
 https://noph.dev/components/card
+https://noph.dev/components/carousel
 https://noph.dev/components/checkbox
 https://noph.dev/components/chip
 https://noph.dev/components/date-picker

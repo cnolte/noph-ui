@@ -57,7 +57,11 @@ export const rovingTabindex = (
 }
 
 export const arrowKeyNav =
-	(itemSelector: string, orientation: 'vertical' | 'horizontal' = 'vertical') =>
+	(
+		itemSelector: string,
+		orientation: 'vertical' | 'horizontal' = 'vertical',
+		{ wrap = true }: { wrap?: boolean } = {},
+	) =>
 	(event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		const [prev, next] =
 			orientation === 'vertical'
@@ -83,7 +87,13 @@ export const arrowKeyNav =
 		} else {
 			const delta = key === next ? 1 : -1
 			const index = currentIndex + delta
-			target = index < 0 ? items[items.length - 1] : index >= items.length ? items[0] : items[index]
+			// `delta` is only ever ±1, so wrapping is one modulo and clamping is one clamp.
+			target =
+				items[
+					wrap
+						? (index + items.length) % items.length
+						: Math.min(Math.max(index, 0), items.length - 1)
+				]
 		}
 		target.focus()
 		event.preventDefault()
