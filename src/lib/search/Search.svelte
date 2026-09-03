@@ -228,16 +228,15 @@
 				min-width var(--np-motion-expressive-default-spatial);
 		}
 
-		.np-search-docked.np-search-expanded .np-search-container {
-			animation: unroll var(--np-motion-expressive-default-spatial);
-		}
 		.np-search-docked.np-search-expanded .np-search-results {
-			animation: fadeIn var(--np-motion-expressive-default-effects);
+			animation:
+				unroll var(--np-motion-expressive-default-spatial),
+				fadeIn var(--np-motion-expressive-default-effects);
 		}
 	}
 	@keyframes unroll {
 		from {
-			clip-path: inset(-1.5rem -1.5rem calc(100% - var(--_bar-height)) -1.5rem);
+			clip-path: inset(0 -1.5rem 100% -1.5rem);
 		}
 		to {
 			clip-path: inset(-1.5rem);
@@ -270,7 +269,9 @@
 		.np-search-bar {
 			transition:
 				height var(--np-motion-expressive-default-spatial),
-				background-color var(--np-motion-expressive-fast-effects);
+				background-color var(--np-motion-expressive-fast-effects),
+				border-start-start-radius var(--np-motion-expressive-fast-effects),
+				border-start-end-radius var(--np-motion-expressive-fast-effects);
 		}
 	}
 

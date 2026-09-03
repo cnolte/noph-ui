@@ -22,7 +22,6 @@
 		content="The Material 3 search bar and search view for Svelte: docked or full screen, contained or divided, with results you fill and combobox semantics when they fit."
 	/>
 </svelte:head>
-
 <h1>Search</h1>
 <p>
 	Search lets someone navigate a product with a query. The search bar and the view that shows its
