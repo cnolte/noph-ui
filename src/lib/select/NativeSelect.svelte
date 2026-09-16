@@ -108,18 +108,26 @@
 	}
 
 	.np-select {
-		all: unset;
-		&,
+		appearance: base-select;
+		display: inline-flex;
+		align-items: center;
+		margin: 0;
+		border: none;
+		outline: none;
+		background: none;
+		font: inherit;
+		font-size: inherit;
+		line-height: 1.5rem;
+		width: 100%;
+		min-inline-size: 0;
+		overflow: hidden;
+		box-sizing: border-box;
+		height: 3.5rem;
+		color: var(--np-color-on-surface);
 		&::picker(select) {
 			appearance: base-select;
 			scrollbar-width: thin;
 		}
-		font-size: inherit;
-		width: 100%;
-		box-sizing: border-box;
-		line-height: 1.5rem;
-		height: 3.5rem;
-		color: var(--np-color-on-surface);
 		&::picker-icon {
 			display: none;
 		}
@@ -130,6 +138,11 @@
 		border-radius: var(--np-shape-corner-extra-small);
 		box-shadow: var(--np-elevation-2);
 		border: none;
+		position-area: block-end span-inline-end;
+		min-inline-size: anchor-size(self-inline);
+		margin-block-start: 0.25rem;
+		padding-block: 0.5rem;
+		padding-inline: 0;
 		opacity: 0;
 		scale: 0.8;
 		transform-origin: top center;
@@ -156,7 +169,49 @@
 	.filled select {
 		padding-inline-start: 1rem;
 		padding-block-start: 1.5rem;
+		padding-block-end: 0.5rem;
 		padding-inline-end: 3.25rem;
+	}
+
+	.np-select :global(option) {
+		box-sizing: border-box;
+		min-height: 3rem;
+		padding-inline: 1rem;
+		gap: 0.75rem;
+		color: var(--np-color-on-surface);
+		background-color: transparent;
+	}
+
+	.np-select :global(option::checkmark) {
+		display: none;
+	}
+
+	.np-select :global(option:checked) {
+		background-color: var(--np-color-secondary-container);
+		color: var(--np-color-on-secondary-container);
+	}
+
+	.np-select :global(option:hover:not(:disabled)) {
+		background-color: color-mix(in srgb, var(--np-color-on-surface) 8%, transparent);
+	}
+
+	.np-select :global(option:checked:hover) {
+		background-color: color-mix(
+			in srgb,
+			var(--np-color-on-secondary-container) 8%,
+			var(--np-color-secondary-container)
+		);
+	}
+
+	.np-select :global(option:disabled) {
+		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
+	}
+
+	.np-select :global(optgroup > legend) {
+		padding-inline: 1rem;
+		padding-block: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--np-color-on-surface-variant);
 	}
 
 	.np-select-outline {
