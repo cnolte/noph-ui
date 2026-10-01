@@ -13,7 +13,7 @@ export interface ItemProps
 	end?: Snippet
 	disabled?: boolean
 	variant?: 'button' | 'link' | 'text'
-	supportingText?: Snippet
+	supportingText?: string | Snippet
 	softFocus?: boolean
 	lazy?: boolean
 	type?: 'submit' | 'reset' | 'button' | null

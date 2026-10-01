@@ -8,10 +8,8 @@
 	<Divider />
 	<ListItem>Chrome</ListItem>
 	<ListItem>Safari</ListItem>
-	<ListItem
-		>{#snippet supportingText()}
-			Firefox is the spiritual successor of Netscape Navigator.
-		{/snippet}Firefox</ListItem
+	<ListItem supportingText="Firefox is the spiritual successor of Netscape Navigator."
+		>Firefox</ListItem
 	>
 	<ListItem variant="button"
 		>{#snippet end()}

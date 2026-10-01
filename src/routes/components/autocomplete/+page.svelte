@@ -3,6 +3,8 @@
 	import DemoContainer from '../../DemoContainer.svelte'
 	import AutoCompleteMultipleValues from './demos/AutoCompleteMultipleValues.svelte'
 	import AutoCompleteMultipleValuesSource from './demos/AutoCompleteMultipleValues.svelte?raw'
+	import AutoCompleteOptionStyling from './demos/AutoCompleteOptionStyling.svelte'
+	import AutoCompleteOptionStylingSource from './demos/AutoCompleteOptionStyling.svelte?raw'
 	import AutoCompleteUsage from './demos/AutoCompleteUsage.svelte'
 	import AutoCompleteUsageSource from './demos/AutoCompleteUsage.svelte?raw'
 </script>
@@ -112,6 +114,15 @@
 	--np-menu-container-color="var(--np-color-surface-container-highest)"
 />`}
 />
+<p>
+	To style a single option, give it a <code>class</code> or a <code>style</code>. The style is the
+	easiest way to set list item tokens for that option, and a class lets you reach the parts of the
+	item from your own CSS.
+</p>
+<DemoContainer>
+	<AutoCompleteOptionStyling />
+</DemoContainer>
+<Code value={AutoCompleteOptionStylingSource} />
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -201,8 +212,21 @@
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>
+			<td><code>string | Snippet | undefined</code></td>
+			<td>Second line below the label. Pass a snippet to render your own markup.</td>
+		</tr>
+		<tr>
+			<td><code>class</code></td>
+			<td><code>ClassValue | undefined</code></td>
+			<td>Classes added to the option element.</td>
+		</tr>
+		<tr>
+			<td><code>style</code></td>
 			<td><code>string | undefined</code></td>
-			<td>Second line below the label.</td>
+			<td>
+				Inline style of the option element. Use it to set list item tokens such as
+				<code>--np-item-supporting-text-color</code> for a single option.
+			</td>
 		</tr>
 		<tr>
 			<td><code>start</code></td>

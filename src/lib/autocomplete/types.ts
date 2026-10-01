@@ -1,12 +1,12 @@
+import type { ItemProps } from '#lib/list/types.js'
 import type { TextFieldProps } from '#lib/types.js'
-import type { Snippet } from 'svelte'
 
-export interface AutoCompleteOption {
+export interface AutoCompleteOption extends Pick<
+	ItemProps,
+	'start' | 'end' | 'supportingText' | 'class' | 'style'
+> {
 	value?: string | number
 	label: string
-	start?: Snippet
-	end?: Snippet
-	supportingText?: string
 }
 
 export interface AutoCompleteProps extends Omit<TextFieldProps, 'clientWidth' | 'clientHeight'> {

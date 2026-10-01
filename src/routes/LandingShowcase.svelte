@@ -203,9 +203,12 @@
 			aria-label="Jump to a track"
 		>
 			{#each trackMatches as candidate (candidate.title)}
-				<Item variant="button" onclick={() => jumpTo(candidate.title)}>
+				<Item
+					variant="button"
+					onclick={() => jumpTo(candidate.title)}
+					supportingText={candidate.artist}
+				>
 					{candidate.title}
-					{#snippet supportingText()}{candidate.artist}{/snippet}
 				</Item>
 			{/each}
 		</Search>
@@ -331,14 +334,12 @@
 						command="hide-popover"
 						commandfor="landing-mail-menu"
 						onclick={() => (message.unread = false)}
+						supportingText={message.subject}
 					>
 						{#snippet start()}
 							<Icon --np-icon-settings={message.unread ? FILLED : OUTLINED}>mail</Icon>
 						{/snippet}
 						{message.from}
-						{#snippet supportingText()}
-							{message.subject}
-						{/snippet}
 					</MenuItem>
 				{/each}
 			</Menu>

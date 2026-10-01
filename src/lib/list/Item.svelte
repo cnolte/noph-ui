@@ -32,7 +32,11 @@
 		</div>
 		{#if supportingText}
 			<div class="np-item-supporting-text">
-				{@render supportingText()}
+				{#if typeof supportingText === 'string'}
+					{supportingText}
+				{:else}
+					{@render supportingText()}
+				{/if}
 			</div>
 		{/if}
 	</div>

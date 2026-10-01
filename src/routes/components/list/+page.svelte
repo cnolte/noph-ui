@@ -174,9 +174,12 @@
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>
-			<td><code>Snippet | undefined</code></td>
+			<td><code>string | Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Second line below the label. An item with supporting text is taller.</td>
+			<td>
+				Second line below the label. Pass a snippet to render your own markup. An item with
+				supporting text is taller.
+			</td>
 		</tr>
 		<tr>
 			<td><code>start</code></td>
