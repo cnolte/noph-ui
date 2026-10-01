@@ -10,25 +10,6 @@
 	"author": {
 		"name": "cnolte"
 	},
-	"imports": {
-		"#lib": "./src/lib/index.js",
-		"#lib/*": "./src/lib/*"
-	},
-	"keywords": [
-		"svelte",
-		"svelte 5",
-		"material",
-		"material 3",
-		"expressive",
-		"material you",
-		"material expressive",
-		"m3",
-		"ui",
-		"frontend",
-		"design-system",
-		"ui-library",
-		"theming"
-	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run prepack",
@@ -44,6 +25,17 @@
 		"test": "npm run test:unit -- --run && npm run test:e2e",
 		"test:e2e": "playwright install && playwright test"
 	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -62,48 +54,56 @@
 			"require": "./dist/themes/defaultTheme.css"
 		}
 	},
-	"sideEffects": [
-		"**/*.css"
-	],
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
 	"peerDependencies": {
 		"svelte": "^5.40.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@materialx/material-color-utilities": "^0.4.8",
-		"@playwright/test": "^1.62.1",
-		"@sveltejs/adapter-vercel": "7.0.0-next.6",
-		"@sveltejs/kit": "3.0.0-next.23",
-		"@sveltejs/package": "3.0.0-next.7",
-		"@sveltejs/vite-plugin-svelte": "7.3.0",
-		"@types/node": "^26.4.0",
+		"@playwright/test": "^1.63.0",
+		"@sveltejs/adapter-vercel": "7.0.0",
+		"@sveltejs/kit": "3.0.0",
+		"@sveltejs/package": "3.0.0",
+		"@sveltejs/vite-plugin-svelte": "7.3.1",
+		"@types/node": "^26.6.3",
 		"@types/prismjs": "^1.26.6",
-		"@vitest/browser-playwright": "^4.1.11",
-		"eslint": "^10.9.1",
+		"@vitest/browser-playwright": "^5.0.3",
+		"eslint": "^10.11.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.23.0",
-		"globals": "^17.11.0",
-		"playwright": "^1.62.1",
-		"prettier": "^3.9.6",
+		"globals": "^17.12.0",
+		"playwright": "^1.63.0",
+		"prettier": "^3.9.9",
 		"prettier-plugin-svelte": "^4.1.1",
 		"prismjs": "^1.30.0",
 		"publint": "^0.3.24",
-		"svelte": "^5.57.0",
+		"svelte": "^5.57.1",
 		"svelte-check": "^4.7.6",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.68.0",
-		"valibot": "^1.4.2",
-		"vite": "8.2.2",
-		"vitest": "^4.1.11",
-		"vitest-browser-svelte": "^3.0.0"
+		"typescript-eslint": "^8.71.0",
+		"valibot": "^1.5.0",
+		"vite": "8.3.1",
+		"vitest": "^5.0.3",
+		"vitest-browser-svelte": "^3.1.0"
 	},
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"type": "module",
+	"keywords": [
+		"svelte",
+		"svelte 5",
+		"material",
+		"material 3",
+		"expressive",
+		"material you",
+		"material expressive",
+		"m3",
+		"ui",
+		"frontend",
+		"design-system",
+		"ui-library",
+		"theming"
+	],
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
 	"packageManager": "pnpm@11.9.0"
 }

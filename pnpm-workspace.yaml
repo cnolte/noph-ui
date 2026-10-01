@@ -1,4 +1,6 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - svelte@5.57.0
+  - '@sveltejs/kit@3.0.0'
+  - '@sveltejs/adapter-vercel@7.0.0'
+  - '@sveltejs/package@3.0.0'

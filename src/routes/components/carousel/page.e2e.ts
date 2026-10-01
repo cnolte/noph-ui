@@ -9,14 +9,14 @@ test('the carousel page renders and the usage demo scrolls and activates', async
 	await expect(page.getByRole('heading', { name: 'Carousels', level: 1 })).toBeVisible()
 	await page.waitForLoadState('networkidle')
 
-	const shelf = page.getByRole('group', { name: 'Paintings' })
+	const shelf = page.getByRole('group', { name: 'Paintings', exact: true })
 	await expect(shelf).toBeVisible()
 
 	const third = shelf.getByRole('button', { name: 'Autumn Rhythm, 3 of 5' })
 	await expect(third).toBeVisible()
 
 	await third.click()
-	await expect(page.getByText('Autumn Rhythm', { exact: true })).toBeVisible()
+	await expect(page.getByRole('code').filter({ hasText: /^Autumn Rhythm$/ })).toBeVisible()
 
 	expect(errors).toEqual([])
 })
@@ -28,7 +28,7 @@ test('arrow keys walk the carousel items and stop at the end', async ({ page }) 
 	await page.goto('/components/carousel')
 	await page.waitForLoadState('networkidle')
 
-	const shelf = page.getByRole('group', { name: 'Paintings' })
+	const shelf = page.getByRole('group', { name: 'Paintings', exact: true })
 	const first = shelf.getByRole('button', { name: /^Convergence/ })
 	await first.focus()
 
@@ -52,7 +52,7 @@ test('a carousel works before hydration, with uniform items and no morphing', as
 
 	await page.goto('/components/carousel')
 
-	const shelf = page.getByRole('group', { name: 'Paintings' })
+	const shelf = page.getByRole('group', { name: 'Paintings', exact: true })
 	await expect(shelf).toBeVisible()
 
 	const widths = await shelf

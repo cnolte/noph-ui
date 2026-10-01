@@ -9,7 +9,7 @@ const VALUE = '14:30'
 const setup = (props: Record<string, unknown> = {}) =>
 	render(Harness, { locale: 'en-US', value: VALUE, ...props })
 
-const field = () => page.getByRole('textbox', { name: 'Time' })
+const field = () => page.getByRole('textbox', { name: /^Time\b/ })
 const input = () => field().element() as HTMLInputElement
 const boundValue = () => page.getByTestId('bound-value')
 const action = (name: string) => page.getByRole('button', { name, exact: true })
@@ -31,7 +31,7 @@ describe('text field', async () => {
 
 	test('reads a 24 hour locale the way that locale writes it', async () => {
 		await setup({ locale: 'de-DE' })
-		await expect.element(page.getByRole('textbox', { name: 'Time' })).toHaveValue('14:30')
+		await expect.element(page.getByRole('textbox', { name: /^Time\b/ })).toHaveValue('14:30')
 		await expect.element(page.getByText('HH:mm')).toBeInTheDocument()
 	})
 
@@ -196,9 +196,9 @@ describe('forms', async () => {
 
 	test('a form reset goes back to the default value', async () => {
 		render(Form, { locale: 'en-US', value: '18:45', defaultValue: '09:00' })
-		await expect.element(page.getByRole('textbox', { name: 'Time' })).toHaveValue('06:45 PM')
+		await expect.element(page.getByRole('textbox', { name: /^Time\b/ })).toHaveValue('06:45 PM')
 
 		await page.getByRole('button', { name: 'Reset' }).click()
-		await expect.element(page.getByRole('textbox', { name: 'Time' })).toHaveValue('09:00 AM')
+		await expect.element(page.getByRole('textbox', { name: /^Time\b/ })).toHaveValue('09:00 AM')
 	})
 })

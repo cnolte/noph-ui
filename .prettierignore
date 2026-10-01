@@ -5,11 +5,6 @@ yarn.lock
 bun.lock
 bun.lockb
 
-# Vendored by the svelte ai-tools plugin. Their snippets carry +++ diff markers, which prettier
-# cannot parse, and reformatting them would be undone the next time the plugin syncs.
-/.github/agents/
-/.github/skills/
-
 # Miscellaneous
 /static/
 src/routes/tocSections.ts
