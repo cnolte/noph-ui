@@ -20,8 +20,8 @@
 <h1>Lists</h1>
 <p>
 	A list is a run of rows with text and, where they earn it, an icon, an avatar or a control. Rows
-	can be read only, act on the page or navigate, and the variant you pick decides which element ends
-	up in the DOM.
+	can be read only, act on the page or navigate, and what you pass decides which element ends up in
+	the DOM.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -82,10 +82,10 @@
 </h2>
 <p>
 	<code>List</code> renders a plain <code>&lt;ul&gt;</code>, so anything you put inside becomes a
-	list item for assistive technology. Pick the <code>variant</code> that matches what the item does:
-	<code>text</code> for content that is only read, <code>button</code> for something that acts on
-	the current page, and <code>link</code> for navigation. That choice decides the element that ends up
-	in the DOM, and with it the role, the keyboard behaviour and whether the item is focusable at all.
+	list item for assistive technology. Give an item an <code>href</code> when it navigates, an
+	<code>onclick</code> when it acts on the current page, and neither when it is only read. That decides
+	the element that ends up in the DOM, and with it the role, the keyboard behaviour and whether the item
+	is focusable at all.
 </p>
 <p>
 	A disabled item renders as a <code>&lt;div&gt;</code> with <code>aria-disabled</code> instead of a disabled
@@ -125,13 +125,21 @@
 	<code>Item</code> instead and skip the wrapper. It takes the same attributes as
 	<code>ListItem</code> below.
 </p>
+<p>
+	The item picks its element from what you pass: an <code>href</code> makes it an
+	<code>&lt;a&gt;</code>, an <code>onclick</code>, a <code>command</code> or a
+	<code>popovertarget</code> makes it a <code>&lt;button&gt;</code>, and without any of them it is a
+	plain <code>&lt;div&gt;</code>. The interactive ones add a ripple. Set <code>type</code> to pin
+	the element yourself, for example <code>type="text"</code> for a row that only reacts to clicks on the
+	controls inside it.
+</p>
 <!-- eslint-disable no-useless-escape -- the escape keeps the closing script tag from ending the surrounding block -->
 <Code
 	value={`<script lang="ts">
 	import { Item } from '#lib/index.js'
 <\/script>
 
-<Item variant="link" href="/components/list">Lists</Item>`}
+<Item href="/components/list">Lists</Item>`}
 />
 
 <h3 id="listitem-attributes">
@@ -149,12 +157,11 @@
 	<tbody>
 		<tr>
 			<td><code>variant</code></td>
-			<td><code>'text' | 'button' | 'link'</code></td>
-			<td><code>'text'</code></td>
+			<td><code>'text' | 'button' | 'link' | undefined</code></td>
+			<td><code>undefined</code></td>
 			<td
-				>Element the item renders as: a <code>&lt;div&gt;</code>, a <code>&lt;button&gt;</code> or
-				an
-				<code>&lt;a&gt;</code>. The interactive variants add a ripple.</td
+				>Deprecated, use <code>type</code>. Still pins the element: a <code>&lt;div&gt;</code>, a
+				<code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code>.</td
 			>
 		</tr>
 		<tr>
@@ -168,8 +175,8 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td
-				>Renders the item as non-interactive with <code>aria-disabled</code>, whatever the
-				<code>variant</code> is.</td
+				>Renders the item as non-interactive with <code>aria-disabled</code>, even with an
+				<code>href</code> or <code>onclick</code>.</td
 			>
 		</tr>
 		<tr>
@@ -189,9 +196,12 @@
 		</tr>
 		<tr>
 			<td><code>end</code></td>
-			<td><code>Snippet | undefined</code></td>
+			<td><code>string | Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Trailing content, typically an icon, a switch or a checkbox.</td>
+			<td
+				>Trailing content, typically an icon, a switch or a checkbox. Pass a string for short
+				trailing text such as a count.</td
+			>
 		</tr>
 		<tr>
 			<td><code>softFocus</code></td>
@@ -210,10 +220,12 @@
 		</tr>
 		<tr>
 			<td><code>type</code></td>
-			<td><code>'submit' | 'reset' | 'button' | null</code></td>
-			<td><code>'button'</code></td>
+			<td><code>'text' | 'link' | 'button' | 'submit' | 'reset' | null</code></td>
+			<td><code>undefined</code></td>
 			<td
-				>Only for <code>variant="button"</code>. Set it to <code>submit</code> to have the item submit
+				>Pins the element, like on <code>Card</code>. <code>text</code> renders a
+				<code>&lt;div&gt;</code>, <code>link</code> an <code>&lt;a&gt;</code>, and the native button
+				types a <code>&lt;button&gt;</code> of that type. Use <code>submit</code> to have the item submit
 				the surrounding form.</td
 			>
 		</tr>

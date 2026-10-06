@@ -8,6 +8,6 @@
 		--np-search-pane-margin="4rem"
 		--np-search-view-margin="0rem"
 	>
-		<Item variant="button">Simple Classic Tacos</Item>
+		<Item type="button">Simple Classic Tacos</Item>
 	</Search>
 </div>

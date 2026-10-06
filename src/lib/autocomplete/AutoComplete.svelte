@@ -28,8 +28,8 @@
 	}: AutoCompleteProps = $props()
 
 	const uid = $props.id()
-	const query = $derived(value ? `${value}`.toLocaleLowerCase() : '')
-	const filterFn = $derived(
+	let query = $derived(value ? `${value}`.toLocaleLowerCase() : '')
+	let filterFn = $derived(
 		optionsFilter ||
 			((option: AutoCompleteOption) => !query || option.label.toLocaleLowerCase().includes(query)),
 	)
@@ -121,7 +121,6 @@
 			setActive(index)
 			selectOption(option)
 		}}
-		variant="button"
 		start={option.start}
 		end={option.end}
 		supportingText={option.supportingText}

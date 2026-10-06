@@ -64,7 +64,8 @@
 <p>
 	Pass <code>backdrop</code> to dim the page behind the drawer and let a click outside close it. Set
 	<code>direction="rtl"</code> to have the drawer slide in from the other edge, which is what you want
-	when it sits at the end of the layout or in a right-to-left context.
+	when it sits at the end of the layout. In a right-to-left page it already slides in from the right without
+	any extra prop.
 </p>
 
 <h2 id="accessibility">
@@ -178,9 +179,12 @@
 		</tr>
 		<tr>
 			<td><code>direction</code></td>
-			<td><code>'ltr' | 'rtl'</code></td>
-			<td><code>'ltr'</code></td>
-			<td>Edge the drawer slides in from.</td>
+			<td><code>'ltr' | 'rtl' | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Edge the drawer slides in from: <code>ltr</code> from the left, <code>rtl</code> from the right.
+				Left out, it follows the writing direction.</td
+			>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
@@ -234,7 +238,7 @@
 		</tr>
 		<tr>
 			<td><code>badgeLabel</code></td>
-			<td><code>string | undefined</code></td>
+			<td><code>string | number | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>Trailing text, for a count such as <code>"+100"</code>.</td>
 		</tr>

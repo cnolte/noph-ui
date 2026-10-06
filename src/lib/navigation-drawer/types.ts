@@ -6,7 +6,11 @@ export interface NavigationDrawerProps extends HTMLAttributes<HTMLElement> {
 	backdrop?: boolean
 	open?: boolean
 	element?: HTMLElement
-	direction?: 'rtl' | 'ltr'
+	/**
+	 * The edge the modal drawer slides in from: `ltr` from the left, `rtl` from the right. Leave it
+	 * out to follow the writing direction.
+	 */
+	direction?: 'ltr' | 'rtl'
 }
 
 export type NavigationDrawerItemElement = HTMLButtonElement | HTMLAnchorElement
@@ -19,7 +23,7 @@ export interface NavigationDrawerItemProps
 	icon?: Snippet
 	label: string
 	selected?: boolean
-	badgeLabel?: string
+	badgeLabel?: string | number
 	badgeAriaLabel?: string
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 	element?: NavigationDrawerItemElement

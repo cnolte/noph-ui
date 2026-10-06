@@ -12,7 +12,7 @@
 <div style="width:26rem;max-width:100%">
 	<Search bind:value={query} placeholder="Search product">
 		{#each matches(query) as dish (dish)}
-			<Item variant="button">{dish}</Item>
+			<Item onclick={() => (query = dish)}>{dish}</Item>
 		{/each}
 	</Search>
 </div>

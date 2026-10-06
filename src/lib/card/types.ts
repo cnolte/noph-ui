@@ -1,20 +1,16 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { ElementKindProps } from '#lib/internal/elementTag.js'
 
 export type CardElement = HTMLDivElement | HTMLButtonElement | HTMLAnchorElement
 
-export interface CardProps
-	extends
-		HTMLAttributes<CardElement>,
-		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
-		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
+export interface CardProps extends ElementKindProps<CardElement> {
 	variant?: 'elevated' | 'filled' | 'outlined'
-	disabled?: boolean | null
 	image?: string | null
+	/** Describes `image` for assistive technology. Leave it out for a decorative image. */
+	imageAlt?: string
 	element?: HTMLElement
 	headline?: string | null
 	subhead?: string | null
 	supportingText?: string | null
 	action?: Snippet<[]>
-	type: 'text' | 'button' | 'link'
 }

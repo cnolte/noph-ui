@@ -7,7 +7,6 @@
 {/snippet}
 <div class="cards">
 	<Card
-		type="text"
 		variant="filled"
 		headline="Filled"
 		subhead="Subhead"
@@ -15,7 +14,6 @@
 		supportingText="Explain more about the topic shown in the headline and subhead through supporting text."
 	></Card>
 	<Card
-		type="text"
 		variant="filled"
 		disabled
 		headline="Filled disabled"

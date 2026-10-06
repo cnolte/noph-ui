@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Button, DockedTimePicker } from '#lib/index.js'
+	import type { Issue } from '#lib/types.js'
 
 	let value = $state<string | undefined>()
-	let issues = $state<{ message: string }[]>([])
+	let issues = $state<Issue[]>([])
 	let submitted = $state('')
 
 	const handleSubmit = (event: SubmitEvent) => {

@@ -20,8 +20,8 @@
 
 	let touchEl: HTMLSpanElement | undefined = $state()
 
-	const isLink = $derived(attributes.href != null)
-	const classes = $derived([
+	let isLink = $derived(attributes.href != null)
+	let classes = $derived([
 		'np-navigation-bar-item',
 		selected && 'np-navigation-bar-item-selected',
 		labelBehavior === 'selected' && 'np-navigation-bar-item-label-selected',

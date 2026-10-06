@@ -10,7 +10,7 @@
 			<Icon>close</Icon>
 		</IconButton>
 	{/snippet}
-	<Item variant="button">Share</Item>
-	<Item variant="button">Add to favourites</Item>
-	<Item variant="button">Delete</Item>
+	<Item type="button" command="close" commandfor="bottom-sheet">Share</Item>
+	<Item type="button" command="close" commandfor="bottom-sheet">Add to favourites</Item>
+	<Item type="button" command="close" commandfor="bottom-sheet">Delete</Item>
 </Sheet>

@@ -38,7 +38,7 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Give the carousel an accessible name and each item a <code>type</code>. The
+	Give the carousel an accessible name. The
 	<code>multi-browse</code> layout is the default: one or more large items, then a medium and a small
 	one to show there is more to reach.
 </p>
@@ -110,11 +110,12 @@
 	Interactive items<a href="#interactive-items" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>type</code> is required, because whether an item is interactive decides its semantics, its
-	place in the tab order and whether it gets a state layer at all. A <code>button</code> item and a
-	<code>link</code> item are focusable and rippled; a <code>text</code> item is neither. A carousel
-	made only of <code>text</code> items has no keyboard path of its own, so it depends entirely on
-	the
+	Whether an item is interactive decides its semantics, its place in the tab order and whether it
+	gets a state layer at all. An item with an <code>href</code> renders a link, one with an
+	<code>onclick</code> or a <code>type</code> renders a button, and both are focusable and rippled.
+	An item with neither is plain content. <code>type="text"</code> or <code>type="link"</code> pins
+	the element yourself. A carousel made only of plain items has no keyboard path of its own, so it
+	depends entirely on the
 	<a class="link" href="#show-all">Show all</a> route.
 </p>
 <DemoContainer>
@@ -521,8 +522,8 @@
 	<tbody>
 		<tr>
 			<td><code>type</code></td>
-			<td><code>'text' | 'button' | 'link'</code></td>
-			<td>required</td>
+			<td><code>'text' | 'link' | 'button' | 'submit' | 'reset' | null</code></td>
+			<td><code>undefined</code></td>
 		</tr>
 		<tr>
 			<td><code>label</code></td>
@@ -532,6 +533,11 @@
 		<tr>
 			<td><code>image</code></td>
 			<td><code>string | null</code></td>
+			<td><code>undefined</code></td>
+		</tr>
+		<tr>
+			<td><code>imageAlt</code></td>
+			<td><code>string</code></td>
 			<td><code>undefined</code></td>
 		</tr>
 		<tr>

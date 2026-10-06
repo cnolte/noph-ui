@@ -3,7 +3,7 @@
 	import DemoContainer from '../../DemoContainer.svelte'
 
 	let { demo }: { demo: Component } = $props()
-	const Demo = $derived(demo)
+	let Demo = $derived(demo)
 </script>
 
 <DemoContainer>

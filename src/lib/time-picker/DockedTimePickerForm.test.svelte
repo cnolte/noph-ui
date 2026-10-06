@@ -1,11 +1,12 @@
 <script lang="ts">
+	import type { Issue } from '#lib/shared/types.js'
 	import DockedTimePicker from './DockedTimePicker.svelte'
 	import type { DockedTimePickerProps } from './types.ts'
 
 	let { value = $bindable(), ...rest }: DockedTimePickerProps = $props()
 
 	let submitted = $state('')
-	let issues = $state<{ message: string }[]>([])
+	let issues = $state<Issue[]>([])
 
 	const handleSubmit = (event: SubmitEvent) => {
 		event.preventDefault()

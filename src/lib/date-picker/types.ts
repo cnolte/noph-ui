@@ -1,6 +1,8 @@
+import type { Issue } from '#lib/shared/types.js'
 import type { Snippet } from 'svelte'
+import type { DockedFieldProps } from '#lib/internal/fieldTypes.js'
 import type { TextFieldElement } from '#lib/text-field/types.js'
-import type { HTMLAttributes, HTMLInputAttributes } from 'svelte/elements'
+import type { HTMLAttributes } from 'svelte/elements'
 
 export type ISODate = string
 
@@ -35,30 +37,21 @@ interface MonthStepperLabelProps {
 	previousMonthLabel?: string
 }
 
+interface DockedDateFieldProps extends DockedFieldProps {
+	displayMonth?: ISODate
+}
+
 export interface DockedDatePickerProps
 	extends
 		Omit<HTMLAttributes<TextFieldElement>, 'onchange'>,
 		DatePickerLocaleProps,
 		DatePickerRangeProps,
 		DatePickerCommonLabelProps,
-		MonthStepperLabelProps {
+		MonthStepperLabelProps,
+		DockedDateFieldProps {
 	value?: ISODate | number | null
-	displayMonth?: ISODate
-	open?: boolean
-	element?: HTMLSpanElement
-	name?: string
-	form?: string
-	required?: boolean
-	disabled?: boolean
-	readonly?: boolean
-	variant?: 'outlined' | 'filled'
-	issues?: { message: string }[]
 	defaultValue?: ISODate | number | null
 	type?: 'date'
-	noAsterisk?: boolean
-	autocomplete?: HTMLInputAttributes['autocomplete']
-	label?: string
-	supportingText?: string
 	nextYearLabel?: string
 	previousYearLabel?: string
 	selectMonthLabel?: string
@@ -74,26 +67,13 @@ export interface DockedDateTimePickerProps
 		DatePickerLocaleProps,
 		Omit<DatePickerRangeProps, 'min' | 'max'>,
 		DatePickerCommonLabelProps,
-		MonthStepperLabelProps {
+		MonthStepperLabelProps,
+		DockedDateFieldProps {
 	value?: ISODateTime | number | null
-	displayMonth?: ISODate
-	open?: boolean
-	element?: HTMLSpanElement
+	defaultValue?: ISODateTime | number | null
 	min?: ISODate | ISODateTime
 	max?: ISODate | ISODateTime
-	name?: string
-	form?: string
-	required?: boolean
-	disabled?: boolean
-	readonly?: boolean
-	variant?: 'outlined' | 'filled'
-	issues?: { message: string }[]
-	defaultValue?: ISODateTime | number | null
 	type?: 'datetime-local'
-	noAsterisk?: boolean
-	autocomplete?: HTMLInputAttributes['autocomplete']
-	label?: string
-	supportingText?: string
 	minuteStep?: number
 	hour12?: boolean
 	defaultTime?: string
@@ -115,12 +95,6 @@ export interface TimeOption {
 	disabled?: boolean
 }
 
-export interface TimeColumnProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onselect'> {
-	options: TimeOption[]
-	value?: number
-	onselect?: (value: number) => void
-}
-
 export interface DatePickerDialogProps
 	extends
 		Omit<HTMLAttributes<HTMLDialogElement>, 'onchange'>,
@@ -139,7 +113,7 @@ export interface DatePickerDialogProps
 	modeToggle?: boolean
 	label?: string
 	supportingText?: string
-	issues?: { message: string }[]
+	issues?: Issue[]
 	selectYearLabel?: string
 	calendarModeLabel?: string
 	inputModeLabel?: string

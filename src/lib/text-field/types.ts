@@ -1,25 +1,5 @@
-import type { Snippet } from 'svelte'
+import type { FieldProps } from '#lib/internal/fieldTypes.js'
 import type { HTMLAttributes, HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements'
-
-interface FieldProps {
-	label?: string
-	supportingText?: string
-	issues?: {
-		message: string
-	}[]
-	prefixText?: string
-	suffixText?: string
-	variant?: 'outlined' | 'filled'
-	start?: Snippet
-	end?: Snippet
-	noAsterisk?: boolean
-	element?: HTMLSpanElement
-	inputElement?: HTMLInputElement | HTMLTextAreaElement
-	populated?: boolean
-	clientWidth?: number
-	clientHeight?: number
-	focused?: boolean
-}
 
 export type TextFieldType =
 	| 'text'

@@ -12,7 +12,7 @@
 
 <h1>Quick start</h1>
 <p>
-	Noph UI requires <a class="link" href="https://svelte.dev" target="_blank">Svelte</a> 5.40 or newer.
+	Noph UI requires <a class="link" href="https://svelte.dev" target="_blank">Svelte</a> 5.56.5 or newer.
 	It works inside SvelteKit or in a plain Vite + Svelte project alike, SvelteKit is not required.
 </p>
 <h2 id="install">Install<a href="#install" aria-hidden="true" tabindex="-1">#</a></h2>

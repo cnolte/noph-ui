@@ -1,3 +1,4 @@
+import type { Issue } from '#lib/shared/types.js'
 import type { Snippet } from 'svelte'
 import type {
 	HTMLAnchorAttributes,
@@ -56,18 +57,22 @@ export interface SplitButtonProps extends Omit<HTMLAttributes<HTMLDivElement>, '
 	element?: HTMLElement
 }
 
+export interface SegmentedButtonOption {
+	/** Stored in `group` and submitted with the form. Falls back to `label`. */
+	value?: string | number
+	label?: string
+	labelIcon?: Snippet
+	selected?: boolean
+	disabled?: boolean | null
+	icon?: Snippet
+	onclick?: (event: Event) => void
+}
+
 export interface SegmentedButtonProps extends HTMLAttributes<HTMLDivElement> {
 	name: string
 	multiSelect?: boolean
-	options: {
-		label?: string
-		labelIcon?: Snippet
-		selected?: boolean
-		disabled?: boolean
-		icon?: Snippet
-		onclick?: (event: Event) => void
-	}[]
+	options: SegmentedButtonOption[]
 	group?: string | number | (string | number)[] | null
 	element?: HTMLElement
-	issues?: { message: string }[]
+	issues?: Issue[]
 }

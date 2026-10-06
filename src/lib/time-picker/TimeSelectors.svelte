@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { formatTwoDigits, MINUTES_IN_HOUR } from '#lib/date-picker/timeUtils.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { TimeSelectorsProps } from './types.ts'
+	import type { TimeSelectorsProps } from './internalTypes.ts'
 
 	let {
 		value,
@@ -20,7 +20,7 @@
 	let hourText = $derived(formatTwoDigits(hour12 ? hour % 12 || 12 : hour, locale))
 	let minuteText = $derived(formatTwoDigits(minute, locale))
 
-	const fields = $derived([
+	let fields = $derived([
 		{ key: 'hour' as const, text: hourText, label: hourLabel },
 		{ key: 'minute' as const, text: minuteText, label: minuteLabel },
 	])

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { Button, DockedDatePicker } from '#lib/index.js'
+	import type { Issue } from '#lib/types.js'
 
 	const today = new Date()
 	const isoToday = `${today.getFullYear()}-${`${today.getMonth() + 1}`.padStart(2, '0')}-${`${today.getDate()}`.padStart(2, '0')}`
 
 	let formValue = $state<string | undefined>()
-	let formIssues = $state<{ message: string }[]>([])
+	let formIssues = $state<Issue[]>([])
 	let submitted = $state('')
 
 	const handleSubmit = (event: SubmitEvent) => {

@@ -615,6 +615,12 @@
 			<td>Replaces the generated <code>MM/DD/YYYY</code> hint.</td>
 		</tr>
 		<tr>
+			<td><code>start</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading icon, passed to the text field.</td>
+		</tr>
+		<tr>
 			<td><code>issues</code></td>
 			<td><code>&#123; message: string &#125;[]</code></td>
 			<td><code>undefined</code></td>

@@ -15,9 +15,9 @@
 		...attributes
 	}: AppBarProps = $props()
 
-	const twoLine = $derived(variant === 'medium' || variant === 'large')
-	const isSearch = $derived(variant === 'search')
-	const collapses = $derived(collapsible && twoLine)
+	let twoLine = $derived(variant === 'medium' || variant === 'large')
+	let isSearch = $derived(variant === 'search')
+	let collapses = $derived(collapsible && twoLine)
 </script>
 
 {#snippet titles(inline: boolean)}

@@ -119,15 +119,21 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	A plain card is a <code>&lt;div&gt;</code>: it holds content and takes no focus. Give it
-	<code>type="button"</code> or <code>type="link"</code> only when the whole card really is one
-	target, and it renders a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code> instead.
+	A plain card is a <code>&lt;div&gt;</code>: it holds content and takes no focus. Give it an
+	<code>href</code> or an <code>onclick</code> only when the whole card really is one target, and it
+	renders an <code>&lt;a&gt;</code> or a <code>&lt;button&gt;</code> instead. A <code>command</code>
+	or <code>popovertarget</code> also makes it a button. Set
+	<code>type</code> to pin the element yourself.
 </p>
 <p>
 	A card that only wraps its own buttons and links should stay a plain card. Nesting controls inside
 	a clickable card leaves a screen reader with a target inside a target, and there is no way to
 	reach the inner one. A disabled clickable card keeps <code>aria-disabled</code> and steps out of the
 	tab order.
+</p>
+<p>
+	The image is decorative by default. When it carries meaning, describe it with
+	<code>imageAlt</code>.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -142,9 +148,13 @@
 	<tbody>
 		<tr>
 			<td><code>type</code></td>
-			<td><code>'text' | 'link' | 'button'</code></td>
-			<td></td>
-			<td>The type of the card</td>
+			<td><code>'text' | 'link' | 'button' | 'submit' | 'reset' | null</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Pins the element. <code>text</code> renders a <code>&lt;div&gt;</code>, <code>link</code>
+				an <code>&lt;a&gt;</code>, and the native button types a <code>&lt;button&gt;</code> of that
+				type. Left out, the card follows <code>href</code> and <code>onclick</code>.</td
+			>
 		</tr>
 		<tr>
 			<td><code>variant</code></td>
@@ -163,6 +173,12 @@
 			<td><code>string | undefined | null</code></td>
 			<td><code>undefined</code></td>
 			<td>The path to the image of the card</td>
+		</tr>
+		<tr>
+			<td><code>imageAlt</code></td>
+			<td><code>string | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Describes the image for assistive technology. Leave it out for a decorative image.</td>
 		</tr>
 		<tr>
 			<td><code>headline</code></td>
@@ -198,11 +214,10 @@
 			>
 			<td></td>
 			<td
-				>A single, unified set of attributes for the element chosen by <code>type</code>
-				(<code>div</code>, <code>button</code> or <code>a</code>). Event handlers such as
-				<code>onclick</code> receive <code>event.currentTarget</code> typed as
-				<code>HTMLDivElement | HTMLButtonElement | HTMLAnchorElement</code>, so you no longer need
-				to set <code>type</code> to get correctly typed events.</td
+				>A single, unified set of attributes for the rendered element (<code>div</code>,
+				<code>button</code> or <code>a</code>). Event handlers such as <code>onclick</code> receive
+				<code>event.currentTarget</code> typed as
+				<code>HTMLDivElement | HTMLButtonElement | HTMLAnchorElement</code>.</td
 			>
 		</tr>
 	</tbody>

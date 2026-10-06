@@ -40,7 +40,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/about/quick-start',
 		title: 'Quick start',
-		body: 'Noph UI requires Svelte 5.40 or newer. It works inside SvelteKit or in a plain Vite + Svelte project alike, SvelteKit is not required.',
+		body: 'Noph UI requires Svelte 5.56.5 or newer. It works inside SvelteKit or in a plain Vite + Svelte project alike, SvelteKit is not required.',
 		terms: [],
 		sections: [
 			{
@@ -713,15 +713,15 @@ export const searchIndex: SearchPage[] = [
 				id: 'accessibility',
 				text: 'Accessibility',
 				level: 2,
-				body: 'A plain card is a <div>: it holds content and takes no focus. Give it type="button" or type="link" only when the whole card really is one target, and it renders a <button> or an…',
-				terms: ['<div>', 'type="button"', 'type="link"', '<button>', '<a>', 'aria-disabled'],
+				body: 'A plain card is a <div>: it holds content and takes no focus. Give it an href or an onclick only when the whole card really is one target, and it renders an <a> or a <button>…',
+				terms: ['<div>', 'href', 'onclick', '<a>', '<button>', 'command', 'popovertarget', 'type', 'aria-disabled', 'imageAlt'],
 			},
 			{
 				id: 'api',
 				text: 'API',
 				level: 2,
 				body: '',
-				terms: ['type', "'text' | 'link' | 'button'", 'variant', "'elevated' | 'filled' | 'outlined'", "'outlined'", 'disabled', 'boolean', 'false', 'image', 'string | undefined | null', 'undefined', 'headline', 'subhead', 'supportingText', 'action', 'Snippet | undefined', '...attributes', 'div', 'button', 'a', 'onclick', 'event.currentTarget'],
+				terms: ['type', 'undefined', 'text', '<div>', 'link', '<a>', '<button>', 'href', 'onclick', 'variant', "'elevated' | 'filled' | 'outlined'", "'outlined'", 'disabled', 'boolean', 'false', 'image', 'string | undefined | null', 'imageAlt', 'string | undefined', 'headline', 'subhead', 'supportingText', 'action', 'Snippet | undefined'],
 			},
 			{
 				id: 'bindables',
@@ -742,8 +742,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'usage',
 				text: 'Usage',
 				level: 2,
-				body: 'Give the carousel an accessible name and each item a type. The multi-browse layout is the default: one or more large items, then a medium and a small one to show there is more to…',
-				terms: ['type', 'multi-browse', 'image', '--np-carousel-item-height'],
+				body: 'Give the carousel an accessible name. The multi-browse layout is the default: one or more large items, then a medium and a small one to show there is more to reach.',
+				terms: ['multi-browse', 'image', '--np-carousel-item-height'],
 			},
 			{
 				id: 'layouts',
@@ -763,8 +763,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'interactive-items',
 				text: 'Interactive items',
 				level: 2,
-				body: 'type is required, because whether an item is interactive decides its semantics, its place in the tab order and whether it gets a state layer at all. A button item and a link item…',
-				terms: ['type', 'button', 'link', 'text'],
+				body: 'Whether an item is interactive decides its semantics, its place in the tab order and whether it gets a state layer at all. An item with an href renders a link, one with an onclick…',
+				terms: ['href', 'onclick', 'type', 'type="text"', 'type="link"'],
 			},
 			{
 				id: 'show-all',
@@ -820,7 +820,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'CarouselItem',
 				level: 3,
 				body: '',
-				terms: ['type', "'text' | 'button' | 'link'", 'label', 'string | null', 'undefined', 'image', 'aspectRatio', 'number | null', 'disabled', 'boolean | null', 'false', 'Bindables', 'element'],
+				terms: ['type', 'undefined', 'label', 'string | null', 'image', 'imageAlt', 'string', 'aspectRatio', 'number | null', 'disabled', 'boolean | null', 'false', 'Bindables', 'element'],
 			},
 		],
 	},
@@ -1250,7 +1250,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'DockedDatePicker',
 				level: 3,
 				body: "Anything not listed here is forwarded to the picker's root element.",
-				terms: ['label', 'string', "'Date'", 'variant', "'outlined' | 'filled'", "'outlined'", 'supportingText', 'MM/DD/YYYY', 'issues', '{ message: string }[]', 'undefined', 'defaultValue', 'string | number | null', 'value', 'type', "{...field.as('date')}", 'locale', 'firstDayOfWeek', 'number', 'min', 'max', 'yearRange', '[number, number]', '[1900, 2100]'],
+				terms: ['label', 'string', "'Date'", 'variant', "'outlined' | 'filled'", "'outlined'", 'supportingText', 'MM/DD/YYYY', 'start', 'Snippet | undefined', 'undefined', 'issues', '{ message: string }[]', 'defaultValue', 'string | number | null', 'value', 'type', "{...field.as('date')}", 'locale', 'firstDayOfWeek', 'number', 'min', 'max', 'yearRange'],
 			},
 			{
 				id: 'datepickerdialog',
@@ -1369,8 +1369,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'dockeddatetimepicker',
 				text: 'DockedDateTimePicker',
 				level: 3,
-				body: 'Takes every DockedDatePicker prop, with value as a YYYY-MM-DDTHH:mm string, min and max as either a moment or a bare day, and isDateEnabled called with the full moment. label…',
-				terms: ['DockedDatePicker', 'value', 'YYYY-MM-DDTHH:mm', 'min', 'max', 'isDateEnabled', 'label', "'Date and time'", 'openCalendarLabel', "'Show date and time picker'", 'invalidDateMessage', "'Enter a valid date and time.'", 'minuteStep', 'number', '5', 'hour12', 'boolean', 'locale', 'defaultTime', 'string', "'00:00'", 'HH:mm', 'hourLabel', 'minuteLabel'],
+				body: 'Takes every DockedDatePicker prop, including the start snippet for a leading icon in the field, with value as a YYYY-MM-DDTHH:mm string, min and max as either a moment or a bare…',
+				terms: ['DockedDatePicker', 'start', 'value', 'YYYY-MM-DDTHH:mm', 'min', 'max', 'isDateEnabled', 'label', "'Date and time'", 'openCalendarLabel', "'Show date and time picker'", 'invalidDateMessage', "'Enter a valid date and time.'", 'minuteStep', 'number', '5', 'hour12', 'boolean', 'locale', 'defaultTime', 'string', "'00:00'", 'HH:mm', 'hourLabel'],
 			},
 			{
 				id: 'time-helpers',
@@ -1787,7 +1787,7 @@ export const searchIndex: SearchPage[] = [
 	{
 		route: '/components/list',
 		title: 'Lists',
-		body: 'A list is a run of rows with text and, where they earn it, an icon, an avatar or a control. Rows can be read only, act on the page or navigate, and the variant you pick decides…',
+		body: 'A list is a run of rows with text and, where they earn it, an icon, an avatar or a control. Rows can be read only, act on the page or navigate, and what you pass decides which…',
 		terms: [],
 		sections: [
 			{
@@ -1829,8 +1829,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'accessibility',
 				text: 'Accessibility',
 				level: 2,
-				body: 'List renders a plain <ul>, so anything you put inside becomes a list item for assistive technology. Pick the variant that matches what the item does: text for content that is only…',
-				terms: ['List', '<ul>', 'variant', 'text', 'button', 'link', '<div>', 'aria-disabled'],
+				body: 'List renders a plain <ul>, so anything you put inside becomes a list item for assistive technology. Give an item an href when it navigates, an onclick when it acts on the current…',
+				terms: ['List', '<ul>', 'href', 'onclick', '<div>', 'aria-disabled'],
 			},
 			{
 				id: 'api',
@@ -1851,14 +1851,14 @@ export const searchIndex: SearchPage[] = [
 				text: 'Item',
 				level: 3,
 				body: 'ListItem is an Item wrapped in an <li>. Where a row is not part of a <ul>, in search results, a sheet or a card, import Item instead and skip the wrapper. It takes the same…',
-				terms: ['ListItem', 'Item', '<li>', '<ul>'],
+				terms: ['ListItem', 'Item', '<li>', '<ul>', 'href', '<a>', 'onclick', 'command', 'popovertarget', '<button>', '<div>', 'type', 'type="text"'],
 			},
 			{
 				id: 'listitem-attributes',
 				text: 'ListItem attributes',
 				level: 3,
 				body: '',
-				terms: ['variant', "'text' | 'button' | 'link'", "'text'", '<div>', '<button>', '<a>', 'selected', 'boolean', 'false', 'disabled', 'aria-disabled', 'supportingText', 'string | Snippet | undefined', 'undefined', 'start', 'Snippet | undefined', 'end', 'softFocus', 'lazy', 'type', "'submit' | 'reset' | 'button' | null", "'button'", 'variant="button"', 'submit'],
+				terms: ['variant', "'text' | 'button' | 'link' | undefined", 'undefined', 'type', '<div>', '<button>', '<a>', 'selected', 'boolean', 'false', 'disabled', 'aria-disabled', 'href', 'onclick', 'supportingText', 'string | Snippet | undefined', 'start', 'Snippet | undefined', 'end', 'softFocus', 'lazy', 'Card', 'text', 'link'],
 			},
 		],
 	},
@@ -2114,14 +2114,14 @@ export const searchIndex: SearchPage[] = [
 				text: 'NavigationDrawer attributes',
 				level: 3,
 				body: 'Everything else you pass is forwarded to the root element, the <nav> for a standard drawer and the <dialog> for a modal one, so id, class, style and ontoggle work as expected.…',
-				terms: ['<nav>', '<dialog>', 'id', 'class', 'style', 'ontoggle', 'aria-label', 'aria-labelledby', 'modal', 'boolean', 'false', 'backdrop', 'direction', "'ltr' | 'rtl'", "'ltr'", 'element', 'HTMLElement | undefined', 'undefined', 'show()', 'close()'],
+				terms: ['<nav>', '<dialog>', 'id', 'class', 'style', 'ontoggle', 'aria-label', 'aria-labelledby', 'modal', 'boolean', 'false', 'backdrop', 'direction', "'ltr' | 'rtl' | undefined", 'undefined', 'ltr', 'rtl', 'element', 'HTMLElement | undefined', 'show()', 'close()'],
 			},
 			{
 				id: 'navigationdraweritem-attributes',
 				text: 'NavigationDrawerItem attributes',
 				level: 3,
 				body: 'Everything else you pass is forwarded to the underlying <button> or <a>, including onclick and href.',
-				terms: ['<button>', '<a>', 'onclick', 'href', 'label', 'string', 'icon', 'Snippet | undefined', 'undefined', 'selected', 'boolean | undefined', 'aria-current="page"', 'badgeLabel', 'string | undefined', '"+100"', 'type', "'submit' | 'reset' | 'button' | null"],
+				terms: ['<button>', '<a>', 'onclick', 'href', 'label', 'string', 'icon', 'Snippet | undefined', 'undefined', 'selected', 'boolean | undefined', 'aria-current="page"', 'badgeLabel', 'string | number | undefined', '"+100"', 'string | undefined', 'type', "'submit' | 'reset' | 'button' | null"],
 			},
 		],
 	},
@@ -2589,7 +2589,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Attributes',
 				level: 3,
 				body: '',
-				terms: ['name', 'string', 'options', 'multiSelect', 'boolean', 'false'],
+				terms: ['name', 'string', 'options', 'value', 'group', 'label', 'multiSelect', 'boolean', 'false'],
 			},
 			{
 				id: 'bindables',
@@ -2737,7 +2737,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'SelectOption',
 				level: 3,
 				body: '',
-				terms: ['value', 'string | number', 'label', 'string', 'selected', 'boolean | null | undefined', 'disabled', 'boolean | undefined'],
+				terms: ['value', 'string | number', 'label', 'string', 'selected', 'boolean | null | undefined', 'disabled', 'boolean | undefined', 'supportingText', 'string | Snippet | undefined', 'start', 'end', 'Snippet | undefined', 'multiple', 'class', 'style', 'ClassValue'],
 			},
 			{
 				id: 'select-bindables',
@@ -3515,7 +3515,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'DockedTimePicker',
 				level: 3,
 				body: "The shared props above, plus the text field's own. label defaults to 'Time' and openPickerLabel to 'Show time picker'.",
-				terms: ['label', "'Time'", 'openPickerLabel', "'Show time picker'", 'variant', "'outlined' | 'filled'", "'outlined'", 'supportingText', 'string', 'defaultValue', 'string | number | null', 'reset()', 'required', 'disabled', 'readonly', 'noAsterisk', 'boolean', 'false', 'Bindables', 'value', 'string | number | null | undefined', 'HH:mm', 'open', 'mode'],
+				terms: ['label', "'Time'", 'openPickerLabel', "'Show time picker'", 'variant', "'outlined' | 'filled'", "'outlined'", 'supportingText', 'string', 'defaultValue', 'string | number | null', 'reset()', 'required', 'disabled', 'readonly', 'noAsterisk', 'boolean', 'false', 'start', 'Snippet | undefined', 'undefined', 'Bindables', 'value', 'string | number | null | undefined'],
 			},
 			{
 				id: 'timepickerdialog',

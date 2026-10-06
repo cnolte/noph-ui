@@ -12,7 +12,7 @@
 <div style="width:26rem;max-width:100%">
 	<Search bind:value={dividedQuery} variant="divided" placeholder="Search product">
 		{#each matches(dividedQuery) as dish (dish)}
-			<Item variant="button">{dish}</Item>
+			<Item onclick={() => (dividedQuery = dish)}>{dish}</Item>
 		{/each}
 	</Search>
 </div>

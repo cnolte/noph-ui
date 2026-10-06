@@ -26,9 +26,9 @@
 
 	const uid = $props.id()
 
-	const isLink = $derived(attributes.href != null && !disabled && !loading)
+	let isLink = $derived(attributes.href != null && !disabled && !loading)
 
-	const tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
+	let tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
 
 	const morph = pressMorph()
 

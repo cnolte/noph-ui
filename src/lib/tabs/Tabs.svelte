@@ -35,7 +35,7 @@
 	}
 	setTabsContext(tabsContext)
 
-	const secondaryStyle = $derived(
+	let secondaryStyle = $derived(
 		tabsContext.variant === 'secondary'
 			? '--np-tabs-indicator-radius: 0;--_indicator-gap: 0;--_indicator-height: 2px'
 			: '',

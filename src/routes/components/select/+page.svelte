@@ -362,6 +362,24 @@
 			<td><code>boolean | undefined</code></td>
 			<td>Makes the option non-selectable.</td>
 		</tr>
+		<tr>
+			<td><code>supportingText</code></td>
+			<td><code>string | Snippet | undefined</code></td>
+			<td>Second line under the label.</td>
+		</tr>
+		<tr>
+			<td><code>start</code> / <code>end</code></td>
+			<td><code>Snippet | undefined</code>, <code>end</code> also <code>string</code></td>
+			<td
+				>Leading and trailing content of the option. With <code>multiple</code> the check box takes
+				the place of <code>start</code>.</td
+			>
+		</tr>
+		<tr>
+			<td><code>class</code> / <code>style</code></td>
+			<td><code>ClassValue</code> / <code>string</code></td>
+			<td>Styles a single option, the same way as on an AutoComplete option.</td>
+		</tr>
 	</tbody>
 </table>
 

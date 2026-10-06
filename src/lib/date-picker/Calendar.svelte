@@ -212,13 +212,14 @@
 							{#if !inMonth && !adjacentMonthDays}
 								<td role="gridcell" class="np-calendar-cell"></td>
 							{:else}
-								{@const isSelected =
+								{let isSelected = $derived(
 									isSameDay(date, selected) ||
-									isSameDay(date, rangeStart) ||
-									isSameDay(date, rangeEnd)}
-								{@const isToday = isSameDay(date, todayValue)}
-								{@const enabled = isEnabled(date)}
-								{@const between = inRange(date)}
+										isSameDay(date, rangeStart) ||
+										isSameDay(date, rangeEnd),
+								)}
+								{let isToday = $derived(isSameDay(date, todayValue))}
+								{let enabled = $derived(isEnabled(date))}
+								{let between = $derived(inRange(date))}
 								<td
 									role="gridcell"
 									aria-selected={isSelected}

@@ -1,12 +1,9 @@
-import type { ItemProps } from '#lib/list/types.js'
+import type { BaseOption } from '#lib/shared/types.js'
 import type { TextFieldProps } from '#lib/types.js'
 
-export interface AutoCompleteOption extends Pick<
-	ItemProps,
-	'start' | 'end' | 'supportingText' | 'class' | 'style'
-> {
+export interface AutoCompleteOption extends BaseOption {
+	/** Falls back to `label`. */
 	value?: string | number
-	label: string
 }
 
 export interface AutoCompleteProps extends Omit<TextFieldProps, 'clientWidth' | 'clientHeight'> {

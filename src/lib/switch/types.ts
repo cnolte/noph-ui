@@ -1,3 +1,4 @@
+import type { Issue } from '#lib/shared/types.js'
 import type { HTMLInputAttributes } from 'svelte/elements'
 
 export interface SwitchProps extends Omit<
@@ -5,9 +6,8 @@ export interface SwitchProps extends Omit<
 	'type' | 'role' | 'checked' | 'indeterminate'
 > {
 	selected?: boolean
-	disabled?: boolean
 	icons?: 'selected' | 'both'
 	inputElement?: HTMLInputElement
 	element?: HTMLDivElement
-	issues?: { message: string }[]
+	issues?: Issue[]
 }

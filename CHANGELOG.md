@@ -5,6 +5,38 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.50.0] - 2026-10-06
+
+### Changed (breaking)
+
+- **Svelte**: peer dependency `^5.56.5` (was `^5.40.0`).
+- **Item, ListItem**: without `variant` or `type`, `href` renders an `<a>` and
+  `onclick`, `command` or `popovertarget` a `<button>`. Use `type="text"` to
+  keep a `<div>`.
+- **MenuItem**: an explicit `type` wins over `href`.
+- **NavigationDrawer**: a modal drawer follows the writing direction unless
+  `direction` is set. `--np-navigation-drawer-start` is gone.
+- **Types**: `TimeColumnProps`, `TimePickerPanelProps`, `TimeSelectorsProps`,
+  `TimeInputsProps` and `PeriodSelectorProps` are no longer exported.
+  `disabled` and the docked pickers' `name`, `form`, `required` and
+  `readonly` accept `null`.
+
+### Added
+
+- **Item**: `type` takes `text` and `link`; `end` takes a string.
+- **Card, CarouselItem**: `type` is optional and takes `submit` and `reset`;
+  new `imageAlt`.
+- **SegmentedButton**: options take a `value`.
+- **Select**: options take `start`, `end`, `supportingText`, `class` and
+  `style` (shared `BaseOption` type with AutoComplete).
+- **Docked pickers**: a `start` snippet.
+- **Types**: `Issue` for every `issues` prop.
+- **NavigationDrawerItem**: `badgeLabel` accepts a number.
+
+### Deprecated
+
+- **Item, ListItem**: `variant`, use `type`.
+
 ## [0.49.0] - 2026-10-01
 
 ### Added

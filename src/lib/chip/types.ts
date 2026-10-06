@@ -1,3 +1,4 @@
+import type { Issue } from '#lib/shared/types.js'
 import type { ButtonElement } from '#lib/button/types.js'
 import type { Snippet } from 'svelte'
 import type {
@@ -29,7 +30,7 @@ export type SuggestionChipProps = Omit<AssistChipProps, 'icon'>
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
 	removable?: boolean
-	disabled?: boolean
+	disabled?: boolean | null
 	variant?: 'outlined' | 'elevated'
 	label?: string
 	icon?: Snippet
@@ -40,12 +41,12 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	group?: (string | number)[] | null
 	defaultSelected?: boolean | null
 	onremove?: MouseEventHandler<ButtonElement>
-	issues?: { message: string }[]
+	issues?: Issue[]
 }
 
 export interface InputChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onclick'> {
 	selected?: boolean
-	disabled?: boolean
+	disabled?: boolean | null
 	label?: string
 	icon?: Snippet
 	removeAriaLabel?: string
@@ -55,7 +56,7 @@ export interface InputChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
 	value?: string | number
 	onclick?: MouseEventHandler<HTMLButtonElement>
 	onremove?: MouseEventHandler<ButtonElement>
-	issues?: { message: string }[]
+	issues?: Issue[]
 }
 
 export interface ChipSetContext {

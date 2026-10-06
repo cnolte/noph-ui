@@ -8,6 +8,6 @@
 		{#snippet trailing()}
 			<IconButton title="Filter"><Icon>settings</Icon></IconButton>
 		{/snippet}
-		<Item variant="button">Simple Classic Tacos</Item>
+		<Item type="button">Simple Classic Tacos</Item>
 	</Search>
 </div>

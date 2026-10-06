@@ -51,7 +51,7 @@
 </p>
 <Code
 	value={`<Search placeholder="Search product" resultsAttributes={{ role: 'listbox' }}>
-	<Item variant="button" role="option">Simple Classic Tacos</Item>
+	<Item type="button" role="option">Simple Classic Tacos</Item>
 </Search>`}
 />
 <p>

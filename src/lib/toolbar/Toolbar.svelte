@@ -15,7 +15,7 @@
 
 	const ITEMS = 'button, a[href], input:not([type="hidden"])'
 	const attach = rovingTabindex(ITEMS)
-	const arrowHandler = $derived(arrowKeyNav(ITEMS, orientation))
+	let arrowHandler = $derived(arrowKeyNav(ITEMS, orientation))
 
 	const handleKeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		userKeydown?.(event)

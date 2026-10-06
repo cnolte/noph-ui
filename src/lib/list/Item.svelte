@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
+	import { buttonType, elementTag } from '#lib/internal/elementTag.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { ItemProps } from './types.ts'
 
@@ -13,9 +14,12 @@
 		softFocus = false,
 		lazy = false,
 		variant,
+		type,
 		element = $bindable(),
 		...attributes
 	}: ItemProps = $props()
+
+	let tag = $derived(elementTag(attributes, type ?? variant))
 </script>
 
 {#snippet content()}
@@ -43,7 +47,11 @@
 
 	{#if end}
 		<div class={['np-item-end', selected && 'selected', disabled && 'disabled']}>
-			{@render end()}
+			{#if typeof end === 'string'}
+				{end}
+			{:else}
+				{@render end()}
+			{/if}
 		</div>
 	{/if}
 {/snippet}
@@ -57,7 +65,7 @@
 	>
 		{@render content()}
 	</div>
-{:else if variant === 'text' || variant === undefined}
+{:else if tag === 'div'}
 	<div
 		{...attributes}
 		bind:this={element}
@@ -65,17 +73,17 @@
 	>
 		{@render content()}
 	</div>
-{:else if variant === 'button'}
+{:else if tag === 'button'}
 	<button
 		{...attributes}
 		bind:this={element}
-		type={attributes.type ?? 'button'}
+		type={buttonType(type)}
 		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
 	>
 		{@render content()}
 		<Ripple forceHover={softFocus} />
 	</button>
-{:else if variant === 'link'}
+{:else}
 	<a
 		{...attributes}
 		bind:this={element}

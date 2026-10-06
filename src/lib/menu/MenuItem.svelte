@@ -3,12 +3,16 @@
 	import type { MenuItemProps } from './types.ts'
 
 	let { element = $bindable(), ...attributes }: MenuItemProps = $props()
-
-	const isLink = $derived(attributes.href != null)
 </script>
 
 <div class="np-menu-item" role="none">
-	<Item role="menuitem" bind:element {...attributes} variant={isLink ? 'link' : 'button'} />
+	<!-- Without a link to follow, a menu item is still a button. -->
+	<Item
+		role="menuitem"
+		bind:element
+		{...attributes}
+		type={attributes.type ?? (attributes.href == null ? 'button' : undefined)}
+	/>
 </div>
 
 <style>

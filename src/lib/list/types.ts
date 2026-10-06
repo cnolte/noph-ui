@@ -1,22 +1,19 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { ElementKindProps } from '#lib/internal/elementTag.js'
+import type { HTMLAttributes } from 'svelte/elements'
 
 export type ItemElement = HTMLButtonElement | HTMLAnchorElement | HTMLDivElement
 
-export interface ItemProps
-	extends
-		HTMLAttributes<ItemElement>,
-		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
-		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
+export interface ItemProps extends ElementKindProps<ItemElement> {
 	selected?: boolean
 	start?: Snippet
-	end?: Snippet
-	disabled?: boolean
-	variant?: 'button' | 'link' | 'text'
+	/** Trailing content, such as an icon or short supporting text like a count. */
+	end?: string | Snippet
 	supportingText?: string | Snippet
 	softFocus?: boolean
 	lazy?: boolean
-	type?: 'submit' | 'reset' | 'button' | null
+	/** @deprecated Use `type`, like on `Card`. */
+	variant?: 'button' | 'link' | 'text'
 	element?: ItemElement
 }
 

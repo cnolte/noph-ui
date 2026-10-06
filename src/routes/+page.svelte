@@ -99,7 +99,6 @@
 <h2>Why Noph UI</h2>
 <div class="features">
 	<Card
-		type="text"
 		variant="elevated"
 		class="feature"
 		headline="The whole spec, covered"
@@ -109,7 +108,6 @@
 		<div class="feature-icon"><Icon>verified</Icon></div>
 	</Card>
 	<Card
-		type="link"
 		href="/about/remote-functions"
 		variant="elevated"
 		class="feature"
@@ -121,7 +119,6 @@
 		<div class="feature-icon"><Icon>webhook</Icon></div>
 	</Card>
 	<Card
-		type="link"
 		href="/about/theming#generate-your-own-theme"
 		variant="elevated"
 		class="feature"
@@ -132,7 +129,6 @@
 		<div class="feature-icon"><Icon>palette</Icon></div>
 	</Card>
 	<Card
-		type="text"
 		variant="elevated"
 		class="feature"
 		headline="Zero dependencies"
@@ -142,7 +138,6 @@
 		<div class="feature-icon"><Icon>download</Icon></div>
 	</Card>
 	<Card
-		type="text"
 		variant="elevated"
 		class="feature"
 		headline="Expressive motion"
@@ -152,7 +147,6 @@
 		<div class="feature-icon"><Icon>animation</Icon></div>
 	</Card>
 	<Card
-		type="text"
 		variant="elevated"
 		class="feature"
 		headline="Accessible by default"
@@ -162,7 +156,6 @@
 		<div class="feature-icon"><Icon>accessibility_new</Icon></div>
 	</Card>
 	<Card
-		type="link"
 		href="/about/theming#light-and-dark-color-schemes"
 		variant="elevated"
 		class="feature"

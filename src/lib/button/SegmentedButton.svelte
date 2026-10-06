@@ -24,7 +24,8 @@
 	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"
 >
 	{#each options as option, i (i)}
-		{@const optionLabel = option.label ?? `${name}-${i}`}
+		{let optionLabel = $derived(option.label ?? `${name}-${i}`)}
+		{let optionValue = $derived(option.value ?? optionLabel)}
 		<label class={['np-segmented-button', option.icon && 'width-icon']}>
 			<div class="check-icon-wrapper">
 				<div class="check-icon">
@@ -56,7 +57,7 @@
 						bind:group
 						{name}
 						aria-label={optionLabel}
-						value={optionLabel}
+						value={optionValue}
 						disabled={option.disabled}
 						checked={option.selected}
 					/>
@@ -67,7 +68,7 @@
 						bind:group
 						{name}
 						aria-label={optionLabel}
-						value={optionLabel}
+						value={optionValue}
 						disabled={option.disabled}
 						checked={option.selected}
 					/>
@@ -78,7 +79,7 @@
 					onclick={option.onclick}
 					{name}
 					aria-label={optionLabel}
-					value={optionLabel}
+					value={optionValue}
 					disabled={option.disabled}
 					checked={option.selected}
 				/>

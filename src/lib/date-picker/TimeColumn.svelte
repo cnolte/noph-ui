@@ -2,7 +2,7 @@
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { revealSelected, tabStop } from './optionList.js'
-	import type { TimeColumnProps } from './types.ts'
+	import type { TimeColumnProps } from './internalTypes.ts'
 
 	let { options, value, onselect, ...attributes }: TimeColumnProps = $props()
 
@@ -20,7 +20,7 @@
 	onkeydown={handleKeydown}
 >
 	{#each options as option (option.value)}
-		{@const selected = option.value === value}
+		{let selected = $derived(option.value === value)}
 		<button
 			{@attach selected && reveal}
 			type="button"

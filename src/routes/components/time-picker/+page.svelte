@@ -618,6 +618,12 @@
 			<td><code>'Show time picker'</code></td>
 			<td>Accessible name of the trailing icon button.</td>
 		</tr>
+		<tr>
+			<td><code>start</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading icon, passed to the text field.</td>
+		</tr>
 	</tbody>
 </table>
 

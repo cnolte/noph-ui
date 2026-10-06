@@ -254,7 +254,8 @@
 	Takes every <a class="link" href="/components/date-picker#dockeddatepicker"
 		><code>DockedDatePicker</code></a
 	>
-	prop, with <code>value</code> as a <code>YYYY-MM-DDTHH:mm</code> string, <code>min</code> and
+	prop, including the <code>start</code> snippet for a leading icon in the field, with
+	<code>value</code> as a <code>YYYY-MM-DDTHH:mm</code> string, <code>min</code> and
 	<code>max</code> as either a moment or a bare day, and <code>isDateEnabled</code> called with the
 	full moment. <code>label</code> defaults to <code>'Date and time'</code>,
 	<code>openCalendarLabel</code> to <code>'Show date and time picker'</code> and

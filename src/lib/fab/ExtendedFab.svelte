@@ -21,8 +21,8 @@
 
 	const uid = $props.id()
 
-	const isLink = $derived(attributes.href != null && !disabled)
-	const tooltipId = $derived(collapsed && label && !disabled ? uid : undefined)
+	let isLink = $derived(attributes.href != null && !disabled)
+	let tooltipId = $derived(collapsed && label && !disabled ? uid : undefined)
 
 	const morph = pressMorph()
 	morph.supersededBy(() => shape)
@@ -32,7 +32,7 @@
 		morph.press()
 	}
 
-	const classes = $derived([
+	let classes = $derived([
 		'np-extended-fab',
 		'np-focus-ring',
 		`np-fab-${variant}`,

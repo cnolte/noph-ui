@@ -11,7 +11,7 @@
 	<ListItem supportingText="Firefox is the spiritual successor of Netscape Navigator."
 		>Firefox</ListItem
 	>
-	<ListItem variant="button"
+	<ListItem href="https://browserbench.org" target="_blank"
 		>{#snippet end()}
 			<Icon>open_in_new</Icon>
 		{/snippet}

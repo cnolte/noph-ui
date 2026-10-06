@@ -1,5 +1,6 @@
 import type { Snippet } from 'svelte'
-import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
+import type { ElementKindProps } from '#lib/internal/elementTag.js'
+import type { HTMLAttributes } from 'svelte/elements'
 
 export type CarouselVariant = 'multi-browse' | 'uncontained' | 'hero' | 'full-screen'
 export type CarouselAlignment = 'start' | 'center'
@@ -19,16 +20,12 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
 	element?: HTMLDivElement
 }
 
-export interface CarouselItemProps
-	extends
-		HTMLAttributes<CarouselItemElement>,
-		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
-		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
-	type: 'text' | 'button' | 'link'
+export interface CarouselItemProps extends ElementKindProps<CarouselItemElement> {
 	label?: string | null
 	image?: string | null
+	/** Describes `image` for assistive technology. Leave it out for a decorative image. */
+	imageAlt?: string
 	aspectRatio?: number | null
-	disabled?: boolean | null
 	children?: Snippet
 	element?: CarouselItemElement
 }

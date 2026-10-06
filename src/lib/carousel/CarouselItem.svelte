@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import { pressMorph } from '#lib/press.svelte.js'
+	import { buttonType, elementTag } from '#lib/internal/elementTag.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { minVisibleFraction } from './carouselStrategy.ts'
 	import { getCarouselContext } from './context.js'
@@ -10,6 +11,7 @@
 		type,
 		label,
 		image,
+		imageAlt,
 		aspectRatio,
 		disabled = false,
 		children,
@@ -19,13 +21,15 @@
 		...attributes
 	}: CarouselItemProps = $props()
 
+	let tag = $derived(elementTag(attributes, type))
+
 	const carouselContext = getCarouselContext()
 	const press = pressMorph()
 
-	const total = $derived(carouselContext.items.length)
-	const position = $derived(element ? carouselContext.position(element) : 0)
+	let total = $derived(carouselContext.items.length)
+	let position = $derived(element ? carouselContext.position(element) : 0)
 
-	const itemStyle = $derived(
+	let itemStyle = $derived(
 		[
 			`--_visible:${minVisibleFraction(aspectRatio)}`,
 			aspectRatio != null && `--_aspect:${aspectRatio}`,
@@ -35,26 +39,31 @@
 			.join(';'),
 	)
 
-	const accessibleName = $derived(
+	let accessibleName = $derived(
 		attributes['aria-label'] ??
-			(type !== 'text' && label && position > 0
+			(tag !== 'div' && label && position > 0
 				? carouselContext.itemLabel(label, position, total)
 				: undefined),
 	)
 
-	const labelHidden = $derived(accessibleName !== undefined)
+	let labelHidden = $derived(accessibleName !== undefined)
 
 	const handlePointerdown = (
 		event: PointerEvent & { currentTarget: EventTarget & CarouselItemElement },
 	) => {
 		onpointerdown?.(event)
-		if (!disabled && type !== 'text') press.press()
+		if (!disabled && tag !== 'div') press.press()
 	}
 </script>
 
 {#snippet content()}
 	{#if image}
-		<div class="np-carousel-item-image" style="background-image: url({image})"></div>
+		<div
+			class="np-carousel-item-image"
+			style="background-image: url({image})"
+			role={imageAlt ? 'img' : undefined}
+			aria-label={imageAlt || undefined}
+		></div>
 	{/if}
 	{#if children}
 		{@render children()}
@@ -62,12 +71,12 @@
 	{#if label}
 		<span class="np-carousel-item-label" aria-hidden={labelHidden || undefined}>{label}</span>
 	{/if}
-	{#if !disabled && type !== 'text'}
+	{#if !disabled && tag !== 'div'}
 		<Ripple />
 	{/if}
 {/snippet}
 
-{#if type === 'text'}
+{#if tag === 'div'}
 	<div
 		{...attributes}
 		bind:this={element}
@@ -83,11 +92,11 @@
 	>
 		{@render content()}
 	</div>
-{:else if type === 'button'}
+{:else if tag === 'button'}
 	<button
 		{...attributes}
 		bind:this={element}
-		type="button"
+		type={buttonType(type)}
 		{disabled}
 		aria-disabled={disabled}
 		aria-label={accessibleName}
@@ -103,7 +112,7 @@
 	>
 		{@render content()}
 	</button>
-{:else if type === 'link'}
+{:else}
 	<a
 		{...attributes}
 		bind:this={element}

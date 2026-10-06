@@ -13,7 +13,7 @@
 <!-- The bar has nowhere to sit until it opens, so it is out of the layout while at rest. -->
 <div class={['view', !expanded && 'resting']}>
 	<Search bind:this={search} bind:expanded view="full-screen" placeholder="Search product">
-		<Item variant="button">Simple Classic Tacos</Item>
+		<Item type="button">Simple Classic Tacos</Item>
 	</Search>
 </div>
 

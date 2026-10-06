@@ -166,7 +166,7 @@
 
 	let jump = $state('')
 	let jumpExpanded = $state(false)
-	const trackMatches = $derived(
+	let trackMatches = $derived(
 		tracks.filter((candidate) =>
 			candidate.title.toLocaleLowerCase().includes(jump.toLocaleLowerCase()),
 		),
@@ -190,7 +190,6 @@
 
 <div class="bento">
 	<Card
-		type="text"
 		variant="elevated"
 		class="tile player"
 		headline="Now playing"
@@ -203,11 +202,7 @@
 			aria-label="Jump to a track"
 		>
 			{#each trackMatches as candidate (candidate.title)}
-				<Item
-					variant="button"
-					onclick={() => jumpTo(candidate.title)}
-					supportingText={candidate.artist}
-				>
+				<Item onclick={() => jumpTo(candidate.title)} supportingText={candidate.artist}>
 					{candidate.title}
 				</Item>
 			{/each}
@@ -297,7 +292,6 @@
 	</Card>
 
 	<Card
-		type="text"
 		variant="elevated"
 		class="tile inbox"
 		headline="Inbox"
@@ -366,7 +360,6 @@
 	</Card>
 
 	<Card
-		type="text"
 		variant="elevated"
 		class="tile toolbar"
 		headline="Toolbar"
@@ -419,7 +412,6 @@
 	</Card>
 
 	<Card
-		type="text"
 		variant="elevated"
 		class="tile reserve"
 		headline="Reserve a table"
@@ -472,7 +464,6 @@
 	</Card>
 
 	<Card
-		type="text"
 		variant="elevated"
 		class="tile search"
 		headline="Search the docs"
@@ -523,8 +514,8 @@
 				<Switch bind:selected={includeArchived} />
 				Include archived pages
 			</label>
-			<Item variant="button">Sort by relevance</Item>
-			<Item variant="button">Sort by date</Item>
+			<Item type="button">Sort by relevance</Item>
+			<Item type="button">Sort by date</Item>
 		</Sheet>
 		{@render uses([
 			{ label: 'Autocomplete', href: '/components/autocomplete' },
@@ -535,7 +526,6 @@
 	</Card>
 
 	<Card
-		type="text"
 		variant="elevated"
 		class="tile loading"
 		headline="Always loading"

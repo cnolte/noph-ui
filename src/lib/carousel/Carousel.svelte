@@ -26,14 +26,14 @@
 	let snapPoints = $state<HTMLDivElement>()
 	let items = $state.raw<CarouselItemElement[]>([])
 
-	const axis = $derived(orientation ?? (variant === 'full-screen' ? 'vertical' : 'horizontal'))
-	const vertical = $derived(axis === 'vertical')
-	const snapping = $derived(snap ?? variant !== 'uncontained')
+	let axis = $derived(orientation ?? (variant === 'full-screen' ? 'vertical' : 'horizontal'))
+	let vertical = $derived(axis === 'vertical')
+	let snapping = $derived(snap ?? variant !== 'uncontained')
 
-	const keylined = $derived(variant === 'multi-browse' || variant === 'hero' ? variant : undefined)
-	const morphing = $derived(!!keylined && scrollTimelines && !reducedMotion.current)
+	let keylined = $derived(variant === 'multi-browse' || variant === 'hero' ? variant : undefined)
+	let morphing = $derived(!!keylined && scrollTimelines && !reducedMotion.current)
 
-	const cropping = $derived(variant === 'uncontained' && !reducedMotion.current)
+	let cropping = $derived(variant === 'uncontained' && !reducedMotion.current)
 
 	const collectItems: Attachment<HTMLElement> = (node) => {
 		const read = () => {
@@ -56,13 +56,13 @@
 		return () => observer.disconnect()
 	}
 
-	const morph = $derived(
+	let morph = $derived(
 		morphing && keylined
 			? carouselMorph({ variant: keylined, alignment, vertical, items, track, metrics, uid })
 			: undefined,
 	)
 
-	const arrowHandler = $derived(arrowKeyNav('.np-carousel-item', axis, { wrap: false }))
+	let arrowHandler = $derived(arrowKeyNav('.np-carousel-item', axis, { wrap: false }))
 
 	const handleKeydown = (
 		event: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement },
@@ -71,7 +71,7 @@
 		if (!event.defaultPrevented) arrowHandler(event)
 	}
 
-	const places = $derived(new Map(items.map((item, index) => [item, index + 1])))
+	let places = $derived(new Map(items.map((item, index) => [item, index + 1])))
 
 	const handleFocusIn = (event: FocusEvent) => {
 		const item = (event.target as HTMLElement | null)?.closest<HTMLElement>('.np-carousel-item')

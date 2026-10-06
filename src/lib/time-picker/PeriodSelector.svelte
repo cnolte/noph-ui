@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { PeriodSelectorProps } from './types.ts'
+	import type { PeriodSelectorProps } from './internalTypes.ts'
 
 	let {
 		isPm,
@@ -15,7 +15,7 @@
 		...attributes
 	}: PeriodSelectorProps = $props()
 
-	const periods = $derived([
+	let periods = $derived([
 		{ pm: false, text: amLabel, unreachable: amDisabled },
 		{ pm: true, text: pmLabel, unreachable: pmDisabled },
 	])

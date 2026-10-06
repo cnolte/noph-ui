@@ -12,7 +12,7 @@
 <div style="width:26rem;max-width:100%">
 	<Search bind:value={fullScreenQuery} view="full-screen" placeholder="Search product">
 		{#each matches(fullScreenQuery) as dish (dish)}
-			<Item variant="button">{dish}</Item>
+			<Item onclick={() => (fullScreenQuery = dish)}>{dish}</Item>
 		{/each}
 	</Search>
 </div>

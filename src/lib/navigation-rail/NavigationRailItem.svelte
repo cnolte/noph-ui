@@ -17,7 +17,7 @@
 	}: NavigationRailItemProps = $props()
 	let touchEl: HTMLSpanElement | undefined = $state()
 
-	const isLink = $derived(attributes.href != null)
+	let isLink = $derived(attributes.href != null)
 </script>
 
 {#snippet content()}

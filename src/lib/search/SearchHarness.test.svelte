@@ -36,8 +36,8 @@
 		placeholder="Search product"
 		onsearch={(q) => (searched = q)}
 	>
-		<Item variant="button">Simple Classic Tacos</Item>
-		<Item variant="button">Mexican dishes</Item>
+		<Item type="button">Simple Classic Tacos</Item>
+		<Item type="button">Mexican dishes</Item>
 	</Search>
 </div>
 

@@ -31,7 +31,7 @@
 	const resultsId = `np-search-results-${uid}`
 
 	const comboboxPopups = ['listbox', 'tree', 'grid', 'dialog']
-	const isCombobox = $derived(comboboxPopups.includes(String(resultsAttributes?.role)))
+	let isCombobox = $derived(comboboxPopups.includes(String(resultsAttributes?.role)))
 
 	let pointerFocus = false
 	let focusRing = $state(false)

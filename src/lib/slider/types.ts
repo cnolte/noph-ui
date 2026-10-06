@@ -1,3 +1,4 @@
+import type { Issue } from '#lib/shared/types.js'
 import type { Snippet } from 'svelte'
 import type { HTMLInputAttributes } from 'svelte/elements'
 
@@ -18,12 +19,11 @@ export interface SliderProps extends Omit<
 	centered?: boolean
 	labeled?: boolean
 	ticks?: boolean
-	disabled?: boolean
 	format?: (value: number) => string
 	icon?: Snippet
 	endInputAttributes?: HTMLInputAttributes
 	element?: HTMLDivElement
 	inputElement?: HTMLInputElement
 	endInputElement?: HTMLInputElement
-	issues?: { message: string }[]
+	issues?: Issue[]
 }

@@ -1,9 +1,9 @@
+import type { BaseOption, Issue } from '#lib/shared/types.js'
 import type { Snippet } from 'svelte'
 import type { HTMLOptionAttributes, HTMLSelectAttributes } from 'svelte/elements'
 
-export interface SelectOption {
+export interface SelectOption extends BaseOption {
 	value: string | number
-	label: string
 	disabled?: boolean
 	selected?: boolean | undefined | null
 }
@@ -11,9 +11,7 @@ export interface SelectOption {
 export interface SelectProps extends Omit<HTMLSelectAttributes, 'size' | 'autocomplete'> {
 	label?: string
 	supportingText?: string
-	issues?: {
-		message: string
-	}[]
+	issues?: Issue[]
 	variant?: 'outlined' | 'filled'
 	start?: Snippet
 	end?: Snippet
@@ -28,11 +26,7 @@ export interface NativeSelectProps extends HTMLSelectAttributes {
 	label?: string
 	noAsterisk?: boolean
 	supportingText?: string
-	issues?:
-		| {
-				message: string
-		  }[]
-		| undefined
+	issues?: Issue[]
 	variant?: 'outlined' | 'filled'
 	element?: HTMLDivElement
 }

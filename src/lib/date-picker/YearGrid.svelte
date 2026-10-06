@@ -84,7 +84,7 @@
 	onkeydown={handleKeydown}
 >
 	{#each years as { year, disabled } (year)}
-		{@const selected = year === value}
+		{let selected = $derived(year === value)}
 		<button
 			{@attach selected && scrollIntoGrid}
 			type="button"

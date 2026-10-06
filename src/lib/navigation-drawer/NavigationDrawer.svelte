@@ -8,7 +8,7 @@
 		backdrop = false,
 		open = $bindable(false),
 		element = $bindable(),
-		direction = 'ltr',
+		direction,
 		children,
 		onkeydown: userKeydown,
 		ontoggle,
@@ -40,8 +40,6 @@
 		show,
 		close,
 	)
-
-	const start = $derived(direction === 'ltr' ? 'translateX(-100%)' : 'translateX(100%)')
 </script>
 
 {#if modal}
@@ -53,7 +51,7 @@
 		aria-label={null}
 		aria-labelledby={null}
 		closedby="any"
-		style="--np-navigation-drawer-start: {start}; {attributes.style ?? ''}"
+		style:--_hidden={direction && (direction === 'ltr' ? 'translateX(-100%)' : 'translateX(100%)')}
 		class={[
 			'np-navigation-drawer-container',
 			'np-navigation-drawer-container-modal',
@@ -111,10 +109,14 @@
 	}
 
 	.np-navigation-drawer-container-modal {
+		--_hidden: translateX(-100%);
 		position: fixed;
 		inset-block: 0;
 		height: 100dvh;
 		overflow: visible;
+	}
+	.np-navigation-drawer-container-modal:dir(rtl) {
+		--_hidden: translateX(100%);
 	}
 	.np-navigation-drawer-container-modal:not([open]) {
 		display: none;
@@ -132,7 +134,7 @@
 	}
 
 	.np-navigation-drawer-container-modal .np-navigation-wrapper {
-		transform: var(--np-navigation-drawer-start, translateX(-100%));
+		transform: var(--_hidden);
 	}
 	.np-navigation-drawer-container-modal[open] .np-navigation-wrapper {
 		transform: translateX(0);
@@ -149,7 +151,7 @@
 		}
 		.np-navigation-drawer-container-modal[open] .np-navigation-wrapper {
 			@starting-style {
-				transform: var(--np-navigation-drawer-start, translateX(-100%));
+				transform: var(--_hidden);
 			}
 		}
 	}

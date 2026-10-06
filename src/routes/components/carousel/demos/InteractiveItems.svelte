@@ -12,8 +12,8 @@
 			image="/pollock.avif"
 			onclick={() => (clicked = 'Button')}
 		/>
-		<CarouselItem type="link" label="Link" image="/pollock2.avif" href="#interactive-items" />
-		<CarouselItem type="text" label="Not interactive" image="/pollock3.avif" />
+		<CarouselItem label="Link" image="/pollock2.avif" href="#interactive-items" />
+		<CarouselItem label="Not interactive" image="/pollock3.avif" />
 		<CarouselItem type="button" label="Disabled" image="/pollock.avif" disabled />
 	</Carousel>
 </div>

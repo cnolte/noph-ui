@@ -1,10 +1,12 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
+	import { buttonType, elementTag } from '#lib/internal/elementTag.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { CardProps } from './types.ts'
 
 	let {
 		image,
+		imageAlt,
 		variant = 'outlined',
 		disabled = false,
 		element = $bindable(),
@@ -16,11 +18,18 @@
 		type,
 		...attributes
 	}: CardProps = $props()
+
+	let tag = $derived(elementTag(attributes, type))
 </script>
 
 {#snippet content()}
 	{#if image}
-		<div class="np-card-image" style="background-image: url({image})"></div>
+		<div
+			class="np-card-image"
+			style="background-image: url({image})"
+			role={imageAlt ? 'img' : undefined}
+			aria-label={imageAlt || undefined}
+		></div>
 	{/if}
 	<div class="np-card-content">
 		{#if headline}
@@ -45,12 +54,12 @@
 			<div class="np-card-action">{@render action()}</div>
 		{/if}
 	</div>
-	{#if !disabled && type !== 'text'}
+	{#if !disabled && tag !== 'div'}
 		<Ripple />
 	{/if}
 {/snippet}
 
-{#if type === 'text'}
+{#if tag === 'div'}
 	<div
 		{...attributes}
 		bind:this={element}
@@ -64,11 +73,11 @@
 	>
 		{@render content()}
 	</div>
-{:else if type === 'button'}
+{:else if tag === 'button'}
 	<button
 		{...attributes}
 		aria-disabled={disabled}
-		type="button"
+		type={buttonType(type)}
 		bind:this={element}
 		{disabled}
 		class={[
@@ -80,7 +89,7 @@
 	>
 		{@render content()}
 	</button>
-{:else if type === 'link'}
+{:else}
 	<a
 		{...attributes}
 		bind:this={element}

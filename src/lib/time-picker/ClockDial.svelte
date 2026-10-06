@@ -316,8 +316,8 @@
 	<div class="np-clock-dial-center"></div>
 
 	{#each options as option, index (option.minutes)}
-		{@const angle = (angleOf(option.position, option.positions) * Math.PI) / 180}
-		{@const radius = radiusOf(option.inner)}
+		{let angle = $derived((angleOf(option.position, option.positions) * Math.PI) / 180)}
+		{let radius = $derived(radiusOf(option.inner))}
 		<button
 			type="button"
 			role="option"

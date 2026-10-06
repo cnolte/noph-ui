@@ -474,7 +474,7 @@
 </div>
 
 {#snippet item(option: SelectOption, index: number)}
-	{@const isSelected = selectedSet.has(option.value)}
+	{let isSelected = $derived(selectedSet.has(option.value))}
 	{#snippet check()}
 		<Check disabled={option.disabled} checked={isSelected} />
 	{/snippet}
@@ -489,10 +489,13 @@
 		aria-disabled={option.disabled}
 		role="option"
 		onkeydown={(event) => optionKeydown(event, option)}
-		variant="button"
 		selected={isSelected}
 		aria-selected={isSelected}
-		start={multiple ? check : undefined}
+		class={option.class}
+		style={option.style}
+		start={multiple ? check : option.start}
+		end={option.end}
+		supportingText={option.supportingText}
 		>{option.label}
 	</Item>
 {/snippet}

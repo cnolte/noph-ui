@@ -164,7 +164,6 @@
 				</p>
 			{:else}
 				<Item
-					variant="link"
 					href={row.hit.href}
 					id="{uid}-option-{row.position}"
 					role="option"

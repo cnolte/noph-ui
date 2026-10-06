@@ -127,12 +127,16 @@
 			<td><code>options</code></td>
 			<td
 				><code
-					>&#123; label?: string, labelIcon?: Snippet, icon?: Snippet, selected?: boolean,
-					disabled?: boolean, onclick?: &#40;event: Event&#41; =&gt; void &#125;&#91;&#93;</code
+					>&#123; value?: string | number, label?: string, labelIcon?: Snippet, icon?: Snippet,
+					selected?: boolean, disabled?: boolean, onclick?: &#40;event: Event&#41; =&gt; void
+					&#125;&#91;&#93;</code
 				></td
 			>
 			<td></td>
-			<td>The options to display</td>
+			<td
+				>The options to display. <code>value</code> is what ends up in <code>group</code> and in the
+				form data; without it the option falls back to its <code>label</code>.</td
+			>
 		</tr>
 		<tr>
 			<td><code>multiSelect</code></td>

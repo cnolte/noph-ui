@@ -30,7 +30,7 @@
 
 	const ITEMS = 'button, a[href], [role="menuitem"]'
 	const attach = rovingTabindex(ITEMS)
-	const arrowHandler = $derived(
+	let arrowHandler = $derived(
 		arrowKeyNav(ITEMS, placement.startsWith('inline') ? 'horizontal' : 'vertical'),
 	)
 
