@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
-	import type { ChipSetProps } from './types.ts'
+	import type { ChipSetProps } from './types.js'
 
 	let { children, element = $bindable(), ...attributes }: ChipSetProps = $props()
 

@@ -30,7 +30,7 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import type { DockedDatePickerProps, ISODate } from './types.ts'
+	import type { DockedDatePickerProps, ISODate } from './types.js'
 
 	let {
 		value = $bindable(),

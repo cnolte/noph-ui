@@ -4,7 +4,7 @@
 	import CheckIcon from '#lib/icons/CheckIcon.svelte'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { FilterChipProps } from './types.ts'
+	import type { FilterChipProps } from './types.js'
 
 	let {
 		selected = $bindable(),

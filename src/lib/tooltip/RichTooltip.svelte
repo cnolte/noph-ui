@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { RichTooltipProps } from './types.ts'
+	import type { RichTooltipProps } from './types.js'
 
 	let {
 		children,

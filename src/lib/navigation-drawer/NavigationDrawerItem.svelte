@@ -2,7 +2,7 @@
 	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
-	import type { NavigationDrawerItemProps } from './types.ts'
+	import type { NavigationDrawerItemProps } from './types.js'
 
 	let {
 		selected = false,

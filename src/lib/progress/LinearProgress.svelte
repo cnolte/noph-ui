@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reducedMotion } from '#lib/media.js'
-	import type { LinearProgressProps } from './types.ts'
+	import type { LinearProgressProps } from './types.js'
 
 	let {
 		value = 0,

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Item from '#lib/list/Item.svelte'
-	import type { MenuItemProps } from './types.ts'
+	import type { MenuItemProps } from './types.js'
 
 	let { element = $bindable(), ...attributes }: MenuItemProps = $props()
 </script>

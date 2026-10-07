@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Select from './Select.svelte'
-	import type { SelectOption } from './types.ts'
+	import type { SelectOption } from './types.js'
 
 	let {
 		value = $bindable(),

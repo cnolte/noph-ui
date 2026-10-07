@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClockDial from './ClockDial.svelte'
-	import type { ClockDialProps, TimeSelection } from './types.ts'
+	import type { ClockDialProps, TimeSelection } from './types.js'
 
 	let {
 		value = $bindable(0),

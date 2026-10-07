@@ -3,7 +3,7 @@
 	import Badge from '#lib/badge/Badge.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
-	import type { NavigationBarItemProps } from './types.ts'
+	import type { NavigationBarItemProps } from './types.js'
 
 	let {
 		selected = false,

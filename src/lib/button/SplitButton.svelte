@@ -3,7 +3,7 @@
 	import Menu from '#lib/menu/Menu.svelte'
 	import Button from './Button.svelte'
 	import ButtonGroup from './ButtonGroup.svelte'
-	import type { SplitButtonProps } from './types.ts'
+	import type { SplitButtonProps } from './types.js'
 
 	let {
 		label = '',

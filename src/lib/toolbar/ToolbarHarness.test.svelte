@@ -2,7 +2,7 @@
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import Toolbar from './Toolbar.svelte'
-	import type { ToolbarProps } from './types.ts'
+	import type { ToolbarProps } from './types.js'
 
 	let {
 		variant = 'docked',

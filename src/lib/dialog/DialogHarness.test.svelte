@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Dialog from './Dialog.svelte'
-	import type { DialogProps } from './types.ts'
+	import type { DialogProps } from './types.js'
 
 	let {
 		open = $bindable(true),

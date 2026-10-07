@@ -44,7 +44,7 @@
 		uses12HourClock,
 		withMinutes,
 	} from './dateUtils.js'
-	import type { DockedDateTimePickerProps, ISODate } from './types.ts'
+	import type { DockedDateTimePickerProps, ISODate } from './types.js'
 
 	let {
 		value = $bindable(),

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Issue } from '#lib/shared/types.js'
 	import DockedDatePicker from './DockedDatePicker.svelte'
-	import type { DockedDatePickerProps } from './types.ts'
+	import type { DockedDatePickerProps } from './types.js'
 
 	let { value = $bindable(), ...rest }: DockedDatePickerProps = $props()
 

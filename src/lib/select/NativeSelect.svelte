@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
-	import type { NativeSelectProps } from './types.ts'
+	import type { NativeSelectProps } from './types.js'
 
 	let {
 		id,

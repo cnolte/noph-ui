@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DateRangePicker from './DateRangePicker.svelte'
-	import type { DateRangePickerProps } from './types.ts'
+	import type { DateRangePickerProps } from './types.js'
 
 	let { value = $bindable({}), open = $bindable(false), ...rest }: DateRangePickerProps = $props()
 </script>

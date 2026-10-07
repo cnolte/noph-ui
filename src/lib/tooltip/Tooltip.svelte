@@ -3,7 +3,7 @@
 	import '#lib/internal/interest.css'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import { on } from 'svelte/events'
-	import type { TooltipProps } from './types.ts'
+	import type { TooltipProps } from './types.js'
 
 	let {
 		children,

@@ -20,7 +20,7 @@
 	import { onMount, tick } from 'svelte'
 	import TimePickerPanel from './TimePickerPanel.svelte'
 	import { timePickerState } from './timePickerState.svelte.js'
-	import type { DockedTimePickerProps, ISOTime, TimePickerMode } from './types.ts'
+	import type { DockedTimePickerProps, ISOTime, TimePickerMode } from './types.js'
 
 	let {
 		value = $bindable(),

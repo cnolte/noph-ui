@@ -7,7 +7,7 @@
 		snapToStep,
 	} from '#lib/date-picker/timeUtils.js'
 	import { tick } from 'svelte'
-	import type { ClockDialProps } from './types.ts'
+	import type { ClockDialProps } from './types.js'
 
 	let {
 		value,

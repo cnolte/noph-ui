@@ -21,7 +21,7 @@
 		today as getToday,
 	} from './dateUtils.js'
 	import { afterTwoFrames } from '#lib/animation.js'
-	import type { CalendarProps } from './types.ts'
+	import type { CalendarProps } from './types.js'
 
 	let {
 		month,

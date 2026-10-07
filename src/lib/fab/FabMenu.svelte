@@ -6,7 +6,7 @@
 	import { PRESS_DURATION } from '#lib/press.svelte.js'
 	import { onMount } from 'svelte'
 	import Fab from './Fab.svelte'
-	import type { FabMenuProps } from './types.ts'
+	import type { FabMenuProps } from './types.js'
 
 	let {
 		label = 'Actions',

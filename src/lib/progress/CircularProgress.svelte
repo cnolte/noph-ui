@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { reducedMotion } from '#lib/media.js'
 	import type { Attachment } from 'svelte/attachments'
-	import type { CircularProgressProps } from './types.ts'
+	import type { CircularProgressProps } from './types.js'
 
 	let {
 		value = 0,

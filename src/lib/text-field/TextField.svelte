@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TextFieldProps } from './types.ts'
+	import type { TextFieldProps } from './types.js'
 
 	let {
 		defaultValue,

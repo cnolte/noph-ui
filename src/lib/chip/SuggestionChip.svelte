@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '#lib/button/Button.svelte'
-	import type { SuggestionChipProps } from './types.ts'
+	import type { SuggestionChipProps } from './types.js'
 
 	let {
 		variant = 'outlined',

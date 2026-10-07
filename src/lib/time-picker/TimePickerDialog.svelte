@@ -16,7 +16,7 @@
 	import { MediaQuery } from 'svelte/reactivity'
 	import TimePickerPanel from './TimePickerPanel.svelte'
 	import { timePickerState } from './timePickerState.svelte.js'
-	import type { ISOTime, TimePickerDialogProps, TimePickerMode } from './types.ts'
+	import type { ISOTime, TimePickerDialogProps, TimePickerMode } from './types.js'
 
 	let {
 		value = $bindable(),

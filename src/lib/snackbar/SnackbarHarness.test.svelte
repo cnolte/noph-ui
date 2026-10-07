@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Snackbar from './Snackbar.svelte'
-	import type { SnackbarProps } from './types.ts'
+	import type { SnackbarProps } from './types.js'
 
 	let {
 		label,

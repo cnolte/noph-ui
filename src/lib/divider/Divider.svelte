@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DividerProps } from './types.ts'
+	import type { DividerProps } from './types.js'
 
 	let { variant = 'full', element = $bindable(), ...attributes }: DividerProps = $props()
 </script>

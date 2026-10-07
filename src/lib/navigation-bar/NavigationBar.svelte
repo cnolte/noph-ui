@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
-	import type { NavigationBarProps } from './types.ts'
+	import type { NavigationBarProps } from './types.js'
 
 	let {
 		children,

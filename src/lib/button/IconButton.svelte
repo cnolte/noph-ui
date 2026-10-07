@@ -5,7 +5,7 @@
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
-	import type { IconButtonProps } from './types.ts'
+	import type { IconButtonProps } from './types.js'
 
 	let {
 		variant = 'text',

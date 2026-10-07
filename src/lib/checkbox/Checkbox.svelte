@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { CheckboxProps } from './types.ts'
+	import type { CheckboxProps } from './types.js'
 
 	let {
 		indeterminate = $bindable(),

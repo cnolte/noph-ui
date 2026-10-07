@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { MenuProps } from './types.ts'
+	import type { MenuProps } from './types.js'
 
 	const MENU_ITEM_SELECTOR = '[role="menuitem"]'
 	const attach = rovingTabindex(MENU_ITEM_SELECTOR)

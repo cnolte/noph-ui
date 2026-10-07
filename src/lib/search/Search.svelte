@@ -5,7 +5,7 @@
 	import ArrowBackIcon from '#lib/icons/ArrowBackIcon.svelte'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
 	import SearchIcon from '#lib/icons/SearchIcon.svelte'
-	import type { SearchProps } from './types.ts'
+	import type { SearchProps } from './types.js'
 
 	let {
 		value = $bindable(''),

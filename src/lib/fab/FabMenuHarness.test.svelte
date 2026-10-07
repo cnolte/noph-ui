@@ -2,7 +2,7 @@
 	import Icon from '#lib/icons/Icon.svelte'
 	import Button from '#lib/button/Button.svelte'
 	import FabMenu from './FabMenu.svelte'
-	import type { FabMenuProps } from './types.ts'
+	import type { FabMenuProps } from './types.js'
 
 	let {
 		open = $bindable(false),

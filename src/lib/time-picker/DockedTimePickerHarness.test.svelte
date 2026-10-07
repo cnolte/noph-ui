@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DockedTimePicker from './DockedTimePicker.svelte'
-	import type { DockedTimePickerProps, TimePickerMode } from './types.ts'
+	import type { DockedTimePickerProps, TimePickerMode } from './types.js'
 
 	let {
 		value = $bindable(),

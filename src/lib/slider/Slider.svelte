@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Attachment } from 'svelte/attachments'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { SliderProps } from './types.ts'
+	import type { SliderProps } from './types.js'
 
 	let {
 		value = $bindable(0),

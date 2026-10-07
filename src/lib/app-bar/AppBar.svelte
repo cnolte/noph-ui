@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { AppBarProps } from './types.ts'
+	import type { AppBarProps } from './types.js'
 
 	let {
 		variant = 'small',

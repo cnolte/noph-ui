@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IconProps } from './types.ts'
+	import type { IconProps } from './types.js'
 
 	let { children, element = $bindable(), ...attributes }: IconProps = $props()
 </script>

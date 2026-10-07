@@ -2,7 +2,7 @@
 	import Divider from '#lib/divider/Divider.svelte'
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import { setTabsContext } from './context.js'
-	import type { TabsContext, TabsProps } from './types.ts'
+	import type { TabsContext, TabsProps } from './types.js'
 
 	let {
 		children,

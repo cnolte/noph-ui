@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Carousel from './Carousel.svelte'
 	import CarouselItem from './CarouselItem.svelte'
-	import type { CarouselItemProps, CarouselProps } from './types.ts'
+	import type { CarouselItemProps, CarouselProps } from './types.js'
 
 	let {
 		variant = 'multi-browse',

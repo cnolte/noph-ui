@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ListProps } from './types.ts'
+	import type { ListProps } from './types.js'
 
 	let { element = $bindable(), children, ...attributes }: ListProps = $props()
 </script>

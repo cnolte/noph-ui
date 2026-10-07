@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { BadgeProps } from './types.ts'
+	import type { BadgeProps } from './types.js'
 
 	let {
 		label,

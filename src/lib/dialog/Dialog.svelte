@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Divider from '#lib/divider/Divider.svelte'
 	import { syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { DialogProps } from './types.ts'
+	import type { DialogProps } from './types.js'
 
 	let {
 		element = $bindable(),

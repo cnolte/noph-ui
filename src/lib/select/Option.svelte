@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { OptionProps } from './types.ts'
+	import type { OptionProps } from './types.js'
 
 	let { start, end, children, ...attributes }: OptionProps = $props()
 </script>

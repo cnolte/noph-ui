@@ -2,7 +2,7 @@
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { revealSelected, tabStop } from './optionList.js'
-	import type { TimeColumnProps } from './internalTypes.ts'
+	import type { TimeColumnProps } from './internalTypes.js'
 
 	let { options, value, onselect, ...attributes }: TimeColumnProps = $props()
 

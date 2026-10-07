@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { PeriodSelectorProps } from './internalTypes.ts'
+	import type { PeriodSelectorProps } from './internalTypes.js'
 
 	let {
 		isPm,

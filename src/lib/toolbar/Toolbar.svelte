@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
-	import type { ToolbarProps } from './types.ts'
+	import type { ToolbarProps } from './types.js'
 
 	let {
 		variant = 'docked',

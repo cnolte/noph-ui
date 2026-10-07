@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '#lib/button/Button.svelte'
 	import Sheet from './Sheet.svelte'
-	import type { SheetProps } from './types.ts'
+	import type { SheetProps } from './types.js'
 
 	let {
 		open = $bindable(false),

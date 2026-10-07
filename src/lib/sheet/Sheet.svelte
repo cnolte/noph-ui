@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { SheetProps } from './types.ts'
+	import type { SheetProps } from './types.js'
 
 	let {
 		open = $bindable(false),

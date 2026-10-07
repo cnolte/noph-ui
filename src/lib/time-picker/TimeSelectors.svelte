@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { formatTwoDigits, MINUTES_IN_HOUR } from '#lib/date-picker/timeUtils.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { TimeSelectorsProps } from './internalTypes.ts'
+	import type { TimeSelectorsProps } from './internalTypes.js'
 
 	let {
 		value,

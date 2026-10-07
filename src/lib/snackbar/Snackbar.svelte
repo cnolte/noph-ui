@@ -2,7 +2,7 @@
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { SnackbarProps } from './types.ts'
+	import type { SnackbarProps } from './types.js'
 
 	let {
 		label,

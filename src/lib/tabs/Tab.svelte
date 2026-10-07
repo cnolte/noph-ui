@@ -3,7 +3,7 @@
 	import Badge from '#lib/badge/Badge.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { getTabsContext } from './context.js'
-	import type { TabProps } from './types.ts'
+	import type { TabProps } from './types.js'
 
 	let {
 		children,

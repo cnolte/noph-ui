@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import { syncOpenEffect } from '#lib/popover.svelte.js'
-	import type { NavigationDrawerProps } from './types.ts'
+	import type { NavigationDrawerProps } from './types.js'
 
 	let {
 		modal = false,

@@ -22,7 +22,7 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import type { DateRange, DateRangePickerProps } from './types.ts'
+	import type { DateRange, DateRangePickerProps } from './types.js'
 
 	let {
 		value = $bindable({}),

@@ -3,7 +3,7 @@
 	import Icon from '#lib/icons/Icon.svelte'
 	import Search from '#lib/search/Search.svelte'
 	import AppBar from './AppBar.svelte'
-	import type { AppBarProps } from './types.ts'
+	import type { AppBarProps } from './types.js'
 
 	let {
 		variant = 'small',

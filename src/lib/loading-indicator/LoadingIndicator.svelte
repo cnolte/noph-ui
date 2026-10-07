@@ -1,6 +1,6 @@
 <script module lang="ts">
-	import { SCALE, SHAPES, VIEWBOX, outlinePath } from './shapes.ts'
-	import type { LoadingIndicatorProps } from './types.ts'
+	import { SCALE, SHAPES, VIEWBOX, outlinePath } from './shapes.js'
+	import type { LoadingIndicatorProps } from './types.js'
 
 	const MORPH_DURATION = 650
 	const QUARTER_TURN = 90

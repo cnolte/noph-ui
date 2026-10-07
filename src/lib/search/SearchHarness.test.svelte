@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Item from '#lib/list/Item.svelte'
 	import Search from './Search.svelte'
-	import type { SearchProps } from './types.ts'
+	import type { SearchProps } from './types.js'
 
 	let {
 		value = $bindable(''),

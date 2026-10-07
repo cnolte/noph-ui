@@ -32,7 +32,7 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import type { DatePickerDialogProps, ISODate } from './types.ts'
+	import type { DatePickerDialogProps, ISODate } from './types.js'
 
 	let {
 		value = $bindable(),

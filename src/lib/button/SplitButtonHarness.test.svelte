@@ -1,7 +1,7 @@
 <script lang="ts">
 	import MenuItem from '#lib/menu/MenuItem.svelte'
 	import SplitButton from './SplitButton.svelte'
-	import type { SplitButtonProps } from './types.ts'
+	import type { SplitButtonProps } from './types.js'
 
 	let {
 		variant = 'filled',

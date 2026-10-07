@@ -4,7 +4,7 @@
 	import PeriodSelector from './PeriodSelector.svelte'
 	import TimeInputs from './TimeInputs.svelte'
 	import TimeSelectors from './TimeSelectors.svelte'
-	import type { TimePickerPanelProps } from './internalTypes.ts'
+	import type { TimePickerPanelProps } from './internalTypes.js'
 
 	let {
 		state,

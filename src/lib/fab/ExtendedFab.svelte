@@ -4,7 +4,7 @@
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
-	import type { ExtendedFabProps } from './types.ts'
+	import type { ExtendedFabProps } from './types.js'
 
 	let {
 		variant = 'primary-container',

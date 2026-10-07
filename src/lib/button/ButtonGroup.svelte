@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { reducedMotion } from '#lib/media.js'
 	import { onMount } from 'svelte'
-	import { expandedWidths, parseMotion, resolveItem } from './buttonGroup.ts'
-	import type { ButtonGroupProps } from './types.ts'
+	import { expandedWidths, parseMotion, resolveItem } from './buttonGroup.js'
+	import type { ButtonGroupProps } from './types.js'
 
 	let {
 		variant = 'standard',

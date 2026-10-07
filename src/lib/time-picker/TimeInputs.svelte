@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { HOURS_IN_DAY, MINUTES_IN_HOUR } from '#lib/date-picker/timeUtils.js'
 	import { customValidity } from '#lib/validity.js'
-	import type { TimeInputsProps } from './internalTypes.ts'
+	import type { TimeInputsProps } from './internalTypes.js'
 
 	let {
 		value,

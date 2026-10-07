@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Issue } from '#lib/shared/types.js'
 	import DockedTimePicker from './DockedTimePicker.svelte'
-	import type { DockedTimePickerProps } from './types.ts'
+	import type { DockedTimePickerProps } from './types.js'
 
 	let { value = $bindable(), ...rest }: DockedTimePickerProps = $props()
 

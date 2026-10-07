@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TimePickerDialog from './TimePickerDialog.svelte'
-	import type { TimePickerDialogProps, TimePickerMode } from './types.ts'
+	import type { TimePickerDialogProps, TimePickerMode } from './types.js'
 
 	let {
 		value = $bindable(),

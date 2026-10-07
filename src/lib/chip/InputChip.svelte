@@ -3,7 +3,7 @@
 	import IconButton from '#lib/button/IconButton.svelte'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { InputChipProps } from './types.ts'
+	import type { InputChipProps } from './types.js'
 
 	let {
 		selected = $bindable(),

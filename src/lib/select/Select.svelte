@@ -6,7 +6,7 @@
 	import Check from '#lib/select/Check.svelte'
 	import VirtualList from '#lib/select/VirtualList.svelte'
 	import { tick } from 'svelte'
-	import type { SelectOption, SelectProps } from './types.ts'
+	import type { SelectOption, SelectProps } from './types.js'
 
 	let {
 		options = [],

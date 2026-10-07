@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DockedDateTimePicker from './DockedDateTimePicker.svelte'
-	import type { DockedDateTimePickerProps } from './types.ts'
+	import type { DockedDateTimePickerProps } from './types.js'
 
 	let {
 		value = $bindable(),

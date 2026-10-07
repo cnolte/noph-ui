@@ -2,7 +2,7 @@
 	import Button from '#lib/button/Button.svelte'
 	import ButtonGroup from '#lib/button/ButtonGroup.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
-	import type { ButtonGroupProps } from './types.ts'
+	import type { ButtonGroupProps } from './types.js'
 
 	let { variant = 'standard', ...rest }: ButtonGroupProps = $props()
 </script>

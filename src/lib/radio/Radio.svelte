@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { RadioProps } from './types.ts'
+	import type { RadioProps } from './types.js'
 
 	let {
 		checked,

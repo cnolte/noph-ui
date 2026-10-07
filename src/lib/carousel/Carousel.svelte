@@ -2,9 +2,9 @@
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import { reducedMotion } from '#lib/media.js'
 	import type { Attachment } from 'svelte/attachments'
-	import { carouselMorph, scrollTimelines } from './carouselMorph.ts'
+	import { carouselMorph, scrollTimelines } from './carouselMorph.js'
 	import { setCarouselContext } from './context.js'
-	import type { CarouselContext, CarouselItemElement, CarouselProps } from './types.ts'
+	import type { CarouselContext, CarouselItemElement, CarouselProps } from './types.js'
 
 	let {
 		variant = 'multi-browse',

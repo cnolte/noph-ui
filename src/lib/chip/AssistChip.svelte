@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { AssistChipProps } from './types.ts'
+	import type { AssistChipProps } from './types.js'
 	import Button from '#lib/button/Button.svelte'
 
 	let {

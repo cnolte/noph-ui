@@ -2,7 +2,7 @@
 	import '#lib/internal/focus-ring.css'
 	import { buttonType, elementTag } from '#lib/internal/elementTag.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { ItemProps } from './types.ts'
+	import type { ItemProps } from './types.js'
 
 	let {
 		selected = false,

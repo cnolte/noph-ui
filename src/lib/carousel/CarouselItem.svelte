@@ -3,9 +3,9 @@
 	import { pressMorph } from '#lib/press.svelte.js'
 	import { buttonType, elementTag } from '#lib/internal/elementTag.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import { minVisibleFraction } from './carouselStrategy.ts'
+	import { minVisibleFraction } from './carouselStrategy.js'
 	import { getCarouselContext } from './context.js'
-	import type { CarouselItemElement, CarouselItemProps } from './types.ts'
+	import type { CarouselItemElement, CarouselItemProps } from './types.js'
 
 	let {
 		type,

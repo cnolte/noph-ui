@@ -2,7 +2,7 @@
 	import { forcedColors, reducedMotion } from '#lib/media.js'
 	import type { Attachment } from 'svelte/attachments'
 	import { on } from 'svelte/events'
-	import type { RippleProps } from './types.ts'
+	import type { RippleProps } from './types.js'
 
 	let {
 		forceHover = false,

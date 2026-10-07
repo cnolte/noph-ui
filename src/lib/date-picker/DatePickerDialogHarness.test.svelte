@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DatePickerDialog from './DatePickerDialog.svelte'
-	import type { DatePickerDialogProps } from './types.ts'
+	import type { DatePickerDialogProps } from './types.js'
 
 	let {
 		value = $bindable(),

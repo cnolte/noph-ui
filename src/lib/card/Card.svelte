@@ -2,7 +2,7 @@
 	import '#lib/internal/focus-ring.css'
 	import { buttonType, elementTag } from '#lib/internal/elementTag.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import type { CardProps } from './types.ts'
+	import type { CardProps } from './types.js'
 
 	let {
 		image,
