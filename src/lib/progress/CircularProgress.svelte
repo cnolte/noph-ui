@@ -119,6 +119,7 @@
 
 <style>
 	.np-container {
+		--_stroke: var(--np-circular-progress-active-indicator-width, 8.3333);
 		all: unset;
 		display: inline-flex;
 		vertical-align: middle;
@@ -155,7 +156,7 @@
 	}
 	circle,
 	.wave {
-		stroke-width: calc(var(--np-circular-progress-active-indicator-width, 8.3333) * 1%);
+		stroke-width: calc(var(--_stroke) * 1%);
 		stroke-dasharray: 100;
 		fill: transparent;
 	}
@@ -163,14 +164,19 @@
 	circle {
 		cx: 50%;
 		cy: 50%;
-		r: calc(50% * (1 - var(--np-circular-progress-active-indicator-width, 8.3333) / 100));
+		r: calc(50% * (1 - var(--_stroke) / 100));
 		transform-box: view-box;
 		transform-origin: 50% 50%;
 	}
 
 	.progress {
-		--_stroke: var(--np-circular-progress-active-indicator-width, 8.3333);
 		--_gap: calc((0.1 + var(--_stroke) / 100) / (3.14159265 * (1 - var(--_stroke) / 100)) * 100);
+	}
+
+	/* The flat ring is drawn 40dp wide inside the 48dp box, so the width is scaled to stay a
+	   percentage of the full indicator size. */
+	.progress:not(.wavy) {
+		--_stroke: calc(var(--np-circular-progress-active-indicator-width, 8.3333) * 1.2);
 	}
 
 	.wavy .track {

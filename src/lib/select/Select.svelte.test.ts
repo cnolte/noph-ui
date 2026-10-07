@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { render } from 'vitest-browser-svelte'
 import Harness from './MenuWidthHarness.test.svelte'
+import Select from './Select.svelte'
 import MultiHarness from './SelectOptionsHarness.test.svelte'
 
 describe.each(['select', 'autocomplete'] as const)('%s menu width', async (which) => {
@@ -37,5 +38,35 @@ describe('select options', async () => {
 		expect(
 			[...document.querySelectorAll('[role="option"]')].map((o) => o.getAttribute('aria-selected')),
 		).toEqual(['false', 'true'])
+	})
+})
+
+describe('select error state', async () => {
+	const options = [{ value: 'a', label: 'A' }]
+	const combobox = () => document.querySelector<HTMLElement>('[role="combobox"]')!
+
+	test('issues mark the focusable combobox invalid and point it at the message', async () => {
+		await render(Select, { options, label: 'Pick', issues: [{ message: 'Required' }] })
+
+		expect(combobox().getAttribute('aria-invalid')).toBe('true')
+		const errormessage = combobox().getAttribute('aria-errormessage')!
+		expect(document.getElementById(errormessage)?.textContent?.trim()).toBe('Required')
+		expect(combobox().matches(".field:is([aria-invalid='true'], :has(select:user-invalid))")).toBe(
+			true,
+		)
+	})
+
+	test('supporting text describes the combobox', async () => {
+		await render(Select, {
+			options,
+			label: 'Pick',
+			supportingText: 'Choose one',
+			'aria-describedby': 'outside-hint',
+		})
+
+		const describedby = combobox().getAttribute('aria-describedby')!
+		expect(describedby).toContain('outside-hint')
+		const own = describedby.split(' ').find((id) => id !== 'outside-hint')!
+		expect(document.getElementById(own)?.textContent?.trim()).toBe('Choose one')
 	})
 })

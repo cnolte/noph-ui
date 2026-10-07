@@ -5,6 +5,71 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.51.0] - 2026-10-06
+
+### Added
+
+- **AppBar**: fills with surface container on scroll
+  (`--np-app-bar-scrolled-container-color`, `--np-app-bar-fill-distance`).
+  The search field is surface container and turns surface container highest
+  on scroll. `scroller` now applies to every bar.
+- **Theme**: `--np-elevation-4`.
+- **Sheet**: `--np-sheet-max-width`; bottom sheets stop at 640px and center.
+- **TimePicker**: `--np-time-picker-period-selector-height`.
+
+### Fixed
+
+Colors, sizes and spacing now follow the M3 spec:
+
+- **AppBar**: headline and subtitle type scale per variant; medium and large
+  headlines wrap to two lines instead of truncating.
+- **Button, IconButton**: outlined content is on surface variant; state layers
+  use the content color of each variant and state; filled hover is 8%.
+- **SegmentedButton**: state layer is on surface, on secondary container when
+  selected.
+- **SplitButton**: 4px gap to the menu.
+- **FAB, ExtendedFAB**: hover adds one 8% state layer instead of two and
+  raises to elevation 4. **FabMenu**: 8px gap to the FAB, 4px between items.
+- **NavigationBar**: selected label is secondary; labels wrap instead of
+  truncating. **NavigationRail**: selected label is secondary.
+- **NavigationDrawer**: no extra padding after a badge.
+- **Tabs**: the indicator is at least 24px.
+- **Toolbar**: floating toolbars are 64px; docked toolbars have 16px side
+  padding; vertical toolbars sit 24px from the edge.
+- **Dialog, TimePickerDialog**: container is surface container high; the
+  content does not scroll the page behind.
+- **Sheet**: standard side sheets are surface with square corners; side sheet
+  headlines are on surface variant; the drag handle is on surface variant with
+  22px above and below; side sheets never scroll sideways; 12px header gap.
+- **Carousel**: 16px between full-screen items; no trailing padding on
+  uncontained carousels.
+- **List Item**: disabled supporting text is dimmed.
+- **Select**: hover state on outlined fields; disabled opacity is applied
+  once; the leading icon keeps its color in the error state.
+- **SuggestionChip**: label is on surface variant.
+- **Switch**: the error icon turns error; the handle mirrors in right-to-left
+  layouts. **Radio, Switch**: icons are hidden from assistive technology.
+- **Slider**: medium handle is 52px; the value label is 44 by 48px.
+- **DatePickerDialog, DateRangePicker**: headline is on surface; the full
+  screen range picker is surface container high.
+- **TimePicker**: unselected period label is on surface; the period selector
+  is 72px high in input mode.
+- **CircularProgress**: the flat ring is 4px thick.
+- **LinearProgress**: works from 40px wide.
+- **Snackbar**: the label wraps to two lines.
+- **RichTooltip**: 12px top padding with actions.
+
+Accessibility now follows the M3 spec:
+
+- **Dialog**: focus lands on the first interactive element, or on an
+  `autofocus` element, instead of on the dialog itself.
+- **Select**: `issues` alone switch on the error state. `aria-invalid`,
+  `aria-errormessage` and `aria-describedby` sit on the focusable combobox,
+  and a consumer `aria-describedby` is no longer dropped.
+  **NativeSelect**: `issues` set `aria-invalid`.
+- **Snackbar**: a polite `role="status"` live region instead of
+  `role="alert"`.
+
 ## [0.50.0] - 2026-10-06
 
 ### Changed (breaking)

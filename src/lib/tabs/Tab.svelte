@@ -166,7 +166,7 @@
 		font-weight: 500;
 		gap: 0.5rem;
 		text-wrap: nowrap;
-		min-width: 1.5rem;
+		min-width: calc(1.5rem + 2 * var(--_indicator-gap, 2px));
 	}
 	.np-tab-label-badge {
 		margin-inline-end: 4px;

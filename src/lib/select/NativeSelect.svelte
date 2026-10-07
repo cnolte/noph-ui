@@ -18,6 +18,7 @@
 		element = $bindable(),
 		'aria-describedby': ariaDescribedby,
 		'aria-errormessage': ariaErrormessage,
+		'aria-invalid': ariaInvalid,
 		...attributes
 	}: NativeSelectProps = $props()
 	const uid = $props.id()
@@ -78,6 +79,7 @@
 		id={selectId}
 		bind:value
 		{...attributes}
+		aria-invalid={errorText ? 'true' : ariaInvalid}
 		aria-errormessage={[errorText && `supporting-text-${uid}`, ariaErrormessage]
 			.filter(Boolean)
 			.join(' ') || undefined}

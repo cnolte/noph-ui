@@ -49,7 +49,7 @@
 		aria-label={menuLabel}
 		start={caret}
 	/>
-	<Menu id={menuId} anchor={trigger} bind:open coverAnchor={false}>
+	<Menu id={menuId} anchor={trigger} bind:open coverAnchor={false} style="--np-menu-margin: 4px">
 		{@render menu?.(menuId)}
 	</Menu>
 </ButtonGroup>

@@ -112,7 +112,8 @@
 </p>
 <p>
 	While the dialog is open every other element on the page is marked <code>inert</code>, which keeps
-	both the keyboard and the screen reader cursor inside it. Focus moves to the dialog on open and
+	both the keyboard and the screen reader cursor inside it. On open, focus moves to the first
+	interactive element inside the dialog, or to an element marked <code>autofocus</code>, and goes
 	back to whatever was focused before on close. <kbd>Escape</kbd> and a click on the scrim close the dialog,
 	so always offer a cancelling action as well; a dialog that must not be dismissed by accident should
 	not rely on the scrim alone.
@@ -121,7 +122,7 @@
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	By default the dialog follows the theme without configuration: it draws on the
-	<code>surface</code>
+	<code>surface-container-high</code>
 	and <code>on-surface</code> roles, uses <code>secondary</code> for the icon,
 	<code>on-surface-variant</code> for the supporting text and <code>scrim</code> for the backdrop. Every
 	one of those defaults is reachable through a custom property when a dialog needs to depart from them.
@@ -157,7 +158,7 @@
 		</tr>
 		<tr>
 			<td><code>--np-dialog-container-color</code></td>
-			<td><code>--np-color-surface</code></td>
+			<td><code>--np-color-surface-container-high</code></td>
 			<td>Surface colour.</td>
 		</tr>
 		<tr>

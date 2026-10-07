@@ -209,4 +209,7 @@
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 		background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
 	}
+	.np-item.disabled .np-item-supporting-text {
+		color: inherit;
+	}
 </style>

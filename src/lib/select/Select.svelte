@@ -32,10 +32,16 @@
 		multiple,
 		virtualThreshold = 300,
 		clampMenuWidth = false,
+		'aria-invalid': ariaInvalid,
+		'aria-describedby': ariaDescribedby,
+		'aria-errormessage': ariaErrormessage,
 		...attributes
 	}: SelectProps = $props()
 
 	const uid = $props.id()
+	const supportingTextId = `supporting-text-${uid}`
+	const ids = (...values: (string | undefined | null | false)[]) =>
+		values.filter(Boolean).join(' ') || undefined
 	$effect(() => {
 		if (value === undefined) {
 			if (multiple) {
@@ -59,6 +65,11 @@
 	let widthProp = $derived(clampMenuWidth || useVirtualList ? 'width' : 'min-width')
 
 	let errorText = $derived(issues?.map((i) => i.message).join(', '))
+	let ariaProps = $derived({
+		'aria-invalid': errorText ? ('true' as const) : ariaInvalid,
+		'aria-errormessage': ids(errorText && supportingTextId, ariaErrormessage),
+		'aria-describedby': ids(supportingText && !errorText && supportingTextId, ariaDescribedby),
+	})
 	let selectElement = $state<HTMLSelectElement>()
 	let menuElement = $state<HTMLDivElement>()
 	let anchorElement = $state<HTMLDivElement>()
@@ -309,6 +320,7 @@
 		aria-label={attributes['aria-label'] || label}
 		aria-disabled={disabled}
 		aria-activedescendant={activeDescendantId}
+		{...ariaProps}
 		data-testid={attributes['data-testid']}
 		bind:this={field}
 		autofocus={disabled ? false : autofocus}
@@ -408,7 +420,6 @@
 						{#if multiple}
 							<select
 								tabindex="-1"
-								aria-invalid={attributes['aria-invalid']}
 								{disabled}
 								{required}
 								{name}
@@ -429,7 +440,6 @@
 						{:else}
 							<select
 								tabindex="-1"
-								aria-invalid={attributes['aria-invalid']}
 								{disabled}
 								{required}
 								{name}
@@ -464,7 +474,7 @@
 			</div>
 		</div>
 		{#if supportingText || errorText}
-			<div class="supporting-text" role={errorText ? 'alert' : undefined}>
+			<div id={supportingTextId} class="supporting-text" role={errorText ? 'alert' : undefined}>
 				<span>
 					{errorText ?? supportingText}
 				</span>
@@ -580,10 +590,10 @@
 		border-bottom-color: var(--np-color-primary);
 		border-bottom-width: 3px;
 	}
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .active-indicator::before {
+	.field:is([aria-invalid='true'], :has(select:user-invalid)) .active-indicator::before {
 		border-bottom-color: var(--np-color-error);
 	}
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .active-indicator::after {
+	.field:is([aria-invalid='true'], :has(select:user-invalid)) .active-indicator::after {
 		border-bottom-color: var(--np-color-error);
 	}
 	.disabled .active-indicator::before {
@@ -681,7 +691,7 @@
 		justify-content: space-between;
 		padding: 0.25rem 1rem 0;
 	}
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .supporting-text {
+	.field:is([aria-invalid='true'], :has(select:user-invalid)) .supporting-text {
 		color: var(--np-color-error);
 	}
 	.disabled .supporting-text {
@@ -810,8 +820,7 @@
 		margin-inline-start: 1rem;
 		margin-inline-end: 0.75rem;
 	}
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .start,
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .end {
+	.field:is([aria-invalid='true'], :has(select:user-invalid)) .end {
 		color: var(--np-color-error);
 	}
 	.disabled .start,
@@ -928,15 +937,13 @@
 	.field:focus .label {
 		color: var(--np-color-primary);
 	}
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .label,
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])).menu-open .label,
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])):focus .label {
+	.field:is([aria-invalid='true'], :has(select:user-invalid)) .label,
+	.field:is([aria-invalid='true'], :has(select:user-invalid)).menu-open .label,
+	.field:is([aria-invalid='true'], :has(select:user-invalid)):focus .label {
 		color: var(--np-color-error);
 	}
 	.disabled .label {
 		color: var(--np-color-on-surface);
-	}
-	.disabled {
 		opacity: 0.38;
 	}
 	.resizable:not(.disabled) .np-container {
@@ -1079,15 +1086,27 @@
 		z-index: 1;
 	}
 
+	.field:not(.disabled, .menu-open, :focus):hover .np-outline {
+		border-color: var(--np-color-on-surface);
+		color: var(--np-color-on-surface);
+	}
 	.field.menu-open .np-outline,
 	.field:focus .np-outline {
 		border-color: var(--np-color-primary);
 		color: var(--np-color-primary);
 	}
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])) .np-outline,
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])).menu-open .np-outline,
-	.field:has(select:is(:user-invalid, [aria-invalid='true'])):focus .np-outline {
+	.field:is([aria-invalid='true'], :has(select:user-invalid)) .np-outline,
+	.field:is([aria-invalid='true'], :has(select:user-invalid)).menu-open .np-outline,
+	.field:is([aria-invalid='true'], :has(select:user-invalid)):focus .np-outline {
 		border-color: var(--np-color-error);
+	}
+	.field:is([aria-invalid='true'], :has(select:user-invalid)):not(
+			.disabled,
+			.menu-open,
+			:focus
+		):hover
+		.np-outline {
+		border-color: var(--np-color-on-error-container);
 	}
 	.disabled .np-outline {
 		border-color: var(--np-color-on-surface);

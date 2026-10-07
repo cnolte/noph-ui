@@ -195,6 +195,10 @@
 		padding-block: var(--_cross);
 	}
 
+	.np-carousel-uncontained.np-carousel-horizontal .np-carousel-track {
+		padding-inline-end: 0;
+	}
+
 	.np-carousel-vertical .np-carousel-track {
 		flex-direction: column;
 		padding-block: var(--_pad);
@@ -208,7 +212,7 @@
 
 	.np-carousel-full-screen {
 		--np-carousel-padding: 0px;
-		--_gap: 0px;
+		--_gap: var(--np-carousel-item-spacing, 1rem);
 		--_cross: 0px;
 		--np-carousel-item-container-shape: 0px;
 		--np-carousel-snap-stop: always;

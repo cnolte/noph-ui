@@ -188,6 +188,11 @@
 	sits visually, so the tab order matches the screen, and remember that one screen has one FAB: two
 	of them leave people guessing which action the screen is about.
 </p>
+<p>
+	A FAB menu is a <code>role="menu"</code>, and a menu may only hold menu items. Give every item
+	<code>role="menuitem"</code>, as the example above does. The menu keeps them in one tab stop and
+	moves between them with the arrow keys.
+</p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="fab-attributes">
 	Fab attributes<a href="#fab-attributes" aria-hidden="true" tabindex="-1">#</a>

@@ -168,7 +168,7 @@ export const searchIndex: SearchPage[] = [
 				id: 'elevation-tokens',
 				text: 'Elevation tokens',
 				level: 2,
-				body: 'Three layered shadows, from the lightest lift to the most pronounced. Cards, menus and dialogs use them, and so can you.',
+				body: 'Four layered shadows, from the lightest lift to the most pronounced. Cards, menus, dialogs and hovered FABs use them, and so can you.',
 				terms: [],
 			},
 			{
@@ -201,6 +201,13 @@ export const searchIndex: SearchPage[] = [
 				terms: ['search', 'small', 'medium', 'large'],
 			},
 			{
+				id: 'scrolling',
+				text: 'Scrolling',
+				level: 2,
+				body: "The bar starts in the page's surface color and fills with surface container once the content scrolls under it, which separates it from the page without a shadow. Like collapsing,…",
+				terms: ['animation-timeline: scroll()', 'scroller'],
+			},
+			{
 				id: 'collapsing',
 				text: 'Collapsing',
 				level: 2,
@@ -212,7 +219,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Theming',
 				level: 2,
 				body: '',
-				terms: ['--np-app-bar-container-color', '--np-app-bar-headline-color'],
+				terms: ['--np-app-bar-container-color', '--np-app-bar-scrolled-container-color', '--np-app-bar-fill-distance', '--np-app-bar-headline-color'],
 			},
 			{
 				id: 'accessibility',
@@ -587,7 +594,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Outlined button tokens',
 				level: 3,
 				body: '',
-				terms: ['--np-outlined-button-outline-color', '--np-color-outline-variant', '--np-outlined-button-label-text-color', '--np-color-primary'],
+				terms: ['--np-outlined-button-outline-color', '--np-color-outline-variant', '--np-outlined-button-label-text-color', '--np-color-on-surface-variant'],
 			},
 			{
 				id: 'outlined-button-example',
@@ -1420,14 +1427,14 @@ export const searchIndex: SearchPage[] = [
 				text: 'Accessibility',
 				level: 2,
 				body: 'The surface renders role="dialog" with aria-modal="true". The headline labels it through aria-labelledby and the supportingText describes it through aria-describedby, so both are…',
-				terms: ['role="dialog"', 'aria-modal="true"', 'headline', 'aria-labelledby', 'supportingText', 'aria-describedby', 'h1', 'headlineLevel', 'aria-label', 'inert'],
+				terms: ['role="dialog"', 'aria-modal="true"', 'headline', 'aria-labelledby', 'supportingText', 'aria-describedby', 'h1', 'headlineLevel', 'aria-label', 'inert', 'autofocus'],
 			},
 			{
 				id: 'theming',
 				text: 'Theming',
 				level: 2,
-				body: 'By default the dialog follows the theme without configuration: it draws on the surface and on-surface roles, uses secondary for the icon, on-surface-variant for the supporting…',
-				terms: ['surface', 'on-surface', 'secondary', 'on-surface-variant', 'scrim', '--np-dialog-container-width', '37rem', 'fit-content', '--np-dialog-container-min-width', '19.5rem', '--np-dialog-inset', '2rem 1rem', '--np-dialog-padding', '1.5rem', '0', '--np-dialog-container-color', '--np-color-surface', '--np-dialog-container-shape', '--np-shape-corner-extra-large', '--np-dialog-elevation', '--np-elevation-3', 'none', '--np-dialog-max-height', 'calc(100dvh - 3rem)'],
+				body: 'By default the dialog follows the theme without configuration: it draws on the surface-container-high and on-surface roles, uses secondary for the icon, on-surface-variant for the…',
+				terms: ['surface-container-high', 'on-surface', 'secondary', 'on-surface-variant', 'scrim', '--np-dialog-container-width', '37rem', 'fit-content', '--np-dialog-container-min-width', '19.5rem', '--np-dialog-inset', '2rem 1rem', '--np-dialog-padding', '1.5rem', '0', '--np-dialog-container-color', '--np-color-surface-container-high', '--np-dialog-container-shape', '--np-shape-corner-extra-large', '--np-dialog-elevation', '--np-elevation-3', 'none', '--np-dialog-max-height', 'calc(100dvh - 3rem)'],
 			},
 			{
 				id: 'api',
@@ -1576,7 +1583,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Accessibility',
 				level: 2,
 				body: 'The FAB renders a native <button>, or an <a> with href. It usually shows an icon alone, so the label is what gives it a name, and the same text becomes its tooltip.',
-				terms: ['<button>', '<a>', 'href', 'label'],
+				terms: ['<button>', '<a>', 'href', 'label', 'role="menu"', 'role="menuitem"'],
 			},
 			{
 				id: 'api',
@@ -2716,7 +2723,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Accessibility',
 				level: 2,
 				body: 'Select renders the field as a role="combobox" with aria-expanded, aria-controls and aria-activedescendant, and the popup as a role="listbox" whose options carry aria-selected.…',
-				terms: ['Select', 'role="combobox"', 'aria-expanded', 'aria-controls', 'aria-activedescendant', 'role="listbox"', 'aria-selected', 'label', 'aria-describedby', 'issues', 'role="alert"', 'NativeSelect', '<select>'],
+				terms: ['Select', 'role="combobox"', 'aria-expanded', 'aria-controls', 'aria-activedescendant', 'role="listbox"', 'aria-selected', 'label', 'aria-describedby', 'issues', 'aria-invalid', 'aria-errormessage', 'role="alert"', 'NativeSelect', '<select>'],
 			},
 			{
 				id: 'api',
@@ -2794,7 +2801,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Theming',
 				level: 2,
 				body: '',
-				terms: ['--np-sheet-container-color', '--np-sheet-shape', '--np-sheet-size', '--np-sheet-handle-color', '--np-sheet-elevation'],
+				terms: ['--np-sheet-container-color', '--np-sheet-shape', '--np-sheet-max-width', '--np-sheet-size', '--np-sheet-handle-color', '--np-sheet-elevation'],
 			},
 			{
 				id: 'accessibility',
@@ -2949,8 +2956,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'two-line-snackbar',
 				text: 'Two-line snackbar',
 				level: 3,
-				body: '',
-				terms: [],
+				body: 'A long label wraps onto a second line instead of being cut off, so the whole message stays readable. Past two lines it is truncated, so keep the text short enough to fit.',
+				terms: ['label'],
 			},
 			{
 				id: 'manual-control',
@@ -2963,8 +2970,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'accessibility',
 				text: 'Accessibility',
 				level: 2,
-				body: 'The snackbar is role="alert", an atomic live region, so a screen reader reads the whole thing out when it appears: the label, the supportingText and the action label together. It…',
-				terms: ['role="alert"', 'label', 'supportingText', 'aria-label', 'iconAriaLabel', 'timeout', 'timeout='],
+				body: 'The snackbar is role="status", a polite live region, as the M3 spec asks for on the web. A screen reader waits until it is done speaking and then reads the whole thing: the label,…',
+				terms: ['role="status"', 'label', 'supportingText', 'aria-label', 'iconAriaLabel', 'timeout', 'timeout='],
 			},
 			{
 				id: 'theming',
@@ -3466,7 +3473,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Theming',
 				level: 2,
 				body: 'Colours and shapes come from the theme, and every part exposes a custom property for the cases the theme cannot reach. Set them on the picker itself; they inherit into the dial,…',
-				terms: ['--np-text-field-*', '--np-time-picker-headline-color', '--np-color-on-surface-variant', '--np-time-picker-time-selector-container-shape', '--np-shape-corner-small', '--np-time-picker-time-selector-container-width', '6rem', '7.125rem', '--np-color-primary-container', '--np-color-on-primary-container', '--np-color-surface-container-highest', '--np-color-on-surface', '--np-time-picker-time-selector-separator-color', '--np-time-picker-period-selector-container-shape', '--np-time-picker-period-selector-outline-color', '--np-color-outline', '--np-color-tertiary-container', '--np-color-on-tertiary-container', '--np-time-picker-clock-dial-container-color', '--np-time-picker-clock-dial-container-shape', '--np-shape-corner-full', '--np-time-picker-clock-dial-size', '16rem', '--np-time-picker-clock-dial-label-color'],
+				terms: ['--np-text-field-*', '--np-time-picker-headline-color', '--np-color-on-surface-variant', '--np-time-picker-time-selector-container-shape', '--np-shape-corner-small', '--np-time-picker-period-selector-height', '5rem', '4.5rem', '--np-time-picker-time-selector-container-width', '6rem', '7.125rem', '--np-color-primary-container', '--np-color-on-primary-container', '--np-color-surface-container-highest', '--np-color-on-surface', '--np-time-picker-time-selector-separator-color', '--np-time-picker-period-selector-container-shape', '--np-time-picker-period-selector-outline-color', '--np-color-outline', '--np-color-tertiary-container', '--np-color-on-tertiary-container', '--np-time-picker-clock-dial-container-color', '--np-time-picker-clock-dial-container-shape', '--np-shape-corner-full'],
 			},
 			{
 				id: 'example',

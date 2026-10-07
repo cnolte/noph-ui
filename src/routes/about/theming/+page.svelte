@@ -185,13 +185,14 @@ setTheme({ '--np-color-primary': 'light-dark(#00668c, #75ceff)' })`}
 	Elevation tokens<a href="#elevation-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Three layered shadows, from the lightest lift to the most pronounced. Cards, menus and dialogs use
-	them, and so can you.
+	Four layered shadows, from the lightest lift to the most pronounced. Cards, menus, dialogs and
+	hovered FABs use them, and so can you.
 </p>
 <Code
 	value={`box-shadow: var(--np-elevation-1);
 box-shadow: var(--np-elevation-2);
-box-shadow: var(--np-elevation-3);`}
+box-shadow: var(--np-elevation-3);
+box-shadow: var(--np-elevation-4);`}
 />
 
 <h2 id="overriding-a-single-component">

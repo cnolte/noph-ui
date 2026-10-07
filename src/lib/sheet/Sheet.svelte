@@ -108,6 +108,8 @@
 		max-height: var(--np-sheet-size, 50dvh);
 	}
 	.np-sheet-bottom {
+		max-width: var(--np-sheet-max-width, 40rem);
+		margin-inline: auto;
 		inset-block-end: 0;
 		inset-block-start: auto;
 		border-start-start-radius: var(--np-sheet-shape, var(--np-shape-corner-extra-large));
@@ -139,21 +141,26 @@
 		border-start-start-radius: var(--np-sheet-shape, var(--np-shape-corner-large));
 		border-end-start-radius: var(--np-sheet-shape, var(--np-shape-corner-large));
 	}
+	.np-sheet-start:not(.np-sheet-modal),
+	.np-sheet-end:not(.np-sheet-modal) {
+		background-color: var(--np-sheet-container-color, var(--np-color-surface));
+		border-radius: var(--np-sheet-shape, 0);
+	}
 
 	.np-sheet-handle {
 		flex: none;
 		width: 2rem;
 		height: 0.25rem;
-		margin: 1rem auto 0;
+		margin: 1.375rem auto;
 		border-radius: var(--np-shape-corner-full);
-		background-color: var(--np-sheet-handle-color, var(--np-color-outline-variant));
+		background-color: var(--np-sheet-handle-color, var(--np-color-on-surface-variant));
 	}
 
 	.np-sheet-header {
 		flex: none;
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.75rem;
 		padding: 1rem 1.5rem 0;
 	}
 	.np-sheet-headline {
@@ -163,6 +170,10 @@
 		line-height: 2rem;
 		font-weight: 400;
 	}
+	.np-sheet-start .np-sheet-headline,
+	.np-sheet-end .np-sheet-headline {
+		color: var(--np-color-on-surface-variant);
+	}
 	.np-sheet-action {
 		flex: none;
 		display: flex;
@@ -171,6 +182,7 @@
 	.np-sheet-content {
 		flex: 1;
 		min-height: 0;
+		overflow-x: hidden;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		padding: 1rem 1.5rem 1.5rem;

@@ -60,7 +60,7 @@
 	.np-period-selector.vertical {
 		flex-direction: column;
 		width: 3.25rem;
-		height: 5rem;
+		height: var(--np-time-picker-period-selector-height, 5rem);
 		flex: none;
 	}
 
@@ -100,10 +100,7 @@
 		font-size: 1rem;
 		line-height: 1.5rem;
 		font-weight: 500;
-		color: var(
-			--np-time-picker-period-selector-unselected-label-color,
-			var(--np-color-on-surface-variant)
-		);
+		color: var(--np-time-picker-period-selector-unselected-label-color, var(--np-color-on-surface));
 	}
 
 	.np-period-option.selected {

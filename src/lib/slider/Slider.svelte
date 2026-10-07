@@ -391,6 +391,7 @@
 	}
 	.np-slider.np-size-m {
 		--_size-track-height: 2.5rem;
+		--_size-handle-height: 3.25rem;
 		--_size-corner: 0.75rem;
 	}
 	.np-slider.np-size-l {
@@ -614,9 +615,9 @@
 		flex: none;
 		writing-mode: horizontal-tb;
 		direction: ltr;
-		min-inline-size: 2rem;
+		min-inline-size: 3rem;
 		box-sizing: border-box;
-		padding: 0.375rem 0.625rem;
+		padding: 0.75rem 1rem;
 		border-radius: var(--np-shape-corner-full);
 		background: var(--np-slider-label-container-color, var(--np-color-inverse-surface));
 		color: var(--np-slider-label-text-color, var(--np-color-inverse-on-surface));

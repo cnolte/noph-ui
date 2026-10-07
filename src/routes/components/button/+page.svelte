@@ -220,7 +220,7 @@
 		</tr>
 		<tr>
 			<td><code>--np-outlined-button-label-text-color</code></td>
-			<td><code>--np-color-primary</code></td>
+			<td><code>--np-color-on-surface-variant</code></td>
 		</tr>
 	</tbody>
 </table>

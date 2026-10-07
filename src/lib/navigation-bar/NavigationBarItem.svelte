@@ -133,13 +133,12 @@
 		font-weight: var(--np-navigation-bar-item-font-weight, 500);
 		color: var(--np-color-on-surface-variant);
 		max-width: 100%;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		text-align: center;
+		overflow-wrap: anywhere;
 	}
 	.np-navigation-bar-item-selected .np-navigation-bar-item-label {
 		font-weight: var(--np-navigation-bar-item-selected-font-weight, 500);
-		color: var(--np-color-on-surface);
+		color: var(--np-color-secondary);
 	}
 
 	.np-navigation-bar-item-label-selected .np-navigation-bar-item-label {

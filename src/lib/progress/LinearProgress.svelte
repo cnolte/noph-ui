@@ -217,7 +217,7 @@
 		border-radius: var(--np-linear-progress-track-shape, var(--np-shape-corner-full));
 		display: flex;
 		position: relative;
-		min-width: 80px;
+		min-width: 40px;
 		height: var(--np-linear-progress-track-height, 0.25rem);
 		content-visibility: auto;
 		contain: strict;

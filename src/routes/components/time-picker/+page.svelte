@@ -244,6 +244,10 @@
 			<td><code>--np-shape-corner-small</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-time-picker-period-selector-height</code></td>
+			<td><code>5rem</code> (80dp), <code>4.5rem</code> (72dp) in input mode</td>
+		</tr>
+		<tr>
 			<td><code>--np-time-picker-time-selector-container-width</code></td>
 			<td><code>6rem</code> (96dp), <code>7.125rem</code> (114dp) with no period selector</td>
 		</tr>
@@ -285,7 +289,7 @@
 		</tr>
 		<tr>
 			<td><code>--np-time-picker-period-selector-unselected-label-color</code></td>
-			<td><code>--np-color-on-surface-variant</code></td>
+			<td><code>--np-color-on-surface</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-time-picker-clock-dial-container-color</code></td>

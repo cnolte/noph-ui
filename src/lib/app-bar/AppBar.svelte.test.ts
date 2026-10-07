@@ -118,6 +118,50 @@ describe('AppBar', async () => {
 		expect(bar().getBoundingClientRect().height).toBeGreaterThan(112)
 	})
 
+	test('the container fill is driven by a scroll timeline on every variant', async () => {
+		await render(Harness, { variant: 'small', scrollable: true })
+
+		const style = getComputedStyle(bar())
+		expect(style.animationTimeline).toContain('scroll')
+		expect(style.animationName).toContain('np-app-bar-fill')
+	})
+
+	test('the container fills with a different color once the page scrolls', async () => {
+		await render(Harness, { variant: 'small', scrollable: true })
+		const flat = getComputedStyle(bar()).backgroundColor
+
+		window.scrollTo(0, 200)
+		await new Promise(requestAnimationFrame)
+		await new Promise(requestAnimationFrame)
+		const scrolled = getComputedStyle(bar()).backgroundColor
+		window.scrollTo(0, 0)
+
+		expect(scrolled).not.toBe(flat)
+	})
+
+	test('the search field in a search bar changes color on scroll too', async () => {
+		await render(Harness, { variant: 'search', scrollable: true })
+		const field = document.querySelector<HTMLElement>('.np-app-bar-search-field .np-search-bar')!
+		const flat = getComputedStyle(field).backgroundColor
+
+		window.scrollTo(0, 200)
+		await new Promise(requestAnimationFrame)
+		await new Promise(requestAnimationFrame)
+		const scrolled = getComputedStyle(field).backgroundColor
+		window.scrollTo(0, 0)
+
+		expect(getComputedStyle(field).animationName).toContain('np-app-bar-search-fill')
+		expect(scrolled).not.toBe(flat)
+		expect(scrolled).not.toBe(getComputedStyle(bar()).backgroundColor)
+	})
+
+	test('a bar that does not collapse leaves scroll anchoring alone in its own scroller', async () => {
+		await render(AppBar, { headline: 'Inbox', scroller: 'nearest' })
+
+		expect(bar().classList.contains('np-app-bar-scroller-nearest')).toBe(true)
+		expect(getComputedStyle(bar().parentElement!).overflowAnchor).not.toBe('none')
+	})
+
 	test('a collapsible bar turns off scroll anchoring on the scroller', async () => {
 		await render(Harness, { variant: 'large', collapsible: true, scrollable: true })
 

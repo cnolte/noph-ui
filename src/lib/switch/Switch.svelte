@@ -30,7 +30,7 @@
 	<div class="np-track"></div>
 	<div class={['np-handle', icons === 'both' && 'both-icons']}>
 		{#if icons}
-			<svg class="np-switch-icon np-icon-selected" viewBox="0 0 24 24">
+			<svg aria-hidden="true" class="np-switch-icon np-icon-selected" viewBox="0 0 24 24">
 				<path
 					d="M20 6L9 17l-5-5"
 					fill="none"
@@ -42,7 +42,7 @@
 			</svg>
 		{/if}
 		{#if icons === 'both'}
-			<svg class="np-switch-icon np-icon-unselected" viewBox="0 0 24 24">
+			<svg aria-hidden="true" class="np-switch-icon np-icon-unselected" viewBox="0 0 24 24">
 				<path
 					fill="currentColor"
 					d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
@@ -75,6 +75,7 @@
 
 <style>
 	.np-switch {
+		--_travel: 1.25rem;
 		position: relative;
 		width: 3.25rem;
 		height: 2rem;
@@ -102,6 +103,10 @@
 		outline-color: var(--np-switch-unselected-track-outline-color, var(--np-color-outline));
 		outline-style: solid;
 		outline-offset: -0.125rem;
+	}
+
+	.np-switch:dir(rtl) {
+		--_travel: -1.25rem;
 	}
 
 	.np-handle {
@@ -132,7 +137,7 @@
 	}
 
 	.np-switch:has(input:checked) .np-state-layer {
-		transform: translateX(1.25rem);
+		transform: translateX(var(--_travel));
 	}
 
 	.np-switch input {
@@ -160,11 +165,11 @@
 	}
 
 	.np-switch:not(.np-disabled):has(input:checked:active) .np-handle {
-		transform: translateX(1.25rem) scale(1.75);
+		transform: translateX(var(--_travel)) scale(1.75);
 	}
 
 	.np-switch:has(input:checked) .np-handle {
-		transform: translateX(1.25rem) scale(1.5);
+		transform: translateX(var(--_travel)) scale(1.5);
 		color: var(--np-switch-selected-icon-color, var(--np-color-primary));
 		background-color: var(--np-switch-selected-handle-color, var(--np-color-on-primary));
 	}
@@ -196,7 +201,7 @@
 	}
 
 	.np-error:has(input:checked) .np-switch-icon {
-		fill: var(--np-color-error);
+		color: var(--np-color-error);
 	}
 
 	.np-error {

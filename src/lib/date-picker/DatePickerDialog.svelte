@@ -400,6 +400,7 @@
 
 	.np-date-picker-dialog-headline {
 		margin: 0;
+		color: var(--np-color-on-surface);
 		font-size: 2rem;
 		line-height: 2.5rem;
 		font-weight: 400;

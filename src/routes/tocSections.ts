@@ -35,6 +35,7 @@ export const tocSections: Record<string, TocSection[]> = {
 	'/components/app-bar': [
 		{ id: 'usage', text: 'Usage', level: 2 },
 		{ id: 'variants', text: 'Variants', level: 2 },
+		{ id: 'scrolling', text: 'Scrolling', level: 2 },
 		{ id: 'collapsing', text: 'Collapsing', level: 2 },
 		{ id: 'theming', text: 'Theming', level: 2 },
 		{ id: 'accessibility', text: 'Accessibility', level: 2 },

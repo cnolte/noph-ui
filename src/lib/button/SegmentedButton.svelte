@@ -90,8 +90,9 @@
 
 <style>
 	.np-segmented-buttons {
-		--np-ripple-hover-color: var(--np-color-primary);
-		--np-ripple-pressed-color: var(--np-color-primary);
+		/* State layers take the content color of each variant and state. */
+		--np-ripple-hover-color: currentColor;
+		--np-ripple-pressed-color: currentColor;
 		display: grid;
 		color: var(--np-color-on-surface);
 		border: 1px solid var(--np-color-outline);
@@ -100,8 +101,6 @@
 	}
 
 	.np-segmented-buttons.np-error {
-		--np-ripple-hover-color: var(--np-color-error);
-		--np-ripple-pressed-color: var(--np-color-error);
 		border-color: var(--np-color-error);
 		color: var(--np-color-error);
 	}

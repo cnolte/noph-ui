@@ -149,6 +149,9 @@
 		opacity: 0;
 	}
 	.np-button {
+		/* State layers take the content color of each variant and state. */
+		--np-ripple-hover-color: currentColor;
+		--np-ripple-pressed-color: currentColor;
 		box-sizing: border-box;
 		font: inherit;
 		background-color: transparent;
@@ -279,14 +282,9 @@
 		}
 	}
 	.text {
-		--np-ripple-hover-color: var(--np-text-button-label-text-color, var(--np-color-primary));
-		--np-ripple-pressed-color: var(--np-text-button-label-text-color, var(--np-color-primary));
 		color: var(--np-text-button-label-text-color, var(--np-color-primary));
 	}
 	.filled {
-		--np-ripple-hover-opacity: 0.12;
-		--np-ripple-hover-color: var(--np-color-surface);
-		--np-ripple-pressed-color: var(--np-color-surface);
 		color: var(--np-filled-button-label-text-color, var(--np-color-on-primary));
 		background-color: var(--np-filled-button-container-color, var(--np-color-primary));
 	}
@@ -312,8 +310,6 @@
 	}
 
 	.tonal {
-		--np-ripple-hover-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
-		--np-ripple-pressed-color: var(--np-tonal-button-label-text-color, var(--np-color-primary));
 		color: var(--np-tonal-button-label-text-color, var(--np-color-on-secondary-container));
 		background-color: var(--np-tonal-button-container-color, var(--np-color-secondary-container));
 	}
@@ -336,8 +332,6 @@
 	}
 
 	.elevated {
-		--np-ripple-hover-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
-		--np-ripple-pressed-color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
 		color: var(--np-elevated-button-label-text-color, var(--np-color-primary));
 		background-color: var(
 			--np-elevated-button-container-color,
@@ -364,9 +358,7 @@
 			--np-outlined-button-outline-color,
 			var(--np-color-outline-variant)
 		);
-		--np-ripple-hover-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
-		--np-ripple-pressed-color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
-		color: var(--np-outlined-button-label-text-color, var(--np-color-primary));
+		color: var(--np-outlined-button-label-text-color, var(--np-color-on-surface-variant));
 	}
 
 	.outlined:not(.selected)::after,

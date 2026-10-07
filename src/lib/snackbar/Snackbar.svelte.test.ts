@@ -74,7 +74,7 @@ test('the icon button closes it and carries iconAriaLabel', async () => {
 	await expect.poll(isOpen, { timeout: 3000 }).toBe(false)
 })
 
-test('is one atomic alert region, named by its label', async () => {
+test('is one polite status region, named by its label', async () => {
 	await render(Harness, {
 		label: 'Reservation saved',
 		supportingText: 'Table for two',
@@ -83,12 +83,12 @@ test('is one atomic alert region, named by its label', async () => {
 	})
 	await expect.poll(isOpen, { timeout: 3000 }).toBe(true)
 
-	const alert = surface()
-	expect(alert.getAttribute('role')).toBe('alert')
-	const labelId = alert.getAttribute('aria-labelledby')
+	const status = surface()
+	expect(status.getAttribute('role')).toBe('status')
+	const labelId = status.getAttribute('aria-labelledby')
 	expect(document.getElementById(labelId ?? '')?.textContent).toBe('Reservation saved')
-	expect(alert.textContent).toContain('Reservation saved')
-	expect(alert.textContent).toContain('Table for two')
+	expect(status.textContent).toContain('Reservation saved')
+	expect(status.textContent).toContain('Table for two')
 })
 
 test('takes an aria-label from the caller', async () => {

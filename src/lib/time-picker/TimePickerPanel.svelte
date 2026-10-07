@@ -40,6 +40,8 @@
 
 	// A 24-hour dial has no period selector, so its fields take the room that frees up.
 	let fieldWidth = $derived(!hour12 && !horizontal ? '7.125rem' : '6rem')
+	// The period selector matches the 72dp input fields in input mode.
+	let periodHeight = $derived(mode === 'input' ? '4.5rem' : '5rem')
 
 	// Bounds can put a whole half of the day out of reach, and then that half cannot be chosen.
 	let amReachable = $derived([...Array(12).keys()].some((hour) => state.hourReachable(hour)))
@@ -54,7 +56,7 @@
 <div
 	{...attributes}
 	class={['np-time-picker', horizontal && 'np-horizontal', attributes.class]}
-	style="--np-time-picker-time-selector-container-width: {fieldWidth}"
+	style="--np-time-picker-time-selector-container-width: {fieldWidth}; --np-time-picker-period-selector-height: {periodHeight}"
 >
 	{#if headline}
 		<div id={headlineId} class="np-time-picker-headline">{headline}</div>

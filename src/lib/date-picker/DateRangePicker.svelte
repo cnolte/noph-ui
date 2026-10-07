@@ -297,7 +297,7 @@
 		--np-dialog-elevation: none;
 		--np-dialog-container-color: var(
 			--np-date-range-picker-container-color,
-			var(--np-color-surface)
+			var(--np-color-surface-container-high)
 		);
 		--np-dialog-container-shape: var(
 			--np-date-range-picker-container-shape,
@@ -368,6 +368,7 @@
 
 	.np-date-range-picker-headline {
 		margin: 0;
+		color: var(--np-color-on-surface);
 		display: flex;
 		gap: 0.5rem;
 		font-size: 1.375rem;
@@ -419,10 +420,6 @@
 			--np-dialog-inset: 2rem 1rem;
 			--np-dialog-max-height: calc(100dvh - 3rem);
 			--np-dialog-elevation: var(--np-elevation-3);
-			--np-dialog-container-color: var(
-				--np-date-range-picker-container-color,
-				var(--np-color-surface-container-high)
-			);
 			--np-dialog-container-shape: var(
 				--np-date-range-picker-container-shape,
 				var(--np-shape-corner-extra-large)

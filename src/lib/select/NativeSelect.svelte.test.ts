@@ -38,4 +38,13 @@ describe('NativeSelect', async () => {
 		expect(errormessage).toContain('outside-error')
 		expect(errormessage).toMatch(/supporting-text-/)
 	})
+
+	test('issues alone switch on the error state', async () => {
+		await render(NativeSelect, { label: 'Fruit', issues: [{ message: 'Required' }] })
+
+		expect(select().getAttribute('aria-invalid')).toBe('true')
+		expect(select().matches(':user-invalid')).toBe(false)
+		const errormessage = select().getAttribute('aria-errormessage')!
+		expect(document.getElementById(errormessage)?.textContent?.trim()).toBe('Required')
+	})
 })

@@ -48,7 +48,7 @@
 	{popover}
 	class={['np-snackbar', attributes.class]}
 	bind:this={element}
-	role="alert"
+	role="status"
 	aria-labelledby="np-snackbar-label-{uid}"
 	onpointerenter={() => (hovered = true)}
 	onpointerleave={() => (hovered = false)}
@@ -103,9 +103,12 @@
 		padding: 0.875rem 1rem;
 	}
 	.np-snackbar-label {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
 		overflow: hidden;
-		text-overflow: ellipsis;
-		text-wrap: nowrap;
+		overflow-wrap: anywhere;
 	}
 	.np-snackbar-inner {
 		display: flex;

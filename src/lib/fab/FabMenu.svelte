@@ -158,7 +158,7 @@
 		background: none;
 		flex-direction: column;
 		align-items: flex-end;
-		gap: 0.5rem;
+		gap: 0.25rem;
 		overflow: visible;
 	}
 
@@ -168,22 +168,22 @@
 
 	.np-fab-menu-block-start .np-fab-menu-list {
 		position-area: block-start;
-		margin-block-end: 0.75rem;
+		margin-block-end: 0.5rem;
 		flex-direction: column-reverse;
 	}
 	.np-fab-menu-block-end .np-fab-menu-list {
 		position-area: block-end;
-		margin-block-start: 0.75rem;
+		margin-block-start: 0.5rem;
 	}
 	.np-fab-menu-inline-start .np-fab-menu-list {
 		position-area: inline-start;
-		margin-inline-end: 0.75rem;
+		margin-inline-end: 0.5rem;
 		flex-direction: row-reverse;
 		align-items: center;
 	}
 	.np-fab-menu-inline-end .np-fab-menu-list {
 		position-area: inline-end;
-		margin-inline-start: 0.75rem;
+		margin-inline-start: 0.5rem;
 		flex-direction: row;
 		align-items: center;
 	}

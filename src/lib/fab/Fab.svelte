@@ -184,12 +184,7 @@
 
 	@media (hover: hover) {
 		.np-fab:not(:disabled):hover {
-			box-shadow: var(--np-fab-elevation, var(--np-elevation-3));
-			background-color: color-mix(
-				in srgb,
-				var(--np-fab-icon-color, var(--_icon-color)) 8%,
-				var(--np-fab-container-color, var(--_container-color))
-			);
+			box-shadow: var(--np-fab-elevation, var(--np-elevation-4));
 		}
 		.np-fab-lowered:not(:disabled):hover {
 			box-shadow: var(--np-fab-elevation, var(--np-elevation-2));

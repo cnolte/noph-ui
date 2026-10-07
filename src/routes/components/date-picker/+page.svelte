@@ -410,10 +410,7 @@
 		</tr>
 		<tr>
 			<td><code>--np-date-range-picker-container-color</code></td>
-			<td>
-				<code>--np-color-surface</code> full screen, <code>--np-color-surface-container-high</code>
-				as a modal
-			</td>
+			<td><code>--np-color-surface-container-high</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-date-range-picker-container-shape</code></td>

@@ -222,10 +222,11 @@
 	<code>label</code>.
 </p>
 <p>
-	Supporting text is tied to the field through <code>aria-describedby</code>, and an error from
-	<code>issues</code> is announced through <code>role="alert"</code>. Where none of the extras are
-	needed, <code>NativeSelect</code> keeps a real <code>&lt;select&gt;</code>, which brings the
-	platform picker with it, mobile included.
+	Supporting text is tied to the field through <code>aria-describedby</code>. An error from
+	<code>issues</code> marks the field <code>aria-invalid</code>, points
+	<code>aria-errormessage</code> at the message and is announced through <code>role="alert"</code>.
+	Where none of the extras are needed, <code>NativeSelect</code> keeps a real
+	<code>&lt;select&gt;</code>, which brings the platform picker with it, mobile included.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="select-attributes">

@@ -6,11 +6,10 @@
 {#snippet icon()}
 	<Icon>close</Icon>
 {/snippet}
-<Button command="toggle-popover" commandfor="two-single-line-snackbar">Show snackbar</Button>
+<Button command="toggle-popover" commandfor="two-line-snackbar-demo">Show snackbar</Button>
 <Snackbar
 	{icon}
-	id="two-single-line-snackbar"
-	label="Two line snackbar"
-	supportingText="with action and icon"
-	actionLabel="Action"
+	id="two-line-snackbar-demo"
+	label="Your photo was moved to the archive. You can restore it from the archive folder at any time within the next 30 days."
+	actionLabel="Undo"
 />

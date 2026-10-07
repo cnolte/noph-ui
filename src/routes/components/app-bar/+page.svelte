@@ -46,6 +46,16 @@
 </DemoContainer>
 <Code value={VariantsSource} />
 
+<h2 id="scrolling">Scrolling<a href="#scrolling" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	The bar starts in the page's surface color and fills with surface container once the content
+	scrolls under it, which separates it from the page without a shadow. Like collapsing, the fill
+	runs on <code>animation-timeline: scroll()</code> and follows the scroller set by
+	<code>scroller</code>. In a browser without scroll-driven animations the bar stays flat. Set
+	<code>--np-app-bar-scrolled-container-color: transparent</code> to keep the bar clear on scroll instead,
+	and give its icon buttons a filled container.
+</p>
+
 <h2 id="collapsing">Collapsing<a href="#collapsing" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>collapsible</code> shrinks a <code>medium</code> or <code>large</code> bar down to one row
@@ -80,6 +90,14 @@
 		<tr>
 			<td><code>--np-app-bar-container-color</code></td>
 			<td>Background of the bar.</td>
+		</tr>
+		<tr>
+			<td><code>--np-app-bar-scrolled-container-color</code></td>
+			<td>Background once the content scrolls under the bar.</td>
+		</tr>
+		<tr>
+			<td><code>--np-app-bar-fill-distance</code></td>
+			<td>How far the content scrolls before the fill is complete. Defaults to 0.5rem.</td>
 		</tr>
 		<tr>
 			<td><code>--np-app-bar-headline-color</code></td>
@@ -172,7 +190,7 @@
 			<td><code>scroller</code></td>
 			<td><code>'root' | 'nearest'</code></td>
 			<td><code>'root'</code></td>
-			<td>Which scroller the collapse follows.</td>
+			<td>Which scroller the color fill and the collapse follow.</td>
 		</tr>
 	</tbody>
 </table>

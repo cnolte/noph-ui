@@ -91,7 +91,7 @@
 		padding-block: 0.75rem 1rem;
 	}
 	.np-rich-tooltip-with-actions[popover] {
-		padding-bottom: 0.5rem;
+		padding-block: 0.75rem 0.5rem;
 	}
 	.np-rich-tooltip-subhead {
 		margin-bottom: 0.25rem;

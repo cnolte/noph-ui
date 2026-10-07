@@ -26,7 +26,7 @@
 	{#if !attributes.disabled}
 		<Ripple forElement={inputEl} class="np-radio-ripple" />
 	{/if}
-	<svg class="np-radio-icon" viewBox="0 0 20 20">
+	<svg aria-hidden="true" class="np-radio-icon" viewBox="0 0 20 20">
 		<mask id="{uid}-mask">
 			<rect width="100%" height="100%" fill="white" />
 			<circle cx="10" cy="10" r="8" fill="black" />

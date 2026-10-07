@@ -76,6 +76,10 @@
 		<tr><td><code>--np-sheet-container-color</code></td><td>Background.</td></tr>
 		<tr><td><code>--np-sheet-shape</code></td><td>Corner radius on the exposed edges.</td></tr>
 		<tr>
+			<td><code>--np-sheet-max-width</code></td>
+			<td>Widest a bottom sheet gets before it centers. Defaults to 40rem.</td>
+		</tr>
+		<tr>
 			<td><code>--np-sheet-size</code></td>
 			<td>Height of a bottom or top sheet, width of a side sheet.</td>
 		</tr>

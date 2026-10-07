@@ -46,7 +46,9 @@
 	.np-toolbar {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		box-sizing: border-box;
+		min-height: 4rem;
 		gap: var(--np-toolbar-gap, 0.25rem);
 		color: var(--np-toolbar-color, var(--np-color-on-surface));
 		--np-icon-button-icon-color: var(--np-toolbar-color, var(--np-color-on-surface-variant));
@@ -54,6 +56,8 @@
 
 	.np-toolbar-vertical {
 		flex-direction: column;
+		min-height: 0;
+		min-width: 4rem;
 		--np-tooltip-position-area: inline-end;
 		--np-tooltip-justify-self: auto;
 		--np-tooltip-align-self: anchor-center;
@@ -68,17 +72,13 @@
 
 	.np-toolbar-docked {
 		width: 100%;
-		min-height: 4rem;
-		justify-content: center;
-		padding-inline: 0.5rem;
+		padding-inline: 1rem;
 		background-color: var(--np-toolbar-container-color, var(--np-color-surface-container));
 		padding-block-end: max(0px, env(safe-area-inset-bottom));
 	}
 	.np-toolbar-docked.np-toolbar-vertical {
 		width: auto;
 		height: 100%;
-		min-height: 0;
-		min-width: 4rem;
 		padding-block: 0.5rem;
 		padding-inline: 0;
 	}
@@ -106,10 +106,10 @@
 		margin-block: auto;
 	}
 	.np-toolbar-start {
-		inset-inline-start: var(--np-toolbar-inset, 1rem);
+		inset-inline-start: var(--np-toolbar-inset, 1.5rem);
 	}
 	.np-toolbar-end {
-		inset-inline-end: var(--np-toolbar-inset, 1rem);
+		inset-inline-end: var(--np-toolbar-inset, 1.5rem);
 		margin-inline-start: auto;
 	}
 

@@ -12,8 +12,8 @@
 </script>
 
 <Button
-	--np-elevated-button-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface))"
-	--np-outlined-button-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface))"
+	--np-elevated-button-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface-variant))"
+	--np-outlined-button-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface-variant))"
 	--np-outlined-button-outline-color="var(--np-suggestion-chip-outline-color, var(--np-color-outline-variant))"
 	--np-button-padding="1rem"
 	--np-button-shape="0.5rem"

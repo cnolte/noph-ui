@@ -24,4 +24,12 @@ describe('Dialog', () => {
 		const dialog = document.querySelector<HTMLDialogElement>('.np-dialog-container')!
 		expect(document.getElementById(dialog.getAttribute('aria-labelledby')!)).toBe(headline())
 	})
+
+	test('focus lands on the first interactive element, not on the dialog', async () => {
+		await render(Harness, { open: true })
+		// The toggle event is queued after showModal(), so let it run first.
+		await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve)))
+
+		expect(document.activeElement?.textContent).toBe('Reset')
+	})
 })

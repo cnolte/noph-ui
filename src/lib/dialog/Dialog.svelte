@@ -40,14 +40,12 @@
 <dialog
 	bind:this={element}
 	{...attributes}
-	tabindex="-1"
 	closedby="any"
 	aria-labelledby={ariaLabelledby ?? (headline ? `${uid}-dialog-headline` : undefined)}
 	aria-describedby={supportingText ? `${uid}-dialog-supporting-text` : undefined}
 	class={['np-dialog-container', !quick && 'np-animate', attributes.class]}
 	ontoggle={(event) => {
 		open = event.newState === 'open'
-		if (event.newState === 'open') element?.focus()
 		ontoggle?.(event)
 	}}
 	onclick={(event) => {
@@ -114,7 +112,7 @@
 
 	.np-dialog {
 		border: 0;
-		background-color: var(--np-dialog-container-color, var(--np-color-surface));
+		background-color: var(--np-dialog-container-color, var(--np-color-surface-container-high));
 		color: var(--np-color-on-surface);
 		padding: var(--np-dialog-padding, 1.5rem);
 		border-radius: var(--np-dialog-container-shape, var(--np-shape-corner-extra-large));
@@ -129,6 +127,7 @@
 
 	.np-dialog-scroller {
 		overflow-y: auto;
+		overscroll-behavior: contain;
 		display: flex;
 		flex: 1 1 0%;
 		flex-direction: column;

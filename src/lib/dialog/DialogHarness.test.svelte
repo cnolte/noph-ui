@@ -11,4 +11,4 @@
 	} = $props()
 </script>
 
-<Dialog bind:open {headlineLevel} headline="Reset settings?">Body</Dialog>
+<Dialog bind:open {headlineLevel} headline="Reset settings?">Body <button>Reset</button></Dialog>

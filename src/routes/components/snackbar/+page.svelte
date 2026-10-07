@@ -39,6 +39,10 @@
 <h3 id="two-line-snackbar">
 	Two-line snackbar<a href="#two-line-snackbar" aria-hidden="true" tabindex="-1">#</a>
 </h3>
+<p>
+	A long <code>label</code> wraps onto a second line instead of being cut off, so the whole message stays
+	readable. Past two lines it is truncated, so keep the text short enough to fit.
+</p>
 <DemoContainer>
 	<TwoLineSnackbar />
 </DemoContainer>
@@ -71,11 +75,11 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The snackbar is <code>role="alert"</code>, an atomic live region, so a screen reader reads the
-	whole thing out when it appears: the <code>label</code>, the <code>supportingText</code> and the
-	action label together. It takes no name of its own, which is what the ARIA alert pattern asks for,
-	and it never takes focus. Pass <code>aria-label</code> if you do want to name it, and
-	<code>iconAriaLabel</code> to translate the close button.
+	The snackbar is <code>role="status"</code>, a polite live region, as the M3 spec asks for on the
+	web. A screen reader waits until it is done speaking and then reads the whole thing: the
+	<code>label</code>, the <code>supportingText</code> and the action label together. The region is
+	named by its <code>label</code> and never takes focus. Pass <code>aria-label</code> to give it a
+	different name, and <code>iconAriaLabel</code> to translate the close button.
 </p>
 <p>
 	The <code>timeout</code> waits while the snackbar is hovered or holds focus and starts over once

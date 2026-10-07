@@ -9,7 +9,7 @@
 <div style="display:flex;gap:8rem;justify-content:center;padding-block:12rem">
 	<FabMenu label="First" {open}>
 		{#snippet icon()}<Icon>add</Icon>{/snippet}
-		<Button variant="tonal">One</Button>
+		<Button role="menuitem" variant="tonal">One</Button>
 	</FabMenu>
 	<FabMenu
 		label="Second"
@@ -17,6 +17,6 @@
 		style="--np-tonal-button-container-color: var(--np-color-tertiary-container)"
 	>
 		{#snippet icon()}<Icon>add</Icon>{/snippet}
-		<Button variant="tonal">Two</Button>
+		<Button role="menuitem" variant="tonal">Two</Button>
 	</FabMenu>
 </div>
