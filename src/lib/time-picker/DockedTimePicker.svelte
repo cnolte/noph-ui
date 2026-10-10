@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { exitVisibility } from '#lib/date-picker/exitVisibility.svelte.js'
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import {
@@ -76,6 +77,8 @@
 	const uid = $props.id()
 
 	let menuElement = $state<HTMLDivElement>()
+	// Keeps the content while the menu animates out, so it fades as a whole, not as an empty box.
+	const exit = exitVisibility()
 	let inputElement = $state<HTMLInputElement | HTMLTextAreaElement>()
 	let valueInput = $state<HTMLInputElement>()
 	let mounted = $state(false)
@@ -289,12 +292,14 @@
 	bind:open
 	ontoggle={({ newState }) => {
 		if (newState === 'open') {
+			exit.show()
 			pending.reset(committed ?? minutesOfDay(new Date()))
 			focusPanel()
 		}
+		if (newState === 'closed') exit.scheduleExit(menuElement)
 	}}
 >
-	{#if open}
+	{#if open || exit.visible}
 		<div class="np-docked-time-picker-container">
 			<TimePickerPanel
 				state={pending}

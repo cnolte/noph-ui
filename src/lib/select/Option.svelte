@@ -22,7 +22,7 @@
 		all: unset;
 		position: relative;
 		display: flex;
-		padding: 0.5rem 1rem;
+		padding: 0.5rem 0.75rem;
 		gap: 0.75rem;
 		height: 2rem;
 		align-items: center;
@@ -45,7 +45,6 @@
 
 		&:disabled {
 			color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-			background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
 		}
 		&:focus-visible {
 			outline-style: solid;

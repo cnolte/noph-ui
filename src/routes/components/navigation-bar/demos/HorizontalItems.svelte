@@ -13,7 +13,7 @@
 </script>
 
 <div style="width:100%;max-width:36rem">
-	<NavigationBar aria-label="Main, horizontal items" arrangement="centered">
+	<NavigationBar aria-label="Main, horizontal items">
 		{#each destinations as destination (destination.value)}
 			<NavigationBarItem
 				orientation="horizontal"

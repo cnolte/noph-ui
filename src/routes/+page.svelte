@@ -40,7 +40,7 @@
 	<title>Noph UI - Material 3 Expressive components for Svelte</title>
 	<meta
 		name="description"
-		content="Noph UI is a Material 3 Expressive component library for Svelte and SvelteKit: server rendered, themed from a single color, and shipped with zero dependencies."
+		content="Noph UI is a Material 3 Expressive component library for Svelte and SvelteKit: server rendered, themed from one color, with zero dependencies."
 	/>
 	<link rel="canonical" href="https://noph.dev/" />
 	<meta property="og:type" content="website" />
@@ -59,8 +59,8 @@
 		<h1 class="header">Noph UI</h1>
 		<p class="sub-header">Material 3 Expressive components for Svelte</p>
 		<p class="hero-text">
-			Pick one source color and all 54 Material 3 color roles follow, in light and dark, with the
-			springy motion the Expressive spec asks for.
+			Pick one source color and all 54 Material 3 color roles follow, in light and dark. Components
+			use the springy motion of the Expressive spec.
 		</p>
 		<div class="hero-actions">
 			<Button
@@ -91,9 +91,9 @@
 <LandingShowcase />
 
 <p class="lead">
-	Noph UI is a UI library for Svelte that follows the Material 3 Expressive guidelines. It gives you
-	the buttons, fields, navigation and feedback components a real app needs, with theming, dark mode
-	and accessibility already handled.
+	Noph UI is a UI library for Svelte that follows the Material 3 Expressive guidelines. It has the
+	buttons, fields, navigation and feedback components an app needs, with theming, dark mode and
+	accessibility built in.
 </p>
 
 <h2>Why Noph UI</h2>
@@ -102,7 +102,7 @@
 		variant="elevated"
 		class="feature"
 		headline="The whole spec, covered"
-		supportingText="Every component family in Material 3 Expressive is here: buttons, FABs and split buttons, text fields and pickers, navigation bars, rails and drawers, sheets, snackbars and the rest. Nothing to fill in yourself."
+		supportingText="Every component family in Material 3 Expressive is here: buttons, FABs and split buttons, text fields and pickers, navigation bars, rails and drawers, sheets, snackbars and more."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
 		<div class="feature-icon"><Icon>verified</Icon></div>
@@ -112,7 +112,7 @@
 		variant="elevated"
 		class="feature"
 		headline="Remote functions ready"
-		supportingText="Text fields, selects, checkboxes, autocompletes and date pickers take an issues prop shaped exactly like a SvelteKit remote form's validation errors, so they wire straight in without an adapter."
+		supportingText="Text fields, selects, checkboxes, autocompletes and date pickers take an issues prop in the same shape as the validation errors of a SvelteKit remote form, so you can pass them in without an adapter."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 		--np-outlined-card-container-color="var(--np-color-surface-container-low)"
 	>
@@ -123,7 +123,7 @@
 		variant="elevated"
 		class="feature"
 		headline="Dynamic theming"
-		supportingText="Material 3 color roles are plain CSS variables. Pick a source color and every component follows, at runtime if you want."
+		supportingText="Material 3 color roles are plain CSS variables. Pick a source color and every component follows. This also works at runtime."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
 		<div class="feature-icon"><Icon>palette</Icon></div>
@@ -132,7 +132,7 @@
 		variant="elevated"
 		class="feature"
 		headline="Zero dependencies"
-		supportingText="One package, nothing else pulled in behind your back. Your users download components, not a framework on top of a framework."
+		supportingText="One package with no other dependencies. Your users download only the components."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
 		<div class="feature-icon"><Icon>download</Icon></div>
@@ -141,7 +141,7 @@
 		variant="elevated"
 		class="feature"
 		headline="Expressive motion"
-		supportingText="Springy shape morphs, ripples and wavy progress from the Material 3 Expressive spec. All of it steps aside when a visitor prefers reduced motion."
+		supportingText="Springy shape morphs, ripples and wavy progress from the Material 3 Expressive spec. All of it respects a visitor's reduced motion setting."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
 		<div class="feature-icon"><Icon>animation</Icon></div>
@@ -160,7 +160,7 @@
 		variant="elevated"
 		class="feature"
 		headline="Light and dark"
-		supportingText="The default theme ships both color schemes and follows the system setting, or whatever setting you put in charge."
+		supportingText="The default theme has both color schemes. It follows the system setting, or a setting you control."
 		--np-elevated-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
 		<div class="feature-icon"><Icon>brightness_medium</Icon></div>
@@ -170,8 +170,8 @@
 <h2>One color, a whole theme</h2>
 <p>
 	The default theme is a set of Material 3 color roles written as CSS variables. Use the palette
-	button in the header to pick a source color and watch this page recolor, then copy the generated
-	theme straight into your project.
+	button in the header to pick a source color. This page changes to match. Then copy the generated
+	theme into your project.
 </p>
 <div class="swatches">
 	{#each swatches as swatch (swatch.token)}
@@ -186,7 +186,7 @@
 <Code value="npm install noph-ui" />
 <p>Import the default theme once, in your root layout.</p>
 <Code value="import 'noph-ui/defaultTheme'" />
-<p>Then import a component and drop it into your markup.</p>
+<p>Then import a component and use it in your markup.</p>
 <!-- eslint-disable no-useless-escape -- the escape keeps the closing script tag from ending the surrounding block -->
 <Code
 	value={`<script>
@@ -206,8 +206,8 @@
 	<div>
 		<h2>Build something expressive</h2>
 		<p>
-			Install the package, import the theme and ship a Material 3 interface that renders on the
-			server and feels alive in the browser.
+			Install the package, import the theme and build a Material 3 interface that renders on the
+			server.
 		</p>
 		<div class="hero-actions">
 			<Button

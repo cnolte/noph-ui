@@ -40,17 +40,23 @@
 		align-items: stretch;
 		box-sizing: border-box;
 		width: 100%;
-		min-height: 5rem;
-		padding-block: 0.75rem;
+		min-height: 4rem;
+		padding-block: 0.375rem;
 		padding-inline: 0.5rem;
 		background-color: var(--np-navigation-bar-container-color, var(--np-color-surface-container));
-		padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+		padding-bottom: max(0.375rem, env(safe-area-inset-bottom));
 		z-index: 8;
 	}
 
 	.np-navigation-bar-centered {
 		justify-content: center;
 		gap: 0.5rem;
+	}
+	/* Horizontal items keep their own width and sit centred as a group, so extra space goes to
+	   the ends of the bar. */
+	.np-navigation-bar:has(> :global(.np-navigation-bar-item-horizontal)) {
+		justify-content: center;
+		gap: 2rem;
 	}
 	:global(.np-navigation-bar-centered .np-navigation-bar-item.np-navigation-bar-item) {
 		flex: 0 0 auto;

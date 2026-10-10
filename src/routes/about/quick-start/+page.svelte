@@ -13,20 +13,19 @@
 <h1>Quick start</h1>
 <p>
 	Noph UI requires <a class="link" href="https://svelte.dev" target="_blank">Svelte</a> 5.56.5 or newer.
-	It works inside SvelteKit or in a plain Vite + Svelte project alike, SvelteKit is not required.
+	It works with SvelteKit or with a plain Vite + Svelte project.
 </p>
 <h2 id="install">Install<a href="#install" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>Install Noph UI components using npm and node.</p>
+<p>Install Noph UI with npm.</p>
 <Code value="npm install noph-ui" />
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The quickest way to get started with Noph UI is by using the default theme. You can import it into
-	your <code>+layout.svelte</code> file as shown below:
+	The quickest way to start is the default theme. Import it in your <code>+layout.svelte</code>:
 </p>
 <Code value="import 'noph-ui/defaultTheme'" />
 <p>
-	To apply both the theme's background color and text color to the entire app, you can target the
-	<code>&lt;body&gt;</code> element directly in your app.css file like this:
+	To use the theme's background and text color in the whole app, set them on
+	<code>&lt;body&gt;</code> in your app.css:
 </p>
 
 <Code
@@ -36,10 +35,6 @@
 }`}
 />
 <p style="margin-top:1rem">
-	This will ensure that the background and text color for the entire app are set to match the
-	theme's color scheme.
-</p>
-<p>
 	<a class="link" href="/about/theming">Theming</a> goes further: generate a theme from your own source
 	color, browse every color, shape and motion token, and switch themes while the app is running.
 </p>
@@ -51,17 +46,16 @@
 	>
 </h3>
 <p>
-	The theme includes color schemes for both dark and light modes. The selected theme is
-	automatically determined based on the user's system settings. Alternatively, you can enforce a
-	specific theme by setting the <code>data-theme</code> attribute in your <code>app.html</code>.
-	Valid values for this attribute are <code>dark</code> and <code>light</code>.
+	The theme has a dark and a light color scheme. By default it follows the user's system setting. To
+	force one, set the <code>data-theme</code> attribute in your <code>app.html</code> to
+	<code>dark</code> or <code>light</code>.
 </p>
 <Code value="<html lang=&quot;en&quot; data-theme=&quot;dark&quot;>" />
 
 <h2 id="typography">Typography<a href="#typography" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Define a font family in your <code>app.css</code>. You can load the default 'Roboto' font, for
-	example, from fonts.google.com.
+	Set a font family in your <code>app.css</code>. For example, load the default 'Roboto' font from
+	fonts.google.com.
 </p>
 <Code
 	value={`body {
@@ -72,11 +66,10 @@
 
 <h2 id="icons">Icons<a href="#icons" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Buttons, fields and navigation take an icon wherever Material 3 asks for one, and the
-	<code>Icon</code>
-	component draws it from the Material Symbols font. That font is not part of the package, so load it
-	in your <code>app.html</code> before the first icon shows up, otherwise its name is what you see.
-	Ask Google Fonts for the icons you use, here <code>search</code> and <code>home</code>:
+	Buttons, fields and navigation take icons where Material 3 uses them. The <code>Icon</code>
+	component draws them from the Material Symbols font. The font is not part of the package, so load it
+	in your <code>app.html</code>. Otherwise you see the icon name instead of the icon. Request the
+	icons you use from Google Fonts, here <code>search</code> and <code>home</code>:
 </p>
 <Code
 	value={`<link

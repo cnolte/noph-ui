@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
+	import '#lib/internal/exit.css'
+	import { exitAnimation } from '#lib/animation.js'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { SnackbarProps } from './types.js'
 
@@ -48,6 +50,7 @@
 	{popover}
 	class={['np-snackbar', attributes.class]}
 	bind:this={element}
+	{@attach exitAnimation}
 	role="status"
 	aria-labelledby="np-snackbar-label-{uid}"
 	onpointerenter={() => (hovered = true)}

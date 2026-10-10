@@ -29,6 +29,10 @@
 	> internally.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	Show one snackbar at a time, never stacked. To update the message, change the text of the open
+	snackbar instead of opening a second one.
+</p>
 <h3 id="single-line-snackbar-2">
 	Single-line snackbar<a href="#single-line-snackbar-2" aria-hidden="true" tabindex="-1">#</a>
 </h3>
@@ -40,8 +44,8 @@
 	Two-line snackbar<a href="#two-line-snackbar" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	A long <code>label</code> wraps onto a second line instead of being cut off, so the whole message stays
-	readable. Past two lines it is truncated, so keep the text short enough to fit.
+	A long <code>label</code> wraps onto a second line. Past two lines it is truncated, so keep the text
+	short enough to fit.
 </p>
 <DemoContainer>
 	<TwoLineSnackbar />
@@ -52,19 +56,18 @@
 </h2>
 <p>
 	A snackbar is a popover, so <code>command</code> and <code>commandfor</code> on a trigger open and
-	close it with no script at all. Reach for this first: it is the same pair every overlay in the
-	library takes, and it works before the page has hydrated. With <code>timeout={0}</code> it stays open
-	until something closes it.
+	close it without script. Use this first. Every overlay in the library takes the same pair, and it
+	works before the page has hydrated. With <code>timeout={0}</code> the snackbar stays open until something
+	closes it.
 </p>
 <DemoContainer>
 	<ManualControl />
 </DemoContainer>
 <Code value={ManualControlSource} />
 <p>
-	Where there is no trigger to point at the snackbar, call <code>show()</code> and
-	<code>close()</code> on the component, as under <a class="link" href="#methods">Methods</a>.
-	<code>bind:open</code> reports whether the snackbar is showing and follows it when it times out on its
-	own, so it is there to read rather than to drive.
+	When there is no trigger to point at the snackbar, call <code>show()</code> and
+	<code>close()</code> on the component, as shown under <a class="link" href="#methods">Methods</a>.
+	<code>bind:open</code> reports whether the snackbar is showing, also after it times out.
 </p>
 <DemoContainer>
 	<BoundToState />
@@ -75,17 +78,16 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The snackbar is <code>role="status"</code>, a polite live region, as the M3 spec asks for on the
-	web. A screen reader waits until it is done speaking and then reads the whole thing: the
-	<code>label</code>, the <code>supportingText</code> and the action label together. The region is
-	named by its <code>label</code> and never takes focus. Pass <code>aria-label</code> to give it a
-	different name, and <code>iconAriaLabel</code> to translate the close button.
+	The snackbar has <code>role="status"</code>, a polite live region. A screen reader finishes what
+	it is saying and then reads the <code>label</code>, the <code>supportingText</code> and the action
+	label together. The region is named by its <code>label</code> and never takes focus. Pass
+	<code>aria-label</code>
+	to give it a different name, and <code>iconAriaLabel</code> to translate the close button.
 </p>
 <p>
-	The <code>timeout</code> waits while the snackbar is hovered or holds focus and starts over once
-	it is left alone, so an action stays reachable with a keyboard. Give a snackbar that must not
-	vanish
-	<code>timeout={0}</code>.
+	The <code>timeout</code> pauses while the snackbar is hovered or has focus, and starts over when
+	both end. This keeps the action reachable with a keyboard. For a snackbar that must not close on
+	its own, set <code>timeout={0}</code>.
 </p>
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="tokens">Tokens<a href="#tokens" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -148,16 +150,13 @@
 			<td><code>actionLabel</code></td>
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td
-				>Text to display in the action button. If <code>undefined</code>, the action button will not
-				be shown.</td
-			>
+			<td>Text of the action button. If <code>undefined</code>, there is no action button.</td>
 		</tr>
 		<tr>
 			<td><code>icon</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Icon for the close affordance</td>
+			<td>Icon of the close button</td>
 		</tr>
 		<tr>
 			<td><code>iconAriaLabel</code></td>
@@ -170,8 +169,8 @@
 			<td><code>number</code></td>
 			<td><code>4000</code></td>
 			<td
-				>Time in milliseconds before the snackbar closes. If set to <code>&lt;= 0</code>, the
-				snackbar will stay open until another action triggers it.
+				>Time in milliseconds before the snackbar closes. With <code>&lt;= 0</code>, the snackbar
+				stays open until something closes it.
 			</td>
 		</tr>
 		<tr>
@@ -180,27 +179,27 @@
 			<td><code>'manual'</code></td>
 			<td>
 				With <code>manual</code> the snackbar closes on its <code>timeout</code> or when you hide
-				it. Use <code>auto</code> to also let a click elsewhere or <kbd>Escape</kbd> dismiss it, at the
-				cost of other popovers closing it.
+				it. With <code>auto</code>, a click elsewhere or <kbd>Escape</kbd> also closes it, but so does
+				opening another popover.
 			</td>
 		</tr>
 		<tr>
 			<td><code>onactionclick</code></td>
 			<td><code>(event: Event) =&gt; void | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Function that is triggered when clicking on the action button.</td>
+			<td>Called when the action button is clicked.</td>
 		</tr>
 		<tr>
 			<td><code>oniconclick</code></td>
 			<td><code>(event: Event) =&gt; void</code></td>
 			<td><code>close()</code></td>
-			<td>Function that is triggered when clicking on the icon button.</td>
+			<td>Called when the icon button is clicked.</td>
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLAttributes&lt;HTMLDivElement&gt;</code></td>
 			<td></td>
-			<td>Attributes are passed to the component container.</td>
+			<td>Passed to the container element.</td>
 		</tr>
 	</tbody>
 </table>
@@ -219,26 +218,21 @@
 			<td><code>boolean</code></td>
 			<td
 				>Whether the snackbar is shown. Defaults to <code>false</code>. Set it to
-				<code>true</code> to show the snackbar and <code>false</code> to hide it; the snackbar writes
-				back when it opens or closes on its own.</td
+				<code>true</code> to show the snackbar and <code>false</code> to hide it. It updates when the
+				snackbar opens or closes on its own.</td
 			>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The root DOM element of the component, bound with <code>bind:this</code>.</td>
 		</tr>
 	</tbody>
 </table>
 <h3 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
 	Bind a reference to the component with <code>bind:this</code> and type it with
-	<code>ReturnType&lt;typeof Snackbar&gt;</code>; it is <code>undefined</code> until the component
+	<code>ReturnType&lt;typeof Snackbar&gt;</code>. It is <code>undefined</code> until the component
 	has mounted, so call through <code>?.</code>.
 </p>
 <Code
@@ -267,7 +261,7 @@
 		<tr>
 			<td><code>show</code></td>
 			<td><code>() =&gt; void</code></td>
-			<td>Shows the snackbar. A no-op if it is already showing.</td>
+			<td>Shows the snackbar. Does nothing if it is already showing.</td>
 		</tr>
 		<tr>
 			<td><code>close</code></td>

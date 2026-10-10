@@ -45,12 +45,14 @@
 		)
 		const from = Number(focused?.dataset.year)
 		if (!focused || Number.isNaN(from)) return
+		// Right to left, the next year sits to the left.
+		const forward = getComputedStyle(grid).direction === 'rtl' ? -1 : 1
 		switch (event.key) {
 			case 'ArrowLeft':
-				focusYear(grid, from - 1)
+				focusYear(grid, from - forward)
 				break
 			case 'ArrowRight':
-				focusYear(grid, from + 1)
+				focusYear(grid, from + forward)
 				break
 			case 'ArrowUp':
 				focusYear(grid, from - YEARS_IN_ROW)

@@ -13,6 +13,8 @@
 	import ExtendedSource from './demos/Extended.svelte?raw'
 	import FabMenuExample from './demos/FabMenuExample.svelte'
 	import FabMenuExampleSource from './demos/FabMenuExample.svelte?raw'
+	import FabWithMenu from './demos/FabWithMenu.svelte'
+	import FabWithMenuSource from './demos/FabWithMenu.svelte?raw'
 	import Lowered from './demos/Lowered.svelte'
 	import LoweredSource from './demos/Lowered.svelte?raw'
 	import Shape from './demos/Shape.svelte'
@@ -50,9 +52,8 @@
 
 <h2 id="sizes">Sizes<a href="#sizes" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Three sizes, 56, 80 and 96 pixels, the same three an <code>ExtendedFab</code> takes.
-	<code>s</code> is M3's baseline FAB and the default; reach for a bigger one when the FAB is competing
-	with a large hero image. There is no 40 pixel FAB, because M3 Expressive no longer recommends one.
+	Three sizes: 56, 80 and 96 pixels. An <code>ExtendedFab</code> takes the same three.
+	<code>s</code> is the default. Use a bigger one when the FAB competes with a large hero image.
 </p>
 <DemoContainer>
 	<Sizes />
@@ -61,9 +62,8 @@
 
 <h2 id="colors">Colors<a href="#colors" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Six color styles, each named after the tokens it maps to. The three tone styles are the stronger
-	pair and the three container styles the softer one; pick whichever stands out against the surface
-	behind it. There is no surface style, because M3 Expressive no longer recommends one.
+	Six color styles, each named after the tokens it maps to. The three tone styles are stronger, the
+	three container styles softer. Pick the one that stands out against the surface behind it.
 </p>
 <DemoContainer>
 	<Colors />
@@ -76,9 +76,9 @@
 
 <h2 id="shape">Shape<a href="#shape" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>round</code> is fully rounded and <code>square</code> is a tighter radius, reading the same
-	way as on <a class="link" href="/components/button">Button</a>. Either way, a press morphs the
-	corner towards the other shape.
+	<code>square</code>, the default, has a corner radius that grows with the size.
+	<code>round</code> is fully rounded, as on
+	<a class="link" href="/components/button">Button</a>. The shape does not change on press.
 </p>
 <DemoContainer>
 	<Shape />
@@ -87,8 +87,8 @@
 
 <h2 id="lowered">Lowered<a href="#lowered" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>lowered</code> drops the shadow a level, for a FAB sitting on a surface that is already raised,
-	such as inside a card or a sheet.
+	<code>lowered</code> lowers the shadow by one level. Use it for a FAB on a raised surface, such as a
+	card or a sheet.
 </p>
 <DemoContainer>
 	<Lowered />
@@ -107,9 +107,9 @@
 
 <h3 id="collapsing">Collapsing<a href="#collapsing" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	<code>collapsed</code> shrinks an extended FAB to the icon alone and animates the width. Drive it
-	from whatever you already track, a scroll position or a media query. The label moves to
-	<code>aria-label</code> while it is collapsed, so the button keeps its name.
+	<code>collapsed</code> shrinks an extended FAB to its icon and animates the width. Set it from a
+	scroll position or a media query. While collapsed, the label moves to <code>aria-label</code>, so
+	the button keeps its name.
 </p>
 <DemoContainer>
 	<Collapsing />
@@ -118,25 +118,36 @@
 
 <h2 id="fab-menu">FAB menu<a href="#fab-menu" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	A FAB menu turns the FAB into a set of related actions. The trigger becomes square and its icon
-	turns into a close affordance while the menu is open, and the items rise into place one after
-	another. <code>placement</code> decides which side they fan out to. Picking an action closes the
-	menu; pass <code>closeOnSelect={false}</code> to keep it open for actions that toggle something.
+	A FAB menu opens two to six related actions from the FAB, as on a phone. When it opens, the FAB
+	turns into a round 56px close button in its top trailing corner, at any FAB size. The items rise
+	into place next to it, aligned with its trailing edge. When it closes, they fade out.
+	<code>placement</code> sets which side they open to. In a short window the items scroll.
 </p>
 <p>
-	<code>variant</code> colours the trigger. The items are your own buttons, so pair them with it
-	yourself: set the tonal <code>Button</code> tokens on the <code>FabMenu</code> and every item inherits
-	them.
+	Use <code>FabMenuItem</code> for the actions. It has the size of a medium button and always shows
+	its label, ideally with an icon. The menu takes its colors from the FAB's <code>variant</code>, so
+	a tertiary FAB opens a tertiary close button with tertiary container items.
 </p>
 <DemoContainer>
 	<FabMenuExample />
 </DemoContainer>
 <Code value={FabMenuExampleSource} />
 
+<h3 id="fab-menu-web">On the web<a href="#fab-menu-web" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	On larger windows and desktop web, M3 opens a regular <a class="link" href="/components/menu"
+		>menu</a
+	>
+	from the FAB instead, 4px away from it. To build it, anchor a <code>Menu</code> to the FAB.
+</p>
+<DemoContainer>
+	<FabWithMenu />
+</DemoContainer>
+<Code value={FabWithMenuSource} />
+
 <h2 id="as-link">As link<a href="#as-link" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Give a FAB an <code>href</code> and it renders an <code>&lt;a&gt;</code>. A disabled FAB stays a
-	<code>&lt;button&gt;</code>, because a disabled link is still followable.
+	Give a FAB an <code>href</code> and it renders an <code>&lt;a&gt;</code>.
 </p>
 <DemoContainer>
 	<AsLink />
@@ -165,12 +176,15 @@
 			<td>Corner radius at rest, overriding the <code>shape</code>.</td>
 		</tr>
 		<tr>
-			<td><code>--np-fab-pressed-shape</code></td>
-			<td>Corner radius while pressed.</td>
-		</tr>
-		<tr>
 			<td><code>--np-fab-elevation</code></td>
 			<td>Shadow, overriding <code>lowered</code>.</td>
+		</tr>
+		<tr>
+			<td><code>--np-fab-motion-spatial</code></td>
+			<td>
+				How an extended FAB collapses and expands, by default
+				<code>--np-motion-expressive-default-spatial</code>.
+			</td>
 		</tr>
 	</tbody>
 </table>
@@ -180,18 +194,20 @@
 </h2>
 <p>
 	The FAB renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> with
-	<code>href</code>. It usually shows an icon alone, so the <code>label</code> is what gives it a name,
-	and the same text becomes its tooltip.
+	<code>href</code>. It usually shows only an icon, so the <code>label</code> gives it its name. The same
+	text becomes its tooltip.
 </p>
 <p>
-	An extended FAB shows the label as text and is named by it. Keep the FAB late in the DOM, where it
-	sits visually, so the tab order matches the screen, and remember that one screen has one FAB: two
-	of them leave people guessing which action the screen is about.
+	An extended FAB is named by its label text. Keep the FAB late in the DOM, where it sits visually,
+	so the tab order matches the screen. Use one FAB per screen. With two, people have to guess which
+	action the screen is about.
 </p>
 <p>
-	A FAB menu is a <code>role="menu"</code>, and a menu may only hold menu items. Give every item
-	<code>role="menuitem"</code>, as the example above does. The menu keeps them in one tab stop and
-	moves between them with the arrow keys.
+	A FAB menu has <code>role="menu"</code>, and a menu may only hold menu items.
+	<code>FabMenuItem</code> has <code>role="menuitem"</code>. When the menu opens, focus stays on the
+	close button, and the items follow it top to bottom. They share one tab stop. The arrow keys move
+	between them, and typing a letter jumps to the action that starts with it. On the FAB,
+	<kbd>↓</kbd> and <kbd>↑</kbd> open the menu on its first and last action.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="fab-attributes">
@@ -244,20 +260,14 @@
 		<tr>
 			<td><code>shape</code></td>
 			<td><code>'round' | 'square'</code></td>
-			<td><code>'round'</code></td>
-			<td>Corner radius at rest.</td>
+			<td><code>'square'</code></td>
+			<td>Corner radius.</td>
 		</tr>
 		<tr>
 			<td><code>lowered</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td>Drops the shadow a level.</td>
-		</tr>
-		<tr>
-			<td><code>disabled</code></td>
-			<td><code>boolean | null | undefined</code></td>
-			<td><code>false</code></td>
-			<td>Makes the FAB non-interactive and forces a <code>&lt;button&gt;</code>.</td>
 		</tr>
 	</tbody>
 </table>
@@ -266,8 +276,8 @@
 	ExtendedFab attributes<a href="#extendedfab-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	Everything <code>Fab</code> takes, with <code>label</code> shown as text rather than used as a tooltip,
-	plus:
+	Everything <code>Fab</code> takes, plus the attribute below. The <code>label</code> shows as text instead
+	of a tooltip.
 </p>
 <table>
 	<thead>
@@ -287,6 +297,31 @@
 				Shrinks to the icon alone, animating the width. The label moves to
 				<code>aria-label</code>.
 			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3 id="fabmenuitem-attributes">
+	FabMenuItem attributes<a href="#fabmenuitem-attributes" aria-hidden="true" tabindex="-1">#</a>
+</h3>
+<p>
+	A medium tonal <code>Button</code> with <code>role="menuitem"</code>, taking its attributes, plus:
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>Attribute</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>icon</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>Leading icon. It helps tell the actions apart.</td>
 		</tr>
 	</tbody>
 </table>

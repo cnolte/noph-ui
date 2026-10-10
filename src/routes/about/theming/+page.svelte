@@ -16,18 +16,17 @@
 
 <h1>Theming</h1>
 <p>
-	Every color, corner, easing curve and shadow in Noph UI comes from a CSS custom property.
-	Components never hard code a value, so a theme is nothing more than a set of variables you own.
-	Change one and every component that reads it follows, at build time or while the page is running.
+	Every color, corner, easing curve and shadow in Noph UI comes from a CSS custom property. A theme
+	is a set of these variables. Change one and every component that reads it updates, at build time
+	or while the page is running.
 </p>
 
 <h2 id="how-the-theme-works">
 	How the theme works<a href="#how-the-theme-works" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	A theme declares 54 color roles on <code>:root</code>. Each one holds both schemes at once, in a
-	<code>light-dark()</code>
-	pair, and <code>color-scheme: light dark</code> tells the browser it may pick either.
+	A theme declares 54 color roles on <code>:root</code>. Each one holds both schemes in a
+	<code>light-dark()</code> pair. <code>color-scheme: light dark</code> lets the browser pick either.
 </p>
 <Code
 	value={`:root {
@@ -39,9 +38,8 @@
 }`}
 />
 <p>
-	The same file also carries the shape, motion and elevation tokens, which are listed further down.
-	Because it is plain CSS, you can ship it as a stylesheet, inline it, or overwrite single values
-	from a component.
+	The same file also holds the shape, motion and elevation tokens listed below. It is plain CSS, so
+	you can ship it as a stylesheet, inline it, or override single values from a component.
 </p>
 
 <h2 id="using-the-default-theme">
@@ -49,7 +47,7 @@
 </h2>
 <p>Import the default theme once, in your root layout.</p>
 <Code value="import 'noph-ui/defaultTheme'" />
-<p>Then hand the page background and text color to the theme.</p>
+<p>Then take the page background and text color from the theme.</p>
 <Code
 	value={`body {
 	background-color: var(--np-color-background);
@@ -58,17 +56,17 @@
 />
 <p>
 	The default theme is the source color <code>#5fb9e9</code> run through the Content variant on the 2025
-	spec with no contrast adjustment. That is why the generator below starts out matching the shipped file
-	exactly, token for token.
+	spec with no contrast adjustment. The generator below starts with these settings, so it matches the
+	shipped file token for token.
 </p>
 
 <h2 id="generate-your-own-theme">
 	Generate your own theme<a href="#generate-your-own-theme" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Pick a source color and Noph UI derives all 54 roles for both schemes. Every change here applies
-	to this page right away, so you can judge a palette on real components instead of swatches.
-	<strong>Copy CSS</strong> puts a complete replacement for the default theme on your clipboard.
+	Pick a source color and Noph UI derives all 54 roles for both schemes. Every change applies to
+	this page right away, so you can check a palette on real components.
+	<strong>Copy CSS</strong> copies a complete replacement for the default theme to your clipboard.
 	<strong>Reset</strong> brings back the shipped theme.
 </p>
 <ThemeGenerator />
@@ -78,8 +76,8 @@
 </h3>
 <p>
 	<code>SPEC_2021</code> is the original Material 3 color system. <code>SPEC_2025</code> is the Material
-	3 Expressive revision, with brighter containers and different surface tones, and it is what the default
-	theme uses.
+	3 Expressive revision, with brighter containers and different surface tones. The default theme uses
+	it.
 </p>
 
 <h2 id="light-and-dark-color-schemes">
@@ -90,19 +88,18 @@
 	>
 </h2>
 <p>
-	Because every token is a <code>light-dark()</code> pair, the browser follows the operating system setting
-	on its own. No JavaScript, no class toggling.
+	Every token is a <code>light-dark()</code> pair, so the browser follows the operating system setting
+	without JavaScript or class toggling.
 </p>
 <p>
-	To force one scheme, set <code>data-theme</code> on the <code>html</code> element. Valid values
-	are
-	<code>light</code> and <code>dark</code>.
+	To force one scheme, set <code>data-theme</code> on the <code>html</code> element to
+	<code>light</code> or <code>dark</code>.
 </p>
 <Code value="<html lang=&quot;en&quot; data-theme=&quot;dark&quot;>" />
 <p>
-	If visitors get to choose, store the choice and set the attribute in an inline
-	<code>&lt;script&gt;</code> in the <code>&lt;head&gt;</code> of your <code>app.html</code>, before
-	the page paints. That avoids a flash of the wrong scheme.
+	To let visitors choose, store the choice and set the attribute in an inline
+	<code>&lt;script&gt;</code> in the <code>&lt;head&gt;</code> of your <code>app.html</code>. It
+	runs before the page paints, so the wrong scheme does not flash.
 </p>
 <Code
 	value={`const stored = localStorage.getItem('theme')
@@ -117,8 +114,8 @@ if (stored === 'light' || stored === 'dark') {
 	>
 </h2>
 <p>
-	Setting the custom properties on the root element beats swapping stylesheets, since only the
-	changed values repaint. This is exactly what the generator above does.
+	Set the custom properties on the root element instead of swapping stylesheets. Only the changed
+	values repaint. The generator above does the same.
 </p>
 <Code
 	value={`const setTheme = (tokens) => {
@@ -136,7 +133,7 @@ setTheme({ '--np-color-primary': 'light-dark(#00668c, #75ceff)' })`}
 <h2 id="shape-tokens">
 	Shape tokens<a href="#shape-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h2>
-<p>Corner radii are shared by every component, so rounding stays consistent across the app.</p>
+<p>Every component uses these corner radii.</p>
 <table>
 	<thead>
 		<tr><th>Token</th><th>Value</th></tr>
@@ -156,9 +153,9 @@ setTheme({ '--np-color-primary': 'light-dark(#00668c, #75ceff)' })`}
 	Motion tokens<a href="#motion-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Motion tokens pair a duration with an easing curve. <strong>Spatial</strong> tokens move things,
-	<strong>effects</strong> tokens change color and opacity. The <strong>expressive</strong> curves
-	overshoot slightly and settle, the <strong>standard</strong> curves do not.
+	Motion tokens pair a duration with an easing curve. <strong>Spatial</strong> tokens move things.
+	<strong>Effects</strong> tokens change color and opacity. The <strong>expressive</strong> curves
+	overshoot slightly and settle. The <strong>standard</strong> curves do not.
 </p>
 <table>
 	<thead>
@@ -185,8 +182,8 @@ setTheme({ '--np-color-primary': 'light-dark(#00668c, #75ceff)' })`}
 	Elevation tokens<a href="#elevation-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Four layered shadows, from the lightest lift to the most pronounced. Cards, menus, dialogs and
-	hovered FABs use them, and so can you.
+	Four layered shadows, from lightest to strongest. Cards, menus, dialogs and hovered FABs use them,
+	and you can use them too.
 </p>
 <Code
 	value={`box-shadow: var(--np-elevation-1);

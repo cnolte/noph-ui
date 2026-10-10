@@ -10,6 +10,7 @@
 		buffer = 0,
 		wavy = false,
 		track = true,
+		stopIndicator = true,
 		element = $bindable(),
 		class: className,
 		style,
@@ -17,7 +18,6 @@
 	}: LinearProgressProps = $props()
 
 	const WAVE_AMPLITUDE = 3
-	const WAVE_THICKNESS = 4
 	const DETERMINATE_WAVELENGTH = 40
 	const INDETERMINATE_WAVELENGTH = 20
 
@@ -59,12 +59,12 @@
 
 	const WAVE_STEPS = 12
 	let containerWidth = $state(0)
+	let containerHeight = $state(0)
 	let wavePathA = $state<SVGPathElement>()
 	let wavePathB = $state<SVGPathElement>()
 	let renderedAmplitude = 0
 
-	const buildWave = (width: number, len: number, amp: number, phase: number) => {
-		const height = WAVE_THICKNESS + 2 * WAVE_AMPLITUDE
+	const buildWave = (width: number, height: number, len: number, amp: number, phase: number) => {
 		const mid = height / 2
 		const step = len / WAVE_STEPS
 		const xs: number[] = []
@@ -91,14 +91,25 @@
 		return wave.cum[i] + (wave.cum[i + 1] - wave.cum[i]) * f
 	}
 
-	const trim = (path: SVGPathElement | undefined, wave: Wave, x0: number, x1: number) => {
+	// `dot` keeps a determinate indicator visible as a dot at low values, where the round caps
+	// alone are wider than the progress.
+	const trim = (
+		path: SVGPathElement | undefined,
+		wave: Wave,
+		x0: number,
+		x1: number,
+		cap: number,
+		dot: boolean,
+	) => {
 		if (!path) return
-		const cap = WAVE_THICKNESS / 2
 		const from = x0 + cap
-		const to = x1 - cap
+		let to = x1 - cap
 		if (to <= from) {
-			path.style.visibility = 'hidden'
-			return
+			if (!dot || x1 <= x0) {
+				path.style.visibility = 'hidden'
+				return
+			}
+			to = from + 0.01
 		}
 		path.style.visibility = ''
 		const a = lengthAt(wave, from)
@@ -109,9 +120,11 @@
 	}
 
 	$effect(() => {
-		if (!wave || !containerWidth) return
+		if (!wave || !containerWidth || !containerHeight) return
 		const len = wavelength
 		const width = containerWidth
+		const height = containerHeight
+		const cap = wavePathA ? parseFloat(getComputedStyle(wavePathA).strokeWidth) / 2 || 2 : 2
 		const host = wavePathA?.closest('.progress') as HTMLElement | null
 		const hostStyles = host && getComputedStyle(host)
 		let raf = 0
@@ -127,7 +140,7 @@
 					: percent
 			const shown = Number.isFinite(eased) ? eased : percent
 			renderedAmplitude += (amplitudeFor(shown / 100) - renderedAmplitude) * Math.min(1, dt / 500)
-			const wave = buildWave(width, len, renderedAmplitude, phase)
+			const wave = buildWave(width, height, len, renderedAmplitude, phase)
 			if (indeterminate) {
 				const t = now % CYCLE
 				const [h1, t1, h2, t2] = RAMPS.map(([d, u]) => rampAt(t, d, u))
@@ -135,10 +148,10 @@
 				host?.style.setProperty('--np-lp-t1', `${t1 * 100}%`)
 				host?.style.setProperty('--np-lp-h2', `${h2 * 100}%`)
 				host?.style.setProperty('--np-lp-t2', `${t2 * 100}%`)
-				trim(wavePathA, wave, t1 * width, h1 * width)
-				trim(wavePathB, wave, t2 * width, h2 * width)
+				trim(wavePathA, wave, t1 * width, h1 * width, cap, false)
+				trim(wavePathB, wave, t2 * width, h2 * width, cap, false)
 			} else {
-				trim(wavePathA, wave, 0, (shown / 100) * width)
+				trim(wavePathA, wave, 0, (shown / 100) * width, cap, true)
 			}
 		}
 		raf = requestAnimationFrame(frame)
@@ -166,6 +179,7 @@
 	class={['np-container', wave && 'wavy', className]}
 	{style}
 	bind:clientWidth={containerWidth}
+	bind:clientHeight={containerHeight}
 >
 	<div
 		{...attributes}
@@ -206,7 +220,7 @@
 				<div class="bar-inner"></div>
 			</div>
 		{/if}
-		{#if !indeterminate}
+		{#if !indeterminate && stopIndicator}
 			<div class="stop-indicator"></div>
 		{/if}
 	</div>
@@ -243,10 +257,11 @@
 		transform: scaleX(-1);
 	}
 
+	/* A 4dp dot, centred in the round end of a thicker track. */
 	.stop-indicator {
-		right: 0;
-		width: var(--np-linear-progress-active-indicator-height, 0.25rem);
-		height: var(--np-linear-progress-active-indicator-height, 0.25rem);
+		right: max(0px, (var(--np-linear-progress-track-height, 0.25rem) - 0.25rem) / 2);
+		width: 0.25rem;
+		height: 0.25rem;
 		border-radius: var(--np-shape-corner-full);
 		background: var(--np-linear-progress-active-indicator-color, var(--np-color-primary));
 	}
@@ -270,8 +285,12 @@
 		background: var(--np-linear-progress-active-indicator-color, var(--np-color-primary));
 	}
 
+	/* At low values the active indicator is a dot as wide as it is thick. */
 	.progress:not(.indeterminate) .primary-bar {
-		width: var(--_percent, 0%);
+		width: max(
+			var(--_percent, 0%),
+			var(--np-linear-progress-active-indicator-height, 0.25rem) * var(--_gap-on, 0)
+		);
 		transform: none;
 		transition: width var(--np-motion-expressive-default-effects);
 	}
@@ -284,7 +303,13 @@
 		background: var(--np-linear-progress-track-color, var(--np-color-secondary-container));
 		inset-block: 0;
 		left: min(
-			calc(var(--_percent, 0%) + var(--np-linear-progress-track-gap, 0.25rem) * var(--_gap-on, 0)),
+			calc(
+				max(
+						var(--_percent, 0%),
+						var(--np-linear-progress-active-indicator-height, 0.25rem) * var(--_gap-on, 0)
+					) +
+					var(--np-linear-progress-track-gap, 0.25rem) * var(--_gap-on, 0)
+			),
 			100%
 		);
 		right: calc(100% - var(--_buffer-percent, 100%));
@@ -481,7 +506,10 @@
 	}
 
 	.np-container.wavy {
-		height: var(--np-linear-progress-wave-height, 0.625rem);
+		height: var(
+			--np-linear-progress-wave-height,
+			calc(var(--np-linear-progress-active-indicator-height, 0.25rem) + 0.375rem)
+		);
 		border-radius: 0;
 	}
 

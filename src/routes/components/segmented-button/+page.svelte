@@ -21,8 +21,8 @@
 
 <h1>Segmented buttons</h1>
 <p>
-	A segmented button holds two to five related options in one connected control, for choosing a view
-	or filtering what is on screen. Use it where the options are short and worth showing all at once.
+	A segmented button holds two to five related options in one connected control. Use it to choose a
+	view or filter what is on screen, when the options are short and should all be visible.
 </p>
 <h2 id="single-choice">
 	Single choice<a href="#single-choice" aria-hidden="true" tabindex="-1">#</a>
@@ -53,9 +53,8 @@
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The segmented button carries no custom properties of its own. It is drawn entirely from the
-	Material 3 color roles, so it follows the theme wherever it sits, and overriding a role on an
-	ancestor recolors it.
+	The segmented button has no custom properties of its own. It uses the Material 3 color roles, so
+	it follows the theme. Override a role on an ancestor to recolor it.
 </p>
 <table>
 	<thead>
@@ -88,22 +87,23 @@
 	</tbody>
 </table>
 <p>
-	The shape comes from <code>--np-shape-corner-full</code>, so a squarer theme squares the set off
-	with everything else.
+	The shape comes from <code>--np-shape-corner-full</code> and changes with it.
 </p>
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
 	Every segment is a native <code>&lt;input&gt;</code> inside a <code>&lt;label&gt;</code>: radios
-	for single choice, checkboxes for <code>multiSelect</code>. Selection, the arrow keys of a radio
-	group, the space key and form submission all come from the browser.
+	for single choice in a <code>role="radiogroup"</code>, checkboxes for <code>multiSelect</code>.
+	Selection, the arrow keys of a radio group, the space key and form submission work like native
+	inputs. Checkboxes get the same single tab stop and arrow keys as radios. <kbd>Enter</kbd> picks the
+	focused segment instead of submitting the form. Each segment keeps a 48px tall target.
 </p>
 <p>
-	The <code>label</code> of an option is its accessible name, including for an option that shows
-	only <code>labelIcon</code>, so fill it in even where nothing is drawn. A disabled option is a
-	disabled input and drops out of the tab order. Keep the set between two and five options; beyond
-	that a <a class="link" href="/components/select">select</a> reads better.
+	The <code>label</code> of an option is its accessible name, also for an option that shows only
+	<code>labelIcon</code>. Always set it. A disabled option is a disabled input and leaves the tab
+	order. Keep the set between two and five options. For more, use a
+	<a class="link" href="/components/select">select</a>.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -134,8 +134,8 @@
 			>
 			<td></td>
 			<td
-				>The options to display. <code>value</code> is what ends up in <code>group</code> and in the
-				form data; without it the option falls back to its <code>label</code>.</td
+				>The options to display. <code>value</code> goes into <code>group</code> and the form data.
+				Without it, the option uses its <code>label</code>.</td
 			>
 		</tr>
 		<tr>
@@ -167,12 +167,7 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The root DOM element of the component, bound with <code>bind:this</code>.</td>
 		</tr>
 	</tbody>
 </table>

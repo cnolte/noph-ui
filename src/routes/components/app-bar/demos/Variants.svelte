@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { AppBar, IconButton, Item, Search } from '#lib/index.js'
+	import { AppBar, IconButton, List, ListItem, Search } from '#lib/index.js'
 	import { Icon } from '#lib/icons/index.js'
 
 	const dishes = ['Simple Classic Tacos', 'Mexican street corn', 'Chilaquiles verdes']
 
 	let query = $state('')
+	let expanded = $state(false)
 
 	const matches = (q: string) =>
 		q ? dishes.filter((d) => d.toLowerCase().includes(q.toLowerCase())) : dishes
@@ -17,10 +18,19 @@
 				<IconButton title="Open navigation"><Icon>menu</Icon></IconButton>
 			{/snippet}
 			{#snippet search()}
-				<Search bind:value={query} placeholder="Search product">
-					{#each matches(query) as dish (dish)}
-						<Item onclick={() => (query = dish)}>{dish}</Item>
-					{/each}
+				<Search bind:value={query} bind:expanded placeholder="Search product">
+					<List aria-label="Suggestions">
+						{#each matches(query) as dish (dish)}
+							<ListItem
+								onclick={() => {
+									query = dish
+									expanded = false
+								}}
+							>
+								{dish}
+							</ListItem>
+						{/each}
+					</List>
 				</Search>
 			{/snippet}
 		</AppBar>

@@ -6,7 +6,7 @@
 </script>
 
 <Button command="show-modal" commandfor="demo-drawer">Open nav</Button>
-<NavigationDrawer id="demo-drawer" modal backdrop>
+<NavigationDrawer id="demo-drawer" modal>
 	<NavigationDrawerItem
 		selected={selection === 1}
 		onclick={() => {

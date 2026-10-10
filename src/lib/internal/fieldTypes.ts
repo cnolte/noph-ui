@@ -8,6 +8,12 @@ export interface FieldProps {
 	issues?: Issue[]
 	prefixText?: string
 	suffixText?: string
+	/** Spoken in place of `prefixText`, for example "Euro" for "€". */
+	prefixLabel?: string
+	/** Spoken in place of `suffixText`, for example "at gmail dot com". */
+	suffixLabel?: string
+	/** Spoken before the character counter. */
+	counterLabel?: string
 	variant?: 'outlined' | 'filled'
 	start?: Snippet
 	end?: Snippet

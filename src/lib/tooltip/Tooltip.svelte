@@ -23,7 +23,9 @@
 
 	const attachAnchor = (el: HTMLDivElement) => {
 		if (!id) return
-		const anchor = document.querySelector<HTMLElement>(`[aria-describedby="${id}"]`)
+		const anchor = document.querySelector<HTMLElement>(
+			`[aria-describedby~="${id}"], [interestfor="${id}"]`,
+		)
 		if (!anchor) return
 		if (isInterestInvoker(anchor)) {
 			native = true

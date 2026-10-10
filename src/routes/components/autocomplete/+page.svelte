@@ -13,7 +13,7 @@
 	<title>Autocomplete - Material 3 combobox for Svelte - Noph UI</title>
 	<meta
 		name="description"
-		content="The Material 3 autocomplete for Svelte: a text field that suggests options as you type, keeps what the user typed as the value and wires up the combobox roles for you."
+		content="The Material 3 autocomplete for Svelte: a text field that suggests options as you type, keeps what the user typed as the value and sets the combobox roles."
 	/>
 </svelte:head>
 
@@ -21,20 +21,19 @@
 <p>
 	Auto complete is a <a class="link" href="/components/text-field">text field</a> that suggests
 	matching options as you type. Unlike a <a class="link" href="/components/select">select</a> it does
-	not restrict the input: what the user types is the value, and the menu is only there to help them get
-	there faster.
+	not restrict the input. What the user types is the value, and the menu helps them get there faster.
 </p>
 <p>
-	It accepts every text field attribute, so <code>variant</code>, <code>label</code>,
-	<code>supportingText</code>, <code>required</code> and the rest work the same way here.
+	It accepts every text field attribute, such as <code>variant</code>, <code>label</code>,
+	<code>supportingText</code> and <code>required</code>.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Pass an array of <code>options</code>. Each one needs a <code>label</code>; a
-	<code>value</code>, a <code>supportingText</code> and leading or trailing content are optional. By default
-	the menu shows the options whose label contains what has been typed, and picking one writes its label
-	into the field.
+	Pass an array of <code>options</code>. Each one needs a <code>label</code>. A <code>value</code>,
+	a
+	<code>supportingText</code> and leading or trailing content are optional. By default the menu shows
+	the options whose label contains the typed text. Picking one writes its label into the field.
 </p>
 <DemoContainer>
 	<AutoCompleteUsage />
@@ -46,11 +45,9 @@
 </h2>
 <p>
 	To collect more than one value, keep the chosen options in your own state and render them as
-	<a class="link" href="/components/chip">input chips</a> inside the field. Two props do the work:
-	<code>onoptionselect</code> replaces the default behaviour of writing the label into the input,
-	and
-	<code>optionsFilter</code> takes over the filtering so options that are already picked disappear from
-	the menu.
+	<a class="link" href="/components/chip">input chips</a> inside the field. Use two props.
+	<code>onoptionselect</code> replaces the default behaviour of writing the label into the input.
+	<code>optionsFilter</code> replaces the filtering, so you can hide options that are already picked.
 </p>
 <DemoContainer>
 	<AutoCompleteMultipleValues />
@@ -61,11 +58,10 @@
 	Long option lists<a href="#long-option-lists" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Once more than <code>virtualThreshold</code> options are visible at the same time, the menu
-	switches to a virtual list and only renders what is on screen, so a list of thousands of entries
-	stays responsive. The threshold defaults to 300; lower it if your options are expensive to render.
-	A virtual list needs a fixed width, so the menu is clamped to the width of the field in that mode,
-	the same as with <code>clampMenuWidth</code>.
+	When more than <code>virtualThreshold</code> options are visible at once, the menu switches to a
+	virtual list and only renders what is on screen. A list of thousands of entries stays responsive.
+	The threshold defaults to 300. Lower it if your options are expensive to render. In this mode the
+	menu has the width of the field, as with <code>clampMenuWidth</code>.
 </p>
 <Code
 	value={`<AutoComplete
@@ -82,19 +78,19 @@
 <p>
 	The field is a combobox: it renders <code>role="combobox"</code> with
 	<code>aria-expanded</code>, <code>aria-controls</code> and <code>aria-activedescendant</code>, and
-	the menu renders as a listbox whose options carry <code>role="option"</code>. Because the active
-	option is pointed at rather than focused, focus stays in the input while the user browses the
+	the menu renders as a listbox whose options carry <code>role="option"</code>. Focus stays in the
+	input while the user moves through the list.
+</p>
+<p>
+	<kbd>↓</kbd> and <kbd>↑</kbd> move through the suggestions and open the menu if it is closed.
+	<kbd>Home</kbd> and <kbd>End</kbd> move the caret in the input. Once the arrow keys have moved
+	into the suggestions, they jump to the first and the last one. <kbd>Enter</kbd> picks the active
+	option.
+	<kbd>Escape</kbd> closes the menu without changing the value. Typing reopens the menu with the filtered
 	list.
 </p>
 <p>
-	<kbd>↓</kbd> and <kbd>↑</kbd> move through the suggestions and open the menu if it is closed,
-	<kbd>Home</kbd> and <kbd>End</kbd> jump to the first and the last one, <kbd>Enter</kbd> picks the
-	active option and <kbd>Escape</kbd> closes the menu without changing the value. Typing anything reopens
-	the menu with the filtered list.
-</p>
-<p>
-	Always pass a <code>label</code>. The suggestions are a convenience, so the field has to be
-	understandable before the menu ever opens.
+	Always pass a <code>label</code>. The field must make sense before the menu opens.
 </p>
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -103,8 +99,7 @@
 	<a class="link" href="/components/text-field">text field tokens</a> and the suggestion list
 	follows the
 	<a class="link" href="/components/menu">menu</a> and
-	<a class="link" href="/components/list">list tokens</a>, so it picks up whatever you already set
-	for those.
+	<a class="link" href="/components/list">list tokens</a>.
 </p>
 <Code
 	value={`<AutoComplete
@@ -115,9 +110,9 @@
 />`}
 />
 <p>
-	To style a single option, give it a <code>class</code> or a <code>style</code>. The style is the
-	easiest way to set list item tokens for that option, and a class lets you reach the parts of the
-	item from your own CSS.
+	To style a single option, give it a <code>class</code> or a <code>style</code>. Use the style to
+	set list item tokens for that option. Use a class to reach the parts of the item from your own
+	CSS.
 </p>
 <DemoContainer>
 	<AutoCompleteOptionStyling />
@@ -183,7 +178,7 @@
 			<td><code>virtualThreshold</code></td>
 			<td><code>number</code></td>
 			<td><code>300</code></td>
-			<td>Number of visible options from which on the menu renders as a virtual list.</td>
+			<td>The menu renders as a virtual list when more than this many options are visible.</td>
 		</tr>
 	</tbody>
 </table>

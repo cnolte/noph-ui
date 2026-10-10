@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
-	import { pressMorph } from '#lib/press.svelte.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
@@ -9,9 +8,8 @@
 	let {
 		variant = 'primary-container',
 		size = 's',
-		shape = 'round',
+		shape = 'square',
 		lowered = false,
-		disabled = false,
 		icon,
 		label,
 		element = $bindable(),
@@ -20,16 +18,9 @@
 
 	const uid = $props.id()
 
-	let isLink = $derived(attributes.href != null && !disabled)
-	let tooltipId = $derived(label && !disabled ? uid : undefined)
-
-	const morph = pressMorph()
-	morph.supersededBy(() => shape)
-
-	const handlePress = () => {
-		if (disabled) return
-		morph.press()
-	}
+	let isLink = $derived(attributes.href != null)
+	let tooltipId = $derived(label ? uid : undefined)
+	let tooltipNames = $derived(!!tooltipId && !attributes['aria-label'])
 
 	let classes = $derived([
 		'np-fab',
@@ -38,15 +29,12 @@
 		size,
 		shape,
 		lowered && 'np-fab-lowered',
-		morph.pressed && 'pressed',
 		attributes.class,
 	])
 </script>
 
 {#snippet content()}
-	{#if !disabled}
-		<Ripple forElement={element} />
-	{/if}
+	<Ripple forElement={element} />
 	{#if icon}
 		<span class="np-fab-icon">{@render icon()}</span>
 	{/if}
@@ -55,14 +43,10 @@
 {#if isLink}
 	<a
 		{...attributes}
-		onclick={(event) => {
-			handlePress()
-			attributes.onclick?.(event)
-		}}
 		bind:this={element}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={label || attributes['aria-label']}
+		aria-label={attributes['aria-label'] ?? label}
 		class={classes}
 	>
 		{@render content()}
@@ -70,16 +54,11 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		onclick={(event) => {
-			handlePress()
-			attributes.onclick?.(event)
-		}}
 		bind:this={element}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={label || attributes['aria-label']}
+		aria-label={attributes['aria-label'] ?? label}
 		type={(attributes['type'] as HTMLButtonAttributes['type']) ?? 'button'}
-		{disabled}
 		class={classes}
 	>
 		{@render content()}
@@ -117,17 +96,10 @@
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		.round:not(:disabled):is(:active, .pressed) {
-			border-radius: var(--np-fab-pressed-shape, var(--_square-radius));
-		}
-		.square:not(:disabled):is(:active, .pressed) {
-			border-radius: var(--np-fab-pressed-shape, 50%);
-		}
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
 		.np-fab {
 			transition:
+				width var(--np-motion-expressive-default-spatial),
+				height var(--np-motion-expressive-default-spatial),
 				border-radius var(--np-motion-expressive-default-spatial),
 				box-shadow var(--np-motion-expressive-fast-effects),
 				background-color var(--np-motion-expressive-fast-effects);
@@ -183,19 +155,12 @@
 	}
 
 	@media (hover: hover) {
-		.np-fab:not(:disabled):hover {
+		.np-fab:hover {
 			box-shadow: var(--np-fab-elevation, var(--np-elevation-4));
 		}
-		.np-fab-lowered:not(:disabled):hover {
+		.np-fab-lowered:hover {
 			box-shadow: var(--np-fab-elevation, var(--np-elevation-2));
 		}
-	}
-
-	.np-fab:disabled {
-		cursor: default;
-		box-shadow: none;
-		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
-		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
 
 	.np-fab-icon {

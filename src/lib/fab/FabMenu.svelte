@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { reducedMotion } from '#lib/media.js'
+	import '#lib/internal/exit.css'
+	import { exitAnimation } from '#lib/animation.js'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
-	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
+	import { arrowKeyNav, focusableItems, rovingTabindex, typeahead } from '#lib/keyboard-nav.js'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
-	import { PRESS_DURATION } from '#lib/press.svelte.js'
-	import { onMount } from 'svelte'
 	import Fab from './Fab.svelte'
 	import type { FabMenuProps } from './types.js'
 
@@ -16,7 +15,6 @@
 		variant = 'primary-container',
 		size = 's',
 		placement = 'block-start',
-		closeOnSelect = true,
 		open = $bindable(false),
 		element = $bindable(),
 		...attributes
@@ -28,37 +26,32 @@
 
 	let menuElement: HTMLDivElement | undefined = $state()
 
+	let colorSet = $derived(variant.replace('-container', '') as 'primary' | 'secondary' | 'tertiary')
+
 	const ITEMS = 'button, a[href], [role="menuitem"]'
 	const attach = rovingTabindex(ITEMS)
 	let arrowHandler = $derived(
 		arrowKeyNav(ITEMS, placement.startsWith('inline') ? 'horizontal' : 'vertical'),
+	)
+	const typeaheadHandler = typeahead(
+		ITEMS,
+		(item) => (item.querySelector('.children-wrapper') ?? item).textContent ?? '',
 	)
 
 	const controller = popoverController(() => menuElement)
 
 	export const show = () => controller.show()
 
-	export const close = () => {
-		clearTimeout(closeTimeout)
-		controller.close()
+	export const close = () => controller.close()
+
+	const openWithArrow = (event: KeyboardEvent) => {
+		if (!menuElement || (event.key !== 'ArrowDown' && event.key !== 'ArrowUp')) return
+		event.preventDefault()
+		show()
+		focusableItems(menuElement, ITEMS)
+			.at(event.key === 'ArrowDown' ? 0 : -1)
+			?.focus()
 	}
-
-	let closeTimeout: ReturnType<typeof setTimeout>
-
-	const closeAfterPress = () => {
-		if (reducedMotion.current) {
-			close()
-			return
-		}
-		clearTimeout(closeTimeout)
-		closeTimeout = setTimeout(close, PRESS_DURATION)
-	}
-
-	onMount(() => {
-		return () => {
-			clearTimeout(closeTimeout)
-		}
-	})
 
 	syncOpenEffect(
 		() => menuElement,
@@ -83,19 +76,26 @@
 	{...attributes}
 	bind:this={element}
 	style="anchor-name: {anchorName}; {attributes.style ?? ''}"
-	class={['np-fab-menu', `np-fab-menu-${placement}`, attributes.class]}
+	class={[
+		'np-fab-menu',
+		`np-fab-menu-${placement}`,
+		`np-fab-menu-${size}`,
+		`np-fab-menu-set-${colorSet}`,
+		attributes.class,
+	]}
 >
 	<Fab
-		{variant}
-		{size}
+		variant={open ? colorSet : variant}
+		size={open ? 's' : size}
+		shape={open ? 'round' : undefined}
 		{label}
-		shape={open ? 'square' : 'round'}
 		command="toggle-popover"
 		commandfor={menuId}
 		aria-haspopup="menu"
 		aria-expanded={open}
 		class="np-fab-menu-trigger"
 		icon={triggerIcon}
+		onkeydown={openWithArrow}
 	/>
 
 	<div
@@ -108,11 +108,10 @@
 		aria-label={label}
 		class="np-fab-menu-list"
 		{@attach attach}
-		onkeydown={arrowHandler}
-		onclick={(event) => {
-			if (!closeOnSelect) return
-			const target = event.target as HTMLElement
-			if (target.closest(ITEMS)) closeAfterPress()
+		{@attach exitAnimation}
+		onkeydown={(event) => {
+			arrowHandler(event)
+			if (!event.defaultPrevented) typeaheadHandler(event)
 		}}
 		ontoggle={(event) => {
 			open = event.newState === 'open'
@@ -126,6 +125,35 @@
 	.np-fab-menu {
 		position: relative;
 		display: inline-flex;
+		width: var(--_size);
+		height: var(--_size);
+	}
+	.np-fab-menu-s {
+		--_size: 3.5rem;
+	}
+	.np-fab-menu-m {
+		--_size: 5rem;
+	}
+	.np-fab-menu-l {
+		--_size: 6rem;
+	}
+	.np-fab-menu > :global(.np-fab.np-fab-menu-trigger) {
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-end: 0;
+	}
+
+	.np-fab-menu-set-primary {
+		--np-tonal-button-container-color: var(--np-color-primary-container);
+		--np-tonal-button-label-text-color: var(--np-color-on-primary-container);
+	}
+	.np-fab-menu-set-secondary {
+		--np-tonal-button-container-color: var(--np-color-secondary-container);
+		--np-tonal-button-label-text-color: var(--np-color-on-secondary-container);
+	}
+	.np-fab-menu-set-tertiary {
+		--np-tonal-button-container-color: var(--np-color-tertiary-container);
+		--np-tonal-button-label-text-color: var(--np-color-on-tertiary-container);
 	}
 
 	.np-fab-menu-icons {
@@ -152,48 +180,78 @@
 
 	.np-fab-menu-list {
 		position: absolute;
+		box-sizing: border-box;
+		max-height: 100%;
 		margin: 0;
-		padding: 0;
+		padding: 0.5rem;
 		border: none;
 		background: none;
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 0.25rem;
-		overflow: visible;
+		overflow: auto;
+		scrollbar-width: none;
 	}
 
 	.np-fab-menu-list:popover-open {
 		display: flex;
 	}
+	.np-fab-menu-list {
+		--np-exit-display: flex;
+	}
+	.np-fab-menu-list > :global(:focus-visible) {
+		z-index: 1;
+	}
 
 	.np-fab-menu-block-start .np-fab-menu-list {
-		position-area: block-start;
-		margin-block-end: 0.5rem;
-		flex-direction: column-reverse;
+		position-area: block-start span-inline-start;
 	}
 	.np-fab-menu-block-end .np-fab-menu-list {
-		position-area: block-end;
-		margin-block-start: 0.5rem;
+		position-area: block-end span-inline-start;
 	}
 	.np-fab-menu-inline-start .np-fab-menu-list {
 		position-area: inline-start;
-		margin-inline-end: 0.5rem;
-		flex-direction: row-reverse;
-		align-items: center;
 	}
 	.np-fab-menu-inline-end .np-fab-menu-list {
 		position-area: inline-end;
-		margin-inline-start: 0.5rem;
+	}
+	:is(.np-fab-menu-block-start, .np-fab-menu-block-end) .np-fab-menu-list {
+		margin-inline-end: -0.5rem;
+	}
+	:is(.np-fab-menu-inline-start, .np-fab-menu-inline-end) .np-fab-menu-list {
 		flex-direction: row;
 		align-items: center;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
+		.np-fab-menu-list {
+			opacity: 0;
+			transition:
+				opacity var(--np-motion-expressive-fast-effects),
+				display var(--np-motion-expressive-fast-effects) allow-discrete,
+				overlay var(--np-motion-expressive-fast-effects) allow-discrete;
+		}
+		.np-fab-menu-list:popover-open {
+			opacity: 1;
+		}
 		.np-fab-menu-list:popover-open > :global(*) {
 			--_stagger-window: 210ms;
 			--_delay: calc((sibling-index() - 1) / sibling-count() * var(--_stagger-window));
 			animation: np-fab-menu-item-in var(--np-motion-expressive-default-spatial) both;
 			animation-delay: var(--_delay);
+		}
+		.np-fab-menu-list:popover-open > :global(:focus-visible) {
+			animation:
+				np-fab-menu-item-in var(--np-motion-expressive-default-spatial) both,
+				focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+			animation-delay: var(--_delay), 0s;
+		}
+		:is(.np-fab-menu-block-start, .np-fab-menu-inline-start)
+			.np-fab-menu-list:popover-open
+			> :global(*) {
+			--_delay: calc(
+				(sibling-count() - sibling-index()) / sibling-count() * var(--_stagger-window)
+			);
 		}
 	}
 

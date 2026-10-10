@@ -7,6 +7,9 @@
 		issues,
 		prefixText = '',
 		suffixText = '',
+		prefixLabel,
+		suffixLabel,
+		counterLabel = 'Character count',
 		supportingText = '',
 		start,
 		end,
@@ -27,6 +30,7 @@
 		'aria-invalid': ariaInvalid,
 		'aria-describedby': ariaDescribedby,
 		'aria-errormessage': ariaErrormessage,
+		'aria-labelledby': ariaLabelledby,
 		...attributes
 	}: TextFieldProps = $props()
 
@@ -34,16 +38,33 @@
 	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))
 
 	const supportingTextId = `supporting-text-${uid}`
+	const labelId = `label-${uid}`
+	const prefixId = `prefix-${uid}`
+	const suffixId = `suffix-${uid}`
+	const counterId = `counter-${uid}`
+	const counterLabelId = `counter-label-${uid}`
+	let inputId = $derived(attributes.id ?? `input-${uid}`)
+	// A textarea renders no prefix or suffix.
+	let hasAffixes = $derived(attributes.type !== 'textarea')
 	const ids = (...values: (string | undefined | null | false)[]) =>
 		values.filter(Boolean).join(' ') || undefined
 	let ariaProps = $derived({
 		'aria-invalid': errorText ? ('true' as const) : ariaInvalid,
 		'aria-errormessage': ids(errorText && supportingTextId, ariaErrormessage),
-		'aria-describedby': ids(supportingText && !errorText && supportingTextId, ariaDescribedby),
+		'aria-describedby': ids(
+			hasAffixes && prefixText && prefixId,
+			hasAffixes && suffixText && suffixId,
+			supportingText && !errorText && supportingTextId,
+			!!attributes.maxlength && `${counterLabelId} ${counterId}`,
+			ariaDescribedby,
+		),
+		'aria-labelledby':
+			ariaLabelledby ?? (label?.length && !attributes['aria-label'] ? labelId : undefined),
 	})
 </script>
 
 <label
+	for={inputId}
 	style={(variant === 'outlined'
 		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-inline-start:-2.25rem;'
 		: !label?.length
@@ -78,6 +99,7 @@
 					{#if label?.length}
 						<div class="label-wrapper">
 							<span
+								id={labelId}
 								class={['label', !noAsterisk && attributes.required && 'required']}
 								aria-disabled={attributes.disabled}
 								>{label}
@@ -103,6 +125,7 @@
 						<div class="label-wrapper">
 							{#if label?.length}
 								<span
+									id={labelId}
 									class={['label', !noAsterisk && attributes.required && 'required']}
 									aria-disabled={attributes.disabled}
 									>{label}
@@ -111,10 +134,11 @@
 						</div>
 					{/if}
 					<div class="content">
-						{#if attributes.type === 'textarea'}
+						{#if !hasAffixes}
 							<textarea
 								{...attributes}
 								{...ariaProps}
+								id={inputId}
 								{placeholder}
 								{defaultValue}
 								bind:focused
@@ -123,14 +147,16 @@
 								class="input"></textarea>
 						{:else}
 							<div class="input-wrapper">
-								{#if suffixText}
-									<span class="suffix">
-										{suffixText}
+								{#if prefixText}
+									<span class="prefix" id={prefixLabel ? undefined : prefixId}>
+										{prefixText}
 									</span>
 								{/if}
+								{@render children?.()}
 								<input
 									{...attributes}
 									{...ariaProps}
+									id={inputId}
 									{placeholder}
 									{defaultValue}
 									bind:focused
@@ -138,10 +164,9 @@
 									bind:this={inputElement}
 									class="input"
 								/>
-								{@render children?.()}
-								{#if prefixText}
-									<span class="prefix">
-										{prefixText}
+								{#if suffixText}
+									<span class="suffix" id={suffixLabel ? undefined : suffixId}>
+										{suffixText}
 									</span>
 								{/if}
 							</div>
@@ -161,11 +186,20 @@
 					{errorText ?? supportingText}
 				</span>
 				{#if attributes.maxlength}
-					<span>{`${value ?? ''}`.length}/{attributes.maxlength}</span>
+					<span id={counterId}>{`${value ?? ''}`.length}/{attributes.maxlength}</span>
 				{/if}
 			</div>
 		{/if}
 	</div>
+	{#if hasAffixes && prefixText && prefixLabel}
+		<span hidden id={prefixId}>{prefixLabel}</span>
+	{/if}
+	{#if hasAffixes && suffixText && suffixLabel}
+		<span hidden id={suffixId}>{suffixLabel}</span>
+	{/if}
+	{#if attributes.maxlength}
+		<span hidden id={counterLabelId}>{counterLabel},</span>
+	{/if}
 </label>
 
 <style>
@@ -342,10 +376,9 @@
 
 	.input-wrapper {
 		display: flex;
-		flex-wrap: wrap-reverse;
+		flex-wrap: wrap;
 		align-items: baseline;
 		min-width: 0;
-		flex-direction: row-reverse;
 	}
 
 	.input-wrapper > * {
@@ -606,7 +639,7 @@
 		width: min-content;
 	}
 
-	.field:hover .label {
+	.outlined:hover .label {
 		color: var(--np-color-on-surface);
 	}
 
@@ -755,6 +788,9 @@
 	}
 	.np-outline {
 		border-color: var(--np-color-outline);
+		transition:
+			border-color var(--np-motion-expressive-fast-effects),
+			color var(--np-motion-expressive-fast-effects);
 		border-radius: inherit;
 		display: flex;
 		pointer-events: none;

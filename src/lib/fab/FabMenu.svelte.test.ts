@@ -42,13 +42,18 @@ describe('FabMenu', async () => {
 		await expect.poll(() => list().matches(':popover-open')).toBe(true)
 	})
 
-	test('the trigger becomes square while open, matching M3', async () => {
-		const { rerender } = await render(Harness, { open: false })
-		expect(trigger().classList.contains('round')).toBe(true)
+	test('open, the FAB turns into a round 56px close button in its top trailing corner', async () => {
+		const { rerender } = await render(Harness, { open: false, size: 'l' })
+		expect(trigger().classList.contains('square')).toBe(true)
+		const closed = trigger().getBoundingClientRect()
 
 		await rerender({ open: true })
 
-		await expect.poll(() => trigger().classList.contains('square')).toBe(true)
+		await expect.poll(() => trigger().classList.contains('round')).toBe(true)
+		const open = trigger().getBoundingClientRect()
+		expect(open.width).toBe(56)
+		expect(open.top).toBe(closed.top)
+		expect(open.right).toBe(closed.right)
 	})
 
 	test('both trigger icons stay mounted, so the swap can animate', async () => {
@@ -93,22 +98,13 @@ describe('FabMenu', async () => {
 		expect(reopened).toBe(false)
 	})
 
-	test('the trigger morphs straight to square, without the press morph fighting it', async () => {
-		await render(Harness, { open: false })
-
-		trigger().click()
-
-		await expect.poll(() => trigger().classList.contains('square')).toBe(true)
-		expect(trigger().classList.contains('pressed')).toBe(false)
-	})
-
 	test('a closed menu is not displayed, so it cannot swallow clicks on the page', async () => {
 		await render(Harness, { open: false })
 
 		expect(getComputedStyle(list()).display).toBe('none')
 	})
 
-	test('items animate in rather than appearing, and each starts after the last', async () => {
+	test('items animate in rather than appearing, the one next to the FAB first', async () => {
 		const { rerender } = await render(Harness, { open: false })
 
 		await rerender({ open: true })
@@ -121,8 +117,9 @@ describe('FabMenu', async () => {
 		}
 		expect(styles[0].animationName).toContain('np-fab-menu-item-in')
 		const delays = styles.map((s) => Number.parseFloat(s.animationDelay))
-		expect(delays[1]).toBeGreaterThan(delays[0])
-		expect(delays[2]).toBeGreaterThan(delays[1])
+		// Above the FAB, the last item sits next to it.
+		expect(delays[1]).toBeLessThan(delays[0])
+		expect(delays[2]).toBeLessThan(delays[1])
 	})
 
 	test('each menu anchors to its own trigger, not to the last one on the page', async () => {
@@ -132,8 +129,9 @@ describe('FabMenu', async () => {
 		await expect.poll(() => lists[0].matches(':popover-open')).toBe(true)
 
 		expect(menus[0].getBoundingClientRect().x).not.toBe(menus[1].getBoundingClientRect().x)
-		expect(Math.round(lists[0].getBoundingClientRect().x)).toBe(
-			Math.round(menus[0].getBoundingClientRect().x),
+		const firstItem = lists[0].querySelector<HTMLElement>('[role="menuitem"]')!
+		expect(Math.round(firstItem.getBoundingClientRect().right)).toBe(
+			Math.round(menus[0].getBoundingClientRect().right),
 		)
 	})
 
@@ -146,29 +144,15 @@ describe('FabMenu', async () => {
 		expect(getComputedStyle(item).backgroundColor).toBe('rgb(232, 175, 254)')
 	})
 
-	test('picking an action closes the menu', async () => {
-		await render(Harness, { open: true })
-		await expect.poll(() => list().matches(':popover-open')).toBe(true)
-
-		entries()[0].click()
-
-		await expect.poll(() => list().matches(':popover-open')).toBe(false)
-		await expect.poll(() => trigger().getAttribute('aria-expanded')).toBe('false')
-	})
-
-	test('the item stays displayed for its own press animation, unless motion is reduced', async () => {
+	test('picking an action leaves the menu open, closing is up to the app', async () => {
 		await render(Harness, { open: true })
 		await expect.poll(() => list().matches(':popover-open')).toBe(true)
 
 		entries()[0].click()
 		await tick()
 
-		expect(entries()[0].classList.contains('pressed')).toBe(true)
-		expect(list().matches(':popover-open')).toBe(
-			!matchMedia('(prefers-reduced-motion: reduce)').matches,
-		)
-
-		await expect.poll(() => list().matches(':popover-open')).toBe(false)
+		expect(list().matches(':popover-open')).toBe(true)
+		expect(trigger().getAttribute('aria-expanded')).toBe('true')
 	})
 
 	test('the menu is one tab stop, with the arrows moving between actions', async () => {

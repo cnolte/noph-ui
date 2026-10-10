@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
+	import { arrowKeyNav, focusableItems, focusedItem, rovingTabindex } from '#lib/keyboard-nav.js'
 	import type { ChipSetProps } from './types.js'
 
 	let { children, element = $bindable(), ...attributes }: ChipSetProps = $props()
@@ -9,7 +9,33 @@
 		currentAttr: 'aria-current',
 		currentValue: 'true',
 	})
-	const onkeydown = arrowKeyNav(CHIP_SELECTOR, 'horizontal')
+	const arrows = arrowKeyNav(CHIP_SELECTOR, 'horizontal')
+
+	// In a set that wraps, ↑ and ↓ move to the chip closest above or below the focused one.
+	const toRow = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
+		const chips = focusableItems(event.currentTarget, CHIP_SELECTOR)
+		const focused = focusedItem(event.currentTarget, CHIP_SELECTOR, chips)
+		if (!focused) return
+		const from = focused.getBoundingClientRect()
+		const fromX = from.left + from.width / 2
+		const below = event.key === 'ArrowDown'
+		const candidates = chips
+			.map((chip) => ({ chip, box: chip.getBoundingClientRect() }))
+			.filter(({ box }) => (below ? box.top >= from.bottom : box.bottom <= from.top))
+		if (!candidates.length) return
+		const rowTop = below
+			? Math.min(...candidates.map(({ box }) => box.top))
+			: Math.max(...candidates.map(({ box }) => box.top))
+		const row = candidates.filter(({ box }) => Math.abs(box.top - rowTop) < 1)
+		const distance = (box: DOMRect) => Math.abs(box.left + box.width / 2 - fromX)
+		row.sort((a, b) => distance(a.box) - distance(b.box))[0].chip.focus()
+		event.preventDefault()
+	}
+
+	const onkeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
+		if (event.key === 'ArrowUp' || event.key === 'ArrowDown') toRow(event)
+		else arrows(event)
+	}
 </script>
 
 <div {...attributes} bind:this={element} class={['np-chip-set-wrapper', attributes.class]}>

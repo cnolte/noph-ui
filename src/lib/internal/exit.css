@@ -1,0 +1,47 @@
+/* Browsers without an `overlay` transition, such as Safari, drop a closing dialog or popover from
+   the top layer at once, so its exit animation would never show. While it animates out it carries
+   data-np-exiting (see exitAnimation in animation.ts) and these rules keep it shown, over the page
+   but not blocking it. Browsers with the transition keep it in the top layer themselves. */
+@supports not (overlay: auto) {
+	/* Important, as each component hides its closed state with a rule of its own, scoped and so
+	   more specific than this one. It only ever holds for the moment of leaving. */
+	[popover][data-np-exiting]:not(:popover-open),
+	dialog[data-np-exiting]:not([open]) {
+		display: var(--np-exit-display, block) !important;
+		z-index: 1000 !important;
+		pointer-events: none !important;
+	}
+
+	/* A closed dialog is no longer :modal and would lose its place. Components that place their
+	   dialog themselves win over this. */
+	:where(dialog[data-np-exiting]:not([open])) {
+		position: fixed;
+		inset-block: 0;
+	}
+
+	/* Its ::backdrop is gone as well, so a dialog with a scrim draws one of its own that fades: a
+	   wide shadow around it, and one inside for a dialog whose box is transparent, as it sits under
+	   the content. A shadow rather than a pseudo element covers the screen even while the dialog
+	   moves. A dialog that is its own surface turns the inner one off with
+	   --np-exit-scrim-inner: 0 0 transparent. */
+	dialog.np-exit-scrim[data-np-exiting]:not([open]) {
+		--np-exit-scrim-color: color-mix(in srgb, var(--np-color-scrim) 32%, transparent);
+		box-shadow:
+			0 0 0 100vmax var(--np-exit-scrim-color),
+			var(--np-exit-scrim-inner, inset 0 0 0 100vmax var(--np-exit-scrim-color));
+		animation: np-exit-scrim var(--np-exit-scrim-motion, var(--np-motion-expressive-slow-effects))
+			forwards;
+	}
+	@keyframes np-exit-scrim {
+		to {
+			--np-exit-scrim-color: transparent;
+		}
+	}
+}
+
+/* Registered, so the scrim's colour can fade. */
+@property --np-exit-scrim-color {
+	syntax: '<color>';
+	inherits: false;
+	initial-value: transparent;
+}

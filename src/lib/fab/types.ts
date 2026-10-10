@@ -1,4 +1,4 @@
-import type { ButtonElement } from '#lib/button/types.js'
+import type { ButtonElement, ButtonProps } from '#lib/button/types.js'
 import type { Snippet } from 'svelte'
 import type { HTMLAnchorAttributes, HTMLAttributes, HTMLButtonAttributes } from 'svelte/elements'
 
@@ -7,7 +7,7 @@ export type FabElement = ButtonElement
 interface BaseFabProps
 	extends
 		HTMLAttributes<FabElement>,
-		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type'>,
+		Omit<HTMLButtonAttributes, keyof HTMLAttributes<HTMLButtonElement> | 'type' | 'disabled'>,
 		Omit<HTMLAnchorAttributes, keyof HTMLAttributes<HTMLAnchorElement> | 'type'> {
 	element?: FabElement
 	variant?:
@@ -20,7 +20,6 @@ interface BaseFabProps
 	size?: 's' | 'm' | 'l'
 	shape?: 'round' | 'square'
 	lowered?: boolean
-	disabled?: boolean | null
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 }
 
@@ -35,6 +34,14 @@ export interface ExtendedFabProps extends BaseFabProps {
 	collapsed?: boolean
 }
 
+export interface FabMenuItemProps extends Omit<
+	ButtonProps,
+	'variant' | 'size' | 'start' | 'end' | 'toggle' | 'selected' | 'role'
+> {
+	/** Leading icon. Keep it, it tells the actions apart at a glance. */
+	icon?: Snippet
+}
+
 export interface FabMenuProps extends HTMLAttributes<HTMLDivElement> {
 	label?: string
 	icon?: Snippet
@@ -43,6 +50,5 @@ export interface FabMenuProps extends HTMLAttributes<HTMLDivElement> {
 	size?: FabProps['size']
 	placement?: 'block-start' | 'block-end' | 'inline-start' | 'inline-end'
 	open?: boolean
-	closeOnSelect?: boolean
 	element?: HTMLDivElement
 }

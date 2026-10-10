@@ -43,9 +43,9 @@
 
 <h1>Buttons</h1>
 <p>
-	Buttons let people take an action with one tap. Material 3 gives five styles, and the one you pick
-	says how much weight the action carries on the screen: filled for the one action a screen is
-	about, tonal and elevated below it, outlined and text for everything secondary.
+	Buttons let people take an action with one tap. There are five styles, and the style shows how
+	important the action is: filled for the main action of a screen, tonal and elevated one step
+	below, outlined and text for secondary actions.
 </p>
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -102,8 +102,8 @@
 </DemoContainer>
 <Code value={LoadingSource} />
 <blockquote>
-	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
-	when using the loading state.
+	<Icon>bookmark</Icon> For accessibility, set <code>loadingAriaLabel</code> when you use the loading
+	state.
 </blockquote>
 <h2 id="size">Size<a href="#size" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -111,6 +111,10 @@
 </DemoContainer>
 <Code value={SizeSource} />
 <h2 id="toggle">Toggle<a href="#toggle" aria-hidden="true" tabindex="-1">#</a></h2>
+<p>
+	A toggle button changes its shape when selected: a round one turns square, and a square one turns
+	round.
+</p>
 <DemoContainer style="flex-direction: column">
 	<Toggle />
 </DemoContainer>
@@ -252,10 +256,10 @@
 	Shared tokens<a href="#shared-tokens" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	These apply to every variant. Their defaults come from <code>size</code>, so setting one overrides
-	the sizing for whatever size the button is. <code>--np-button-shape</code> is the exception worth
-	knowing: it sets the radius of the square shape only, so pair it with <code>shape="square"</code>.
-	Round buttons stay pills, with a radius that follows their height.
+	These apply to every variant. Their defaults depend on <code>size</code>, so setting one overrides
+	the value at every size. <code>--np-button-shape</code> sets the radius of the square shape only,
+	so use it with <code>shape="square"</code>. Round buttons stay pills, with a radius that follows
+	their height.
 </p>
 <table>
 	<thead>
@@ -302,15 +306,17 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	A button renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> as soon as you
-	pass <code>href</code>, so the role, the keyboard and the focus ring come from the platform. Label
-	it with its text content wherever you can.
+	A button renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> when you pass
+	<code>href</code>, so the role, the keyboard and the focus ring come from the browser. Label it
+	with its text content wherever you can.
 </p>
 <p>
-	A button showing only an icon needs <code>title</code>. It becomes the accessible name and the
-	tooltip in one go. <code>toggle</code> reports the state through <code>aria-pressed</code>,
-	<code>loading</code> sets <code>aria-busy</code> and names the spinner with
-	<code>loadingAriaLabel</code>, and a disabled button is really disabled rather than dimmed.
+	A button with only an icon needs <code>title</code>. It becomes both the accessible name and the
+	tooltip, and is read once. On a button with a visible label, the label stays the name and
+	<code>title</code> only describes it. Extra small and small buttons keep a 48px tall touch target.
+	<code>toggle</code> reports the state through <code>aria-pressed</code>. <code>loading</code> sets
+	<code>aria-busy</code> and names the spinner with <code>loadingAriaLabel</code>. A disabled button
+	is truly disabled, not only dimmed.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -364,7 +370,7 @@
 			<td><code>title</code></td>
 			<td><code>string | null | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Specifies the tooltip text.</td>
+			<td>Tooltip text. Without a visible label it is also the accessible name.</td>
 		</tr>
 		<tr>
 			<td><code>size</code></td>
@@ -382,13 +388,13 @@
 			<td><code>toggle</code></td>
 			<td><code>boolean | undefined</code></td>
 			<td><code>false</code></td>
-			<td>Enables toggle behavior, allowing the button to act as a toggleable (on/off) button.</td>
+			<td>Makes the button an on/off toggle.</td>
 		</tr>
 		<tr>
 			<td><code>selected</code></td>
 			<td><code>boolean | undefined</code></td>
 			<td><code>false</code></td>
-			<td>Indicates whether the button is currently selected (used with toggle buttons).</td>
+			<td>Whether the button is selected. Used with <code>toggle</code>.</td>
 		</tr>
 
 		<tr>
@@ -396,12 +402,12 @@
 			<td><code>HTMLButtonAttributes &amp; HTMLAnchorAttributes</code></td>
 			<td></td>
 			<td>
-				A single, unified set of <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> attributes.
-				Setting <code>href</code> renders an <code>&lt;a&gt;</code>, otherwise a
+				One set of <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> attributes. Setting
+				<code>href</code>
+				renders an <code>&lt;a&gt;</code>, otherwise a
 				<code>&lt;button&gt;</code>. Event handlers such as <code>onclick</code> receive
 				<code>event.currentTarget</code> typed as
-				<code>HTMLButtonElement | HTMLAnchorElement</code>, so you no longer need to set
-				<code>href</code> to get correctly typed events.
+				<code>HTMLButtonElement | HTMLAnchorElement</code>.
 			</td>
 		</tr>
 	</tbody>
@@ -420,12 +426,7 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The component's root DOM element, bound with <code>bind:this</code>.</td>
 		</tr>
 	</tbody>
 </table>

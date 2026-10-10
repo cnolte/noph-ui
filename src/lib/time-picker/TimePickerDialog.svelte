@@ -135,6 +135,7 @@
 </script>
 
 <Dialog
+	role="dialog"
 	{...attributes}
 	bind:element
 	bind:open

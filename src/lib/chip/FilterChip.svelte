@@ -13,8 +13,9 @@
 		disabled = false,
 		label = '',
 		icon,
+		trailingIcon,
 		element = $bindable(),
-		removeAriaLabel = 'Remove',
+		removeAriaLabel,
 		onremove,
 		name,
 		value,
@@ -69,10 +70,22 @@
 			<CheckIcon width={18} height={18} />
 		</div>
 		<div class="np-chip-label">{label}</div>
+		{#if trailingIcon && !removable}
+			<div class="np-chip-trailing-icon" aria-hidden="true">
+				{@render trailingIcon()}
+			</div>
+		{/if}
+		<span class="np-touch"></span>
 		<input
 			type="checkbox"
 			checked={isChecked}
 			{onchange}
+			onkeydown={(event) => {
+				// Enter selects like Space, instead of submitting the form.
+				if (event.key !== 'Enter') return
+				event.preventDefault()
+				event.currentTarget.click()
+			}}
 			{value}
 			{name}
 			{disabled}
@@ -89,7 +102,7 @@
 			type="button"
 			size="xs"
 			--np-icon-button-icon-size="1.125rem"
-			aria-label={removeAriaLabel}
+			aria-label={removeAriaLabel ?? `Remove ${label}`}
 			onclick={onremove}
 		>
 			<CloseIcon />
@@ -99,6 +112,7 @@
 
 <style>
 	.np-filter-chip {
+		box-sizing: border-box;
 		position: relative;
 		display: inline-flex;
 		align-items: center;
@@ -107,7 +121,6 @@
 		--np-icon-button-icon-color: var(--np-color-on-surface-variant);
 		--np-icon-size: 1.125rem;
 		--np-ripple-pressed-opacity: 0.1;
-		min-width: 0;
 		transition: box-shadow var(--np-motion-expressive-slow-effects);
 	}
 	.np-filter-chip-label input {
@@ -117,6 +130,7 @@
 	}
 	.np-filter-chip-label {
 		cursor: pointer;
+		position: relative;
 		display: inline-flex;
 		align-items: center;
 		height: 2rem;
@@ -126,7 +140,19 @@
 		gap: 0.5rem;
 		z-index: 1;
 		padding-inline: 1rem;
-		overflow: hidden;
+	}
+	.np-chip-trailing-icon {
+		display: flex;
+		margin-inline-end: -0.5rem;
+	}
+	/* The chip keeps a 48px tall target. */
+	.np-touch {
+		position: absolute;
+		inset-inline: 0;
+		top: 50%;
+		translate: 0 -50%;
+		height: 3rem;
+		z-index: -1;
 	}
 	.np-chip-icon-checked {
 		display: flex;
@@ -154,8 +180,10 @@
 	.np-filter-chip-icon .np-filter-chip-label {
 		padding-inline-start: 0.5rem;
 	}
+	/* Removable, selecting and removing each keep a 48px target side by side. */
 	.np-filter-chip-removable {
 		padding-inline-end: 1px;
+		min-width: 5.5rem;
 	}
 	.np-filter-chip-removable .np-filter-chip-label {
 		padding-inline-end: 1px;

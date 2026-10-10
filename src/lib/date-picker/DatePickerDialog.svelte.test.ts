@@ -52,6 +52,22 @@ test('moves focus into the grid on open', async () => {
 		.toBe('Monday, August 18, 2025')
 })
 
+test('mirrors the left and right arrows right to left', async () => {
+	document.documentElement.dir = 'rtl'
+	try {
+		await setup({ value: '2025-08-17' })
+		await openDialog()
+		await expect.element(action('Sunday, August 17, 2025, selected')).toHaveFocus()
+
+		await userEvent.keyboard('{ArrowLeft}')
+		await expect
+			.poll(() => document.querySelector('.np-calendar-day:focus')?.getAttribute('aria-label'))
+			.toBe('Monday, August 18, 2025')
+	} finally {
+		document.documentElement.dir = ''
+	}
+})
+
 test('the year grid replaces the calendar and returns to it', async () => {
 	await setup({ value: '2025-08-17' })
 	await openDialog()

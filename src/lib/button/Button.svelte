@@ -5,6 +5,7 @@
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
+	import { getButtonGroupContext } from './groupContext.js'
 	import type { ButtonProps } from './types.js'
 
 	let {
@@ -17,8 +18,8 @@
 		disabled = false,
 		loading = false,
 		loadingAriaLabel,
-		size = 's',
-		shape = 'round',
+		size: sizeProp,
+		shape: shapeProp,
 		toggle = false,
 		selected = $bindable(false),
 		...attributes
@@ -29,6 +30,24 @@
 	let isLink = $derived(attributes.href != null && !disabled && !loading)
 
 	let tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
+	// A visible label names the button, the tooltip only describes it. Without one, the tooltip
+	// text is the name, and describing the button with it again would read it twice.
+	let tooltipNames = $derived(!!tooltipId && !children && !attributes['aria-label'])
+
+	// Inside a ButtonGroup, the group sets the size and shape its buttons leave open, and with
+	// `selection` it decides what is selected.
+	const group = getButtonGroupContext()
+	let size = $derived(sizeProp ?? group?.size ?? 's')
+	let shape = $derived(shapeProp ?? group?.shape ?? 'round')
+	let groupValue = $derived(
+		group?.selection && attributes.value != null ? String(attributes.value) : undefined,
+	)
+	let isToggle = $derived(toggle || groupValue !== undefined)
+	let isSelected = $derived(groupValue !== undefined ? group!.isSelected(groupValue) : selected)
+	// A selected toggle swaps its resting shape: round turns square, square turns round.
+	let shapeClass = $derived(
+		isSelected ? (shape === 'square' ? 'round' : 'square') : loading ? 'square' : shape,
+	)
 
 	const morph = pressMorph()
 
@@ -41,6 +60,7 @@
 {#snippet content()}
 	{#if !disabled && !loading}
 		<Ripple forElement={element} />
+		<span class="np-touch"></span>
 	{/if}
 	{#if loading}
 		<div class="circular-progress">
@@ -68,21 +88,21 @@
 	<a
 		{...attributes}
 		onclick={(event) => {
-			if (!toggle) {
+			if (!isToggle) {
 				handlePress()
 			}
 			attributes.onclick?.(event)
 		}}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={title || attributes['aria-label']}
+		aria-label={attributes['aria-label'] ?? (tooltipNames ? title : undefined)}
 		bind:this={element}
 		class={[
 			'np-button',
 			size,
-			selected ? 'square' : shape,
-			toggle && 'toggle',
-			selected && 'selected',
+			shapeClass,
+			isToggle && 'toggle',
+			isSelected && 'selected',
 			'enabled',
 			variant,
 			morph.pressed && 'pressed',
@@ -94,16 +114,18 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={title || attributes['aria-label']}
+		aria-label={attributes['aria-label'] ?? (tooltipNames ? title : undefined)}
 		disabled={disabled || loading}
-		aria-pressed={toggle ? selected : undefined}
+		aria-pressed={isToggle ? isSelected : undefined}
 		aria-busy={loading}
 		type={(attributes['type'] as 'button' | 'submit' | 'reset' | 'button') ?? undefined}
 		bind:this={element}
 		onclick={(event) => {
-			if (toggle) {
+			if (groupValue !== undefined) {
+				group!.toggle(groupValue)
+			} else if (toggle) {
 				selected = !selected
 			} else {
 				handlePress()
@@ -113,9 +135,9 @@
 		class={[
 			'np-button',
 			size,
-			selected || loading ? 'square' : shape,
-			toggle && 'toggle',
-			selected && 'selected',
+			shapeClass,
+			isToggle && 'toggle',
+			isSelected && 'selected',
 			loading && 'np-loading',
 			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
 			morph.pressed && 'pressed',
@@ -131,10 +153,10 @@
 {/if}
 
 <style>
+	/* The label is never truncated or wrapped, the button grows to fit it instead. */
 	.children-wrapper {
-		flex: 1;
-		overflow: var(--_button-label-overflow, hidden);
-		text-overflow: var(--_button-label-text-overflow, ellipsis);
+		min-width: 0;
+		overflow: var(--_button-label-overflow, visible);
 		text-wrap: nowrap;
 	}
 	.circular-progress {
@@ -162,8 +184,10 @@
 		display: inline-flex;
 		user-select: none;
 		align-items: center;
-		text-align: start;
-		overflow: hidden;
+		/* Icon and label stay grouped and centered, also in a stretched button. */
+		justify-content: center;
+		text-align: center;
+		min-width: var(--_button-min-width, max-content);
 		font-weight: 500;
 		text-decoration: none;
 		--np-icon-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -275,6 +299,17 @@
 		outline-color: var(--np-color-secondary);
 		outline-width: 3px;
 		outline-offset: 2px;
+	}
+	.enabled:focus-visible :global(.np-ripple-surface)::before {
+		opacity: var(--np-ripple-focus-opacity, 0.1);
+	}
+	/* Extra small and small buttons keep a 48px tall target around them. */
+	.np-touch {
+		position: absolute;
+		inset-inline: 0;
+		top: 50%;
+		translate: 0 -50%;
+		height: max(3rem, 100%);
 	}
 	@media (prefers-reduced-motion: no-preference) {
 		.enabled:focus-visible {

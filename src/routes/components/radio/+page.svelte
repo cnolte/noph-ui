@@ -19,8 +19,8 @@
 
 <h1>Radio button</h1>
 <p>
-	Radio buttons let people pick exactly one option from a set they can all see at once. Beyond a
-	handful of options a <a class="link" href="/components/select">select</a> keeps the screen calmer.
+	Radio buttons let people pick exactly one option from a set they can all see. For more than a
+	handful of options, use a <a class="link" href="/components/select">select</a>.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -56,6 +56,12 @@
 		</tr>
 	</tbody>
 </table>
+<p>
+	The radio sits in a 48dp box: the 20dp icon plus room for its 48dp touch target. The hover state
+	layer is <code>--np-color-primary</code> on the selected radio and
+	<code>--np-color-on-surface</code> on the others. The press ripple uses the other colour, as the Material
+	3 states define.
+</p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
 	<ThemingExample />
@@ -66,14 +72,14 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Each radio is a native <code>&lt;input type="radio"&gt;</code>. Radios that share a
-	<code>name</code> form one group, and the browser gives that group its arrow key navigation, its single
-	tab stop and its form behaviour.
+	Each radio is a native <code>&lt;input type="radio"&gt;</code>. Radios with the same
+	<code>name</code> form one group. The browser gives the group arrow key navigation, a single tab stop
+	and form behaviour.
 </p>
 <p>
-	The component brings no label of its own, so wrap each radio in a <code>&lt;label&gt;</code> or
-	pass <code>aria-label</code>. Where the group as a whole needs a question above it, put the radios
-	in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>.
+	The component has no label, so wrap each radio in a <code>&lt;label&gt;</code> or pass
+	<code>aria-label</code>. When the group needs a question above it, put the radios in a
+	<code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -114,12 +120,7 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The component's root DOM element, bound with <code>bind:this</code>.</td>
 		</tr>
 	</tbody>
 </table>

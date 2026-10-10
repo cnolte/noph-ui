@@ -12,4 +12,5 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface LinearProgressProps extends CircularProgressProps {
 	buffer?: number
+	stopIndicator?: boolean
 }

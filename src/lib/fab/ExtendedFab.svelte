@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
-	import { pressMorph } from '#lib/press.svelte.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
@@ -9,9 +8,8 @@
 	let {
 		variant = 'primary-container',
 		size = 's',
-		shape = 'round',
+		shape = 'square',
 		lowered = false,
-		disabled = false,
 		collapsed = false,
 		icon,
 		label,
@@ -21,16 +19,10 @@
 
 	const uid = $props.id()
 
-	let isLink = $derived(attributes.href != null && !disabled)
-	let tooltipId = $derived(collapsed && label && !disabled ? uid : undefined)
+	let isLink = $derived(attributes.href != null)
+	let tooltipId = $derived(collapsed && label ? uid : undefined)
 
-	const morph = pressMorph()
-	morph.supersededBy(() => shape)
-
-	const handlePress = () => {
-		if (disabled) return
-		morph.press()
-	}
+	let tooltipNames = $derived(!!tooltipId && !attributes['aria-label'])
 
 	let classes = $derived([
 		'np-extended-fab',
@@ -40,15 +32,12 @@
 		shape,
 		lowered && 'np-fab-lowered',
 		collapsed && 'np-fab-collapsed',
-		morph.pressed && 'pressed',
 		attributes.class,
 	])
 </script>
 
 {#snippet content()}
-	{#if !disabled}
-		<Ripple forElement={element} />
-	{/if}
+	<Ripple forElement={element} />
 	{#if icon}
 		<span class="np-fab-icon">{@render icon()}</span>
 	{/if}
@@ -60,14 +49,10 @@
 {#if isLink}
 	<a
 		{...attributes}
-		onclick={(event) => {
-			handlePress()
-			attributes.onclick?.(event)
-		}}
 		bind:this={element}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={collapsed ? label || attributes['aria-label'] : attributes['aria-label']}
+		aria-label={attributes['aria-label'] ?? (collapsed ? label : undefined)}
 		class={classes}
 	>
 		{@render content()}
@@ -75,16 +60,11 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		onclick={(event) => {
-			handlePress()
-			attributes.onclick?.(event)
-		}}
 		bind:this={element}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={collapsed ? label || attributes['aria-label'] : attributes['aria-label']}
+		aria-label={attributes['aria-label'] ?? (collapsed ? label : undefined)}
 		type={(attributes['type'] as HTMLButtonAttributes['type']) ?? 'button'}
-		{disabled}
 		class={classes}
 	>
 		{@render content()}
@@ -129,19 +109,10 @@
 	.square {
 		border-radius: var(--np-fab-shape, var(--_square-radius));
 	}
-	@media (prefers-reduced-motion: no-preference) {
-		.round:not(:disabled):is(:active, .pressed) {
-			border-radius: var(--np-fab-pressed-shape, var(--_square-radius));
-		}
-		.square:not(:disabled):is(:active, .pressed) {
-			border-radius: var(--np-fab-pressed-shape, calc(var(--_height) / 2));
-		}
-	}
-
 	.s {
 		--_height: 3.5rem;
 		--_square-radius: 1rem;
-		--_gap: 0.75rem;
+		--_gap: 0.5rem;
 		--_padding: 1rem;
 		font-size: 1rem;
 		--np-icon-size: 1.5rem;
@@ -149,8 +120,9 @@
 	.m {
 		--_height: 5rem;
 		--_square-radius: 1.25rem;
-		--_gap: 1rem;
-		--_padding: 1.5rem;
+		--_gap: 0.75rem;
+		--_padding: 1.625rem;
+		font-weight: 400;
 		font-size: 1.375rem;
 		--np-icon-size: 1.75rem;
 	}
@@ -158,15 +130,17 @@
 		--_height: 6rem;
 		--_square-radius: 1.75rem;
 		--_gap: 1rem;
-		--_padding: 2rem;
+		--_padding: 1.75rem;
+		font-weight: 400;
 		font-size: 1.5rem;
 		--np-icon-size: 2.25rem;
 	}
 
+	/* Collapsed, the icon keeps its place at the start: the padding centres it in the square, and
+	   only the gap and the label shrink, so the icon does not drift while the FAB changes width. */
 	.np-fab-collapsed {
 		width: var(--_height);
-		padding-inline: 0;
-		justify-content: center;
+		padding-inline: calc((var(--_height) - var(--np-icon-size)) / 2);
 		gap: 0;
 	}
 	.np-fab-collapsed .np-fab-label {
@@ -175,25 +149,24 @@
 	}
 
 	.np-fab-label {
-		max-width: 20rem;
+		max-width: max-content;
 		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
 		.np-extended-fab {
 			transition:
-				width var(--np-motion-expressive-default-spatial),
-				gap var(--np-motion-expressive-default-spatial),
-				padding-inline var(--np-motion-expressive-default-spatial),
-				border-radius var(--np-motion-expressive-default-spatial),
+				width var(--np-fab-motion-spatial, var(--np-motion-expressive-default-spatial)),
+				gap var(--np-fab-motion-spatial, var(--np-motion-expressive-default-spatial)),
+				padding-inline var(--np-fab-motion-spatial, var(--np-motion-expressive-default-spatial)),
+				border-radius var(--np-fab-motion-spatial, var(--np-motion-expressive-default-spatial)),
 				box-shadow var(--np-motion-expressive-fast-effects),
 				background-color var(--np-motion-expressive-fast-effects);
 		}
 		.np-fab-label {
 			transition:
 				opacity var(--np-motion-expressive-fast-effects),
-				max-width var(--np-motion-expressive-default-spatial);
+				max-width var(--np-fab-motion-spatial, var(--np-motion-expressive-default-spatial));
 		}
 	}
 
@@ -227,19 +200,12 @@
 	}
 
 	@media (hover: hover) {
-		.np-extended-fab:not(:disabled):hover {
+		.np-extended-fab:hover {
 			box-shadow: var(--np-fab-elevation, var(--np-elevation-4));
 		}
-		.np-fab-lowered:not(:disabled):hover {
+		.np-fab-lowered:hover {
 			box-shadow: var(--np-fab-elevation, var(--np-elevation-2));
 		}
-	}
-
-	.np-extended-fab:disabled {
-		cursor: default;
-		box-shadow: none;
-		background-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
-		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
 
 	.np-fab-icon {

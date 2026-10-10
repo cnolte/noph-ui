@@ -57,7 +57,7 @@ describe('AppBar', async () => {
 
 	test('large is taller than medium', async () => {
 		await render(Harness, { variant: 'large' })
-		expect(Math.round(bar().getBoundingClientRect().height)).toBe(152)
+		expect(Math.round(bar().getBoundingClientRect().height)).toBe(120)
 	})
 
 	test('the headline is announced once, even though it is rendered twice', async () => {
@@ -94,7 +94,93 @@ describe('AppBar', async () => {
 	test('collapsible without scroll support leaves the bar expanded', async () => {
 		await render(Harness, { variant: 'large', collapsible: true, scrollable: true })
 
-		expect(Math.round(secondRow()!.getBoundingClientRect().height)).toBe(88)
+		expect(Math.round(secondRow()!.getBoundingClientRect().height)).toBe(56)
+	})
+
+	test('the leading button is on surface, the trailing ones on surface variant', async () => {
+		await render(Harness, { variant: 'small' })
+
+		const color = (selector: string) =>
+			getComputedStyle(document.querySelector(`${selector} .np-icon-button`)!).color
+		expect(color('.np-app-bar-leading')).not.toBe(color('.np-app-bar-trailing'))
+	})
+
+	test('a search app bar keeps its leading button on surface variant', async () => {
+		await render(Harness, { variant: 'search' })
+
+		const color = (selector: string) =>
+			getComputedStyle(document.querySelector(`${selector} .np-icon-button`)!).color
+		expect(color('.np-app-bar-leading')).toBe(color('.np-app-bar-trailing'))
+	})
+
+	test('the search fills its space up to 312px, then half of it', async () => {
+		await render(Harness, { variant: 'search', width: '1000px' })
+
+		const field = document.querySelector<HTMLElement>('.np-app-bar-search-field')!
+		const search = field.querySelector<HTMLElement>('.np-search')!
+		const space = Number.parseFloat(getComputedStyle(field).width)
+		expect(Math.round(search.getBoundingClientRect().width)).toBe(Math.round(space / 2))
+	})
+
+	test('the search bar sits 8px from the buttons beside it', async () => {
+		await render(Harness, { variant: 'search', width: '360px' })
+
+		const button = document.querySelector('.np-app-bar-leading')!.getBoundingClientRect()
+		const searchBar = document.querySelector('.np-search-bar')!.getBoundingClientRect()
+		expect(searchBar.left - button.right).toBe(8)
+	})
+
+	test('a narrow search app bar gives the search all of its space', async () => {
+		await render(Harness, { variant: 'search', width: '360px' })
+
+		const field = document.querySelector<HTMLElement>('.np-app-bar-search-field')!
+		const search = field.querySelector<HTMLElement>('.np-search')!
+		const space = Number.parseFloat(getComputedStyle(field).width)
+		expect(search.getBoundingClientRect().width).toBe(space)
+	})
+
+	test('centred, the headline sits in the middle of the bar', async () => {
+		await render(Harness, { variant: 'small', alignment: 'center', width: '600px' })
+
+		const box = headlines()[0].getBoundingClientRect()
+		const frame = bar().getBoundingClientRect()
+		expect(Math.abs(box.left + box.width / 2 - (frame.left + frame.width / 2))).toBeLessThan(1)
+	})
+
+	test('centred, a medium bar centres its second row', async () => {
+		await render(Harness, { variant: 'medium', alignment: 'center', width: '600px' })
+
+		const box = headlines()[0].getBoundingClientRect()
+		const frame = bar().getBoundingClientRect()
+		expect(Math.abs(box.left + box.width / 2 - (frame.left + frame.width / 2))).toBeLessThan(1)
+	})
+
+	test('headlineLevel makes the visible headline a heading, once', async () => {
+		await render(Harness, { variant: 'medium', headlineLevel: 1 })
+
+		const headings = [...document.querySelectorAll('h1')]
+		expect(headings).toHaveLength(1)
+		expect(headings[0].closest('.np-app-bar-inline')).toBeNull()
+	})
+
+	test('without headlineLevel there is no heading', async () => {
+		await render(Harness, { variant: 'small' })
+
+		expect(document.querySelector('h1, h2, h3, h4, h5, h6')).toBeNull()
+	})
+
+	test('an image replaces the headline of a small app bar', async () => {
+		await render(Harness, { variant: 'small', image: true })
+
+		expect(document.querySelector('.np-app-bar img')).not.toBeNull()
+		expect(headlines()).toHaveLength(0)
+	})
+
+	test('an image sits above the headline of a medium app bar', async () => {
+		await render(Harness, { variant: 'medium', image: true })
+
+		const img = document.querySelector('.np-app-bar-second-row img')!.getBoundingClientRect()
+		expect(img.bottom).toBeLessThanOrEqual(headlines()[0].getBoundingClientRect().top)
 	})
 
 	test('a subtitle sits under the headline and is not rendered when absent', async () => {

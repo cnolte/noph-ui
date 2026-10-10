@@ -8,14 +8,17 @@
 		variant = 'docked',
 		orientation = 'horizontal',
 		placement = 'bottom',
+		color = 'standard',
 	}: {
 		variant?: ToolbarProps['variant']
 		orientation?: ToolbarProps['orientation']
 		placement?: ToolbarProps['placement']
+		color?: ToolbarProps['color']
 	} = $props()
 </script>
 
-<Toolbar {variant} {orientation} {placement} aria-label="Actions">
+<Toolbar {variant} {orientation} {placement} {color} aria-label="Actions">
+	<IconButton title="Bold" variant="tonal" toggle><Icon>format_bold</Icon></IconButton>
 	<IconButton title="Favorite"><Icon>favorite</Icon></IconButton>
 	<IconButton title="Search"><Icon>search</Icon></IconButton>
 	<IconButton title="Delete"><Icon>delete</Icon></IconButton>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import CheckIcon from '#lib/icons/CheckIcon.svelte'
+	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { SegmentedButtonProps } from './types.js'
 
@@ -15,12 +16,30 @@
 	}: SegmentedButtonProps = $props()
 
 	let hasError = $derived(!!issues?.length)
+
+	// Radios already share one tab stop and move with the arrow keys. Checkboxes get the same.
+	const SEGMENTS = 'input'
+	const roving = rovingTabindex(SEGMENTS)
+	const arrows = arrowKeyNav(SEGMENTS, 'horizontal')
 </script>
 
 <div
+	role={multiSelect ? 'group' : 'radiogroup'}
 	{...attributes}
 	class={['np-segmented-buttons', hasError && 'np-error', attributes.class]}
 	bind:this={element}
+	{@attach (node) => (multiSelect ? roving(node) : undefined)}
+	onkeydown={(event) => {
+		attributes.onkeydown?.(event)
+		if (event.defaultPrevented) return
+		// Enter picks the focused segment, like Space, instead of submitting the form.
+		if (event.key === 'Enter' && event.target instanceof HTMLInputElement) {
+			event.preventDefault()
+			if (!(event.target.type === 'radio' && event.target.checked)) event.target.click()
+			return
+		}
+		if (multiSelect) arrows(event)
+	}}
 	style="{attributes.style};grid-template-columns: repeat({options.length}, minmax(max-content, 1fr));"
 >
 	{#each options as option, i (i)}
@@ -48,6 +67,7 @@
 			{/if}
 			{#if !option.disabled}
 				<Ripple />
+				<span class="np-touch"></span>
 			{/if}
 			{#if group !== undefined}
 				{#if multiSelect}
@@ -93,11 +113,13 @@
 		/* State layers take the content color of each variant and state. */
 		--np-ripple-hover-color: currentColor;
 		--np-ripple-pressed-color: currentColor;
-		display: grid;
+		/* As wide as its labels need, every segment as wide as the widest. */
+		display: inline-grid;
+		box-sizing: border-box;
+		min-height: 2.5rem;
 		color: var(--np-color-on-surface);
 		border: 1px solid var(--np-color-outline);
 		border-radius: var(--np-shape-corner-full);
-		overflow-x: auto;
 	}
 
 	.np-segmented-buttons.np-error {
@@ -111,7 +133,7 @@
 
 	.np-segmented-button {
 		flex: 1;
-		padding: 0.5rem 1.75rem;
+		padding: 0 1.75rem;
 		text-align: center;
 		cursor: pointer;
 		font-size: 0.875rem;
@@ -157,12 +179,30 @@
 		inset: 0;
 		z-index: -1;
 		opacity: 0;
+		border-radius: inherit;
 		transition: opacity var(--np-motion-expressive-fast-effects);
 		background-color: var(--np-color-secondary-container);
 	}
 	.width-icon,
 	.np-segmented-button:has(input:checked) {
-		padding: 0.5rem 0.75rem;
+		padding: 0 0.75rem;
+	}
+	/* The outer segments round off the container's ends, for their fill and state layer too. */
+	.np-segmented-button:first-child {
+		border-start-start-radius: var(--np-shape-corner-full);
+		border-end-start-radius: var(--np-shape-corner-full);
+	}
+	.np-segmented-button:last-child {
+		border-start-end-radius: var(--np-shape-corner-full);
+		border-end-end-radius: var(--np-shape-corner-full);
+	}
+	/* Each segment keeps a 48px tall target. */
+	.np-touch {
+		position: absolute;
+		inset-inline: 0;
+		top: 50%;
+		translate: 0 -50%;
+		height: max(3rem, 100%);
 	}
 	.np-segmented-button:has(input:checked) {
 		color: var(--np-color-on-secondary-container);

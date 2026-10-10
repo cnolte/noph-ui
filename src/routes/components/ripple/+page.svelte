@@ -11,15 +11,15 @@
 	<title>Ripple - Material 3 ripple effect for Svelte - Noph UI</title>
 	<meta
 		name="description"
-		content="The Material 3 ripple for Svelte: the press and hover state layer that the components use, ready to drop onto a surface of your own."
+		content="The Material 3 ripple for Svelte: the press and hover state layer the components use, ready to add to your own surfaces."
 	/>
 </svelte:head>
 
 <h1>Ripple</h1>
 <p>
-	The ripple is the state layer Material 3 puts under a press: hover, focus and a wave that follows
-	the pointer. Every interactive component here already carries one, and this page is for putting
-	the same feedback on a surface of your own.
+	The ripple is the Material 3 state layer for hover, focus and press, with a wave that follows the
+	pointer. Every interactive component already has one. Use it to add the same feedback to your own
+	surfaces.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -71,12 +71,12 @@
 </h2>
 <p>
 	The ripple is decoration. It renders <code>aria-hidden</code> and takes no pointer events, so it stays
-	out of the accessibility tree and never swallows a click meant for the control underneath.
+	out of the accessibility tree and does not block clicks on the control underneath.
 </p>
 <p>
-	It follows <code>prefers-reduced-motion</code> and stops animating for anyone who asks for less movement.
-	Because it only draws a state layer, the element you put it on still has to be a real control, with
-	a role, a name and a focus ring of its own.
+	It follows <code>prefers-reduced-motion</code> and stops animating when the user asks for less motion.
+	It only draws a state layer, so the element you put it on must be a real control with its own role,
+	name and focus ring.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -95,9 +95,8 @@
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
 			<td
-				>When set to <code>true</code>, applies the hover effect programmatically, regardless of
-				whether the user is actively hovering over the element. When <code>false</code>, the hover
-				effect is only applied through actual user interaction.</td
+				>When <code>true</code>, shows the hover effect even if the pointer is not over the element.
+				When <code>false</code>, the hover effect shows only on real user hover.</td
 			>
 		</tr>
 		<tr>
@@ -124,12 +123,7 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The component's root DOM element, bound with <code>bind:this</code>.</td>
 		</tr>
 	</tbody>
 </table>

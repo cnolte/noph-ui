@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { badgeText } from './description.js'
 	import type { BadgeProps } from './types.js'
 
 	let {
@@ -23,7 +24,7 @@
 >
 	{#if label !== undefined}
 		<div class="np-badge-label">
-			{label}
+			{badgeText(label)}
 		</div>
 	{/if}
 </div>
@@ -35,15 +36,21 @@
 		background-color: var(--np-color-error);
 		border-radius: var(--np-shape-corner-full);
 		position: var(--np-badge-position, absolute);
-		top: var(--np-badge-top, 0);
-		inset-inline-start: var(--np-badge-start, auto);
-		inset-inline-end: var(--np-badge-end, auto);
+		top: var(--np-badge-top, var(--_top));
+		inset-inline-start: var(--np-badge-start, var(--_start));
 	}
+	/* Anchored inside the icon at its top trailing corner. A large badge keeps its leading edge and
+	   grows toward the trailing side. */
 	.np-badge-container-label {
+		--_top: -0.125rem;
+		--_start: calc(100% - 0.75rem);
+		box-sizing: border-box;
 		height: 1rem;
 		min-width: 1rem;
 	}
 	.np-badge-container-no-label {
+		--_top: 0;
+		--_start: calc(100% - 0.375rem);
 		width: 0.375rem;
 		height: 0.375rem;
 	}
@@ -52,6 +59,7 @@
 		padding-inline: 0.25rem;
 		font-weight: 500;
 		font-size: 0.6875rem;
+		white-space: nowrap;
 		display: flex;
 		align-items: center;
 	}

@@ -87,6 +87,7 @@
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 		margin: var(--np-checkbox-margin, max(0px, (48px - 18px)/2));
+		--np-ripple-pressed-color: var(--np-color-primary);
 	}
 	:global(label) {
 		-webkit-tap-highlight-color: transparent;
@@ -187,6 +188,10 @@
 	}
 	.np-error .np-icon {
 		fill: var(--np-color-on-error);
+	}
+	.np-checkbox-container:not(.np-error):has(input:checked, input:indeterminate) {
+		--np-ripple-hover-color: var(--np-color-primary);
+		--np-ripple-pressed-color: var(--np-color-on-surface);
 	}
 	.np-error {
 		--np-ripple-hover-color: var(--np-color-error);

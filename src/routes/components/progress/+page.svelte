@@ -49,7 +49,7 @@
 <p>
 	<code>value</code> is a fraction between <code>0</code> and <code>max</code>, which defaults to
 	<code>1</code>. Drag the slider below to see how the active indicator, the gap and the stop
-	indicator respond.
+	indicator change. Any progress above 0 shows the active indicator as at least a dot.
 </p>
 <DemoContainer>
 	<Determinate />
@@ -60,8 +60,8 @@
 	Indeterminate<a href="#indeterminate" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Use this while you wait for something whose duration you cannot predict. The indicator keeps
-	looping until you either remove it or give it a value.
+	Use this when you cannot predict how long something takes. The indicator loops until you remove it
+	or give it a value.
 </p>
 <DemoContainer>
 	<Indeterminate />
@@ -70,10 +70,9 @@
 
 <h2 id="wavy">Wavy<a href="#wavy" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The Material 3 expressive variant. Only the active indicator waves, the track stays smooth, and
-	the wave travels one wavelength per second. A determinate <code>LinearProgress</code> flattens the wave
-	at 10% and below and at 95% and above, so the ends stay readable. Drag the slider above past those points
-	to see it happen.
+	The Material 3 expressive variant. Only the active indicator waves. The track stays smooth. The
+	wave moves one wavelength per second. A determinate <code>LinearProgress</code> flattens the wave at
+	10% and below and at 95% and above. Drag the slider above past those points to see it.
 </p>
 <DemoContainer>
 	<Wavy />
@@ -82,8 +81,8 @@
 
 <h2 id="buffer">Buffer<a href="#buffer" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Linear only. <code>buffer</code> marks how much has already loaded ahead of the current position, as
-	a streaming video would. Everything beyond the buffer is drawn as dots.
+	Linear only. <code>buffer</code> shows how much has loaded ahead of the current position, like in a
+	streaming video. Everything after the buffer is drawn as dots.
 </p>
 <DemoContainer>
 	<Buffer />
@@ -95,18 +94,23 @@
 </h2>
 <p>
 	Set <code>track={false}</code> when the indicator sits on top of another component that already
-	provides a surface, such as a button's loading state. Both <code>Button</code> and
-	<code>IconButton</code> do this for you when you pass <code>loading</code>.
+	provides a surface, such as a button's loading state. <code>Button</code> and
+	<code>IconButton</code> do this when you pass <code>loading</code>.
 </p>
 <DemoContainer>
 	<WithoutTrack />
 </DemoContainer>
 <Code value={WithoutTrackSource} />
+<p>
+	The 4dp stop indicator marks the end of a linear track. It stays when the track is hidden.
+	Material 3 allows removing it only where the indicator has at least 3:1 contrast with the surfaces
+	around it. In that case pass <code>stopIndicator={false}</code>.
+</p>
 
 <h2 id="four-colors">Four colors<a href="#four-colors" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>fourColor</code> cycles the indicator through primary and tertiary tones instead of a single colour.
-	Use it on indeterminate indicators, where the shifting colour helps convey that something is still happening.
+	Use it on indeterminate indicators.
 </p>
 <DemoContainer>
 	<FourColors />
@@ -118,10 +122,10 @@
 </h2>
 <p>
 	Both components render <code>role="progressbar"</code> and keep <code>aria-valuenow</code> and
-	<code>aria-valuemax</code> in sync with <code>value</code> and <code>max</code>. Neither has any
-	text of its own, so always pass an <code>aria-label</code> saying what is loading. Indeterminate
-	indicators leave out <code>aria-valuenow</code>, and that omission is what tells assistive
-	technology the duration is unknown.
+	<code>aria-valuemax</code> in sync with <code>value</code> and <code>max</code>. Neither has text
+	of its own, so always pass an <code>aria-label</code> that says what is loading. Indeterminate
+	indicators leave out <code>aria-valuenow</code>. This tells assistive technology that the duration
+	is unknown.
 </p>
 <Code
 	value={`<CircularProgress
@@ -130,18 +134,16 @@
 />`}
 />
 <p>
-	<code>wavy</code> honors <code>prefers-reduced-motion</code>. With the preference set, the wave is
-	dropped and the indicator falls back to its plain shape, while the spinner and the bar keep
-	animating so they still read as busy.
+	<code>wavy</code> respects <code>prefers-reduced-motion</code>. With the preference set, the
+	indicator shows its plain shape without the wave. The spinner and the bar keep animating.
 </p>
 
 <h2 id="right-to-left">
 	Right-to-left<a href="#right-to-left" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>LinearProgress</code> mirrors itself in a right-to-left context. The indicator grows from
-	the right and the stop indicator moves to the left edge. There is nothing to configure, since it
-	follows the inherited <code>dir</code>.
+	<code>LinearProgress</code> follows the inherited <code>dir</code>. In a right-to-left context the
+	indicator grows from the right and the stop indicator moves to the left edge.
 </p>
 <DemoContainer>
 	<RightToLeft />
@@ -180,9 +182,10 @@
 </table>
 <p>
 	<code>--np-circular-progress-active-indicator-width</code> is a unitless percentage of the
-	indicator size, so the stroke scales along with <code>--np-circular-progress-size</code>. The gap
-	between the two lanes is derived from that width, which keeps it constant however thick the stroke
-	gets: 4.8dp, and 4dp for the <code>wavy</code> variant.
+	indicator size, so the stroke scales with <code>--np-circular-progress-size</code>. The gap
+	between indicator and track stays the same at any stroke width: 4.8dp, and 4dp for the
+	<code>wavy</code>
+	variant.
 </p>
 <h3 id="circular-progress-example">
 	Circular progress example<a href="#circular-progress-example" aria-hidden="true" tabindex="-1"
@@ -230,13 +233,14 @@
 		</tr>
 		<tr>
 			<td><code>--np-linear-progress-wave-height</code></td>
-			<td><code>0.625rem</code></td>
+			<td><code>--np-linear-progress-active-indicator-height</code> + <code>0.375rem</code></td>
 		</tr>
 	</tbody>
 </table>
 <p>
-	<code>--np-linear-progress-wave-height</code> only applies to the <code>wavy</code> variant, which needs
-	a taller container to fit the crests.
+	<code>--np-linear-progress-wave-height</code> only applies to the <code>wavy</code> variant. It needs
+	a taller container to fit the wave. The wave keeps the Material 3 amplitude of 3dp and wavelength of
+	40dp at any thickness. A thicker indicator makes the container taller, so the wave is not clipped.
 </p>
 <h3 id="linear-progress-example">
 	Linear progress example<a href="#linear-progress-example" aria-hidden="true" tabindex="-1">#</a>
@@ -277,37 +281,34 @@
 			<td><code>max</code></td>
 			<td><code>number</code></td>
 			<td><code>1</code></td>
-			<td>Maximum progress to display, defaults to 1.</td>
+			<td>Maximum progress.</td>
 		</tr>
 		<tr>
 			<td><code>indeterminate</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td
-				>Whether or not to display indeterminate progress, which gives no indication to how long an
-				activity will take.</td
-			>
+			<td>Whether to show indeterminate progress, for tasks of unknown length.</td>
 		</tr>
 		<tr>
 			<td><code>fourColor</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Whether or not to render indeterminate mode using 4 colors instead of one.</td>
+			<td>Whether to use 4 colors in indeterminate mode instead of one.</td>
 		</tr>
 		<tr>
 			<td><code>track</code></td>
 			<td><code>boolean</code></td>
 			<td><code>true</code></td>
 			<td
-				>Whether or not to render the inactive track. Set to <code>false</code> for indicators layered
-				on another component, such as a button's loading state.</td
+				>Whether to show the inactive track. Set to <code>false</code> for indicators on top of another
+				component, such as a button's loading state.</td
 			>
 		</tr>
 		<tr>
 			<td><code>wavy</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Whether or not to draw the active indicator as a travelling wave, per M3 expressive.</td>
+			<td>Whether to draw the active indicator as a moving wave (M3 expressive).</td>
 		</tr>
 	</tbody>
 </table>
@@ -337,45 +338,51 @@
 			<td><code>max</code></td>
 			<td><code>number</code></td>
 			<td><code>1</code></td>
-			<td>Maximum progress to display, defaults to 1.</td>
+			<td>Maximum progress.</td>
 		</tr>
 		<tr>
 			<td><code>indeterminate</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td
-				>Whether or not to display indeterminate progress, which gives no indication to how long an
-				activity will take.</td
-			>
+			<td>Whether to show indeterminate progress, for tasks of unknown length.</td>
 		</tr>
 		<tr>
 			<td><code>fourColor</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Whether or not to render indeterminate mode using 4 colors instead of one.</td>
+			<td>Whether to use 4 colors in indeterminate mode instead of one.</td>
 		</tr>
 		<tr>
 			<td><code>track</code></td>
 			<td><code>boolean</code></td>
 			<td><code>true</code></td>
 			<td
-				>Whether or not to render the inactive track. Set to <code>false</code> for indicators layered
-				on another component, such as a button's loading state.</td
+				>Whether to show the inactive track. Set to <code>false</code> for indicators on top of another
+				component, such as a button's loading state.</td
 			>
 		</tr>
 		<tr>
 			<td><code>wavy</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Whether or not to draw the active indicator as a travelling wave, per M3 expressive.</td>
+			<td>Whether to draw the active indicator as a moving wave (M3 expressive).</td>
 		</tr>
 		<tr>
 			<td><code>buffer</code></td>
 			<td><code>number</code></td>
 			<td><code>0</code></td>
 			<td
-				>Buffer amount to display, a fraction between 0 and <code>max</code>. If the value is 0 or
-				negative, the buffer is not displayed.</td
+				>Buffer amount, a fraction between 0 and <code>max</code>. A value of 0 or less hides the
+				buffer.</td
+			>
+		</tr>
+		<tr>
+			<td><code>stopIndicator</code></td>
+			<td><code>boolean</code></td>
+			<td><code>true</code></td>
+			<td
+				>Shows the 4dp dot at the end of a determinate track. Only turn it off where the indicator
+				has 3:1 contrast with its surroundings.</td
 			>
 		</tr>
 	</tbody>

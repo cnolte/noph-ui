@@ -3,7 +3,8 @@
 	import { page } from '$app/state'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
-	import Item from '#lib/list/Item.svelte'
+	import List from '#lib/list/List.svelte'
+	import ListItem from '#lib/list/ListItem.svelte'
 	import Search from '#lib/search/Search.svelte'
 	import { type DocsHit, highlight, searchDocs, tokenize } from './searchDocs.ts'
 	import type { SearchPage } from './searchIndex.ts'
@@ -13,11 +14,8 @@
 
 	let query = $state('')
 	let expanded = $state(false)
-	let active = $state(0)
 	let index = $state.raw<SearchPage[]>()
 	let search: ReturnType<typeof Search> | undefined = $state()
-
-	const option = (position: number) => document.getElementById(`${uid}-option-${position}`)
 
 	const load = async () => {
 		index ??= (await import('./searchIndex.ts')).searchIndex
@@ -101,17 +99,6 @@
 
 	let count = $derived(rows.reduce((total, row) => total + (row.kind === 'hit' ? 1 : 0), 0))
 
-	$effect(() => {
-		void trimmed
-		active = 0
-	})
-
-	const move = (step: number) => {
-		if (count === 0) return
-		active = (active + step + count) % count
-		option(active)?.scrollIntoView({ block: 'nearest' })
-	}
-
 	const open = () => {
 		void load()
 		search?.show()
@@ -138,75 +125,51 @@
 		view={wide.current ? 'docked' : 'full-screen'}
 		placeholder="Search the docs"
 		label="Search the docs"
-		resultsAttributes={{ role: 'listbox', 'aria-label': 'Documentation search results' }}
-		inputAttributes={{
-			'aria-activedescendant': count > 0 ? `${uid}-option-${active}` : undefined,
-			onfocus: load,
-			onkeydown: (event) => {
-				if (event.key === 'ArrowDown') {
-					event.preventDefault()
-					move(1)
-				} else if (event.key === 'ArrowUp') {
-					event.preventDefault()
-					move(-1)
-				} else if (event.key === 'Enter') {
-					event.preventDefault()
-					option(active)?.click()
-				}
-			},
-		}}
+		resultsAnnouncement={(n) =>
+			trimmed === '' ? '' : `${n} ${n === 1 ? 'result' : 'results'} for ${trimmed}`}
+		inputAttributes={{ onfocus: load }}
+		onsearch={() => document.getElementById(`${uid}-top-hit`)?.click()}
 	>
-		{#each rows as row (row.key)}
-			{#if row.kind === 'group'}
-				<p class="docs-search-group">
-					{row.title}
-					{#if row.label}<span>{row.label}</span>{/if}
-				</p>
-			{:else}
-				<Item
-					href={row.hit.href}
-					id="{uid}-option-{row.position}"
-					role="option"
-					aria-selected={row.position === active}
-					softFocus={row.position === active}
-					onpointermove={() => (active = row.position)}
-					onclick={() => search?.close()}
-				>
-					<span class="docs-search-heading">
-						{#each highlight(row.hit.heading, tokens) as part, i (i)}
-							{#if part.match}<mark>{part.text}</mark>{:else}{part.text}{/if}
-						{/each}
-					</span>
-					{#snippet supportingText()}
-						{#if row.hit.body}
-							<span class="docs-search-body">
-								{#each highlight(row.hit.body, tokens) as part, i (i)}
+		{#if count > 0}
+			<!-- One list for all groups, so the arrow keys run on from one group into the next. -->
+			<List aria-label="Documentation search results">
+				{#each rows as row (row.key)}
+					{#if row.kind === 'group'}
+						<li class="docs-search-group" role="none">
+							{row.title}
+							{#if row.label}<span>{row.label}</span>{/if}
+						</li>
+					{:else}
+						<ListItem
+							href={row.hit.href}
+							id={row.position === 0 ? `${uid}-top-hit` : undefined}
+							onclick={() => search?.close()}
+						>
+							<span class="docs-search-heading">
+								{#each highlight(row.hit.heading, tokens) as part, i (i)}
 									{#if part.match}<mark>{part.text}</mark>{:else}{part.text}{/if}
 								{/each}
 							</span>
-						{/if}
-					{/snippet}
-				</Item>
-			{/if}
-		{/each}
-
-		{#if count === 0 && trimmed !== ''}
-			<p class="docs-search-empty">No results for “{trimmed}”</p>
-		{/if}
-
-		{#if count > 0}
+							{#snippet supportingText()}
+								{#if row.hit.body}
+									<span class="docs-search-body">
+										{#each highlight(row.hit.body, tokens) as part, i (i)}
+											{#if part.match}<mark>{part.text}</mark>{:else}{part.text}{/if}
+										{/each}
+									</span>
+								{/if}
+							{/snippet}
+						</ListItem>
+					{/if}
+				{/each}
+			</List>
 			<p class="docs-search-hint">
 				<kbd>↑</kbd><kbd>↓</kbd> to navigate <kbd>↵</kbd> to open <kbd>esc</kbd> to close
 			</p>
+		{:else if trimmed !== ''}
+			<p class="docs-search-empty">No results for “{trimmed}”</p>
 		{/if}
 	</Search>
-</div>
-
-<div class="docs-search-status" aria-live="polite">
-	{#if expanded && trimmed !== ''}
-		{count}
-		{count === 1 ? 'result' : 'results'} for {trimmed}
-	{/if}
 </div>
 
 <style>
@@ -315,16 +278,5 @@
 		font: inherit;
 		font-size: 0.75rem;
 		line-height: 1.25rem;
-	}
-
-	.docs-search-status {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		margin: -1px;
-		padding: 0;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
 	}
 </style>

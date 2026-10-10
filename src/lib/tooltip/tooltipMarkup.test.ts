@@ -13,9 +13,16 @@ test('the server sends everything the browser needs to run the tooltip without J
 		const anchor = attributesOf(body, id)
 		const tooltipId = anchor.match(/interestfor="([^"]+)"/)?.[1]
 		expect(tooltipId, `${id} is an interest invoker`).toBeTruthy()
-		expect(anchor, `${id} describes itself with its tooltip`).toContain(
-			`aria-describedby="${tooltipId}"`,
-		)
+		if (id === 'button-anchor') {
+			// The visible label names the button, the tooltip describes it.
+			expect(anchor, `${id} describes itself with its tooltip`).toContain(
+				`aria-describedby="${tooltipId}"`,
+			)
+		} else {
+			// Without a visible label, the tooltip text is the name and is not read a second time.
+			expect(anchor).toContain('aria-label="Add to favorites"')
+			expect(anchor).not.toContain('aria-describedby')
+		}
 		const tooltip = attributesOf(body, tooltipId!)
 		expect(tooltip).toContain('popover="hint"')
 		expect(tooltip).toContain('role="tooltip"')

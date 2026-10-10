@@ -23,11 +23,9 @@
 
 <h1>Checkbox</h1>
 <p>
-	A checkbox turns one option on or off, and a group of them lets people pick any number of options
-	at once. For a single choice out of several use a <a class="link" href="/components/radio"
-		>radio</a
-	>, and for a setting that applies at once a
-	<a class="link" href="/components/switch">switch</a>.
+	A checkbox turns one option on or off. A group of them lets people pick any number of options. For
+	a single choice out of several, use a <a class="link" href="/components/radio">radio</a>. For a
+	setting that applies at once, use a <a class="link" href="/components/switch">switch</a>.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -45,8 +43,8 @@
 </DemoContainer>
 <Code value={ErrorSource} />
 <p>
-	<code>issues</code> is shaped like a SvelteKit remote form's field issues, so passing a field's
-	<code>issues()</code> straight through is enough to drive the error state.
+	<code>issues</code> has the shape of a SvelteKit remote form's field issues. Pass a field's
+	<code>issues()</code> to drive the error state.
 </p>
 <h3 id="label">Label<a href="#label" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
@@ -86,8 +84,13 @@
 	</tbody>
 </table>
 <p>
-	<code>--np-checkbox-margin</code> is the space that grows the 18dp box into a 48dp touch target. Only
-	shrink it where the checkbox already sits inside a large enough target of its own, such as a list item.
+	<code>--np-checkbox-margin</code> grows the 18dp box into a 48dp touch target. Only shrink it where
+	the checkbox already sits inside a large enough target, such as a list item.
+</p>
+<p>
+	The hover state layer is <code>--np-color-primary</code> while the box is checked or
+	indeterminate, and <code>--np-color-on-surface</code> otherwise. The press ripple uses the other color,
+	as in the Material 3 states.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
@@ -99,14 +102,16 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The component renders a native <code>&lt;input type="checkbox"&gt;</code> with the Material 3 drawing
-	on top, so checked, focus, the space key and form submission are the browser's work, not ours.
+	The component renders a native <code>&lt;input type="checkbox"&gt;</code> with the Material 3
+	drawing on top. Checked state, focus, the space key and form submission work like a native
+	checkbox.
+	<kbd>Enter</kbd> submits the form instead of toggling.
 </p>
 <p>
-	It brings no label of its own. Wrap it in a <code>&lt;label&gt;</code>, as the
+	It has no label of its own. Wrap it in a <code>&lt;label&gt;</code>, as the
 	<a class="link" href="#label">Label</a> example does, or pass <code>aria-label</code>. The
-	indeterminate state reports <code>aria-checked="mixed"</code>, and <code>issues</code> sets
-	<code>aria-invalid</code> so the error reaches assistive technology and not only the eye.
+	indeterminate state reports <code>aria-checked="mixed"</code>. <code>issues</code> sets
+	<code>aria-invalid</code>, so assistive technology reports the error too.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -124,9 +129,9 @@
 			<td><code>&#123; message: string &#125;[]</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>Draws the checkbox in the error color and sets <code>aria-invalid</code> on the input when non-empty.
-				Shaped like a SvelteKit remote form's field issues, so it wires straight in. A disabled checkbox
-				keeps its disabled styling instead.</td
+				>When non-empty, draws the checkbox in the error color and sets <code>aria-invalid</code> on
+				the input. Pass a remote form field's <code>issues()</code>. A disabled checkbox keeps its
+				disabled styling instead.</td
 			>
 		</tr>
 		<tr>
@@ -165,12 +170,7 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The root DOM element of the component, bound with <code>bind:this</code>.</td>
 		</tr>
 	</tbody>
 </table>

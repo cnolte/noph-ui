@@ -44,23 +44,20 @@
 
 <h1>Text fields</h1>
 <p>
-	Text fields let people enter and edit text. Material 3 gives two styles, filled and outlined, and
-	both carry the label, supporting text and validation that a real form needs.
+	Text fields let people enter and edit text. They come in two styles, filled and outlined. Both
+	support a label, supporting text and validation.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>
-	Text fields function similarly to <code>&lt;input&gt;</code> elements, serving as containers with labels
-	to facilitate user input.
-</p>
+<p>Text fields work like <code>&lt;input&gt;</code> elements with a label.</p>
 <DemoContainer>
 	<Usage />
 </DemoContainer>
 <Code value={UsageSource} />
 <h3 id="input-type">Input type<a href="#input-type" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	The <code>type</code> attribute of a text field changes how the text field works, such as displaying
-	a different keyboard or providing default validation.
+	The <code>type</code> attribute changes how the field works, for example which keyboard shows or which
+	validation applies by default.
 </p>
 <ul>
 	<li><code>type="text"</code> (default)</li>
@@ -92,8 +89,8 @@
 </DemoContainer>
 <Code value={LabelsSource} />
 <blockquote>
-	<Icon>bookmark</Icon> Nesting text fields in labels without aria-labelledby is not currently supported.
-	If you want to avoid using an id, you can use aria-label instead.
+	<Icon>bookmark</Icon> Nesting text fields in labels without aria-labelledby is not supported. To avoid
+	an id, use aria-label instead.
 </blockquote>
 <h3 id="textarea">Textarea<a href="#textarea" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
@@ -112,8 +109,8 @@
 
 <h3 id="chat-prompt">Chat prompt<a href="#chat-prompt" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	A common use of an auto-growing textarea is a chat prompt field, like the input of an AI tool. The
-	leading "+" button below opens a menu, similar to ChatGPT's tools menu.
+	A common use of an auto-growing textarea is a chat prompt, like the input of an AI tool. The "+"
+	button at the start opens a menu.
 </p>
 <DemoContainer>
 	<ChatPrompt />
@@ -257,8 +254,7 @@
 </table>
 <p>
 	A <code>date</code>, <code>time</code> or <code>datetime-local</code> field hides the browser's
-	own picker button, since it clashes with the field's own trailing content. Set
-	<code>--np-picker-indicator-display</code> to <code>block</code> to bring it back.
+	picker button. Set <code>--np-picker-indicator-display</code> to <code>block</code> to show it.
 </p>
 <h3 id="outlined-text-field-example">
 	Outlined text field example<a href="#outlined-text-field-example" aria-hidden="true" tabindex="-1"
@@ -274,17 +270,24 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The field is wrapped in a <code>&lt;label&gt;</code>, so the <code>label</code> text names it
-	without any <code>for</code> and <code>id</code> wiring, and clicking the label puts the caret in
-	the field. Underneath sits a native <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code>,
-	which is what carries type, required, the keyboard and autofill.
+	The field is wrapped in a <code>&lt;label&gt;</code> that points at the input with
+	<code>for</code>, so a click anywhere on the field puts the caret in it. Buttons in the
+	<code>start</code> and <code>end</code> slots keep their own names. The input is named only by the
+	<code>label</code> text, through <code>aria-labelledby</code>. Underneath is a native
+	<code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code>, which handles type, required, the
+	keyboard and autofill.
 </p>
 <p>
-	Supporting text is tied to the field with <code>aria-describedby</code>. An error, from
-	<code>errorText</code> or from <code>issues</code>, switches that to
-	<code>aria-errormessage</code> and announces the message through <code>role="alert"</code>. A
-	required field is marked with an asterisk, which <code>noAsterisk</code> removes when your form says
-	so elsewhere.
+	Supporting text is linked to the field with <code>aria-describedby</code>. An error, from
+	<code>errorText</code> or <code>issues</code>, switches that to <code>aria-errormessage</code> and
+	announces the message with <code>role="alert"</code>. A required field shows an asterisk. Use
+	<code>noAsterisk</code> to remove it when your form marks required fields another way.
+</p>
+<p>
+	Prefix, suffix and the character counter are also linked with <code>aria-describedby</code>. Use
+	<code>prefixLabel</code> and <code>suffixLabel</code> to give symbols a spoken name, for example
+	"Euro" for "€". The counter is read as "Character count, 5/20". <code>counterLabel</code> translates
+	the first part.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -364,13 +367,17 @@
 			<td><code>noAsterisk</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Disables the asterisk on the floating label when the text field is required.</td>
+			<td>Hides the asterisk on the floating label of a required text field.</td>
 		</tr>
 		<tr>
 			<td><code>issues</code></td>
 			<td><code>&#123; message: string &#125;[]</code></td>
 			<td><code>undefined</code></td>
-			<td>Optimized to use with remote form field issues.</td>
+			<td
+				>Error messages shown instead of the supporting text. Pass a remote form field's <code
+					>issues()</code
+				>.</td
+			>
 		</tr>
 		<tr>
 			<td><code>prefixText</code></td>
@@ -383,6 +390,24 @@
 			<td><code>string</code></td>
 			<td><code>''</code></td>
 			<td>An optional suffix to display after the input value.</td>
+		</tr>
+		<tr>
+			<td><code>prefixLabel</code></td>
+			<td><code>string</code></td>
+			<td><code>undefined</code></td>
+			<td>Spoken in place of <code>prefixText</code>, for example "Euro" for "€".</td>
+		</tr>
+		<tr>
+			<td><code>suffixLabel</code></td>
+			<td><code>string</code></td>
+			<td><code>undefined</code></td>
+			<td>Spoken in place of <code>suffixText</code>, for example "at gmail dot com".</td>
+		</tr>
+		<tr>
+			<td><code>counterLabel</code></td>
+			<td><code>string</code></td>
+			<td><code>'Character count'</code></td>
+			<td>Spoken before the character counter that <code>maxlength</code> shows.</td>
 		</tr>
 		<tr>
 			<td><code>defaultValue</code></td>
@@ -428,24 +453,19 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLSpanElement</code></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The component's root DOM element, bound with <code>bind:this</code>.</td>
 		</tr>
 		<tr>
 			<td><code>inputElement</code></td>
 			<td><code>HTMLInputElement | HTMLTextAreaElement | undefined</code></td>
-			<td>Allows access to the input element</td>
+			<td>The input or textarea element.</td>
 		</tr>
 		<tr>
 			<td><code>clientWidth</code>, <code>clientHeight</code></td>
 			<td><code>number | undefined</code></td>
 			<td>
-				Measurements of the field, for laying something out against it. <code>AutoComplete</code> uses
-				them to size its menu.
+				Size of the field, for positioning other elements next to it. <code>AutoComplete</code> uses them
+				to size its menu.
 			</td>
 		</tr>
 	</tbody>

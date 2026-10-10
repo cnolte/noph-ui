@@ -2,25 +2,29 @@
 	import { Button, ButtonGroup } from '#lib/index.js'
 	import { Icon } from '#lib/icons/index.js'
 
-	let places = $state([
-		{ label: 'Work', icon: 'work', selected: true },
-		{ label: 'Restaurant', icon: 'restaurant', selected: false },
-		{ label: 'Coffee', icon: 'coffee', selected: false },
-		{ label: 'Home', icon: 'home', selected: false },
-	])
-
-	const choose = (index: number) => {
-		places.forEach((place, i) => (place.selected = i === index))
-	}
+	const places = [
+		{ value: 'work', label: 'Work', icon: 'work' },
+		{ value: 'restaurant', label: 'Restaurant', icon: 'restaurant' },
+		{ value: 'coffee', label: 'Coffee', icon: 'coffee' },
+		{ value: 'home', label: 'Home', icon: 'home' },
+	]
+	let place = $state('work')
 </script>
 
-<ButtonGroup variant="connected" aria-label="Place">
-	{#each places as place, index (place.label)}
-		<Button variant="tonal" toggle bind:selected={place.selected} onclick={() => choose(index)}>
+<ButtonGroup
+	variant="connected"
+	selection="single"
+	required
+	name="place"
+	bind:value={place}
+	aria-label="Place"
+>
+	{#each places as { value, label, icon } (value)}
+		<Button variant="tonal" {value}>
 			{#snippet start()}
-				<Icon>{place.icon}</Icon>
+				<Icon>{icon}</Icon>
 			{/snippet}
-			{place.label}
+			{label}
 		</Button>
 	{/each}
 </ButtonGroup>

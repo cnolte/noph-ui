@@ -16,6 +16,8 @@ export interface TabProps extends HTMLAttributes<HTMLElement> {
 export interface TabsProps extends HTMLAttributes<HTMLElement> {
 	variant?: 'primary' | 'secondary'
 	value: string | number
+	/** Tabs as wide as their labels that scroll sideways, for more tabs or longer labels than fit. */
+	scrollable?: boolean
 	element?: HTMLElement
 }
 
@@ -23,4 +25,5 @@ export interface TabsContext {
 	value: string | number
 	indicatorValue: string | number
 	variant: 'primary' | 'secondary'
+	reveal(tab: HTMLElement): void
 }

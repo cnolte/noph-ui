@@ -5,6 +5,7 @@
 	import Menu from '#lib/menu/Menu.svelte'
 	import Check from '#lib/select/Check.svelte'
 	import VirtualList from '#lib/select/VirtualList.svelte'
+	import { typeaheadBuffer, typeaheadMatch } from '#lib/keyboard-nav.js'
 	import { tick } from 'svelte'
 	import type { SelectOption, SelectProps } from './types.js'
 
@@ -40,6 +41,7 @@
 
 	const uid = $props.id()
 	const supportingTextId = `supporting-text-${uid}`
+	const labelId = `label-${uid}`
 	const ids = (...values: (string | undefined | null | false)[]) =>
 		values.filter(Boolean).join(' ') || undefined
 	$effect(() => {
@@ -85,18 +87,13 @@
 	let menuOpen = $state(false)
 	let focusIndex = $state(-1)
 	let pendingFocus = false
-	let typeBuffer = ''
-	let lastTypeTime = 0
+	const collectTypeahead = typeaheadBuffer()
 
+	let selectedIndex = $derived(options.findIndex((o) => selectedSet.has(o.value)))
 	let activeDescendantId = $derived.by<string | undefined>(() => {
 		if (!menuOpen) return undefined
 		if (focusIndex >= 0 && focusIndex < options.length) return `${uid}-opt-${focusIndex}`
-		const fallbackIdx = multiple
-			? Array.isArray(value) && value.length
-				? options.findIndex((o) => o.value === value[0])
-				: -1
-			: options.findIndex((o) => o.value === value)
-		return fallbackIdx >= 0 ? `${uid}-opt-${fallbackIdx}` : undefined
+		return selectedIndex >= 0 ? `${uid}-opt-${selectedIndex}` : undefined
 	})
 	let selectedLabel = $derived.by<string>(() => {
 		if (multiple) {
@@ -111,48 +108,11 @@
 		return options.find((option) => option.value === value)?.label || ''
 	})
 
-	let cachedRowHeight = 0
-	const ensureRowHeight = () => {
-		if (!cachedRowHeight && menuElement) {
-			const viewport = menuElement.querySelector(
-				'svelte-virtual-list-viewport',
-			) as HTMLElement | null
-			if (viewport) {
-				const firstRow = viewport.querySelector('[id^="' + uid + '-opt-"]') as HTMLElement | null
-				cachedRowHeight = firstRow?.offsetHeight || 48
-			}
-		}
-		if (!cachedRowHeight) cachedRowHeight = 48
-		return cachedRowHeight
-	}
+	let virtualList = $state<VirtualList<SelectOption>>()
 	const scrollOptionIntoView = (index: number) => {
-		if (index < 0 || !menuElement) return
-		if (!useVirtualList) {
-			document.getElementById(`${uid}-opt-${index}`)?.scrollIntoView({ block: 'nearest' })
-			return
-		}
-		const viewport = menuElement.querySelector('svelte-virtual-list-viewport') as HTMLElement | null
-		if (!viewport) return
-		const rowHeight = ensureRowHeight()
-		const top = index * rowHeight
-		const bottom = top + rowHeight
-		const { scrollTop, clientHeight } = viewport
-		if (top < scrollTop) viewport.scrollTop = top
-		else if (bottom > scrollTop + clientHeight) viewport.scrollTop = bottom - clientHeight
-	}
-
-	const defaultActiveIndex = () => {
-		let idx = -1
-		if (multiple) {
-			if (Array.isArray(value) && value.length) {
-				idx = options.findIndex((o) => value.includes(o.value) && !o.disabled)
-			}
-		} else {
-			idx = options.findIndex((o) => o.value === value && !o.disabled)
-		}
-		if (idx < 0) idx = options.findIndex((o) => !o.disabled)
-		if (idx < 0) idx = 0
-		return idx
+		if (index < 0) return
+		if (useVirtualList) virtualList?.scrollToIndex(index)
+		else document.getElementById(`${uid}-opt-${index}`)?.scrollIntoView({ block: 'nearest' })
 	}
 
 	const toggleValue = (option: SelectOption) => {
@@ -189,6 +149,7 @@
 	}
 
 	const openMenuAndFocus = async (index: number) => {
+		if (!options.length) return
 		if (!menuOpen) menuElement?.showPopover()
 		focusIndex = Math.min(Math.max(index, 0), options.length - 1)
 		pendingFocus = true
@@ -196,45 +157,23 @@
 		focusActiveOption()
 	}
 
-	const moveFocus = (delta: number) => {
-		if (!options.length) return
-		let next = focusIndex
-		if (next < 0) {
-			const selIdx = Array.isArray(value)
-				? options.findIndex((o) => value.includes(o.value) && !o.disabled)
-				: options.findIndex((o) => o.value === value && !o.disabled)
-			next = selIdx >= 0 ? selIdx : 0
-		}
-		let attempts = 0
-		while (attempts < options.length) {
-			next = (next + delta + options.length) % options.length
-			if (!options[next].disabled) {
-				openMenuAndFocus(next)
-				return
-			}
-			attempts++
-		}
-	}
+	// Disabled options take focus like any other, they just cannot be picked.
+	const moveFocus = (delta: number) =>
+		openMenuAndFocus((focusIndex + delta + options.length) % options.length)
 
-	const focusEdge = (start: boolean) => {
-		if (!options.length) {
-			return
-		}
-		if (start) {
-			for (let i = 0; i < options.length; i++) {
-				if (!options[i].disabled) {
-					openMenuAndFocus(i)
-					return
-				}
-			}
-		} else {
-			for (let i = options.length - 1; i >= 0; i--) {
-				if (!options[i].disabled) {
-					openMenuAndFocus(i)
-					return
-				}
-			}
-		}
+	// From the field, the first arrow press shows focus on the active option instead of moving past it.
+	const focusActiveOrDefault = () =>
+		openMenuAndFocus(focusIndex >= 0 ? focusIndex : Math.max(selectedIndex, 0))
+
+	const typeahead = (event: KeyboardEvent) => {
+		const query = collectTypeahead(event)
+		if (!query) return
+		const match = typeaheadMatch(
+			options.map((o) => o.label ?? ''),
+			focusIndex,
+			query,
+		)
+		if (match >= 0) openMenuAndFocus(match)
 	}
 
 	const optionKeydown = (event: KeyboardEvent, option: SelectOption) => {
@@ -247,42 +186,17 @@
 			moveFocus(-1)
 		} else if (key === 'Home') {
 			event.preventDefault()
-			focusEdge(true)
+			openMenuAndFocus(0)
 		} else if (key === 'End') {
 			event.preventDefault()
-			focusEdge(false)
+			openMenuAndFocus(options.length - 1)
 		} else if (key === 'Enter' || key === ' ') {
 			event.preventDefault()
 			handleOptionSelect(event, option)
 		} else if (key === 'Tab') {
 			menuElement?.hidePopover()
-		} else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-			performTypeahead(key)
-		}
-	}
-
-	const performTypeahead = (char: string) => {
-		const now = performance.now()
-		if (now - lastTypeTime > 700) typeBuffer = ''
-		lastTypeTime = now
-		typeBuffer += char.toLowerCase()
-		if (!options.length) {
-			return
-		}
-		const startIdx = focusIndex >= 0 ? (focusIndex + 1) % options.length : 0
-		for (let i = 0; i < options.length; i++) {
-			const idx = (startIdx + i) % options.length
-			const label = options[idx].label?.toLowerCase?.() || ''
-			if (label.startsWith(typeBuffer) && !options[idx].disabled) {
-				openMenuAndFocus(idx)
-				return
-			}
-		}
-
-		if (typeBuffer.length > 1) {
-			const last = typeBuffer[typeBuffer.length - 1]
-			typeBuffer = last
-			performTypeahead('')
+		} else {
+			typeahead(event)
 		}
 	}
 </script>
@@ -317,7 +231,9 @@
 		tabindex={disabled ? -1 : tabindex}
 		aria-controls="listbox-{uid}"
 		aria-expanded={menuOpen}
-		aria-label={attributes['aria-label'] || label}
+		aria-label={attributes['aria-label']}
+		aria-labelledby={attributes['aria-label'] || !label?.length ? undefined : labelId}
+		aria-required={required || undefined}
 		aria-disabled={disabled}
 		aria-activedescendant={activeDescendantId}
 		{...ariaProps}
@@ -342,30 +258,27 @@
 				menuElement?.hidePopover()
 				return
 			}
-			if (key === 'ArrowDown') {
+			if (key === 'ArrowDown' || key === 'ArrowUp') {
 				event.preventDefault()
-				moveFocus(1)
-				return
-			}
-			if (key === 'ArrowUp') {
-				event.preventDefault()
-				moveFocus(-1)
+				// A long list focuses its option only once it has rendered, keep counting presses until then.
+				if (pendingFocus) moveFocus(key === 'ArrowDown' ? 1 : -1)
+				else focusActiveOrDefault()
 				return
 			}
 			if (key === 'Home') {
 				event.preventDefault()
-				focusEdge(true)
+				openMenuAndFocus(0)
 				return
 			}
 			if (key === 'End') {
 				event.preventDefault()
-				focusEdge(false)
+				openMenuAndFocus(options.length - 1)
 				return
 			}
 			if (key === 'Enter' || key === ' ') {
 				event.preventDefault()
 				if (!menuOpen) {
-					openMenuAndFocus(focusIndex >= 0 ? focusIndex : 0)
+					focusActiveOrDefault()
 				} else if (focusIndex >= 0) {
 					const opt = options[focusIndex]
 					if (opt && !opt.disabled) {
@@ -374,10 +287,7 @@
 				}
 				return
 			}
-			if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-				performTypeahead(key)
-				return
-			}
+			typeahead(event)
 		}}
 	>
 		<div class="container-overflow">
@@ -391,7 +301,9 @@
 					<div class="outline-start"></div>
 					{#if label?.length}
 						<div class="label-wrapper">
-							<span class={['label', !noAsterisk && required && 'required']}>{label}</span>
+							<span id={labelId} class={['label', !noAsterisk && required && 'required']}
+								>{label}</span
+							>
 						</div>
 						<div class="outline-notch">
 							<span class="notch" aria-hidden="true"
@@ -412,7 +324,9 @@
 					{#if variant === 'filled'}
 						<div class="label-wrapper">
 							{#if label?.length}
-								<span class={['label', !noAsterisk && required && 'required']}>{label}</span>
+								<span id={labelId} class={['label', !noAsterisk && required && 'required']}
+									>{label}</span
+								>
 							{/if}
 						</div>
 					{/if}
@@ -491,6 +405,7 @@
 	<Item
 		id="{uid}-opt-{index}"
 		onclick={(event) => {
+			focusIndex = index
 			handleOptionSelect(event, option)
 			field?.focus()
 		}}
@@ -526,7 +441,7 @@
 	bind:open={menuOpen}
 	ontoggle={async ({ newState }) => {
 		if (newState === 'open') {
-			if (focusIndex < 0) focusIndex = defaultActiveIndex()
+			if (focusIndex < 0) focusIndex = Math.max(selectedIndex, 0)
 			await tick()
 			scrollOptionIntoView(focusIndex)
 		} else {
@@ -538,8 +453,8 @@
 >
 	{#if useVirtualList}
 		<VirtualList
+			bind:this={virtualList}
 			height="250px"
-			itemHeight={48}
 			items={options}
 			rendered={({ start, end }) => {
 				if (pendingFocus && focusIndex >= start && focusIndex < end) {
@@ -920,7 +835,7 @@
 		inset-inline-start: var(--floating-label-left, 0);
 	}
 	.label {
-		transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+		transition: color var(--np-motion-expressive-fast-effects);
 		box-sizing: border-box;
 		color: var(--np-color-on-surface-variant);
 		overflow: hidden;
@@ -933,6 +848,9 @@
 		width: min-content;
 	}
 
+	.outlined:hover .label {
+		color: var(--np-color-on-surface);
+	}
 	.field.menu-open .label,
 	.field:focus .label {
 		color: var(--np-color-primary);
@@ -1064,7 +982,7 @@
 	.outline-end::after,
 	.outline-notch::after {
 		opacity: 0;
-		transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+		transition: opacity var(--np-motion-expressive-fast-effects);
 	}
 
 	.field.menu-open .outline-start::after,
@@ -1077,6 +995,9 @@
 	}
 	.np-outline {
 		border-color: var(--np-color-outline);
+		transition:
+			border-color var(--np-motion-expressive-fast-effects),
+			color var(--np-motion-expressive-fast-effects);
 		border-radius: inherit;
 		display: flex;
 		pointer-events: none;
@@ -1124,9 +1045,7 @@
 		}
 
 		.label {
-			transition-property: all;
-			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-			transition-duration: 150ms;
+			transition: all var(--np-motion-expressive-fast-effects);
 		}
 	}
 </style>

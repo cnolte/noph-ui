@@ -51,4 +51,78 @@ describe('Tabs', async () => {
 
 		await expect.poll(() => document.activeElement === tabs()[1]).toBe(true)
 	})
+
+	test('the divider lies inside the 48px height', async () => {
+		await render(Harness)
+
+		expect(document.querySelector('nav')!.getBoundingClientRect().height).toBe(48)
+	})
+})
+
+describe('Scrollable tabs', async () => {
+	const many = ['Akita', 'Alaskan', 'Australian Shepherd', 'Azawakh', 'Barbet', 'Basenji']
+
+	test('are as wide as their labels, the first 52px from the start', async () => {
+		await render(Harness, { scrollable: true, tabs: many, value: 'Akita' })
+
+		const strip = document.querySelector('[role="tablist"]')!.getBoundingClientRect()
+		const [first, second] = tabs().map((tab) => tab.getBoundingClientRect())
+		expect(first.left - strip.left).toBe(52)
+		expect(first.width).toBeLessThan(second.width)
+		expect(tabs()[0].parentElement!.scrollWidth).toBeGreaterThan(strip.width)
+	})
+
+	test('bring the selected tab into view', async () => {
+		await render(Harness, { scrollable: true, tabs: many, value: 'Akita' })
+		const strip = document.querySelector<HTMLElement>('[role="tablist"]')!
+		expect(strip.scrollLeft).toBe(0)
+
+		tabs()[5].click()
+
+		await expect
+			.poll(() => {
+				const box = tabs()[5].getBoundingClientRect()
+				const view = strip.getBoundingClientRect()
+				return box.left >= view.left && box.right <= view.right
+			})
+			.toBe(true)
+	})
+
+	test('fixed tabs share the width equally', async () => {
+		await render(Harness)
+
+		const widths = tabs().map((tab) => Math.round(tab.getBoundingClientRect().width))
+		expect(new Set(widths).size).toBe(1)
+	})
+})
+
+describe('Link tabs', async () => {
+	test('a click selects the tab', async () => {
+		await render(Harness, { links: true, value: 'one' })
+
+		tabs()[1].click()
+
+		await expect.poll(() => tabs()[1].getAttribute('aria-selected')).toBe('true')
+	})
+
+	test('Space activates the tab instead of scrolling the page', async () => {
+		await render(Harness, { links: true, value: 'one' })
+		tabs()[2].focus()
+
+		const event = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true })
+		tabs()[2].dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(true)
+		await expect.poll(() => tabs()[2].getAttribute('aria-selected')).toBe('true')
+	})
+})
+
+describe('Tab badge', async () => {
+	test('is read after the tab name, as its description', async () => {
+		await render(Harness, { badgeLabel: 5 })
+
+		const tab = page.getByRole('tab', { name: 'two', exact: true })
+		await expect.element(tab).toHaveAccessibleDescription('5')
+		expect(document.querySelector('.np-badge-container')!.getAttribute('aria-hidden')).toBe('true')
+	})
 })

@@ -14,7 +14,8 @@
 	]
 	let fruits: AutoCompleteOption[] = $state([{ value: 1, label: 'Apple' }])
 	let fruitValue = $state('')
-	let pendingDeleteIndex: number | null = $state(null)
+	let chipSet: HTMLDivElement | undefined = $state()
+	let input: HTMLElement | undefined
 </script>
 
 <AutoComplete
@@ -25,24 +26,16 @@
 	name="fruit"
 	populated={fruits.length > 0}
 	bind:value={fruitValue}
+	onfocus={(e) => (input = e.currentTarget)}
 	onkeydown={(e) => {
+		// Backspace in the empty field moves to the last fruit, and Backspace there removes it.
 		if (e.key === 'Backspace' && !e.currentTarget.value && fruits.length > 0) {
 			e.preventDefault()
-			if (pendingDeleteIndex !== null) {
-				fruits.splice(pendingDeleteIndex, 1)
-				pendingDeleteIndex = null
-			} else {
-				pendingDeleteIndex = fruits.length - 1
-			}
-		} else {
-			pendingDeleteIndex = null
+			chipSet
+				?.querySelectorAll('button')
+				.item(fruits.length - 1)
+				?.focus()
 		}
-	}}
-	onfocus={() => {
-		pendingDeleteIndex = null
-	}}
-	onblur={() => {
-		pendingDeleteIndex = null
 	}}
 	onoptionselect={(option) => {
 		fruits.push(option)
@@ -54,18 +47,16 @@
 		)
 	}}
 >
-	<ChipSet>
-		{#each fruits as fruit, index (fruit.value)}
+	<ChipSet bind:element={chipSet}>
+		{#each fruits as fruit (fruit.value)}
 			<InputChip
 				name="fruit"
 				value={fruit.value}
 				label={fruit.label}
-				selected={pendingDeleteIndex === index}
-				removeAriaLabel="Remove {fruit.label}"
 				onremove={() => {
-					if (index > -1) {
-						fruits.splice(index, 1)
-					}
+					fruits = fruits.filter((f) => f !== fruit)
+					// With the last fruit gone there is no chip left to focus, so go back to the field.
+					if (!fruits.length) input?.focus()
 				}}
 			/>
 		{/each}

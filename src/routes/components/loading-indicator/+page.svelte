@@ -11,16 +11,15 @@
 	<title>Loading indicator - Material 3 spinner for Svelte - Noph UI</title>
 	<meta
 		name="description"
-		content="The Material 3 Expressive loading indicator for Svelte: a spinner that morphs through shapes while it turns, for short waits inside a page."
+		content="Material 3 Expressive loading indicator for Svelte. A spinner that morphs through shapes as it turns, for short waits inside a page."
 	/>
 </svelte:head>
 
 <h1>Loading indicator</h1>
 <p>
-	The loading indicator is the Material 3 expressive take on a spinner. Instead of sweeping an arc
-	around a circle, it morphs through a sequence of shapes while it turns. Use it for short waits
-	inside a surface you already own, such as a pull to refresh gesture or a panel that is fetching
-	its contents. For anything that reports real progress over a longer period, reach for
+	The loading indicator is the Material 3 expressive spinner. It morphs through a sequence of shapes
+	while it turns. Use it for short waits inside an existing surface, such as a pull to refresh
+	gesture or a panel that is loading its contents. To show real progress over a longer time, use
 	<a class="link" href="/components/progress">progress indicators</a> instead.
 </p>
 
@@ -28,12 +27,10 @@
 	Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The indicator gives no reading of progress, so it needs nothing but a label. It loops through
-	seven shapes, a new morph every 650ms, and completes a full turn every 4.7 seconds. The whole
-	animation is precomputed, so it runs on the browser's own timeline and costs no script while it
-	spins.
+	The indicator does not show progress, so it only needs a label. It loops through seven shapes,
+	with a new morph every 650ms, and makes a full turn every 4.7 seconds.
 	<code>contained</code> puts the shape on a filled circle. Use it when the indicator floats over content,
-	where the container keeps it legible, and leave it off when the indicator sits on a surface of its own.
+	so it stays readable. Leave it off when the indicator sits on its own surface.
 </p>
 <DemoContainer>
 	<Usage />
@@ -44,9 +41,9 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The indicator renders <code>role="progressbar"</code> without an <code>aria-valuenow</code>, and
-	that missing value is what tells assistive technology that the wait has no known length. It has no
-	text of its own, so always pass an <code>aria-label</code> saying what is loading.
+	The indicator renders <code>role="progressbar"</code> without an <code>aria-valuenow</code>. This
+	tells assistive technology that the wait has no known length. It has no visible text, so always
+	pass an <code>aria-label</code> that says what is loading.
 </p>
 <Code
 	value={`<LoadingIndicator
@@ -80,8 +77,7 @@
 	</tbody>
 </table>
 <p>
-	The shape is drawn relative to the container, so it scales with
-	<code>--np-loading-indicator-size</code> without any further adjustment.
+	The shape scales with <code>--np-loading-indicator-size</code>.
 </p>
 <DemoContainer>
 	<ThemingExample />
@@ -103,7 +99,7 @@
 			<td><code>contained</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Whether or not to draw the shape on a filled container.</td>
+			<td>Draws the shape on a filled container.</td>
 		</tr>
 	</tbody>
 </table>

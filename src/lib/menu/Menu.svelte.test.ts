@@ -3,7 +3,7 @@ import { page } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Harness from './MenuPlacementHarness.test.svelte'
 
-const ITEM_HEIGHT = 56
+const ITEM_HEIGHT = 48
 const MENU_PADDING = 16
 const heightOf = (items: number) => items * ITEM_HEIGHT + MENU_PADDING
 const GAP = 4

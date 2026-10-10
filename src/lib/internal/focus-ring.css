@@ -31,6 +31,10 @@
 	outline-width: 3px;
 	outline-offset: 2px;
 }
+/* The focused state layer, on top of the ring. */
+.np-focus-ring:focus-visible .np-ripple-surface::before {
+	opacity: var(--np-ripple-focus-opacity, 0.1);
+}
 @media (prefers-reduced-motion: no-preference) {
 	.np-focus-ring:focus-visible {
 		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;

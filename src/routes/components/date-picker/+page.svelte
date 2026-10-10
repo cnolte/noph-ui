@@ -49,7 +49,7 @@
 
 <p>
 	Date pickers let users choose a date from a calendar while keeping the input editable. Use them
-	when calendar context matters; for dates users already know, typing is often faster.
+	when calendar context matters. For dates users already know, typing is often faster.
 </p>
 
 <p>
@@ -80,8 +80,8 @@
 	Reacting to a change<a href="#reacting-to-a-change" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>onchange</code> fires whenever the committed value changes, whether it came from the
-	calendar or from typing. It receives the ISO string, or <code>undefined</code> when the field is cleared.
+	<code>onchange</code> fires when the committed value changes, from the calendar or from typing. It
+	receives the ISO string, or <code>undefined</code> when the field is cleared.
 </p>
 <DemoContainer>
 	<ReactingToChange />
@@ -105,9 +105,9 @@
 </h2>
 <p>
 	Month names, weekday names and the numeric input order all come from <code>Intl</code>. Without a
-	<code>locale</code> the runtime's own locale is used; pass one to pin it. The supporting text
-	under the field is generated from the same pattern, so a German picker asks for
-	<code>DD.MM.YYYY</code> and parses <code>17.08.2025</code>.
+	<code>locale</code>, the runtime locale is used. Pass one to set it. The supporting text under the
+	field uses the same pattern. A German picker asks for <code>DD.MM.YYYY</code> and parses
+	<code>17.08.2025</code>.
 </p>
 <DemoContainer>
 	<Localisation />
@@ -118,9 +118,9 @@
 	First day of the week<a href="#first-day-of-the-week" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	The first column is derived from the locale through <code>Intl.Locale#getWeekInfo</code>. On an
-	engine that does not implement it the calendar falls back to Sunday, so set
-	<code>firstDayOfWeek</code> explicitly (0 = Sunday … 6 = Saturday) when the week start has to be certain.
+	The first column comes from the locale through <code>Intl.Locale#getWeekInfo</code>. Browsers that
+	do not support it fall back to Sunday. Set <code>firstDayOfWeek</code> (0 = Sunday … 6 = Saturday) when
+	the week start must be certain.
 </p>
 <DemoContainer>
 	<FirstDayOfWeek />
@@ -131,9 +131,8 @@
 	Bounding the selection<a href="#bounding-the-selection" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>min</code> and <code>max</code> are inclusive ISO days. They grey out the days outside the window,
-	stop the month and year steppers at the edge, and disable the months and years that fall entirely outside
-	it.
+	<code>min</code> and <code>max</code> are inclusive ISO days. They grey out the days outside the range,
+	stop the month and year steppers at the edge, and disable months and years that fall fully outside it.
 </p>
 <DemoContainer>
 	<BoundingSelection />
@@ -146,8 +145,8 @@
 	>
 </h3>
 <p>
-	<code>isDateEnabled</code> runs for every rendered day; return <code>false</code> to disable it. Use
-	it for rules a range cannot express, such as weekends, public holidays or days already fully booked.
+	<code>isDateEnabled</code> runs for every rendered day. Return <code>false</code> to disable it. Use
+	it for rules a range cannot express, such as weekends, public holidays or fully booked days.
 </p>
 <DemoContainer>
 	<DisablingIndividualDays />
@@ -160,9 +159,8 @@
 	>
 </h3>
 <p>
-	<code>yearRange</code> sets the years offered in the year menu, defaulting to
-	<code>[1900, 2100]</code>. Narrowing it keeps a long scroll from getting in the way. For a date of
-	birth, pair it with a <code>max</code> of today.
+	<code>yearRange</code> sets the years in the year menu. The default is <code>[1900, 2100]</code>.
+	A narrower range keeps the list short. For a date of birth, pair it with a <code>max</code> of today.
 </p>
 <DemoContainer>
 	<RestrictingYearMenu />
@@ -175,9 +173,9 @@
 	>
 </h2>
 <p>
-	By default the calendar shows only the days of the displayed month and leaves the surrounding
-	cells empty. Set <code>adjacentMonthDays</code> to fill those cells with the leading and trailing days
-	of the neighbouring months instead. Keyboard navigation crosses the month boundary either way.
+	By default the calendar shows only the days of the displayed month and leaves the other cells
+	empty. Set <code>adjacentMonthDays</code> to fill them with days of the previous and next month. Keyboard
+	navigation crosses the month boundary in both cases.
 </p>
 <DemoContainer>
 	<AdjacentMonthDays />
@@ -188,10 +186,10 @@
 	Controlling the calendar<a href="#controlling-the-calendar" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>displayMonth</code> is the month on screen. It follows the selection until the person navigates,
-	and binding it lets you park the calendar on a specific month, such as the start of a booking season.
-	It also reports where they browsed to while the calendar is open, but closing it restores whatever you
-	set, so the picker always reopens where you put it.
+	<code>displayMonth</code> is the month on screen. It follows the selection until the user navigates.
+	Bind it to show a specific month, such as the start of a booking season. While the calendar is open,
+	it reports the month the user browsed to. When the calendar closes, it goes back to the value you set,
+	so the picker reopens there.
 </p>
 <DemoContainer>
 	<ControllingCalendar />
@@ -202,12 +200,12 @@
 	Opening it yourself<a href="#opening-it-yourself" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	The docked pickers keep their calendar in a popover of their own, so there is no
-	<code>id</code> for a trigger to point at. Open them with <code>show()</code> and
-	<code>close()</code>, the pair every overlay in the library exports: bind a reference with
-	<code>bind:this</code>, type it with <code>ReturnType&lt;typeof DockedDatePicker&gt;</code>, and
-	call through <code>?.</code> since it is <code>undefined</code> until the component has mounted.
-	<code>show()</code> on a <code>disabled</code> or <code>readonly</code> field does nothing.
+	The docked pickers keep their calendar in their own popover, so there is no <code>id</code> for a
+	trigger to point at. Open them with <code>show()</code> and <code>close()</code>, the same pair
+	every overlay in the library exports. Bind a reference with <code>bind:this</code>, type it with
+	<code>ReturnType&lt;typeof DockedDatePicker&gt;</code>, and call through <code>?.</code> because
+	it is <code>undefined</code> until the component has mounted. <code>show()</code> does nothing on
+	a <code>disabled</code> or <code>readonly</code> field.
 </p>
 <DemoContainer>
 	<OpeningItYourself />
@@ -218,23 +216,20 @@
 	Forms and validation<a href="#forms-and-validation" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Passing a <code>name</code> includes the ISO date value in form submissions. Validation stays on the
-	visible field, so browser validation feedback works as expected.
+	Passing a <code>name</code> includes the ISO date in form submissions. Validation stays on the visible
+	field, so browser validation feedback works.
 </p>
 <p>
-	Invalid dates are reported after submission or when the field loses focus. Use <code
-		>invalidDateMessage</code
-	>
-	to customize the validation message.
-	<code>issues</code> replaces the supporting text with your own messages and turns the field red, so
-	it pairs with whatever validation library the form already uses.
+	Invalid dates are reported after submission or when the field loses focus. Use
+	<code>invalidDateMessage</code> to change the message. <code>issues</code> replaces the supporting text
+	with your own messages and turns the field red, so it works with any validation library.
 </p>
 <p>
-	A SvelteKit remote form field can be spread straight in with
-	<code>&#123;...field.as('date')&#125;</code>, alongside
+	You can spread a SvelteKit remote form field onto the picker with
+	<code>&#123;...field.as('date')&#125;</code>, together with
 	<code>issues=&#123;field.issues()&#125;</code>. See
-	<a class="link" href="/about/remote-functions">Remote functions</a> for a form that wires several components
-	up that way.
+	<a class="link" href="/about/remote-functions">Remote functions</a> for a form that connects several
+	components this way.
 </p>
 <DemoContainer>
 	<FormsAndValidation />
@@ -243,8 +238,8 @@
 
 <h2 id="modal">Modal<a href="#modal" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>DatePickerDialog</code> is the same calendar in a modal, with the selection echoed in a headline
-	and a three-column year grid behind the month button. Prefer it on small screens, or when picking the
+	<code>DatePickerDialog</code> is the same calendar in a modal. It shows the selection in a headline
+	and has a three-column year grid behind the month button. Use it on small screens, or when picking the
 	date is the main task of the step rather than one field among many.
 </p>
 <DemoContainer>
@@ -252,12 +247,10 @@
 </DemoContainer>
 <Code value={ModalSource} />
 <p>
-	The dialog is a native <code>&lt;dialog&gt;</code>, so a trigger opens it with
+	The dialog is a native <code>&lt;dialog&gt;</code>. A trigger opens it with
 	<code>command="show-modal"</code> pointed at its <code>id</code>, and
-	<code>command="close"</code> closes it. No state and no handler are involved, and it works before
-	the page has hydrated. Where there is no trigger to point at it, call <code>show()</code> and
-	<code>close()</code> on the component instead; <code>bind:open</code> is there to report the state rather
-	than to set it.
+	<code>command="close"</code> closes it. This needs no state or handler, and it works before the
+	page has hydrated. Without a trigger, call <code>show()</code> and <code>close()</code> on the component.
 </p>
 
 <h3 id="keyboard-entry-and-custom-wording">
@@ -268,11 +261,10 @@
 	>
 </h3>
 <p>
-	<code>modeToggle</code> adds the header button that swaps the calendar for a text field, for
-	people who would rather type. <code>title</code> replaces the supporting line above the headline,
-	and
-	<code>headline</code> overrides the formatted date itself. <code>onconfirm</code> fires on the
-	confirm button, and <code>oncancel</code> on every other way out: the cancel button,
+	<code>modeToggle</code> adds a header button that swaps the calendar for a text field, for people
+	who prefer to type. <code>title</code> replaces the supporting line above the headline, and
+	<code>headline</code> replaces the formatted date. <code>onconfirm</code> fires on the confirm
+	button. <code>oncancel</code> fires on every other way out: the cancel button,
 	<kbd>Escape</kbd>, a click on the scrim, or setting <code>open</code> back to
 	<code>false</code> yourself.
 </p>
@@ -284,21 +276,20 @@
 <h2 id="range">Range<a href="#range" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>DateRangePicker</code> scrolls through months continuously and fills the days between the
-	two ends. The first tap sets the start, the second the end; tapping before the start restarts the
-	range. <code>value</code> is a <code>&#123; start, end &#125;</code> object of ISO days.
+	two ends. The first tap sets the start and the second sets the end. Tapping before the start
+	begins a new range. <code>value</code> is a <code>&#123; start, end &#125;</code> object of ISO days.
 </p>
 <p>
-	The month list is a window rather than the whole year range: it opens on a few months either side
-	of the start day and grows as you scroll, and each month is only as tall as the week rows it
-	needs. The seven grids share one tab stop, so the list is one stop in the tab order and the arrow
-	keys carry focus from one month into the next.
+	The month list does not hold the whole year range. It opens on a few months before and after the
+	start day and grows as you scroll. Each month is only as tall as its week rows. The whole list is
+	one tab stop. The arrow keys move from one month into the next.
 </p>
 <p>
-	The picker's presentation depends on the window width. Below 600dp it fills the screen, square
-	cornered and flat, and confirms from the top bar. From 600dp up it is an ordinary modal instead: a
-	rounded dialog the width of the calendar, sitting in the scrim with the month list scrolling
-	inside it and <code>Cancel</code> and <code>Save</code> at the bottom. The switch is a media query,
-	so the server can render the right one directly. Narrow the window to see it change.
+	The layout depends on the window width. Below 600dp it fills the screen, square-cornered and flat,
+	and confirms from the top bar. From 600dp up it is a regular modal: a rounded dialog as wide as
+	the calendar, on the scrim, with the month list scrolling inside and
+	<code>Cancel</code> and <code>Save</code> at the bottom. The switch is a media query, so the server
+	renders the right layout. Narrow the window to see it change.
 </p>
 <DemoContainer>
 	<Range />
@@ -307,16 +298,14 @@
 
 <h3 id="two-fields">Two fields<a href="#two-fields" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	A booking form usually shows the range as two fields rather than a button, and the calendar is
-	what opens behind them. <code>DateRangePicker</code> is only the popup, so the pair of fields
-	stays yours: bind the same <code>&#123; start, end &#125;</code> to both, and the range is the single
-	place the two edges live.
+	A booking form often shows the range as two fields instead of a button, and the calendar opens
+	from them. <code>DateRangePicker</code> is only the popup, so you build the two fields. Bind the
+	same <code>&#123; start, end &#125;</code> to both, so the range is stored in one place.
 </p>
 <p>
-	The calendar is the only editor, so the fields are read-only and simply display the range through
-	<code>formatDate</code>. Nothing needs to stay in sync, because the two edges only ever change in
-	one place. Clicking a field opens the picker, and the calendar button does the same for the
-	keyboard.
+	The calendar is the only editor, so the fields are read-only and show the range through
+	<code>formatDate</code>. Clicking a field opens the picker, and the calendar button does the same
+	for keyboard users.
 </p>
 <DemoContainer>
 	<TwoFields />
@@ -325,8 +314,8 @@
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Colours and shapes come from the theme, and every part exposes a custom property for the cases the
-	theme cannot reach. Set them on the picker itself; they inherit into the calendar.
+	Colours and shapes come from the theme. Each part also has a custom property for cases the theme
+	does not cover. Set them on the picker. They inherit into the calendar.
 </p>
 <table>
 	<thead>
@@ -440,8 +429,8 @@
 	Motion and gestures<a href="#motion-and-gestures" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Movement follows the Material 3 motion scheme, using the theme's own motion tokens: travel runs on
-	the spatial tokens, fades on the effects tokens.
+	Motion follows the Material 3 motion scheme and uses the theme's motion tokens: spatial tokens for
+	movement, effects tokens for fades.
 </p>
 <table>
 	<thead>
@@ -466,7 +455,7 @@
 			<td>Month and year menus</td>
 			<td>
 				The list slides down over the calendar and fades in from 60% opacity. The calendar stays
-				underneath, so the panel never resizes, and the steppers fade out while it is covered.
+				underneath, so the panel does not resize, and the steppers fade out while it is covered.
 			</td>
 			<td><code>--np-motion-expressive-default-effects</code></td>
 		</tr>
@@ -477,28 +466,27 @@
 		</tr>
 		<tr>
 			<td>Calendar / keyboard entry</td>
-			<td>The text field slides up from below; the calendar slides down from a 48dp parallax.</td>
+			<td>The text field slides up from below. The calendar slides down from a 48dp parallax.</td>
 			<td><code>--np-motion-expressive-default-spatial</code></td>
 		</tr>
 	</tbody>
 </table>
 <p>
-	Swipe horizontally across the calendar to move between months, and scroll the year picker
-	vertically to move between years. Every transition above is wrapped in
-	<code>prefers-reduced-motion: no-preference</code>, so the picker resizes and swaps views
-	instantly for anyone who has asked for less motion.
+	Swipe horizontally across the calendar to change months, and scroll the year picker vertically to
+	change years. All transitions above only run under
+	<code>prefers-reduced-motion: no-preference</code>. With reduced motion, the picker resizes and
+	switches views instantly.
 </p>
 
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The grid is a <code>role="grid"</code> table named after the month it shows, with the weekday
-	names as column headers and a single roving tab stop, so the calendar is one stop in the tab order
-	rather than forty-two. Each day is labelled with its full date, today carries
-	<code>aria-current="date"</code>, and the selected day is <code>aria-selected</code> on its cell
-	and names itself "…, selected" so the state is announced on the day that has focus.
-	<code>selectedDateLabel</code> translates that suffix.
+	The grid is a <code>role="grid"</code> table named after its month, with the weekday names as
+	column headers and a single roving tab stop. The calendar is one stop in the tab order, not
+	forty-two. Each day is labelled with its full date. Today has <code>aria-current="date"</code>.
+	The selected day has <code>aria-selected</code> on its cell, and its name ends in "…, selected",
+	so the state is announced on the focused day. <code>selectedDateLabel</code> translates that suffix.
 </p>
 <table>
 	<thead>
@@ -521,36 +509,36 @@
 	</tbody>
 </table>
 <p>
-	Navigating past the edge of the month moves to the neighbouring one and keeps focus on the day it
-	lands on, in the range picker too. A key that would leave the <code>min</code> and
-	<code>max</code> window stops on the bound instead. The label strings are all props, including
+	Moving past the edge of the month goes to the next or previous month and keeps focus on the day it
+	lands on, also in the range picker. A key that would leave the <code>min</code> and
+	<code>max</code> range stops at the bound. All label strings are props, including
 	<code>cancelLabel</code>, <code>confirmLabel</code>, <code>openCalendarLabel</code>,
 	<code>selectedDateLabel</code> and the month and year navigation labels, so a localised app can translate
 	the whole control.
 </p>
 <p>
-	While a month or year list covers the calendar, the grid is inert, so the list, the actions and
-	nothing else are what <kbd>Tab</kbd> reaches. Picking from the list hands focus back to the grid.
+	While a month or year list covers the calendar, the grid is inert, so <kbd>Tab</kbd> reaches only the
+	list and the actions. Picking from the list returns focus to the grid.
 </p>
 <p>
-	The modal picker opens with focus on the grid rather than on the dialog, so the arrow keys work
-	straight away, and it names itself with its <code>title</code>.
+	The modal picker opens with focus on the grid, not on the dialog, so the arrow keys work right
+	away. Its accessible name is its <code>title</code>.
 </p>
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="methods">Methods<a href="#methods" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	All four pickers export the same pair, the one every overlay in the library exports. Bind a
-	reference with <code>bind:this</code> and type it with
-	<code>ReturnType&lt;typeof DockedDatePicker&gt;</code> or whichever picker it is; it is
-	<code>undefined</code> until the component has mounted, so call through <code>?.</code>.
+	All four pickers export the same pair as every overlay in the library. Bind a reference with
+	<code>bind:this</code> and type it with <code>ReturnType&lt;typeof DockedDatePicker&gt;</code> (or
+	the picker you use). It is <code>undefined</code> until the component has mounted, so call through
+	<code>?.</code>.
 </p>
 <p>
-	Reach for these only where there is nothing to point a trigger at.
-	<code>DatePickerDialog</code> and <code>DateRangePicker</code> are native
-	<code>&lt;dialog&gt;</code> elements, so <code>command="show-modal"</code> and
-	<code>commandfor</code> open them from markup with no script at all. The docked pickers keep their
-	calendar in a popover of their own, with no <code>id</code> to point at, so they need these.
+	Use these only when there is nothing for a trigger to point at. <code>DatePickerDialog</code> and
+	<code>DateRangePicker</code> are native <code>&lt;dialog&gt;</code> elements, so
+	<code>command="show-modal"</code> and <code>commandfor</code> open them from markup without
+	script. The docked pickers keep their calendar in their own popover with no <code>id</code> to point
+	at, so they need these methods.
 </p>
 <table>
 	<thead>
@@ -565,16 +553,16 @@
 			<td><code>show</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>
-				Opens the picker. Already open, it does nothing, and on a <code>disabled</code> or
-				<code>readonly</code> docked field it does nothing either.
+				Opens the picker. Does nothing if it is already open, or on a <code>disabled</code> or
+				<code>readonly</code> docked field.
 			</td>
 		</tr>
 		<tr>
 			<td><code>close</code></td>
 			<td><code>() =&gt; void</code></td>
 			<td>
-				Closes the picker and leaves focus where it is. Only a close the person asked for, through
-				the field or the cancel button, hands focus back to the input.
+				Closes the picker and leaves focus where it is. Focus returns to the input only when the
+				user closes it through the field or the cancel button.
 			</td>
 		</tr>
 	</tbody>
@@ -622,8 +610,9 @@
 			<td><code>&#123; message: string &#125;[]</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>Validation messages shown instead of the supporting text. Optimized to use with remote form
-				field issues.</td
+				>Error messages shown instead of the supporting text. Pass a remote form field's <code
+					>issues()</code
+				>.</td
 			>
 		</tr>
 		<tr>
@@ -631,8 +620,9 @@
 			<td><code>string | number | null</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>Stands in for <code>value</code> while that is unset. Together with an accepted and ignored
-				<code>type</code>, it lets <code>&#123;...field.as('date')&#125;</code> be spread onto the picker.</td
+				>Used in place of <code>value</code> while <code>value</code> is unset. The picker also
+				accepts and ignores <code>type</code>, so <code>&#123;...field.as('date')&#125;</code> can be
+				spread onto it.</td
 			>
 		</tr>
 		<tr>
@@ -711,7 +701,7 @@
 			<td><code>invalidDateMessage</code></td>
 			<td><code>string</code></td>
 			<td><code>'Enter a valid date.'</code></td>
-			<td>Validation message reported when the typed text is not a date the picker can take.</td>
+			<td>Validation message when the typed text is not a date the picker accepts.</td>
 		</tr>
 		<tr>
 			<td><code>cancelLabel</code> / <code>confirmLabel</code></td>
@@ -783,7 +773,7 @@
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLSpanElement</code></td>
-			<td>The picker's root element, which is the text field itself.</td>
+			<td>The picker's root element, the text field.</td>
 		</tr>
 	</tbody>
 </table>
@@ -799,8 +789,8 @@
 	<code>previousMonthLabel</code>, <code>nextMonthLabel</code>, <code>selectYearLabel</code>,
 	<code>selectedDateLabel</code> and <code>onchange</code> props as
 	<code>DockedDatePicker</code>. It has no year steppers or month menu, so those labels do not
-	apply, and it validates by disabling confirm rather than through the field, so
-	<code>required</code> and <code>invalidDateMessage</code> do not either. On top of the shared props:
+	apply. It validates by disabling confirm, not through the field, so <code>required</code> and
+	<code>invalidDateMessage</code> do not apply either. It adds these props:
 </p>
 <table>
 	<thead>
@@ -854,7 +844,7 @@
 </table>
 <p>
 	Bindable: <code>value</code>, <code>displayMonth</code>, <code>open</code> and
-	<code>element</code>. Calendar navigation is not kept: the dialog reopens on the month it was
+	<code>element</code>. The dialog does not keep calendar navigation. It reopens on the month it was
 	given, or on the month of <code>value</code>.
 </p>
 
@@ -865,8 +855,8 @@
 	Takes the same <code>locale</code>, <code>firstDayOfWeek</code>, <code>min</code>,
 	<code>max</code>, <code>yearRange</code>, <code>isDateEnabled</code>,
 	<code>adjacentMonthDays</code> and <code>selectedDateLabel</code> props as the other pickers. It has
-	no text field and no month or year navigation, so none of those labels apply, and it does not submit
-	with a form.
+	no text field and no month or year navigation, so those labels do not apply. It does not submit with
+	a form.
 </p>
 <table>
 	<thead>
@@ -900,7 +890,7 @@
 			<td><code>onchange</code> / <code>onconfirm</code></td>
 			<td><code>(value: DateRange) =&gt; void</code></td>
 			<td><code>undefined</code></td>
-			<td>Both fire when the range is saved, matching the other pickers.</td>
+			<td>Both fire when the range is saved.</td>
 		</tr>
 		<tr>
 			<td><code>oncancel</code></td>
@@ -919,10 +909,10 @@
 	Calendar and YearGrid<a href="#calendar-and-yeargrid" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	The two grids the pickers are built from are exported as well, for a layout none of the three
-	covers, such as a calendar sitting permanently on a page. They are lower level than the pickers:
-	they hold no value, take <code>Date</code> objects rather than ISO strings, and leave the month on screen,
-	the selection and the keyboard entry points to the caller.
+	The two grids the pickers are built from are exported too, for layouts the three pickers do not
+	cover, such as a calendar that stays on the page. They are lower level than the pickers. They hold
+	no value and take <code>Date</code> objects instead of ISO strings. The caller handles the month on
+	screen, the selection and the keyboard entry points.
 </p>
 <table>
 	<thead>
@@ -940,10 +930,10 @@
 				<code>max</code>, <code>todayDate</code> and <code>focusedDate</code> as
 				<code>Date</code> objects, plus <code>locale</code>, <code>isDateEnabled</code>,
 				<code>adjacentMonthDays</code>, <code>selectedLabel</code>, <code>weekdays</code> to hide
-				the column headers, <code>dynamicRows</code> to size the grid to the month rather than
-				reserve six rows, and a <code>monthSubhead</code> snippet. It reports through
+				the column headers, <code>dynamicRows</code> to size the grid to the month instead of always
+				using six rows, and a <code>monthSubhead</code> snippet. It reports through
 				<code>onselect</code>, <code>onfocusday</code> and <code>onmonthstep</code>. Several
-				calendars shown together share one tab stop through <code>tabStopDate</code> and hand focus
+				calendars shown together share one tab stop through <code>tabStopDate</code> and pass focus
 				across a month boundary through <code>focusRoot</code>.
 			</td>
 		</tr>
@@ -961,7 +951,7 @@
 	Date helpers<a href="#date-helpers" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	The date maths behind the pickers is exported too, so an app can share the same timezone-safe
+	The date maths behind the pickers is exported too, so an app can use the same timezone-safe
 	handling.
 </p>
 <table>

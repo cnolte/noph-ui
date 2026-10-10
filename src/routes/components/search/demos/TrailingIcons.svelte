@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { IconButton, Item, Search } from '#lib/index.js'
+	import { IconButton, List, ListItem, Search } from '#lib/index.js'
 	import { Icon } from '#lib/icons/index.js'
+
+	let expanded = $state(false)
 </script>
 
 <div style="width:26rem;max-width:100%">
-	<Search placeholder="Search product">
+	<Search bind:expanded placeholder="Search product">
 		{#snippet trailing()}
 			<IconButton title="Filter"><Icon>settings</Icon></IconButton>
 		{/snippet}
-		<Item type="button">Simple Classic Tacos</Item>
+		<List aria-label="Suggestions">
+			<ListItem type="button" onclick={() => (expanded = false)}>Simple Classic Tacos</ListItem>
+		</List>
 	</Search>
 </div>
