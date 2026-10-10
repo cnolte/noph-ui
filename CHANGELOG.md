@@ -5,7 +5,7 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.52.0] - 2026-10-10
 
 ### Changed (breaking)
 
@@ -19,7 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **NavigationDrawer**: a modal drawer has its scrim by default; pass
   `backdrop={false}` to leave the page undimmed. The drawer is 360px wide
   instead of 363px, with 12px padding all round instead of 20px above and
-  below.
+  below. `open` defaults to `undefined` instead of `false`, and a standard
+  drawer with `open={false}` is now hidden, as a closed dismissible drawer.
+  Leave `open` out for a standard drawer that is always there; one
+  `bind:open` shared with a modal drawer hides the standard one while
+  closed.
+
+- **Menu, Select, AutoComplete**: items in a menu or listbox no longer take
+  `--np-item-container-height`; use `--np-menu-item-container-height`.
 
 - **NavigationRail**: the collapsed rail is 96px wide instead of 80px, starts
   44px from the top and groups its destinations at the top instead of
@@ -112,9 +119,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tabs**: `scrollable` makes each tab as wide as its label and lets the
   strip scroll sideways, the first tab 52px from the leading edge. A
   selected tab scrolls towards the middle of the strip.
-- **TextField**: `prefixLabel` and `suffixLabel` give a prefix or suffix a
-  spoken name, for example "Euro" for "€". `counterLabel` translates the
-  "Character count" announced before the counter.
+- **TextField, AutoComplete**: `prefixLabel` and `suffixLabel` give a prefix
+  or suffix a spoken name, for example "Euro" for "€". `counterLabel`
+  translates the "Character count" announced before the counter.
 - **MenuItem**: `role` takes `menuitemradio` and `menuitemcheckbox`, which
   announce `selected` as `aria-checked`.
 - **Menu**: typeahead, a letter moves focus to the next item starting with it.
@@ -131,15 +138,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **SuggestionChip**: `icon`.
 - **List**: `selection="single"` or `"multiple"` makes the list a listbox of
   options that announce their `selected` state.
-- **Item, ListItem**: `avatar`, a 40px circle with initials or an image;
-  `--np-item-gap`, `--np-item-avatar-container-color` and
+- **Item, ListItem, MenuItem**: `avatar`, a 40px circle with initials or an
+  image; `--np-item-gap`, `--np-item-avatar-container-color` and
   `--np-item-avatar-label-text-color`.
 - **Search**: `resultsAnnouncement`, `--np-search-docked-min-height` and
   `--np-search-docked-max-height`.
 - **FabMenuItem**: a medium tonal button with `role="menuitem"` and an
   `icon`, for the actions of a FabMenu.
 - **Menu**: `--np-menu-min-width`, `--np-menu-max-width`,
-  `--np-menu-item-container-height` and `--np-menu-item-padding-inline`.
+  `--np-menu-item-container-height`, `--np-menu-item-padding-inline` and
+  `--np-menu-item-gap`.
 - **Item**: `--np-item-padding-inline`.
 - **Divider**: `orientation="vertical"`, which takes the height of its row.
 - **NavigationRail**: the expanded rail. `expanded` (bindable) widens it to
