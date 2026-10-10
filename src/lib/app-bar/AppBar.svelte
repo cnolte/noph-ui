@@ -4,7 +4,10 @@
 	let {
 		variant = 'small',
 		headline,
+		headlineLevel,
 		subtitle,
+		alignment = 'start',
+		image,
 		leading,
 		search,
 		trailing,
@@ -22,7 +25,15 @@
 
 {#snippet titles(inline: boolean)}
 	<div class={['np-app-bar-titles', inline && 'np-app-bar-titles-inline']}>
-		<div class="np-app-bar-headline">{headline}</div>
+		{#if image && !inline}
+			<div class="np-app-bar-image">{@render image()}</div>
+		{/if}
+		<!-- The copy shown while collapsed is hidden from assistive technology, so only the other one
+		     is the heading. -->
+		<svelte:element
+			this={headlineLevel && !inline ? `h${headlineLevel}` : 'div'}
+			class="np-app-bar-headline">{headline}</svelte:element
+		>
 		{#if subtitle}
 			<div class="np-app-bar-subtitle">{subtitle}</div>
 		{/if}
@@ -36,6 +47,7 @@
 		'np-app-bar',
 		`np-app-bar-${variant}`,
 		collapses && 'np-app-bar-collapsible',
+		alignment === 'center' && 'np-app-bar-center',
 		scroller === 'nearest' && 'np-app-bar-scroller-nearest',
 		attributes.class,
 	]}
@@ -48,6 +60,9 @@
 			<div class="np-app-bar-search-field">{@render search?.()}</div>
 		{:else if twoLine}
 			<div class="np-app-bar-inline" aria-hidden="true">{@render titles(true)}</div>
+		{:else if image}
+			<!-- In a small app bar the image takes the headline's place. -->
+			<div class="np-app-bar-titles">{@render image()}</div>
 		{:else}
 			{@render titles(false)}
 		{/if}
@@ -82,8 +97,10 @@
 		--_timeline: scroll(nearest block);
 	}
 
+	/* The bar is the open search's stacking context, so it rises to the search's own level, above
+	   other bars and a page header. */
 	.np-app-bar:has(:global(.np-search-expanded)) {
-		z-index: 9;
+		z-index: var(--np-search-z-index, 24);
 	}
 
 	.np-app-bar-row {
@@ -105,6 +122,11 @@
 	.np-app-bar-trailing {
 		margin-inline-start: auto;
 	}
+	/* The leading button is on surface, the trailing ones on surface variant. In a search app bar
+	   they are all on surface variant. */
+	.np-app-bar:not(.np-app-bar-search) .np-app-bar-leading {
+		--np-icon-button-icon-color: var(--np-color-on-surface);
+	}
 
 	.np-app-bar-titles {
 		display: flex;
@@ -125,6 +147,7 @@
 	}
 
 	.np-app-bar-headline {
+		margin: 0;
 		font-size: var(--_headline-size);
 		line-height: var(--_headline-line-height);
 		font-weight: 400;
@@ -152,12 +175,20 @@
 		--_subtitle-line-height: 1rem;
 	}
 
+	/* The search fills the space between the leading and trailing elements up to 312dp, then
+	   grows only to half of it, centred. The bar sits 8dp from the elements beside it, so the
+	   margin a search keeps for its open view stays out of the row. */
 	.np-app-bar-search-field {
 		flex: 1;
 		min-width: 0;
 		display: flex;
 		align-items: center;
-		padding-inline: 0.25rem;
+		justify-content: center;
+		container-type: inline-size;
+		--np-search-pane-margin: 0;
+	}
+	.np-app-bar-search-field :global(.np-search:not(.np-search-full-screen.np-search-expanded)) {
+		width: min(100%, max(19.5rem, 50cqi));
 	}
 	.np-app-bar-search-field :global(.np-search:not(.np-search-expanded) .np-search-bar) {
 		background-color: var(--np-search-container-color, var(--np-color-surface-container));
@@ -179,7 +210,7 @@
 		--_headline-line-height: 2.75rem;
 		--_subtitle-size: 1rem;
 		--_subtitle-line-height: 1.5rem;
-		--_second-row-height: 5.5rem;
+		--_second-row-height: 3.5rem;
 	}
 
 	.np-app-bar-second-row {
@@ -190,11 +221,44 @@
 		height: auto;
 		min-height: var(--_second-row-height);
 		padding-inline: 1rem;
-		padding-block-end: 1rem;
+		padding-block-end: 0.75rem;
 		overflow: hidden;
 	}
-	.np-app-bar-medium .np-app-bar-second-row {
-		padding-block-end: 0.75rem;
+	.np-app-bar-image {
+		display: flex;
+		margin-block-end: 0.5rem;
+	}
+
+	/* Centred, a small app bar puts its headline in the middle of the bar whatever sits beside it. */
+	.np-app-bar-center .np-app-bar-row {
+		display: grid;
+		grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+	}
+	.np-app-bar-center .np-app-bar-leading {
+		grid-column: 1;
+	}
+	.np-app-bar-center .np-app-bar-row > .np-app-bar-titles,
+	.np-app-bar-center .np-app-bar-inline,
+	.np-app-bar-center .np-app-bar-search-field {
+		grid-column: 2;
+		padding-inline: 0;
+	}
+	.np-app-bar-center.np-app-bar-search .np-app-bar-row {
+		grid-template-columns: auto 1fr auto;
+	}
+	.np-app-bar-center .np-app-bar-trailing {
+		grid-column: 3;
+		justify-self: end;
+	}
+	.np-app-bar-center .np-app-bar-titles {
+		align-items: center;
+		text-align: center;
+	}
+	.np-app-bar-center .np-app-bar-second-row {
+		justify-content: center;
+	}
+	.np-app-bar-center .np-app-bar-search-field :global(.np-search-input) {
+		text-align: center;
 	}
 
 	.np-app-bar-inline {

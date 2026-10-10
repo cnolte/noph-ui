@@ -43,15 +43,14 @@ describe('ButtonGroup', async () => {
 		expect(corners('last')).toEqual({ start: '8px', end: '20px' })
 	})
 
-	test('the corners a person sees are rounded, not only the ones in the style sheet', async () => {
+	test('the whole box is a target, rounded corners included', async () => {
 		await render(Harness, { variant: 'connected' })
 		const first = byId('first')
 		const box = first.getBoundingClientRect()
 		const hit = (x: number, y: number) => document.elementFromPoint(x, y)?.closest('.np-button')
 
-		expect(hit(box.right - 1, box.top + 1)).toBeNull()
-		expect(hit(box.right - 6, box.top + 6)).toBe(first)
-		expect(hit(box.left + 1, box.top + 1)).toBeNull()
+		expect(hit(box.left + 1, box.top + 1)).toBe(first)
+		expect(hit(box.right - 1, box.top + 1)).toBe(first)
 		expect(hit(box.left + 1, box.top + box.height / 2)).toBe(first)
 	})
 

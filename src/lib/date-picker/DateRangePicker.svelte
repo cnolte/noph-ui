@@ -184,6 +184,7 @@
 </script>
 
 <Dialog
+	role="dialog"
 	{...attributes}
 	bind:element
 	aria-label={title}

@@ -146,12 +146,12 @@
 		padding-block: 0.5rem;
 		padding-inline: 0;
 		opacity: 0;
-		scale: 0.8;
+		scale: 0.95;
 		transform-origin: top center;
 		transition:
-			opacity var(--np-motion-expressive-fast-effects),
-			display 150ms allow-discrete,
-			overlay 150ms allow-discrete;
+			opacity var(--np-motion-expressive-default-effects),
+			display var(--np-motion-expressive-default-effects) allow-discrete,
+			overlay var(--np-motion-expressive-default-effects) allow-discrete;
 	}
 
 	select:open::picker(select) {
@@ -178,7 +178,7 @@
 	.np-select :global(option) {
 		box-sizing: border-box;
 		min-height: 3rem;
-		padding-inline: 1rem;
+		padding-inline: 0.75rem;
 		gap: 0.75rem;
 		color: var(--np-color-on-surface);
 		background-color: transparent;
@@ -338,6 +338,7 @@
 
 	label {
 		display: inline-block;
+		transition: color var(--easing-fast);
 		pointer-events: none;
 		line-height: 1rem;
 		padding-inline: 0.25rem;
@@ -465,15 +466,22 @@
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
+		/* Closes like Menu: a fade and a slight shrink on the default effects curve. */
 		::picker(select) {
+			transition:
+				opacity var(--np-motion-expressive-default-effects),
+				scale var(--np-motion-expressive-default-effects),
+				display var(--np-motion-expressive-default-effects) allow-discrete,
+				overlay var(--np-motion-expressive-default-effects) allow-discrete;
+		}
+
+		/* Opens like Menu: a fade and a scale up from 0.8. */
+		select:open::picker(select) {
 			transition:
 				opacity var(--np-motion-expressive-fast-effects),
 				scale var(--np-motion-expressive-fast-spatial),
-				display 150ms allow-discrete,
-				overlay 150ms allow-discrete;
-		}
-
-		select:open::picker(select) {
+				display var(--np-motion-expressive-default-effects) allow-discrete,
+				overlay var(--np-motion-expressive-default-effects) allow-discrete;
 			@starting-style {
 				opacity: 0;
 				scale: 0.8;
@@ -485,9 +493,9 @@
 		}
 
 		.animate-label label {
-			transition-property: font-size;
-			transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-			transition-duration: 150ms;
+			transition:
+				font-size 150ms cubic-bezier(0.4, 0, 0.2, 1),
+				color var(--easing-fast);
 		}
 
 		.animate-label:not(.is-empty) .np-select-outline label {

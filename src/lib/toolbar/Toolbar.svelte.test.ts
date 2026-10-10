@@ -6,8 +6,7 @@ import Harness from './ToolbarHarness.test.svelte'
 const toolbar = () => document.querySelector<HTMLElement>('.np-toolbar')!
 const items = () => [...toolbar().querySelectorAll<HTMLElement>('button')]
 
-const tooltipOf = (item: HTMLElement) =>
-	document.getElementById(item.getAttribute('aria-describedby')!)!
+const tooltipOf = (item: HTMLElement) => document.getElementById(item.getAttribute('interestfor')!)!
 
 const covers = (a: DOMRect, b: DOMRect) =>
 	b.left < a.right && b.right > a.left && b.top < a.bottom && b.bottom > a.top
@@ -59,7 +58,7 @@ describe('Toolbar', async () => {
 	})
 
 	test('vertical stacks the actions and says so', async () => {
-		await render(Harness, { orientation: 'vertical' })
+		await render(Harness, { variant: 'floating', orientation: 'vertical' })
 
 		expect(toolbar().getAttribute('aria-orientation')).toBe('vertical')
 		expect(getComputedStyle(toolbar()).flexDirection).toBe('column')
@@ -68,7 +67,7 @@ describe('Toolbar', async () => {
 	})
 
 	test('vertical puts a tooltip beside its action, clear of the whole stack', async () => {
-		await render(Harness, { orientation: 'vertical' })
+		await render(Harness, { variant: 'floating', orientation: 'vertical' })
 
 		const { item, tooltip } = await openTooltipOfSecondAction()
 
@@ -90,6 +89,47 @@ describe('Toolbar', async () => {
 		expect(box.left).toBeGreaterThanOrEqual(0)
 		expect(box.right).toBeLessThanOrEqual(window.innerWidth)
 		expect(box.right <= item.getBoundingClientRect().left).toBe(true)
+	})
+
+	test('docked is never vertical', async () => {
+		await render(Harness, { variant: 'docked', orientation: 'vertical' })
+
+		expect(toolbar().getAttribute('aria-orientation')).toBe('horizontal')
+		expect(getComputedStyle(toolbar()).flexDirection).toBe('row')
+	})
+
+	test('docked keeps 16px at the edges and 32px between items', async () => {
+		await render(Harness, { variant: 'docked' })
+
+		const style = getComputedStyle(toolbar())
+		expect(style.paddingInlineStart).toBe('16px')
+		expect(style.columnGap).toBe('32px')
+	})
+
+	test('floating keeps 8px inside and 4px between items, and 16px from the edges', async () => {
+		await render(Harness, { variant: 'floating' })
+
+		const style = getComputedStyle(toolbar())
+		expect(style.paddingInlineStart).toBe('8px')
+		expect(style.columnGap).toBe('4px')
+		expect(style.maxWidth).toBe('calc(100% - 32px)')
+	})
+
+	test('vibrant colours a docked toolbar too', async () => {
+		await render(Harness, { variant: 'docked', color: 'vibrant' })
+
+		expect(toolbar().classList.contains('np-toolbar-vibrant')).toBe(true)
+	})
+
+	test('vibrant gives an unselected tonal toggle the surface container', async () => {
+		await render(Harness, { variant: 'floating', color: 'vibrant' })
+
+		const probe = document.createElement('div')
+		probe.style.backgroundColor = 'var(--np-color-surface-container)'
+		toolbar().append(probe)
+		expect(getComputedStyle(items()[0]).backgroundColor).toBe(
+			getComputedStyle(probe).backgroundColor,
+		)
 	})
 
 	test('horizontal leaves the tooltip on the block axis, centered on its action', async () => {

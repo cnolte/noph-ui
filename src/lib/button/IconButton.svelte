@@ -5,6 +5,7 @@
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
+	import { getButtonGroupContext } from './groupContext.js'
 	import type { IconButtonProps } from './types.js'
 
 	let {
@@ -19,8 +20,8 @@
 		selected = $bindable(false),
 		selectedIcon,
 		width = 'default',
-		size = 's',
-		shape = 'round',
+		size: sizeProp,
+		shape: shapeProp,
 		...attributes
 	}: IconButtonProps = $props()
 
@@ -28,6 +29,25 @@
 
 	let isLink = $derived(attributes.href != null && !disabled && !loading)
 	let tooltipId = $derived(title && !disabled && !loading ? uid : undefined)
+	// Without an aria-label, the tooltip text is the name, and describing the button with it again
+	// would read it twice.
+	let tooltipNames = $derived(!!tooltipId && !attributes['aria-label'])
+	let name = $derived(attributes['aria-label'] ?? (title || undefined))
+
+	// Inside a ButtonGroup, the group sets the size and shape its buttons leave open, and with
+	// `selection` it decides what is selected.
+	const group = getButtonGroupContext()
+	let size = $derived(sizeProp ?? group?.size ?? 's')
+	let shape = $derived(shapeProp ?? group?.shape ?? 'round')
+	let groupValue = $derived(
+		group?.selection && attributes.value != null ? String(attributes.value) : undefined,
+	)
+	let isToggle = $derived(toggle || groupValue !== undefined)
+	let isSelected = $derived(groupValue !== undefined ? group!.isSelected(groupValue) : selected)
+	// A selected toggle swaps its resting shape: round turns square, square turns round.
+	let shapeClass = $derived(
+		isSelected ? (shape === 'square' ? 'round' : 'square') : loading ? 'square' : shape,
+	)
 
 	const morph = pressMorph()
 
@@ -47,7 +67,7 @@
 			<CircularProgress aria-label={loadingAriaLabel} indeterminate track={false} />
 		</div>
 	{/if}
-	{#if selectedIcon && selected}
+	{#if selectedIcon && isSelected}
 		{@render selectedIcon()}
 	{:else if children}
 		{@render children()}
@@ -58,24 +78,24 @@
 	<a
 		{...attributes}
 		onclick={(event) => {
-			if (!toggle) {
+			if (!isToggle) {
 				handlePress()
 			}
 			attributes.onclick?.(event)
 		}}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={title || attributes['aria-label']}
+		aria-label={name}
 		bind:this={element}
 		class={[
 			'np-icon-button',
 			size,
 			width,
 			variant,
-			selected ? 'square' : shape,
+			shapeClass,
 			'enabled',
-			toggle && 'toggle',
-			selected && 'selected',
+			isToggle && 'toggle',
+			isSelected && 'selected',
 			morph.pressed && 'pressed',
 			attributes.class,
 		].filter(Boolean)}
@@ -85,16 +105,18 @@
 {:else}
 	<button
 		{...attributes as HTMLButtonAttributes}
-		aria-describedby={tooltipId ?? attributes['aria-describedby']}
+		aria-describedby={(!tooltipNames && tooltipId) || attributes['aria-describedby']}
 		interestfor={tooltipId ?? attributes['interestfor']}
-		aria-label={title || attributes['aria-label']}
-		aria-pressed={toggle ? selected : undefined}
+		aria-label={name}
+		aria-pressed={isToggle ? isSelected : undefined}
 		aria-busy={loading}
 		type={(attributes['type'] as 'button' | 'submit' | 'reset' | 'button') ?? undefined}
 		disabled={disabled || loading}
 		bind:this={element}
 		onclick={(event) => {
-			if (toggle) {
+			if (groupValue !== undefined) {
+				group!.toggle(groupValue)
+			} else if (toggle) {
 				selected = !selected
 			} else {
 				handlePress()
@@ -105,10 +127,10 @@
 			'np-icon-button',
 			size,
 			width,
-			selected || loading ? 'square' : shape,
+			shapeClass,
 			disabled || loading ? `${variant}-disabled disabled` : `${variant} enabled`,
-			toggle && 'toggle',
-			selected && 'selected',
+			isToggle && 'toggle',
+			isSelected && 'selected',
 			morph.pressed && 'pressed',
 			attributes.class,
 		]}
@@ -278,6 +300,9 @@
 		outline-width: 3px;
 		outline-offset: 2px;
 	}
+	.enabled:focus-visible :global(.np-ripple-surface)::before {
+		opacity: var(--np-ripple-focus-opacity, 0.1);
+	}
 	@media (prefers-reduced-motion: no-preference) {
 		.enabled:focus-visible {
 			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
@@ -316,8 +341,14 @@
 		);
 	}
 	.tonal.toggle {
-		color: var(--np-color-on-secondary-container);
-		background-color: var(--np-color-secondary-container);
+		color: var(
+			--np-tonal-icon-button-unselected-icon-color,
+			var(--np-color-on-secondary-container)
+		);
+		background-color: var(
+			--np-tonal-icon-button-unselected-container-color,
+			var(--np-color-secondary-container)
+		);
 	}
 	.tonal.selected {
 		color: var(--np-color-on-secondary);

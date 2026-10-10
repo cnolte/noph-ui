@@ -77,7 +77,8 @@
 	}
 
 	.np-radio-container {
-		margin: max(0px, (40px - var(--np-radio-icon-size, 20px))/2);
+		margin: max(0px, (48px - var(--np-radio-icon-size, 20px))/2);
+		--np-ripple-pressed-color: var(--np-color-primary);
 		display: inline-flex;
 		vertical-align: top;
 		-webkit-tap-highlight-color: transparent;
@@ -135,6 +136,11 @@
 
 	.np-error:has(input:checked) .np-radio-icon {
 		fill: var(--np-color-error);
+	}
+
+	.np-radio-container:not(.np-error):has(input:checked) {
+		--np-ripple-hover-color: var(--np-color-primary);
+		--np-ripple-pressed-color: var(--np-color-on-surface);
 	}
 
 	.np-error {

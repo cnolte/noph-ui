@@ -5,5 +5,5 @@
 
 <span style="position:relative;display:inline-flex">
 	<Icon>favorite</Icon>
-	<Badge --np-badge-end="0" />
+	<Badge />
 </span>

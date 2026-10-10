@@ -5,7 +5,13 @@
 	let chatPromptPlusBtn: HTMLElement | undefined = $state()
 </script>
 
-<TextField placeholder="Ask anything" type="textarea" maxLines={8} style="width:22rem">
+<TextField
+	aria-label="Prompt"
+	placeholder="Ask anything"
+	type="textarea"
+	maxLines={8}
+	style="width:22rem"
+>
 	{#snippet start()}
 		<IconButton
 			title="Add"

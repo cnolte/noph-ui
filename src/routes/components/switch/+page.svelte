@@ -21,8 +21,8 @@
 
 <h1>Switch</h1>
 <p>
-	A switch turns a setting on or off, and the change applies at once, with nothing to confirm. Where
-	a choice only takes effect once a form is submitted, use a
+	A switch turns a setting on or off. The change applies at once. When a choice only takes effect
+	once a form is submitted, use a
 	<a class="link" href="/components/checkbox">checkbox</a> instead.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -64,6 +64,14 @@
 			<td><code>--np-color-on-primary</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-switch-selected-hover-handle-color</code></td>
+			<td><code>--np-switch-selected-handle-color</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-switch-selected-pressed-handle-color</code></td>
+			<td><code>--np-switch-selected-handle-color</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-switch-selected-icon-color</code></td>
 			<td><code>--np-color-primary</code></td>
 		</tr>
@@ -78,6 +86,20 @@
 		<tr>
 			<td><code>--np-switch-unselected-handle-color</code></td>
 			<td><code>--np-color-outline</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-switch-unselected-hover-handle-color</code></td>
+			<td
+				><code>--np-switch-unselected-handle-color</code>, then
+				<code>--np-color-on-surface-variant</code></td
+			>
+		</tr>
+		<tr>
+			<td><code>--np-switch-unselected-pressed-handle-color</code></td>
+			<td
+				><code>--np-switch-unselected-handle-color</code>, then
+				<code>--np-color-on-surface-variant</code></td
+			>
 		</tr>
 		<tr>
 			<td><code>--np-switch-handle-shape</code></td>
@@ -96,8 +118,20 @@
 			<td><code>--np-color-surface-container-highest</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-switch-disabled-unselected-track-outline-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-switch-disabled-selected-track-color</code></td>
 			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-switch-disabled-unselected-handle-color</code></td>
+			<td><code>--np-color-on-surface</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-switch-disabled-selected-handle-color</code></td>
+			<td><code>--np-color-surface</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-switch-disabled-track-opacity</code></td>
@@ -114,10 +148,15 @@
 	</tbody>
 </table>
 <p>
-	<code>--np-switch-selected-icon-color</code> colors the icon inside the handle, which only shows
-	with <code>icons="selected"</code> or <code>icons="both"</code>. The
-	<code>disabled</code> tokens take a colour and an opacity separately, because the disabled switch is
-	drawn by fading the same colours rather than by swapping in pre-faded ones.
+	<code>--np-switch-selected-icon-color</code> colors the icon inside the handle. The icon only
+	shows with <code>icons="selected"</code> or <code>icons="both"</code>. The <code>disabled</code>
+	tokens set a color and an opacity separately: the disabled switch fades the normal colors. The hover
+	and pressed handle colors fall back to the plain handle color, so a themed handle keeps its color. M3
+	also shows primary-container on a selected handle in these states. That only reads well when primary-container
+	is far from primary, as in the baseline palette. So the selected handle keeps its normal color unless
+	you set <code>--np-switch-selected-hover-handle-color</code>. The state layer around the handle
+	takes the selected track color while the switch is on and
+	<code>--np-color-on-surface</code> while it is off.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
@@ -129,14 +168,13 @@
 </h2>
 <p>
 	The switch is a native checkbox reporting <code>role="switch"</code>, so it is announced as on or
-	off rather than checked. Space toggles it, and Enter does too, which is what people expect from a
-	setting that applies at once.
+	off rather than checked. Space and Enter toggle it. Both fire <code>input</code> and
+	<code>change</code>, like a click. The touch target is 48dp tall, a little taller than the switch.
 </p>
 <p>
-	It carries no label of its own: wrap it in a <code>&lt;label&gt;</code> or pass
-	<code>aria-label</code>. Write that name for the setting, <code>Auto refresh</code>, not for the
-	current state. The optional icons on the handle are decoration, and a screen reader never reads
-	them.
+	It has no label of its own: wrap it in a <code>&lt;label&gt;</code> or pass
+	<code>aria-label</code>. Name the setting, for example <code>Auto refresh</code>, not the current
+	state. The optional icons on the handle are decoration, and screen readers do not read them.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="switch">Switch<a href="#switch" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -160,9 +198,9 @@
 			<td><code>icons</code></td>
 			<td><code>'selected' | 'both' | undefined</code></td>
 			<td>
-				Controls the visibility of icons. Determines if only one icon is shown when selected, if
-				both are shown (which also increases the size of the indicator when unchecked) or none for
-				never showing an icon.</td
+				Which icons show. <code>'selected'</code> shows an icon only when selected.
+				<code>'both'</code> shows icons in both states and makes the unselected handle larger. Leave it
+				out for no icons.</td
 			>
 		</tr>
 	</tbody>
@@ -181,22 +219,20 @@
 		<tr>
 			<td><code>selected</code></td>
 			<td><code>boolean</code></td>
-			<td>The state of the switch. True indicates the switch is on.</td>
+			<td>The state of the switch. <code>true</code> means on.</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>
 			<td><code>HTMLDivElement</code></td>
 			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
+				>A reference to the root DOM element of the component, bound with <code>bind:this</code
+				>.</td
 			>
 		</tr>
 		<tr>
 			<td><code>inputElement</code></td>
 			<td><code>HTMLInputElement | undefined</code></td>
-			<td>Allows access to the underlying native checkbox input element.</td>
+			<td>The underlying native checkbox input element.</td>
 		</tr>
 	</tbody>
 </table>

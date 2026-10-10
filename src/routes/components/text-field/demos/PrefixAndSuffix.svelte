@@ -7,6 +7,7 @@
 	value="0"
 	inputmode="numeric"
 	prefixText="$"
+	prefixLabel="US dollars"
 	suffixText=".00"
 	type="number"
 />

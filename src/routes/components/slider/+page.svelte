@@ -33,20 +33,20 @@
 
 <h1>Slider</h1>
 <p>
-	Sliders let people select a value from a range by dragging a handle along a track. Reach for one
-	when the position within the range matters more than the exact number, as with volume, brightness
-	or a price filter.
+	Sliders let people select a value from a range by dragging a handle along a track. Use one when
+	the position in the range matters more than the exact number, as with volume, brightness or a
+	price filter.
 </p>
 <p>
 	The component wraps a native <code>&lt;input type="range"&gt;</code>, so keyboard support, form
-	participation and the <code>slider</code> role come from the platform. Pointer input is handled by the
-	component itself, which is what lets a range slider grab the nearer of its two handles.
+	participation and the <code>slider</code> role come from the browser. The component handles pointer
+	input itself, so a range slider grabs the nearer of its two handles.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>value</code> is bindable and defaults to <code>0</code>; the range is
-	<code>min</code>/<code>max</code> (<code>0</code> to <code>100</code> unless you say otherwise).
+	<code>value</code> is bindable and defaults to <code>0</code>. The range goes from
+	<code>min</code> to <code>max</code> (<code>0</code> to <code>100</code> by default).
 </p>
 <DemoContainer>
 	<Usage />
@@ -54,16 +54,16 @@
 <Code value={UsageSource} />
 
 <h2 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>Three ways to read the track, all sharing the same handle and gap anatomy:</p>
+<p>There are three variants. All use the same handle and gaps:</p>
 <ul>
 	<li><strong>Standard</strong> fills from the start of the track to the handle.</li>
 	<li>
-		<strong>Centered</strong> fills from the midpoint outward, so the handle reads as an offset from neutral.
-		Good for balance, EQ or an exposure correction.
+		<strong>Centered</strong> fills from the midpoint outward, so the handle shows an offset from neutral.
+		Use it for balance, EQ or exposure correction.
 	</li>
 	<li>
 		<strong>Range</strong> has two handles and fills between them. Bind <code>value</code> and
-		<code>endValue</code>; the handles cannot cross.
+		<code>endValue</code>. The handles cannot cross.
 	</li>
 </ul>
 <DemoContainer>
@@ -74,9 +74,8 @@
 <h2 id="sizes">Sizes<a href="#sizes" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	Five sizes, from <code>xs</code> to <code>xl</code>. The size sets the track height, the handle
-	height and the track corner radius together. Bigger tracks get proportionally <em>less</em>
-	rounding, which is why an <code>xl</code> slider reads as a rounded rectangle rather than a pill.
-	The default is <code>xs</code>.
+	height and the track corner radius. Bigger tracks get proportionally <em>less</em> rounding, so an
+	<code>xl</code> slider looks like a rounded rectangle, not a pill. The default is <code>xs</code>.
 </p>
 <DemoContainer>
 	<Sizes />
@@ -104,8 +103,8 @@
 <h2 id="orientation">Orientation<a href="#orientation" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>orientation="vertical"</code> runs the track bottom to top. The length comes from
-	<code>--np-slider-length</code> (<code>12rem</code> by default), and the native input follows the
-	same writing mode, so <kbd>↑</kbd>/<kbd>↓</kbd> keep working the way you would expect.
+	<code>--np-slider-length</code> (<code>12rem</code> by default). The native input uses the same
+	writing mode, so <kbd>↑</kbd>/<kbd>↓</kbd> move the handle up and down.
 </p>
 <DemoContainer>
 	<Orientation />
@@ -119,12 +118,12 @@
 </h2>
 <p>
 	Set <code>step</code> to make the slider discrete. Add <code>ticks</code> to draw a stop indicator on
-	every step; the tick under the handle is omitted so the gap around the handle stays clean, and the ticks
-	at the two ends give way to the track's own stop indicators.
+	every step. The tick under the handle is hidden, so the gap around the handle stays clear. At the two
+	ends, the track's own stop indicators replace the ticks.
 </p>
 <p>
-	A discrete handle travels between the two track corners rather than the full track, which is what
-	keeps it aligned with the tick it selects.
+	A discrete handle moves between the two track corners, not along the full track, so it lines up
+	with the tick it selects.
 </p>
 <DemoContainer>
 	<StepsAndStopIndicators />
@@ -135,13 +134,13 @@
 	Value indicator<a href="#value-indicator" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>labeled</code> shows a value indicator above the handle on hover, focus and drag. The
-	container grows with its content, so <code>format</code> is free to return whatever reads best.
+	<code>labeled</code> shows a value indicator above the handle while it is pressed, dragged or has
+	keyboard focus. The container grows with its content, so <code>format</code> can return text of any
+	length.
 </p>
 <p>
-	A continuous slider reports the exact position it was dragged to, which is rarely something you
-	want to put in front of someone. Pair <code>labeled</code> with a <code>step</code>, or round in
-	<code>format</code>.
+	A continuous slider reports the exact position it was dragged to, which is rarely a good number to
+	show. Pair <code>labeled</code> with a <code>step</code>, or round in <code>format</code>.
 </p>
 <DemoContainer>
 	<ValueIndicator />
@@ -150,16 +149,14 @@
 
 <h2 id="inset-icon">Inset icon<a href="#inset-icon" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The <code>icon</code> snippet is drawn inside the leading end of the active track. Once the active
-	track runs out of room for it, which happens at a low value or between the handles of a
-	<code>range</code> slider, the icon moves over to the inactive track instead of sitting there half
-	clipped, and takes the inactive track's colour with it. It needs room either way, so it is meant
-	for
-	<code>m</code> and larger.
+	The <code>icon</code> snippet is drawn inside the leading end of the active track. When the active
+	track gets too short for it, at a low value or between the handles of a <code>range</code> slider,
+	the icon moves to the inactive track and takes the inactive track's colour. The icon needs room,
+	so use it with <code>m</code> and larger.
 </p>
 <p>
-	The snippet is yours to render, so a slider at zero can show a different icon: drag the volume
-	slider below to the start and the icon becomes <code>volume_off</code>.
+	You render the snippet, so a slider at zero can show a different icon. Drag the volume slider
+	below to the start and the icon changes to <code>volume_off</code>.
 </p>
 <DemoContainer>
 	<InsetIcon />
@@ -176,9 +173,8 @@
 	Right-to-left<a href="#right-to-left" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Horizontal sliders mirror themselves in a right-to-left context. The track fills from the right
-	and the stop indicator moves to the left edge. There is nothing to configure, since it follows the
-	inherited <code>dir</code>.
+	Horizontal sliders mirror in a right-to-left context, following the inherited <code>dir</code>.
+	The track fills from the right and the stop indicator moves to the left edge.
 </p>
 <DemoContainer>
 	<RightToLeft />
@@ -289,9 +285,9 @@
 	</tbody>
 </table>
 <p>
-	The handle narrows to <code>--np-slider-handle-width-focus</code> while it is pressed or focused, and
-	keeps its full height either way. The disabled colours are blended with an opacity of their own, so
-	they take a colour, not a pre-faded one.
+	The handle narrows to <code>--np-slider-handle-width-focus</code> while it is pressed or focused. Its
+	height stays the same. The disabled colours get their own opacity, so set a full colour, not a faded
+	one.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
@@ -303,20 +299,17 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The slider has no text of its own, so pass an <code>aria-label</code> (or
-	<code>aria-labelledby</code>) describing what it controls. A <code>range</code> slider has two
-	inputs: the spread attributes go to the start handle, while
-	<code>endInputAttributes</code> covers the end handle. Label both.
+	The slider has no text, so pass an <code>aria-label</code> (or <code>aria-labelledby</code>) that
+	says what it controls. A <code>range</code> slider has two inputs. The spread attributes go to the
+	start handle, and <code>endInputAttributes</code> go to the end handle. Label both.
 </p>
 <p>
 	Arrow keys move by one step, <kbd>Home</kbd>/<kbd>End</kbd> jump to the ends, and
-	<kbd>Page&nbsp;Up</kbd>/<kbd>Page&nbsp;Down</kbd> move in larger increments. All of that comes from
-	the native input.
+	<kbd>Page&nbsp;Up</kbd>/<kbd>Page&nbsp;Down</kbd> move in larger steps. This comes from the native input.
 </p>
 <p>
-	A <code>format</code> function feeds <code>aria-valuetext</code>, so a screen reader announces
-	<em>21 percent</em> rather than the bare <em>21</em>. Reach for it whenever the number needs a
-	unit to make sense.
+	A <code>format</code> function also sets <code>aria-valuetext</code>, so a screen reader says
+	<em>21 percent</em> instead of <em>21</em>. Use it when the number needs a unit.
 </p>
 
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -374,13 +367,13 @@
 			<td><code>centered</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Grows the active track out of the midpoint instead of the start.</td>
+			<td>Fills the active track from the midpoint instead of the start.</td>
 		</tr>
 		<tr>
 			<td><code>labeled</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Shows the value indicator on hover, focus and drag.</td>
+			<td>Shows the value indicator on press, drag and keyboard focus.</td>
 		</tr>
 		<tr>
 			<td><code>ticks</code></td>
@@ -433,7 +426,7 @@
 		<tr>
 			<td><code>endValue</code></td>
 			<td><code>number | undefined</code></td>
-			<td>End handle's value. <code>range</code> only; defaults to <code>max</code>.</td>
+			<td>End handle's value. <code>range</code> only. Defaults to <code>max</code>.</td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>

@@ -20,6 +20,17 @@
 	<Button toggle selected variant="tonal">Tonal</Button>
 	<Button toggle selected variant="outlined">Outlined</Button>
 </div>
+<!-- A square toggle turns round when selected. -->
+<div class="button-list">
+	<Button toggle shape="square" variant="filled">Filled</Button>
+	<Button toggle shape="square" variant="tonal">Tonal</Button>
+	<Button toggle shape="square" variant="outlined">Outlined</Button>
+</div>
+<div class="button-list">
+	<Button toggle selected shape="square" variant="filled">Filled</Button>
+	<Button toggle selected shape="square" variant="tonal">Tonal</Button>
+	<Button toggle selected shape="square" variant="outlined">Outlined</Button>
+</div>
 
 <style>
 	.button-list {

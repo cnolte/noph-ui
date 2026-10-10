@@ -12,4 +12,7 @@
 	<FilterChip label="Selected with icon" selected>
 		{#snippet icon()}<Icon>bookmark</Icon>{/snippet}
 	</FilterChip>
+	<FilterChip label="Language">
+		{#snippet trailingIcon()}<Icon>arrow_drop_down</Icon>{/snippet}
+	</FilterChip>
 </ChipSet>

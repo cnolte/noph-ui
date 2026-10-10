@@ -8,7 +8,6 @@
 	headline="Reset settings?"
 	supportingText="This will reset your app preferences back to their default settings."
 	id="simple-dialog"
-	divider
 >
 	{#snippet icon()}
 		<Icon>settings</Icon>

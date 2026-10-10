@@ -19,14 +19,14 @@
 
 <h1>Badges</h1>
 <p>
-	A badge marks an icon or a navigation item with news: a dot for something new, a number for how
-	much of it there is. Keep it to a count someone can act on.
+	A badge marks an icon or a navigation item: a dot for something new, a number for a count. Only
+	show counts people can act on.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Badges show notifications, counts, or status information on navigation items and icons. A badge is
-	positioned relative to its anchor, so place it inside an element with
-	<code>position: relative</code>.
+	Badges show notifications, counts or status on navigation items and icons. Place the badge next to
+	a 24px icon inside an element with <code>position: relative</code>. It then sits inside the icon
+	at its top trailing corner, mirrored for right-to-left text.
 </p>
 
 <h3 id="small-badge">Small badge<a href="#small-badge" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -37,7 +37,11 @@
 <Code value={SmallBadgeSource} />
 
 <h3 id="large-badge">Large badge<a href="#large-badge" aria-hidden="true" tabindex="-1">#</a></h3>
-<p>Set a <code>label</code> to display a number or short text.</p>
+<p>
+	Set a <code>label</code> to show a number or short text. A large badge keeps its leading edge and
+	grows toward the trailing side. Counts above 999 show as <code>999+</code>, so the badge stays at
+	four characters.
+</p>
 <DemoContainer>
 	<LargeBadge />
 </DemoContainer>
@@ -45,8 +49,8 @@
 
 <h2 id="positioning">Positioning<a href="#positioning" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	By default a badge is positioned absolutely at the top of its anchor. Use the following custom
-	properties to adjust its placement. They accept any valid CSS length or keyword.
+	Material 3 gives badges a fixed place on the icon. Only move one when its anchor is not a bare
+	24px icon, such as an icon button. The custom properties below accept any CSS length or keyword.
 </p>
 <table>
 	<thead>
@@ -64,18 +68,13 @@
 		</tr>
 		<tr>
 			<td><code>--np-badge-top</code></td>
-			<td><code>0</code></td>
+			<td><code>0</code> small, <code>-0.125rem</code> large</td>
 			<td>Distance from the top of the anchor.</td>
 		</tr>
 		<tr>
 			<td><code>--np-badge-start</code></td>
-			<td><code>auto</code></td>
-			<td>Distance from the inline-start edge of the anchor.</td>
-		</tr>
-		<tr>
-			<td><code>--np-badge-end</code></td>
-			<td><code>auto</code></td>
-			<td>Distance from the inline-end edge of the anchor.</td>
+			<td><code>calc(100% - 0.375rem)</code> small, <code>calc(100% - 0.75rem)</code> large</td>
+			<td>Distance from the inline-start edge of the anchor to the badge's leading edge.</td>
 		</tr>
 	</tbody>
 </table>
@@ -87,9 +86,8 @@
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	A badge takes its colors from the error role, so it stays legible in both color schemes without
-	any work. Position it with the custom properties below when the element underneath is not the
-	usual icon.
+	A badge takes its colors from the error role, so it stays legible in both color schemes. Use the
+	custom properties below to position it when the element underneath is not a plain icon.
 </p>
 <table>
 	<thead>
@@ -105,35 +103,35 @@
 		</tr>
 		<tr>
 			<td><code>--np-badge-top</code></td>
-			<td><code>0</code></td>
+			<td><code>0</code> small, <code>-0.125rem</code> large</td>
 		</tr>
 		<tr>
 			<td><code>--np-badge-start</code></td>
-			<td><code>auto</code></td>
-		</tr>
-		<tr>
-			<td><code>--np-badge-end</code></td>
-			<td><code>auto</code></td>
+			<td><code>calc(100% - 0.375rem)</code> small, <code>calc(100% - 0.75rem)</code> large</td>
 		</tr>
 	</tbody>
 </table>
 <p>
 	The container color is <code>--np-color-error</code> and the label
-	<code>--np-color-on-error</code>. Change the pair on an ancestor to recolor a badge, and see
-	<a class="link" href="/about/theming">Theming</a> for the roles themselves.
+	<code>--np-color-on-error</code>. Change both on an ancestor to recolor a badge. See
+	<a class="link" href="/about/theming">Theming</a> for the roles.
 </p>
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	A badge is decorative by default: it renders <code>aria-hidden</code>, because a number floating
-	beside an icon means nothing on its own. The icon button or navigation item it sits on carries the
-	name.
+	A badge is decorative by default and renders <code>aria-hidden</code>. The icon button or
+	navigation item it sits on carries the name.
 </p>
 <p>
-	Where the count is news, pass <code>aria-label</code>. The badge then becomes a
-	<code>role="status"</code> with that name, and a screen reader announces it when it changes. Write
-	the label out in full, <code>3 unread messages</code> rather than <code>3</code>.
+	In navigation bar, navigation rail and tabs, the badge is read after the destination's name as its
+	description: <code>badgeAriaLabel</code> if set, else the count, else
+	<code>New notification</code>. Use <code>badgeAriaLabel</code> to translate that last one.
+</p>
+<p>
+	For a badge on its own, where the count is news, pass <code>aria-label</code>. The badge then gets
+	<code>role="status"</code> with that name, and screen readers announce it when it changes. Write
+	the label in full: <code>3 unread messages</code>, not <code>3</code>.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>
@@ -151,7 +149,7 @@
 			<td><code>label</code></td>
 			<td><code>string | number | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Content displayed inside the badge. When omitted, a small badge (dot) is shown.</td>
+			<td>Content inside the badge. Without it, a small badge (dot) shows.</td>
 		</tr>
 		<tr>
 			<td><code>aria-label</code></td>

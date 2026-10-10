@@ -29,16 +29,12 @@ describe('Search', async () => {
 		expect(input().getAttribute('aria-controls')).toBe(results().id)
 	})
 
-	test('results that say they are a listbox make the field a combobox', async () => {
+	test('the field stays a search field whatever role the results take', async () => {
 		await render(Harness, { resultsRole: 'listbox' })
 
 		expect(results().getAttribute('role')).toBe('listbox')
-		expect(input().getAttribute('role')).toBe('combobox')
-		expect(input().getAttribute('aria-expanded')).toBe('false')
-
-		input().focus()
-
-		await expect.poll(() => input().getAttribute('aria-expanded')).toBe('true')
+		expect(input().hasAttribute('role')).toBe(false)
+		expect(input().hasAttribute('aria-expanded')).toBe(false)
 	})
 
 	test('results are out of the layout until it expands', async () => {
@@ -58,11 +54,14 @@ describe('Search', async () => {
 		await expect.poll(() => root().classList.contains('np-search-expanded')).toBe(true)
 	})
 
-	test('a clear button appears only with a query, and empties it', async () => {
-		const { rerender } = await render(Harness, { value: '' })
+	test('a clear button appears only with a query in the open view, and empties it', async () => {
+		const { rerender } = await render(Harness, { value: '', expanded: true })
 		expect(document.querySelector('[title="Clear search"]')).toBeNull()
 
-		await rerender({ value: 'tacos' })
+		await rerender({ value: 'tacos', expanded: false })
+		expect(document.querySelector('[title="Clear search"]')).toBeNull()
+
+		await rerender({ value: 'tacos', expanded: true })
 		await clear().click()
 
 		await expect.poll(() => input().value).toBe('')
@@ -100,7 +99,7 @@ describe('Search', async () => {
 	})
 
 	test('clearing with the mouse does not raise the ring on the way back', async () => {
-		await render(Harness, { value: 'tacos' })
+		await render(Harness, { value: 'tacos', expanded: true })
 
 		await clear().click()
 
@@ -186,7 +185,8 @@ describe('Search', async () => {
 		await rerender({ expanded: true, variant: 'divided' })
 
 		await expect.poll(() => px(getComputedStyle(bar()).borderTopLeftRadius)).toBe(0)
-		expect(px(getComputedStyle(bar()).borderBottomWidth)).toBeGreaterThan(0)
+		// The divider is an inset shadow, transparent while there is none.
+		expect(getComputedStyle(bar()).boxShadow).toMatch(/^rgb\(/)
 	})
 
 	test('contained docks the results as their own 12dp pane', async () => {

@@ -30,13 +30,3 @@ export const expandedWidths = (
 	}
 	return next
 }
-
-export const parseMotion = (token: string): { duration: number; easing: string } => {
-	const [time, ...rest] = token.trim().split(/\s+/)
-	const value = Number.parseFloat(time)
-	const easing = rest.join(' ')
-	return {
-		duration: Number.isNaN(value) ? 0 : time.endsWith('ms') ? value : value * 1000,
-		easing: easing || 'linear',
-	}
-}

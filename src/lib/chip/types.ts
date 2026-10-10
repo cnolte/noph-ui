@@ -25,7 +25,7 @@ export interface AssistChipProps
 	type?: 'submit' | 'reset' | 'button' | (string & {}) | null
 }
 
-export type SuggestionChipProps = Omit<AssistChipProps, 'icon'>
+export type SuggestionChipProps = AssistChipProps
 
 export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	selected?: boolean
@@ -34,6 +34,9 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 	variant?: 'outlined' | 'elevated'
 	label?: string
 	icon?: Snippet
+	/** Trailing icon, such as an arrow for a chip that opens a menu. Not shown when `removable`. */
+	trailingIcon?: Snippet
+	/** Defaults to "Remove" and the chip's label. */
 	removeAriaLabel?: string
 	element?: HTMLDivElement
 	name?: string
@@ -47,8 +50,12 @@ export interface FilterChipProps extends HTMLAttributes<HTMLDivElement> {
 export interface InputChipProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onclick'> {
 	selected?: boolean
 	disabled?: boolean | null
+	variant?: 'outlined' | 'elevated'
 	label?: string
 	icon?: Snippet
+	/** A 24px leading image, such as a person's photo. Takes the place of `icon`. */
+	avatar?: Snippet
+	/** Defaults to "Remove" and the chip's label. */
 	removeAriaLabel?: string
 	element?: HTMLDivElement
 	actionElement?: HTMLButtonElement

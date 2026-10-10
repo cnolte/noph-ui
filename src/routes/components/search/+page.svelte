@@ -19,21 +19,21 @@
 	<title>Search - Material 3 search bar for Svelte - Noph UI</title>
 	<meta
 		name="description"
-		content="The Material 3 search bar and search view for Svelte: docked or full screen, contained or divided, with results you fill and combobox semantics when they fit."
+		content="The Material 3 search bar and search view for Svelte: docked or full screen, contained or divided, with results you fill."
 	/>
 </svelte:head>
 <h1>Search</h1>
 <p>
-	Search lets someone navigate a product with a query. The search bar and the view that shows its
-	results are one component, which is how Material 3 named them together in 2025.
+	Search lets people navigate a product with a query. The search bar and the view that shows its
+	results are one component.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	A search bar carries a leading search icon, hinted search text and any trailing icons you add. Put
-	the suggestions or results inside as children; they show once the field has focus, and the field
-	reports them to assistive technology as a combobox. The view they open floats over the page rather
-	than pushing it down, and closes again as soon as focus leaves it.
+	A search bar has a leading search icon, hinted search text and up to two trailing icons you add.
+	Put the suggestions or results inside as children, in a <code>List</code>. They show when the
+	field has focus. The view floats over the page instead of pushing it down, and closes when focus
+	leaves it. Enter reports the query, keeps it visible and moves focus to the results.
 </p>
 <DemoContainer style="overflow:visible">
 	<Usage />
@@ -42,29 +42,23 @@
 
 <h2 id="semantics">Semantics<a href="#semantics" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The container holding the results brings no role of its own, because what goes in it is a list one
-	time and categories, avatars and chips the next. Give it one through
-	<code>resultsAttributes</code> when the children have earned it. Name a role a combobox is allowed
-	to own, such as <code>listbox</code>, and the field turns itself into that combobox, wired up with
-	<code>aria-expanded</code> and <code>aria-controls</code>; name nothing and it stays a plain
-	search field with the results as ordinary content below it.
+	Build suggestions and results with <code>List</code> and <code>ListItem</code>, so screen readers
+	announce them as a list. The container around them has no role, so it can also hold category
+	labels, avatars or chips next to the list. The field is a plain search field. <kbd>↓</kbd> moves
+	into the results, the arrow keys move between them, and <kbd>↑</kbd> on the first one goes back to the
+	field.
 </p>
-<Code
-	value={`<Search placeholder="Search product" resultsAttributes={{ role: 'listbox' }}>
-	<Item type="button" role="option">Simple Classic Tacos</Item>
-</Search>`}
-/>
 <p>
-	Options a person steps through with the arrow keys are a different component:
-	<a class="link" href="/components/autocomplete">autocomplete</a> is the full combobox, and it
-	handles the active option and <code>aria-activedescendant</code> for you.
+	For options that people step through while focus stays in the field, use
+	<a class="link" href="/components/autocomplete">autocomplete</a>. It is a full combobox and
+	handles the active option and <code>aria-activedescendant</code>.
 </p>
 
 <h2 id="styles">Styles<a href="#styles" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>contained</code>, the default, keeps the field's pill shape and colour while the results
-	show. Material recommends it. <code>divided</code> squares the field off and separates it from the results
-	with a rule.
+	show. Material recommends it. <code>divided</code> gives the field square corners and separates it from
+	the results with a line.
 </p>
 <DemoContainer style="overflow:visible">
 	<Styles />
@@ -73,8 +67,8 @@
 
 <h2 id="trailing">Trailing icons<a href="#trailing" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The <code>trailing</code> slot takes an avatar or actions. A clear button appears next to it on its
-	own once there is a query.
+	The <code>trailing</code> slot takes an avatar or actions. A clear button appears next to it when there
+	is a query.
 </p>
 <DemoContainer style="overflow:visible">
 	<TrailingIcons />
@@ -83,9 +77,10 @@
 
 <h2 id="layout">Layout<a href="#layout" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>docked</code>, the default, drops the results under the field, growing them to two thirds of
-	the screen at the most. <code>full-screen</code> takes over the viewport once the field has focus, which
-	suits a small screen.
+	<code>docked</code> shows the results under the field. The open view is at least 240px and at most
+	two thirds of the screen high.
+	<code>full-screen</code> fills the viewport when the field has focus. Without a
+	<code>view</code>, search is full screen in windows below 600px and docked above.
 </p>
 <DemoContainer style="overflow:visible">
 	<Layout />
@@ -94,10 +89,8 @@
 
 <h2 id="motion">Motion<a href="#motion" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Material 3 Expressive grows the search bar when it takes focus, by shrinking the margin it keeps
-	to its pane from 24dp to 12dp. The component owns that margin, so the growth needs nothing from
-	you. Change how far it travels with the two custom properties, or set them both to the same value
-	to hold the bar still.
+	The search bar grows when it takes focus. Its margin to the pane shrinks from 24dp to 12dp. Change
+	the distance with the two custom properties. Set both to the same value to keep the bar still.
 </p>
 <DemoContainer style="overflow:visible">
 	<Motion />
@@ -109,8 +102,8 @@
 </h2>
 <p>
 	Use a search app bar as an emphasised, global entry point. It is the
-	<a class="link" href="/components/app-bar">app bar</a>'s <code>search</code> variant, which carries
-	a field in place of a headline.
+	<a class="link" href="/components/app-bar">app bar</a>'s <code>search</code> variant, which shows a
+	field instead of a headline.
 </p>
 <Code
 	value={`<AppBar variant="search">
@@ -127,12 +120,11 @@
 	Opening it yourself<a href="#opening-it-yourself" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Focusing the field opens the view, so most of the time nothing is needed from you. Where the bar
-	has no room to sit at rest, a narrow app bar say, a trigger elsewhere can open it through
-	<code>show</code>, and <code>close</code> puts it away again. Both take care of the caret, and
-	<code>show</code> puts the bar in the document before it moves focus there, so a bar that is
-	hidden until it opens still works. It does that synchronously, which is what lets Safari on iOS
-	open the keyboard: the tap that called <code>show</code> is still on the stack.
+	Focusing the field opens the view. When the bar has no room at rest, for example in a narrow app
+	bar, open it from another control with <code>show</code>. <code>close</code> closes it. Both
+	handle the caret. <code>show</code> adds the bar to the document before it moves focus there, so a
+	bar that is hidden until it opens still works. Call <code>show</code> directly in the tap handler, so
+	Safari on iOS opens the keyboard.
 </p>
 <DemoContainer style="overflow:visible">
 	<OpeningItYourself />
@@ -155,7 +147,7 @@
 			></tr
 		>
 		<tr><td><code>--np-search-shape</code></td><td>Corner radius of the field.</td></tr>
-		<tr><td><code>--np-search-width</code></td><td>Widest the field grows. 720dp.</td></tr>
+		<tr><td><code>--np-search-width</code></td><td>Maximum width of the field. 720dp.</td></tr>
 		<tr
 			><td><code>--np-search-pane-margin</code></td><td
 				>Space the field keeps to its pane at rest. 24dp.</td
@@ -171,13 +163,23 @@
 			></tr
 		>
 		<tr
+			><td><code>--np-search-docked-min-height</code></td><td
+				>Minimum height of the open docked view with results, field included. 240dp.</td
+			></tr
+		>
+		<tr
+			><td><code>--np-search-docked-max-height</code></td><td
+				>Maximum height of the open docked view. Two thirds of the screen.</td
+			></tr
+		>
+		<tr
 			><td><code>--np-search-results-max-height</code></td><td>How tall the docked results grow.</td
 			></tr
 		>
 		<tr
 			><td><code>--np-search-z-index</code></td><td>How the open view stacks over the page.</td></tr
 		>
-		<tr><td><code>--np-search-divider-color</code></td><td>The rule under a divided field.</td></tr>
+		<tr><td><code>--np-search-divider-color</code></td><td>The line under a divided field.</td></tr>
 		<tr><td><code>--np-search-focus-indicator-color</code></td><td>The focus ring.</td></tr>
 	</tbody>
 </table>
@@ -186,16 +188,16 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	The field is a native <code>&lt;input type="search"&gt;</code> named by <code>label</code>. The
-	clear button and the back arrow are named by <code>clearLabel</code> and <code>backLabel</code>,
-	so all three can be translated.
+	The field is a native <code>&lt;input type="search"&gt;</code> named by its hinted text, the
+	<code>placeholder</code>, or by <code>label</code> where that should differ. The clear button and
+	the back arrow are named by <code>clearLabel</code> and <code>backLabel</code>, so all of them can
+	be translated. When results appear or change, a polite status tells screen readers how many there
+	are. <code>resultsAnnouncement</code> sets the text.
 </p>
 <p>
-	Focus opens the view and moving focus out of it closes it again, which keeps the keyboard and the
-	pointer in step. Escape closes it from the field and leaves the query alone. Results are yours to
-	fill, so the roles inside are yours too: see <a class="link" href="#semantics">Semantics</a> for
-	when to make them a listbox, and reach for
-	<a class="link" href="/components/autocomplete">autocomplete</a> when arrow keys should walk the options.
+	Focus opens the view, and moving focus out of it closes it. Escape closes it from the field or the
+	results and keeps the query. See
+	<a class="link" href="#semantics">Semantics</a> for the keyboard in the results.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
@@ -210,7 +212,7 @@
 	<tbody>
 		<tr>
 			<td><code>show()</code></td>
-			<td>Opens the view and moves focus into the field, both before it returns.</td>
+			<td>Opens the view and moves focus into the field before it returns.</td>
 		</tr>
 		<tr>
 			<td><code>close()</code></td>
@@ -241,7 +243,7 @@
 			<td><code>expanded</code></td>
 			<td><code>boolean</code></td>
 			<td><code>false</code></td>
-			<td>Bindable. Whether the results are showing. Focusing the field opens it.</td>
+			<td>Bindable. Whether the results show. Focusing the field opens them.</td>
 		</tr>
 		<tr>
 			<td><code>variant</code></td>
@@ -251,21 +253,24 @@
 		</tr>
 		<tr>
 			<td><code>view</code></td>
-			<td><code>'docked' | 'full-screen'</code></td>
-			<td><code>'docked'</code></td>
-			<td>Results under the field, or covering the viewport.</td>
+			<td><code>'docked' | 'full-screen' | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>
+				Results under the field, or covering the viewport. Without one, full screen below 600px and
+				docked above.
+			</td>
 		</tr>
 		<tr>
 			<td><code>leading</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Replaces the search icon, and the back arrow shown once expanded.</td>
+			<td>Replaces the search icon and the back arrow shown while expanded.</td>
 		</tr>
 		<tr>
 			<td><code>trailing</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Avatar or actions. The clear button sits beside it.</td>
+			<td>Avatar or actions, two at most. The clear button sits beside it in the open view.</td>
 		</tr>
 		<tr>
 			<td><code>onsearch</code></td>
@@ -276,8 +281,14 @@
 		<tr>
 			<td><code>label</code></td>
 			<td><code>string</code></td>
-			<td><code>'Search'</code></td>
-			<td>Accessible name for the field.</td>
+			<td><code>placeholder</code></td>
+			<td>Accessible name for the field. Defaults to the hinted text.</td>
+		</tr>
+		<tr>
+			<td><code>resultsAnnouncement</code></td>
+			<td><code>(count: number) =&gt; string</code></td>
+			<td><code>'3 results'</code></td>
+			<td>What screen readers hear when results appear or change.</td>
 		</tr>
 		<tr>
 			<td><code>clearLabel</code></td>
@@ -301,7 +312,7 @@
 			<td><code>resultsAttributes</code></td>
 			<td><code>HTMLAttributes&lt;HTMLDivElement&gt; | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Extra attributes for the results container, and where its role goes.</td>
+			<td>Extra attributes for the results container, including its role.</td>
 		</tr>
 	</tbody>
 </table>

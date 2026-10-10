@@ -95,9 +95,6 @@
 		height: 100%;
 		opacity: 0;
 		transform: scaleX(0.32);
-		transition-duration: 0.2s;
-		transition-property: transform, opacity;
-		transition-timing-function: linear;
 		background-color: var(--np-color-secondary-container);
 		border-radius: var(--np-navigation-drawer-item-container-shape, var(--np-shape-corner-full));
 		z-index: -1;
@@ -106,6 +103,14 @@
 	.np-navigation-drawer-item-selected.np-navigation-drawer-item::before {
 		opacity: 1;
 		transform: scaleX(1);
+	}
+	/* Like the active indicator in the navigation bar and rail. */
+	@media (prefers-reduced-motion: no-preference) {
+		.np-navigation-drawer-item::before {
+			transition:
+				transform var(--np-motion-expressive-default-spatial),
+				opacity var(--np-motion-expressive-fast-effects);
+		}
 	}
 
 	.np-navigation-drawer-item:focus-visible {

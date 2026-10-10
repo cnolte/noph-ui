@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-	import { tick, type Snippet } from 'svelte'
+	import { tick, untrack, type Snippet } from 'svelte'
 	import type { Attachment } from 'svelte/attachments'
 	import type { HTMLAttributes } from 'svelte/elements'
 
@@ -35,6 +35,21 @@
 	let bottom = $state(0)
 	let measured_height = $state(0)
 	let average_height: number = $derived(itemHeight || measured_height)
+
+	/** Scrolls by the least distance that brings the row at `index` fully into view. */
+	// Untracked, so a caller's effect does not rerun on every scroll.
+	export const scrollToIndex = (index: number) =>
+		untrack(() => {
+			if (!viewport) return
+			// `top` is the offset of row `start`, so walk from there instead of from row 0.
+			let rowTop = top
+			for (let i = start; i < index; i += 1) rowTop += height_map[i] || average_height
+			for (let i = index; i < start; i += 1) rowTop -= height_map[i] || average_height
+			const rowBottom = rowTop + (height_map[index] || average_height)
+			const { scrollTop, clientHeight } = viewport
+			if (rowTop < scrollTop) viewport.scrollTop = rowTop
+			else if (rowBottom > scrollTop + clientHeight) viewport.scrollTop = rowBottom - clientHeight
+		})
 
 	const collectRows: Attachment<HTMLDivElement> = (node) => {
 		rows = node.children as HTMLCollectionOf<HTMLElement>

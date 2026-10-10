@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import Badge from '#lib/badge/Badge.svelte'
+	import { badgeDescription } from '#lib/badge/description.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { getTabsContext } from './context.js'
 	import type { TabProps } from './types.js'
@@ -23,9 +24,16 @@
 
 	const tabsContext = getTabsContext()
 
+	const uid = $props.id()
+	let badgeId = $derived(badge ? `${uid}-badge` : undefined)
+	let describedBy = $derived(
+		[attributes['aria-describedby'], badgeId].filter(Boolean).join(' ') || undefined,
+	)
+
 	$effect(() => {
 		if (tabsContext.value === value) {
 			tabsContext.indicatorValue = value
+			if (element) tabsContext.reveal(element)
 		}
 	})
 </script>
@@ -41,7 +49,7 @@
 			{#if icon}
 				{#if badge && tabsContext.variant === 'primary' && !inlineIcon}
 					<div class="np-tab-icon-badge">
-						<Badge label={badgeLabel} aria-label={badgeAriaLabel} />
+						<Badge label={badgeLabel} />
 						{@render icon?.()}
 					</div>
 				{:else}
@@ -50,10 +58,7 @@
 			{/if}
 			{#if badge && (!icon || tabsContext.variant === 'secondary' || inlineIcon)}
 				<div style="--np-badge-position:static;">
-					<span class="np-tab-label-badge">{@render children?.()}</span><Badge
-						label={badgeLabel}
-						aria-label={badgeAriaLabel}
-					/>
+					<span class="np-tab-label-badge">{@render children?.()}</span><Badge label={badgeLabel} />
 				</div>
 			{:else}
 				{@render children?.()}
@@ -72,6 +77,9 @@
 	</div>
 	<div class="focus-area"></div>
 	<Ripple />
+	{#if badgeId}
+		<span id={badgeId} hidden>{badgeDescription(badgeLabel, badgeAriaLabel)}</span>
+	{/if}
 {/snippet}
 
 {#if href}
@@ -81,27 +89,9 @@
 		role="tab"
 		aria-selected={tabsContext.value === value}
 		aria-controls={controls}
+		aria-describedby={describedBy}
 		tabindex={tabsContext.value === value ? 0 : -1}
 		{href}
-		class={[
-			'np-tab',
-			tabsContext.value === value && 'np-tab-content-active',
-			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
-			attributes.class,
-		]}
-		{onclick}
-		{onkeydown}
-	>
-		{@render content()}
-	</a>
-{:else}
-	<button
-		{...attributes}
-		bind:this={element}
-		role="tab"
-		aria-selected={tabsContext.value === value}
-		aria-controls={controls}
-		tabindex={tabsContext.value === value ? 0 : -1}
 		class={[
 			'np-tab',
 			tabsContext.value === value && 'np-tab-content-active',
@@ -113,11 +103,36 @@
 			onclick?.(event)
 		}}
 		onkeydown={(event) => {
-			if (event.key === 'Enter' || event.key === ' ') {
-				tabsContext.value = value
+			// Space activates a tab like Enter, where a link would scroll the page.
+			if (event.key === ' ') {
+				event.preventDefault()
+				event.currentTarget.click()
 			}
 			onkeydown?.(event)
 		}}
+	>
+		{@render content()}
+	</a>
+{:else}
+	<button
+		{...attributes}
+		bind:this={element}
+		role="tab"
+		aria-selected={tabsContext.value === value}
+		aria-controls={controls}
+		aria-describedby={describedBy}
+		tabindex={tabsContext.value === value ? 0 : -1}
+		class={[
+			'np-tab',
+			tabsContext.value === value && 'np-tab-content-active',
+			tabsContext.variant === 'primary' ? 'primary' : 'secondary',
+			attributes.class,
+		]}
+		onclick={(event) => {
+			tabsContext.value = value
+			onclick?.(event)
+		}}
+		{onkeydown}
 	>
 		{@render content()}
 	</button>
@@ -175,7 +190,6 @@
 		height: 1.5rem;
 		width: 1.5rem;
 		position: relative;
-		--np-badge-start: 1.125rem;
 	}
 
 	.np-tab-no-inline {

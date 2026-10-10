@@ -7,6 +7,7 @@
 	let {
 		selected = false,
 		start,
+		avatar,
 		end,
 		children,
 		supportingText,
@@ -23,7 +24,15 @@
 </script>
 
 {#snippet content()}
-	{#if start}
+	{#if avatar}
+		<div class="np-item-avatar" aria-hidden={typeof avatar === 'string' ? 'true' : undefined}>
+			{#if typeof avatar === 'string'}
+				{avatar}
+			{:else}
+				{@render avatar()}
+			{/if}
+		</div>
+	{:else if start}
 		<div class={['np-item-start', selected && 'selected', disabled && 'disabled']}>
 			{@render start()}
 		</div>
@@ -46,7 +55,14 @@
 	</div>
 
 	{#if end}
-		<div class={['np-item-end', selected && 'selected', disabled && 'disabled']}>
+		<div
+			class={[
+				'np-item-end',
+				typeof end === 'string' && 'np-item-end-text',
+				selected && 'selected',
+				disabled && 'disabled',
+			]}
+		>
 			{#if typeof end === 'string'}
 				{end}
 			{:else}
@@ -135,18 +151,47 @@
 		text-align: start;
 		overflow: hidden;
 		width: 100%;
-		padding-block: 0.625rem;
-		padding-inline: 1rem;
+		padding-block: 0.5rem;
+		padding-inline: var(--np-item-padding-inline, 1rem);
 		min-height: var(--np-item-container-height, 3.5rem);
-		gap: 0.75rem;
+		gap: var(--np-item-gap, 1rem);
 		text-decoration: none;
 		-webkit-tap-highlight-color: transparent;
 		color: var(--np-item-label-text-color, var(--np-color-on-surface));
 		box-sizing: border-box;
 	}
 
+	/* 12px above and below text with supporting text, so three lines come to 88px. */
 	.np-item:has(.np-item-supporting-text) {
 		min-height: var(--np-item-container-height, 4.5rem);
+		padding-block: 0.75rem;
+	}
+	.np-item-avatar {
+		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		overflow: hidden;
+		background-color: var(--np-item-avatar-container-color, var(--np-color-primary-container));
+		color: var(--np-item-avatar-label-text-color, var(--np-color-on-primary-container));
+		font-size: 1rem;
+		font-weight: 500;
+		letter-spacing: 0.009rem;
+	}
+	.np-item-avatar > :global(*) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	/* Trailing text, such as a count, is label small. */
+	.np-item-end-text {
+		font-size: 0.6875rem;
+		line-height: 1rem;
+		font-weight: 500;
+		letter-spacing: 0.031rem;
 	}
 
 	.np-item-lazy {
@@ -197,17 +242,18 @@
 		flex: 1;
 		font-size: 1rem;
 		line-height: 1.5rem;
+		letter-spacing: 0.031rem;
 	}
 	.np-item-supporting-text {
 		color: var(--np-item-supporting-text-color, var(--np-color-on-surface-variant));
 		font-size: 0.875rem;
 		line-height: 1.25rem;
+		letter-spacing: 0.016rem;
 	}
 
 	.np-item.disabled {
 		pointer-events: none;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-		background-color: color-mix(in srgb, var(--np-color-on-surface) 10%, transparent);
 	}
 	.np-item.disabled .np-item-supporting-text {
 		color: inherit;

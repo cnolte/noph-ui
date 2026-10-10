@@ -1,29 +1,13 @@
 <script lang="ts">
-	import Button from '#lib/button/Button.svelte'
+	import AssistChip from './AssistChip.svelte'
 	import type { SuggestionChipProps } from './types.js'
 
-	let {
-		variant = 'outlined',
-		disabled = false,
-		label = '',
-		element = $bindable(),
-		...attributes
-	}: SuggestionChipProps = $props()
+	let { element = $bindable(), ...attributes }: SuggestionChipProps = $props()
 </script>
 
-<Button
-	--np-elevated-button-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface-variant))"
-	--np-outlined-button-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface-variant))"
-	--np-outlined-button-outline-color="var(--np-suggestion-chip-outline-color, var(--np-color-outline-variant))"
-	--np-button-padding="1rem"
-	--np-button-shape="0.5rem"
-	style="letter-spacing: 0.006rem"
+<AssistChip
+	--np-assist-chip-label-text-color="var(--np-suggestion-chip-label-text-color, var(--np-color-on-surface-variant))"
+	--np-assist-chip-outline-color="var(--np-suggestion-chip-outline-color, var(--np-color-outline-variant))"
 	bind:element
 	{...attributes}
-	size="xs"
-	shape="square"
-	{variant}
-	{disabled}
->
-	{label}
-</Button>
+/>

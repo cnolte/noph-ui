@@ -7,6 +7,8 @@
 	import PrimaryTabsSource from './demos/PrimaryTabs.svelte?raw'
 	import PrimaryTabsIcons from './demos/PrimaryTabsIcons.svelte'
 	import PrimaryTabsIconsSource from './demos/PrimaryTabsIcons.svelte?raw'
+	import Scrollable from './demos/Scrollable.svelte'
+	import ScrollableSource from './demos/Scrollable.svelte?raw'
 	import SecondaryTabs from './demos/SecondaryTabs.svelte'
 	import SecondaryTabsSource from './demos/SecondaryTabs.svelte?raw'
 	import SecondaryTabsIcons from './demos/SecondaryTabsIcons.svelte'
@@ -30,10 +32,8 @@
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Tabs provide a user interface for navigating between distinct sections or pages within an
-	application. Each <code>&lt;Tabs&gt;</code> component contains multiple <code>&lt;Tab&gt;</code>
-	children, and the <code>&lt;Tabs&gt;</code> component itself can be styled as either primary or secondary
-	variants to suit different use cases.
+	Each <code>&lt;Tabs&gt;</code> holds several <code>&lt;Tab&gt;</code> children. Set
+	<code>&lt;Tabs&gt;</code> to the primary or the secondary variant.
 </p>
 
 <h3 id="primary-tabs">
@@ -60,15 +60,26 @@
 	<SecondaryTabsIcons />
 </DemoContainer>
 <Code value={SecondaryTabsIconsSource} />
+<h3 id="scrollable-tabs">
+	Scrollable tabs<a href="#scrollable-tabs" aria-hidden="true" tabindex="-1">#</a>
+</h3>
+<p>
+	By default the tabs share the full width equally. When the tabs or labels do not fit, set
+	<code>scrollable</code>. Each tab is then as wide as its label and the strip scrolls sideways. The
+	first tab sits 52dp from the leading edge, so the cut off tabs at the end show that there is more.
+	Selecting a tab scrolls it towards the middle of the strip.
+</p>
+<DemoContainer>
+	<Scrollable />
+</DemoContainer>
+<Code value={ScrollableSource} />
 <h3 id="selection">Selection<a href="#selection" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	The <code>value</code> prop on <code>&lt;Tabs&gt;</code> determines which tab is currently
-	selected. Each <code>&lt;Tab&gt;</code> must have a unique <code>value</code> within the same
-	<code>&lt;Tabs&gt;</code>
-	group. When the <code>value</code> of <code>&lt;Tabs&gt;</code> matches a
-	<code>&lt;Tab&gt;</code>'s <code>value</code>, that tab is highlighted as selected. To react to
-	tab changes, use <code>bind:value</code> on <code>&lt;Tabs&gt;</code> to keep track of the selected
-	tab in your component state.
+	The <code>value</code> of <code>&lt;Tabs&gt;</code> sets the selected tab: the
+	<code>&lt;Tab&gt;</code> with the same <code>value</code> is selected. Each
+	<code>&lt;Tab&gt;</code> needs a unique <code>value</code> within its <code>&lt;Tabs&gt;</code>.
+	Use
+	<code>bind:value</code> on <code>&lt;Tabs&gt;</code> to track the selected tab in your state.
 </p>
 <DemoContainer>
 	<Selection />
@@ -77,11 +88,9 @@
 
 <h3 id="links">Links<a href="#links" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	To enable navigation between pages or routes, use the <code>href</code> attribute on
-	<code>&lt;Tab&gt;</code>. This renders the tab as a link, allowing users to navigate to different
-	routes when a tab is clicked. The <code>href</code> attribute works seamlessly with the
-	<code>value</code> prop, so you can track which tab is selected even when navigating between pages.
-	This approach is especially useful for SSR and deep linking.
+	Give a <code>&lt;Tab&gt;</code> an <code>href</code> to render it as a link to another page or
+	route. The <code>value</code> prop still tracks the selected tab across pages, which helps with SSR
+	and deep linking. Clicking a link tab selects it at once, and Space follows the link like Enter.
 </p>
 <DemoContainer>
 	<Links />
@@ -116,12 +125,14 @@
 <p>
 	The strip renders <code>role="tablist"</code> and each tab <code>role="tab"</code> with
 	<code>aria-selected</code>. The tabs share one tab stop: the left and right arrow keys move
-	between them, Home and End jump to the ends, and Tab leaves the strip for the panel.
+	between them, Home and End jump to the ends, Space and Enter select the focused tab, and Tab
+	leaves the strip for the panel.
 </p>
 <p>
 	Where a tab reveals a panel on the same page, give the panel an id, point at it with
 	<code>controls</code> and mark the panel <code>role="tabpanel"</code>. Tabs that navigate take an
-	<code>href</code> instead and stay real links. A badge on a tab needs
+	<code>href</code> instead and stay real links. A badge on a tab is read after the tab's name: the
+	count, or <code>New notification</code> for a dot. Pass
 	<code>badgeAriaLabel</code> to say what the number counts.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -147,9 +158,15 @@
 			<td><code>variant</code></td>
 			<td><code>'primary' | 'secondary'</code></td>
 			<td><code>'primary'</code></td>
+			<td>The style of the tabs: <code>'primary'</code> or <code>'secondary'</code>.</td>
+		</tr>
+		<tr>
+			<td><code>scrollable</code></td>
+			<td><code>boolean</code></td>
+			<td><code>false</code></td>
 			<td
-				>Sets the visual style of the tab. Use <code>'primary'</code> for the default appearance or
-				<code>'secondary'</code> for an alternative style.</td
+				>Tabs as wide as their labels that scroll sideways, the first one 52dp from the leading
+				edge. Without it the tabs share the width equally.</td
 			>
 		</tr>
 		<tr>
@@ -189,15 +206,15 @@
 			<td><code>badgeLabel</code></td>
 			<td><code>string | number | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>A string representing the label to be displayed inside a badge element.</td>
+			<td>Text shown inside the badge.</td>
 		</tr>
 		<tr>
 			<td><code>badgeAriaLabel</code></td>
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td
-				>Announces the badge, for example <code>"2 new videos"</code>. Without it the badge is
-				<code>aria-hidden</code> and only the tab label is read out.</td
+				>Read after the label, for example <code>"2 new videos"</code>. Without it the count is
+				read, or <code>New notification</code> for a dot.</td
 			>
 		</tr>
 		<tr>
@@ -213,25 +230,22 @@
 			<td><code>value</code></td>
 			<td><code>number | string</code></td>
 			<td><code>undefined</code></td>
-			<td>The value associated with this tab. Used to identify which tab is selected.</td>
+			<td
+				>Identifies the tab. The tab is selected when it matches the <code>value</code> of
+				<code>&lt;Tabs&gt;</code>.</td
+			>
 		</tr>
 		<tr>
 			<td><code>icon</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td
-				>Provides a custom icon for the tab, typically rendered before the tab label. Accepts a
-				Svelte snippet, such as an <code>&lt;Icon&gt;</code> component.</td
-			>
+			<td>Icon shown before the label, as a snippet such as an <code>&lt;Icon&gt;</code>.</td>
 		</tr>
 		<tr>
 			<td><code>href</code></td>
 			<td><code>string</code></td>
 			<td><code>undefined</code></td>
-			<td>
-				When set, the tab will render as a link using the provided URL. This allows navigation to
-				other pages or routes when the tab is clicked.
-			</td>
+			<td> Renders the tab as a link to this URL. </td>
 		</tr>
 		<tr>
 			<td><code>element</code></td>

@@ -1,11 +1,19 @@
 <script lang="ts">
-	import { arrowKeyNav, rovingTabindex } from '#lib/keyboard-nav.js'
+	import '#lib/internal/exit.css'
+	import { exitAnimation, motionOf } from '#lib/animation.js'
+	import { reducedMotion } from '#lib/media.js'
+	import type { Attachment } from 'svelte/attachments'
+	import { arrowKeyNav, rovingTabindex, typeahead } from '#lib/keyboard-nav.js'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { MenuProps } from './types.js'
 
-	const MENU_ITEM_SELECTOR = '[role="menuitem"]'
+	const MENU_ITEM_SELECTOR = '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]'
 	const attach = rovingTabindex(MENU_ITEM_SELECTOR)
 	const arrowHandler = arrowKeyNav(MENU_ITEM_SELECTOR)
+	const typeaheadHandler = typeahead(
+		MENU_ITEM_SELECTOR,
+		(item) => (item.querySelector('.np-item-headline') ?? item).textContent ?? '',
+	)
 
 	let {
 		children,
@@ -24,6 +32,24 @@
 	let innerHeight = $state(0)
 
 	const controller = popoverController(() => element)
+
+	// Opens with a fade and a scale from the anchor, started just before the menu shows. Driven by
+	// script rather than @starting-style, which Safari does not apply again when a popover reopens.
+	const openAnimation: Attachment<HTMLElement> = (menu) => {
+		const onBeforeToggle = (event: Event) => {
+			if ((event as ToggleEvent).newState !== 'open' || reducedMotion.current) return
+			menu.animate(
+				[{ opacity: 0 }, { opacity: 1 }],
+				motionOf(menu, '--np-motion-expressive-fast-effects'),
+			)
+			menu.animate(
+				[{ scale: 0.8 }, { scale: 1 }],
+				motionOf(menu, '--np-motion-expressive-fast-spatial'),
+			)
+		}
+		menu.addEventListener('beforetoggle', onBeforeToggle)
+		return () => menu.removeEventListener('beforetoggle', onBeforeToggle)
+	}
 
 	export const show = () => controller.show()
 	export const close = () => controller.close()
@@ -74,9 +100,14 @@
 	{...attributes}
 	{role}
 	bind:this={element}
+	{@attach exitAnimation}
+	{@attach openAnimation}
 	ontoggle={(event) => {
 		let { newState } = event
 		open = newState === 'open'
+		if (open && role === 'menu') {
+			element?.querySelector<HTMLElement>(MENU_ITEM_SELECTOR)?.focus()
+		}
 		ontoggle?.(event)
 	}}
 	{popover}
@@ -85,6 +116,18 @@
 	onkeydown={(event) => {
 		attributes.onkeydown?.(event)
 		if (!event.defaultPrevented) arrowHandler(event)
+		if (!event.defaultPrevented) typeaheadHandler(event)
+		// Links only follow Enter, a menu item follows Space as well.
+		const item = event.target
+		if (
+			!event.defaultPrevented &&
+			event.key === ' ' &&
+			item instanceof HTMLAnchorElement &&
+			item.matches(MENU_ITEM_SELECTOR)
+		) {
+			event.preventDefault()
+			item.click()
+		}
 	}}
 >
 	<div {@attach attach} bind:clientHeight={contentHeight} class="np-menu" role="none">
@@ -98,6 +141,17 @@
 		overflow-x: hidden;
 		flex: 1;
 		padding: 0.5rem 0;
+	}
+	/* Baseline menu items: 48dp high with 12dp at the sides, in action menus and listboxes alike. */
+	.np-menu-container:is([role='menu'], [role='listbox']) .np-menu {
+		--np-item-container-height: var(--np-menu-item-container-height, 3rem);
+		--np-item-padding-inline: var(--np-menu-item-padding-inline, 0.75rem);
+		--np-item-gap: var(--np-menu-item-gap, 0.75rem);
+	}
+	/* Select and AutoComplete match their field instead. */
+	.np-menu-container[role='menu'][popover] {
+		min-width: var(--np-menu-min-width, 7rem);
+		max-width: var(--np-menu-max-width, 17.5rem);
 	}
 	:global(.np-menu .np-divider) {
 		margin-block: 0.5rem;
@@ -135,25 +189,23 @@
 		align-self: center;
 	}
 
-	.np-menu-container:popover-open {
-		opacity: 1;
-		scale: 1;
-	}
 	@media (prefers-reduced-motion: no-preference) {
-		.np-menu-container:popover-open {
-			animation:
-				fadeIn var(--np-motion-expressive-fast-effects),
-				scaleIn var(--np-motion-expressive-fast-spatial);
-		}
-	}
-	@keyframes fadeIn {
-		from {
+		/* Closes with a fade and a slight shrink towards the anchor, on the default effects curve,
+		   which is gentler at the start than the fast one. It opens through openAnimation.
+		   NativeSelect's list closes the same way. */
+		.np-menu-container[popover] {
+			--_exit: var(--np-motion-expressive-default-effects);
 			opacity: 0;
+			scale: 0.95;
+			transition:
+				opacity var(--_exit),
+				scale var(--_exit),
+				display var(--_exit) allow-discrete,
+				overlay var(--_exit) allow-discrete;
 		}
-	}
-	@keyframes scaleIn {
-		from {
-			scale: 0.8;
+		.np-menu-container:popover-open {
+			opacity: 1;
+			scale: 1;
 		}
 	}
 </style>

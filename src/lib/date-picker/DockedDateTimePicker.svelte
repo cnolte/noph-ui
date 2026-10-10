@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { exitVisibility } from './exitVisibility.svelte.js'
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Divider from '#lib/divider/Divider.svelte'
@@ -103,6 +104,8 @@
 	const uid = $props.id()
 
 	let menuElement = $state<HTMLDivElement>()
+	// Keeps the content while the menu animates out, so it fades as a whole, not as an empty box.
+	const exit = exitVisibility()
 	let mode = $state<'days' | 'months' | 'years'>('days')
 	let listMode = $state<'months' | 'years' | undefined>(undefined)
 	let pendingDay = $state<ISODate | undefined>(undefined)
@@ -461,20 +464,24 @@
 	bind:open
 	ontoggle={({ newState }) => {
 		if (newState === 'open') {
+			exit.show()
 			monthBeforeOpen = displayMonth
 			pendingDay = committed ? toISODate(committed) : undefined
 			pendingMinutes = committed ? minutesOfDay(committed) : defaultMinutes
 			focusCalendarWhenReady()
 		}
 		if (newState === 'closed') {
-			setMode('days')
-			listMode = undefined
-			focusedDay = undefined
-			displayMonth = monthBeforeOpen
+			// Reset once the menu is gone, not while it still shows.
+			exit.scheduleExit(menuElement, () => {
+				setMode('days')
+				listMode = undefined
+				focusedDay = undefined
+				displayMonth = monthBeforeOpen
+			})
 		}
 	}}
 >
-	{#if open}
+	{#if open || exit.visible}
 		<div
 			class="np-docked-date-time-picker-container"
 			style:--np-calendar-rows={rowCount}

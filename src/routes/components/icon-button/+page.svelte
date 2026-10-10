@@ -45,9 +45,8 @@
 
 <h1>Icon buttons</h1>
 <p>
-	An icon button is a single action drawn as an icon, for toolbars, app bars and anywhere a word
-	would not fit. It comes in the same four styles as a button, and in a toggle variant for a state
-	that stays.
+	An icon button is a single action shown as an icon. Use it in toolbars, app bars and anywhere a
+	word does not fit. It comes in four styles, and as a toggle for an on/off state.
 </p>
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -100,7 +99,7 @@
 </DemoContainer>
 <Code value={IconButtonShapesSource} />
 <h2 id="width">Width<a href="#width" aria-hidden="true" tabindex="-1">#</a></h2>
-<p>The width can be adjusted independently of the size. The height stays the same.</p>
+<p>You can set the width independently of the size. The height stays the same.</p>
 <DemoContainer>
 	<IconButtonWidths />
 </DemoContainer>
@@ -116,8 +115,8 @@
 </DemoContainer>
 <Code value={IconButtonLoadingSource} />
 <blockquote>
-	<Icon>bookmark</Icon> For accessibility, the <code>loadingAriaLabel</code> attribute is recommended
-	when using the loading state.
+	<Icon>bookmark</Icon> For accessibility, set <code>loadingAriaLabel</code> when you use the loading
+	state.
 </blockquote>
 <h2 id="tooltip">Tooltip<a href="#tooltip" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>
@@ -208,8 +207,8 @@
 	>
 </h3>
 <p>
-	A <code>toggle</code> filled icon button switches between an unselected and a selected container, each
-	with its own tokens instead of sharing the plain filled ones above.
+	A <code>toggle</code> filled icon button switches between an unselected and a selected container. Each
+	has its own tokens, separate from the filled tokens above.
 </p>
 <table>
 	<thead>
@@ -271,6 +270,14 @@
 			<td><code>--np-color-secondary-container</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-tonal-icon-button-unselected-icon-color</code></td>
+			<td><code>--np-color-on-secondary-container</code></td>
+		</tr>
+		<tr>
+			<td><code>--np-tonal-icon-button-unselected-container-color</code></td>
+			<td><code>--np-color-secondary-container</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-icon-button-icon-size</code></td>
 			<td><code>1.5rem</code></td>
 		</tr>
@@ -326,12 +333,13 @@
 </h2>
 <p>
 	An icon button renders a native <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> with
-	<code>href</code>. Nothing in an icon carries a name, so <code>title</code> is not optional here: it
-	becomes both the accessible name and the tooltip.
+	<code>href</code>. An icon has no name, so always set <code>title</code>. It becomes both the
+	accessible name and the tooltip, and is read once. Pass an <code>aria-label</code> too only when the
+	tooltip should add something to the name. The tooltip is then read as a description.
 </p>
 <p>
-	<code>toggle</code> reports the state with <code>aria-pressed</code>, so use it for a control that
-	stays on, a bookmark or a mute button, and write a title that holds for both states.
+	<code>toggle</code> reports the state with <code>aria-pressed</code>. Use it for a control that
+	stays on, like a bookmark or a mute button, and write a title that fits both states.
 	<code>loading</code> sets <code>aria-busy</code> and names the spinner with
 	<code>loadingAriaLabel</code>.
 </p>
@@ -417,24 +425,19 @@
 			<td><code>element</code></td>
 			<td><code><span class="bind">bind</span>:HTMLElement</code></td>
 			<td></td>
-			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
-			>
+			<td>The component's root DOM element, bound with <code>bind:this</code>.</td>
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>
 			<td><code>HTMLButtonAttributes &amp; HTMLAnchorAttributes</code></td>
 			<td></td>
 			<td
-				>A single, unified set of <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> attributes.
-				Setting <code>href</code> renders an <code>&lt;a&gt;</code>, otherwise a
+				>One set of <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> attributes. Setting
+				<code>href</code>
+				renders an <code>&lt;a&gt;</code>, otherwise a
 				<code>&lt;button&gt;</code>. Event handlers such as <code>onclick</code> receive
 				<code>event.currentTarget</code> typed as
-				<code>HTMLButtonElement | HTMLAnchorElement</code>, so you no longer need to set
-				<code>href</code> to get correctly typed events.</td
+				<code>HTMLButtonElement | HTMLAnchorElement</code>.</td
 			>
 		</tr>
 	</tbody>

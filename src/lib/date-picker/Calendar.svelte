@@ -110,12 +110,14 @@
 	const handleKeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		const grid = event.currentTarget
 		const from = focusedDate ?? tabStop
+		// Right to left, the next day sits to the left.
+		const forward = getComputedStyle(grid).direction === 'rtl' ? -1 : 1
 		switch (event.key) {
 			case 'ArrowLeft':
-				moveFocus(grid, addDays(from, -1))
+				moveFocus(grid, addDays(from, -forward))
 				break
 			case 'ArrowRight':
-				moveFocus(grid, addDays(from, 1))
+				moveFocus(grid, addDays(from, forward))
 				break
 			case 'ArrowUp':
 				moveFocus(grid, addDays(from, -DAYS_IN_WEEK))

@@ -1,8 +1,12 @@
 <script lang="ts">
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
+	import Centered from './demos/Centered.svelte'
+	import CenteredSource from './demos/Centered.svelte?raw'
 	import Collapsing from './demos/Collapsing.svelte'
 	import CollapsingSource from './demos/Collapsing.svelte?raw'
+	import Image from './demos/Image.svelte'
+	import ImageSource from './demos/Image.svelte?raw'
 	import Usage from './demos/Usage.svelte'
 	import UsageSource from './demos/Usage.svelte?raw'
 	import Variants from './demos/Variants.svelte'
@@ -25,8 +29,8 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The headline prop is called <code>headline</code>. An optional
-	<code>subtitle</code> sits under it, and the bar grows to fit rather than clipping.
+	Set the screen's name with <code>headline</code>. An optional <code>subtitle</code> sits under it, and
+	the bar grows to fit it.
 </p>
 <DemoContainer>
 	<Usage />
@@ -35,43 +39,68 @@
 
 <h2 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>search</code> carries a <a class="link" href="/components/search">search</a> field instead
-	of a headline, as an emphasised, global entry point to search; put the field in the
+	<code>search</code> shows a <a class="link" href="/components/search">search</a> field instead of
+	a headline, as a prominent, app-wide entry point to search. Put the field in the
 	<code>search</code> snippet. <code>small</code> is one row tall. <code>medium</code> and
-	<code>large</code> put the headline on a second line below the actions, giving the screen's name more
-	weight.
+	<code>large</code> put the headline on a second line below the actions, which gives the screen's
+	name more weight. <code>large</code> is 120dp tall and <code>medium</code> 112dp. With a subtitle they
+	grow to fit it.
 </p>
 <DemoContainer style="overflow:visible">
 	<Variants />
 </DemoContainer>
 <Code value={VariantsSource} />
+<p>
+	In a search app bar the field fills the space between the leading and trailing elements until it
+	is 312dp wide. Beyond that it takes only half of the space, centred.
+</p>
+
+<h3 id="centered">Centered<a href="#centered" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	<code>alignment="center"</code> centres the headline and subtitle. In a small app bar they sit in the
+	middle of the bar, whatever is beside them. In medium and large the second row is centred. In a search
+	app bar the placeholder is centred.
+</p>
+<DemoContainer style="overflow:visible">
+	<Centered />
+</DemoContainer>
+<Code value={CenteredSource} />
+
+<h3 id="image">Image<a href="#image" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	The <code>image</code> snippet adds an image or logo. In a small app bar it replaces the headline,
+	so give the image an <code>alt</code> text that names the screen. In medium and large it sits above
+	the headline.
+</p>
+<DemoContainer>
+	<Image />
+</DemoContainer>
+<Code value={ImageSource} />
 
 <h2 id="scrolling">Scrolling<a href="#scrolling" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	The bar starts in the page's surface color and fills with surface container once the content
-	scrolls under it, which separates it from the page without a shadow. Like collapsing, the fill
-	runs on <code>animation-timeline: scroll()</code> and follows the scroller set by
-	<code>scroller</code>. In a browser without scroll-driven animations the bar stays flat. Set
-	<code>--np-app-bar-scrolled-container-color: transparent</code> to keep the bar clear on scroll instead,
-	and give its icon buttons a filled container.
+	The bar starts in the page's surface color. Once the content scrolls under it, it fills with
+	surface container instead of casting a shadow. The fill uses
+	<code>animation-timeline: scroll()</code> and follows the scroller set by <code>scroller</code>.
+	In a browser without scroll-driven animations the bar stays flat. To keep the bar clear on scroll,
+	set
+	<code>--np-app-bar-scrolled-container-color: transparent</code> and give its icon buttons a filled container.
 </p>
 
 <h2 id="collapsing">Collapsing<a href="#collapsing" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>collapsible</code> shrinks a <code>medium</code> or <code>large</code> bar down to one row
-	as the page scrolls, moving the headline up into the action row. It is driven by
-	<code>animation-timeline: scroll()</code>, so there is no scroll listener and no state to keep. In
-	a browser without scroll-driven animations the bar simply stays expanded.
+	as the page scrolls, moving the headline up into the action row. It uses
+	<code>animation-timeline: scroll()</code>. In a browser without scroll-driven animations the bar
+	stays expanded.
 </p>
 <p>
 	By default it follows the page scroller. If the bar sits inside its own scroll container, pass
 	<code>scroller="nearest"</code> and make the bar a direct child of that container.
 </p>
 <p>
-	A collapsing bar also needs scroll anchoring off on whichever element scrolls, otherwise the
-	browser compensates for the shrinking bar by pushing the scroll position back and the bar never
-	collapses. The component sets <code>overflow-anchor: none</code> on the scroller for you, so there is
-	nothing to add.
+	The component sets <code>overflow-anchor: none</code> on the scroller, so the scroll position does not
+	jump back while the bar shrinks.
 </p>
 <DemoContainer>
 	<Collapsing />
@@ -111,14 +140,14 @@
 </h2>
 <p>
 	The bar renders a <code>&lt;header&gt;</code>. At the top level of a page that makes it the banner
-	landmark, so keep it out of <code>&lt;main&gt;</code>. The headline is styled text, not a heading,
-	which leaves the page free to keep its own <code>&lt;h1&gt;</code> where it belongs.
+	landmark, so keep it out of <code>&lt;main&gt;</code>. By default the headline is styled text, not
+	a heading, so the page can keep its own <code>&lt;h1&gt;</code>. When the headline is the page's
+	title, set <code>headlineLevel</code> to make it a heading of that level.
 </p>
 <p>
-	The medium and large variants carry a second copy of the title in the first row, the one that
-	fades in as the bar collapses. That copy is <code>aria-hidden</code>, so the title is announced
-	once. Everything you put in <code>leading</code> and <code>trailing</code> keeps its own name:
-	give each icon button a <code>title</code>.
+	The medium and large variants have a second copy of the title in the first row, which fades in as
+	the bar collapses. That copy is <code>aria-hidden</code>, so the title is announced once. Give
+	each icon button in <code>leading</code> and <code>trailing</code> a <code>title</code>.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="topappbar-attributes">
@@ -151,6 +180,28 @@
 			<td>Secondary line under the headline.</td>
 		</tr>
 		<tr>
+			<td><code>headlineLevel</code></td>
+			<td><code>1 | 2 | 3 | 4 | 5 | 6 | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Renders the headline as a heading of this level. Without it the headline is plain text.</td
+			>
+		</tr>
+		<tr>
+			<td><code>alignment</code></td>
+			<td><code>'start' | 'center'</code></td>
+			<td><code>'start'</code></td>
+			<td>Headline and subtitle at the leading edge or centred.</td>
+		</tr>
+		<tr>
+			<td><code>image</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>An image or logo. It replaces the headline of a small app bar and sits above it otherwise.</td
+			>
+		</tr>
+		<tr>
 			<td><code>variant</code></td>
 			<td><code>'search' | 'small' | 'medium' | 'large'</code></td>
 			<td><code>'small'</code></td>
@@ -161,8 +212,7 @@
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>
-				The search field, for <code>variant="search"</code>. Replaces the headline, which a search
-				app bar does not show.
+				The search field, for <code>variant="search"</code>. Replaces the headline.
 			</td>
 		</tr>
 		<tr>
@@ -183,7 +233,7 @@
 			<td><code>false</code></td>
 			<td>
 				Collapses a <code>medium</code> or <code>large</code> bar to one row on scroll. Ignored by the
-				one-row variants, which have nothing to collapse.
+				one-row variants.
 			</td>
 		</tr>
 		<tr>

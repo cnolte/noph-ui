@@ -15,15 +15,15 @@
 	<title>Cards - Material 3 card component for Svelte - Noph UI</title>
 	<meta
 		name="description"
-		content="Material 3 cards for Svelte in the elevated, filled and outlined styles, themable down to the container color, shape and elevation of each one."
+		content="Material 3 cards for Svelte in the elevated, filled and outlined styles, with themable container color and shape."
 	/>
 </svelte:head>
 
 <h1>Cards</h1>
 <p>
-	A card groups content and actions about one subject. Material 3 gives three styles, elevated,
-	filled and outlined, which differ in how far the card lifts off the background rather than in what
-	it can hold.
+	A card groups content and actions about one subject. There are three styles: elevated, filled and
+	outlined. They differ in how much the card stands out from the background, not in what it can
+	hold.
 </p>
 <h2 id="types">Types<a href="#types" aria-hidden="true" tabindex="-1">#</a></h2>
 
@@ -120,16 +120,16 @@
 </h2>
 <p>
 	A plain card is a <code>&lt;div&gt;</code>: it holds content and takes no focus. Give it an
-	<code>href</code> or an <code>onclick</code> only when the whole card really is one target, and it
-	renders an <code>&lt;a&gt;</code> or a <code>&lt;button&gt;</code> instead. A <code>command</code>
+	<code>href</code> or an <code>onclick</code> only when the whole card is one target. It then
+	renders an <code>&lt;a&gt;</code> or a <code>&lt;button&gt;</code>. A <code>command</code>
 	or <code>popovertarget</code> also makes it a button. Set
 	<code>type</code> to pin the element yourself.
 </p>
 <p>
-	A card that only wraps its own buttons and links should stay a plain card. Nesting controls inside
-	a clickable card leaves a screen reader with a target inside a target, and there is no way to
-	reach the inner one. A disabled clickable card keeps <code>aria-disabled</code> and steps out of the
-	tab order.
+	A card that holds its own buttons and links should stay a plain card. Inside a clickable card, a
+	screen reader cannot reach those inner controls. A disabled clickable card keeps <code
+		>aria-disabled</code
+	> and steps out of the tab order.
 </p>
 <p>
 	The image is decorative by default. When it carries meaning, describe it with
@@ -236,10 +236,8 @@
 			<td><code>element</code></td>
 			<td><code>HTMLElement</code></td>
 			<td
-				>A reference to the root DOM element of the component. This variable is bound using <code
-					>bind:this</code
-				>, allowing direct access to the underlying HTML element for manipulation or querying within
-				the component's logic.</td
+				>A reference to the root DOM element of the component, bound with <code>bind:this</code
+				>.</td
 			>
 		</tr>
 	</tbody>

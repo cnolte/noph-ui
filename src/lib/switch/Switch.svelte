@@ -9,7 +9,7 @@
 		element = $bindable(),
 		inputElement = $bindable(),
 		icons,
-		onkeyup,
+		onkeydown,
 		issues,
 		'aria-invalid': ariaInvalid,
 		...attributes
@@ -57,12 +57,11 @@
 	{/if}
 	<input
 		{...attributes}
-		onkeyup={(e) => {
-			if (e.key === 'Enter' && !disabled) {
-				e.preventDefault()
-				selected = !selected
-			}
-			onkeyup?.(e)
+		onkeydown={(e) => {
+			onkeydown?.(e)
+			if (e.defaultPrevented || e.key !== 'Enter' || disabled) return
+			e.preventDefault()
+			e.currentTarget.click()
 		}}
 		type="checkbox"
 		role="switch"
@@ -76,6 +75,11 @@
 <style>
 	.np-switch {
 		--_travel: 1.25rem;
+		--_selected-handle: var(--np-switch-selected-handle-color, var(--np-color-on-primary));
+		--_unselected-active-handle: var(
+			--np-switch-unselected-handle-color,
+			var(--np-color-on-surface-variant)
+		);
 		position: relative;
 		width: 3.25rem;
 		height: 2rem;
@@ -145,9 +149,11 @@
 		opacity: 0;
 		position: absolute;
 		cursor: inherit;
-		inset: 0;
+		inset-inline-start: 0;
+		inset-block-start: 50%;
+		translate: 0 -50%;
 		width: 100%;
-		height: 100%;
+		height: max(3rem, 100%);
 		margin: 0;
 	}
 
@@ -171,16 +177,46 @@
 	.np-switch:has(input:checked) .np-handle {
 		transform: translateX(var(--_travel)) scale(1.5);
 		color: var(--np-switch-selected-icon-color, var(--np-color-primary));
-		background-color: var(--np-switch-selected-handle-color, var(--np-color-on-primary));
+		background-color: var(--_selected-handle);
+	}
+
+	@media (hover: hover) {
+		.np-switch:not(.np-disabled):hover:has(input:not(:checked)) .np-handle {
+			background-color: var(
+				--np-switch-unselected-hover-handle-color,
+				var(--_unselected-active-handle)
+			);
+		}
+
+		.np-switch:not(.np-disabled, .np-error):hover:has(input:checked) .np-handle {
+			background-color: var(--np-switch-selected-hover-handle-color, var(--_selected-handle));
+		}
+	}
+
+	.np-switch:not(.np-disabled):has(input:not(:checked):active) .np-handle {
+		background-color: var(
+			--np-switch-unselected-pressed-handle-color,
+			var(--_unselected-active-handle)
+		);
+	}
+
+	.np-switch:not(.np-disabled, .np-error):has(input:checked:active) .np-handle {
+		background-color: var(--np-switch-selected-pressed-handle-color, var(--_selected-handle));
+	}
+
+	.np-switch:not(.np-error):has(input:checked) {
+		--np-ripple-hover-color: var(--np-switch-selected-track-color, var(--np-color-primary));
+		--np-ripple-pressed-color: var(--np-switch-selected-track-color, var(--np-color-primary));
 	}
 
 	.np-disabled .np-handle {
+		background-color: var(--np-switch-disabled-unselected-handle-color, var(--np-color-on-surface));
 		opacity: var(--np-switch-disabled-unselected-handle-opacity, 0.38);
 	}
 
 	.np-switch.np-disabled:has(input:checked) .np-handle {
 		opacity: var(--np-switch-disabled-selected-handle-opacity, 1);
-		background-color: var(--np-switch-selected-handle-color, var(--np-color-surface));
+		background-color: var(--np-switch-disabled-selected-handle-color, var(--np-color-surface));
 	}
 
 	.np-switch:has(input:checked) .np-track {
@@ -211,6 +247,10 @@
 
 	.np-disabled .np-track {
 		opacity: var(--np-switch-disabled-track-opacity, 0.12);
+		outline-color: var(
+			--np-switch-disabled-unselected-track-outline-color,
+			var(--np-color-on-surface)
+		);
 		background-color: var(
 			--np-switch-disabled-unselected-track-color,
 			var(--np-color-surface-container-highest)

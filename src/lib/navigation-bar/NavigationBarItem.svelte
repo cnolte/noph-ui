@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/focus-ring.css'
 	import Badge from '#lib/badge/Badge.svelte'
+	import { badgeDescription } from '#lib/badge/description.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 	import type { NavigationBarItemProps } from './types.js'
@@ -18,7 +19,11 @@
 		...attributes
 	}: NavigationBarItemProps = $props()
 
-	let touchEl: HTMLSpanElement | undefined = $state()
+	const uid = $props.id()
+	let badgeId = $derived(badge ? `${uid}-badge` : undefined)
+	let describedBy = $derived(
+		[attributes['aria-describedby'], badgeId].filter(Boolean).join(' ') || undefined,
+	)
 
 	let isLink = $derived(attributes.href != null)
 	let classes = $derived([
@@ -32,21 +37,24 @@
 
 {#snippet content()}
 	{#if orientation === 'horizontal'}
-		<Ripple forElement={touchEl} />
+		<Ripple forElement={element} />
 	{/if}
 	<span class="np-navigation-bar-item-icon">
 		{#if orientation === 'vertical'}
-			<Ripple forElement={touchEl} />
+			<Ripple forElement={element} />
 		{/if}
 		{@render icon()}
 		{#if badge}
 			<span class="np-navigation-bar-item-badge">
-				<Badge label={badgeLabel} aria-label={badgeAriaLabel} />
+				<Badge label={badgeLabel} />
 			</span>
 		{/if}
 	</span>
 	<span class="np-navigation-bar-item-label">{label}</span>
-	<span class="np-touch" bind:this={touchEl}></span>
+	{#if badgeId}
+		<span id={badgeId} hidden>{badgeDescription(badgeLabel, badgeAriaLabel)}</span>
+	{/if}
+	<span class="np-touch"></span>
 {/snippet}
 
 {#if isLink}
@@ -54,6 +62,7 @@
 		{...attributes}
 		bind:this={element}
 		href={attributes.href}
+		aria-describedby={describedBy}
 		class={classes}
 		aria-current={selected ? 'page' : undefined}
 		tabindex={selected ? 0 : -1}
@@ -64,6 +73,7 @@
 	<button
 		{...attributes as HTMLButtonAttributes}
 		bind:this={element}
+		aria-describedby={describedBy}
 		class={classes}
 		aria-current={selected ? 'page' : undefined}
 		tabindex={selected ? 0 : -1}
@@ -80,6 +90,8 @@
 		cursor: pointer;
 		font: inherit;
 		border-width: 0;
+		padding-block: 0;
+		padding-inline: 0.375rem;
 		background: none;
 		display: flex;
 		flex-direction: column;
@@ -150,6 +162,7 @@
 	}
 
 	.np-navigation-bar-item-horizontal {
+		flex: 0 0 auto;
 		flex-direction: row;
 		justify-content: center;
 		gap: 0.25rem;
@@ -182,14 +195,12 @@
 	.np-navigation-bar-item-horizontal .np-navigation-bar-item-icon::before {
 		content: none;
 	}
-	.np-navigation-bar-item-horizontal .np-navigation-bar-item-badge {
-		--np-badge-top: -0.25rem;
-		--np-badge-end: -0.25rem;
-	}
 	.np-navigation-bar-item-horizontal .np-touch {
-		inset: 0;
+		inset-inline: 0;
+		inset-block-start: 50%;
+		translate: 0 -50%;
 		width: 100%;
-		height: 100%;
+		height: max(3rem, 100%);
 	}
 	@media (prefers-reduced-motion: no-preference) {
 		.np-navigation-bar-item-horizontal::before {
@@ -200,10 +211,11 @@
 	}
 
 	.np-navigation-bar-item-badge {
-		--np-badge-top: 0;
-		--np-badge-end: 1rem;
 		position: absolute;
 		inset: 0;
+		width: 1.5rem;
+		height: 1.5rem;
+		margin: auto;
 		pointer-events: none;
 	}
 
@@ -220,6 +232,10 @@
 		outline-width: 3px;
 		outline-offset: 2px;
 		border-radius: 1rem;
+	}
+	/* The focused state layer, on top of the ring. */
+	.np-navigation-bar-item:focus-visible :global(.np-ripple-surface)::before {
+		opacity: var(--np-ripple-focus-opacity, 0.1);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {

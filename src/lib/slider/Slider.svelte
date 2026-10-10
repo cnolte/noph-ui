@@ -117,14 +117,9 @@
 
 	let startLabelElement = $state<HTMLDivElement>()
 	let endLabelElement = $state<HTMLDivElement>()
-	let startHandleElement = $state<HTMLDivElement>()
-	let endHandleElement = $state<HTMLDivElement>()
-	let hovered = $state<'start' | 'end' | null>(null)
 	let focused = $state<'start' | 'end' | null>(null)
 
-	let labelled = $derived(
-		disabled ? null : (dragging ?? hovered ?? (pointerFocused ? null : focused)),
-	)
+	let labelled = $derived(disabled ? null : (dragging ?? (pointerFocused ? null : focused)))
 
 	const bindLabel = (getElement: () => HTMLDivElement | undefined, side: 'start' | 'end') => {
 		const controller = popoverController(getElement)
@@ -178,24 +173,7 @@
 		}
 	}
 
-	const HOVER_TOLERANCE = 12
-
-	const distanceTo = (handle: HTMLDivElement | undefined, e: PointerEvent) => {
-		if (!handle) return Infinity
-		const r = handle.getBoundingClientRect()
-		const dx = Math.max(r.left - e.clientX, 0, e.clientX - r.right)
-		const dy = Math.max(r.top - e.clientY, 0, e.clientY - r.bottom)
-		return Math.hypot(dx, dy)
-	}
-
-	const updateHover = (e: PointerEvent) => {
-		const toStart = distanceTo(startHandleElement, e)
-		const toEnd = distanceTo(endHandleElement, e)
-		hovered = Math.min(toStart, toEnd) > HOVER_TOLERANCE ? null : toStart <= toEnd ? 'start' : 'end'
-	}
-
 	const onpointermove = (e: PointerEvent) => {
-		updateHover(e)
 		if (!dragging) return
 		if (!tracking) {
 			const d = pointerOrigin
@@ -235,7 +213,6 @@
 		tracking = false
 		pointerOrigin = null
 		element?.releasePointerCapture(e.pointerId)
-		updateHover(e)
 		input?.dispatchEvent(new Event('change', { bubbles: true }))
 	}
 
@@ -264,7 +241,6 @@
 	{onpointermove}
 	onpointerup={endDrag}
 	onpointercancel={endDrag}
-	onpointerleave={() => (hovered = null)}
 	onkeydown={() => (pointerFocused = false)}
 	onfocusin={(event) => (focused = event.target === endInputElement ? 'end' : 'start')}
 	onfocusout={() => {
@@ -295,7 +271,6 @@
 		{/each}
 
 		<div
-			bind:this={startHandleElement}
 			class="np-slider-handle np-slider-handle-start"
 			style="anchor-name: --np-slider-{uid}-start"
 		></div>
@@ -311,7 +286,6 @@
 		{/if}
 		{#if range}
 			<div
-				bind:this={endHandleElement}
 				class="np-slider-handle np-slider-handle-end"
 				style="anchor-name: --np-slider-{uid}-end"
 			></div>

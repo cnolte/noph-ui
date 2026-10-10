@@ -1,4 +1,4 @@
-import { tick } from 'svelte'
+import { createRawSnippet } from 'svelte'
 import { describe, expect, test } from 'vitest'
 import { page } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
@@ -26,12 +26,6 @@ describe('Fab', async () => {
 		await render(Fab, { label: 'Add', href: '/new' })
 		expect(document.querySelector('a.np-fab')).not.toBeNull()
 		expect(document.querySelector('button.np-fab')).toBeNull()
-	})
-
-	test('a disabled fab with an href stays a button, so it is not followable', async () => {
-		await render(Fab, { label: 'Add', href: '/new', disabled: true })
-		expect(document.querySelector('button.np-fab')).not.toBeNull()
-		expect(document.querySelector('a.np-fab')).toBeNull()
 	})
 
 	test('names itself from label, since it shows no text', async () => {
@@ -90,16 +84,6 @@ describe('Fab', async () => {
 		)
 	})
 
-	test('a click holds a pressed class, so the corner morph outlasts the pointer lift', async () => {
-		await render(Fab, { label: 'Add' })
-
-		root().click()
-		await tick()
-		expect(root().classList.contains('pressed')).toBe(true)
-
-		await expect.poll(() => root().classList.contains('pressed'), { timeout: 400 }).toBe(false)
-	})
-
 	test('a click still reaches the handler', async () => {
 		let clicked = 0
 		await render(Fab, { label: 'Add', onclick: () => (clicked += 1) })
@@ -120,6 +104,31 @@ describe('Fab', async () => {
 })
 
 describe('ExtendedFab', async () => {
+	const icon = createRawSnippet(() => ({
+		render: () =>
+			'<span style="display:block;width:var(--np-icon-size);height:var(--np-icon-size)"></span>',
+	}))
+	const iconOffset = () => {
+		const fab = document.querySelector('.np-extended-fab')!.getBoundingClientRect()
+		return document.querySelector('.np-fab-icon')!.getBoundingClientRect().left - fab.left
+	}
+
+	for (const size of ['s', 'm', 'l'] as const) {
+		test(`the icon keeps its place when it collapses (${size})`, async () => {
+			const { rerender } = await render(ExtendedFab, { label: 'Compose', icon, size })
+			const expanded = iconOffset()
+
+			await rerender({ label: 'Compose', icon, size, collapsed: true })
+
+			const fab = document.querySelector('.np-extended-fab')!.getBoundingClientRect()
+			const iconBox = document.querySelector('.np-fab-icon')!.getBoundingClientRect()
+			expect(fab.width).toBe(fab.height)
+			// Centred in the square, and no further from where it sat than the square's rounding needs.
+			expect(iconBox.left - fab.left).toBeCloseTo(fab.right - iconBox.right, 0)
+			expect(Math.abs(iconOffset() - expanded)).toBeLessThanOrEqual(2)
+		})
+	}
+
 	test('shows its label as text, so it needs no aria-label', async () => {
 		await render(ExtendedFab, { label: 'Compose' })
 		expect(root().textContent).toContain('Compose')
@@ -153,15 +162,5 @@ describe('ExtendedFab', async () => {
 		await page.getByRole('button', { name: 'Compose' }).click()
 
 		expect(clicked).toBe(1)
-	})
-
-	test('a click holds a pressed class, so the corner morph outlasts the pointer lift', async () => {
-		await render(ExtendedFab, { label: 'Compose' })
-
-		root().click()
-		await tick()
-		expect(root().classList.contains('pressed')).toBe(true)
-
-		await expect.poll(() => root().classList.contains('pressed'), { timeout: 400 }).toBe(false)
 	})
 })

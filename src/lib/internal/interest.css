@@ -1,4 +1,6 @@
-[interestfor][aria-describedby] {
+/* A tooltip shows at once and lingers a little. Its anchor either points at it with
+   aria-describedby or, when the tooltip text is the anchor's name, is followed by it. */
+[interestfor]:is([aria-describedby], :has(+ [role='tooltip'])) {
 	interest-delay-start: 0s;
 	interest-delay-end: 500ms;
 }

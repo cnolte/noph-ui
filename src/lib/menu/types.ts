@@ -8,4 +8,10 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 	coverAnchor?: boolean
 }
 
-export type MenuItemProps = Omit<ItemProps, 'variant' | 'softFocus'>
+export interface MenuItemProps extends Omit<ItemProps, 'variant' | 'softFocus' | 'role'> {
+	/**
+	 * `menuitemradio` for one choice out of several, `menuitemcheckbox` for a choice that can be
+	 * toggled on its own. Both announce `selected` as checked, and a checkbox keeps the menu open.
+	 */
+	role?: 'menuitem' | 'menuitemradio' | 'menuitemcheckbox'
+}

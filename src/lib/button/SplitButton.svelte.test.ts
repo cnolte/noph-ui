@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { page } from 'vitest/browser'
+import { page, userEvent } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
+import IconOnly from './SplitButtonIconOnly.test.svelte'
 import Harness from './SplitButtonHarness.test.svelte'
 
 const halves = () => [...document.querySelectorAll<HTMLElement>('.np-split-button .np-button')]
@@ -81,5 +82,34 @@ describe('SplitButton', async () => {
 		await render(Harness, { variant: 'elevated' })
 
 		expect(halves().every((h) => h.classList.contains('elevated'))).toBe(true)
+	})
+})
+
+describe('SplitButton spec', async () => {
+	const radius = (el: HTMLElement) => getComputedStyle(el).borderStartEndRadius
+
+	test('meets with 4px inner corners at small size and keeps its own width', async () => {
+		await render(Harness)
+		const [action] = halves()
+		expect(radius(action)).toBe('4px')
+		expect(document.querySelector('.np-split-button')!.getBoundingClientRect().width).toBeLessThan(
+			window.innerWidth / 2,
+		)
+	})
+
+	test('Tab moves from the leading to the trailing button', async () => {
+		await render(Harness)
+		halves()[0].focus()
+
+		await userEvent.keyboard('{Tab}')
+
+		expect(document.activeElement).toBe(trigger())
+	})
+
+	test('an icon only split button is named by its label', async () => {
+		await render(IconOnly)
+
+		await expect.element(page.getByRole('button', { name: 'Edit', exact: true })).toBeVisible()
+		expect(halves()[0].querySelector('.children-wrapper')).toBeNull()
 	})
 })

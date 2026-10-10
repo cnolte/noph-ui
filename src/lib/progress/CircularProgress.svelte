@@ -195,7 +195,8 @@
 	}
 
 	.progress:not(.indeterminate) .track {
-		--_g: min(var(--_active), var(--_gap));
+		/* The full gap as soon as there is any progress, so a low value shows as a dot. */
+		--_g: calc(var(--_gap) * clamp(0, var(--_active) * 100, 1));
 		stroke-dasharray: calc(max(0, 100 - var(--_active) - 2 * var(--_g)) * 1px) 100px;
 		stroke-dashoffset: calc((var(--_active) + var(--_g)) * -1px);
 	}

@@ -13,6 +13,8 @@
 	import DockedDateTimePicker from '#lib/date-picker/DockedDateTimePicker.svelte'
 	import Icon from '#lib/icons/Icon.svelte'
 	import Item from '#lib/list/Item.svelte'
+	import List from '#lib/list/List.svelte'
+	import ListItem from '#lib/list/ListItem.svelte'
 	import LoadingIndicator from '#lib/loading-indicator/LoadingIndicator.svelte'
 	import Menu from '#lib/menu/Menu.svelte'
 	import MenuItem from '#lib/menu/MenuItem.svelte'
@@ -195,17 +197,14 @@
 		headline="Now playing"
 		--np-outlined-card-container-shape="var(--np-shape-corner-extra-large)"
 	>
-		<Search
-			bind:value={jump}
-			bind:expanded={jumpExpanded}
-			placeholder="Jump to a track"
-			aria-label="Jump to a track"
-		>
-			{#each trackMatches as candidate (candidate.title)}
-				<Item onclick={() => jumpTo(candidate.title)} supportingText={candidate.artist}>
-					{candidate.title}
-				</Item>
-			{/each}
+		<Search bind:value={jump} bind:expanded={jumpExpanded} placeholder="Jump to a track">
+			<List aria-label="Tracks">
+				{#each trackMatches as candidate (candidate.title)}
+					<ListItem onclick={() => jumpTo(candidate.title)} supportingText={candidate.artist}>
+						{candidate.title}
+					</ListItem>
+				{/each}
+			</List>
 		</Search>
 		<div class="row spread">
 			<div class="stack">
@@ -313,8 +312,8 @@
 					<Badge
 						label={unread}
 						aria-label="{unread} unread"
-						--np-badge-end="-0.25rem"
-						--np-badge-top="-0.25rem"
+						--np-badge-start="calc(100% - 1.25rem)"
+						--np-badge-top="0.375rem"
 					/>
 				{/if}
 			</div>
@@ -433,6 +432,8 @@
 						<MenuItem
 							command="hide-popover"
 							commandfor={menuId}
+							role="menuitemradio"
+							selected={size === party}
 							onclick={() => {
 								party = size
 							}}

@@ -29,9 +29,8 @@
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Mark the current destination with <code>selected</code>. That makes it the only tab stop in the
-	bar, so the whole bar is one stop in the tab order and the arrow keys move between destinations,
-	which is what a screen reader user expects of a navigation row.
+	Mark the current destination with <code>selected</code>. It becomes the bar's only tab stop, and
+	the arrow keys move between destinations.
 </p>
 <DemoContainer>
 	<Usage />
@@ -56,9 +55,9 @@
 <h2 id="badges">Badges<a href="#badges" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	<code>badge</code> puts a <a class="link" href="/components/badge">badge</a> on the icon. Without
-	a <code>badgeLabel</code> it is a small dot. Give it a
-	<code>badgeAriaLabel</code> so the count is announced, otherwise the badge is hidden from assistive
-	technology.
+	a <code>badgeLabel</code> it is a small dot. A screen reader reads it after the destination's
+	name: the count, or <code>New notification</code> for a dot. <code>badgeAriaLabel</code> replaces that
+	text, to say what the number counts or to translate it.
 </p>
 <DemoContainer>
 	<Badges />
@@ -77,10 +76,9 @@
 
 <h2 id="arrangement">Arrangement<a href="#arrangement" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	By default items share the bar equally (<code>arrangement="equal-weight"</code>), which M3
-	recommends for compact, phone-width screens. Once the bar has room to spare, switch to
-	<code>arrangement="centered"</code> so each item keeps its own content width and the group sits in the
-	middle instead of stretching edge to edge.
+	By default items share the bar equally (<code>arrangement="equal-weight"</code>), as M3 recommends
+	for phone-width screens. When the bar has room to spare, use <code>arrangement="centered"</code>.
+	Each item then keeps its own width and the group sits in the middle.
 </p>
 <DemoContainer>
 	<Arrangement />
@@ -91,8 +89,9 @@
 	Horizontal items<a href="#horizontal-items" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	<code>orientation="horizontal"</code> puts the icon beside the label instead of above it. M3 pairs this
-	with the centered arrangement once a bar has the width to spare.
+	<code>orientation="horizontal"</code> puts the icon beside the label, inside the active indicator.
+	M3 uses it on medium windows. Horizontal items always keep their own width and sit centred with
+	32dp between them, whatever the <code>arrangement</code>.
 </p>
 <DemoContainer>
 	<HorizontalItems />
@@ -132,22 +131,20 @@
 </h2>
 <p>
 	The bar renders a <code>&lt;nav&gt;</code> landmark. Give it an <code>aria-label</code> when the
-	page has more than one, so screen reader users can tell the main navigation from the rest. The
-	selected item carries <code>aria-current="page"</code>.
+	page has more than one, so screen reader users can tell them apart. The selected item carries
+	<code>aria-current="page"</code>.
 </p>
 <p>
-	The items share a single tab stop. Tab moves into the bar and out again, and the left and right
-	arrow keys move between destinations, with Home and End jumping to the ends. Items are links when
-	you pass <code>href</code>, which keeps middle click and open in new tab working. A badge on an
-	item needs <code>badgeAriaLabel</code> to be more than decoration.
+	The items share one tab stop. Tab moves into the bar and out again. The left and right arrow keys
+	move between destinations, and Home and End jump to the ends. With <code>href</code> the items are links,
+	so middle click and open in new tab work. A badge is read after the item's name, as its description.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="navigationbar-attributes">
 	NavigationBar attributes<a href="#navigationbar-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	Renders a <code>&lt;nav&gt;</code> and takes its attributes, so give it an
-	<code>aria-label</code> when a page has more than one navigation landmark.
+	Renders a <code>&lt;nav&gt;</code> and takes its attributes, such as <code>aria-label</code>.
 	<code>bind:element</code> gives you the <code>&lt;nav&gt;</code>.
 </p>
 <table>
@@ -165,8 +162,8 @@
 			<td><code>'equal-weight' | 'centered'</code></td>
 			<td><code>'equal-weight'</code></td>
 			<td
-				>Whether items stretch to share the bar equally, or keep their own width and group in the
-				middle.</td
+				>Whether vertical items stretch to share the bar equally, or keep their own width and group
+				in the middle. Horizontal items are always centred.</td
 			>
 		</tr>
 	</tbody>
@@ -242,7 +239,9 @@
 			<td><code>badgeAriaLabel</code></td>
 			<td><code>string | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Announces the badge. Without it the badge is hidden from assistive technology.</td>
+			<td>
+				Read after the label. Without it the count is read, or <code>New notification</code> for a dot.
+			</td>
 		</tr>
 	</tbody>
 </table>

@@ -7,11 +7,16 @@
 	let {
 		open = $bindable(false),
 		placement = 'block-start',
-	}: { open?: boolean; placement?: FabMenuProps['placement'] } = $props()
+		size = 's',
+	}: {
+		open?: boolean
+		placement?: FabMenuProps['placement']
+		size?: FabMenuProps['size']
+	} = $props()
 </script>
 
 <div style="margin-block:10rem;display:flex;justify-content:center">
-	<FabMenu bind:open {placement} label="Create">
+	<FabMenu bind:open {placement} {size} label="Create">
 		{#snippet icon()}<Icon>add</Icon>{/snippet}
 		<Button role="menuitem" variant="tonal">New document</Button>
 		<Button role="menuitem" variant="tonal">New folder</Button>

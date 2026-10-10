@@ -38,6 +38,7 @@
 	let useVirtualList = $derived(displayOptions.length > virtualThreshold)
 	let widthProp = $derived(clampMenuWidth || useVirtualList ? 'width' : 'min-width')
 	let menuElement = $state<HTMLDivElement>()
+	let virtualList = $state<VirtualList<AutoCompleteOption>>()
 	let finalPopulated = $derived(populated)
 	let activeIndex = $state(NO_INDEX)
 
@@ -81,25 +82,7 @@
 			optEl.scrollIntoView({ block: 'nearest' })
 			return
 		}
-		if (useVirtualList && menuElement) {
-			const viewport = menuElement.querySelector(
-				'svelte-virtual-list-viewport',
-			) as HTMLElement | null
-			if (!viewport) return
-			let rowHeight = 48
-			const firstRow = viewport.querySelector('[id^="' + uid + '-opt-"]') as HTMLElement | null
-			if (firstRow) {
-				rowHeight = firstRow.offsetHeight || rowHeight
-			}
-			const top = activeIndex * rowHeight
-			const bottom = top + rowHeight
-			const { scrollTop, clientHeight } = viewport
-			if (top < scrollTop) {
-				viewport.scrollTop = top
-			} else if (bottom > scrollTop + clientHeight) {
-				viewport.scrollTop = bottom - clientHeight
-			}
-		}
+		if (useVirtualList) virtualList?.scrollToIndex(activeIndex)
 	})
 </script>
 
@@ -169,13 +152,9 @@
 			event.preventDefault()
 			return
 		}
-		if (event.key === 'Home') {
-			setActive(0)
-			event.preventDefault()
-			return
-		}
-		if (event.key === 'End') {
-			setActive(displayOptions.length - 1)
+		// Home and End move the caret, unless the arrows have already moved into the options.
+		if ((event.key === 'Home' || event.key === 'End') && open && activeIndex >= 0) {
+			setActive(event.key === 'Home' ? 0 : displayOptions.length - 1)
 			event.preventDefault()
 			return
 		}
@@ -227,11 +206,7 @@
 	bind:element={menuElement}
 >
 	{#if useVirtualList}
-		<VirtualList
-			height="250px"
-			itemHeight={displayOptions.some(({ supportingText }) => supportingText) ? 68 : 48}
-			items={displayOptions}
-		>
+		<VirtualList bind:this={virtualList} height="250px" items={displayOptions}>
 			{#snippet row(option, index)}
 				{@render item(option, index)}
 			{/snippet}

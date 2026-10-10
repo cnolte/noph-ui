@@ -21,6 +21,8 @@
 	import FilterChipRemovableSource from './demos/FilterChipRemovable.svelte?raw'
 	import InputChipDefault from './demos/InputChipDefault.svelte'
 	import InputChipDefaultSource from './demos/InputChipDefault.svelte?raw'
+	import InputChipAvatar from './demos/InputChipAvatar.svelte'
+	import InputChipAvatarSource from './demos/InputChipAvatar.svelte?raw'
 	import InputChipDisabled from './demos/InputChipDisabled.svelte'
 	import InputChipDisabledSource from './demos/InputChipDisabled.svelte?raw'
 	import InputChipSelected from './demos/InputChipSelected.svelte'
@@ -45,9 +47,9 @@
 
 <h1>Chips</h1>
 <p>
-	Chips are compact actions and choices in the flow of the content. Material 3 has four: assist for
-	a helpful action, suggestion for something the app proposes, filter for narrowing a list, and
-	input for what someone has already entered.
+	Chips are small actions and choices inside the content. Material 3 has four types: assist chips
+	for a helpful action, suggestion chips for something the app suggests, filter chips to narrow a
+	list, and input chips for something the user has entered.
 </p>
 
 <h2 id="assist-chip">Assist chip<a href="#assist-chip" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -80,8 +82,8 @@
 	Suggestion chip<a href="#suggestion-chip" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	A suggestion chip carries a generated suggestion rather than an action, so it is text only and
-	takes no icon. Everything else matches an assist chip.
+	A suggestion chip shows a generated suggestion instead of an action. It can start with an icon
+	when that helps tell suggestions apart. Otherwise it works like an assist chip.
 </p>
 <DemoContainer>
 	<SuggestionChip />
@@ -138,14 +140,25 @@
 	Separate actions<a href="#separate-actions" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	The chip body is a button of its own, so it can be focused and activated with the keyboard. Use
-	<code>onclick</code> for the primary action, for example selecting the chip or switching it into
-	an edit mode, and <code>onremove</code> for the trailing icon.
+	Without <code>onclick</code>, an input chip can only be removed. The whole chip is one focusable
+	element: its remove button. Pass <code>onclick</code> to add a primary action, such as selecting the
+	chip or switching it into an edit mode. The chip body then becomes its own button next to the remove
+	button. The chip is then at least 88px wide, so both buttons keep a 48px target.
 </p>
 <DemoContainer>
 	<InputChipSeparateActions />
 </DemoContainer>
 <Code value={InputChipSeparateActionsSource} />
+
+<h3 id="avatar">Avatar and elevated<a href="#avatar" aria-hidden="true" tabindex="-1">#</a></h3>
+<p>
+	<code>avatar</code> shows a 24px image, such as a person's photo, at the start of the chip instead
+	of an icon. <code>variant="elevated"</code> puts the chip on a raised surface instead of an outline.
+</p>
+<DemoContainer>
+	<InputChipAvatar />
+</DemoContainer>
+<Code value={InputChipAvatarSource} />
 
 <h3 id="disabled-3">Disabled<a href="#disabled-3" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
@@ -166,28 +179,23 @@
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>
 </h2>
 <p>
-	Every chip type renders the element that matches what it does. An assist chip is a
+	Each chip type renders the element that fits its role. An assist chip is a
 	<code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> when you pass an <code>href</code>. A
-	filter chip is a checkbox with a label, so it reports its selected state to assistive technology
-	on its own. An input chip is a button with a second button for removing it.
+	filter chip is a checkbox with a label, so assistive technology reads its selected state.
+	<kbd>Enter</kbd> selects it like <kbd>Space</kbd> instead of submitting the form. An input chip is
+	a remove button. With <code>onclick</code>, it is a button plus a second button for removing it.
+	<kbd>Backspace</kbd> and <kbd>Delete</kbd> remove the focused input chip and move focus to its neighbour.
 </p>
 <p>
-	Wrap chips in a <code>ChipSet</code> to give them a single tab stop: <kbd>Tab</kbd> moves into and
-	out of the set, <kbd>←</kbd> and <kbd>→</kbd> move between the chips and wrap around at the ends,
-	and <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and the last one.
+	Wrap chips in a <code>ChipSet</code> to give them a single tab stop. <kbd>Tab</kbd> moves into and
+	out of the set. <kbd>←</kbd> and <kbd>→</kbd> move between the chips and wrap around at the ends.
+	<kbd>Home</kbd> and <kbd>End</kbd> jump to the first and the last chip. When the chips wrap onto
+	several rows, <kbd>↑</kbd> and <kbd>↓</kbd> move to the closest chip in the row above or below.
 </p>
 <p>
-	A remove button carries no text of its own, so give it one through
-	<code>removeAriaLabel</code>. The default is the bare <code>"Remove"</code>, which does not say
-	what is being removed, so name the chip in it.
+	A remove button has no visible text. Its name is "Remove" plus the chip's label, for example
+	"Remove Ada". Pass <code>removeAriaLabel</code> to change it, for example for another language.
 </p>
-<Code
-	value={`<InputChip
-	label={email}
-	removeAriaLabel="Remove {email}"
-	onremove={() => remove(email)}
-/>`}
-/>
 
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <table>
@@ -225,10 +233,10 @@
 	</tbody>
 </table>
 <p>
-	The colours of a filter and an input chip come from the theme's
-	<code>secondary-container</code> and <code>on-secondary-container</code> roles while they are
-	selected, and from <code>on-surface-variant</code> while they are not. An elevated chip takes its shadow
-	from the elevation roles.
+	Selected filter and input chips take their colours from the theme's
+	<code>secondary-container</code> and <code>on-secondary-container</code> roles. Unselected ones
+	use
+	<code>on-surface-variant</code>. An elevated chip takes its shadow from the elevation roles.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <DemoContainer>
@@ -241,10 +249,9 @@
 	ChipSet attributes<a href="#chipset-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	Everything you pass is forwarded to the wrapping <code>&lt;div&gt;</code>, so
-	<code>class</code>, <code>style</code> and <code>aria-label</code> work as expected.
-	<code>bind:element</code> gives you that <code>&lt;div&gt;</code>. The set makes room for its
-	chips on its own, from whether it has any, so there is nothing to configure.
+	All attributes go to the wrapping <code>&lt;div&gt;</code>, including <code>class</code>,
+	<code>style</code> and <code>aria-label</code>. <code>bind:element</code> gives you that
+	<code>&lt;div&gt;</code>.
 </p>
 
 <h3 id="assistchip-attributes">
@@ -252,10 +259,9 @@
 </h3>
 <p>
 	An assist chip renders a <code>&lt;button&gt;</code>, or an <code>&lt;a&gt;</code> when you give
-	it an <code>href</code>, and takes that element's attributes: <code>onclick</code>,
-	<code>type</code>, <code>class</code>, <code>aria-*</code> and the rest.
-	<code>bind:element</code> gives you whichever element it rendered. It does not take
-	<code>size</code> or <code>shape</code>: a chip has one of each.
+	it an <code>href</code>. It takes that element's attributes, such as <code>onclick</code>,
+	<code>type</code>, <code>class</code> and <code>aria-*</code>. <code>bind:element</code> gives you the
+	rendered element.
 </p>
 <table>
 	<thead>
@@ -284,7 +290,7 @@
 			<td><code>'outlined' | 'elevated'</code></td>
 			<td><code>'outlined'</code></td>
 			<td>
-				<code>elevated</code> drops the outline and gives the chip a shadow instead.
+				<code>elevated</code> replaces the outline with a shadow.
 			</td>
 		</tr>
 		<tr>
@@ -332,8 +338,8 @@
 			<td><code>(string | number)[] | null | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>
-				Bindable. Bind several chips that share a <code>name</code> to one array and their
-				<code>value</code>s are added and removed as they are toggled.
+				Bindable. Bind chips that share a <code>name</code> to one array. Each chip adds or removes
+				its <code>value</code> when toggled.
 			</td>
 		</tr>
 		<tr>
@@ -369,8 +375,18 @@
 		<tr>
 			<td><code>removeAriaLabel</code></td>
 			<td><code>string</code></td>
-			<td><code>'Remove'</code></td>
+			<td><code>'Remove ' + label</code></td>
 			<td>Accessible name of the remove button.</td>
+		</tr>
+		<tr>
+			<td><code>trailingIcon</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td
+				>Trailing icon, such as an arrow for a chip that opens a menu. Not shown when <code
+					>removable</code
+				>.</td
+			>
 		</tr>
 		<tr>
 			<td><code>icon</code></td>
@@ -383,7 +399,7 @@
 			<td><code>'outlined' | 'elevated'</code></td>
 			<td><code>'outlined'</code></td>
 			<td>
-				<code>elevated</code> drops the outline and gives the chip a shadow instead.
+				<code>elevated</code> replaces the outline with a shadow.
 			</td>
 		</tr>
 		<tr>
@@ -425,7 +441,7 @@
 			<td><code>boolean | undefined</code></td>
 			<td><code>undefined</code></td>
 			<td>
-				Bindable. Highlights the chip, for instance to show which one <kbd>Backspace</kbd> would remove
+				Bindable. Highlights the chip, for example to show which one <kbd>Backspace</kbd> would remove
 				next.
 			</td>
 		</tr>
@@ -456,14 +472,26 @@
 		<tr>
 			<td><code>removeAriaLabel</code></td>
 			<td><code>string</code></td>
-			<td><code>'Remove'</code></td>
+			<td><code>'Remove ' + label</code></td>
 			<td>Accessible name of the remove button.</td>
 		</tr>
 		<tr>
 			<td><code>icon</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Leading icon or avatar.</td>
+			<td>Leading icon.</td>
+		</tr>
+		<tr>
+			<td><code>avatar</code></td>
+			<td><code>Snippet | undefined</code></td>
+			<td><code>undefined</code></td>
+			<td>A 24px leading image, such as a photo, in place of <code>icon</code>.</td>
+		</tr>
+		<tr>
+			<td><code>variant</code></td>
+			<td><code>'outlined' | 'elevated'</code></td>
+			<td><code>'outlined'</code></td>
+			<td>Outlined, or on a raised surface.</td>
 		</tr>
 		<tr>
 			<td><code>disabled</code></td>
