@@ -9,6 +9,7 @@
 	let {
 		state,
 		mode,
+		entering = false,
 		horizontal = false,
 		hour12,
 		minuteStep = 1,
@@ -38,8 +39,9 @@
 	let am = $derived(amLabel ?? periods[0])
 	let pm = $derived(pmLabel ?? periods[1])
 
-	// A 24-hour dial has no period selector, so its fields take the room that frees up.
-	let fieldWidth = $derived(!hour12 && !horizontal ? '7.125rem' : '6rem')
+	// A vertical 24-hour dial has no period selector, so its fields take the room that frees up.
+	// The input fields keep their width.
+	let fieldWidth = $derived(!hour12 && !horizontal && mode !== 'input' ? '7.125rem' : '6rem')
 	// The period selector matches the 72dp input fields in input mode.
 	let periodHeight = $derived(mode === 'input' ? '4.5rem' : '5rem')
 
@@ -55,8 +57,14 @@
 
 <div
 	{...attributes}
-	class={['np-time-picker', horizontal && 'np-horizontal', attributes.class]}
-	style="--np-time-picker-time-selector-container-width: {fieldWidth}; --np-time-picker-period-selector-height: {periodHeight}"
+	class={[
+		'np-time-picker',
+		horizontal && 'np-horizontal',
+		entering && 'np-time-picker-entering',
+		attributes.class,
+	]}
+	style:--_time-field-width={fieldWidth}
+	style:--_period-height={periodHeight}
 >
 	{#if headline}
 		<div id={headlineId} class="np-time-picker-headline">{headline}</div>
@@ -177,6 +185,20 @@
 
 	.np-time-picker :global(.np-time-picker-dial) {
 		align-self: center;
+	}
+
+	.np-time-picker-entering :global(.np-time-picker-dial) {
+		transform: scale(0.8);
+		opacity: 0;
+		transition: none;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-time-picker :global(.np-time-picker-dial) {
+			transition:
+				transform var(--np-motion-expressive-default-spatial),
+				opacity var(--np-motion-expressive-default-effects);
+		}
 	}
 
 	.np-time-picker-issues {

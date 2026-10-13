@@ -1,9 +1,14 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
+	import IconButton from '#lib/button/IconButton.svelte'
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
 	import ChevronLeftIcon from '#lib/icons/ChevronLeftIcon.svelte'
 	import ChevronRightIcon from '#lib/icons/ChevronRightIcon.svelte'
 	import Ripple from '#lib/ripple/Ripple.svelte'
+	import Tooltip from '#lib/tooltip/Tooltip.svelte'
 	import type { HTMLAttributes } from 'svelte/elements'
+	import { DEFAULT_SHORTCUT_LABELS, withShortcut } from './shortcuts.js'
+	import type { DatePickerShortcutLabels } from './types.js'
 
 	interface CalendarHeaderProps extends HTMLAttributes<HTMLDivElement> {
 		monthLabel: string
@@ -19,6 +24,7 @@
 		nextYearLabel: string
 		selectMonthLabel: string
 		selectYearLabel: string
+		shortcutLabels?: Partial<DatePickerShortcutLabels>
 		monthListId: string
 		yearListId: string
 		onpreviousmonth?: () => void
@@ -43,6 +49,7 @@
 		nextYearLabel,
 		selectMonthLabel,
 		selectYearLabel,
+		shortcutLabels,
 		monthListId,
 		yearListId,
 		onpreviousmonth,
@@ -54,40 +61,51 @@
 		...attributes
 	}: CalendarHeaderProps = $props()
 
+	const uid = $props.id()
 	let showSteppers = $derived(mode === 'days')
+	let keys = $derived({ ...DEFAULT_SHORTCUT_LABELS, ...shortcutLabels })
 </script>
 
-{#snippet stepper(label: string, enabled: boolean, next: boolean, onclick?: () => void)}
-	<button
-		type="button"
-		class={['np-date-picker-stepper', !showSteppers && 'hidden']}
-		aria-label={label}
-		disabled={!enabled}
-		{onclick}
-	>
-		{#if next}
-			<ChevronRightIcon />
-		{:else}
-			<ChevronLeftIcon />
-		{/if}
-		{#if enabled}
-			<Ripple />
-		{/if}
-	</button>
+{#snippet stepper(
+	label: string,
+	key: string,
+	enabled: boolean,
+	next: boolean,
+	onclick?: () => void,
+)}
+	<span class={['np-date-picker-stepper', !showSteppers && 'hidden']}>
+		<IconButton
+			type="button"
+			class="np-focus-ring-inset"
+			aria-label={label}
+			title={withShortcut(label, key)}
+			disabled={!enabled}
+			{onclick}
+		>
+			{#if next}
+				<ChevronRightIcon />
+			{:else}
+				<ChevronLeftIcon />
+			{/if}
+		</IconButton>
+	</span>
 {/snippet}
 
 {#snippet menuButton(
 	label: string,
 	accessibleLabel: string,
+	key: string,
 	expanded: boolean,
 	disabled: boolean,
 	controls: string,
+	tooltipId: string,
 	onclick?: () => void,
 )}
 	<button
 		type="button"
-		class="np-date-picker-menu-button"
+		class="np-date-picker-menu-button np-focus-ring"
 		aria-label="{accessibleLabel}, {label}"
+		aria-describedby={disabled ? undefined : tooltipId}
 		aria-haspopup="listbox"
 		aria-expanded={expanded}
 		aria-controls={expanded ? controls : undefined}
@@ -102,32 +120,45 @@
 			<Ripple />
 		{/if}
 	</button>
+	{#if !disabled}
+		<Tooltip id={tooltipId}>{withShortcut(accessibleLabel, key)}</Tooltip>
+	{/if}
 {/snippet}
 
 <div {...attributes} class={['np-date-picker-header', attributes.class]}>
 	<div class="np-date-picker-header-group">
-		{@render stepper(previousMonthLabel, canPreviousMonth, false, onpreviousmonth)}
+		{@render stepper(
+			previousMonthLabel,
+			keys.previousMonth,
+			canPreviousMonth,
+			false,
+			onpreviousmonth,
+		)}
 		{@render menuButton(
 			monthLabel,
 			selectMonthLabel,
+			keys.monthList,
 			mode === 'months',
 			mode === 'years',
 			monthListId,
+			`${uid}-month-tip`,
 			ontogglemonths,
 		)}
-		{@render stepper(nextMonthLabel, canNextMonth, true, onnextmonth)}
+		{@render stepper(nextMonthLabel, keys.nextMonth, canNextMonth, true, onnextmonth)}
 	</div>
 	<div class="np-date-picker-header-group">
-		{@render stepper(previousYearLabel, canPreviousYear, false, onpreviousyear)}
+		{@render stepper(previousYearLabel, keys.previousYear, canPreviousYear, false, onpreviousyear)}
 		{@render menuButton(
 			yearLabel,
 			selectYearLabel,
+			keys.yearList,
 			mode === 'years',
 			mode === 'months',
 			yearListId,
+			`${uid}-year-tip`,
 			ontoggleyears,
 		)}
-		{@render stepper(nextYearLabel, canNextYear, true, onnextyear)}
+		{@render stepper(nextYearLabel, keys.nextYear, canNextYear, true, onnextyear)}
 	</div>
 </div>
 
@@ -138,6 +169,10 @@
 		justify-content: space-between;
 		height: 1.5rem;
 		color: var(--np-date-picker-header-color, var(--np-color-on-surface-variant));
+		--np-icon-button-icon-color: var(
+			--np-date-picker-header-color,
+			var(--np-color-on-surface-variant)
+		);
 	}
 
 	.np-date-picker-header-group {
@@ -146,29 +181,16 @@
 		gap: 0.25rem;
 	}
 
-	.np-date-picker-stepper,
-	.np-date-picker-menu-button {
-		font: inherit;
-		-webkit-tap-highlight-color: transparent;
-		background: none;
-		border: 0;
-		padding: 0;
-		margin: 0;
-		color: inherit;
-		cursor: pointer;
-		position: relative;
-		display: flex;
-		align-items: center;
-		height: 1.5rem;
-		border-radius: var(--np-shape-corner-full);
+	.np-date-picker-header-group:first-child {
+		margin-inline-start: -0.5rem;
+	}
+	.np-date-picker-header-group:last-child {
+		margin-inline-end: -0.5rem;
 	}
 
-	.np-date-picker-stepper::before,
-	.np-date-picker-menu-button::before {
-		content: '';
-		position: absolute;
-		inset-block: -0.75rem;
-		inset-inline: 0;
+	.np-date-picker-stepper {
+		display: flex;
+		flex: none;
 	}
 
 	.np-date-picker-stepper.hidden {
@@ -184,15 +206,28 @@
 		}
 	}
 
-	.np-date-picker-stepper {
-		width: 1.5rem;
-		justify-content: center;
-		flex: none;
+	.np-date-picker-menu-button {
+		font: inherit;
+		-webkit-tap-highlight-color: transparent;
+		background: none;
+		border: 0;
+		margin: 0;
+		color: inherit;
+		cursor: pointer;
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		height: 1.5rem;
+		padding: 0 0.5rem;
+		border-radius: var(--np-shape-corner-full);
 	}
 
-	.np-date-picker-menu-button {
-		gap: 0.25rem;
-		padding-inline: 0.5rem;
+	.np-date-picker-menu-button::before {
+		content: '';
+		position: absolute;
+		inset-block: -0.75rem;
+		inset-inline: 0;
 	}
 
 	.np-date-picker-menu-button-label {
@@ -212,27 +247,14 @@
 		rotate: 180deg;
 	}
 
-	:global(.np-date-picker-stepper svg) {
-		width: 1.5rem;
-		height: 1.5rem;
-		fill: currentColor;
-	}
-
 	:global(.np-date-picker-menu-button-caret svg) {
 		width: 1.25rem;
 		height: 1.25rem;
 		fill: currentColor;
 	}
 
-	.np-date-picker-stepper:disabled,
 	.np-date-picker-menu-button:disabled {
 		cursor: default;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.np-date-picker-stepper:focus-visible,
-	.np-date-picker-menu-button:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 2px;
 	}
 </style>

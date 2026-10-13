@@ -25,18 +25,33 @@
 	}
 }
 
-.np-focus-ring:focus-visible {
-	outline-style: solid;
-	outline-color: var(--np-color-secondary);
-	outline-width: 3px;
-	outline-offset: 2px;
+@property --np-focus-ring-offset {
+	syntax: '<length>';
+	inherits: false;
+	initial-value: 2px;
 }
-/* The focused state layer, on top of the ring. */
-.np-focus-ring:focus-visible .np-ripple-surface::before {
+
+/* A part draws the ring of the focused element around it, for a shape smaller than its target. */
+.np-focus-ring:is(:focus-visible, .np-focus-ring-shown),
+.np-focus-ring-within:has(input:focus-visible),
+:focus-visible > .np-focus-ring-part {
+	outline: 3px solid var(--np-color-secondary);
+	outline-offset: var(--np-focus-ring-offset);
+}
+.np-focus-ring-inset:is(:focus-visible, .np-focus-ring-shown, :has(input:focus-visible)) {
+	outline-offset: -3px;
+}
+.np-focus-ring:is(:focus-visible, .np-focus-ring-shown) .np-ripple-surface::before,
+:focus-visible > .np-focus-ring-part .np-ripple-surface::before {
 	opacity: var(--np-ripple-focus-opacity, 0.1);
 }
 @media (prefers-reduced-motion: no-preference) {
-	.np-focus-ring:focus-visible {
+	.np-focus-ring:is(:focus-visible, .np-focus-ring-shown),
+	.np-focus-ring-within:has(input:focus-visible),
+	:focus-visible > .np-focus-ring-part {
 		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
+	}
+	.np-focus-ring-inset:is(:focus-visible, .np-focus-ring-shown, :has(input:focus-visible)) {
+		animation-name: focusAnimationInset;
 	}
 }

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
+	import type { PageRouteId } from '$app/types'
 	import AutoComplete from '#lib/autocomplete/AutoComplete.svelte'
 	import type { AutoCompleteOption } from '#lib/autocomplete/types.js'
 	import Badge from '#lib/badge/Badge.svelte'
@@ -181,11 +183,11 @@
 	}
 </script>
 
-{#snippet uses(links: { label: string; href: string }[])}
+{#snippet uses(links: { label: string; href: PageRouteId }[])}
 	<p class="uses">
 		{#each links as link, index (link.href)}
 			{#if index > 0}<span aria-hidden="true">&middot;</span>{/if}
-			<a class="link" href={link.href}>{link.label}</a>
+			<a class="link" href={resolve(link.href as '/')}>{link.label}</a>
 		{/each}
 	</p>
 {/snippet}

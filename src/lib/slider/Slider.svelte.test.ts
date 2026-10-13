@@ -25,4 +25,15 @@ describe('Slider value label', async () => {
 
 		await expect.poll(labelOpen).toBe(true)
 	})
+
+	test('hides again once focus leaves', async () => {
+		await render(Slider, { labeled: true, value: 50, 'aria-label': 'Volume' })
+		const input = document.querySelector<HTMLInputElement>('input')!
+
+		input.focus()
+		await expect.poll(labelOpen).toBe(true)
+		input.blur()
+
+		await expect.poll(labelOpen).toBe(false)
+	})
 })

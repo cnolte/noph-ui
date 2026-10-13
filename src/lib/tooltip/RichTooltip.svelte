@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/pop-in.css'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { RichTooltipProps } from './types.js'
 
@@ -42,6 +43,7 @@
 	{id}
 	class={[
 		'np-rich-tooltip',
+		'np-pop-in',
 		subhead && 'np-rich-tooltip-with-subhead',
 		actions && 'np-rich-tooltip-with-actions',
 		attributes.class,
@@ -71,7 +73,6 @@
 		box-sizing: border-box;
 		width: max-content;
 		max-width: 20rem;
-		word-wrap: break-word;
 		overflow-wrap: break-word;
 		margin: var(--np-rich-tooltip-margin, 4px 0);
 		padding: 0.25rem 1rem;
@@ -107,27 +108,5 @@
 		margin-top: 1rem;
 		margin-inline-start: calc(-1 * var(--np-rich-tooltip-action-inset, 1rem));
 		padding-inline-end: var(--np-rich-tooltip-action-inset, 1rem);
-	}
-	.np-rich-tooltip:popover-open {
-		opacity: 1;
-		scale: 1;
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.np-rich-tooltip:popover-open {
-			animation:
-				fadeIn var(--np-motion-expressive-fast-effects),
-				scaleIn var(--np-motion-expressive-fast-spatial);
-		}
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-	}
-	@keyframes scaleIn {
-		from {
-			scale: 0.8;
-		}
 	}
 </style>

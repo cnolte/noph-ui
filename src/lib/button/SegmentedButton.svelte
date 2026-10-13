@@ -45,7 +45,14 @@
 	{#each options as option, i (i)}
 		{let optionLabel = $derived(option.label ?? `${name}-${i}`)}
 		{let optionValue = $derived(option.value ?? optionLabel)}
-		<label class={['np-segmented-button', option.icon && 'width-icon']}>
+		<label
+			class={[
+				'np-segmented-button',
+				'np-focus-ring-within',
+				'np-focus-ring-inset',
+				option.icon && 'width-icon',
+			]}
+		>
 			<div class="check-icon-wrapper">
 				<div class="check-icon">
 					<CheckIcon />
@@ -257,13 +264,6 @@
 		opacity: var(--np-ripple-focus-opacity, 0.1);
 	}
 
-	.np-segmented-button:has(input:focus-visible) {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: -3px;
-	}
-
 	@media (prefers-reduced-motion: no-preference) {
 		.np-segmented-button {
 			transition: all var(--np-motion-expressive-fast-effects);
@@ -281,9 +281,6 @@
 			transition:
 				width var(--np-motion-expressive-fast-effects),
 				opacity var(--np-motion-expressive-fast-effects);
-		}
-		.np-segmented-button:has(input:focus-visible) {
-			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
 		}
 	}
 </style>

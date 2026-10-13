@@ -24,13 +24,13 @@
 	const EASING_STANDARD = 'cubic-bezier(0.2, 0, 0, 1)'
 	const TOUCH_DELAY_MS = 150
 
-	let rippleSize = $state('')
-	let rippleScale = $state('')
-	let initialSize = $state(0)
-	let growAnimation: Animation | undefined = $state()
-	let step: 'INACTIVE' | 'TOUCH_DELAY' | 'HOLDING' | 'WAITING_FOR_CLICK' = $state('INACTIVE')
-	let rippleStartEvent: PointerEvent | undefined = $state()
-	let checkBoundsAfterContextMenu = $state(false)
+	let rippleSize = ''
+	let rippleScale = ''
+	let initialSize = 0
+	let growAnimation: Animation | undefined
+	let step: 'INACTIVE' | 'TOUCH_DELAY' | 'HOLDING' | 'WAITING_FOR_CLICK' = 'INACTIVE'
+	let rippleStartEvent: PointerEvent | undefined
+	let checkBoundsAfterContextMenu = false
 
 	const isTouch = (event: PointerEvent) => {
 		return event.pointerType === 'touch'
@@ -314,9 +314,6 @@
 		inset: 0;
 		overflow: hidden;
 		pointer-events: none;
-	}
-
-	.np-ripple-surface {
 		-webkit-tap-highlight-color: transparent;
 
 		&::before,
@@ -329,9 +326,7 @@
 		&::before {
 			background-color: var(--np-ripple-hover-color, var(--np-color-on-surface));
 			inset: 0;
-			transition:
-				opacity 15ms linear,
-				background-color 15ms linear;
+			transition: opacity 15ms linear;
 		}
 
 		&::after {
@@ -340,14 +335,11 @@
 				var(--np-ripple-pressed-color, var(--np-color-on-surface)) max(calc(100% - 70px), 65%),
 				transparent 100%
 			);
-			transform-origin: center center;
 			transition: opacity var(--np-motion-expressive-slow-effects);
 		}
 	}
 
-	.np-ripple-surface:hover:before,
 	.np-ripple-hovered::before {
-		background-color: var(--np-ripple-hover-color, var(--np-color-on-surface));
 		opacity: var(--np-ripple-hover-opacity, 0.08);
 	}
 

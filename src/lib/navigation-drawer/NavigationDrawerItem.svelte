@@ -43,6 +43,8 @@
 		href={attributes.href}
 		class={[
 			'np-navigation-drawer-item',
+			'np-focus-ring',
+			'np-focus-ring-inset',
 			selected && 'np-navigation-drawer-item-selected',
 			attributes.class,
 		]}
@@ -57,6 +59,8 @@
 		bind:this={element}
 		class={[
 			'np-navigation-drawer-item',
+			'np-focus-ring',
+			'np-focus-ring-inset',
 			selected && 'np-navigation-drawer-item-selected',
 			attributes.class,
 		]}
@@ -113,17 +117,6 @@
 		}
 	}
 
-	.np-navigation-drawer-item:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: -3px;
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.np-navigation-drawer-item:focus-visible {
-			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
-		}
-	}
 	.np-navigation-drawer-item-icon {
 		color: var(--np-color-on-surface-variant);
 		display: flex;

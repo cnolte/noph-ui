@@ -8,6 +8,9 @@ export type ISODate = string
 
 export type ISODateTime = string
 
+/** A modal picker's view: the calendar, or text fields to type into. */
+export type DatePickerMode = 'calendar' | 'input'
+
 export interface DateRange {
 	start?: ISODate
 	end?: ISODate
@@ -32,9 +35,21 @@ interface DatePickerCommonLabelProps {
 	selectedDateLabel?: string
 }
 
+/** The keys of a calendar's shortcuts, as its tooltips name them. */
+export interface DatePickerShortcutLabels {
+	previousMonth: string
+	nextMonth: string
+	previousYear: string
+	nextYear: string
+	monthList: string
+	yearList: string
+}
+
 interface MonthStepperLabelProps {
 	nextMonthLabel?: string
 	previousMonthLabel?: string
+	/** The keys named in the tooltips, in English by default. An empty one leaves its key out. */
+	shortcutLabels?: Partial<DatePickerShortcutLabels>
 }
 
 interface DockedDateFieldProps extends DockedFieldProps {
@@ -110,6 +125,8 @@ export interface DatePickerDialogProps
 	form?: string
 	title?: string
 	headline?: string
+	/** The view it opens in. Bindable, so it holds the view a person switched to. */
+	mode?: DatePickerMode
 	modeToggle?: boolean
 	label?: string
 	supportingText?: string
@@ -138,6 +155,11 @@ export interface DateRangePickerProps
 	form?: string
 	startLabel?: string
 	endLabel?: string
+	/** The view it opens in. Bindable, so it holds the view a person switched to. */
+	mode?: DatePickerMode
+	modeToggle?: boolean
+	calendarModeLabel?: string
+	inputModeLabel?: string
 	onchange?: (value: DateRange) => void
 	onconfirm?: (value: DateRange) => void
 	oncancel?: () => void
@@ -165,6 +187,8 @@ export interface CalendarProps extends Omit<
 	tabStopDate?: Date
 	focusRoot?: HTMLElement
 	onselect?: (date: Date) => void
+	/** Enter on a day: the picker saves it and closes. Without it, Enter picks the day as a click does. */
+	onconfirm?: (date: Date) => void
 	onfocusday?: (date: Date) => void
 	onmonthstep?: (delta: number) => void
 	monthSubhead?: Snippet<[string]>

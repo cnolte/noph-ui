@@ -5,6 +5,118 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.53.0]
+
+### Changed (breaking)
+
+- **Card**: the props type rejects `action` on a card that is a target
+  itself (`href`, `onclick`, `command`, `popovertarget` or a `type` other
+  than `text`). A screen reader cannot reach actions inside such a card.
+
+### Changed
+
+- **Carousel**: with `alignment="center"`, the first item opens full size at
+  the leading edge and the last ends at the trailing edge, with no empty
+  slots; on `hero` this is the center-aligned hero. Layouts without keylines
+  snap the focused item to the middle. ↑ and ↓ leave a horizontal carousel
+  for the element before or after it, and the arrow keys skip plain and
+  disabled items.
+- **CarouselItem**: an `aria-label` replaces the item's text and keeps the
+  position ("A harbour at dawn, 2 of 4"); an item with only an image takes
+  its text from `imageAlt`. The press shows on click, so on Enter and Space
+  too.
+- **TextField, Select, NativeSelect**: share one frame whose parts carry
+  `np-field-*` classes. Styles aimed at the former inner classes, such as
+  `.label` or `.np-outline`, no longer apply. The outline of an outlined
+  field is a `fieldset`, hidden from assistive technology but one unnamed
+  entry in a form's `elements`. The label gap opens as the label floats, and
+  a focused outline grows to 3px. NativeSelect matches Select in every state
+  and floats its label on focus.
+- **Select**: the arrow keys keep focus in the field and move
+  `aria-activedescendant`, as in AutoComplete; the active option shows the
+  focus ring. An invalid field turns to `--np-color-on-error-container` on
+  hover, as TextField does.
+- **Focus**: the date and time pickers show keyboard focus as the rest of
+  the library does, a ring that pulses once (not under reduced motion) over
+  a 10% state layer. NavigationDrawerItem and Option add the state layer,
+  and the ring of the Sheet drag handle pulses.
+- **DatePickerDialog**: the edit icon for typing a date shows by default, as
+  M3 asks; `modeToggle={false}` removes it. The dialog reopens in the view
+  last used instead of the calendar.
+- **Date pickers**: Enter on a day saves and closes DockedDatePicker and
+  DatePickerDialog; in DockedDateTimePicker and DateRangePicker it selects
+  the day. Shift+M and Shift+Y open and close the month and year lists from
+  anywhere in the picker (DatePickerDialog has Shift+Y only). Page up and
+  Page down also work on the header buttons, Escape closes an open list
+  before the picker, and a click on a bare part of the picker keeps focus in
+  it.
+- **Date pickers**: the arrows and the month and year buttons name their key
+  in a tooltip, such as "Previous year (Shift+Page up)". The weekday
+  initials show the full name on hover.
+- **Date and time pickers**: typed digits only, such as "09012025" or
+  "1430", are read in the order of the field's pattern. Enter formats the
+  text, as leaving the field does. DatePickerDialog, DateRangePicker on wide
+  screens, TimePickerDialog and the docked menus have no shadow, as M3 asks.
+- **Date and time pickers**: switching between the calendar or dial and
+  the text fields resizes the picker smoothly while the new view slides or
+  fades in (not under reduced motion).
+- **DockedDateTimePicker**: on the day of `min` or `max`, an hour is offered
+  only when one of its `minuteStep` minutes is within the bound.
+- **TimePickerDialog, DockedTimePicker**: narrower, as in M3: the colon is
+  24px wide instead of 48px, the 24-hour input fields 96px instead of 114px.
+  The input fields show a state layer on hover. The mode toggle is named
+  "Toggle dial picker" and "Toggle input picker" instead of "Switch to dial
+  mode" and "Switch to text input mode".
+
+### Added
+
+- **DatePickerDialog, DateRangePicker**: a bindable `mode`, `'calendar'` or
+  `'input'`, sets the view the picker opens in.
+- **DateRangePicker**: an input mode with a field for each end, behind an
+  edit icon shown by default. It takes `modeToggle`, `inputModeLabel` and
+  `calendarModeLabel`, and `startLabel` and `endLabel` name the fields.
+- **DockedDatePicker, DockedDateTimePicker, DatePickerDialog**:
+  `shortcutLabels` translates the key names in the tooltips.
+- **Calendar**: `onconfirm` for Enter on a day.
+- **Menu**: `--np-menu-elevation`, `--np-elevation-2` by default.
+
+### Fixed
+
+- **Carousel, CarouselItem**: a pressed item takes `--np-shape-corner-large`
+  (16px) instead of medium, as in M3, also when cropped or morphing; focus
+  ring and outline follow the crop. A centred strip snaps to every item, and
+  a centred multi-browse strip keeps its sizes while it shifts at either end.
+- **Checkbox, Radio, Switch**: the focus ring no longer pulses under reduced
+  motion.
+- **TextField, Select, NativeSelect**: their styles no longer reach the
+  page, where every `<label>` lost its tap highlight and every `svg` in an
+  `.icon` element took the text colour. A floating outlined label beside an
+  icon uses the full field width before it is cut short. A filled
+  NativeSelect shows its container inside a parent with its own background.
+- **Select**: `oninput` fires on a pick, before `onchange`.
+- **TimePickerDialog**: Escape and a click on the scrim call `oncancel`, as
+  in the date picker dialogs.
+- **TimePickerDialog, DockedTimePicker**: a theme's
+  `--np-time-picker-time-selector-container-width` and
+  `--np-time-picker-period-selector-height` take effect.
+- **DockedDateTimePicker**: refuses hour 0 on a 12-hour clock, such as
+  "0:30 PM", as DockedTimePicker does.
+- **DateRangePicker**: scrolling up no longer jumps ahead when earlier months
+  load.
+- **DockedDatePicker, DockedDateTimePicker**: the month and year arrows are
+  40px with a 48px target instead of 24px wide, as in M3, which moves the
+  month and year names 8px inward. Their focus ring sits inside, as the
+  outer arrows are too close to the edge for one outside.
+- **DatePickerDialog**: the year button has a 48px target and a ripple.
+- **DatePickerDialog, DateRangePicker**: the headline takes the M3 format,
+  "Mon, Aug 17" and "Aug 17 – Aug 23", without the year. A range with years
+  wrapped onto a second line.
+- **Date pickers**: reopened while it fades out, a picker starts fresh on
+  the days of its month; it kept the last month and an open list, and its
+  keys did nothing. A key right after Page up, Page down or a pick from a
+  list reaches the picker instead of the page. The focus ring of a day at
+  the edge of the calendar is no longer cut off.
+
 ## [0.52.0] - 2026-10-10
 
 ### Changed (breaking)

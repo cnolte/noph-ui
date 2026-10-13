@@ -11,11 +11,6 @@ export const afterTwoFrames = (fn: () => void) => {
 	}
 }
 
-/**
- * Calls `fn` once the element's animations have finished, two frames from now so that transitions
- * just started are counted. `subtree` includes those of its descendants. Endless animations, such
- * as a spinner's, are not waited for.
- */
 export const afterExit = (
 	element: Element | undefined,
 	fn: () => void,
@@ -55,17 +50,9 @@ export const parseMotion = (token: string): { duration: number; easing: string }
 	}
 }
 
-/** Reads a motion token such as `--np-motion-standard-fast-spatial` off an element's styles. */
 export const motionOf = (element: Element, token: string) =>
 	parseMotion(getComputedStyle(element).getPropertyValue(token))
 
-/**
- * Keeps a dialog or popover on screen while it animates out, in browsers that drop it from the top
- * layer the moment it closes because they cannot transition `overlay`, such as Safari. From the
- * start of closing until its exit animations end it carries `data-np-exiting`, and the rules in
- * `internal/exit.css` keep it shown meanwhile, over the page but not blocking it. `beforetoggle`
- * fires before every way of closing, from Escape and light dismiss to `close()`.
- */
 export const exitAnimation: Attachment<HTMLElement> = (element) => {
 	if (CSS.supports('overlay: auto')) return
 	let cancel = () => {}
@@ -85,4 +72,25 @@ export const exitAnimation: Attachment<HTMLElement> = (element) => {
 		element.removeEventListener('beforetoggle', onBeforeToggle)
 		done()
 	}
+}
+
+export const morphSize = (element: HTMLElement | undefined, apply: () => void, token: string) => {
+	if (!element || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		apply()
+		return
+	}
+	const from = element.getBoundingClientRect()
+	element.getAnimations().forEach((animation) => animation.cancel())
+	apply()
+	const to = element.getBoundingClientRect()
+	const frame = (rect: DOMRect) => ({
+		...(from.width !== to.width && { width: `${rect.width}px` }),
+		...(from.height !== to.height && { height: `${rect.height}px` }),
+	})
+	if (from.width === to.width && from.height === to.height) return
+	element.style.overflow = 'hidden'
+	element.animate([frame(from), frame(to)], motionOf(element, token)).finished.then(
+		() => element.style.removeProperty('overflow'),
+		() => {},
+	)
 }

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import '#lib/internal/exit.css'
-	import { exitAnimation, motionOf } from '#lib/animation.js'
-	import { reducedMotion } from '#lib/media.js'
-	import type { Attachment } from 'svelte/attachments'
+	import '#lib/internal/pop-in.css'
+	import { exitAnimation } from '#lib/animation.js'
 	import { arrowKeyNav, rovingTabindex, typeahead } from '#lib/keyboard-nav.js'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { MenuProps } from './types.js'
@@ -32,24 +31,6 @@
 	let innerHeight = $state(0)
 
 	const controller = popoverController(() => element)
-
-	// Opens with a fade and a scale from the anchor, started just before the menu shows. Driven by
-	// script rather than @starting-style, which Safari does not apply again when a popover reopens.
-	const openAnimation: Attachment<HTMLElement> = (menu) => {
-		const onBeforeToggle = (event: Event) => {
-			if ((event as ToggleEvent).newState !== 'open' || reducedMotion.current) return
-			menu.animate(
-				[{ opacity: 0 }, { opacity: 1 }],
-				motionOf(menu, '--np-motion-expressive-fast-effects'),
-			)
-			menu.animate(
-				[{ scale: 0.8 }, { scale: 1 }],
-				motionOf(menu, '--np-motion-expressive-fast-spatial'),
-			)
-		}
-		menu.addEventListener('beforetoggle', onBeforeToggle)
-		return () => menu.removeEventListener('beforetoggle', onBeforeToggle)
-	}
 
 	export const show = () => controller.show()
 	export const close = () => controller.close()
@@ -101,7 +82,6 @@
 	{role}
 	bind:this={element}
 	{@attach exitAnimation}
-	{@attach openAnimation}
 	ontoggle={(event) => {
 		let { newState } = event
 		open = newState === 'open'
@@ -111,7 +91,7 @@
 		ontoggle?.(event)
 	}}
 	{popover}
-	class={['np-menu-container', !coverAnchor && 'np-menu-no-cover', attributes.class]}
+	class={['np-menu-container', 'np-pop-in', !coverAnchor && 'np-menu-no-cover', attributes.class]}
 	{style}
 	onkeydown={(event) => {
 		attributes.onkeydown?.(event)
@@ -162,7 +142,7 @@
 		border: none;
 		border-radius: var(--np-menu-container-shape, var(--np-shape-corner-extra-small));
 		padding: 0;
-		box-shadow: var(--np-elevation-2);
+		box-shadow: var(--np-menu-elevation, var(--np-elevation-2));
 		margin: var(--np-menu-margin, 2px);
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
@@ -191,7 +171,8 @@
 
 	@media (prefers-reduced-motion: no-preference) {
 		/* Closes with a fade and a slight shrink towards the anchor, on the default effects curve,
-		   which is gentler at the start than the fast one. It opens through openAnimation.
+		   which is gentler at the start than the fast one. It opens through np-pop-in, from its
+		   keyframes, which run again on every opening where @starting-style does not in Safari.
 		   NativeSelect's list closes the same way. */
 		.np-menu-container[popover] {
 			--_exit: var(--np-motion-expressive-default-effects);

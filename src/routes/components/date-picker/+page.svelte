@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import AdjacentMonthDays from './demos/AdjacentMonthDays.svelte'
@@ -56,7 +57,7 @@
 	<code>DockedDatePicker</code> opens a calendar below the field, <code>DatePickerDialog</code>
 	opens it in a modal, and
 	<code>DateRangePicker</code> selects a start and end date. For date and time selection, see the
-	<a class="link" href="/components/date-time-picker">date and time picker</a>.
+	<a class="link" href={resolve('/components/date-time-picker')}>date and time picker</a>.
 </p>
 
 <p>
@@ -228,8 +229,8 @@
 	You can spread a SvelteKit remote form field onto the picker with
 	<code>&#123;...field.as('date')&#125;</code>, together with
 	<code>issues=&#123;field.issues()&#125;</code>. See
-	<a class="link" href="/about/remote-functions">Remote functions</a> for a form that connects several
-	components this way.
+	<a class="link" href={resolve('/about/remote-functions')}>Remote functions</a> for a form that connects
+	several components this way.
 </p>
 <DemoContainer>
 	<FormsAndValidation />
@@ -261,8 +262,11 @@
 	>
 </h3>
 <p>
-	<code>modeToggle</code> adds a header button that swaps the calendar for a text field, for people
-	who prefer to type. <code>title</code> replaces the supporting line above the headline, and
+	A button in the header swaps the calendar for a text field, for people who prefer to type, as M3
+	asks for the modal picker. <code>mode</code> sets the view it opens in. It is bindable and keeps
+	the view a person switched to, so a form that mostly takes typed dates can open on the field.
+	<code>modeToggle=&#123;false&#125;</code> leaves the button out. <code>title</code> replaces the
+	supporting line above the headline, and
 	<code>headline</code> replaces the formatted date. <code>onconfirm</code> fires on the confirm
 	button. <code>oncancel</code> fires on every other way out: the cancel button,
 	<kbd>Escape</kbd>, a click on the scrim, or setting <code>open</code> back to
@@ -290,6 +294,12 @@
 	the calendar, on the scrim, with the month list scrolling inside and
 	<code>Cancel</code> and <code>Save</code> at the bottom. The switch is a media query, so the server
 	renders the right layout. Narrow the window to see it change.
+</p>
+<p>
+	Its header has the same button as the modal picker, which swaps the months for two text fields,
+	one for each end. They read what is typed as it is typed and format it once a field is left or
+	<kbd>Enter</kbd> is pressed. An end before the start is marked invalid. <code>mode</code> sets the view
+	it opens in and is bindable.
 </p>
 <DemoContainer>
 	<Range />
@@ -492,7 +502,7 @@
 	<thead>
 		<tr>
 			<th>Key</th>
-			<th>Moves</th>
+			<th>Does</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -504,8 +514,30 @@
 			<td><kbd>Shift</kbd> + <kbd>Page&nbsp;Up</kbd>/<kbd>Page&nbsp;Down</kbd></td>
 			<td>One year</td>
 		</tr>
-		<tr><td><kbd>Enter</kbd> <kbd>Space</kbd></td><td>Select the focused day</td></tr>
-		<tr><td><kbd>Esc</kbd></td><td>Close the calendar</td></tr>
+		<tr>
+			<td><kbd>Enter</kbd></td>
+			<td>
+				Save the focused day and close, in <code>DockedDatePicker</code> and
+				<code>DatePickerDialog</code>. In the date and time picker and the range picker it selects
+				the day, as there is more to choose.
+			</td>
+		</tr>
+		<tr><td><kbd>Space</kbd></td><td>Select the focused day</td></tr>
+		<tr>
+			<td><kbd>Shift</kbd> + <kbd>M</kbd></td>
+			<td>Open the month list, or close it again, in the docked pickers</td>
+		</tr>
+		<tr>
+			<td><kbd>Shift</kbd> + <kbd>Y</kbd></td>
+			<td>
+				Open the year list, or close it again, in the docked pickers and
+				<code>DatePickerDialog</code>
+			</td>
+		</tr>
+		<tr>
+			<td><kbd>Esc</kbd></td>
+			<td>Close the month or year list. With no list open, close the calendar.</td>
+		</tr>
 	</tbody>
 </table>
 <p>
@@ -515,6 +547,18 @@
 	<code>cancelLabel</code>, <code>confirmLabel</code>, <code>openCalendarLabel</code>,
 	<code>selectedDateLabel</code> and the month and year navigation labels, so a localised app can translate
 	the whole control.
+</p>
+<p>
+	<kbd>Shift</kbd> + <kbd>M</kbd>, <kbd>Shift</kbd> + <kbd>Y</kbd> and <kbd>Esc</kbd> work wherever
+	focus is in the picker, and <kbd>Page&nbsp;Up</kbd> and <kbd>Page&nbsp;Down</kbd> also on the arrows
+	and the month and year buttons. A text field takes the keys as typing.
+</p>
+<p>
+	The arrows and the month and year buttons name their key in a tooltip, such as "Previous year
+	(Shift+Page up)", which a screen reader reads as their description. <code>shortcutLabels</code>
+	takes the key names in another language, for example
+	<code>&#123; previousMonth: 'Bild ↑' &#125;</code>. The weekday initials show the full name on
+	hover.
 </p>
 <p>
 	While a month or year list covers the calendar, the grid is inert, so <kbd>Tab</kbd> reaches only the
@@ -728,6 +772,16 @@
 			<td>Accessible names of the menu buttons.</td>
 		</tr>
 		<tr>
+			<td><code>shortcutLabels</code></td>
+			<td><code>Partial&lt;DatePickerShortcutLabels&gt;</code></td>
+			<td>English key names</td>
+			<td>
+				Key names in the tooltips of the arrows and menu buttons: <code>previousMonth</code>,
+				<code>nextMonth</code>, <code>previousYear</code>, <code>nextYear</code>,
+				<code>monthList</code> and <code>yearList</code>. An empty one leaves its key out.
+			</td>
+		</tr>
+		<tr>
 			<td><code>selectedDateLabel</code></td>
 			<td><code>string</code></td>
 			<td><code>'selected'</code></td>
@@ -787,7 +841,7 @@
 	<code>adjacentMonthDays</code>, <code>label</code>, <code>supportingText</code>,
 	<code>name</code>, <code>form</code>, <code>cancelLabel</code>, <code>confirmLabel</code>,
 	<code>previousMonthLabel</code>, <code>nextMonthLabel</code>, <code>selectYearLabel</code>,
-	<code>selectedDateLabel</code> and <code>onchange</code> props as
+	<code>shortcutLabels</code>, <code>selectedDateLabel</code> and <code>onchange</code> props as
 	<code>DockedDatePicker</code>. It has no year steppers or month menu, so those labels do not
 	apply. It validates by disabling confirm, not through the field, so <code>required</code> and
 	<code>invalidDateMessage</code> do not apply either. It adds these props:
@@ -815,9 +869,15 @@
 			<td>Overrides the headline text.</td>
 		</tr>
 		<tr>
+			<td><code>mode</code></td>
+			<td><code>'calendar' | 'input'</code></td>
+			<td><code>'calendar'</code></td>
+			<td>The view it opens in. Bindable.</td>
+		</tr>
+		<tr>
 			<td><code>modeToggle</code></td>
 			<td><code>boolean</code></td>
-			<td><code>false</code></td>
+			<td><code>true</code></td>
 			<td>Shows the calendar / keyboard-entry toggle.</td>
 		</tr>
 		<tr>
@@ -854,9 +914,9 @@
 <p>
 	Takes the same <code>locale</code>, <code>firstDayOfWeek</code>, <code>min</code>,
 	<code>max</code>, <code>yearRange</code>, <code>isDateEnabled</code>,
-	<code>adjacentMonthDays</code> and <code>selectedDateLabel</code> props as the other pickers. It has
-	no text field and no month or year navigation, so those labels do not apply. It does not submit with
-	a form.
+	<code>adjacentMonthDays</code> and <code>selectedDateLabel</code> props as the other pickers, and
+	<code>mode</code>, <code>modeToggle</code>, <code>inputModeLabel</code> and
+	<code>calendarModeLabel</code> as <code>DatePickerDialog</code>.
 </p>
 <table>
 	<thead>
@@ -878,13 +938,25 @@
 			<td><code>startLabel</code> / <code>endLabel</code></td>
 			<td><code>string</code></td>
 			<td><code>'Start date'</code> / <code>'End date'</code></td>
-			<td>Headline placeholders before each end is chosen.</td>
+			<td>Headline placeholders before each end is chosen, and the labels of the two fields.</td>
 		</tr>
 		<tr>
 			<td><code>cancelLabel</code> / <code>confirmLabel</code></td>
 			<td><code>string</code></td>
 			<td><code>'Cancel'</code> / <code>'Save'</code></td>
 			<td>Accessible name of the close button, and the confirm button's text.</td>
+		</tr>
+		<tr>
+			<td><code>name</code> / <code>endName</code></td>
+			<td><code>string</code></td>
+			<td><code>undefined</code></td>
+			<td>Form field names of the start and the end, each sent as <code>YYYY-MM-DD</code>.</td>
+		</tr>
+		<tr>
+			<td><code>form</code></td>
+			<td><code>string</code></td>
+			<td><code>undefined</code></td>
+			<td>Id of a form outside the picker that both values belong to.</td>
 		</tr>
 		<tr>
 			<td><code>onchange</code> / <code>onconfirm</code></td>
@@ -901,7 +973,7 @@
 	</tbody>
 </table>
 <p>
-	Bindable: <code>value</code> (a <code>DateRange</code>), <code>open</code> and
+	Bindable: <code>value</code> (a <code>DateRange</code>), <code>open</code>, <code>mode</code> and
 	<code>element</code>.
 </p>
 
@@ -932,9 +1004,11 @@
 				<code>adjacentMonthDays</code>, <code>selectedLabel</code>, <code>weekdays</code> to hide
 				the column headers, <code>dynamicRows</code> to size the grid to the month instead of always
 				using six rows, and a <code>monthSubhead</code> snippet. It reports through
-				<code>onselect</code>, <code>onfocusday</code> and <code>onmonthstep</code>. Several
-				calendars shown together share one tab stop through <code>tabStopDate</code> and pass focus
-				across a month boundary through <code>focusRoot</code>.
+				<code>onselect</code>, <code>onfocusday</code> and <code>onmonthstep</code>.
+				<code>onconfirm</code> takes <kbd>Enter</kbd> on a day for saving it. Several calendars
+				shown together share one tab stop through <code>tabStopDate</code> and pass focus across a
+				month boundary through
+				<code>focusRoot</code>.
 			</td>
 		</tr>
 		<tr>

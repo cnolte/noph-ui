@@ -1,6 +1,8 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
+	import '#lib/internal/visually-hidden.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
-	import { tick } from 'svelte'
+	import { flushSync } from 'svelte'
 	import type { Attachment } from 'svelte/attachments'
 	import {
 		addDays,
@@ -16,6 +18,7 @@
 		isSameDay,
 		isWithin,
 		MAX_CALENDAR_ROWS,
+		parseISODate,
 		startOfDay,
 		toISODate,
 		today as getToday,
@@ -42,6 +45,7 @@
 		tabStopDate,
 		focusRoot,
 		onselect,
+		onconfirm,
 		onfocusday,
 		onmonthstep,
 		monthSubhead,
@@ -100,17 +104,25 @@
 		)
 	}
 
-	const moveFocus = async (grid: HTMLElement, date: Date) => {
+	// The month changes and focus moves in one step, so no key lands on the page in between.
+	const moveFocus = (grid: HTMLElement, date: Date) => {
 		const target = startOfDay(clampDate(date, min, max))
-		onfocusday?.(target)
-		await tick()
+		flushSync(() => onfocusday?.(target))
 		findDay(focusRoot ?? grid, target)?.focus()
 	}
 
 	const handleKeydown = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLElement }) => {
 		const grid = event.currentTarget
 		const from = focusedDate ?? tabStop
-		// Right to left, the next day sits to the left.
+		if (event.key === 'Enter' && onconfirm) {
+			const day = (event.target as HTMLElement).closest<HTMLElement>('.np-calendar-day')
+			const date = parseISODate(day?.dataset.date)
+			if (!day || !date || day.getAttribute('aria-disabled') === 'true') return
+			event.preventDefault()
+			onselect?.(date)
+			onconfirm(date)
+			return
+		}
 		const forward = getComputedStyle(grid).direction === 'rtl' ? -1 : 1
 		switch (event.key) {
 			case 'ArrowLeft':
@@ -197,12 +209,14 @@
 			aria-label={monthLabel}
 			onkeydown={handleKeydown}
 		>
-			<thead class={weekdays ? undefined : 'np-calendar-head-hidden'}>
+			<thead class={weekdays ? undefined : 'np-visually-hidden'}>
 				<tr>
 					{#each weekdayLabels as weekday (weekday.long)}
 						<th scope="col" abbr={weekday.long} class="np-calendar-weekday">
-							<span aria-hidden="true">{weekday.narrow}</span>
-							<span class="np-calendar-sr-only">{weekday.long}</span>
+							<span class="np-calendar-weekday-short" aria-hidden="true" title={weekday.long}
+								>{weekday.narrow}</span
+							>
+							<span class="np-visually-hidden">{weekday.long}</span>
 						</th>
 					{/each}
 				</tr>
@@ -256,7 +270,7 @@
 											if (event.currentTarget.matches(':focus-visible')) onfocusday?.(date)
 										}}
 									>
-										<span class="np-calendar-day-container">
+										<span class="np-calendar-day-container np-focus-ring-part">
 											{date.getDate()}
 											{#if enabled}
 												<Ripple />
@@ -275,25 +289,15 @@
 
 <style>
 	.np-calendar-body.dynamic {
+		box-sizing: content-box;
 		overflow: hidden;
 		height: calc(var(--np-calendar-head, 2.5rem) + var(--np-calendar-rows) * 3rem);
+		padding: 0 0.25rem 0.25rem;
+		margin: 0 -0.25rem -0.25rem;
 	}
 
 	.np-calendar.swipeable {
 		touch-action: pan-y;
-	}
-
-	.np-calendar-sr-only,
-	.np-calendar-head-hidden {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-		border-width: 0;
 	}
 
 	.np-calendar-grid {
@@ -354,6 +358,10 @@
 		vertical-align: middle;
 	}
 
+	.np-calendar-weekday-short {
+		display: block;
+	}
+
 	.np-calendar-weekday {
 		box-sizing: content-box;
 		height: 1.5rem;
@@ -408,9 +416,7 @@
 		}
 
 		.np-calendar-day:not(.between) .np-calendar-day-container {
-			transition:
-				background-color var(--np-motion-expressive-default-effects),
-				outline-color var(--np-motion-expressive-default-effects);
+			transition: background-color var(--np-motion-expressive-default-effects);
 		}
 	}
 
@@ -456,11 +462,6 @@
 
 	.np-calendar-day:focus-visible {
 		outline: none;
-	}
-
-	.np-calendar-day:focus-visible .np-calendar-day-container {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 2px;
 	}
 
 	.np-calendar-cell.in-range::before,

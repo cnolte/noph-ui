@@ -1,6 +1,8 @@
+import { createRawSnippet } from 'svelte'
 import { describe, expect, test } from 'vitest'
 import { render } from 'vitest-browser-svelte'
 import Card from './Card.svelte'
+import type { CardProps } from './types.js'
 
 const container = () => document.querySelector<HTMLElement>('.np-card-container')!
 
@@ -26,5 +28,28 @@ describe('Card element', () => {
 	test('passes a native submit type through', async () => {
 		await render(Card, { type: 'submit', headline: 'Submit' })
 		expect(container().getAttribute('type')).toBe('submit')
+	})
+})
+
+describe('Card actions', () => {
+	const action = createRawSnippet(() => ({ render: () => '<button>Share</button>' }))
+
+	test('a plain card holds its actions', async () => {
+		await render(Card, { headline: 'Plain', action })
+
+		expect(container().tagName).toBe('DIV')
+		expect(container().querySelector('button')?.textContent).toBe('Share')
+	})
+
+	test('the props type rejects actions on a card that is a target itself', () => {
+		// @ts-expect-error A clickable card cannot hold actions.
+		const clickable: CardProps = { onclick: () => {}, action }
+		// @ts-expect-error A linked card cannot hold actions.
+		const linked: CardProps = { href: '#target', action }
+		// @ts-expect-error A button card cannot hold actions.
+		const button: CardProps = { type: 'button', action }
+		const plain: CardProps = { type: 'text', action }
+
+		expect([clickable, linked, button, plain]).toHaveLength(4)
 	})
 })

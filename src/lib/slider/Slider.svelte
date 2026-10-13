@@ -1,6 +1,6 @@
 <script lang="ts">
+	import '#lib/internal/pop-in.css'
 	import type { Attachment } from 'svelte/attachments'
-	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import type { SliderProps } from './types.js'
 
 	let {
@@ -115,18 +115,17 @@
 
 	const DRAG_THRESHOLD = 3
 
-	let startLabelElement = $state<HTMLDivElement>()
-	let endLabelElement = $state<HTMLDivElement>()
 	let focused = $state<'start' | 'end' | null>(null)
 
 	let labelled = $derived(disabled ? null : (dragging ?? (pointerFocused ? null : focused)))
 
-	const bindLabel = (getElement: () => HTMLDivElement | undefined, side: 'start' | 'end') => {
-		const controller = popoverController(getElement)
-		syncOpenEffect(getElement, () => labelled === side, controller.show, controller.close)
-	}
-	bindLabel(() => startLabelElement, 'start')
-	bindLabel(() => endLabelElement, 'end')
+	// Shows a handle's value label while it is labelled.
+	const label =
+		(side: 'start' | 'end'): Attachment<HTMLDivElement> =>
+		(element) => {
+			// It may run once more while the slider is taken down.
+			if (element.isConnected) element.togglePopover(labelled === side)
+		}
 
 	const fitIcon: Attachment<HTMLDivElement> = (lane) => {
 		if (!icon) return
@@ -276,9 +275,9 @@
 		></div>
 		{#if labeled}
 			<div
-				bind:this={startLabelElement}
+				{@attach label('start')}
 				popover="manual"
-				class="np-slider-label-anchor"
+				class="np-slider-label-anchor np-pop-in"
 				style="position-anchor: --np-slider-{uid}-start"
 			>
 				<div class="np-slider-label">{labelFor(range ? Math.min(lo, hi) : lo)}</div>
@@ -291,9 +290,9 @@
 			></div>
 			{#if labeled}
 				<div
-					bind:this={endLabelElement}
+					{@attach label('end')}
 					popover="manual"
-					class="np-slider-label-anchor"
+					class="np-slider-label-anchor np-pop-in"
 					style="position-anchor: --np-slider-{uid}-end"
 				>
 					<div class="np-slider-label">{labelFor(Math.max(lo, hi))}</div>
@@ -562,27 +561,6 @@
 
 	.np-slider-label-anchor:popover-open {
 		display: flex;
-		opacity: 1;
-		scale: 1;
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-		.np-slider-label-anchor:popover-open {
-			animation:
-				fadeIn var(--np-motion-expressive-fast-effects),
-				scaleIn var(--np-motion-expressive-fast-spatial);
-		}
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-	}
-	@keyframes scaleIn {
-		from {
-			scale: 0.8;
-		}
 	}
 
 	.np-slider-label {
@@ -642,7 +620,6 @@
 		background: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 	}
 
-	.np-slider.np-disabled .np-slider-stop.np-on-active,
 	.np-slider.np-disabled .np-slider-tick.np-on-active {
 		background: var(--np-color-surface);
 	}
@@ -658,8 +635,7 @@
 	@media (prefers-reduced-motion: reduce) {
 		.np-slider .np-slider-lane,
 		.np-slider .np-slider-handle,
-		.np-slider .np-slider-tick,
-		.np-slider .np-slider-label {
+		.np-slider .np-slider-tick {
 			transition: none;
 		}
 	}

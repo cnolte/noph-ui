@@ -129,7 +129,7 @@
 		align-items: center;
 		justify-content: center;
 		box-sizing: border-box;
-		width: 3rem;
+		width: 1.5rem;
 		height: 4.5rem;
 		flex: none;
 		font-size: 3.5rem;
@@ -145,7 +145,7 @@
 
 	.np-time-input {
 		box-sizing: border-box;
-		width: var(--np-time-picker-time-selector-container-width, 6rem);
+		width: var(--np-time-picker-time-selector-container-width, var(--_time-field-width, 6rem));
 		height: 4.5rem;
 		overflow: hidden;
 		border: 1px solid transparent;
@@ -159,7 +159,18 @@
 		);
 	}
 
+	.np-time-input:hover {
+		--_state: color-mix(in srgb, var(--np-color-on-surface) 8%, transparent);
+		background-image: linear-gradient(var(--_state), var(--_state));
+	}
+
 	.np-time-input:focus-within {
+		--_state: color-mix(
+			in srgb,
+			var(--np-time-picker-time-selector-selected-label-color, var(--np-color-on-primary-container))
+				8%,
+			transparent
+		);
 		border-color: var(--np-color-primary);
 		background-color: var(
 			--np-time-picker-time-selector-selected-container-color,

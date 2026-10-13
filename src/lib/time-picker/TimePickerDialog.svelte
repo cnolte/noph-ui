@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { afterTwoFrames, morphSize } from '#lib/animation.js'
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import { exitVisibility } from '#lib/date-picker/exitVisibility.svelte.js'
@@ -11,8 +12,7 @@
 	import Dialog from '#lib/dialog/Dialog.svelte'
 	import KeyboardIcon from '#lib/icons/KeyboardIcon.svelte'
 	import ScheduleIcon from '#lib/icons/ScheduleIcon.svelte'
-	import { syncOpenEffect } from '#lib/popover.svelte.js'
-	import { onMount, tick } from 'svelte'
+	import { flushSync, onMount, tick } from 'svelte'
 	import { MediaQuery } from 'svelte/reactivity'
 	import TimePickerPanel from './TimePickerPanel.svelte'
 	import { timePickerState } from './timePickerState.svelte.js'
@@ -47,8 +47,8 @@
 		selectMinuteLabel = 'Select minute',
 		hourOptionLabel,
 		minuteOptionLabel,
-		dialModeLabel = 'Switch to dial mode',
-		inputModeLabel = 'Switch to text input mode',
+		dialModeLabel = 'Toggle dial picker',
+		inputModeLabel = 'Toggle input picker',
 		invalidTimeMessage = 'Enter a valid time.',
 		onchange,
 		onconfirm,
@@ -91,20 +91,12 @@
 	let committed = $derived(parseISOTime(value))
 	let headline = $derived(mode === 'input' ? inputTitle : title)
 
-	export const show = () => {
-		if (element && !element.open) element.showModal()
-	}
+	let dialog = $state<Dialog>()
+	// Any way of closing other than the confirm action cancels.
+	let confirming = false
 
-	export const close = () => {
-		element?.close()
-	}
-
-	syncOpenEffect(
-		() => element,
-		() => open,
-		show,
-		close,
-	)
+	export const show = () => dialog?.show()
+	export const close = () => dialog?.close()
 
 	const focusFirst = async () => {
 		await tick()
@@ -115,21 +107,31 @@
 		element?.querySelector<HTMLElement>('.np-clock-dial-option[tabindex="0"]')?.focus()
 	}
 
+	// The dial comes in on a switch to it, not when the picker opens on it.
+	let entering = $state(false)
+	let cancelEntering: (() => void) | undefined
+
 	const setMode = async (next: TimePickerMode) => {
 		if (mode === next) return
-		mode = next
+		cancelEntering?.()
+		morphSize(
+			element?.querySelector<HTMLElement>('.np-time-picker') ?? undefined,
+			() =>
+				flushSync(() => {
+					mode = next
+					entering = next === 'dial'
+				}),
+			'--np-motion-expressive-default-spatial',
+		)
+		cancelEntering = afterTwoFrames(() => (entering = false))
 		await focusFirst()
 	}
 
 	const confirm = () => {
 		const next: ISOTime = toISOTime(pending.minutes)
+		confirming = true
 		value = next
 		onconfirm?.(next)
-		close()
-	}
-
-	const cancel = () => {
-		oncancel?.()
 		close()
 	}
 </script>
@@ -137,19 +139,22 @@
 <Dialog
 	role="dialog"
 	{...attributes}
+	bind:this={dialog}
 	bind:element
 	bind:open
 	aria-labelledby="{uid}-headline"
 	class={['np-time-picker-dialog', attributes.class]}
 	--np-dialog-container-width="fit-content"
 	--np-dialog-container-min-width="0"
+	--np-dialog-elevation="none"
 	ontoggle={(event) => {
 		if (event.newState === 'open') {
+			confirming = false
 			exit.show()
 			pending.reset(committed ?? minutesOfDay(new Date()))
 			focusFirst()
-		}
-		if (event.newState === 'closed') {
+		} else {
+			if (!confirming) oncancel?.()
 			exit.scheduleExit(element)
 		}
 		ontoggle?.(event)
@@ -159,6 +164,7 @@
 		<TimePickerPanel
 			state={pending}
 			{mode}
+			{entering}
 			{horizontal}
 			hour12={clock12}
 			{minuteStep}
@@ -200,7 +206,7 @@
 			<span></span>
 		{/if}
 		<div class="np-time-picker-confirm">
-			<Button type="button" variant="text" onclick={cancel}>{cancelLabel}</Button>
+			<Button type="button" variant="text" onclick={close}>{cancelLabel}</Button>
 			<Button type="button" variant="text" disabled={!pending.usable} onclick={confirm}>
 				{confirmLabel}
 			</Button>

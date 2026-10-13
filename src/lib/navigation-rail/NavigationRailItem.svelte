@@ -31,6 +31,8 @@
 
 	let classes = $derived([
 		'np-navigation-action',
+		'np-focus-ring',
+		'np-focus-ring-inset',
 		selected && 'np-navigation-action-selected',
 		expanded && 'np-navigation-action-expanded',
 		attributes.class,
@@ -128,20 +130,7 @@
 	}
 
 	.np-navigation-action:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: -3px;
 		border-radius: 1rem;
-	}
-	/* The focused state layer, on top of the ring. */
-	.np-navigation-action:focus-visible :global(.np-ripple-surface)::before {
-		opacity: var(--np-ripple-focus-opacity, 0.1);
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.np-navigation-action:focus-visible {
-			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
-		}
 	}
 
 	.np-navigation-action-indicator {

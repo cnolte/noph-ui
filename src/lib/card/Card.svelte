@@ -66,6 +66,7 @@
 		aria-disabled={disabled}
 		class={[
 			'np-card-container',
+			'np-focus-ring',
 			`np-card-${variant}`,
 			disabled && 'np-card-disabled',
 			attributes.class,
@@ -82,6 +83,7 @@
 		{disabled}
 		class={[
 			'np-card-container',
+			'np-focus-ring',
 			`np-card-${variant}`,
 			disabled && 'np-card-disabled',
 			attributes.class,
@@ -98,6 +100,7 @@
 		role="link"
 		class={[
 			'np-card-container',
+			'np-focus-ring',
 			`np-card-${variant}`,
 			disabled && 'np-card-disabled',
 			attributes.class,
@@ -111,7 +114,6 @@
 	.np-card-elevated {
 		border-width: 0;
 		box-shadow: var(--np-elevation-1);
-		color: var(--np-color-on-surface);
 		--background-color: var(
 			--np-elevated-card-container-color,
 			var(--np-color-surface-container-low)
@@ -123,7 +125,6 @@
 	}
 	.np-card-filled {
 		border-width: 0;
-		color: var(--np-color-on-surface);
 		--background-color: var(
 			--np-filled-card-container-color,
 			var(--np-color-surface-container-highest)
@@ -134,7 +135,6 @@
 		--background-color: var(--np-color-surface-variant);
 	}
 	.np-card-outlined {
-		color: var(--np-color-on-surface);
 		border: 1px solid var(--np-color-outline-variant);
 		--background-color: var(--np-outlined-card-container-color, var(--np-color-surface));
 		--border-radius: var(--np-outlined-card-container-shape, var(--np-shape-corner-medium));
@@ -159,21 +159,6 @@
 		cursor: pointer;
 	}
 
-	.np-card-container:focus-visible :global(.np-ripple-surface)::before {
-		opacity: var(--np-ripple-focus-opacity, 0.1);
-	}
-
-	.np-card-container:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: 2px;
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.np-card-container:focus-visible {
-			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
-		}
-	}
 	.np-card-disabled {
 		opacity: 0.38;
 		cursor: unset;
@@ -199,7 +184,6 @@
 		flex: 1 0 auto;
 		min-width: calc(100% - 32px);
 		margin: 1rem;
-		grid-gap: 0.5rem;
 		gap: 0.5rem;
 	}
 

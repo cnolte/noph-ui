@@ -126,10 +126,10 @@
 	<code>type</code> to pin the element yourself.
 </p>
 <p>
-	A card that holds its own buttons and links should stay a plain card. Inside a clickable card, a
-	screen reader cannot reach those inner controls. A disabled clickable card keeps <code
-		>aria-disabled</code
-	> and steps out of the tab order.
+	A card that holds its own buttons and links stays a plain card. Inside a clickable card, a screen
+	reader cannot reach those inner controls, so the props type rejects <code>action</code> together
+	with <code>href</code>, <code>onclick</code> or a <code>type</code> other than <code>text</code>.
+	A disabled clickable card keeps <code>aria-disabled</code> and steps out of the tab order.
 </p>
 <p>
 	The image is decorative by default. When it carries meaning, describe it with
@@ -202,7 +202,7 @@
 			<td><code>action</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>The action of the card</td>
+			<td>The buttons or links of the card. Only on a plain card.</td>
 		</tr>
 		<tr>
 			<td><code>...attributes</code></td>

@@ -28,6 +28,7 @@
 	let isLink = $derived(attributes.href != null)
 	let classes = $derived([
 		'np-navigation-bar-item',
+		'np-focus-ring',
 		selected && 'np-navigation-bar-item-selected',
 		labelBehavior === 'selected' && 'np-navigation-bar-item-label-selected',
 		orientation === 'horizontal' && 'np-navigation-bar-item-horizontal',
@@ -115,7 +116,9 @@
 		z-index: 1;
 	}
 
-	.np-navigation-bar-item-icon::before {
+	/* The active indicator: behind the icon, or behind the whole item when it lies horizontal. */
+	.np-navigation-bar-item-icon::before,
+	.np-navigation-bar-item-horizontal::before {
 		content: '';
 		position: absolute;
 		inset: 0;
@@ -128,7 +131,8 @@
 		border-radius: inherit;
 		z-index: -1;
 	}
-	.np-navigation-bar-item-selected .np-navigation-bar-item-icon::before {
+	.np-navigation-bar-item-selected .np-navigation-bar-item-icon::before,
+	.np-navigation-bar-item-horizontal.np-navigation-bar-item-selected::before {
 		opacity: 1;
 		transform: scaleX(1);
 	}
@@ -171,23 +175,6 @@
 		align-self: center;
 		z-index: 0;
 	}
-	.np-navigation-bar-item-horizontal::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		opacity: 0;
-		transform: scaleX(0.32);
-		background-color: var(
-			--np-navigation-bar-item-active-indicator-color,
-			var(--np-color-secondary-container)
-		);
-		border-radius: inherit;
-		z-index: -1;
-	}
-	.np-navigation-bar-item-horizontal.np-navigation-bar-item-selected::before {
-		opacity: 1;
-		transform: scaleX(1);
-	}
 	.np-navigation-bar-item-horizontal .np-navigation-bar-item-icon {
 		width: 1.5rem;
 		height: 1.5rem;
@@ -227,15 +214,7 @@
 	}
 
 	.np-navigation-bar-item:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: 2px;
 		border-radius: 1rem;
-	}
-	/* The focused state layer, on top of the ring. */
-	.np-navigation-bar-item:focus-visible :global(.np-ripple-surface)::before {
-		opacity: var(--np-ripple-focus-opacity, 0.1);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -246,9 +225,6 @@
 		}
 		.np-navigation-bar-item-label {
 			transition: color var(--np-motion-expressive-default-effects);
-		}
-		.np-navigation-bar-item:focus-visible {
-			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
 		}
 	}
 </style>

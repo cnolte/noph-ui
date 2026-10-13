@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import CheckIcon from '#lib/icons/CheckIcon.svelte'
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
@@ -29,7 +30,12 @@
 			aria-selected={selected}
 			aria-disabled={option.disabled}
 			tabindex={option.value === tabStopValue ? 0 : -1}
-			class={['np-date-picker-selection-option', selected && 'selected']}
+			class={[
+				'np-date-picker-selection-option',
+				'np-focus-ring',
+				'np-focus-ring-inset',
+				selected && 'selected',
+			]}
 			onclick={() => {
 				if (option.disabled) return
 				onselect?.(option.value)
@@ -113,10 +119,5 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-
-	.np-date-picker-selection-option:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: -3px;
 	}
 </style>

@@ -151,10 +151,10 @@ describe('picker', async () => {
 	test('swaps the dial for typed fields and back', async () => {
 		await setup()
 		await openPicker()
-		await action('Switch to text input mode').click()
+		await action('Toggle input picker').click()
 		await expect.element(page.getByRole('textbox', { name: 'Hour' })).toBeInTheDocument()
 
-		await action('Switch to dial mode').click()
+		await action('Toggle dial picker').click()
 		await expect.poll(() => !!document.querySelector('.np-clock-dial')).toBe(true)
 	})
 

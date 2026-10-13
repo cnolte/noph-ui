@@ -22,6 +22,7 @@
 	bind:this={element}
 	class={[
 		'np-switch',
+		'np-focus-ring-within',
 		disabled && 'np-disabled',
 		hasError && !disabled && 'np-error',
 		attributes.class,
@@ -74,6 +75,7 @@
 
 <style>
 	.np-switch {
+		--np-focus-ring-offset: -2px;
 		--_travel: 1.25rem;
 		--_selected-handle: var(--np-switch-selected-handle-color, var(--np-color-on-primary));
 		--_unselected-active-handle: var(
@@ -263,13 +265,5 @@
 
 	.np-disabled {
 		cursor: default;
-	}
-
-	.np-switch:has(input:focus-visible) {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: -2px;
-		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
 	}
 </style>

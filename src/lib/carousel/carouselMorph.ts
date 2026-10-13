@@ -87,7 +87,7 @@ export const carouselMorph =
 				return
 			}
 
-			const shape = 'var(--np-carousel-item-container-shape, var(--np-shape-corner-extra-large))'
+			const shape = 'var(--_carousel-item-corner)'
 			const offset = (along: number) =>
 				vertical ? `inset-block-start:${px(along)}` : `inset-inline-start:${px(along)}`
 			const mask = (clip: number) =>

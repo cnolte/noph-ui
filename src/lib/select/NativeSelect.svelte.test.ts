@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { createRawSnippet } from 'svelte'
 import { render } from 'vitest-browser-svelte'
 import NativeSelect from './NativeSelect.svelte'
 
@@ -46,5 +47,24 @@ describe('NativeSelect', async () => {
 		expect(select().matches(':user-invalid')).toBe(false)
 		const errormessage = select().getAttribute('aria-errormessage')!
 		expect(document.getElementById(errormessage)?.textContent?.trim()).toBe('Required')
+	})
+})
+
+describe('NativeSelect filled', async () => {
+	test('shows the chosen option over its container', async () => {
+		await render(NativeSelect, {
+			label: 'Fruit',
+			variant: 'filled',
+			value: 'apple',
+			children: createRawSnippet(() => ({
+				render: () => '<option value="apple">Apple</option>',
+			})),
+		})
+
+		// Hit testing follows the paint order, once the container can be hit at all.
+		document.querySelector<HTMLElement>('.np-field-background')!.style.pointerEvents = 'auto'
+		const box = select().getBoundingClientRect()
+		const top = document.elementFromPoint(box.left + 24, box.top + box.height * 0.7)
+		expect(top === select() || select().contains(top)).toBe(true)
 	})
 })

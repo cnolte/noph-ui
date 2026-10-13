@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { coarsePointer } from '#lib/media.js'
 	import '#lib/internal/interest.css'
+	import '#lib/internal/pop-in.css'
 	import { popoverController, syncOpenEffect } from '#lib/popover.svelte.js'
 	import { on } from 'svelte/events'
 	import type { TooltipProps } from './types.js'
@@ -134,7 +135,7 @@
 	{...attributes}
 	{id}
 	{@attach attachAnchor}
-	class={['np-tooltip', attributes.class]}
+	class={['np-tooltip', 'np-pop-in', attributes.class]}
 	role="tooltip"
 	popover="hint"
 	bind:this={element}
@@ -152,7 +153,6 @@
 	.np-tooltip[popover] {
 		width: max-content;
 		max-width: 12.5rem;
-		word-wrap: break-word;
 		overflow-wrap: break-word;
 		margin: var(--np-tooltip-margin, 4px 0);
 		background: var(--np-color-inverse-surface);
@@ -166,27 +166,5 @@
 		align-self: var(--np-tooltip-align-self, auto);
 		position-area: var(--np-tooltip-position-area, top);
 		position-try-fallbacks: var(--np-tooltip-position-try-fallbacks, flip-block);
-	}
-	.np-tooltip:popover-open {
-		opacity: 1;
-		scale: 1;
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.np-tooltip:popover-open {
-			animation:
-				fadeIn var(--np-motion-expressive-fast-effects),
-				scaleIn var(--np-motion-expressive-fast-spatial);
-		}
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-	}
-	@keyframes scaleIn {
-		from {
-			scale: 0.8;
-		}
 	}
 </style>

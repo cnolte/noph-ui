@@ -154,6 +154,7 @@ describe('parseDateTimeInput', () => {
 
 	it('refuses an hour the clock cannot hold', () => {
 		expect(parseDateTimeInput('08/17/2025, 13:30 PM', 'en-US', true)).toBeUndefined()
+		expect(parseDateTimeInput('08/17/2025, 0:30 PM', 'en-US', true)).toBeUndefined()
 		expect(parseDateTimeInput('17.08.2025, 24:30', 'de-DE', false)).toBeUndefined()
 	})
 
@@ -248,6 +249,11 @@ describe('formatMinutes / getTimePattern', () => {
 })
 
 describe('parseTimeInput', () => {
+	it('reads digits typed without a colon', () => {
+		expect(parseTimeInput('1430', 'de-DE', false)).toBe(870)
+		expect(parseTimeInput('0230 PM', 'en-US', true)).toBe(870)
+	})
+
 	it('reads the field order of the locale', () => {
 		expect(parseTimeInput('02:30 PM', 'en-US', true)).toBe(870)
 		expect(parseTimeInput('14:30', 'de-DE', false)).toBe(870)

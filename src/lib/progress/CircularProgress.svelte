@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './four-color.css'
 	import { reducedMotion } from '#lib/media.js'
 	import type { Attachment } from 'svelte/attachments'
 	import type { CircularProgressProps } from './types.js'
@@ -49,8 +50,7 @@
 
 	let wave = $derived(wavy && !reducedMotion.current)
 
-	// Attached to the path itself, so the loop starts and stops with the node the two branches render
-	// rather than racing a shared `bind:this` when the determinate branch swaps.
+	// Attached to the path itself, so the loop starts and stops with the node.
 	const animateWave: Attachment<SVGPathElement> = (path) => {
 		const strokePercent =
 			parseFloat(
@@ -85,35 +85,21 @@
 		aria-valuemax={max}
 		aria-valuenow={indeterminate ? undefined : value}
 	>
-		{#if indeterminate}
-			<svg class="spinner" viewBox="0 0 4800 4800">
-				{#if track}
-					<circle class="track spinner-track" pathLength="100"></circle>
-				{/if}
-				{#if wave}
-					<path
-						{@attach animateWave}
-						class="active-track spinner-arc wave"
-						d={wavePath}
-						pathLength="100"
-					></path>
-				{:else}
-					<circle class="active-track spinner-arc" pathLength="100"></circle>
-				{/if}
-			</svg>
-		{:else}
-			<svg viewBox="0 0 4800 4800">
-				{#if track}
-					<circle class="track" pathLength="100"></circle>
-				{/if}
-				{#if wave}
-					<path {@attach animateWave} class="active-track wave" d={wavePath} pathLength="100"
-					></path>
-				{:else}
-					<circle class="active-track" pathLength="100"></circle>
-				{/if}
-			</svg>
-		{/if}
+		<svg class={[indeterminate && 'spinner']} viewBox="0 0 4800 4800">
+			{#if track}
+				<circle class={['track', indeterminate && 'spinner-track']} pathLength="100"></circle>
+			{/if}
+			{#if wave}
+				<path
+					{@attach animateWave}
+					class={['active-track', indeterminate && 'spinner-arc', 'wave']}
+					d={wavePath}
+					pathLength="100"
+				></path>
+			{:else}
+				<circle class={['active-track', indeterminate && 'spinner-arc']} pathLength="100"></circle>
+			{/if}
+		</svg>
 	</div>
 </div>
 
@@ -133,8 +119,6 @@
 	}
 
 	.progress {
-		flex: 1;
-		align-self: stretch;
 		margin: 0.25rem;
 	}
 
@@ -304,64 +288,25 @@
 	}
 
 	.four-color .spinner-arc {
-		animation-name: cp-arc-sweep, four-color;
+		animation-name: cp-arc-sweep, np-four-color;
 		animation-duration: 6000ms, calc(4 * 1333ms);
+		--np-four-color: var(--np-circular-progress-color, var(--np-color-primary));
+		stroke: var(--np-four-color);
 	}
 
 	.four-color .spinner-track {
-		animation-name: cp-track-sweep, four-color-track;
+		animation-name: cp-track-sweep, np-four-color;
 		animation-duration: 6000ms, calc(4 * 1333ms);
+		--np-four-color-track: var(
+			--np-circular-progress-track-color,
+			var(--np-color-secondary-container)
+		);
+		stroke: var(--np-four-color-track);
 	}
 
 	@media (forced-colors: active) {
 		.active-track {
 			stroke: CanvasText;
-		}
-
-		.spinner-arc {
-			stroke: CanvasText;
-		}
-	}
-	@keyframes four-color {
-		0%,
-		15% {
-			stroke: var(--np-color-primary);
-		}
-		25%,
-		40% {
-			stroke: var(--np-color-primary-container);
-		}
-		50%,
-		65% {
-			stroke: var(--np-color-tertiary);
-		}
-		75%,
-		90% {
-			stroke: var(--np-color-tertiary-container);
-		}
-		100% {
-			stroke: var(--np-color-primary);
-		}
-	}
-	@keyframes four-color-track {
-		0%,
-		15% {
-			stroke: var(--np-color-primary-container);
-		}
-		25%,
-		40% {
-			stroke: var(--np-color-primary);
-		}
-		50%,
-		65% {
-			stroke: var(--np-color-tertiary-container);
-		}
-		75%,
-		90% {
-			stroke: var(--np-color-tertiary);
-		}
-		100% {
-			stroke: var(--np-color-primary-container);
 		}
 	}
 </style>

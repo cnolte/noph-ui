@@ -42,12 +42,11 @@ test('the dial and the input mode are two ways into the same value', async ({ pa
 	await page.waitForLoadState('networkidle')
 
 	await page.getByRole('button', { name: 'Select time' }).first().click()
-	// The dialog is named after its headline, which follows the mode.
 	const dial = page.getByRole('dialog', { name: 'Select time' })
 	await expect(dial).toBeVisible()
 	await expect(dial.getByRole('listbox', { name: 'Select hour' })).toBeVisible()
 
-	await dial.getByRole('button', { name: 'Switch to text input mode' }).click()
+	await dial.getByRole('button', { name: 'Toggle input picker' }).click()
 
 	const entry = page.getByRole('dialog', { name: 'Enter time' })
 	await expect(entry).toBeVisible()

@@ -113,7 +113,7 @@ describe('TextField aria wiring', async () => {
 		const order = [...document.querySelector('.input-wrapper')!.children].map(
 			(child) => child.className.split(' ')[0],
 		)
-		expect(order).toEqual(['prefix', 'input', 'suffix'])
+		expect(order).toEqual(['prefix', 'np-field-input', 'suffix'])
 	})
 
 	test('describes the input with prefix and suffix', async () => {

@@ -54,7 +54,7 @@
 		<rect class="mark short" />
 		<rect class="mark long" />
 	</svg>
-	<div class="np-input-wrapper">
+	<div class="np-input-wrapper np-focus-ring-within">
 		{#if !attributes.disabled}
 			<Ripple forElement={inputEl} />
 		{/if}
@@ -115,13 +115,6 @@
 		cursor: inherit;
 	}
 
-	.np-input-wrapper:has(input:focus-visible) {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: 2px;
-		animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
-	}
 	.np-outline,
 	.np-background,
 	.np-icon {

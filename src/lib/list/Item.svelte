@@ -77,7 +77,14 @@
 		{...attributes}
 		bind:this={element}
 		aria-disabled="true"
-		class={['np-item disabled', lazy && 'np-item-lazy', attributes.class]}
+		class={[
+			'np-item',
+			'disabled',
+			'np-focus-ring',
+			'np-focus-ring-inset',
+			lazy && 'np-item-lazy',
+			attributes.class,
+		]}
 	>
 		{@render content()}
 	</div>
@@ -85,7 +92,14 @@
 	<div
 		{...attributes}
 		bind:this={element}
-		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
+		class={[
+			'np-item',
+			'np-focus-ring',
+			'np-focus-ring-inset',
+			selected && 'selected',
+			lazy && 'np-item-lazy',
+			attributes.class,
+		]}
 	>
 		{@render content()}
 	</div>
@@ -94,7 +108,14 @@
 		{...attributes}
 		bind:this={element}
 		type={buttonType(type)}
-		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
+		class={[
+			'np-item',
+			'np-focus-ring',
+			'np-focus-ring-inset',
+			selected && 'selected',
+			lazy && 'np-item-lazy',
+			attributes.class,
+		]}
 	>
 		{@render content()}
 		<Ripple forceHover={softFocus} />
@@ -103,7 +124,14 @@
 	<a
 		{...attributes}
 		bind:this={element}
-		class={['np-item', selected && 'selected', lazy && 'np-item-lazy', attributes.class]}
+		class={[
+			'np-item',
+			'np-focus-ring',
+			'np-focus-ring-inset',
+			selected && 'selected',
+			lazy && 'np-item-lazy',
+			attributes.class,
+		]}
 	>
 		{@render content()}
 		<Ripple forceHover={softFocus} />
@@ -145,7 +173,6 @@
 		cursor: pointer;
 		display: flex;
 		flex: 1;
-		flex-grow: 1;
 		user-select: none;
 		align-items: center;
 		text-align: start;
@@ -203,21 +230,8 @@
 		contain-intrinsic-block-size: auto var(--np-item-container-height, 4.5rem);
 	}
 
-	.np-item:focus-visible :global(.np-ripple-surface)::before {
-		opacity: var(--np-ripple-focus-opacity, 0.1);
-	}
-
 	.np-item:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: -3px;
 		border-radius: var(--np-shape-corner-extra-small);
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.np-item:focus-visible {
-			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
-		}
 	}
 
 	div.np-item {

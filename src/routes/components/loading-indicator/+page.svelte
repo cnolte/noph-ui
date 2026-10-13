@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import ThemingExample from './demos/ThemingExample.svelte'
@@ -20,7 +21,7 @@
 	The loading indicator is the Material 3 expressive spinner. It morphs through a sequence of shapes
 	while it turns. Use it for short waits inside an existing surface, such as a pull to refresh
 	gesture or a panel that is loading its contents. To show real progress over a longer time, use
-	<a class="link" href="/components/progress">progress indicators</a> instead.
+	<a class="link" href={resolve('/components/progress')}>progress indicators</a> instead.
 </p>
 
 <h2 id="usage">

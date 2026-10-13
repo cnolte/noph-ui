@@ -6,7 +6,7 @@
 	let { start, end, children, ...attributes }: OptionProps = $props()
 </script>
 
-<option {...attributes}>
+<option {...attributes} class={['np-focus-ring', 'np-focus-ring-inset', attributes.class]}>
 	<Ripple />
 	{#if start}
 		{@render start()}
@@ -47,15 +47,7 @@
 			color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
 		}
 		&:focus-visible {
-			outline-style: solid;
-			outline-color: var(--np-color-secondary);
-			outline-width: 3px;
-			outline-offset: -3px;
 			border-radius: var(--np-shape-corner-extra-small);
-
-			@media (prefers-reduced-motion: no-preference) {
-				animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
-			}
 		}
 	}
 </style>

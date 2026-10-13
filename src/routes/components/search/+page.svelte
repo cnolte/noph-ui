@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Layout from './demos/Layout.svelte'
@@ -50,8 +51,8 @@
 </p>
 <p>
 	For options that people step through while focus stays in the field, use
-	<a class="link" href="/components/autocomplete">autocomplete</a>. It is a full combobox and
-	handles the active option and <code>aria-activedescendant</code>.
+	<a class="link" href={resolve('/components/autocomplete')}>autocomplete</a>. It is a full combobox
+	and handles the active option and <code>aria-activedescendant</code>.
 </p>
 
 <h2 id="styles">Styles<a href="#styles" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -102,8 +103,8 @@
 </h2>
 <p>
 	Use a search app bar as an emphasised, global entry point. It is the
-	<a class="link" href="/components/app-bar">app bar</a>'s <code>search</code> variant, which shows a
-	field instead of a headline.
+	<a class="link" href={resolve('/components/app-bar')}>app bar</a>'s <code>search</code> variant, which
+	shows a field instead of a headline.
 </p>
 <Code
 	value={`<AppBar variant="search">

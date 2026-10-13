@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Labels from './demos/Labels.svelte'
@@ -20,7 +21,7 @@
 <h1>Radio button</h1>
 <p>
 	Radio buttons let people pick exactly one option from a set they can all see. For more than a
-	handful of options, use a <a class="link" href="/components/select">select</a>.
+	handful of options, use a <a class="link" href={resolve('/components/select')}>select</a>.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/field.css'
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
 	import type { NativeSelectProps } from './types.js'
 
@@ -13,7 +14,6 @@
 		required,
 		noAsterisk,
 		children,
-		oninput,
 		style,
 		element = $bindable(),
 		'aria-describedby': ariaDescribedby,
@@ -24,108 +24,110 @@
 	const uid = $props.id()
 	let selectId = $derived(id ?? `select-${uid}`)
 
-	let animateLabel = $state(false)
 	let errorText = $derived(issues?.map((issue) => issue.message).join(', '))
+	let asterisk = $derived(required && !noAsterisk)
 </script>
 
-<div
-	class={[
-		'np-select-container',
-		variant,
-		disabled && 'disabled',
-		required && !noAsterisk && 'asterisk',
-		(value === null || value === undefined || value === '') && 'is-empty',
-		animateLabel && 'animate-label',
-		attributes.class,
-	]}
-	{style}
-	bind:this={element}
->
-	{#if variant === 'outlined'}
-		<div class="np-select-outline">
-			<div class="np-select-outline-start"></div>
-			<div class="np-select-outline-notch">
-				{#if label}
-					<label for={selectId}>{label}</label>
-				{/if}
-			</div>
-			<div class="np-select-outline-end"></div>
-		</div>
-	{:else if variant === 'filled'}
-		<div class="np-select-filled">
-			{#if label}
-				<label for={selectId}>{label}</label>
-			{/if}
-		</div>
-		<div class="np-select-state-layer"></div>
-	{/if}
-	<span class="arrow">
-		<ArrowDropDownIcon />
-	</span>
-	<select
-		oninput={(event) => {
-			if (
-				(!animateLabel &&
-					(value === null || value === undefined || value === '') &&
-					event.currentTarget.value) ||
-				(value !== null && value !== undefined && value !== '' && !event.currentTarget.value)
-			) {
-				animateLabel = true
-			}
-			oninput?.(event)
-		}}
-		{disabled}
-		{required}
-		id={selectId}
-		bind:value
-		{...attributes}
-		aria-invalid={errorText ? 'true' : ariaInvalid}
-		aria-errormessage={[errorText && `supporting-text-${uid}`, ariaErrormessage]
-			.filter(Boolean)
-			.join(' ') || undefined}
-		aria-describedby={[supportingText && !errorText && `supporting-text-${uid}`, ariaDescribedby]
-			.filter(Boolean)
-			.join(' ') || undefined}
-		class="np-select"
+<div class={['np-select-container', attributes.class]} {style} bind:this={element}>
+	<div
+		class={[
+			'np-field',
+			variant === 'outlined' && 'np-field-outlined',
+			!label && 'np-field-no-label',
+			'np-field-with-end',
+			disabled && 'np-field-disabled',
+			value !== null && value !== undefined && value !== '' && 'np-field-populated',
+		]}
 	>
-		{@render children?.()}
-	</select>
-	{#if supportingText || errorText}
-		<div id="supporting-text-{uid}" class="supporting-text" role={errorText ? 'alert' : undefined}>
-			{errorText ?? supportingText}
+		<div class="np-field-box">
+			{#if variant === 'filled'}
+				<div class="np-field-background"></div>
+				<div class="np-field-state-layer"></div>
+				<div class="np-field-indicator"></div>
+			{:else}
+				<fieldset class="np-field-outline" aria-hidden="true">
+					<legend>
+						{#if label}<span>{label}{asterisk ? '*' : ''}</span>{/if}
+					</legend>
+				</fieldset>
+			{/if}
+			{#if label}
+				<div class="np-field-label-wrapper">
+					<label for={selectId} class={['np-field-label', asterisk && 'np-field-required']}
+						>{label}</label
+					>
+				</div>
+			{/if}
+			<select
+				{disabled}
+				{required}
+				id={selectId}
+				bind:value
+				{...attributes}
+				aria-invalid={errorText ? 'true' : ariaInvalid}
+				aria-errormessage={[errorText && `supporting-text-${uid}`, ariaErrormessage]
+					.filter(Boolean)
+					.join(' ') || undefined}
+				aria-describedby={[
+					supportingText && !errorText && `supporting-text-${uid}`,
+					ariaDescribedby,
+				]
+					.filter(Boolean)
+					.join(' ') || undefined}
+				class="np-select np-field-value"
+			>
+				{@render children?.()}
+			</select>
+			<span class="np-field-end np-field-icon arrow">
+				<ArrowDropDownIcon />
+			</span>
 		</div>
-	{/if}
+		{#if supportingText || errorText}
+			<div
+				id="supporting-text-{uid}"
+				class="np-field-supporting-text"
+				role={errorText ? 'alert' : undefined}
+			>
+				{errorText ?? supportingText}
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
 	.np-select-container {
-		--easing-fast: ease-out 150ms;
-		position: relative;
-		font-size: 1rem;
-		display: inline-block;
-		box-sizing: border-box;
+		display: inline-flex;
 		min-width: var(--np-select-min-width, 210px);
 		max-width: var(--np-select-max-width, 100%);
-		color: var(--np-color-on-surface-variant);
+	}
+	.np-field {
+		--_field-shape: var(--np-shape-corner-extra-small);
+		--_field-container-color: var(--np-color-surface-container-highest);
+	}
+	/* A filled label stays clear of the arrow. */
+	.np-field:not(.np-field-outlined) .np-field-label-wrapper {
+		margin-inline-end: 3.25rem;
 	}
 
+	/* The select fills the field: over its container, under its outline and label. */
 	.np-select {
 		appearance: base-select;
-		display: inline-flex;
-		align-items: center;
+		position: relative;
+		flex: 1;
+		min-inline-size: 0;
+		height: 3.5rem;
+		box-sizing: border-box;
 		margin: 0;
+		padding-block: var(--top-space) var(--bottom-space);
+		padding-inline: 1rem 3.25rem;
 		border: none;
 		outline: none;
 		background: none;
-		font: inherit;
-		font-size: inherit;
-		line-height: 1.5rem;
-		width: 100%;
-		min-inline-size: 0;
 		overflow: hidden;
-		box-sizing: border-box;
-		height: 3.5rem;
 		color: var(--np-color-on-surface);
+		font: inherit;
+		font-size: 1rem;
+		line-height: 1.5rem;
 		&::picker(select) {
 			appearance: base-select;
 			scrollbar-width: thin;
@@ -133,6 +135,19 @@
 		&::picker-icon {
 			display: none;
 		}
+	}
+	.np-field-disabled .np-select {
+		opacity: 0.38;
+	}
+
+	.arrow {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-end: 0;
+		pointer-events: none;
+	}
+	.np-field:has(.np-select:open) .arrow {
+		rotate: 180deg;
 	}
 
 	::picker(select) {
@@ -160,19 +175,6 @@
 		@starting-style {
 			opacity: 0;
 		}
-	}
-
-	.outlined select {
-		padding-inline-start: 1rem;
-		padding-block: 1rem;
-		padding-inline-end: 3.25rem;
-	}
-
-	.filled select {
-		padding-inline-start: 1rem;
-		padding-block-start: 1.5rem;
-		padding-block-end: 0.5rem;
-		padding-inline-end: 3.25rem;
 	}
 
 	.np-select :global(option) {
@@ -216,255 +218,6 @@
 		color: var(--np-color-on-surface-variant);
 	}
 
-	.np-select-outline {
-		pointer-events: none;
-		width: 100%;
-		height: 3.5rem;
-		position: absolute;
-		display: flex;
-		box-sizing: border-box;
-		border-color: var(--np-color-outline);
-	}
-	.np-select-container:hover .np-select-outline {
-		border-color: var(--np-color-on-surface);
-		color: var(--np-color-on-surface);
-	}
-
-	.np-select-container:focus-within .np-select-outline {
-		border-color: var(--np-color-primary);
-	}
-
-	.np-select-outline-start,
-	.np-select-outline-notch,
-	.np-select-outline-end,
-	.np-select-filled {
-		transition:
-			border-color var(--easing-fast),
-			border-width var(--easing-fast);
-	}
-	.np-select-outline-start {
-		width: 0.75rem;
-		box-sizing: inherit;
-		border-style: solid;
-		border-color: inherit;
-		border-block-width: 1px;
-		border-inline-start-width: 1px;
-		border-inline-end-width: 0;
-		border-start-start-radius: var(--np-shape-corner-extra-small);
-		border-end-start-radius: var(--np-shape-corner-extra-small);
-	}
-
-	.np-select-container:focus-within .np-select-outline-start {
-		border-block-width: 3px;
-		border-inline-start-width: 3px;
-	}
-
-	.arrow {
-		display: flex;
-		fill: currentColor;
-		position: absolute;
-		pointer-events: none;
-		inset-inline-end: 0.75rem;
-		inset-block-start: 1rem;
-	}
-
-	.np-select-container:has(select:open) .arrow {
-		rotate: 180deg;
-	}
-
-	.np-select-outline-notch {
-		box-sizing: inherit;
-		border-style: solid;
-		border-color: inherit;
-		border-block-start-width: 0;
-		border-block-end-width: 1px;
-		border-inline-width: 0;
-	}
-
-	.np-select-container:focus-within .np-select-outline-notch {
-		border-block-end-width: 3px;
-	}
-
-	.np-select-outline-end {
-		flex: 1;
-		box-sizing: inherit;
-		border-style: solid;
-		border-color: inherit;
-		border-block-width: 1px;
-		border-inline-start-width: 0;
-		border-inline-end-width: 1px;
-		border-start-end-radius: var(--np-shape-corner-extra-small);
-		border-end-end-radius: var(--np-shape-corner-extra-small);
-	}
-
-	.np-select-container:focus-within .np-select-outline-end {
-		border-block-width: 3px;
-		border-inline-end-width: 3px;
-	}
-
-	.np-select-filled {
-		position: absolute;
-		pointer-events: none;
-		box-sizing: border-box;
-		width: 100%;
-		height: 3.5rem;
-		z-index: -1;
-		background: var(--np-color-surface-container-highest);
-		border-start-start-radius: var(--np-shape-corner-extra-small);
-		border-start-end-radius: var(--np-shape-corner-extra-small);
-		border-block-end: 1px solid var(--np-color-on-surface-variant);
-	}
-
-	.np-select-container:focus-within .np-select-filled {
-		border-block-end: 3px solid var(--np-color-primary);
-	}
-
-	.np-select-state-layer {
-		position: absolute;
-		pointer-events: none;
-		width: 100%;
-		height: 3.5rem;
-		background: var(--np-color-on-surface);
-		opacity: 0;
-	}
-
-	.np-select-container:not(.disabled):hover .np-select-state-layer {
-		opacity: 0.08;
-	}
-
-	:global(label) {
-		-webkit-tap-highlight-color: transparent;
-	}
-
-	label {
-		display: inline-block;
-		transition: color var(--easing-fast);
-		pointer-events: none;
-		line-height: 1rem;
-		padding-inline: 0.25rem;
-		overflow: hidden;
-		font-size: 0.75rem;
-	}
-
-	.asterisk label::after {
-		content: '*';
-	}
-
-	.np-select-outline label {
-		transform: translateY(-0.5rem);
-	}
-
-	.np-select-filled label {
-		padding-inline-start: 1rem;
-		transform: translateY(0.5rem);
-	}
-
-	.np-select-container:focus-within label {
-		color: var(--np-color-primary);
-	}
-
-	@keyframes slideUpOutline {
-		from {
-			transform: translateY(1rem);
-		}
-		to {
-			transform: translateY(-0.5rem);
-		}
-	}
-
-	@keyframes slideUpFilled {
-		from {
-			transform: translateY(1.25rem);
-		}
-		to {
-			transform: translateY(0.5rem);
-		}
-	}
-
-	.is-empty .np-select-outline label {
-		transform: translateY(0);
-		font-size: 1rem;
-		inset-block-start: 1.25rem;
-		position: absolute;
-	}
-
-	@keyframes slideDownOutline {
-		from {
-			transform: translateY(-1.5rem);
-		}
-		to {
-			transform: translateY(0);
-		}
-	}
-
-	.is-empty .np-select-filled label {
-		font-size: 1rem;
-		transform: translateY(1.25rem);
-	}
-
-	@keyframes slideDownFilled {
-		from {
-			transform: translateY(0.5rem);
-		}
-		to {
-			transform: translateY(1.25rem);
-		}
-	}
-
-	.supporting-text {
-		font-size: 0.75rem;
-		line-height: 1rem;
-		padding: 0.25rem 1rem 0;
-	}
-
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .supporting-text,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) label,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .arrow,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):focus-within label {
-		color: var(--np-color-error);
-	}
-
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover label,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover .arrow {
-		color: var(--np-color-on-error-container);
-	}
-
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .np-select-outline,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):focus-within
-		.np-select-outline,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])) .np-select-filled,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):focus-within
-		.np-select-filled {
-		border-color: var(--np-color-error);
-	}
-
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover
-		.np-select-outline,
-	.np-select-container:has(.np-select:is(:user-invalid, [aria-invalid='true'])):hover
-		.np-select-filled {
-		border-color: var(--np-color-on-error-container);
-	}
-
-	.disabled .np-select-filled {
-		background: color-mix(in srgb, var(--np-color-on-surface) 4%, transparent);
-		border-block-end-color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.disabled,
-	.disabled label,
-	.disabled .supporting-text,
-	.disabled .arrow,
-	.disabled:hover .np-select-outline,
-	.disabled select,
-	.disabled:hover select {
-		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.disabled:hover .np-select-outline,
-	.disabled .np-select-outline {
-		border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
-	}
-
 	@media (prefers-reduced-motion: no-preference) {
 		/* Closes like Menu: a fade and a slight shrink on the default effects curve. */
 		::picker(select) {
@@ -489,29 +242,7 @@
 		}
 
 		.arrow {
-			transition: rotate var(--easing-fast);
-		}
-
-		.animate-label label {
-			transition:
-				font-size 150ms cubic-bezier(0.4, 0, 0.2, 1),
-				color var(--easing-fast);
-		}
-
-		.animate-label:not(.is-empty) .np-select-outline label {
-			animation: slideUpOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-		}
-
-		.animate-label:not(.is-empty) .np-select-filled label {
-			animation: slideUpFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-		}
-
-		.is-empty.animate-label .np-select-outline label {
-			animation: slideDownOutline 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
-		}
-
-		.is-empty.animate-label .np-select-filled label {
-			animation: slideDownFilled 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+			transition: rotate 150ms ease-out;
 		}
 	}
 </style>

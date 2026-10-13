@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import RegistrationForm from './demos/RegistrationForm.svelte'
@@ -32,10 +33,10 @@
 <p>
 	The form below connects five components to one remote function: two <a
 		class="link"
-		href="/components/text-field">TextFields</a
-	>, a <a class="link" href="/components/select">Select</a>, a
-	<a class="link" href="/components/date-picker">DockedDatePicker</a>
-	and a <a class="link" href="/components/checkbox">Checkbox</a>. It validates against a
+		href={resolve('/components/text-field')}>TextFields</a
+	>, a <a class="link" href={resolve('/components/select')}>Select</a>, a
+	<a class="link" href={resolve('/components/date-picker')}>DockedDatePicker</a>
+	and a <a class="link" href={resolve('/components/checkbox')}>Checkbox</a>. It validates against a
 	<a class="link" href="https://valibot.dev/" target="_blank" rel="noreferrer">Valibot</a>
 	schema. Submit it empty to see an error on every field, or register <code>ada@example.com</code> to
 	trigger a rule the schema cannot express.

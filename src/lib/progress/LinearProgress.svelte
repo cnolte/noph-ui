@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './four-color.css'
 	import { reducedMotion } from '#lib/media.js'
 	import type { LinearProgressProps } from './types.js'
 
@@ -26,36 +27,6 @@
 	let wavelength = $derived(indeterminate ? INDETERMINATE_WAVELENGTH : DETERMINATE_WAVELENGTH)
 	const amplitudeFor = (fraction: number) =>
 		!wave ? 0 : indeterminate || (fraction > 0.1 && fraction < 0.95) ? 1 : 0
-
-	const cubicBezier = (x1: number, y1: number, x2: number, y2: number) => {
-		const A = (a: number, b: number) => 1 - 3 * b + 3 * a
-		const B = (a: number, b: number) => 3 * b - 6 * a
-		const bez = (t: number, a: number, b: number) => ((A(a, b) * t + B(a, b)) * t + 3 * a) * t
-		const slope = (t: number) => (3 * A(x1, x2) * t + 2 * B(x1, x2)) * t + 3 * x1
-		return (x: number) => {
-			if (x <= 0) return 0
-			if (x >= 1) return 1
-			let t = x
-			for (let i = 0; i < 8; i++) {
-				const err = bez(t, x1, x2) - x
-				if (Math.abs(err) < 1e-6) break
-				const d = slope(t)
-				if (Math.abs(d) < 1e-6) break
-				t -= err / d
-			}
-			return bez(t, y1, y2)
-		}
-	}
-	const accelerate = cubicBezier(0.3, 0, 0.8, 0.15)
-	const CYCLE = 1750
-	const RAMPS = [
-		[0, 1000],
-		[250, 1000],
-		[650, 850],
-		[900, 850],
-	] as const
-	const rampAt = (t: number, delay: number, duration: number) =>
-		t <= delay ? 0 : t >= delay + duration ? 1 : accelerate((t - delay) / duration)
 
 	const WAVE_STEPS = 12
 	let containerWidth = $state(0)
@@ -142,12 +113,10 @@
 			renderedAmplitude += (amplitudeFor(shown / 100) - renderedAmplitude) * Math.min(1, dt / 500)
 			const wave = buildWave(width, height, len, renderedAmplitude, phase)
 			if (indeterminate) {
-				const t = now % CYCLE
-				const [h1, t1, h2, t2] = RAMPS.map(([d, u]) => rampAt(t, d, u))
-				host?.style.setProperty('--np-lp-h1', `${h1 * 100}%`)
-				host?.style.setProperty('--np-lp-t1', `${t1 * 100}%`)
-				host?.style.setProperty('--np-lp-h2', `${h2 * 100}%`)
-				host?.style.setProperty('--np-lp-t2', `${t2 * 100}%`)
+				// The wave follows the heads and tails the CSS animation moves.
+				const [h1, t1, h2, t2] = ['h1', 't1', 'h2', 't2'].map(
+					(name) => parseFloat(hostStyles?.getPropertyValue(`--np-lp-${name}`) ?? '') / 100 || 0,
+				)
 				trim(wavePathA, wave, t1 * width, h1 * width, cap, false)
 				trim(wavePathB, wave, t2 * width, h2 * width, cap, false)
 			} else {
@@ -267,12 +236,9 @@
 	}
 
 	.bar {
-		animation: none;
 		left: 0;
 		width: 100%;
 		height: var(--np-linear-progress-active-indicator-height, 0.25rem);
-		transform-origin: left center;
-		transition: transform var(--np-motion-expressive-default-effects);
 	}
 
 	.secondary-bar {
@@ -281,7 +247,6 @@
 
 	.bar-inner {
 		inset: 0;
-		animation: none;
 		background: var(--np-linear-progress-active-indicator-color, var(--np-color-primary));
 	}
 
@@ -291,7 +256,6 @@
 			var(--_percent, 0%),
 			var(--np-linear-progress-active-indicator-height, 0.25rem) * var(--_gap-on, 0)
 		);
-		transform: none;
 		transition: width var(--np-motion-expressive-default-effects);
 	}
 
@@ -325,20 +289,12 @@
 		animation-name: buffering;
 		background-color: var(--np-linear-progress-track-color, var(--np-color-secondary-container));
 		background-repeat: repeat-x;
-		-webkit-mask-image: url("data:image/svg+xml,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 2' preserveAspectRatio='xMinYMin slice'><circle cx='1' cy='1' r='1'/></svg>");
 		mask-image: url("data:image/svg+xml,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 2' preserveAspectRatio='xMinYMin slice'><circle cx='1' cy='1' r='1'/></svg>");
 		z-index: -1;
 	}
 
 	.dots[hidden] {
 		display: none;
-	}
-
-	.indeterminate .bar {
-		transition: none;
-		left: 0;
-		transform: none;
-		animation: none;
 	}
 
 	.indeterminate .secondary-bar {
@@ -385,7 +341,6 @@
 
 	.indeterminate .bar-inner {
 		inset-block: 0;
-		transform: none;
 		border-radius: var(--np-linear-progress-track-shape, var(--np-shape-corner-full));
 	}
 
@@ -399,8 +354,14 @@
 		right: calc(100% - var(--np-lp-h2));
 	}
 
+	.indeterminate.four-color :is(.bar-inner, .np-lp-track),
+	.wavy.four-color .np-lp-wave-line {
+		animation: np-four-color calc(1750ms * 4) linear infinite;
+	}
+
 	.indeterminate.four-color .bar-inner {
-		animation: four-color calc(1750ms * 4) linear infinite;
+		--np-four-color: var(--np-linear-progress-active-indicator-color, var(--np-color-primary));
+		background: var(--np-four-color);
 	}
 
 	.np-lp-track {
@@ -411,7 +372,11 @@
 	}
 
 	.indeterminate.four-color .np-lp-track {
-		animation: four-color-track calc(1750ms * 4) linear infinite;
+		--np-four-color-track: var(
+			--np-linear-progress-track-color,
+			var(--np-color-secondary-container)
+		);
+		background: var(--np-four-color-track);
 	}
 
 	.np-lp-track.ahead {
@@ -434,10 +399,6 @@
 	}
 
 	@keyframes np-lp-h1 {
-		0% {
-			--np-lp-h1: 0%;
-			animation-timing-function: linear;
-		}
 		0% {
 			--np-lp-h1: 0%;
 			animation-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
@@ -498,10 +459,6 @@
 		}
 		100% {
 			--np-lp-t2: 100%;
-			animation-timing-function: linear;
-		}
-		100% {
-			--np-lp-t2: 100%;
 		}
 	}
 
@@ -543,103 +500,14 @@
 		stroke-linejoin: round;
 	}
 
-	.progress.wavy.indeterminate {
-		animation: none;
-	}
-
 	.wavy.four-color .np-lp-wave-line {
-		animation: four-color-stroke calc(1750ms * 4) linear infinite;
-	}
-
-	@keyframes four-color-stroke {
-		0%,
-		15% {
-			stroke: var(--np-color-primary);
-		}
-		25%,
-		40% {
-			stroke: var(--np-color-primary-container);
-		}
-		50%,
-		65% {
-			stroke: var(--np-color-tertiary);
-		}
-		75%,
-		90% {
-			stroke: var(--np-color-tertiary-container);
-		}
-		100% {
-			stroke: var(--np-color-primary);
-		}
+		--np-four-color: var(--np-linear-progress-active-indicator-color, var(--np-color-primary));
+		stroke: var(--np-four-color);
 	}
 
 	@keyframes buffering {
 		0% {
 			transform: translateX(calc(calc(var(--np-linear-progress-track-height, 0.25rem) / 2) * 5));
-		}
-	}
-
-	@keyframes four-color {
-		0% {
-			background: var(--np-color-primary);
-		}
-
-		15% {
-			background: var(--np-color-primary);
-		}
-		25% {
-			background: var(--np-color-primary-container);
-		}
-		40% {
-			background: var(--np-color-primary-container);
-		}
-
-		50% {
-			background: var(--np-color-tertiary);
-		}
-		65% {
-			background: var(--np-color-tertiary);
-		}
-		75% {
-			background: var(--np-color-tertiary-container);
-		}
-		90% {
-			background: var(--np-color-tertiary-container);
-		}
-		100% {
-			background: var(--np-color-primary);
-		}
-	}
-
-	@keyframes four-color-track {
-		0% {
-			background: var(--np-color-primary-container);
-		}
-
-		15% {
-			background: var(--np-color-primary-container);
-		}
-		25% {
-			background: var(--np-color-primary);
-		}
-		40% {
-			background: var(--np-color-primary);
-		}
-
-		50% {
-			background: var(--np-color-tertiary-container);
-		}
-		65% {
-			background: var(--np-color-tertiary-container);
-		}
-		75% {
-			background: var(--np-color-tertiary);
-		}
-		90% {
-			background: var(--np-color-tertiary);
-		}
-		100% {
-			background: var(--np-color-primary-container);
 		}
 	}
 

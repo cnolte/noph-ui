@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import PlainTooltip from './demos/PlainTooltip.svelte'
@@ -94,9 +95,9 @@
 </p>
 
 <p>
-	A vertical <a href="/components/toolbar">toolbar</a> does this for you. Its actions are stacked, so
-	a tooltip above one of them would cover the one before it. The toolbar moves the tooltips to the trailing
-	side.
+	A vertical <a href={resolve('/components/toolbar')}>toolbar</a> does this for you. Its actions are stacked,
+	so a tooltip above one of them would cover the one before it. The toolbar moves the tooltips to the
+	trailing side.
 </p>
 
 <h2 id="without-javascript">

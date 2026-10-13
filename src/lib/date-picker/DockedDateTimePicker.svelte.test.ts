@@ -227,6 +227,25 @@ describe('month and year menus', async () => {
 		expect(stops[0]).toContain('np-date-picker-selection-option')
 	})
 
+	test('Shift+M opens the month list from a time column', async () => {
+		await setup()
+		await openPicker()
+		await expect
+			.poll(() => document.activeElement?.classList.contains('np-calendar-day'))
+			.toBe(true)
+
+		option('30', 'Minute').element().focus()
+		await userEvent.keyboard('{Shift>}M{/Shift}')
+
+		await expect
+			.poll(
+				() =>
+					document.activeElement?.getAttribute('role') === 'option' &&
+					document.activeElement.textContent?.trim(),
+			)
+			.toBe('August')
+	})
+
 	test('the panel keeps its height through every view, so the time columns hold still', async () => {
 		await setup()
 		await openPicker()

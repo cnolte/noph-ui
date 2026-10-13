@@ -99,6 +99,7 @@
 		bind:this={element}
 		class={[
 			'np-button',
+			'np-focus-ring',
 			size,
 			shapeClass,
 			isToggle && 'toggle',
@@ -134,6 +135,7 @@
 		}}
 		class={[
 			'np-button',
+			'np-focus-ring',
 			size,
 			shapeClass,
 			isToggle && 'toggle',
@@ -294,15 +296,6 @@
 	.outlined-disabled {
 		--_outlined-border-color: color-mix(in srgb, var(--np-color-on-surface) 12%, transparent);
 	}
-	.enabled:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: 2px;
-	}
-	.enabled:focus-visible :global(.np-ripple-surface)::before {
-		opacity: var(--np-ripple-focus-opacity, 0.1);
-	}
 	/* Extra small and small buttons keep a 48px tall target around them. */
 	.np-touch {
 		position: absolute;
@@ -310,11 +303,6 @@
 		top: 50%;
 		translate: 0 -50%;
 		height: max(3rem, 100%);
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.enabled:focus-visible {
-			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
-		}
 	}
 	.text {
 		color: var(--np-text-button-label-text-color, var(--np-color-primary));

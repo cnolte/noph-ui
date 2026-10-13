@@ -165,7 +165,7 @@
 	{#if hasHandle}
 		<button
 			type="button"
-			class="np-sheet-handle"
+			class="np-sheet-handle np-focus-ring np-focus-ring-inset"
 			aria-label={handleLabel}
 			aria-expanded={expanded}
 			onclick={() => {
@@ -336,10 +336,6 @@
 	.np-sheet-dragging .np-sheet-handle {
 		cursor: grabbing;
 	}
-	.np-sheet-handle:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: -3px;
-	}
 
 	.np-sheet-header {
 		flex: none;
@@ -425,33 +421,26 @@
 				overlay var(--np-motion-expressive-fast-effects) allow-discrete;
 		}
 
+		/* Closed, the sheet waits just past its edge, and it opens from there. */
 		.np-sheet-bottom {
-			translate: 0 100%;
+			--_away: 0 100%;
 		}
 		.np-sheet-top {
-			translate: 0 -100%;
+			--_away: 0 -100%;
 		}
 		.np-sheet-start {
-			translate: -100% 0;
+			--_away: -100% 0;
 		}
 		.np-sheet-end {
-			translate: 100% 0;
+			--_away: 100% 0;
+		}
+		.np-sheet {
+			translate: var(--_away);
 		}
 		.np-sheet[open] {
 			translate: 0 0;
-		}
-		@starting-style {
-			.np-sheet-bottom[open] {
-				translate: 0 100%;
-			}
-			.np-sheet-top[open] {
-				translate: 0 -100%;
-			}
-			.np-sheet-start[open] {
-				translate: -100% 0;
-			}
-			.np-sheet-end[open] {
-				translate: 100% 0;
+			@starting-style {
+				translate: var(--_away);
 			}
 		}
 

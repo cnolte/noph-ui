@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Disable from './demos/Disable.svelte'
@@ -23,7 +24,7 @@
 <p>
 	A switch turns a setting on or off. The change applies at once. When a choice only takes effect
 	once a form is submitted, use a
-	<a class="link" href="/components/checkbox">checkbox</a> instead.
+	<a class="link" href={resolve('/components/checkbox')}>checkbox</a> instead.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import LargeBadge from './demos/LargeBadge.svelte'
@@ -114,7 +115,7 @@
 <p>
 	The container color is <code>--np-color-error</code> and the label
 	<code>--np-color-on-error</code>. Change both on an ancestor to recolor a badge. See
-	<a class="link" href="/about/theming">Theming</a> for the roles.
+	<a class="link" href={resolve('/about/theming')}>Theming</a> for the roles.
 </p>
 <h2 id="accessibility">
 	Accessibility<a href="#accessibility" aria-hidden="true" tabindex="-1">#</a>

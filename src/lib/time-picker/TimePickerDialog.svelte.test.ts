@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, onTestFinished, test, vi } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Harness from './TimePickerDialogHarness.test.svelte'
@@ -63,6 +63,22 @@ describe('layout and geometry', async () => {
 
 		expect(box('.np-time-selector')).toEqual({ width: 114, height: 80 })
 		expect(document.querySelector('.np-period-selector')).toBeNull()
+	})
+
+	test('lets a theme size the fields and the period selector', async () => {
+		const root = document.documentElement.style
+		root.setProperty('--np-time-picker-time-selector-container-width', '100px')
+		root.setProperty('--np-time-picker-period-selector-height', '90px')
+		try {
+			await setup({ hour12: true })
+			await openPicker()
+
+			expect(box('.np-time-selector').width).toBe(100)
+			expect(box('.np-period-selector').height).toBe(90)
+		} finally {
+			root.removeProperty('--np-time-picker-time-selector-container-width')
+			root.removeProperty('--np-time-picker-period-selector-height')
+		}
 	})
 
 	test('lays the period selector out along the bottom when horizontal', async () => {
@@ -148,13 +164,39 @@ describe('input mode', async () => {
 		await openPicker()
 		await expect.poll(() => !!dial()).toBe(true)
 
-		await action('Switch to text input mode').click()
+		await action('Toggle input picker').click()
 		await expect.poll(() => !!dial()).toBe(false)
 		await expect.element(page.getByRole('textbox', { name: 'Hour' })).toBeInTheDocument()
 		await expect.element(page.getByRole('textbox', { name: 'Minute' })).toBeInTheDocument()
 
-		await action('Switch to dial mode').click()
+		await action('Toggle dial picker').click()
 		await expect.poll(() => !!dial()).toBe(true)
+	})
+
+	test('a switch of view morphs the size of the panel and opening in it does not', async () => {
+		// The test browser runs with reduced motion, which skips the morph.
+		const matchMedia = window.matchMedia.bind(window)
+		vi.spyOn(window, 'matchMedia').mockImplementation((query) =>
+			query.includes('reduce') ? { ...matchMedia(query), matches: false } : matchMedia(query),
+		)
+		onTestFinished(() => {
+			vi.restoreAllMocks()
+		})
+		await setup({ mode: 'input' })
+		await openPicker()
+		const heights = () =>
+			panel()!
+				.getAnimations()
+				.flatMap((animation) => (animation.effect as KeyframeEffect).getKeyframes())
+				.map((frame) => Number.parseFloat(String(frame.height)))
+
+		expect(heights()).toEqual([])
+		expect(document.querySelector('.np-time-picker-entering')).toBeNull()
+
+		await action('Toggle dial picker').click()
+
+		const [from, to] = heights()
+		expect(to).toBeGreaterThan(from)
 	})
 
 	test('renames the headline, because the entry is typed rather than picked', async () => {
@@ -162,7 +204,7 @@ describe('input mode', async () => {
 		await openPicker()
 		await expect.element(page.getByText('Select time')).toBeInTheDocument()
 
-		await action('Switch to text input mode').click()
+		await action('Toggle input picker').click()
 		await expect.element(page.getByText('Enter time')).toBeInTheDocument()
 	})
 
@@ -172,10 +214,16 @@ describe('input mode', async () => {
 		expect(box('.np-time-input')).toEqual({ width: 96, height: 72 })
 	})
 
-	test('widens the fields when there is no period selector beside them', async () => {
+	test('keeps its 96dp fields without a period selector, as the 24 hour input of the spec', async () => {
 		await setup({ mode: 'input', hour12: false })
 		await openPicker()
-		expect(box('.np-time-input')).toEqual({ width: 114, height: 72 })
+		expect(box('.np-time-input')).toEqual({ width: 96, height: 72 })
+	})
+
+	test('leaves 24dp between the fields for the colon', async () => {
+		await setup({ mode: 'input', hour12: true })
+		await openPicker()
+		expect(box('.np-time-inputs-separator').width).toBe(24)
 	})
 
 	test('takes a typed hour and minute', async () => {
@@ -262,6 +310,20 @@ describe('confirming', async () => {
 		await expectClosed()
 		await expect.element(boundValue()).toHaveTextContent('14:30')
 		await expect.element(page.getByTestId('cancels')).toHaveTextContent('1')
+	})
+
+	test('cancels when it closes any way but through OK, as the date pickers do', async () => {
+		await setup({ hour12: true })
+		await openPicker()
+		await userEvent.keyboard('{Escape}')
+		await expectClosed()
+		await expect.element(page.getByTestId('cancels')).toHaveTextContent('1')
+
+		await openPicker()
+		await action('OK').click()
+		await expectClosed()
+		await expect.element(page.getByTestId('cancels')).toHaveTextContent('1')
+		await expect.element(page.getByTestId('confirms')).toHaveTextContent('1')
 	})
 
 	test('reopens on the committed value rather than the one that was abandoned', async () => {

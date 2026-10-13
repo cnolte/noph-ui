@@ -1,8 +1,9 @@
-import { getFormatter, numericDateOptions, pad } from './formatters.js'
+import { getFormatter, getPattern, numericDateOptions, pad, readFields } from './formatters.js'
 import {
 	getDayPeriodLabels,
 	HOURS_IN_DAY,
 	MINUTES_IN_HOUR,
+	readHour,
 	timeOptions,
 	uses12HourClock,
 	withMinutes,
@@ -160,6 +161,14 @@ export const formatDate = (date: Date, locale?: string): string =>
 export const formatDateMedium = (date: Date, locale?: string): string =>
 	getFormatter(locale, { year: 'numeric', month: 'short', day: 'numeric' }).format(date)
 
+/** The headline of the modal picker, as M3 shows it: "Mon, Aug 17". */
+export const formatDateHeadline = (date: Date, locale?: string): string =>
+	getFormatter(locale, { weekday: 'short', month: 'short', day: 'numeric' }).format(date)
+
+/** Each end in the headline of the range picker, as M3 shows it: "Aug 17". */
+export const formatMonthDay = (date: Date, locale?: string): string =>
+	getFormatter(locale, { month: 'short', day: 'numeric' }).format(date)
+
 export const formatDateLong = (date: Date, locale?: string): string =>
 	getFormatter(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(
 		date,
@@ -168,35 +177,12 @@ export const formatDateLong = (date: Date, locale?: string): string =>
 export const formatMonthYear = (date: Date, locale?: string): string =>
 	getFormatter(locale, { year: 'numeric', month: 'long' }).format(date)
 
-type DateFieldOrder = ('year' | 'month' | 'day')[]
-
-const getFieldOrder = (locale?: string): DateFieldOrder =>
-	getFormatter(locale, numericOptions)
-		.formatToParts(new Date(2024, 0, 2))
-		.filter((part) => part.type === 'year' || part.type === 'month' || part.type === 'day')
-		.map((part) => part.type as 'year' | 'month' | 'day')
-
-export const getDatePattern = (locale?: string): string =>
-	getFormatter(locale, numericOptions)
-		.formatToParts(new Date(2024, 0, 2))
-		.map((part) => {
-			if (part.type === 'year') return 'YYYY'
-			if (part.type === 'month') return 'MM'
-			if (part.type === 'day') return 'DD'
-			return part.value
-		})
-		.join('')
+export const getDatePattern = (locale?: string): string => getPattern(locale, numericOptions)
 
 export const parseDateInput = (value: string, locale?: string): Date | undefined => {
-	const groups = value.match(/\d+/g)
-	if (!groups || groups.length !== 3) return undefined
-	const order = getFieldOrder(locale)
-	const year = order.indexOf('year')
-	const month = order.indexOf('month')
-	const day = order.indexOf('day')
-	if (year < 0 || month < 0 || day < 0) return undefined
-	if (groups[year].length !== 4) return undefined
-	return createDate(Number(groups[year]), Number(groups[month]) - 1, Number(groups[day]))
+	const { year, month, day } = readFields(value, locale, numericOptions) ?? {}
+	if (year?.length !== 4 || !month || !day) return undefined
+	return createDate(Number(year), Number(month) - 1, Number(day))
 }
 
 export interface CalendarDay {
@@ -225,8 +211,6 @@ export const getCalendarDays = (
 		return { date, inMonth: date.getMonth() === first.getMonth() }
 	})
 }
-
-const DATE_TIME_PROBE = new Date(2024, 0, 2, 13, 45)
 
 export const toISODateTime = (date: Date): string =>
 	`${toISODate(date)}T${pad(date.getHours())}:${pad(date.getMinutes())}`
@@ -281,66 +265,18 @@ export const formatDateTime = (
 	hour12 = uses12HourClock(locale),
 ): string => getFormatter(locale, dateTimeOptions(hour12)).format(date)
 
-export const getDateTimePattern = (locale?: string, hour12 = uses12HourClock(locale)): string => {
-	const [am, pm] = getDayPeriodLabels(locale)
-	return getFormatter(locale, dateTimeOptions(hour12))
-		.formatToParts(DATE_TIME_PROBE)
-		.map((part) => {
-			if (part.type === 'year') return 'YYYY'
-			if (part.type === 'month') return 'MM'
-			if (part.type === 'day') return 'DD'
-			if (part.type === 'hour') return hour12 ? 'hh' : 'HH'
-			if (part.type === 'minute') return 'mm'
-			if (part.type === 'dayPeriod') return `${am}/${pm}`
-			return part.value
-		})
-		.join('')
-}
-
-type DateTimeField = 'year' | 'month' | 'day' | 'hour' | 'minute'
-
-const getDateTimeFieldOrder = (locale: string | undefined, hour12: boolean): DateTimeField[] =>
-	getFormatter(locale, dateTimeOptions(hour12))
-		.formatToParts(DATE_TIME_PROBE)
-		.filter(
-			(part) =>
-				part.type === 'year' ||
-				part.type === 'month' ||
-				part.type === 'day' ||
-				part.type === 'hour' ||
-				part.type === 'minute',
-		)
-		.map((part) => part.type as DateTimeField)
+export const getDateTimePattern = (locale?: string, hour12 = uses12HourClock(locale)): string =>
+	getPattern(locale, dateTimeOptions(hour12), getDayPeriodLabels(locale).join('/'))
 
 export const parseDateTimeInput = (
 	value: string,
 	locale?: string,
 	hour12 = uses12HourClock(locale),
 ): Date | undefined => {
-	const groups = value.match(/\d+/g)
-	if (!groups || groups.length !== 5) return undefined
-	const order = getDateTimeFieldOrder(locale, hour12)
-	if (order.length !== 5) return undefined
-	const at = (field: DateTimeField) => {
-		const index = order.indexOf(field)
-		return index < 0 ? undefined : groups[index]
-	}
-	const year = at('year')
-	const month = at('month')
-	const day = at('day')
-	const minute = at('minute')
-	const hour = at('hour')
-	if (!year || !month || !day || !hour || !minute) return undefined
-	if (year.length !== 4) return undefined
-	let hours = Number(hour)
-	if (hour12) {
-		const [am, pm] = getDayPeriodLabels(locale)
-		const text = value.toLocaleLowerCase(locale)
-		const isPm = text.includes(pm.toLocaleLowerCase(locale)) || /\bpm\b/.test(text)
-		const isAm = text.includes(am.toLocaleLowerCase(locale)) || /\bam\b/.test(text)
-		if (isPm === isAm) return undefined
-		if (hours > 12) return undefined
-		hours = (hours % 12) + (isPm ? 12 : 0)
-	}
+	const { year, month, day, hour, minute } =
+		readFields(value, locale, dateTimeOptions(hour12)) ?? {}
+	if (year?.length !== 4 || !month || !day || !hour || !minute) return undefined
+	const hours = readHour(hour, value, locale, hour12)
+	if (hours === undefined) return undefined
 	return createDateTime(Number(year), Number(month) - 1, Number(day), hours, Number(minute))
 }

@@ -1,0 +1,337 @@
+.np-field {
+	--_outline-width: 1px;
+	--_outline-color: var(--np-color-outline);
+	--_indicator-color: var(--np-color-on-surface-variant);
+	--_indicator-focus-color: var(--_field-focus-indicator, var(--np-color-primary));
+	--_label-color: var(--np-color-on-surface-variant);
+	--_start-color: var(--np-color-on-surface-variant);
+	--_end-color: var(--np-color-on-surface-variant);
+	--_supporting-color: var(--np-color-on-surface-variant);
+	--_floating-label-top: 0.5rem;
+	--top-space: 1.5rem;
+	--bottom-space: 0.5rem;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	writing-mode: horizontal-tb;
+	max-width: 100%;
+}
+.np-field:where(.np-field-outlined, .np-field-no-label) {
+	--top-space: 1rem;
+	--bottom-space: 1rem;
+}
+.np-field-outlined {
+	--_floating-label-top: -0.5rem;
+}
+
+.np-field:where(:hover) {
+	--_outline-color: var(--np-color-on-surface);
+}
+.np-field-outlined:where(:hover) {
+	--_label-color: var(--np-color-on-surface);
+}
+.np-field:where(:focus, .np-field-open, :has(:is(.np-field-input, .np-field-value):focus)) {
+	--_outline-width: 3px;
+	--_outline-color: var(--_field-focus-outline, var(--np-color-primary));
+	--_label-color: var(--_field-focus-label, var(--np-color-primary));
+}
+.np-field:where(
+	[aria-invalid='true'],
+	:has(:is(.np-field-input, .np-field-value):is(:user-invalid, [aria-invalid='true']))
+) {
+	--_outline-color: var(--np-color-error);
+	--_indicator-color: var(--np-color-error);
+	--_indicator-focus-color: var(--np-color-error);
+	--_label-color: var(--np-color-error);
+	--_end-color: var(--np-color-error);
+	--_supporting-color: var(--np-color-error);
+
+	&:where(:hover) {
+		--_outline-color: var(--np-color-on-error-container);
+		--_indicator-focus-color: var(--np-color-on-error-container);
+		--_label-color: var(--np-color-on-error-container);
+		--_end-color: var(--np-color-on-error-container);
+	}
+}
+.np-field-disabled {
+	--_outline-color: var(--np-color-on-surface);
+	--_indicator-color: var(--np-color-on-surface);
+	--_label-color: var(--np-color-on-surface);
+	--_start-color: var(--np-color-on-surface);
+	--_end-color: var(--np-color-on-surface);
+	--_supporting-color: var(--np-color-on-surface);
+	cursor: default;
+	pointer-events: none;
+}
+
+.np-field-box {
+	display: flex;
+	height: 100%;
+	position: relative;
+	border-radius: var(--_field-shape) var(--_field-shape) 0 0;
+}
+.np-field-outlined .np-field-box {
+	border-radius: var(--_field-shape);
+}
+.np-field-background,
+.np-field-state-layer {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+}
+.np-field-background {
+	background: var(--_field-container-color);
+}
+.np-field-disabled .np-field-background {
+	background: var(--np-color-on-surface);
+	opacity: 0.04;
+}
+.np-field:not(.np-field-disabled):hover .np-field-state-layer {
+	background: var(--np-color-on-surface);
+	opacity: 0.08;
+}
+
+.np-field-indicator {
+	position: absolute;
+	inset: auto 0 0 0;
+	pointer-events: none;
+	z-index: 1;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		inset: auto 0 0 0;
+		border-bottom: 1px solid var(--_indicator-color);
+	}
+	&::after {
+		border-bottom: 3px solid var(--_indicator-focus-color);
+		opacity: 0;
+		transition: opacity var(--np-motion-expressive-fast-effects);
+	}
+}
+.np-field:where(:focus, .np-field-open, :has(:is(.np-field-input, .np-field-value):focus))
+	.np-field-indicator::after {
+	opacity: 1;
+}
+.np-field-disabled .np-field-indicator::before {
+	opacity: 0.38;
+}
+
+/* The outline is a fieldset, which leaves a gap for its legend where the floating label sits. The
+   border runs through the middle of the 1rem legend, so the fieldset starts half of it higher. */
+.np-field-outline {
+	position: absolute;
+	inset: calc(var(--_outline-width) / 2 - 0.5rem) 0 0;
+	margin: 0;
+	padding: 0 calc(0.75rem - var(--_outline-width));
+	min-inline-size: 0;
+	border: var(--_outline-width) solid var(--_outline-color);
+	border-radius: inherit;
+	pointer-events: none;
+	text-align: start;
+	z-index: 1;
+	transition: border-color var(--np-motion-expressive-fast-effects);
+
+	& legend {
+		display: block;
+		float: none;
+		height: 1rem;
+		max-inline-size: 0.01px;
+		padding: 0;
+		overflow: hidden;
+		font-size: 0.75rem;
+		line-height: 1rem;
+		white-space: nowrap;
+		visibility: hidden;
+	}
+	& legend > span {
+		padding-inline: 0.25rem;
+	}
+}
+.np-field-disabled .np-field-outline {
+	opacity: 0.12;
+}
+
+.np-field-row {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	position: relative;
+	min-width: 0;
+	min-height: 100%;
+	max-height: 100%;
+	border-radius: inherit;
+}
+.np-field-start,
+.np-field-middle,
+.np-field-end {
+	display: flex;
+	position: relative;
+	box-sizing: border-box;
+	height: 100%;
+}
+.np-field-start,
+.np-field-end {
+	align-items: center;
+	justify-content: center;
+}
+.np-field-start {
+	color: var(--_start-color);
+	margin-inline: 0.75rem 1rem;
+}
+.np-field-end {
+	color: var(--_end-color);
+	margin-inline: 1rem 0.75rem;
+}
+.np-field-start:has(.np-icon-button) {
+	margin-inline: 0.25rem 0.5rem;
+}
+.np-field-end:has(.np-icon-button) {
+	margin-inline: 0.5rem 0.25rem;
+}
+.np-field-disabled :is(.np-field-start, .np-field-end) {
+	opacity: 0.38;
+}
+.np-field-icon {
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	fill: currentColor;
+
+	& svg {
+		fill: currentColor;
+	}
+}
+.np-field-middle {
+	flex: 1;
+	align-self: baseline;
+	align-items: stretch;
+	min-width: 0;
+}
+
+.np-field-content {
+	display: flex;
+	flex: 1 1 0%;
+	min-width: 0;
+	color: var(--np-color-on-surface);
+	opacity: 0;
+	transition: opacity 83ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.np-field-label-wrapper {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	user-select: none;
+	text-align: initial;
+	margin-inline: 1rem;
+}
+.np-field-with-start:not(.np-field-outlined) .np-field-label-wrapper {
+	margin-inline-start: 0;
+}
+.np-field-with-end:not(.np-field-outlined) .np-field-label-wrapper {
+	margin-inline-end: 0;
+}
+.np-field-label {
+	position: absolute;
+	top: 1rem;
+	inset-inline-start: 0;
+	z-index: 1;
+	box-sizing: border-box;
+	width: min-content;
+	max-width: 100%;
+	overflow: hidden;
+	color: var(--_label-color);
+	font-size: 1rem;
+	line-height: 1.5rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	transition: color var(--np-motion-expressive-fast-effects);
+}
+.np-field-disabled .np-field-label {
+	opacity: 0.38;
+}
+.np-field-required::after {
+	content: '*';
+}
+
+.np-field-outlined.np-field-with-start .np-field-label-wrapper {
+	margin-inline-start: 3.25rem;
+}
+.np-field-outlined.np-field-with-end .np-field-label-wrapper {
+	margin-inline-end: 3.25rem;
+}
+
+.np-field:is(
+	.np-field-populated,
+	:focus,
+	.np-field-open,
+	:has(.np-field-input:is(:focus, :not(:placeholder-shown), :autofill)),
+	:has(.np-field-value:focus)
+) {
+	& .np-field-content {
+		opacity: 1;
+	}
+	& .np-field-label {
+		top: var(--_floating-label-top);
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+	&.np-field-outlined .np-field-label-wrapper {
+		margin-inline: 1rem;
+	}
+	& .np-field-outline legend {
+		max-inline-size: 100%;
+	}
+}
+.np-field-no-label .np-field-content {
+	opacity: 1;
+}
+.np-field-disabled:is(
+		.np-field-no-label,
+		.np-field-populated,
+		:has(.np-field-input:is(:not(:placeholder-shown), :autofill))
+	)
+	.np-field-content {
+	opacity: 0.38;
+}
+
+.np-field-supporting-text {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.25rem 1rem 0;
+	color: var(--_supporting-color);
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+.np-field-disabled .np-field-supporting-text {
+	opacity: 0.38;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.np-field-label {
+		transition:
+			color var(--np-motion-expressive-fast-effects),
+			top var(--np-motion-expressive-fast-effects),
+			font-size var(--np-motion-expressive-fast-effects),
+			line-height var(--np-motion-expressive-fast-effects);
+	}
+	.np-field-label-wrapper {
+		transition: margin var(--np-motion-expressive-fast-effects);
+	}
+	.np-field-outline {
+		transition:
+			border-color var(--np-motion-expressive-fast-effects),
+			border-width var(--np-motion-expressive-fast-effects),
+			inset var(--np-motion-expressive-fast-effects),
+			padding var(--np-motion-expressive-fast-effects);
+
+		& legend {
+			transition: max-inline-size var(--np-motion-expressive-fast-effects);
+		}
+	}
+}

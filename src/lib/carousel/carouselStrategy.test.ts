@@ -307,37 +307,41 @@ describe('carouselStrategy', async () => {
 	})
 
 	test('every item reaches full size somewhere, however few there are', async () => {
-		for (const availableSpace of [268, 320, 420, 544]) {
-			for (const itemCount of [2, 3, 4, 7]) {
-				const arrangement = arrange(input({ itemCount, availableSpace }))
-				const track = morphTrack(arrangement)
-				for (let index = 0; index < itemCount; index += 1) {
-					let widest = 0
-					for (let scroll = 0; scroll <= track.scrollMax; scroll += 2) {
-						widest = Math.max(
-							widest,
-							arrangement.itemSize - 2 * placeItemOnTrack(track, index, scroll).clip,
-						)
+		for (const alignment of ['start', 'center'] as const) {
+			for (const availableSpace of [268, 320, 420, 544]) {
+				for (const itemCount of [2, 3, 4, 7]) {
+					const arrangement = arrange(input({ alignment, itemCount, availableSpace }))
+					const track = morphTrack(arrangement)
+					for (let index = 0; index < itemCount; index += 1) {
+						let widest = 0
+						for (let scroll = 0; scroll <= track.scrollMax; scroll += 2) {
+							widest = Math.max(
+								widest,
+								arrangement.itemSize - 2 * placeItemOnTrack(track, index, scroll).clip,
+							)
+						}
+						expect(widest).toBeCloseTo(arrangement.itemSize, 0)
 					}
-					expect(widest).toBeCloseTo(arrangement.itemSize, 0)
 				}
 			}
 		}
 	})
 
 	test('the painted strip never leaves the strip, shift phases included', async () => {
-		for (const variant of ['multi-browse', 'hero'] as const) {
-			for (const availableSpace of [268, 374, 544]) {
-				const arrangement = arrange(input({ variant, itemCount: 7, availableSpace }))
-				const track = morphTrack(arrangement)
-				for (let scroll = 0; scroll <= track.scrollMax; scroll += 4) {
-					for (let index = 0; index < 7; index += 1) {
-						const { x, clip } = placeItemOnTrack(track, index, scroll)
-						const width = arrangement.itemSize - 2 * clip
-						if (width <= 0.5) continue
-						const start = index * arrangement.stride - scroll + x + clip
-						expect(start).toBeGreaterThan(-arrangement.spacing - 0.5)
-						expect(start + width).toBeLessThan(availableSpace + arrangement.spacing + 0.5)
+		for (const alignment of ['start', 'center'] as const) {
+			for (const variant of ['multi-browse', 'hero'] as const) {
+				for (const availableSpace of [268, 374, 544]) {
+					const arrangement = arrange(input({ variant, alignment, itemCount: 7, availableSpace }))
+					const track = morphTrack(arrangement)
+					for (let scroll = 0; scroll <= track.scrollMax; scroll += 4) {
+						for (let index = 0; index < 7; index += 1) {
+							const { x, clip } = placeItemOnTrack(track, index, scroll)
+							const width = arrangement.itemSize - 2 * clip
+							if (width <= 0.5) continue
+							const start = index * arrangement.stride - scroll + x + clip
+							expect(start).toBeGreaterThan(-arrangement.spacing - 0.5)
+							expect(start + width).toBeLessThan(availableSpace + arrangement.spacing + 0.5)
+						}
 					}
 				}
 			}
@@ -359,6 +363,56 @@ describe('carouselStrategy', async () => {
 
 		expect(track.startShift).toBe(0)
 		expect(track.endShift).toBeGreaterThan(0)
+	})
+
+	const centredHero = () =>
+		arrange(input({ variant: 'hero', alignment: 'center', itemCount: 7, availableSpace: 544 }))
+	const kinds = (arrangement: CarouselArrangement) =>
+		arrangement.keylines.slice(1, -1).map((keyline) => keyline.kind)
+
+	test('a centred strip shifts one slot at each end, so the first and last item are large there', async () => {
+		const arrangement = centredHero()
+		const track = morphTrack(arrangement)
+
+		expect(kinds(arrangement)).toEqual(['small', 'large', 'small'])
+		expect(track.startShift).toBe(arrangement.stride)
+		expect(track.endShift).toBe(arrangement.stride)
+		expect(kinds(track.atStart[track.atStart.length - 1])).toEqual(['large', 'small', 'small'])
+		expect(kinds(track.atEnd[track.atEnd.length - 1])).toEqual(['small', 'small', 'large'])
+	})
+
+	test('a centred strip opens with its first item full size on the leading edge', async () => {
+		const track = morphTrack(centredHero())
+		const { x, clip } = placeItemOnTrack(track, 0, 0)
+
+		expect(round(clip)).toBe(0)
+		expect(round(x)).toBe(0)
+	})
+
+	test('a centred strip has a notch for every item', async () => {
+		const track = morphTrack(centredHero())
+		const at = notches(track)
+
+		expect(at).toHaveLength(7)
+		expect(at[at.length - 1]).toBeCloseTo(track.scrollMax, 1)
+	})
+
+	test('a centred multi-browse strip keeps its sizes falling away from the large run while it shifts', async () => {
+		const arrangement = arrange(input({ alignment: 'center', itemCount: 10, availableSpace: 1400 }))
+		const track = morphTrack(arrangement)
+		const falling = (one: CarouselArrangement) => {
+			const sizes = one.keylines.slice(1, -1).map((keyline) => keyline.size)
+			const first = sizes.indexOf(arrangement.largeSize)
+			const last = sizes.lastIndexOf(arrangement.largeSize)
+			const before = sizes.slice(0, first)
+			const after = sizes.slice(last + 1)
+			return (
+				before.every((size, index) => index === 0 || size >= before[index - 1]) &&
+				after.every((size, index) => index === 0 || size <= after[index - 1])
+			)
+		}
+
+		for (const state of [...track.atStart, ...track.atEnd]) expect(falling(state)).toBe(true)
 	})
 
 	test('the keyframes span the whole scroll range and stay in order', async () => {

@@ -1,4 +1,4 @@
-import { expect, onTestFinished, test } from 'vitest'
+import { describe, expect, onTestFinished, test } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Harness from './DateRangePickerHarness.test.svelte'
@@ -22,6 +22,17 @@ const openRange = async () => {
 	await action('Open the range picker').click()
 	await expect.poll(() => count('.np-calendar')).toBeGreaterThan(0)
 }
+
+test('heads the range with month and day on one line, as M3 shows it', async () => {
+	await setup({ value: { start: '2025-08-17', end: '2025-08-23' } })
+	await openRange()
+
+	const headline = document.querySelector<HTMLElement>('.np-date-range-picker-headline')!
+	expect(headline.textContent?.replace(/\s+/g, ' ').trim()).toBe('Aug 17 – Aug 23')
+	expect(headline.getClientRects()[0].height).toBeLessThanOrEqual(
+		parseFloat(getComputedStyle(headline).lineHeight),
+	)
+})
 
 test('fills the days between the two ends', async () => {
 	await setup({ min: '2025-08-01', max: '2025-08-31' })
@@ -109,4 +120,76 @@ test('is full screen on a compact window', async () => {
 	expect(style('.np-date-range-picker .np-dialog-actions').display).toBe('none')
 	await action('Save').click()
 	await expect.element(page.getByTestId('bound-value')).toHaveTextContent('2025-08-17 to undefined')
+})
+
+test('keeps the month in view when earlier months load above it', async () => {
+	await setup({ value: { start: '2025-08-10' } })
+	await openRange()
+	const scroller = document.querySelector<HTMLElement>('.np-date-range-picker-months')!
+	const firstVisible = () => {
+		const top = scroller.getBoundingClientRect().top
+		const month = [...scroller.querySelectorAll<HTMLElement>('[data-month]')].find(
+			(month) => month.getBoundingClientRect().bottom > top + 1,
+		)!
+		return {
+			month: month.dataset.month,
+			offset: Math.round(month.getBoundingClientRect().top - top),
+		}
+	}
+	const loaded = () => count('[data-month]')
+	await expect.poll(() => scroller.scrollTop).toBeGreaterThan(0)
+	await new Promise((resolve) => requestAnimationFrame(resolve))
+
+	scroller.scrollTop = 200
+	const before = firstVisible()
+	const months = loaded()
+	await expect.poll(loaded).toBeGreaterThan(months)
+	await new Promise((resolve) => requestAnimationFrame(resolve))
+
+	expect(firstVisible()).toEqual(before)
+})
+
+describe('input mode', () => {
+	const field = (name: string) => page.getByRole('textbox', { name, exact: true })
+
+	test('switches to two fields from the edit icon and saves what is typed', async () => {
+		await setup({ min: '2025-01-01', max: '2025-12-31' })
+		await action('Open the range picker').click()
+		await action('Switch to text input mode').click()
+
+		await field('Start date').fill('08/05/2025')
+		await field('End date').fill('08/13/2025')
+		await action('Save').click()
+
+		await expect
+			.element(page.getByTestId('bound-value'))
+			.toHaveTextContent('2025-08-05 to 2025-08-13')
+	})
+
+	test('opens in the input mode and goes back to the calendar', async () => {
+		await setup({ mode: 'input', value: { start: '2025-08-05', end: '2025-08-13' } })
+		await action('Open the range picker').click()
+
+		await expect.element(field('Start date')).toHaveValue('08/05/2025')
+		await expect.element(field('End date')).toHaveValue('08/13/2025')
+		expect(count('.np-calendar')).toBe(0)
+
+		await action('Switch to calendar mode').click()
+		await expect.poll(() => count('.np-calendar')).toBeGreaterThan(0)
+	})
+
+	test('marks an end before the start once it is left', async () => {
+		await setup()
+		await action('Open the range picker').click()
+		await action('Switch to text input mode').click()
+
+		await field('Start date').fill('08/13/2025')
+		await field('End date').fill('08/05/2025')
+		await userEvent.keyboard('{Enter}')
+
+		await expect.element(field('End date')).toHaveAttribute('aria-invalid', 'true')
+		await expect
+			.element(page.getByTestId('bound-value'))
+			.toHaveTextContent('undefined to undefined')
+	})
 })

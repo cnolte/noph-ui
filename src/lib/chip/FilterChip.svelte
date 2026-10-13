@@ -52,6 +52,7 @@
 	bind:this={element}
 	class={[
 		'np-filter-chip',
+		'np-focus-ring-within',
 		variant === 'elevated' ? 'np-filter-chip-elevated' : 'np-filter-chip-default',
 		icon ? 'np-filter-chip-icon' : '',
 		removable ? 'np-filter-chip-removable' : '',
@@ -257,16 +258,6 @@
 	.np-filter-chip:has(input:checked) .np-filter-chip-label {
 		color: var(--np-color-on-secondary-container);
 	}
-	.np-filter-chip-label:focus-visible {
-		outline-width: 0;
-	}
-	.np-filter-chip:has(input:focus-visible) {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: 2px;
-	}
-
 	.np-filter-chip-disabled .np-filter-chip-label {
 		cursor: default;
 		color: var(--np-color-on-surface) !important;
@@ -297,9 +288,6 @@
 		}
 		.np-filter-chip-icon .np-chip-icon-checked {
 			transition: none;
-		}
-		.np-filter-chip:has(input:focus-visible) {
-			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
 		}
 	}
 </style>

@@ -83,13 +83,19 @@ describe('Carousel', async () => {
 		await expect.poll(() => items()[4].getAttribute('aria-label')).toBe('Garden, 5 of 5')
 	})
 
-	test("a consumer's own aria-label is left exactly as given", async () => {
+	test("a consumer's own aria-label replaces the text, and the position still follows", async () => {
 		await render(NamesHarness)
 
-		await expect.poll(() => items()[1].getAttribute('aria-label')).toBe('A harbour at dawn')
+		await expect.poll(() => items()[1].getAttribute('aria-label')).toBe('A harbour at dawn, 2 of 4')
 	})
 
-	test('an item with no label of its own gets no name of its own', async () => {
+	test('an item with only an image takes its text from imageAlt', async () => {
+		await render(NamesHarness)
+
+		await expect.poll(() => items()[3].getAttribute('aria-label')).toBe('A bridge in fog, 4 of 4')
+	})
+
+	test('an item with no text of its own gets no name of its own', async () => {
 		await render(NamesHarness)
 
 		expect(items()[2].hasAttribute('aria-label')).toBe(false)
@@ -158,7 +164,26 @@ describe('Carousel', async () => {
 		expect(document.activeElement).toBe(items()[3])
 	})
 
-	test('a cross-axis arrow is left alone, so it can leave the carousel', async () => {
+	test('down leaves the carousel for the next focusable element', async () => {
+		await render(Harness, { count: 4, surround: true })
+		items()[1].focus()
+
+		const event = arrow('ArrowDown')
+
+		expect(event.defaultPrevented).toBe(true)
+		expect(document.activeElement?.textContent).toBe('Show all')
+	})
+
+	test('up leaves the carousel for the focusable element before it', async () => {
+		await render(Harness, { count: 4, surround: true })
+		items()[2].focus()
+
+		arrow('ArrowUp')
+
+		expect(document.activeElement?.textContent).toBe('Before')
+	})
+
+	test('with nothing to leave for, up and down are left to the page', async () => {
 		await render(Harness, { count: 4 })
 		items()[1].focus()
 
@@ -166,6 +191,42 @@ describe('Carousel', async () => {
 
 		expect(event.defaultPrevented).toBe(false)
 		expect(document.activeElement).toBe(items()[1])
+	})
+
+	test('in a modal dialog, up and down skip the inert page outside it', async () => {
+		await render(Harness, { count: 4 })
+		const dialog = document.createElement('dialog')
+		const outside = document.createElement('button')
+		outside.textContent = 'Outside'
+		dialog.append(document.querySelector('.np-carousel')!)
+		document.body.append(dialog, outside)
+		dialog.showModal()
+		items()[1].focus()
+
+		const event = arrow('ArrowDown')
+
+		expect(event.defaultPrevented).toBe(false)
+		expect(document.activeElement).toBe(items()[1])
+		dialog.remove()
+		outside.remove()
+	})
+
+	test('the arrow keys pass over a disabled link', async () => {
+		await render(Harness, { count: 3, type: 'link', disabledIndex: 1 })
+		items()[0].focus()
+
+		arrow('ArrowRight')
+
+		expect(document.activeElement).toBe(items()[2])
+	})
+
+	test('the arrow keys pass over a plain item', async () => {
+		await render(Harness, { count: 3, plainIndex: 1 })
+		items()[0].focus()
+
+		arrow('ArrowRight')
+
+		expect(document.activeElement).toBe(items()[2])
 	})
 
 	test('a full-screen carousel swaps the axis it claims', async () => {
@@ -212,10 +273,10 @@ describe('Carousel', async () => {
 		await expect.poll(() => getComputedStyle(items()[0]).boxShadow).not.toBe('none')
 	})
 
-	test('a press holds a pressed class past the pointer lift', async () => {
+	test('a click holds a pressed class for a moment, so Enter shows the press too', async () => {
 		await render(Harness, { count: 3 })
 
-		items()[0].dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+		items()[0].click()
 
 		await expect.poll(() => items()[0].classList.contains('np-carousel-item-pressed')).toBe(true)
 		await expect
@@ -396,6 +457,38 @@ describe('Carousel', async () => {
 
 		expect(carousel().classList.contains('np-carousel-snap')).toBe(false)
 		expect(getComputedStyle(scroller()).scrollSnapType).toBe('none')
+	})
+
+	test('a centred carousel without keylines snaps each item to the middle', async () => {
+		await render(Harness, { alignment: 'center', count: 6 })
+
+		expect(getComputedStyle(items()[0]).scrollSnapAlign).toBe('center')
+	})
+
+	test('a centred uncontained carousel snaps to the middle too', async () => {
+		await render(Harness, { variant: 'uncontained', alignment: 'center', snap: true, count: 6 })
+
+		expect(getComputedStyle(items()[0]).scrollSnapAlign).toBe('center')
+	})
+
+	test('focusing an item in a centred carousel brings it to the middle', async () => {
+		await render(Harness, { alignment: 'center', count: 12 })
+		const item = items()[5]
+
+		item.focus()
+
+		const middle = (rect: DOMRect) => rect.left + rect.width / 2
+		await expect
+			.poll(
+				() =>
+					Math.abs(
+						middle(item.getBoundingClientRect()) - middle(scroller().getBoundingClientRect()),
+					),
+				{
+					timeout: 600,
+				},
+			)
+			.toBeLessThanOrEqual(1)
 	})
 
 	test('snapping can be turned on for uncontained anyway', async () => {

@@ -1,8 +1,10 @@
 import {
 	clampMinutes,
+	isHourReachable,
 	isMinuteWithin,
 	MINUTES_IN_HOUR,
 	snapToStep,
+	stepOf,
 } from '#lib/date-picker/timeUtils.js'
 import type { TimeSelection } from './types.ts'
 
@@ -21,7 +23,7 @@ export const timePickerState = (options: TimePickerStateOptions) => {
 	let minutes = $state(0)
 	let selection = $state<TimeSelection>('hour')
 
-	const step = () => Math.max(1, Math.trunc(options.minuteStep()) || 1)
+	const step = () => stepOf(options.minuteStep())
 
 	const settle = (next: number) =>
 		clampMinutes(snapToStep(next, step()), options.min(), options.max())
@@ -30,12 +32,7 @@ export const timePickerState = (options: TimePickerStateOptions) => {
 		isMinuteWithin(next, options.min(), options.max()) && (options.isTimeEnabled()?.(next) ?? true)
 
 	/** Whether any step-aligned minute of an hour can be reached, so the dial can grey it out. */
-	const hourReachable = (hour: number) => {
-		for (let minute = 0; minute < MINUTES_IN_HOUR; minute += step()) {
-			if (usable(hour * MINUTES_IN_HOUR + minute)) return true
-		}
-		return false
-	}
+	const hourReachable = (hour: number) => isHourReachable(hour, step(), usable)
 
 	return {
 		get minutes() {

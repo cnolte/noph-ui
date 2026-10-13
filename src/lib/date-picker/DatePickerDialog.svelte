@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { afterTwoFrames } from '#lib/animation.js'
+	import '#lib/internal/focus-ring.css'
+	import { afterTwoFrames, morphSize } from '#lib/animation.js'
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Dialog from '#lib/dialog/Dialog.svelte'
-	import { syncOpenEffect } from '#lib/popover.svelte.js'
 	import Divider from '#lib/divider/Divider.svelte'
 	import { exitVisibility } from './exitVisibility.svelte.js'
 	import ArrowDropDownIcon from '#lib/icons/ArrowDropDownIcon.svelte'
@@ -11,17 +11,20 @@
 	import ChevronLeftIcon from '#lib/icons/ChevronLeftIcon.svelte'
 	import ChevronRightIcon from '#lib/icons/ChevronRightIcon.svelte'
 	import EditCalendarIcon from '#lib/icons/EditCalendarIcon.svelte'
+	import Ripple from '#lib/ripple/Ripple.svelte'
 	import TextField from '#lib/text-field/TextField.svelte'
-	import { tick } from 'svelte'
+	import Tooltip from '#lib/tooltip/Tooltip.svelte'
+	import { flushSync, tick } from 'svelte'
 	import Calendar from './Calendar.svelte'
 	import YearGrid from './YearGrid.svelte'
+	import { DEFAULT_SHORTCUT_LABELS, pickerShortcut, withShortcut } from './shortcuts.js'
 	import {
 		addMonths,
 		clampMonthInYear,
-		compareDays,
+		isMonthWithin,
 		DEFAULT_YEAR_RANGE,
 		formatDate,
-		formatDateMedium,
+		formatDateHeadline,
 		formatMonthYear,
 		getDatePattern,
 		getFirstDayOfWeek,
@@ -32,7 +35,7 @@
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import type { DatePickerDialogProps, ISODate } from './types.js'
+	import type { DatePickerDialogProps, DatePickerMode, ISODate } from './types.js'
 
 	let {
 		value = $bindable(),
@@ -53,12 +56,14 @@
 		issues,
 		name,
 		form,
-		modeToggle = false,
+		mode = $bindable<DatePickerMode>('calendar'),
+		modeToggle = true,
 		cancelLabel = 'Cancel',
 		confirmLabel = 'OK',
 		nextMonthLabel = 'Next month',
 		previousMonthLabel = 'Previous month',
 		selectYearLabel = 'Select year',
+		shortcutLabels,
 		calendarModeLabel = 'Switch to calendar mode',
 		inputModeLabel = 'Switch to text input mode',
 		selectedDateLabel = 'selected',
@@ -70,7 +75,6 @@
 
 	const uid = $props.id()
 
-	let mode = $state<'calendar' | 'input'>('calendar')
 	let yearPickerVisible = $state(false)
 	let pending = $state<ISODate | undefined>(undefined)
 	let focusedDay = $state<Date | undefined>(undefined)
@@ -92,65 +96,59 @@
 		parseISODate(displayMonth) ?? startOfMonth(pendingDate ?? parseISODate(value) ?? todayValue),
 	)
 	let headlineText = $derived(
-		headline ?? (pendingDate ? formatDateMedium(pendingDate, locale) : title),
+		headline ?? (pendingDate ? formatDateHeadline(pendingDate, locale) : title),
 	)
 
-	let canPreviousMonth = $derived(
-		!minDate ||
-			compareDays(new Date(monthDate.getFullYear(), monthDate.getMonth(), 0), minDate) >= 0,
-	)
-	let canNextMonth = $derived(
-		!maxDate ||
-			compareDays(new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 1), maxDate) <= 0,
-	)
+	let steps = $derived.by(() => {
+		const year = monthDate.getFullYear()
+		const month = monthDate.getMonth()
+		return {
+			previousMonth: isMonthWithin(year, month - 1, minDate, maxDate) ? -1 : 0,
+			nextMonth: isMonthWithin(year, month + 1, minDate, maxDate) ? 1 : 0,
+			previousYear:
+				year > yearRange[0] && isMonthWithin(year - 1, month, minDate, maxDate) ? -12 : 0,
+			nextYear: year < yearRange[1] && isMonthWithin(year + 1, month, minDate, maxDate) ? 12 : 0,
+		}
+	})
+	let canPreviousMonth = $derived(steps.previousMonth !== 0)
+	let canNextMonth = $derived(steps.nextMonth !== 0)
+
+	let keys = $derived({ ...DEFAULT_SHORTCUT_LABELS, ...shortcutLabels })
 
 	let canConfirm = $derived(
 		!pendingDate ||
 			(isWithin(pendingDate, minDate, maxDate) && (isDateEnabled?.(pendingDate) ?? true)),
 	)
 
-	let modeEnter = $state<'' | 'to-input' | 'to-calendar'>('')
-	let yearEnter = $state(false)
+	// The view switched to slides in. Only a switch does, so opening in input mode stays still.
+	let modeEnter = $state<DatePickerMode>()
 	let cancelModeEnter: (() => void) | undefined
-	let cancelYearEnter: (() => void) | undefined
 
-	const setMode = (next: 'calendar' | 'input') => {
+	let content = $state<HTMLElement>()
+
+	const setMode = (next: DatePickerMode) => {
 		if (mode === next) return
-		mode = next
 		cancelModeEnter?.()
-		modeEnter = next === 'input' ? 'to-input' : 'to-calendar'
-		cancelModeEnter = afterTwoFrames(() => (modeEnter = ''))
+		morphSize(
+			content,
+			() =>
+				flushSync(() => {
+					mode = next
+					modeEnter = next
+					yearPickerVisible = false
+				}),
+			'--np-motion-expressive-default-spatial',
+		)
+		cancelModeEnter = afterTwoFrames(() => (modeEnter = undefined))
 	}
 
-	const showYearPicker = (next: boolean) => {
-		yearPickerVisible = next
-		if (!next) return
-		cancelYearEnter?.()
-		yearEnter = true
-		cancelYearEnter = afterTwoFrames(() => (yearEnter = false))
-	}
+	let dialog = $state<Dialog>()
 
-	export const show = () => {
-		if (element && !element.open) element.showModal()
-	}
-
-	export const close = () => {
-		if (element?.open) element.close()
-	}
-
-	syncOpenEffect(
-		() => element,
-		() => open,
-		show,
-		close,
-	)
+	export const show = () => dialog?.show()
+	export const close = () => dialog?.close()
 
 	const setMonth = (date: Date) => {
 		displayMonth = toISODate(startOfMonth(date))
-	}
-
-	const cancel = () => {
-		open = false
 	}
 
 	const confirm = () => {
@@ -161,9 +159,13 @@
 		open = false
 	}
 
-	const focusCalendarWhenReady = async () => {
+	const focusWhenReady = async () => {
 		await tick()
-		element?.querySelector<HTMLElement>('.np-calendar-day[tabindex="0"]')?.focus()
+		element
+			?.querySelector<HTMLElement>(
+				mode === 'input' ? '.np-date-picker-dialog-input input' : '.np-calendar-day[tabindex="0"]',
+			)
+			?.focus()
 	}
 
 	const syncText = () => {
@@ -194,32 +196,66 @@
 		inputInvalid = !parsed
 		if (parsed) text = formatDate(parsed, locale)
 	}
+
+	let navigation = $state<HTMLElement>()
+
+	const showYears = (visible: boolean) => {
+		flushSync(() => (yearPickerVisible = visible))
+		element
+			?.querySelector<HTMLElement>(
+				yearPickerVisible ? '.np-date-picker-year[tabindex="0"]' : '.np-calendar-day[tabindex="0"]',
+			)
+			?.focus()
+	}
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		if (event.key === 'Escape' && yearPickerVisible && !event.defaultPrevented) {
+			event.preventDefault()
+			showYears(false)
+			return
+		}
+		const target = event.target as Node
+		const onHeader = target === event.currentTarget || !!navigation?.contains(target)
+		const shortcut = mode === 'calendar' ? pickerShortcut(event) : undefined
+		if (shortcut === 'yearList') {
+			event.preventDefault()
+			showYears(!yearPickerVisible)
+		} else if (shortcut && shortcut !== 'monthList' && !yearPickerVisible && onHeader) {
+			event.preventDefault()
+			if (steps[shortcut]) setMonth(addMonths(monthDate, steps[shortcut]))
+		}
+	}
 </script>
 
 <Dialog
 	role="dialog"
 	{...attributes}
+	bind:this={dialog}
 	bind:element
+	bind:open
 	aria-label={title}
 	class={['np-date-picker-dialog', attributes.class]}
 	--np-dialog-container-width="fit-content"
 	--np-dialog-container-min-width="0"
 	--np-dialog-padding="0"
+	--np-dialog-elevation="none"
+	tabindex={-1}
 	--np-dialog-container-color="var(--np-date-picker-dialog-container-color, var(--np-color-surface-container-high))"
 	--np-dialog-container-shape="var(--np-date-picker-dialog-container-shape, var(--np-shape-corner-extra-large))"
+	onkeydown={(event) => {
+		attributes.onkeydown?.(event)
+		handleKeydown(event)
+	}}
 	ontoggle={(event) => {
-		const nowOpen = event.newState === 'open'
-		open = nowOpen
-		if (nowOpen) {
+		if (event.newState === 'open') {
 			exit.show()
 			monthBeforeOpen = displayMonth
 			confirming = false
 			pending = value ?? undefined
-			setMode('calendar')
-			showYearPicker(false)
+			yearPickerVisible = false
 			focusedDay = undefined
 			syncText()
-			focusCalendarWhenReady()
+			focusWhenReady()
 		} else {
 			if (!confirming) oncancel?.()
 			confirming = false
@@ -229,7 +265,7 @@
 >
 	<input class="np-date-picker-dialog-value" type="hidden" value={value ?? ''} {name} {form} />
 	{#if exit.visible}
-		<div class="np-date-picker-dialog-content">
+		<div class="np-date-picker-dialog-content" bind:this={content}>
 			<div class="np-date-picker-dialog-header">
 				<div class="np-date-picker-dialog-header-text">
 					<span class="np-date-picker-dialog-title">{title}</span>
@@ -242,7 +278,6 @@
 						onclick={() => {
 							if (mode === 'calendar') syncText()
 							setMode(mode === 'calendar' ? 'input' : 'calendar')
-							showYearPicker(false)
 						}}
 					>
 						{#if mode === 'calendar'}
@@ -256,7 +291,7 @@
 			<Divider />
 
 			{#if mode === 'input'}
-				<div class={['np-date-picker-dialog-input', modeEnter && modeEnter]}>
+				<div class={['np-date-picker-dialog-input', modeEnter === 'input' && 'to-input']}>
 					<TextField
 						{label}
 						{issues}
@@ -265,28 +300,35 @@
 						aria-invalid={inputInvalid ? 'true' : undefined}
 						oninput={handleInput}
 						onblur={handleBlur}
+						onkeydown={(event) => {
+							if (event.key === 'Enter') handleBlur()
+						}}
 					/>
 				</div>
 			{:else}
-				<div class="np-date-picker-dialog-navigation">
+				<div class="np-date-picker-dialog-navigation" bind:this={navigation}>
 					<button
 						type="button"
-						class="np-date-picker-dialog-year-button"
+						class="np-date-picker-dialog-year-button np-focus-ring"
 						aria-label="{selectYearLabel}, {formatMonthYear(monthDate, locale)}"
+						aria-describedby="{uid}-year-tip"
 						aria-expanded={yearPickerVisible}
 						aria-controls={yearPickerVisible ? `${uid}-years` : undefined}
-						onclick={() => showYearPicker(!yearPickerVisible)}
+						onclick={() => (yearPickerVisible = !yearPickerVisible)}
 					>
 						<span aria-live="polite">{formatMonthYear(monthDate, locale)}</span>
 						<span class={['np-date-picker-dialog-caret', yearPickerVisible && 'expanded']}>
 							<ArrowDropDownIcon />
 						</span>
+						<Ripple />
 					</button>
+					<Tooltip id="{uid}-year-tip">{withShortcut(selectYearLabel, keys.yearList)}</Tooltip>
 					{#if !yearPickerVisible}
 						<div class="np-date-picker-dialog-arrows">
 							<IconButton
 								type="button"
 								aria-label={previousMonthLabel}
+								title={withShortcut(previousMonthLabel, keys.previousMonth)}
 								disabled={!canPreviousMonth}
 								onclick={() => setMonth(addMonths(monthDate, -1))}
 							>
@@ -295,6 +337,7 @@
 							<IconButton
 								type="button"
 								aria-label={nextMonthLabel}
+								title={withShortcut(nextMonthLabel, keys.nextMonth)}
 								disabled={!canNextMonth}
 								onclick={() => setMonth(addMonths(monthDate, 1))}
 							>
@@ -306,7 +349,6 @@
 
 				{#if yearPickerVisible}
 					<YearGrid
-						class={yearEnter ? 'entering' : undefined}
 						id="{uid}-years"
 						aria-label={selectYearLabel}
 						{yearRange}
@@ -317,12 +359,14 @@
 							setMonth(
 								new Date(year, clampMonthInYear(year, monthDate.getMonth(), minDate, maxDate), 1),
 							)
-							showYearPicker(false)
+							showYears(false)
 						}}
 					/>
 					<Divider />
 				{:else}
-					<div class={['np-date-picker-dialog-calendar', modeEnter && modeEnter]}>
+					<div
+						class={['np-date-picker-dialog-calendar', modeEnter === 'calendar' && 'to-calendar']}
+					>
 						<Calendar
 							month={monthDate}
 							selected={pendingDate}
@@ -340,6 +384,7 @@
 								pending = toISODate(date)
 								focusedDay = date
 							}}
+							onconfirm={confirm}
 							onfocusday={(date) => {
 								focusedDay = date
 								if (
@@ -357,7 +402,7 @@
 	{/if}
 
 	{#snippet actions()}
-		<Button type="button" variant="text" onclick={cancel}>{cancelLabel}</Button>
+		<Button type="button" variant="text" onclick={close}>{cancelLabel}</Button>
 		<Button type="button" variant="text" disabled={!canConfirm} onclick={confirm}>
 			{confirmLabel}
 		</Button>
@@ -373,6 +418,10 @@
 	:global(.np-date-picker-dialog .np-dialog-actions) {
 		margin-top: 0;
 		padding: 0.5rem 0.75rem 0.75rem;
+	}
+
+	:global(.np-date-picker-dialog:has(.np-date-picker-dialog-calendar) .np-dialog-actions) {
+		padding-top: 0.25rem;
 	}
 
 	.np-date-picker-dialog-header {
@@ -430,6 +479,7 @@
 		border: 0;
 		color: inherit;
 		cursor: pointer;
+		position: relative;
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
@@ -440,9 +490,11 @@
 		line-height: 1.25rem;
 	}
 
-	.np-date-picker-dialog-year-button:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 2px;
+	.np-date-picker-dialog-year-button::before {
+		content: '';
+		position: absolute;
+		inset-block: -0.375rem;
+		inset-inline: 0;
 	}
 
 	.np-date-picker-dialog-caret {
@@ -461,7 +513,7 @@
 	}
 
 	.np-date-picker-dialog-calendar {
-		padding-inline: 0.75rem;
+		padding: 0 0.75rem 0.25rem;
 	}
 
 	.np-date-picker-dialog-input {
@@ -472,14 +524,14 @@
 		overflow: hidden;
 	}
 
-	.np-date-picker-dialog-input.to-input {
-		transform: translateY(100%);
+	.np-date-picker-dialog-calendar.to-calendar {
+		transform: translateY(-3rem);
 		opacity: 0;
 		transition: none;
 	}
 
-	.np-date-picker-dialog-calendar.to-calendar {
-		transform: translateY(-3rem);
+	.np-date-picker-dialog-input.to-input {
+		transform: translateY(100%);
 		opacity: 0;
 		transition: none;
 	}
@@ -490,6 +542,13 @@
 			transition:
 				transform var(--np-motion-expressive-default-spatial),
 				opacity var(--np-motion-expressive-default-effects);
+		}
+
+		.np-date-picker-dialog-content :global(.np-date-picker-year-grid) {
+			@starting-style {
+				height: 0;
+				opacity: 0.6;
+			}
 		}
 	}
 </style>

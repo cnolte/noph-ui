@@ -183,7 +183,7 @@ const build = (input: CarouselStrategyInput, sizes: Sizes, counts: Counts): Caro
 		keylines.push({
 			kind,
 			size,
-			loc: stride / 2 + (index - focal) * stride,
+			loc: stride / 2 + index * stride,
 			locOffset: offset + size / 2,
 		})
 		offset += size
@@ -202,7 +202,7 @@ const build = (input: CarouselStrategyInput, sizes: Sizes, counts: Counts): Caro
 		locOffset: availableSpace + spacing / 2,
 	})
 
-	const scrollMax = Math.max(0, (itemCount - order.length + focal) * stride)
+	const scrollMax = Math.max(0, (itemCount - order.length) * stride)
 	return {
 		smallCount: counts.small,
 		mediumCount: counts.medium,
@@ -313,40 +313,37 @@ const withOrder = (
 	}
 }
 
+const movableSlots = (arrangement: CarouselArrangement, towards: 'start' | 'end') => {
+	const order = arrangement.keylines.slice(1, -1)
+	const first = order.findIndex((slot) => slot.kind === 'large')
+	if (first < 0) return 0
+	if (towards === 'start') return first
+	return order.length - 1 - order.findLastIndex((slot) => slot.kind === 'large')
+}
+
 export const shiftSteps = (
 	arrangement: CarouselArrangement,
 	towards: 'start' | 'end',
 ): CarouselArrangement[] => {
 	const states = [arrangement]
-	if (arrangement.keylines.length === 0) return states
+	const movable = movableSlots(arrangement, towards)
 
-	const order = arrangement.keylines.slice(1, -1)
-	const movable = order.filter((slot) => slot.kind !== 'large').length
-	if (movable === 0 || !order.some((slot) => slot.kind === 'large')) return states
-
-	const working = [...order]
+	const working = arrangement.keylines.slice(1, -1)
 	for (let step = 0; step < movable; step += 1) {
 		if (towards === 'end') {
 			const [moved] = working.splice(working.length - 1, 1)
-			working.splice(
-				working.findIndex((slot) => slot.kind === 'large'),
-				0,
-				moved,
-			)
+			const first = working.findIndex((slot) => slot.kind === 'large')
+			const larger = working.findIndex((slot, index) => index < first && slot.size > moved.size)
+			working.splice(larger < 0 ? first : larger, 0, moved)
 		} else {
 			const [moved] = working.splice(0, 1)
-			working.splice(working.findLastIndex((slot) => slot.kind === 'large') + 1, 0, moved)
+			const last = working.findLastIndex((slot) => slot.kind === 'large')
+			const smaller = working.findIndex((slot, index) => index > last && slot.size < moved.size)
+			working.splice(smaller < 0 ? working.length : smaller, 0, moved)
 		}
 		states.push(withOrder(arrangement, working))
 	}
 	return states
-}
-
-const shiftDistance = (arrangement: CarouselArrangement) => {
-	const moving = arrangement.keylines
-		.slice(1, -1)
-		.filter((keyline) => keyline.kind !== 'large').length
-	return moving * arrangement.stride
 }
 
 export interface CarouselTrack {
@@ -360,9 +357,8 @@ export interface CarouselTrack {
 }
 
 export const morphTrack = (arrangement: CarouselArrangement): CarouselTrack => {
-	const shift = shiftDistance(arrangement)
-	const startShift = arrangement.focal > 1 ? shift : 0
-	const endShift = shift
+	const startShift = movableSlots(arrangement, 'start') * arrangement.stride
+	const endShift = movableSlots(arrangement, 'end') * arrangement.stride
 	const scrollMax = arrangement.scrollMax + startShift + endShift
 	return {
 		arrangement,
@@ -409,14 +405,11 @@ export const placeItemOnTrack = (
 }
 
 export const notches = (track: CarouselTrack): number[] => {
-	const { arrangement, startShift, scrollMax } = track
-	const uniform = arrangement.keylines.length === 0 || arrangement.stride <= 0
-	const step = uniform ? Math.max(1, arrangement.stride) : arrangement.stride
-	const last = uniform ? scrollMax : arrangement.scrollMax
-	const base = uniform ? 0 : startShift
+	const { arrangement, scrollMax } = track
+	const step = Math.max(1, arrangement.stride)
 
 	const out = [0]
-	for (let at = step; at <= last + 0.001; at += step) out.push(base + at)
+	for (let at = step; at <= scrollMax + 0.001; at += step) out.push(at)
 	if (scrollMax > out[out.length - 1] + 0.001) out.push(scrollMax)
 	return out
 }

@@ -16,7 +16,6 @@
 		disabled = false,
 		children,
 		element = $bindable(),
-		onpointerdown,
 		style,
 		...attributes
 	}: CarouselItemProps = $props()
@@ -39,20 +38,20 @@
 			.join(';'),
 	)
 
+	let text = $derived(attributes['aria-label'] ?? label ?? imageAlt)
 	let accessibleName = $derived(
-		attributes['aria-label'] ??
-			(tag !== 'div' && label && position > 0
-				? carouselContext.itemLabel(label, position, total)
-				: undefined),
+		tag !== 'div' && text && position > 0
+			? carouselContext.itemLabel(text, position, total)
+			: (attributes['aria-label'] ?? undefined),
 	)
 
 	let labelHidden = $derived(accessibleName !== undefined)
 
-	const handlePointerdown = (
-		event: PointerEvent & { currentTarget: EventTarget & CarouselItemElement },
+	const handleClick = (
+		event: MouseEvent & { currentTarget: EventTarget & CarouselItemElement },
 	) => {
-		onpointerdown?.(event)
-		if (!disabled && tag !== 'div') press.press()
+		if (!disabled) press.press()
+		attributes.onclick?.(event)
 	}
 </script>
 
@@ -100,7 +99,7 @@
 		{disabled}
 		aria-disabled={disabled}
 		aria-label={accessibleName}
-		onpointerdown={handlePointerdown}
+		onclick={handleClick}
 		style={itemStyle}
 		class={[
 			'np-carousel-item',
@@ -120,7 +119,7 @@
 		aria-disabled={disabled}
 		aria-label={accessibleName}
 		tabindex={disabled ? -1 : undefined}
-		onpointerdown={handlePointerdown}
+		onclick={handleClick}
 		style={itemStyle}
 		class={[
 			'np-carousel-item',
@@ -135,6 +134,12 @@
 {/if}
 
 <style>
+	@property --_carousel-item-corner {
+		syntax: '<length-percentage>';
+		inherits: false;
+		initial-value: 0px;
+	}
+
 	.np-carousel-item {
 		position: relative;
 		box-sizing: border-box;
@@ -154,7 +159,11 @@
 		inline-size: var(--np-carousel-item-width, 12.5rem);
 		block-size: var(--np-carousel-item-height, auto);
 		align-self: stretch;
-		border-radius: var(--np-carousel-item-container-shape, var(--np-shape-corner-extra-large));
+		--_carousel-item-corner: var(
+			--np-carousel-item-container-shape,
+			var(--np-shape-corner-extra-large)
+		);
+		border-radius: var(--_carousel-item-corner);
 		box-shadow: var(--np-carousel-item-elevation, none);
 		background-color: var(--np-carousel-item-container-color, transparent);
 		--np-ripple-hover-color: var(--np-carousel-item-state-layer-color, var(--np-color-on-surface));
@@ -271,11 +280,14 @@
 
 	@media (prefers-reduced-motion: no-preference) {
 		.np-carousel-item {
-			transition: border-radius var(--np-motion-expressive-fast-effects);
+			transition: --_carousel-item-corner var(--np-motion-expressive-fast-effects);
 		}
 
 		.np-carousel-item:is(button, a):is(:active, .np-carousel-item-pressed) {
-			border-radius: var(--np-carousel-item-pressed-container-shape, var(--np-shape-corner-medium));
+			--_carousel-item-corner: var(
+				--np-carousel-item-pressed-container-shape,
+				var(--np-shape-corner-large)
+			);
 		}
 	}
 

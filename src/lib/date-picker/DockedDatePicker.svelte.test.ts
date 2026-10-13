@@ -28,6 +28,32 @@ const openCalendar = async () => {
 
 const expectClosed = () => expect.poll(() => !!container()).toBe(false)
 
+// The boxes that clip a day, by class, where they cut into its focus ring. The ring reaches 8px past
+// the day's circle at the peak of its pulse.
+const clipsOfRing = (day: Element) => {
+	const circle = day.querySelector('.np-calendar-day-container')!.getBoundingClientRect()
+	const clips: string[] = []
+	for (let box = day.parentElement; box && box !== document.body; box = box.parentElement) {
+		const style = getComputedStyle(box)
+		if (style.overflowX === 'visible' && style.overflowY === 'visible') continue
+		const rect = box.getBoundingClientRect()
+		const left = rect.left + box.clientLeft
+		const top = rect.top + box.clientTop
+		const room = Math.min(
+			circle.left - left,
+			left + box.clientWidth - circle.right,
+			circle.top - top,
+			top + box.clientHeight - circle.bottom,
+		)
+		if (room < 7.5) clips.push(box.className)
+	}
+	return clips
+}
+
+// Opening moves focus to the day once the menu shows, so a test that moves it on waits for that.
+const dayFocused = () =>
+	expect.poll(() => document.activeElement?.classList.contains('np-calendar-day')).toBe(true)
+
 const height = () => Math.round(container()!.getBoundingClientRect().height)
 
 const heightsWhile = async (swap: () => Promise<void>) => {
@@ -266,7 +292,7 @@ describe('month and year menus', async () => {
 		await page.getByRole('button', { name: /^Select year/ }).click()
 
 		const header = document.querySelector('.np-date-picker-menu-button')!.getBoundingClientRect()
-		const covered = document.querySelector('.np-docked-date-picker-views')!.getBoundingClientRect()
+		const covered = document.querySelector('.np-month-panel-views')!.getBoundingClientRect()
 		expect(covered.top).toBeGreaterThanOrEqual(header.bottom + 5)
 	})
 
@@ -297,9 +323,10 @@ describe('keyboard and pointer', async () => {
 			.poll(() => document.querySelector('.np-calendar-day:focus')?.getAttribute('aria-label'))
 			.toBe('Monday, July 28, 2025')
 
+		// Enter saves the day and closes, as the spec's keyboard table asks.
 		await userEvent.keyboard('{Enter}')
-		await action('OK').click()
 		await expect.element(boundValue()).toHaveTextContent('2025-07-28')
+		await expect.poll(() => document.querySelector('.np-calendar')).toBeNull()
 	})
 
 	test('a horizontal swipe pages between months', async () => {
@@ -450,4 +477,210 @@ describe('layout', async () => {
 
 		expect(widths).toEqual([480, 480])
 	})
+})
+
+describe('keyboard and targets of the spec', async () => {
+	test('Shift+M and Shift+Y open the month and year lists on the chosen entry', async () => {
+		await setup()
+		await openCalendar()
+
+		await userEvent.keyboard('{Shift>}M{/Shift}')
+		await expect
+			.poll(
+				() =>
+					document.activeElement?.getAttribute('role') === 'option' &&
+					document.activeElement.textContent?.trim(),
+			)
+			.toBe('August')
+
+		await page.getByRole('option', { name: 'August' }).click()
+		await expect.element(grid('August 2025')).toBeVisible()
+		document.querySelector<HTMLElement>('.np-calendar-day[tabindex="0"]')!.focus()
+		await userEvent.keyboard('{Shift>}Y{/Shift}')
+		await expect
+			.poll(
+				() =>
+					document.activeElement?.getAttribute('role') === 'option' &&
+					document.activeElement.textContent?.trim(),
+			)
+			.toBe('2025')
+	})
+
+	test('takes Shift+M and Shift+Y from anywhere in the picker, not only from the days', async () => {
+		await setup()
+		await openCalendar()
+		await dayFocused()
+		const focusedOption = () =>
+			document.activeElement?.getAttribute('role') === 'option' &&
+			document.activeElement.textContent?.trim()
+
+		action('Next month').element().focus()
+		await userEvent.keyboard('{Shift>}M{/Shift}')
+		await expect.poll(focusedOption).toBe('August')
+
+		await userEvent.keyboard('{Shift>}Y{/Shift}')
+		await expect.poll(focusedOption).toBe('2025')
+
+		await page.getByRole('option', { name: '2025', exact: true }).click()
+		await expect.element(grid('August 2025')).toBeVisible()
+		action('Cancel').element().focus()
+		await userEvent.keyboard('{Shift>}M{/Shift}')
+		await expect.poll(focusedOption).toBe('August')
+	})
+
+	test('Shift+M and Shift+Y leave their list again, as their buttons do', async () => {
+		await setup()
+		await openCalendar()
+		await dayFocused()
+		const listOpen = () => count('.np-month-panel-list.open')
+
+		await userEvent.keyboard('{Shift>}M{/Shift}')
+		await expect.poll(listOpen).toBe(1)
+		await userEvent.keyboard('{Shift>}M{/Shift}')
+		await expect.poll(listOpen).toBe(0)
+		await dayFocused()
+
+		await userEvent.keyboard('{Shift>}Y{/Shift}')
+		await expect.poll(listOpen).toBe(1)
+		await userEvent.keyboard('{Shift>}Y{/Shift}')
+		await expect.poll(listOpen).toBe(0)
+		await dayFocused()
+	})
+
+	test('Escape in a list goes back to the days, a second one closes the picker', async () => {
+		await setup()
+		await openCalendar()
+		await dayFocused()
+
+		await userEvent.keyboard('{Shift>}Y{/Shift}')
+		await expect.poll(() => count('.np-month-panel-list.open')).toBe(1)
+		await userEvent.keyboard('{Escape}')
+		await expect.poll(() => count('.np-month-panel-list.open')).toBe(0)
+		await dayFocused()
+		expect(container()).not.toBeNull()
+
+		await userEvent.keyboard('{Escape}')
+		await expectClosed()
+	})
+
+	test('keeps its keys after a click on a bare part of it', async () => {
+		await setup()
+		await openCalendar()
+		await dayFocused()
+
+		// Beside the buttons, below the room the calendar keeps for its focus ring.
+		await userEvent.click(container()!.querySelector('.np-docked-date-picker-actions')!, {
+			position: { x: 4, y: 20 },
+		})
+		await expect
+			.poll(() => document.activeElement?.classList.contains('np-docked-picker-menu'))
+			.toBe(true)
+		await userEvent.keyboard('{Shift>}Y{/Shift}')
+
+		await expect
+			.poll(
+				() =>
+					document.activeElement?.getAttribute('role') === 'option' &&
+					document.activeElement.textContent?.trim(),
+			)
+			.toBe('2025')
+	})
+
+	test('reopened while it fades out, it starts over on the days of its month', async () => {
+		await setup()
+		await openCalendar()
+		await dayFocused()
+		await userEvent.keyboard('{PageDown}{Shift>}Y{/Shift}')
+		await expect.poll(() => count('.np-month-panel-list.open')).toBe(1)
+
+		const toggle = page.getByRole('button', { name: 'Show date picker' }).element() as HTMLElement
+		document
+			.querySelector('.np-docked-picker-menu')!
+			.addEventListener('toggle', () => setTimeout(() => toggle.click()), { once: true })
+		toggle.click()
+
+		await expect.element(grid('August 2025')).toBeVisible()
+		expect(count('.np-month-panel-list.open')).toBe(0)
+		await dayFocused()
+	})
+
+	test('keeps the focus ring of its outer arrows inside the picker', async () => {
+		await setup()
+		await openCalendar()
+		const menu = document.querySelector('.np-docked-picker-menu')!.getBoundingClientRect()
+
+		for (const name of ['Previous month', 'Next year']) {
+			const arrow = action(name).element() as HTMLElement
+			arrow.focus({ focusVisible: true })
+			const style = getComputedStyle(arrow)
+			const reach = parseFloat(style.outlineOffset) + parseFloat(style.outlineWidth)
+			const rect = arrow.getBoundingClientRect()
+			expect(Math.min(rect.left - menu.left, menu.right - rect.right), name).toBeGreaterThanOrEqual(
+				reach,
+			)
+		}
+	})
+
+	test('leaves the focus ring of the days at its edges whole', async () => {
+		await setup()
+		await openCalendar()
+
+		for (const name of ['Sunday, August 3', 'Saturday, August 9', 'Sunday, August 31']) {
+			const day = document.querySelector(`.np-calendar-day[aria-label^="${name}"]`)!
+			expect(clipsOfRing(day), name).toEqual([])
+		}
+	})
+
+	test('takes Page up and Page down on the header arrows, which keep focus', async () => {
+		await setup()
+		await openCalendar()
+		await dayFocused()
+		const arrow = action('Next month').element()
+		arrow.focus()
+
+		await userEvent.keyboard('{PageDown}')
+		await expect.element(grid('September 2025')).toBeVisible()
+		await userEvent.keyboard('{Shift>}{PageUp}{/Shift}')
+		await expect.element(grid('September 2024')).toBeVisible()
+		expect(document.activeElement).toBe(arrow)
+	})
+
+	test('gives its arrows a 48dp target and names their keys', async () => {
+		await setup()
+		await openCalendar()
+
+		const arrow = action('Previous year').element()
+		const touch = arrow.querySelector('.np-touch')!.getBoundingClientRect()
+		expect([Math.round(touch.width), Math.round(touch.height)]).toEqual([48, 48])
+		const tip = document.getElementById(arrow.getAttribute('aria-describedby')!)
+		expect(tip?.textContent?.trim()).toBe('Previous year (Shift+Page up)')
+	})
+
+	test('shows the full weekday on hover', async () => {
+		await setup()
+		await openCalendar()
+
+		const short = document.querySelector<HTMLElement>('.np-calendar-weekday-short')!
+		expect(short.title).toBe('Sunday')
+		expect(short.getAttribute('aria-hidden')).toBe('true')
+	})
+
+	test('reads digits typed without separators and formats them on Enter', async () => {
+		await setup({ value: undefined })
+
+		await field().fill('09012025')
+		await userEvent.keyboard('{Enter}')
+
+		await expect.element(field()).toHaveValue('09/01/2025')
+		await expect.element(boundValue()).toHaveTextContent('2025-09-01')
+	})
+})
+
+test('opens its calendar without a shadow, as M3 date pickers do', async () => {
+	await setup()
+	await openCalendar()
+
+	expect(getComputedStyle(document.querySelector('.np-docked-date-picker-menu')!).boxShadow).toBe(
+		'none',
+	)
 })

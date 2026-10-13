@@ -62,13 +62,47 @@
 			: undefined,
 	)
 
-	let arrowHandler = $derived(arrowKeyNav('.np-carousel-item', axis, { wrap: false }))
+	const ITEMS = '.np-carousel-item:is(button, a[href]):not(.np-carousel-item-disabled)'
+	const TABBABLE =
+		'a[href], button, input:not([type="hidden"]), select, textarea, summary, [tabindex], [contenteditable]'
+
+	let arrowHandler = $derived(arrowKeyNav(ITEMS, axis, { wrap: false }))
+
+	const tabbable = (node: HTMLElement) =>
+		node.tabIndex >= 0 &&
+		!node.matches(':disabled') &&
+		!node.closest('[inert]') &&
+		node.checkVisibility({ visibilityProperty: true })
+
+	const leave = (event: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement }) => {
+		const { key, target, currentTarget: carousel } = event
+		if (vertical || (key !== 'ArrowUp' && key !== 'ArrowDown')) return
+		if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+		if (!(target instanceof HTMLElement) || !target.matches(ITEMS)) return
+
+		// A modal dialog makes the rest of the page inert without an [inert] attribute.
+		const modal = carousel.closest('dialog')
+		const scope = modal?.matches(':modal') ? modal : document
+		const nodes = [...scope.querySelectorAll<HTMLElement>(TABBABLE)]
+		const after = (node: HTMLElement) =>
+			!!(carousel.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING)
+		const candidates =
+			key === 'ArrowDown' ? nodes.filter(after) : nodes.filter((node) => !after(node)).reverse()
+		for (const node of candidates) {
+			if (carousel.contains(node) || node.contains(carousel) || !tabbable(node)) continue
+			node.focus()
+			if (document.activeElement !== node) continue
+			event.preventDefault()
+			return
+		}
+	}
 
 	const handleKeydown = (
 		event: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement },
 	) => {
 		userKeydown?.(event)
 		if (!event.defaultPrevented) arrowHandler(event)
+		if (!event.defaultPrevented) leave(event)
 	}
 
 	let places = $derived(new Map(items.map((item, index) => [item, index + 1])))
@@ -81,7 +115,10 @@
 		const notch =
 			place > 0 ? (snapPoints?.children[place - 1] as HTMLElement | undefined) : undefined
 		if (notch) notch.scrollIntoView({ block: 'start', inline: 'start', behavior })
-		else item.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior })
+		else {
+			const inline = alignment === 'center' && !vertical ? 'center' : 'nearest'
+			item.scrollIntoView({ block: 'nearest', inline, behavior })
+		}
 	}
 
 	const carouselContext: CarouselContext = {
@@ -113,6 +150,7 @@
 		`np-carousel-${variant}`,
 		`np-carousel-${axis}`,
 		snapping && 'np-carousel-snap',
+		alignment === 'center' && !morphing && 'np-carousel-center',
 		cropping && 'np-carousel-cropping',
 		attributes.class,
 	]}
@@ -302,35 +340,40 @@
 
 		.np-carousel-cropping.np-carousel-horizontal .np-carousel-track :global(.np-carousel-item) {
 			animation-timeline: view(inline), view(inline);
-			clip-path: inset(
-				0 var(--_crop-end) 0 var(--_crop-start) round
-					var(--np-carousel-item-container-shape, var(--np-shape-corner-extra-large))
-			);
+			clip-path: inset(0 var(--_crop-end) 0 var(--_crop-start) round var(--_carousel-item-corner));
 			--np-carousel-parallax: var(--_shift) 0;
 		}
 
 		.np-carousel-cropping.np-carousel-horizontal
 			.np-carousel-track:dir(rtl)
 			:global(.np-carousel-item) {
-			clip-path: inset(
-				0 var(--_crop-start) 0 var(--_crop-end) round
-					var(--np-carousel-item-container-shape, var(--np-shape-corner-extra-large))
-			);
+			clip-path: inset(0 var(--_crop-start) 0 var(--_crop-end) round var(--_carousel-item-corner));
 			--_shift: calc(var(--_visible, 0.3333) * (var(--_in) - var(--_out)) * 100%);
 		}
 
 		.np-carousel-cropping.np-carousel-vertical .np-carousel-track :global(.np-carousel-item) {
 			animation-timeline: view(block), view(block);
-			clip-path: inset(
-				var(--_crop-start) 0 var(--_crop-end) 0 round
-					var(--np-carousel-item-container-shape, var(--np-shape-corner-extra-large))
-			);
+			clip-path: inset(var(--_crop-start) 0 var(--_crop-end) 0 round var(--_carousel-item-corner));
 			--np-carousel-parallax: 0 var(--_shift);
 		}
 
 		.np-carousel-cropping .np-carousel-track :global(.np-carousel-item-label) {
 			inset-inline-start: var(--_crop-start);
 			inset-inline-end: var(--_crop-end);
+		}
+
+		.np-carousel-cropping.np-carousel-horizontal
+			.np-carousel-track
+			:global(.np-carousel-item::after) {
+			inset-inline-start: var(--_crop-start);
+			inset-inline-end: var(--_crop-end);
+		}
+
+		.np-carousel-cropping.np-carousel-vertical
+			.np-carousel-track
+			:global(.np-carousel-item::after) {
+			inset-block-start: var(--_crop-start);
+			inset-block-end: var(--_crop-end);
 		}
 	}
 
@@ -345,6 +388,14 @@
 
 		:global(.np-carousel-morphing-block) .np-carousel-track :global(.np-carousel-item) {
 			animation-timeline: scroll(nearest block);
+		}
+
+		:global(.np-carousel-morphing-inline) .np-carousel-track :global(.np-carousel-item::after) {
+			inset-inline: var(--np-carousel-clip);
+		}
+
+		:global(.np-carousel-morphing-block) .np-carousel-track :global(.np-carousel-item::after) {
+			inset-block: var(--np-carousel-clip);
 		}
 	}
 
@@ -372,6 +423,18 @@
 
 	.np-carousel-snap .np-carousel-track :global(.np-carousel-item) {
 		scroll-snap-align: start;
+	}
+
+	.np-carousel-snap.np-carousel-center .np-carousel-track :global(.np-carousel-item) {
+		scroll-snap-align: center;
+	}
+
+	.np-carousel-center.np-carousel-horizontal .np-carousel-scroller {
+		scroll-padding-inline: var(--_pad);
+	}
+
+	.np-carousel-center.np-carousel-vertical .np-carousel-scroller {
+		scroll-padding-block: var(--_pad);
 	}
 
 	:global(.np-carousel-morphing) .np-carousel-track :global(.np-carousel-item) {

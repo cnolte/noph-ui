@@ -1,6 +1,5 @@
 <script lang="ts">
-	let { checked = $bindable(), disabled = false }: { checked: boolean; disabled?: boolean } =
-		$props()
+	let { checked, disabled = false }: { checked: boolean; disabled?: boolean } = $props()
 </script>
 
 <div class={['np-host']}>
@@ -104,42 +103,20 @@
 	.np-container.disabled .np-icon {
 		fill: var(--np-color-surface);
 	}
-	.np-container .mark.short {
-		height: 5.6568542495px;
-	}
-	.np-container.checked .mark {
-		transition-property: none;
-	}
-	.np-container .mark {
+	/* The two strokes of the check mark. The long one draws in as the box is checked. */
+	.mark {
 		transform: scaleY(-1) translate(7px, -14px) rotate(45deg);
 	}
-	.np-container.checked .mark {
-		animation-duration: 350ms;
-		animation-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
-		transition-duration: 350ms;
-		transition-timing-function: cubic-bezier(0.05, 0.7, 0.1, 1);
-	}
 	.mark.short {
-		height: 2px;
-		transition-property: transform, height;
 		width: 2px;
-	}
-	.mark {
-		animation-duration: 150ms;
-		animation-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
-		transition-duration: 150ms;
-		transition-timing-function: cubic-bezier(0.3, 0, 0.8, 0.15);
-	}
-	.np-container.checked .mark.long {
-		animation-name: prev-unselected-to-checked;
-	}
-	.np-container .mark.long {
-		width: 11.313708499px;
+		height: 5.6568542495px;
 	}
 	.mark.long {
+		width: 11.313708499px;
 		height: 2px;
-		transition-property: transform, width;
-		width: 10px;
+	}
+	.np-container.checked .mark.long {
+		animation: prev-unselected-to-checked 350ms cubic-bezier(0.05, 0.7, 0.1, 1);
 	}
 	@keyframes prev-unselected-to-checked {
 		from {

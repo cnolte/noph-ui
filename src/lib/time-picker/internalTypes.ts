@@ -36,6 +36,8 @@ export interface TimePickerPanelProps
 	/** The live hour, minute and day period. Both pickers hand their own state in. */
 	state: TimePickerState
 	mode: TimePickerMode
+	/** For the frames after a switch of `mode`, so the dial comes in instead of popping up. */
+	entering?: boolean
 	horizontal?: boolean
 	hour12: boolean
 	/** Minutes since midnight. */

@@ -281,7 +281,7 @@ describe('a11y', async () => {
 
 	test('announces the time once the gesture is over', async () => {
 		await setup({ hour12: true, value: 0 })
-		const live = document.querySelector<HTMLElement>('.np-clock-dial-sr-only')!
+		const live = document.querySelector<HTMLElement>('[aria-live]')!
 		expect(live.textContent).toBe('')
 
 		tap(3 / 12)

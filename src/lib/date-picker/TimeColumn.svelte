@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import { arrowKeyNav } from '#lib/keyboard-nav.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import { revealSelected, tabStop } from './optionList.js'
@@ -28,7 +29,7 @@
 			aria-selected={selected}
 			aria-disabled={option.disabled}
 			tabindex={option.value === tabStopValue ? 0 : -1}
-			class={['np-time-option', selected && 'selected']}
+			class={['np-time-option', 'np-focus-ring', 'np-focus-ring-inset', selected && 'selected']}
 			onclick={() => {
 				if (option.disabled) return
 				onselect?.(option.value)
@@ -105,10 +106,5 @@
 	.np-time-option[aria-disabled='true'] {
 		cursor: default;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.np-time-option:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: -3px;
 	}
 </style>

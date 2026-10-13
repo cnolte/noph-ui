@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { Attachment } from 'svelte/attachments'
 	import type { HTMLAttributes } from 'svelte/elements'
@@ -98,6 +99,7 @@
 			tabindex={year === tabStopYear ? 0 : -1}
 			class={[
 				'np-date-picker-year',
+				'np-focus-ring',
 				selected && 'selected',
 				year === currentYear && !selected && 'current',
 			]}
@@ -130,12 +132,6 @@
 		padding-block: 1rem;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
-	}
-
-	.np-date-picker-year-grid.entering {
-		height: 0;
-		opacity: 0.6;
-		transition: none;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -188,10 +184,5 @@
 	.np-date-picker-year[aria-disabled='true'] {
 		cursor: default;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.np-date-picker-year:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 2px;
 	}
 </style>

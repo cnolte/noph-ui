@@ -11,7 +11,12 @@ const options = [
 
 const combobox = () => document.querySelector<HTMLElement>('[role="combobox"]')!
 const isOpen = () => !!document.querySelector('.np-menu-container:popover-open')
-const focusedOption = () => document.activeElement?.closest('[role="option"]')?.textContent?.trim()
+// Focus stays in the field, which points at the active option, shown with a focus ring.
+const focusedOption = () => {
+	if (document.activeElement !== combobox()) return undefined
+	const option = document.getElementById(combobox().getAttribute('aria-activedescendant') ?? '')
+	return option?.matches('.np-focus-ring-shown') ? option.textContent?.trim() : undefined
+}
 
 describe('Select keyboard', async () => {
 	test('the first ArrowDown after a mouse open lands on the selected option', async () => {
@@ -65,6 +70,20 @@ describe('Select keyboard', async () => {
 		await expect.poll(focusedOption).toBe('Xigua')
 		await userEvent.keyboard('b')
 		await expect.poll(focusedOption).toBe('Banana')
+	})
+})
+
+describe('Select closing', async () => {
+	test('Escape closes the menu and keeps focus in the field', async () => {
+		await render(Select, { label: 'Fruit', options, value: 'apple' })
+
+		combobox().focus()
+		await userEvent.keyboard('{ArrowDown}')
+		await expect.poll(isOpen).toBe(true)
+		await userEvent.keyboard('{Escape}')
+
+		await expect.poll(isOpen).toBe(false)
+		expect(document.activeElement).toBe(combobox())
 	})
 })
 

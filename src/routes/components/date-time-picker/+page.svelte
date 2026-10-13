@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import BoundingMoment from './demos/BoundingMoment.svelte'
@@ -26,9 +27,9 @@
 <h1>Date and time pickers</h1>
 <p>
 	<code>DockedDateTimePicker</code> is the docked
-	<a class="link" href="/components/date-picker">date picker</a> with time columns next to the calendar:
-	hours, minutes and, on a 12 hour locale, AM or PM. Use it when the user picks a day and a time together,
-	such as for a meeting or a shift.
+	<a class="link" href={resolve('/components/date-picker')}>date picker</a> with time columns next to
+	the calendar: hours, minutes and, on a 12 hour locale, AM or PM. Use it when the user picks a day and
+	a time together, such as for a meeting or a shift.
 </p>
 <p>
 	<code>value</code> is a local <code>YYYY-MM-DDTHH:mm</code> string. It is built from local calendar
@@ -106,9 +107,10 @@
 <p>
 	With a <code>name</code>, the ISO value is submitted with the form through a hidden input.
 	Validation stays on the visible field, so the browser can focus it when a submit is blocked. As on
-	the <a class="link" href="/components/date-picker#forms-and-validation">date picker</a>, errors
-	show on submit or blur, not while the user is still typing. <code>issues</code> replaces the supporting
-	text with your own messages.
+	the
+	<a class="link" href="{resolve('/components/date-picker')}#forms-and-validation">date picker</a>,
+	errors show on submit or blur, not while the user is still typing. <code>issues</code> replaces the
+	supporting text with your own messages.
 </p>
 <DemoContainer>
 	<FormsAndValidation />
@@ -122,25 +124,29 @@
 </h2>
 <p>
 	The calendar half is the docked date picker, so its documentation applies here. See
-	<a class="link" href="/components/date-picker#reacting-to-a-change">reacting to a change</a>,
-	<a class="link" href="/components/date-picker#text-field-variants">text field variants</a>,
-	<a class="link" href="/components/date-picker#disabling-individual-days"
+	<a class="link" href="{resolve('/components/date-picker')}#reacting-to-a-change"
+		>reacting to a change</a
+	>,
+	<a class="link" href="{resolve('/components/date-picker')}#text-field-variants"
+		>text field variants</a
+	>,
+	<a class="link" href="{resolve('/components/date-picker')}#disabling-individual-days"
 		>disabling individual days</a
 	>,
-	<a class="link" href="/components/date-picker#restricting-the-year-menu"
+	<a class="link" href="{resolve('/components/date-picker')}#restricting-the-year-menu"
 		>restricting the year menu</a
 	>,
-	<a class="link" href="/components/date-picker#days-of-neighbouring-months"
+	<a class="link" href="{resolve('/components/date-picker')}#days-of-neighbouring-months"
 		>days of neighbouring months</a
 	>
 	,
-	<a class="link" href="/components/date-picker#controlling-the-calendar"
+	<a class="link" href="{resolve('/components/date-picker')}#controlling-the-calendar"
 		>controlling the calendar</a
 	>
 	and the
-	<a class="link" href="/components/date-picker#methods">show() and close() methods</a>. For a day
-	on its own, a modal, or a start and an end day, use
-	<a class="link" href="/components/date-picker"
+	<a class="link" href="{resolve('/components/date-picker')}#methods">show() and close() methods</a
+	>. For a day on its own, a modal, or a start and an end day, use
+	<a class="link" href={resolve('/components/date-picker')}
 		>DockedDatePicker, DatePickerDialog or DateRangePicker</a
 	>.
 </p>
@@ -149,7 +155,9 @@
 <p>
 	Colours and shapes come from the theme. Each part also has its own custom property. Set them on
 	the picker. They inherit into the calendar and the columns. The calendar half also takes every
-	<a class="link" href="/components/date-picker#theming"><code>--np-date-picker-*</code> token</a>.
+	<a class="link" href="{resolve('/components/date-picker')}#theming"
+		><code>--np-date-picker-*</code> token</a
+	>.
 </p>
 <table>
 	<thead>
@@ -197,11 +205,11 @@
 </h2>
 <p>
 	The calendar half moves like the
-	<a class="link" href="/components/date-picker#motion-and-gestures">date picker</a> and uses the
-	theme's motion tokens. The month and year lists slide down over the calendar, so the panel keeps
-	its size and the columns stay in place. The time columns cross-fade the selected colour. They open
-	centred on the selected value. After that they only scroll when you scroll them, so a pick in
-	progress does not jump back to the centre. All transitions run only under
+	<a class="link" href="{resolve('/components/date-picker')}#motion-and-gestures">date picker</a>
+	and uses the theme's motion tokens. The month and year lists slide down over the calendar, so the panel
+	keeps its size and the columns stay in place. The time columns cross-fade the selected colour. They
+	open centred on the selected value. After that they only scroll when you scroll them, so a pick in progress
+	does not jump back to the centre. All transitions run only under
 	<code>prefers-reduced-motion: no-preference</code>.
 </p>
 
@@ -231,8 +239,9 @@
 	</tbody>
 </table>
 <p>
-	The calendar keeps its own <a class="link" href="/components/date-picker#accessibility"
-		>grid keyboard model</a
+	The calendar keeps its own <a
+		class="link"
+		href="{resolve('/components/date-picker')}#accessibility">grid keyboard model</a
 	>, and every label string is a prop, so a localised app can translate the whole control.
 </p>
 
@@ -241,13 +250,13 @@
 	It exports the same <code>show()</code> and <code>close()</code> as the other pickers. The popover
 	has no <code>id</code> for a trigger, so use these to open it from code. <code>open</code> tells
 	whether it is showing. See
-	<a class="link" href="/components/date-picker#methods">the date picker's methods</a>.
+	<a class="link" href="{resolve('/components/date-picker')}#methods">the date picker's methods</a>.
 </p>
 <h3 id="dockeddatetimepicker">
 	DockedDateTimePicker<a href="#dockeddatetimepicker" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	Takes every <a class="link" href="/components/date-picker#dockeddatepicker"
+	Takes every <a class="link" href="{resolve('/components/date-picker')}#dockeddatepicker"
 		><code>DockedDatePicker</code></a
 	>
 	prop, including the <code>start</code> snippet for a leading icon in the field. The differences:
@@ -336,7 +345,7 @@
 <p>
 	The picker exports its minute-precision, timezone-safe maths for use in your app. The
 	day-precision helpers are documented with the
-	<a class="link" href="/components/date-picker#date-helpers">date picker</a>.
+	<a class="link" href="{resolve('/components/date-picker')}#date-helpers">date picker</a>.
 </p>
 <table>
 	<thead>

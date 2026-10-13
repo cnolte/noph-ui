@@ -30,6 +30,8 @@
 		[attributes['aria-describedby'], badgeId].filter(Boolean).join(' ') || undefined,
 	)
 
+	// The indicator follows a step behind the value, from this effect. Moved in the same update as
+	// the value, Chromium snaps it to the new tab instead of sliding it there.
 	$effect(() => {
 		if (tabsContext.value === value) {
 			tabsContext.indicatorValue = value
@@ -236,10 +238,6 @@
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		.focus-area {
-			transition: height 0.3s ease;
-		}
-
 		.np-tab:focus-visible .focus-area {
 			animation: focusAnimationInset var(--np-motion-expressive-slow-effects) forwards;
 		}

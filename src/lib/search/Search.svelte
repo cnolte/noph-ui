@@ -2,6 +2,7 @@
 	import { flushSync, untrack } from 'svelte'
 	import type { Attachment } from 'svelte/attachments'
 	import '#lib/internal/focus-ring.css'
+	import '#lib/internal/visually-hidden.css'
 	import { afterExit, motionOf } from '#lib/animation.js'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import { arrowKeyNav, focusableItems } from '#lib/keyboard-nav.js'
@@ -298,7 +299,7 @@
 		>
 			{@render children?.()}
 		</div>
-		<span class="np-search-announcement" role="status">{announcement}</span>
+		<span class="np-visually-hidden" role="status">{announcement}</span>
 	</div>
 </div>
 
@@ -512,14 +513,6 @@
 	}
 	.np-search-results:focus {
 		outline: none;
-	}
-	.np-search-announcement {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
 	}
 
 	.np-search-open .np-search-results {

@@ -11,6 +11,8 @@
 		count = 5,
 		type = 'button',
 		disabledIndex = -1,
+		plainIndex = -1,
+		surround = false,
 		image,
 		itemLabel,
 		label = 'Featured photos',
@@ -24,6 +26,8 @@
 		count?: number
 		type?: CarouselItemProps['type']
 		disabledIndex?: number
+		plainIndex?: number
+		surround?: boolean
 		image?: string
 		itemLabel?: CarouselProps['itemLabel']
 		label?: string
@@ -36,10 +40,11 @@
 </script>
 
 <div class="frame">
+	{#if surround}<button>Before</button>{/if}
 	<Carousel {variant} {alignment} {orientation} {snap} {label} {itemLabel} {role} {onkeydown}>
 		{#each indexes as index (index)}
 			<CarouselItem
-				{type}
+				type={index === plainIndex ? 'text' : type}
 				label={names[index % names.length]}
 				{image}
 				disabled={index === disabledIndex}
@@ -47,6 +52,7 @@
 			/>
 		{/each}
 	</Carousel>
+	{#if surround}<button>Show all</button>{/if}
 </div>
 
 <style>

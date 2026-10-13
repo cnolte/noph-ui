@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import AccessibleNames from './demos/AccessibleNames.svelte'
@@ -54,15 +55,22 @@
 
 <h2 id="layouts">Layouts<a href="#layouts" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Four <code>variant</code> values cover the five M3 layouts. <code>multi-browse</code> shows large,
-	medium and small items together and is the M3 default. <code>uncontained</code> keeps every item
-	at its given size and lets items run past the edge. It crops only at the two ends of the
-	scrollport. Give its items their own <code>aspectRatio</code> to get the multi-aspect layout: one
-	strip of items with different shapes. <code>hero</code> shows one item about twice as wide as it
-	is tall, with the next item peeking in. <code>full-screen</code> shows one item at a time and scrolls
+	Four <code>variant</code> values and <code>alignment</code> cover the six M3 layouts.
+	<code>multi-browse</code>
+	shows large, medium and small items together and is the M3 default. <code>uncontained</code> keeps
+	every item at its given size and lets items run past the edge. It crops only at the two ends of
+	the scrollport. Give its items their own <code>aspectRatio</code> to get the multi-aspect layout:
+	one strip of items with different shapes. <code>hero</code> shows one item about twice as wide as
+	it is tall, with the next item peeking in. <code>full-screen</code> shows one item at a time and scrolls
 	on the block axis, so its arrow keys are up and down.
 </p>
-<p>All five layouts, each with the sizing it needs:</p>
+<p>
+	<code>alignment="center"</code> puts the large item in the middle. On <code>hero</code> this is the
+	center-aligned hero, with a small item on both sides. The other layouts snap the item in focus to the
+	middle. At both ends the strip stops at the edge, so the first and last item sit at the start and the
+	end.
+</p>
+<p>All six layouts, each with the sizing it needs:</p>
 <DemoContainer style="flex-direction: column;">
 	<Variants />
 </DemoContainer>
@@ -143,7 +151,9 @@
 	Set carousel properties on <code>Carousel</code> and item properties on
 	<code>CarouselItem</code>. Item properties also inherit when you set them on the carousel. State
 	layer opacities come from the
-	<a class="link" href="/components/ripple#theming"><code>--np-ripple-*</code> tokens</a>.
+	<a class="link" href="{resolve('/components/ripple')}#theming"
+		><code>--np-ripple-*</code> tokens</a
+	>.
 </p>
 <table>
 	<thead>
@@ -207,7 +217,7 @@
 		</tr>
 		<tr>
 			<td><code>--np-carousel-item-pressed-container-shape</code></td>
-			<td><code>--np-shape-corner-medium</code></td>
+			<td><code>--np-shape-corner-large</code> (16dp)</td>
 		</tr>
 		<tr>
 			<td><code>--np-carousel-item-elevation</code></td>
@@ -341,7 +351,10 @@
 		</tr>
 		<tr>
 			<td><kbd>&uarr;</kbd> <kbd>&darr;</kbd></td>
-			<td>Not handled by the carousel, so the page gets them</td>
+			<td>
+				Leaves the carousel for the focusable element before or after it, such as the
+				<a class="link" href="#show-all">Show all</a> button. Not on a full-screen carousel.
+			</td>
 		</tr>
 		<tr>
 			<td><kbd>Space</kbd> <kbd>Enter</kbd></td>
@@ -349,12 +362,14 @@
 		</tr>
 	</tbody>
 </table>
-<p>Focus stops at the first and last item.</p>
+<p>Focus stops at the first and last item. The arrow keys pass over plain and disabled items.</p>
 <p>
 	Each item announces its position, so a screen reader reads
 	<code>Sunset over the bay, 3 of 12</code>. The position comes last, so the name starts with the
-	visible text and voice control can still find it. Pass <code>itemLabel</code> to change the
-	wording, or set <code>aria-label</code> on an item to replace the whole name.
+	visible text and voice control can still find it. The text is the item's
+	<code>aria-label</code>, else its <code>label</code>, else its <code>imageAlt</code>. Set
+	<code>aria-label</code> on an item whose text sits in its own content, such as a count and a
+	caption. Pass <code>itemLabel</code> to change the wording.
 </p>
 <DemoContainer>
 	<AccessibleNames />

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import { formatTwoDigits, MINUTES_IN_HOUR } from '#lib/date-picker/timeUtils.js'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { TimeSelectorsProps } from './internalTypes.js'
@@ -42,7 +43,7 @@
 			{disabled}
 			aria-checked={selection === field.key}
 			aria-label="{field.label}, {field.text}"
-			class={['np-time-selector', selection === field.key && 'selected']}
+			class={['np-time-selector', 'np-focus-ring', selection === field.key && 'selected']}
 			onclick={() => onselect?.(field.key)}
 		>
 			<span aria-hidden="true">{field.text}</span>
@@ -63,8 +64,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		/* 24dp of air on either side of the colon. */
-		width: 3rem;
+		width: 1.5rem;
 		flex: none;
 		font-size: 3.5rem;
 		line-height: 4rem;
@@ -79,7 +79,7 @@
 		align-items: center;
 		justify-content: center;
 		box-sizing: border-box;
-		width: var(--np-time-picker-time-selector-container-width, 6rem);
+		width: var(--np-time-picker-time-selector-container-width, var(--_time-field-width, 6rem));
 		height: 5rem;
 		flex: none;
 		margin: 0;
@@ -125,11 +125,6 @@
 	.np-time-selector:disabled {
 		cursor: default;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.np-time-selector:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 2px;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {

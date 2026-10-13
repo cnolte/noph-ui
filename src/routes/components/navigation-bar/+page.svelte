@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Arrangement from './demos/Arrangement.svelte'
@@ -24,7 +25,7 @@
 <h1>Navigation bar</h1>
 <p>
 	Three to five top level destinations along the bottom of a compact screen. On a wider screen use a
-	<a class="link" href="/components/navigation-rail">navigation rail</a> instead.
+	<a class="link" href={resolve('/components/navigation-rail')}>navigation rail</a> instead.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -45,7 +46,7 @@
 <Code
 	value={`<NavigationBarItem
 	label="Home"
-	href="/"
+	href={resolve('/')}
 	selected={page.url.pathname === '/'}
 >
 	{#snippet icon()}<Icon>home</Icon>{/snippet}
@@ -54,10 +55,10 @@
 
 <h2 id="badges">Badges<a href="#badges" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>badge</code> puts a <a class="link" href="/components/badge">badge</a> on the icon. Without
-	a <code>badgeLabel</code> it is a small dot. A screen reader reads it after the destination's
-	name: the count, or <code>New notification</code> for a dot. <code>badgeAriaLabel</code> replaces that
-	text, to say what the number counts or to translate it.
+	<code>badge</code> puts a <a class="link" href={resolve('/components/badge')}>badge</a> on the
+	icon. Without a <code>badgeLabel</code> it is a small dot. A screen reader reads it after the
+	destination's name: the count, or <code>New notification</code> for a dot.
+	<code>badgeAriaLabel</code> replaces that text, to say what the number counts or to translate it.
 </p>
 <DemoContainer>
 	<Badges />

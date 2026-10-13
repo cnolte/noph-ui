@@ -38,4 +38,8 @@ export default defineConfig(
 		// 'svelte/button-has-type': 'error'
 		rules: {},
 	},
+	{
+		files: ['src/lib/**'],
+		rules: { 'svelte/no-navigation-without-resolve': 'off' },
+	},
 )

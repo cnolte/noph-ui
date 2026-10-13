@@ -1,0 +1,34 @@
+@property --np-four-color {
+	syntax: '<color>';
+	inherits: false;
+	initial-value: transparent;
+}
+@property --np-four-color-track {
+	syntax: '<color>';
+	inherits: false;
+	initial-value: transparent;
+}
+
+@keyframes np-four-color {
+	0%,
+	15%,
+	100% {
+		--np-four-color: var(--np-color-primary);
+		--np-four-color-track: var(--np-color-primary-container);
+	}
+	25%,
+	40% {
+		--np-four-color: var(--np-color-primary-container);
+		--np-four-color-track: var(--np-color-primary);
+	}
+	50%,
+	65% {
+		--np-four-color: var(--np-color-tertiary);
+		--np-four-color-track: var(--np-color-tertiary-container);
+	}
+	75%,
+	90% {
+		--np-four-color: var(--np-color-tertiary-container);
+		--np-four-color-track: var(--np-color-tertiary);
+	}
+}

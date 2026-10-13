@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Code from '../../Code.svelte'
 	import FullScreen from './demos/FullScreen.svelte'
@@ -27,7 +28,7 @@
 </p>
 <p>
 	Use dialogs only for choices that cannot wait. For a message that only confirms what happened, use
-	a <a class="link" href="/components/snackbar">snackbar</a> instead.
+	a <a class="link" href={resolve('/components/snackbar')}>snackbar</a> instead.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>

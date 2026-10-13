@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
 	import Ripple from '#lib/ripple/Ripple.svelte'
 	import type { PeriodSelectorProps } from './internalTypes.js'
 
@@ -34,7 +35,12 @@
 			role="radio"
 			disabled={disabled || period.unreachable}
 			aria-checked={isPm === period.pm}
-			class={['np-period-option', isPm === period.pm && 'selected']}
+			class={[
+				'np-period-option',
+				'np-focus-ring',
+				'np-focus-ring-inset',
+				isPm === period.pm && 'selected',
+			]}
 			onclick={() => onselect?.(period.pm)}
 		>
 			{period.text}
@@ -60,7 +66,7 @@
 	.np-period-selector.vertical {
 		flex-direction: column;
 		width: 3.25rem;
-		height: var(--np-time-picker-period-selector-height, 5rem);
+		height: var(--np-time-picker-period-selector-height, var(--_period-height, 5rem));
 		flex: none;
 	}
 
@@ -125,11 +131,6 @@
 	.np-period-option:disabled {
 		cursor: default;
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.np-period-option:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: -3px;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {

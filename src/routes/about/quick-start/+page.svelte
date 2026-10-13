@@ -1,4 +1,5 @@
 <script>
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 </script>
 
@@ -35,8 +36,8 @@
 }`}
 />
 <p style="margin-top:1rem">
-	<a class="link" href="/about/theming">Theming</a> goes further: generate a theme from your own source
-	color, browse every color, shape and motion token, and switch themes while the app is running.
+	<a class="link" href={resolve('/about/theming')}>Theming</a> goes further: generate a theme from your
+	own source color, browse every color, shape and motion token, and switch themes while the app is running.
 </p>
 <h3 id="dark-and-light-color-schemes">
 	Dark and light color schemes<a
@@ -78,8 +79,8 @@
 />`}
 />
 <p>
-	<a class="link" href="/about/icons">Icons</a> covers the font settings, and how to pass your own SVG
-	instead.
+	<a class="link" href={resolve('/about/icons')}>Icons</a> covers the font settings, and how to pass your
+	own SVG instead.
 </p>
 
 <h2 id="put-it-together">

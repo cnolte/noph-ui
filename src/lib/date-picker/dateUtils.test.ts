@@ -141,6 +141,12 @@ describe('parseDateInput', () => {
 		expect(toISODate(parseDateInput('17.08.2025', 'de-DE')!)).toBe('2025-08-17')
 	})
 
+	it('reads digits typed without separators, in the locale field order', () => {
+		expect(toISODate(parseDateInput('08172025', 'en-US')!)).toBe('2025-08-17')
+		expect(toISODate(parseDateInput('17082025', 'de-DE')!)).toBe('2025-08-17')
+		expect(parseDateInput('0817202', 'en-US')).toBeUndefined()
+	})
+
 	it('accepts unpadded numbers and alternative separators', () => {
 		expect(toISODate(parseDateInput('8/17/2025', 'en-US')!)).toBe('2025-08-17')
 		expect(toISODate(parseDateInput('08-17-2025', 'en-US')!)).toBe('2025-08-17')

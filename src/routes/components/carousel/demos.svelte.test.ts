@@ -43,10 +43,11 @@ describe('carousel demos', async () => {
 	test('Variants shows every layout, so no one of them needs a demo of its own', async () => {
 		await render(Harness, { demo: Variants })
 
-		expect(document.querySelectorAll('.np-carousel')).toHaveLength(5)
+		expect(document.querySelectorAll('.np-carousel')).toHaveLength(6)
 		for (const variant of ['multi-browse', 'uncontained', 'hero', 'full-screen']) {
 			expect(document.querySelectorAll(`.np-carousel-${variant}`).length).toBeGreaterThan(0)
 		}
 		expect(document.querySelectorAll('.np-carousel-item-aspect').length).toBeGreaterThan(0)
+		expect(document.querySelectorAll('.np-carousel-hero')).toHaveLength(2)
 	})
 })

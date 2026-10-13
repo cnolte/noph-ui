@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Disabled from './demos/Disabled.svelte'
@@ -24,8 +25,9 @@
 <h1>Checkbox</h1>
 <p>
 	A checkbox turns one option on or off. A group of them lets people pick any number of options. For
-	a single choice out of several, use a <a class="link" href="/components/radio">radio</a>. For a
-	setting that applies at once, use a <a class="link" href="/components/switch">switch</a>.
+	a single choice out of several, use a <a class="link" href={resolve('/components/radio')}>radio</a
+	>. For a setting that applies at once, use a
+	<a class="link" href={resolve('/components/switch')}>switch</a>.
 </p>
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
 <DemoContainer>

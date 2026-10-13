@@ -47,6 +47,13 @@
 	<Carousel variant="hero" label="Paintings, hero">{@render run()}</Carousel>
 </figure>
 
+<figure class="shelf">
+	<figcaption><code>hero</code> with <code>alignment="center"</code></figcaption>
+	<Carousel variant="hero" alignment="center" label="Paintings, center-aligned hero">
+		{@render run()}
+	</Carousel>
+</figure>
+
 <figure class="viewport">
 	<figcaption><code>full-screen</code></figcaption>
 	<Carousel variant="full-screen" label="Paintings, full screen">

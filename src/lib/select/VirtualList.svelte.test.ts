@@ -17,11 +17,15 @@ test('a long select scrolls the option it focuses fully into view', async () => 
 	await userEvent.keyboard('{ArrowDown}')
 	for (let i = 0; i < 12; i++) await userEvent.keyboard('{ArrowDown}')
 
+	const active = () =>
+		document.getElementById(
+			document.querySelector('[role="combobox"]')!.getAttribute('aria-activedescendant') ?? '',
+		)
 	await expect
-		.poll(() => document.activeElement?.querySelector('.np-item-headline')?.textContent?.trim())
+		.poll(() => active()?.querySelector('.np-item-headline')?.textContent?.trim())
 		.toBe('Option 12')
 	const viewport = document.querySelector('svelte-virtual-list-viewport')!.getBoundingClientRect()
-	const option = document.activeElement!.getBoundingClientRect()
+	const option = active()!.getBoundingClientRect()
 	expect(option.top).toBeGreaterThanOrEqual(viewport.top - 1)
 	expect(option.bottom).toBeLessThanOrEqual(viewport.bottom + 1)
 })

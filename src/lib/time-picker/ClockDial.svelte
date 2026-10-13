@@ -1,10 +1,14 @@
 <script lang="ts">
+	import '#lib/internal/focus-ring.css'
+	import '#lib/internal/visually-hidden.css'
 	import {
 		formatMinutes,
 		formatTwoDigits,
+		isHourReachable,
 		isMinuteWithin,
 		MINUTES_IN_HOUR,
 		snapToStep,
+		stepOf,
 	} from '#lib/date-picker/timeUtils.js'
 	import { tick } from 'svelte'
 	import type { ClockDialProps } from './types.js'
@@ -40,7 +44,7 @@
 	let announcement = $state('')
 	let handleElement = $state<HTMLDivElement>()
 
-	let step = $derived(Math.max(1, Math.trunc(minuteStep) || 1))
+	let step = $derived(stepOf(minuteStep))
 	let hour = $derived(Math.floor(value / MINUTES_IN_HOUR))
 	let minute = $derived(value % MINUTES_IN_HOUR)
 	let isPm = $derived(hour >= 12)
@@ -48,12 +52,7 @@
 	const usable = (minutes: number) =>
 		isMinuteWithin(minutes, min, max) && (isTimeEnabled?.(minutes) ?? true)
 
-	const hourReachable = (candidate: number) => {
-		for (let each = 0; each < MINUTES_IN_HOUR; each += step) {
-			if (usable(candidate * MINUTES_IN_HOUR + each)) return true
-		}
-		return false
-	}
+	const hourReachable = (candidate: number) => isHourReachable(candidate, step, usable)
 
 	/** Minutes for an hour ring position, keeping the minute that is already selected. */
 	const hourMinutes = (position: number) =>
@@ -329,6 +328,7 @@
 			tabindex={tabStopIndex === index ? 0 : -1}
 			class={[
 				'np-clock-dial-option',
+				'np-focus-ring',
 				option.minutes === value && 'selected',
 				!option.label && 'np-unlabelled',
 			]}
@@ -346,7 +346,7 @@
 		</button>
 	{/each}
 
-	<span class="np-clock-dial-sr-only" aria-live="polite">{announcement}</span>
+	<span class="np-visually-hidden" aria-live="polite">{announcement}</span>
 </div>
 
 <style>
@@ -462,23 +462,6 @@
 
 	.np-clock-dial-option[aria-disabled='true'] {
 		color: color-mix(in srgb, var(--np-color-on-surface) 38%, transparent);
-	}
-
-	.np-clock-dial-option:focus-visible {
-		outline: 3px solid var(--np-color-secondary);
-		outline-offset: 2px;
-	}
-
-	.np-clock-dial-sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		margin: -1px;
-		padding: 0;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-		border: 0;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {

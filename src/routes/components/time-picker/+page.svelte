@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import BoundingSelection from './demos/BoundingSelection.svelte'
@@ -46,8 +47,8 @@
 	<code>value</code> is an <code>HH:mm</code> string on a 24 hour clock, whatever clock is shown, so
 	<code>'20:00'</code> and <code>'08:00 PM'</code> are the same value. For a date and a time, use
 	the
-	<a class="link" href="/components/date-time-picker">date and time picker</a>. For a date only, use
-	the <a class="link" href="/components/date-picker">date picker</a>.
+	<a class="link" href={resolve('/components/date-time-picker')}>date and time picker</a>. For a
+	date only, use the <a class="link" href={resolve('/components/date-picker')}>date picker</a>.
 </p>
 
 <h2 id="usage">Usage<a href="#usage" aria-hidden="true" tabindex="-1">#</a></h2>
@@ -94,8 +95,8 @@
 <p>
 	The 24 hour dial has two rings: <code>00</code> to <code>11</code> on the outside and
 	<code>12</code> to <code>23</code> on the inside. The distance from the centre picks the ring, so every
-	hour is one gesture away. Without a period selector, the hour and minute fields widen from 96dp to 114dp,
-	as the spec asks.
+	hour is one gesture away. Without a period selector, the hour and minute fields of the dial widen from
+	96dp to 114dp, as the spec asks. The fields of the input mode stay 96dp.
 </p>
 <DemoContainer>
 	<ClockFormat />
@@ -184,8 +185,8 @@
 	Passing a <code>name</code> submits the <code>HH:mm</code> value with the form through a hidden
 	input. Validation stays on the visible field, so a blocked submit points to a field the browser
 	can focus. The timing matches the
-	<a class="link" href="/components/date-picker#forms-and-validation">date picker</a>: feedback
-	appears on submit or blur, not while a time is being typed.
+	<a class="link" href="{resolve('/components/date-picker')}#forms-and-validation">date picker</a>:
+	feedback appears on submit or blur, not while a time is being typed.
 	<code>issues</code> replaces the supporting text with your own messages, and a form
 	<code>reset()</code> returns the field to <code>defaultValue</code>.
 </p>
@@ -225,7 +226,9 @@
 	Colours and shapes come from the theme. Each part also has a custom property for cases the theme
 	does not cover. Set them on the picker. They inherit into the dial, the fields and the period
 	selector. The docked variant's text field also takes every
-	<a class="link" href="/components/text-field#theming"><code>--np-text-field-*</code> token</a>.
+	<a class="link" href="{resolve('/components/text-field')}#theming"
+		><code>--np-text-field-*</code> token</a
+	>.
 </p>
 <table>
 	<thead>
@@ -249,7 +252,9 @@
 		</tr>
 		<tr>
 			<td><code>--np-time-picker-time-selector-container-width</code></td>
-			<td><code>6rem</code> (96dp), <code>7.125rem</code> (114dp) with no period selector</td>
+			<td>
+				<code>6rem</code> (96dp), <code>7.125rem</code> (114dp) on a vertical 24 hour dial
+			</td>
 		</tr>
 		<tr>
 			<td><code>--np-time-picker-time-selector-selected-container-color</code></td>
@@ -557,7 +562,7 @@
 		<tr>
 			<td><code>dialModeLabel</code> / <code>inputModeLabel</code></td>
 			<td><code>string</code></td>
-			<td><code>'Switch to dial mode'</code> / <code>'Switch to text input mode'</code></td>
+			<td><code>'Toggle dial picker'</code> / <code>'Toggle input picker'</code></td>
 			<td>Accessible name of the mode toggle, named after the mode it switches to.</td>
 		</tr>
 		<tr>
@@ -811,7 +816,9 @@
 <p>
 	The maths behind the picker is exported too, so an app can use the same handling. The
 	<code>Date</code> based versions are documented with the
-	<a class="link" href="/components/date-time-picker#time-helpers">date and time picker</a>.
+	<a class="link" href="{resolve('/components/date-time-picker')}#time-helpers"
+		>date and time picker</a
+	>.
 </p>
 <table>
 	<thead>

@@ -89,6 +89,7 @@
 		bind:this={element}
 		class={[
 			'np-icon-button',
+			'np-focus-ring',
 			size,
 			width,
 			variant,
@@ -125,6 +126,7 @@
 		}}
 		class={[
 			'np-icon-button',
+			'np-focus-ring',
 			size,
 			width,
 			shapeClass,
@@ -294,20 +296,6 @@
 		outline-width: 1px;
 		outline-offset: -1px;
 	}
-	.enabled:focus-visible {
-		outline-style: solid;
-		outline-color: var(--np-color-secondary);
-		outline-width: 3px;
-		outline-offset: 2px;
-	}
-	.enabled:focus-visible :global(.np-ripple-surface)::before {
-		opacity: var(--np-ripple-focus-opacity, 0.1);
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.enabled:focus-visible {
-			animation: focusAnimation var(--np-motion-expressive-slow-effects) forwards;
-		}
-	}
 	.text {
 		color: var(--np-icon-button-icon-color, var(--np-color-on-surface-variant));
 	}
@@ -363,8 +351,7 @@
 		color: var(--np-color-on-surface-variant);
 	}
 
-	.outlined:not(.selected)::after,
-	.outlined-disabled::after {
+	.outlined:not(.selected)::after {
 		content: '';
 		position: absolute;
 		inset: 0;
@@ -379,8 +366,8 @@
 	}
 	.np-touch {
 		position: absolute;
-		height: max(calc(var(--_button-height, 40px) + 8px), 100%);
-		width: max(calc(var(--_button-width, 40px) + 8px), 100%);
+		height: max(3rem, 100%);
+		width: max(3rem, 100%);
 	}
 
 	.np-icon-button-circular-progress {

@@ -1,28 +1,34 @@
 <script lang="ts">
+	import { afterTwoFrames, morphSize } from '#lib/animation.js'
 	import Button from '#lib/button/Button.svelte'
 	import IconButton from '#lib/button/IconButton.svelte'
 	import Dialog from '#lib/dialog/Dialog.svelte'
 	import Divider from '#lib/divider/Divider.svelte'
+	import CalendarToday from '#lib/icons/CalendarToday.svelte'
 	import CloseIcon from '#lib/icons/CloseIcon.svelte'
-	import { syncOpenEffect } from '#lib/popover.svelte.js'
-	import { tick } from 'svelte'
+	import EditCalendarIcon from '#lib/icons/EditCalendarIcon.svelte'
+	import TextField from '#lib/text-field/TextField.svelte'
+	import { flushSync, tick } from 'svelte'
 	import Calendar from './Calendar.svelte'
 	import { exitVisibility } from './exitVisibility.svelte.js'
 	import {
 		clampDate,
 		compareDays,
 		DEFAULT_YEAR_RANGE,
-		formatDateMedium,
+		formatDate,
+		formatMonthDay,
+		getDatePattern,
 		getFirstDayOfWeek,
 		getWeekdayLabels,
 		isWithin,
+		parseDateInput,
 		parseISODate,
 		startOfDay,
 		startOfMonth,
 		toISODate,
 		today as getToday,
 	} from './dateUtils.js'
-	import type { DateRange, DateRangePickerProps } from './types.js'
+	import type { DateRange, DatePickerMode, DateRangePickerProps } from './types.js'
 
 	let {
 		value = $bindable({}),
@@ -42,6 +48,10 @@
 		form,
 		startLabel = 'Start date',
 		endLabel = 'End date',
+		mode = $bindable<DatePickerMode>('calendar'),
+		modeToggle = true,
+		calendarModeLabel = 'Switch to calendar mode',
+		inputModeLabel = 'Switch to text input mode',
 		cancelLabel = 'Cancel',
 		confirmLabel = 'Save',
 		selectedDateLabel = 'selected',
@@ -116,20 +126,10 @@
 		if (target && scroller) scroller.scrollTop = target.offsetTop
 	}
 
-	export const show = () => {
-		if (element && !element.open) element.showModal()
-	}
+	let dialog = $state<Dialog>()
 
-	export const close = () => {
-		if (element?.open) element.close()
-	}
-
-	syncOpenEffect(
-		() => element,
-		() => open,
-		show,
-		close,
-	)
+	export const show = () => dialog?.show()
+	export const close = () => dialog?.close()
 
 	let prepending = false
 
@@ -167,10 +167,6 @@
 		if (index > lastMonth) lastMonth = index
 	}
 
-	const cancel = () => {
-		open = false
-	}
-
 	const confirm = () => {
 		confirming = true
 		value = pending
@@ -179,26 +175,92 @@
 		open = false
 	}
 
-	let headlineStart = $derived(startDate ? formatDateMedium(startDate, locale) : startLabel)
-	let headlineEnd = $derived(endDate ? formatDateMedium(endDate, locale) : endLabel)
+	// The input mode types the range into two fields, read as they are typed and formatted once
+	// left or entered. An end before the start does not count.
+	let startText = $state('')
+	let endText = $state('')
+	let startInvalid = $state(false)
+	let endInvalid = $state(false)
+	let pattern = $derived(getDatePattern(locale))
+
+	const usableDate = (typed: string) => {
+		const parsed = parseDateInput(typed, locale)
+		return parsed && isSelectable(parsed) ? parsed : undefined
+	}
+
+	const syncText = () => {
+		startText = startDate ? formatDate(startDate, locale) : ''
+		endText = endDate ? formatDate(endDate, locale) : ''
+		startInvalid = false
+		endInvalid = false
+	}
+
+	const readTyped = () => {
+		const start = usableDate(startText)
+		const end = usableDate(endText)
+		pending = {
+			start: start && toISODate(start),
+			end: start && end && compareDays(end, start) >= 0 ? toISODate(end) : undefined,
+		}
+	}
+
+	const settleTyped = () => {
+		startInvalid = startText.trim() !== '' && !startDate
+		endInvalid = endText.trim() !== '' && !endDate
+		if (startDate) startText = formatDate(startDate, locale)
+		if (endDate) endText = formatDate(endDate, locale)
+	}
+
+	// The fields slide in on a switch to input mode, not when the picker opens in it.
+	let inputEnter = $state(false)
+	let cancelInputEnter: (() => void) | undefined
+
+	let content = $state<HTMLElement>()
+
+	const setMode = (next: DatePickerMode) => {
+		cancelInputEnter?.()
+		morphSize(
+			content,
+			() =>
+				flushSync(() => {
+					mode = next
+					inputEnter = next === 'input'
+					if (next === 'input') syncText()
+					else resetWindow()
+				}),
+			'--np-motion-expressive-default-spatial',
+		)
+		if (next === 'input') cancelInputEnter = afterTwoFrames(() => (inputEnter = false))
+		else scrollToAnchor()
+	}
+
+	let headlineStart = $derived(startDate ? formatMonthDay(startDate, locale) : startLabel)
+	let headlineEnd = $derived(endDate ? formatMonthDay(endDate, locale) : endLabel)
 </script>
 
 <Dialog
 	role="dialog"
 	{...attributes}
+	bind:this={dialog}
 	bind:element
+	bind:open
 	aria-label={title}
 	class={['np-date-range-picker', attributes.class]}
 	ontoggle={(event) => {
-		const nowOpen = event.newState === 'open'
-		open = nowOpen
-		if (nowOpen) {
+		if (event.newState === 'open') {
 			exit.show()
 			confirming = false
 			pending = { ...value }
 			focusedDay = undefined
-			resetWindow()
-			scrollToAnchor()
+			if (mode === 'input') {
+				syncText()
+				tick().then(() =>
+					element?.querySelector<HTMLInputElement>('.np-date-range-picker-inputs input')?.focus(),
+				)
+			} else {
+				resetWindow()
+				scrollToAnchor()
+			}
 		} else {
 			if (!confirming) oncancel?.()
 			confirming = false
@@ -215,72 +277,117 @@
 		{form}
 	/>
 	{#if exit.visible}
-		<div class="np-date-range-picker-content">
+		<div class="np-date-range-picker-content" bind:this={content}>
 			<div class="np-date-range-picker-header">
 				<div class="np-date-range-picker-top-bar">
-					<IconButton type="button" aria-label={cancelLabel} onclick={cancel}>
+					<IconButton type="button" aria-label={cancelLabel} onclick={close}>
 						<CloseIcon />
 					</IconButton>
 					<Button type="button" variant="text" disabled={!canConfirm} onclick={confirm}>
 						{confirmLabel}
 					</Button>
 				</div>
-				<div class="np-date-range-picker-header-text">
-					<span class="np-date-range-picker-title">{title}</span>
-					<h2 class="np-date-range-picker-headline">
-						{#if headline}
-							<span>{headline}</span>
-						{:else}
-							<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
-							<span aria-hidden="true">–</span>
-							<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
-						{/if}
-					</h2>
+				<div class="np-date-range-picker-header-row">
+					<div class="np-date-range-picker-header-text">
+						<span class="np-date-range-picker-title">{title}</span>
+						<h2 class="np-date-range-picker-headline">
+							{#if headline}
+								<span>{headline}</span>
+							{:else}
+								<span class={[!startDate && 'placeholder']}>{headlineStart}</span>
+								<span aria-hidden="true">–</span>
+								<span class={[!endDate && 'placeholder']}>{headlineEnd}</span>
+							{/if}
+						</h2>
+					</div>
+					{#if modeToggle}
+						<IconButton
+							type="button"
+							aria-label={mode === 'calendar' ? inputModeLabel : calendarModeLabel}
+							onclick={() => setMode(mode === 'calendar' ? 'input' : 'calendar')}
+						>
+							{#if mode === 'calendar'}
+								<EditCalendarIcon />
+							{:else}
+								<CalendarToday />
+							{/if}
+						</IconButton>
+					{/if}
 				</div>
 			</div>
 			<Divider />
 
-			<div class="np-date-range-picker-weekdays" aria-hidden="true">
-				{#each weekdayLabels as weekday (weekday.long)}
-					<span>{weekday.narrow}</span>
-				{/each}
-			</div>
+			{#if mode === 'input'}
+				<div class={['np-date-range-picker-inputs', inputEnter && 'entering']}>
+					{#snippet field(label: string, text: string, invalid: boolean, start: boolean)}
+						<TextField
+							{label}
+							supportingText={pattern}
+							value={text}
+							aria-invalid={invalid ? 'true' : undefined}
+							oninput={(event) => {
+								const typed = (event.currentTarget as HTMLInputElement).value
+								if (start) {
+									startText = typed
+									startInvalid = false
+								} else {
+									endText = typed
+									endInvalid = false
+								}
+								readTyped()
+							}}
+							onblur={settleTyped}
+							onkeydown={(event) => {
+								if (event.key === 'Enter') settleTyped()
+							}}
+						/>
+					{/snippet}
+					{@render field(startLabel, startText, startInvalid, true)}
+					{@render field(endLabel, endText, endInvalid, false)}
+				</div>
+			{:else}
+				<div class="np-date-range-picker-weekdays" aria-hidden="true">
+					{#each weekdayLabels as weekday (weekday.long)}
+						<span>{weekday.narrow}</span>
+					{/each}
+				</div>
 
-			<div class="np-date-range-picker-months" bind:this={scroller} onscroll={handleScroll}>
-				{#each months as month (month.getTime())}
-					<Calendar
-						{month}
-						data-month={monthIndex(month)}
-						rangeStart={startDate}
-						rangeEnd={endDate}
-						min={minDate}
-						max={maxDate}
-						{locale}
-						firstDayOfWeek={week}
-						{isDateEnabled}
-						{adjacentMonthDays}
-						weekdays={false}
-						dynamicRows
-						todayDate={todayValue}
-						focusedDate={focusedDay}
-						selectedLabel={selectedDateLabel}
-						{tabStopDate}
-						focusRoot={scroller}
-						onselect={selectDay}
-						onfocusday={focusDay}
-					>
-						{#snippet monthSubhead(monthName)}
-							<div class="np-date-range-picker-subhead">{monthName}</div>
-						{/snippet}
-					</Calendar>
-				{/each}
-			</div>
+				<div class="np-date-range-picker-months" bind:this={scroller} onscroll={handleScroll}>
+					{#each months as month (month.getTime())}
+						<Calendar
+							{month}
+							data-month={monthIndex(month)}
+							rangeStart={startDate}
+							rangeEnd={endDate}
+							min={minDate}
+							max={maxDate}
+							{locale}
+							firstDayOfWeek={week}
+							{isDateEnabled}
+							{adjacentMonthDays}
+							weekdays={false}
+							dynamicRows
+							todayDate={todayValue}
+							focusedDate={focusedDay}
+							selectedLabel={selectedDateLabel}
+							{tabStopDate}
+							focusRoot={scroller}
+							onselect={selectDay}
+							onfocusday={focusDay}
+						>
+							{#snippet monthSubhead(monthName)}
+								<div class="np-date-range-picker-subhead">{monthName}</div>
+							{/snippet}
+						</Calendar>
+					{/each}
+				</div>
+			{/if}
 		</div>
 	{/if}
 
 	{#snippet actions()}
 		{#if exit.visible}
-			<Button type="button" variant="text" onclick={cancel}>{cancelLabel}</Button>
+			<Button type="button" variant="text" onclick={close}>{cancelLabel}</Button>
 			<Button type="button" variant="text" disabled={!canConfirm} onclick={confirm}>
 				{confirmLabel}
 			</Button>
@@ -349,10 +456,45 @@
 		color: var(--np-color-on-surface-variant);
 	}
 
-	.np-date-range-picker-top-bar {
+	.np-date-range-picker-top-bar,
+	.np-date-range-picker-header-row {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+
+	.np-date-range-picker-header-row {
+		align-items: flex-end;
+		gap: 0.5rem;
+	}
+
+	.np-date-range-picker-inputs {
+		box-sizing: border-box;
+		display: flex;
+		gap: 1rem;
+		max-width: var(--np-date-range-picker-content-width, 25.5rem);
+		width: 100%;
+		margin-inline: auto;
+		padding: 1rem 1rem 0;
+	}
+
+	.np-date-range-picker-inputs > :global(.np-text-field) {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.np-date-range-picker-inputs.entering {
+		transform: translateY(1.5rem);
+		opacity: 0;
+		transition: none;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.np-date-range-picker-inputs {
+			transition:
+				transform var(--np-motion-expressive-default-spatial),
+				opacity var(--np-motion-expressive-default-effects);
+		}
 	}
 
 	.np-date-range-picker-header-text {
@@ -399,6 +541,9 @@
 		min-height: 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;
+		/* Months added above are made up for in script, in every browser alike. Scroll anchoring
+		   would make up for them a second time. */
+		overflow-anchor: none;
 		padding-inline: 0.75rem;
 		scrollbar-color: var(--np-color-on-surface-variant) transparent;
 		scrollbar-width: thin;
@@ -420,7 +565,6 @@
 			--np-dialog-container-width: fit-content;
 			--np-dialog-inset: 2rem 1rem;
 			--np-dialog-max-height: calc(100dvh - 3rem);
-			--np-dialog-elevation: var(--np-elevation-3);
 			--np-dialog-container-shape: var(
 				--np-date-range-picker-container-shape,
 				var(--np-shape-corner-extra-large)
@@ -444,6 +588,10 @@
 
 		.np-date-range-picker-top-bar {
 			display: none;
+		}
+
+		.np-date-range-picker-inputs {
+			padding-inline: 1.5rem;
 		}
 
 		.np-date-range-picker-header {

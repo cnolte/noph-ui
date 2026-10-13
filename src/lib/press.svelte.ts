@@ -22,15 +22,5 @@ export const pressMorph = () => {
 			pressed = true
 			timeout = setTimeout(() => (pressed = false), PRESS_DURATION)
 		},
-		supersededBy: (shape: () => unknown) => {
-			let previous: unknown
-			$effect(() => {
-				const next = shape()
-				const was = previous
-				previous = next
-				if (was === undefined || was === next) return
-				cancel()
-			})
-		},
 	}
 }

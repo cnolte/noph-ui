@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Expanded from './demos/Expanded.svelte'
@@ -29,9 +30,10 @@
 <p>
 	A navigation rail is the top level navigation for medium sized screens. It is a narrow vertical
 	strip of destinations that stays visible next to the content. Use it for three to seven
-	destinations. For fewer, use a <a class="link" href="/components/tabs">tab bar</a>. The expanded
-	rail replaces the <a class="link" href="/components/navigation-drawer">navigation drawer</a>,
-	which Material 3 no longer recommends.
+	destinations. For fewer, use a <a class="link" href={resolve('/components/tabs')}>tab bar</a>. The
+	expanded rail replaces the
+	<a class="link" href={resolve('/components/navigation-drawer')}>navigation drawer</a>, which
+	Material 3 no longer recommends.
 </p>
 <p>
 	Each item needs an <code>icon</code> and a <code>label</code>. Mark the current destination with

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import MenuUsage from './demos/MenuUsage.svelte'
@@ -106,7 +107,7 @@
 		Profile
 		{#snippet start()}<Icon>person</Icon>{/snippet}
 	</MenuItem>
-	<MenuItem href="/settings">Settings</MenuItem>
+	<MenuItem href={resolve('/settings')}>Settings</MenuItem>
 	<Divider />
 	<MenuItem disabled>Sign out</MenuItem>
 </Menu>`}
@@ -168,6 +169,10 @@
 			<td><code>--np-shape-corner-extra-small</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-menu-elevation</code></td>
+			<td><code>--np-elevation-2</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-menu-margin</code></td>
 			<td><code>2px</code></td>
 		</tr>
@@ -209,7 +214,7 @@
 	spans the full height over the anchor. Keep <code>span-all</code> in the block axis and repeat the
 	inline half of <code>--np-menu-position-area</code>, so the menu keeps the same alignment. Style
 	the items with the
-	<a class="link" href="/components/list">list tokens</a>.
+	<a class="link" href={resolve('/components/list')}>list tokens</a>.
 </p>
 <h3 id="example">Example<a href="#example" aria-hidden="true" tabindex="-1">#</a></h3>
 <Code
@@ -287,7 +292,7 @@
 	MenuItem attributes<a href="#menuitem-attributes" aria-hidden="true" tabindex="-1">#</a>
 </h3>
 <p>
-	<code>MenuItem</code> accepts the <a class="link" href="/components/list">ListItem</a> attributes
-	apart from
+	<code>MenuItem</code> accepts the <a class="link" href={resolve('/components/list')}>ListItem</a>
+	attributes apart from
 	<code>variant</code> and <code>softFocus</code>, which the menu sets itself.
 </p>

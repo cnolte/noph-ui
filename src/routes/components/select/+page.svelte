@@ -217,10 +217,12 @@
 	<code>Select</code> renders the field as a <code>role="combobox"</code> with
 	<code>aria-expanded</code>, <code>aria-controls</code> and <code>aria-activedescendant</code>, and
 	the popup as a <code>role="listbox"</code> whose options have <code>aria-selected</code>. It
-	supports arrow keys, Home, End, typeahead, Enter and Escape. The first arrow press moves to the
-	selected option. Disabled options can take focus so screen readers read them out, but they cannot
-	be selected. <code>label</code> names the field, with the asterisk when it is required. The field
-	also has <code>aria-required</code>.
+	supports arrow keys, Home, End, typeahead, Enter and Escape. Focus stays on the field while the
+	keys move through the options: <code>aria-activedescendant</code> points at the active one, which
+	shows the focus ring. The first arrow press moves to the selected option. The keys reach disabled
+	options too, so screen readers read them out, but they cannot be selected.
+	<code>label</code> names the field, with the asterisk when it is required. The field also has
+	<code>aria-required</code>.
 </p>
 <p>
 	Supporting text is linked to the field with <code>aria-describedby</code>. An error from
@@ -364,7 +366,7 @@
 		<tr>
 			<td><code>disabled</code></td>
 			<td><code>boolean | undefined</code></td>
-			<td>Makes the option non-selectable. It can still be focused.</td>
+			<td>Makes the option non-selectable. The arrow keys still reach it.</td>
 		</tr>
 		<tr>
 			<td><code>supportingText</code></td>

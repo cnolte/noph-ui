@@ -14,7 +14,7 @@
 	bind:open={entryOpen}
 	bind:value={entryValue}
 	title="Arrival date"
-	modeToggle
+	mode="input"
 	min={isoToday}
 	onconfirm={(next) => (submitted = next ? `Arriving ${next}` : '')}
 />

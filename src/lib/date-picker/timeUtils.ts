@@ -1,4 +1,4 @@
-import { formatTwoDigits, getFormatter, pad } from './formatters.js'
+import { formatTwoDigits, getFormatter, getPattern, pad, PROBE, readFields } from './formatters.js'
 
 export { formatTwoDigits }
 
@@ -9,8 +9,6 @@ export const MINUTES_IN_HOUR = 60
 export const HOURS_IN_DAY = 24
 
 export const MINUTES_IN_DAY = HOURS_IN_DAY * MINUTES_IN_HOUR
-
-const TIME_PROBE = new Date(2024, 0, 2, 13, 45)
 
 export const minutesOfDay = (date: Date): number =>
 	date.getHours() * MINUTES_IN_HOUR + date.getMinutes()
@@ -47,6 +45,21 @@ export const clampMinutes = (minutes: number, min?: number, max?: number): numbe
 
 export const isMinuteWithin = (minutes: number, min?: number, max?: number): boolean =>
 	(min === undefined || minutes >= min) && (max === undefined || minutes <= max)
+
+/** A minute step as the pickers use it: a whole number of at least 1. */
+export const stepOf = (minuteStep: number): number => Math.max(1, Math.trunc(minuteStep) || 1)
+
+/** Whether an hour has a minute on the step grid that `usable` lets through. */
+export const isHourReachable = (
+	hour: number,
+	step: number,
+	usable: (minutes: number) => boolean,
+): boolean => {
+	for (let minute = 0; minute < MINUTES_IN_HOUR; minute += step) {
+		if (usable(hour * MINUTES_IN_HOUR + minute)) return true
+	}
+	return false
+}
 
 /**
  * Snaps the minute part to the nearest multiple of `step` without ever rolling into the next hour,
@@ -108,60 +121,42 @@ export const formatMinutes = (
 	minutes: number,
 	locale?: string,
 	hour12 = uses12HourClock(locale),
-): string => formatTime(withMinutes(TIME_PROBE, minutes), locale, hour12)
+): string => formatTime(withMinutes(PROBE, minutes), locale, hour12)
 
 /** A hint like `HH:mm` or `hh:mm AM/PM`, for a text field's supporting text. */
-export const getTimePattern = (locale?: string, hour12 = uses12HourClock(locale)): string => {
-	const [am, pm] = getDayPeriodLabels(locale)
-	return getFormatter(locale, timeOptions(hour12))
-		.formatToParts(TIME_PROBE)
-		.map((part) => {
-			if (part.type === 'hour') return hour12 ? 'hh' : 'HH'
-			if (part.type === 'minute') return 'mm'
-			if (part.type === 'dayPeriod') return `${am}/${pm}`
-			return part.value
-		})
-		.join('')
-}
-
-type TimeField = 'hour' | 'minute'
-
-const getTimeFieldOrder = (locale: string | undefined, hour12: boolean): TimeField[] =>
-	getFormatter(locale, timeOptions(hour12))
-		.formatToParts(TIME_PROBE)
-		.filter((part) => part.type === 'hour' || part.type === 'minute')
-		.map((part) => part.type as TimeField)
+export const getTimePattern = (locale?: string, hour12 = uses12HourClock(locale)): string =>
+	getPattern(locale, timeOptions(hour12), getDayPeriodLabels(locale).join('/'))
 
 /**
- * Reads typed text as minutes since midnight. The field order comes from the locale's own format
- * rather than a per-locale regex, and the day period is matched against the locale's labels with an
- * `am`/`pm` fallback.
+ * Reads a typed hour as the hour of the day. A 12-hour clock takes 1 to 12 and needs its day period
+ * in `value`, matched against the locale's labels with an `am`/`pm` fallback.
  */
+export const readHour = (
+	hour: string,
+	value: string,
+	locale: string | undefined,
+	hour12: boolean,
+): number | undefined => {
+	const hours = Number(hour)
+	if (!hour12) return hours < HOURS_IN_DAY ? hours : undefined
+	const [am, pm] = getDayPeriodLabels(locale)
+	const text = value.toLocaleLowerCase(locale)
+	const isPm = text.includes(pm.toLocaleLowerCase(locale)) || /\bpm\b/.test(text)
+	const isAm = text.includes(am.toLocaleLowerCase(locale)) || /\bam\b/.test(text)
+	if (isPm === isAm || hours < 1 || hours > 12) return undefined
+	return (hours % 12) + (isPm ? 12 : 0)
+}
+
+/** Reads typed text as minutes since midnight. */
 export const parseTimeInput = (
 	value: string,
 	locale?: string,
 	hour12 = uses12HourClock(locale),
 ): number | undefined => {
-	const groups = value.match(/\d+/g)
-	if (!groups || groups.length !== 2) return undefined
-	const order = getTimeFieldOrder(locale, hour12)
-	if (order.length !== 2) return undefined
-	const hour = groups[order.indexOf('hour')]
-	const minute = groups[order.indexOf('minute')]
-	if (hour === undefined || minute === undefined) return undefined
-	let hours = Number(hour)
-	const minutes = Number(minute)
-	if (minutes >= MINUTES_IN_HOUR) return undefined
-	if (hour12) {
-		const [am, pm] = getDayPeriodLabels(locale)
-		const text = value.toLocaleLowerCase(locale)
-		const isPm = text.includes(pm.toLocaleLowerCase(locale)) || /\bpm\b/.test(text)
-		const isAm = text.includes(am.toLocaleLowerCase(locale)) || /\bam\b/.test(text)
-		if (isPm === isAm) return undefined
-		if (hours > 12 || hours < 1) return undefined
-		hours = (hours % 12) + (isPm ? 12 : 0)
-	} else if (hours >= HOURS_IN_DAY) {
-		return undefined
-	}
+	const fields = readFields(value, locale, timeOptions(hour12))
+	if (!fields?.hour || !fields.minute) return undefined
+	const hours = readHour(fields.hour, value, locale, hour12)
+	const minutes = Number(fields.minute)
+	if (hours === undefined || minutes >= MINUTES_IN_HOUR) return undefined
 	return hours * MINUTES_IN_HOUR + minutes
 }

@@ -22,13 +22,10 @@
 		text-transform: none;
 		display: inline-block;
 		white-space: nowrap;
-		word-wrap: normal;
+		overflow-wrap: normal;
 		direction: ltr;
 		font-feature-settings: 'liga';
-		-webkit-font-feature-settings: 'liga';
 		-webkit-font-smoothing: antialiased;
-		transition-property: font-variation-settings;
-		transition-timing-function: ease-in;
 		transition: font-variation-settings 0.3s;
 		font-variation-settings: var(--np-icon-settings, 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24);
 	}

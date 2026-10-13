@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { page, userEvent } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Harness from './MenuWidthHarness.test.svelte'
 import Select from './Select.svelte'
@@ -9,7 +10,7 @@ describe.each(['select', 'autocomplete'] as const)('%s menu width', async (which
 		await render(Harness, { which, width })
 
 		const field = document.querySelector<HTMLElement>(
-			which === 'select' ? '.field' : '.np-text-field',
+			which === 'select' ? '.np-field' : '.np-text-field',
 		)!
 		const menu = document.querySelector<HTMLElement>('.np-menu-container')!
 		menu.showPopover()
@@ -51,8 +52,10 @@ describe('select error state', async () => {
 		expect(combobox().getAttribute('aria-invalid')).toBe('true')
 		const errormessage = combobox().getAttribute('aria-errormessage')!
 		expect(document.getElementById(errormessage)?.textContent?.trim()).toBe('Required')
-		expect(combobox().matches(".field:is([aria-invalid='true'], :has(select:user-invalid))")).toBe(
-			true,
+		// The field shows its error colours for an invalid combobox.
+		const style = getComputedStyle(combobox())
+		expect(style.getPropertyValue('--_label-color')).toBe(
+			style.getPropertyValue('--np-color-error'),
 		)
 	})
 
@@ -69,4 +72,34 @@ describe('select error state', async () => {
 		const own = describedby.split(' ').find((id) => id !== 'outside-hint')!
 		expect(document.getElementById(own)?.textContent?.trim()).toBe('Choose one')
 	})
+})
+
+describe('select events', async () => {
+	test('a picked option fires input, then change', async () => {
+		const calls: string[] = []
+		await render(Select, {
+			label: 'Pick',
+			options: [
+				{ value: 'a', label: 'A' },
+				{ value: 'b', label: 'B' },
+			],
+			oninput: () => calls.push('input'),
+			onchange: () => calls.push('change'),
+		})
+
+		await userEvent.click(document.querySelector<HTMLElement>('[role="combobox"]')!)
+		await page.getByRole('option', { name: 'B' }).click()
+
+		await expect.poll(() => calls).toEqual(['input', 'change'])
+	})
+})
+
+test('options that share a value render in the hidden select', async () => {
+	const options = [
+		{ value: '', label: 'None' },
+		{ value: '', label: 'Unknown' },
+	]
+	await render(Select, { options, label: 'Pick', value: '' })
+
+	expect(document.querySelectorAll('select.np-field-value option')).toHaveLength(2)
 })

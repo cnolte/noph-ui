@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Usage from './demos/Usage.svelte'
@@ -36,8 +37,9 @@
 
 <h2 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Both halves use the same variant. Four of the <a class="link" href="/components/button">Button</a> variants
-	are available.
+	Both halves use the same variant. Four of the <a class="link" href={resolve('/components/button')}
+		>Button</a
+	> variants are available.
 </p>
 <DemoContainer>
 	<Variants />
@@ -53,7 +55,7 @@
 <h2 id="theming">Theming<a href="#theming" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
 	A split button is two buttons in a group. Theme it with the
-	<a class="link" href="/components/button">button</a> tokens of its variant.
+	<a class="link" href={resolve('/components/button')}>button</a> tokens of its variant.
 	<code>--np-filled-button-container-color</code> and the related tokens apply to both halves.
 </p>
 <p>
@@ -72,14 +74,14 @@
 </p>
 <p>
 	The caret has <code>aria-haspopup="menu"</code> and <code>aria-expanded</code>, and opens the
-	<a class="link" href="/components/menu">menu</a>. The menu has arrow key navigation and returns
-	focus to the caret when it closes. Tab reaches both halves, so keyboard users can run the default
-	action without opening the menu.
+	<a class="link" href={resolve('/components/menu')}>menu</a>. The menu has arrow key navigation and
+	returns focus to the caret when it closes. Tab reaches both halves, so keyboard users can run the
+	default action without opening the menu.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	Renders a connected <a class="link" href="/components/button-group">ButtonGroup</a> holding the
-	two halves and the menu. <code>bind:element</code> gives you the group.
+	Renders a connected <a class="link" href={resolve('/components/button-group')}>ButtonGroup</a>
+	holding the two halves and the menu. <code>bind:element</code> gives you the group.
 </p>
 <table>
 	<thead>
@@ -111,7 +113,10 @@
 			<td><code>menu</code></td>
 			<td><code>Snippet | undefined</code></td>
 			<td><code>undefined</code></td>
-			<td>Menu items, rendered inside a <a class="link" href="/components/menu">Menu</a>.</td>
+			<td
+				>Menu items, rendered inside a <a class="link" href={resolve('/components/menu')}>Menu</a
+				>.</td
+			>
 		</tr>
 		<tr>
 			<td><code>onclick</code></td>

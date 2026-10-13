@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/internal/field.css'
 	import type { TextFieldProps } from './types.js'
 
 	let {
@@ -65,75 +66,59 @@
 
 <label
 	for={inputId}
-	style={(variant === 'outlined'
-		? '--_label-text-color:var(--np-outlined-text-field-label-text-color);--top-space:1rem;--bottom-space:1rem;--floating-label-top:-0.5rem;--floating-label-inline-start:-2.25rem;'
-		: !label?.length
-			? '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline);--top-space:1rem;--bottom-space:1rem; '
-			: '--_label-text-color:var(--np-filled-text-field-label-text-color);--np-input-chip-outline-color:var(--np-color-outline); ' +
-				(children ? '--top-space:2rem;--bottom-space:1rem;' : '')) +
-		`--_min-height:calc(${minLines} * 1lh);--_max-height:${`calc(${maxLines} * 1lh)`};` +
-		style}
+	style={`--_min-height:calc(${minLines} * 1lh);--_max-height:calc(${maxLines} * 1lh);${style ?? ''}`}
 	class={['np-text-field', attributes.class]}
 	bind:this={element}
 	bind:clientWidth
 	bind:clientHeight
 >
 	<div
-		class="field"
-		class:no-label={!label?.length}
-		class:with-start={start}
-		class:with-end={end}
-		class:disabled={attributes.disabled}
-		class:populated
-		class:outlined={variant === 'outlined'}
+		class={[
+			'np-field',
+			variant === 'outlined' && 'np-field-outlined',
+			!label?.length && 'np-field-no-label',
+			start && 'np-field-with-start',
+			end && 'np-field-with-end',
+			attributes.disabled && 'np-field-disabled',
+			populated && 'np-field-populated',
+			variant === 'filled' && label?.length && children && 'np-text-field-chips',
+		]}
 	>
-		<div class="container-overflow">
+		{#snippet labelText()}
+			<span
+				id={labelId}
+				class={['np-field-label', !noAsterisk && attributes.required && 'np-field-required']}
+				aria-disabled={attributes.disabled}>{label}</span
+			>
+		{/snippet}
+		<div class="np-field-box">
 			{#if variant === 'filled'}
-				<div class="background"></div>
-				<div class="state-layer"></div>
-				<div class="active-indicator"></div>
+				<div class="np-field-background"></div>
+				<div class="np-field-state-layer"></div>
+				<div class="np-field-indicator"></div>
+			{:else}
+				<fieldset class="np-field-outline" aria-hidden="true">
+					<legend>
+						{#if label?.length}
+							<span>{label}{noAsterisk || !attributes.required ? '' : '*'}</span>
+						{/if}
+					</legend>
+				</fieldset>
+				{#if label?.length}
+					<div class="np-field-label-wrapper">{@render labelText()}</div>
+				{/if}
 			{/if}
-			{#if variant === 'outlined'}
-				<div class="np-outline">
-					<div class="outline-start"></div>
-					{#if label?.length}
-						<div class="label-wrapper">
-							<span
-								id={labelId}
-								class={['label', !noAsterisk && attributes.required && 'required']}
-								aria-disabled={attributes.disabled}
-								>{label}
-							</span>
-						</div>
-						<div class="outline-notch">
-							<span class="notch np-hidden" aria-hidden="true">
-								{label}{noAsterisk || !attributes.required ? '' : '*'}
-							</span>
-						</div>
-					{/if}
-					<div class="outline-end"></div>
-				</div>
-			{/if}
-			<div class="np-container">
+			<div class="np-field-row">
 				{#if start}
-					<div class="start">
-						<span class="icon">{@render start()}</span>
+					<div class="np-field-start">
+						<span class="np-field-icon">{@render start()}</span>
 					</div>
 				{/if}
-				<div class="middle">
-					{#if variant === 'filled'}
-						<div class="label-wrapper">
-							{#if label?.length}
-								<span
-									id={labelId}
-									class={['label', !noAsterisk && attributes.required && 'required']}
-									aria-disabled={attributes.disabled}
-									>{label}
-								</span>
-							{/if}
-						</div>
+				<div class="np-field-middle">
+					{#if variant === 'filled' && label?.length}
+						<div class="np-field-label-wrapper">{@render labelText()}</div>
 					{/if}
-					<div class="content">
+					<div class="np-field-content">
 						{#if !hasAffixes}
 							<textarea
 								{...attributes}
@@ -144,7 +129,7 @@
 								bind:focused
 								bind:value
 								bind:this={inputElement}
-								class="input"></textarea>
+								class="np-field-input"></textarea>
 						{:else}
 							<div class="input-wrapper">
 								{#if prefixText}
@@ -162,7 +147,7 @@
 									bind:focused
 									bind:value
 									bind:this={inputElement}
-									class="input"
+									class="np-field-input"
 								/>
 								{#if suffixText}
 									<span class="suffix" id={suffixLabel ? undefined : suffixId}>
@@ -174,14 +159,14 @@
 					</div>
 				</div>
 				{#if end}
-					<div class="end">
-						<span class="icon trailing">{@render end()}</span>
+					<div class="np-field-end">
+						<span class="np-field-icon">{@render end()}</span>
 					</div>
 				{/if}
 			</div>
 		</div>
 		{#if supportingText || errorText || attributes.maxlength}
-			<div class="supporting-text">
+			<div class="np-field-supporting-text">
 				<span id="supporting-text-{uid}" role={errorText ? 'alert' : undefined}>
 					{errorText ?? supportingText}
 				</span>
@@ -203,168 +188,39 @@
 </label>
 
 <style>
-	.active-indicator {
-		inset: auto 0 0 0;
-		pointer-events: none;
-		position: absolute;
-		width: 100%;
-		z-index: 1;
-	}
-	.field:has(input:focus-visible) .active-indicator::after,
-	.field:has(textarea:focus-visible) .active-indicator::after {
-		opacity: 1;
-	}
-	.active-indicator::after {
-		opacity: 0;
-		transition: opacity var(--np-motion-expressive-fast-effects);
-	}
-	.active-indicator::before,
-	.active-indicator::after {
-		border-bottom: 1px solid var(--np-color-on-surface-variant);
-		inset: auto 0 0 0;
-		content: '';
-		position: absolute;
-		width: 100%;
-	}
-	.active-indicator::after {
-		border-bottom-color: var(
-			--np-filled-text-field-focus-active-indicator-color,
-			var(--np-color-primary)
-		);
-		border-bottom-width: 3px;
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .active-indicator::before,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .active-indicator::before {
-		border-bottom-color: var(--np-color-error);
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .active-indicator::after,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .active-indicator::after {
-		border-bottom-color: var(--np-color-error);
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .active-indicator::after,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .active-indicator::after {
-		border-bottom-color: var(--np-color-on-error-container);
-	}
-	.disabled .active-indicator::before {
-		border-bottom-color: var(--np-color-on-surface);
-		border-bottom-width: 1px;
-		opacity: 0.38;
-	}
-	.background {
-		background: var(
-			--np-filled-text-field-container-color,
-			var(--np-color-surface-container-highest)
-		);
-	}
-	.disabled .background {
-		background: var(--np-color-on-surface);
-		opacity: 0.04;
-	}
-	.background,
-	.state-layer {
-		border-radius: inherit;
-		inset: 0;
-		pointer-events: none;
-		position: absolute;
-	}
-	.np-container {
-		align-items: center;
-		border-radius: inherit;
-		display: flex;
-		flex: 1;
-		max-height: 100%;
-		min-height: 100%;
-		min-width: min-content;
-		position: relative;
-		min-width: 0;
-	}
-	.outlined .container-overflow {
-		border-start-start-radius: var(
-			--np-outlined-text-field-container-shape,
-			var(--np-shape-corner-extra-small)
-		);
-		border-start-end-radius: var(
-			--np-outlined-text-field-container-shape,
-			var(--np-shape-corner-extra-small)
-		);
-		border-end-end-radius: var(
-			--np-outlined-text-field-container-shape,
-			var(--np-shape-corner-extra-small)
-		);
-		border-end-start-radius: var(
-			--np-outlined-text-field-container-shape,
-			var(--np-shape-corner-extra-small)
-		);
-	}
-	.container-overflow {
-		border-start-start-radius: var(
-			--np-filled-text-field-container-shape,
-			var(--np-shape-corner-extra-small)
-		);
-		border-start-end-radius: var(
-			--np-filled-text-field-container-shape,
-			var(--np-shape-corner-extra-small)
-		);
-		border-end-end-radius: var(--np-shape-corner-none);
-		border-end-start-radius: var(--np-shape-corner-none);
-		display: flex;
-		height: 100%;
-		position: relative;
-	}
 	.np-text-field {
 		display: inline-flex;
 		text-align: start;
-	}
-	:global(label) {
 		-webkit-tap-highlight-color: transparent;
 	}
-
-	.field {
+	.np-field {
+		--_field-shape: var(--np-filled-text-field-container-shape, var(--np-shape-corner-extra-small));
+		--_field-container-color: var(
+			--np-filled-text-field-container-color,
+			var(--np-color-surface-container-highest)
+		);
+		--_field-focus-indicator: var(--np-filled-text-field-focus-active-indicator-color);
+		--_field-focus-label: var(--np-filled-text-field-label-text-color);
 		cursor: text;
 	}
-
-	.field.disabled {
-		cursor: default;
+	.np-field:not(.np-field-outlined) {
+		--np-input-chip-outline-color: var(--np-color-outline);
+	}
+	.np-field-outlined {
+		--_field-shape: var(
+			--np-outlined-text-field-container-shape,
+			var(--np-shape-corner-extra-small)
+		);
+		--_field-focus-outline: var(--np-outlined-text-field-focus-outline-color);
+		--_field-focus-label: var(--np-outlined-text-field-label-text-color);
+	}
+	/* Chips sit above the input, so a filled field with a label leaves them more room. */
+	.np-text-field-chips {
+		--top-space: 2rem;
+		--bottom-space: 1rem;
 	}
 
-	.field {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		writing-mode: horizontal-tb;
-		max-width: 100%;
-	}
-
-	.supporting-text {
-		display: flex;
-		gap: 1rem;
-		font-size: 0.75rem;
-		line-height: 1rem;
-		color: var(--np-color-on-surface-variant);
-		justify-content: space-between;
-		padding: 0.25rem 1rem 0;
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .supporting-text,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .supporting-text {
-		color: var(--np-color-error);
-	}
-	.disabled .supporting-text {
-		color: var(--np-color-on-surface);
-		opacity: 0.38;
-	}
-
-	.field:not(.disabled):hover .state-layer {
-		visibility: visible;
-	}
-
-	.disabled {
-		pointer-events: none;
-	}
-	.field:not(.disabled):hover .state-layer {
-		background: var(--np-color-on-surface);
-		opacity: 0.08;
-	}
-	.content * {
+	.np-field-content * {
 		all: unset;
 		color: currentColor;
 		font-size: 1rem;
@@ -386,14 +242,7 @@
 		padding: 0;
 	}
 
-	.middle {
-		align-items: stretch;
-		align-self: baseline;
-		flex: 1;
-		min-width: 0;
-	}
-
-	.input {
+	.np-field-input {
 		caret-color: var(--np-color-primary);
 		overflow-x: hidden;
 		text-align: inherit;
@@ -418,40 +267,16 @@
 		}
 	}
 
-	.no-label .content,
-	.field:has(input:focus-visible) .content,
-	.field:has(textarea:focus-visible) .content,
-	.field:has(input:-webkit-autofill) .content,
-	.field.populated .content,
-	.field:has(input:not(:placeholder-shown)) .content,
-	.field:has(textarea:not(:placeholder-shown)) .content {
-		opacity: 1;
+	.np-field:not(.np-field-with-start) :is(.input-wrapper, textarea) {
+		padding-inline-start: 1rem;
+	}
+	.np-field:not(.np-field-with-end) :is(.input-wrapper, textarea) {
+		padding-inline-end: 1rem;
 	}
 
-	.content {
-		color: var(--np-color-on-surface);
-		display: flex;
-		flex: 1 1 0%;
-		opacity: 0;
-		transition: opacity 83ms cubic-bezier(0.2, 0, 0, 1);
-		min-width: 0;
-	}
-	.disabled .content {
-		color: var(--np-color-on-surface);
-	}
-	.field:not(.with-end) .content .input-wrapper,
-	.field:not(.with-end) .content textarea {
-		padding-inline-end: 16px;
-	}
-	.outline-start,
-	.field:not(.with-start) .content .input-wrapper,
-	.field:not(.with-start) .content textarea {
-		padding-inline-start: 16px;
-	}
-
-	.content textarea {
-		margin-top: var(--top-space, 1.5rem);
-		margin-bottom: var(--bottom-space, 0.5rem);
+	.np-field-content textarea {
+		margin-top: var(--top-space);
+		margin-bottom: var(--bottom-space);
 		field-sizing: content;
 		min-inline-size: 20ch;
 		max-inline-size: 100%;
@@ -459,17 +284,15 @@
 		max-height: var(--_max-height, 4lh);
 	}
 
-	.content .input-wrapper .input,
-	.content .input-wrapper .prefix,
-	.content .input-wrapper .suffix {
-		margin-top: var(--top-space, 1.5rem);
-		margin-bottom: var(--bottom-space, 0.5rem);
+	.input-wrapper :is(.np-field-input, .prefix, .suffix) {
+		margin-top: var(--top-space);
+		margin-bottom: var(--bottom-space);
 	}
-	.content .input-wrapper .input {
+	.input-wrapper .np-field-input {
 		min-width: 20px;
 	}
-	:global(.content .input-wrapper .np-chip-set-wrapper) {
-		padding-top: calc(var(--top-space, 1.5rem) - 3px);
+	.input-wrapper :global(.np-chip-set-wrapper) {
+		padding-top: calc(var(--top-space) - 3px);
 		margin-top: 0;
 	}
 
@@ -488,356 +311,5 @@
 		width: min-content;
 		display: flex;
 		align-items: center;
-	}
-	.start {
-		color: var(--np-color-on-surface-variant);
-		margin-inline-start: 0.75rem;
-		margin-inline-end: 1rem;
-	}
-	.end {
-		color: var(--np-color-on-surface-variant);
-		margin-inline-start: 1rem;
-		margin-inline-end: 0.75rem;
-	}
-	.start:has(:global(.np-icon-button)) {
-		margin-inline-start: 0.25rem;
-		margin-inline-end: 0.5rem;
-	}
-	.end:has(:global(.np-icon-button)) {
-		margin-inline-start: 0.5rem;
-		margin-inline-end: 0.25rem;
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .end,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .end {
-		color: var(--np-color-error);
-	}
-
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .end,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .end {
-		color: var(--np-color-on-error-container);
-	}
-	.disabled .start,
-	.disabled .end {
-		color: var(--np-color-on-surface);
-		opacity: 0.38;
-	}
-	.start,
-	.middle,
-	.end {
-		display: flex;
-		box-sizing: border-box;
-		height: 100%;
-		position: relative;
-	}
-	.start,
-	.end {
-		align-items: center;
-		justify-content: center;
-	}
-	.icon {
-		display: flex;
-		color: currentColor;
-		align-items: center;
-		justify-content: center;
-		fill: currentColor;
-		position: relative;
-	}
-	:global(.icon svg) {
-		fill: currentColor;
-	}
-
-	.label-wrapper {
-		user-select: none;
-		pointer-events: none;
-		inset: 0;
-		position: absolute;
-		text-align: initial;
-	}
-	.field:not(.with-end) .label-wrapper {
-		margin-inline-end: 1rem;
-	}
-	.field:not(.with-start) .label-wrapper {
-		margin-inline-start: 1rem;
-	}
-	.with-start .np-outline .label-wrapper {
-		inset-inline-start: 3.25rem;
-	}
-	.with-end .np-outline .label-wrapper {
-		margin-inline-end: 3.25rem;
-	}
-	.with-start:has(input:-webkit-autofill) .with-start:has(input:focus-visible) .label-wrapper,
-	.with-start:has(input:not(:placeholder-shown))
-		.with-start:has(input:focus-visible)
-		.label-wrapper,
-	.with-start:has(textarea:not(:placeholder-shown))
-		.with-start:has(input:focus-visible)
-		.label-wrapper,
-	.with-start.populated .with-start:has(input:focus-visible) .label-wrapper,
-	.with-start:has(textarea:focus-visible) .label-wrapper {
-		inset-inline-end: -2.25rem;
-	}
-
-	.with-end:has(input:-webkit-autofill) .with-end:has(input:focus-visible) .label-wrapper,
-	.with-end:has(input:not(:placeholder-shown)) .with-end:has(input:focus-visible) .label-wrapper,
-	.with-end:has(textarea:not(:placeholder-shown)) .with-end:has(input:focus-visible) .label-wrapper,
-	.with-end.populated .with-end:has(input:focus-visible) .label-wrapper,
-	.with-end:has(textarea:focus-visible) .label-wrapper {
-		margin-inline-end: 1rem;
-	}
-	.notch {
-		font-size: 0.75rem;
-		line-height: 1rem;
-	}
-	.notch.np-hidden {
-		opacity: 0;
-	}
-
-	.label.np-hidden {
-		opacity: 0;
-	}
-
-	.label.required::after {
-		content: '*';
-	}
-
-	.field:not(.populated) .label {
-		position: absolute;
-		top: 1rem;
-		inset-inline-start: 0rem;
-	}
-	.field:has(input:-webkit-autofill) .label,
-	.field.populated .label,
-	.field:has(input:not(:placeholder-shown)) .label,
-	.field:has(textarea:not(:placeholder-shown)) .label,
-	.field:has(input:focus-visible) .label,
-	.field:has(textarea:focus-visible) .label {
-		font-size: 0.75rem;
-		line-height: 1rem;
-		transform-origin: top left;
-		position: absolute;
-		top: var(--floating-label-top, 0.5rem);
-	}
-	.with-start:has(input:-webkit-autofill) .label,
-	.with-start.populated .label,
-	.with-start:has(input:not(:placeholder-shown)) .label,
-	.with-start:has(textarea:not(:placeholder-shown)) .label,
-	.with-start:has(input:focus-visible) .label,
-	.with-start:has(textarea:focus-visible) .label {
-		inset-inline-start: var(--floating-label-inline-start, 0);
-	}
-	.label {
-		transition: color var(--np-motion-expressive-fast-effects);
-		box-sizing: border-box;
-		color: var(--np-color-on-surface-variant);
-		overflow: hidden;
-		max-width: 100%;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		z-index: 1;
-		font-size: 1rem;
-		line-height: 1.5rem;
-		width: min-content;
-	}
-
-	.outlined:hover .label {
-		color: var(--np-color-on-surface);
-	}
-
-	.field:has(input:focus-visible) .label,
-	.field:has(textarea:focus-visible) .label {
-		color: var(--_label-text-color, var(--np-color-primary));
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .label,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .label,
-	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible) .label,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible) .label {
-		color: var(--np-color-error);
-	}
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .label,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .label,
-	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .label,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .label {
-		color: var(--np-color-on-error-container);
-	}
-
-	.disabled .label {
-		color: var(--np-color-on-surface);
-	}
-	.disabled .label:not(.np-hidden) {
-		opacity: 0.38;
-	}
-	.disabled.no-label .content,
-	.disabled:has(input:-webkit-autofill) .content,
-	.disabled:has(input:not(:placeholder-shown)) .content,
-	.disabled:has(textarea:not(:placeholder-shown)) .content,
-	.disabled.populated .content {
-		opacity: 0.38;
-	}
-	.outline-start,
-	.outline-end {
-		border: inherit;
-		border-radius: inherit;
-		box-sizing: border-box;
-		position: relative;
-	}
-	.outline-start::before,
-	.outline-start::after,
-	.outline-end::before,
-	.outline-end::after {
-		border: inherit;
-		content: '';
-		inset: 0;
-		position: absolute;
-	}
-	.outline-start::before,
-	.outline-start::after {
-		border-inline-start-style: solid;
-		border-inline-end-style: none;
-		border-start-start-radius: inherit;
-		border-start-end-radius: 0;
-		border-end-start-radius: inherit;
-		border-end-end-radius: 0;
-		margin-inline-end: 0.25rem;
-	}
-	.outline-end::before,
-	.outline-end::after {
-		border-inline-start-style: none;
-		border-inline-end-style: solid;
-		border-start-start-radius: 0;
-		border-start-end-radius: inherit;
-		border-end-start-radius: 0;
-		border-end-end-radius: inherit;
-	}
-	.outline-notch::before,
-	.outline-notch::after {
-		border: inherit;
-		content: '';
-		inset: 0;
-		position: absolute;
-	}
-	.outline-start::before,
-	.outline-end::before,
-	.outline-notch::before {
-		border-width: 1px;
-	}
-	.outline-start::before,
-	.outline-start::after,
-	.outline-end::before,
-	.outline-end::after {
-		border-bottom-style: solid;
-		border-top-style: solid;
-	}
-	.outline-notch::after {
-		border-bottom-style: solid;
-		border-top-style: none;
-	}
-	.outline-notch::before {
-		border-bottom-style: solid;
-		border-top-style: solid;
-	}
-	.field:has(input:focus-visible) .outline-notch::before,
-	.field:has(textarea:focus-visible) .outline-notch::before,
-	.field:has(input:-webkit-autofill) .outline-notch::before,
-	.field:has(input:not(:placeholder-shown)) .outline-notch::before,
-	.field:has(textarea:not(:placeholder-shown)) .outline-notch::before,
-	.field.populated .outline-notch::before {
-		border-top-style: none;
-	}
-
-	.outline-notch::before,
-	.outline-notch::after {
-		border-inline-start-style: none;
-		border-inline-end-style: none;
-		border-start-start-radius: 0;
-		border-start-end-radius: 0;
-		border-end-start-radius: 0;
-		border-end-end-radius: 0;
-	}
-	.outline-notch {
-		align-items: flex-start;
-		border: inherit;
-		display: flex;
-		margin-inline-start: -0.25rem;
-		margin-inline-end: 0.25rem;
-		max-width: calc(100% - 2rem);
-		padding: 0 0.25rem;
-		position: relative;
-	}
-	.outline-end {
-		flex-grow: 1;
-		margin-inline-start: calc(-1 * 4px);
-	}
-	.outline-start::after,
-	.outline-end::after,
-	.outline-notch::after {
-		border-width: 3px;
-	}
-	.outline-start::after,
-	.outline-end::after,
-	.outline-notch::after {
-		opacity: 0;
-		transition: opacity var(--np-motion-expressive-fast-effects);
-	}
-	.field:has(input:focus-visible) .outline-start::after,
-	.field:has(input:focus-visible) .outline-end::after,
-	.field:has(input:focus-visible) .outline-notch::after,
-	.field:has(textarea:focus-visible) .outline-start::after,
-	.field:has(textarea:focus-visible) .outline-end::after,
-	.field:has(textarea:focus-visible) .outline-notch::after {
-		opacity: 1;
-	}
-	.np-outline {
-		border-color: var(--np-color-outline);
-		transition:
-			border-color var(--np-motion-expressive-fast-effects),
-			color var(--np-motion-expressive-fast-effects);
-		border-radius: inherit;
-		display: flex;
-		pointer-events: none;
-		height: 100%;
-		position: absolute;
-		width: 100%;
-		z-index: 1;
-	}
-
-	.field:has(input:focus-visible) .np-outline,
-	.field:has(textarea:focus-visible) .np-outline {
-		border-color: var(--np-outlined-text-field-focus-outline-color, var(--np-color-primary));
-		color: var(--np-color-primary);
-	}
-
-	.field:hover .np-outline {
-		border-color: var(--np-color-on-surface);
-		color: var(--np-color-on-surface);
-	}
-
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])) .np-outline,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])) .np-outline,
-	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible) .np-outline,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible) .np-outline {
-		border-color: var(--np-color-error);
-	}
-
-	.field:has(input:is(:user-invalid, [aria-invalid='true'])):hover .np-outline,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true'])):hover .np-outline,
-	.field:has(input:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .np-outline,
-	.field:has(textarea:is(:user-invalid, [aria-invalid='true']):focus-visible):hover .np-outline {
-		border-color: var(--np-color-on-error-container);
-	}
-
-	.disabled .np-outline {
-		border-color: var(--np-color-on-surface);
-		color: var(--np-color-on-surface);
-	}
-	.disabled .outline-start,
-	.disabled .outline-end,
-	.disabled .outline-notch {
-		opacity: 0.12;
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-		.label {
-			transition: all var(--np-motion-expressive-fast-effects);
-		}
 	}
 </style>

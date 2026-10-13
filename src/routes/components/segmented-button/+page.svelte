@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Disabled from './demos/Disabled.svelte'
@@ -103,7 +104,7 @@
 	The <code>label</code> of an option is its accessible name, also for an option that shows only
 	<code>labelIcon</code>. Always set it. A disabled option is a disabled input and leaves the tab
 	order. Keep the set between two and five options. For more, use a
-	<a class="link" href="/components/select">select</a>.
+	<a class="link" href={resolve('/components/select')}>select</a>.
 </p>
 <h2 id="api">API<a href="#api" aria-hidden="true" tabindex="-1">#</a></h2>
 <h3 id="attributes">Attributes<a href="#attributes" aria-hidden="true" tabindex="-1">#</a></h3>

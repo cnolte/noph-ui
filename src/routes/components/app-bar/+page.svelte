@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import Centered from './demos/Centered.svelte'
@@ -39,8 +40,8 @@
 
 <h2 id="variants">Variants<a href="#variants" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	<code>search</code> shows a <a class="link" href="/components/search">search</a> field instead of
-	a headline, as a prominent, app-wide entry point to search. Put the field in the
+	<code>search</code> shows a <a class="link" href={resolve('/components/search')}>search</a> field
+	instead of a headline, as a prominent, app-wide entry point to search. Put the field in the
 	<code>search</code> snippet. <code>small</code> is one row tall. <code>medium</code> and
 	<code>large</code> put the headline on a second line below the actions, which gives the screen's
 	name more weight. <code>large</code> is 120dp tall and <code>medium</code> 112dp. With a subtitle they

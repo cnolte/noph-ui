@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import Code from '../../Code.svelte'
 	import DemoContainer from '../../DemoContainer.svelte'
 	import AsLink from './demos/AsLink.svelte'
@@ -43,7 +44,7 @@
 <p>
 	A FAB shows an icon and no text, so give it a <code>label</code>. It becomes the accessible name
 	and a tooltip, the same way <code>title</code> works on a
-	<a class="link" href="/components/button">Button</a>.
+	<a class="link" href={resolve('/components/button')}>Button</a>.
 </p>
 <DemoContainer>
 	<Usage />
@@ -78,7 +79,8 @@
 <p>
 	<code>square</code>, the default, has a corner radius that grows with the size.
 	<code>round</code> is fully rounded, as on
-	<a class="link" href="/components/button">Button</a>. The shape does not change on press.
+	<a class="link" href={resolve('/components/button')}>Button</a>. The shape does not change on
+	press.
 </p>
 <DemoContainer>
 	<Shape />
@@ -135,8 +137,9 @@
 
 <h3 id="fab-menu-web">On the web<a href="#fab-menu-web" aria-hidden="true" tabindex="-1">#</a></h3>
 <p>
-	On larger windows and desktop web, M3 opens a regular <a class="link" href="/components/menu"
-		>menu</a
+	On larger windows and desktop web, M3 opens a regular <a
+		class="link"
+		href={resolve('/components/menu')}>menu</a
 	>
 	from the FAB instead, 4px away from it. To build it, anchor a <code>Menu</code> to the FAB.
 </p>

@@ -10,6 +10,7 @@
 		<CarouselItem type={plain ? 'text' : 'button'} label="Sunset" />
 		<CarouselItem type="button" label="Harbour" aria-label="A harbour at dawn" />
 		<CarouselItem type="button" />
+		<CarouselItem type="button" image="data:," imageAlt="A bridge in fog" />
 	</Carousel>
 </div>
 
