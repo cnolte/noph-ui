@@ -161,6 +161,10 @@
 			<td><code>--np-shape-corner-large</code></td>
 		</tr>
 		<tr>
+			<td><code>--np-navigation-rail-padding-top</code></td>
+			<td><code>max(0.5rem, env(safe-area-inset-top))</code></td>
+		</tr>
+		<tr>
 			<td><code>--np-navigation-rail-item-active-indicator-color</code></td>
 			<td><code>--np-color-secondary-container</code></td>
 		</tr>

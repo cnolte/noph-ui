@@ -38,8 +38,8 @@ describe('NavigationRail layout', async () => {
 		expect(rail().getBoundingClientRect().width).toBe(96)
 		const menuIcon = box(rail().querySelector('.np-navigation-rail-menu svg')!)
 		expect(menuIcon.left).toBe(36)
-		expect(menuIcon.top + menuIcon.height / 2).toBe(72)
-		expect(box(items()[0]).top).toBe(140)
+		expect(menuIcon.top + menuIcon.height / 2).toBe(36)
+		expect(box(items()[0]).top).toBe(104)
 		expect(box(items()[0]).height).toBe(64)
 		expect(box(items()[1]).top - box(items()[0]).top).toBe(68)
 		expect(box(indicators()[0])).toMatchObject({ left: 20, width: 56, height: 32 })
@@ -49,8 +49,8 @@ describe('NavigationRail layout', async () => {
 		await render(Harness, { withFab: true })
 
 		const fab = box(rail().querySelector('.np-fab')!)
-		expect(fab).toMatchObject({ left: 20, top: 104, height: 56 })
-		expect(box(items()[0]).top).toBe(200)
+		expect(fab).toMatchObject({ left: 20, top: 68, height: 56 })
+		expect(box(items()[0]).top).toBe(164)
 	})
 
 	test('the menu button is named without a tooltip popping up on focus', async () => {

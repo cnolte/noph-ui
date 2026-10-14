@@ -2304,7 +2304,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Theming',
 				level: 2,
 				body: 'The colours come from the theme. The rail uses surface, or surface-container where it should stand apart from the content. Idle icons and labels use on-surface-variant. The pill…',
-				terms: ['--np-navigation-rail-container-color', '--np-color-surface', '--np-navigation-rail-modal-container-color', '--np-color-surface-container', '--np-navigation-rail-modal-container-shape', '--np-shape-corner-large', '--np-navigation-rail-item-active-indicator-color', '--np-color-secondary-container', '--np-navigation-rail-item-font-weight', '500', '--np-navigation-rail-item-selected-font-weight', 'surface', 'surface-container', 'on-surface-variant', 'secondary-container', 'on-secondary-container'],
+				terms: ['--np-navigation-rail-container-color', '--np-color-surface', '--np-navigation-rail-modal-container-color', '--np-color-surface-container', '--np-navigation-rail-modal-container-shape', '--np-shape-corner-large', '--np-navigation-rail-padding-top', 'max(0.5rem, env(safe-area-inset-top))', '--np-navigation-rail-item-active-indicator-color', '--np-color-secondary-container', '--np-navigation-rail-item-font-weight', '500', '--np-navigation-rail-item-selected-font-weight', 'surface', 'surface-container', 'on-surface-variant', 'secondary-container', 'on-secondary-container'],
 			},
 			{
 				id: 'example',

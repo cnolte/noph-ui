@@ -5,6 +5,15 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.53.1]
+
+### Changed
+
+- **NavigationRail**: the space above the menu, FAB and items shrinks from
+  44px to 8px. The 44px of the spec make room for the status bar of a native
+  app. On a device with a notch the rail clears the safe area instead. Set
+  `--np-navigation-rail-padding-top: 44px` to keep the old spacing.
+
 ## [0.53.0]
 
 ### Changed (breaking)

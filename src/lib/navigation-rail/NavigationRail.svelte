@@ -272,15 +272,14 @@
 {/if}
 
 <style>
-	/* Collapsed and expanded share their insets: the menu icon sits 36px in, the FAB and the
-	   active indicators 20px, so switching between them only changes the width. */
 	.np-navigation-rail {
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		flex-shrink: 0;
 		width: 6rem;
-		padding-block: 2.75rem 0.5rem;
+		padding-block: var(--np-navigation-rail-padding-top, max(0.5rem, env(safe-area-inset-top)))
+			0.5rem;
 		overflow-x: hidden;
 		overflow-y: auto;
 		z-index: 8;
