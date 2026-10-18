@@ -4,7 +4,7 @@ import { render } from 'vitest-browser-svelte'
 import Harness from './SnackbarHarness.test.svelte'
 import type { SnackbarProps } from './types.ts'
 
-type Props = Omit<SnackbarProps, 'icon' | 'open' | 'timeout'>
+type Props = Omit<SnackbarProps, 'icon' | 'open' | 'timeout'> & { withIcon?: boolean }
 
 const TIMEOUT = 100
 
@@ -96,4 +96,31 @@ test('takes an aria-label from the caller', async () => {
 	await expect.poll(isOpen, { timeout: 3000 }).toBe(true)
 
 	expect(surface().getAttribute('aria-label')).toBe('Reservation')
+})
+
+test('sets the message in regular weight and only the action in medium', async () => {
+	await openWithoutTimer({ label: 'Saved', supportingText: 'In Vacation', actionLabel: 'Undo' })
+
+	const weight = (selector: string) =>
+		getComputedStyle(surface().querySelector(selector)!).fontWeight
+
+	expect(weight('.np-snackbar-label')).toBe('400')
+	expect(weight('.np-snackbar-supporting-text')).toBe('400')
+	expect(weight('button')).toBe('500')
+})
+
+test('keeps 8px between the action and the trailing edge without an icon', async () => {
+	await openWithoutTimer({ label: 'Saved', actionLabel: 'Undo', withIcon: false })
+
+	const action = surface().querySelector('button')!.getBoundingClientRect()
+
+	expect(surface().getBoundingClientRect().right - action.right).toBeCloseTo(8, 0)
+})
+
+test('a snackbar with only a label keeps its usual trailing padding', async () => {
+	await openWithoutTimer({ label: 'Saved', withIcon: false })
+
+	const text = surface().querySelector('.np-snackbar-label-container')!.getBoundingClientRect()
+
+	expect(surface().getBoundingClientRect().right).toBeCloseTo(text.right, 0)
 })

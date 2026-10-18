@@ -72,9 +72,9 @@
 	.np-rich-tooltip[popover] {
 		box-sizing: border-box;
 		width: max-content;
-		max-width: 20rem;
+		max-width: min(20rem, 100vw - 1rem);
 		overflow-wrap: break-word;
-		margin: var(--np-rich-tooltip-margin, 4px 0);
+		margin: var(--np-rich-tooltip-margin, 4px 8px 8px 0);
 		padding: 0.25rem 1rem;
 		border: none;
 		border-radius: var(--np-shape-corner-medium);
@@ -83,10 +83,15 @@
 		box-shadow: var(--np-elevation-2);
 		font-size: 0.875rem;
 		line-height: 1.25rem;
-		justify-self: var(--np-rich-tooltip-justify-self, anchor-center);
+		justify-self: var(--np-rich-tooltip-justify-self, auto);
 		align-self: var(--np-rich-tooltip-align-self, auto);
-		position-area: var(--np-rich-tooltip-position-area, bottom);
-		position-try-fallbacks: var(--np-rich-tooltip-position-try-fallbacks, flip-block);
+		position-area: var(--np-rich-tooltip-position-area, bottom right);
+		position-try-fallbacks: var(
+			--np-rich-tooltip-position-try-fallbacks,
+			flip-block,
+			flip-inline,
+			flip-block flip-inline
+		);
 	}
 	.np-rich-tooltip-with-subhead[popover] {
 		padding-block: 0.75rem 1rem;

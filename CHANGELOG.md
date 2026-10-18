@@ -5,6 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.53.2]
+
+### Fixed
+
+- **RichTooltip**: opens at the bottom right of its control by default, as the
+  spec says, instead of centered below it. With no room there it moves to the
+  left or above, and it keeps 8px from a window edge. For the old placement set
+  `--np-rich-tooltip-position-area: bottom`,
+  `--np-rich-tooltip-justify-self: anchor-center` and
+  `--np-rich-tooltip-margin: 4px 0`.
+- **Snackbar**: the label uses regular weight (400) instead of medium, like the
+  supporting text. Only the action stays medium.
+- **Snackbar**: without a close icon the action keeps 8px from the trailing
+  edge.
+
 ## [0.53.1]
 
 ### Changed

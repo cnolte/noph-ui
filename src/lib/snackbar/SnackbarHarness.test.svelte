@@ -10,7 +10,8 @@
 		timeout,
 		'aria-label': ariaLabel,
 		open: initiallyOpen = false,
-	}: Omit<SnackbarProps, 'icon'> = $props()
+		withIcon = true,
+	}: Omit<SnackbarProps, 'icon'> & { withIcon?: boolean } = $props()
 
 	let open = $derived(initiallyOpen)
 </script>
@@ -20,7 +21,7 @@
 	<span>x</span>
 {/snippet}
 <Snackbar
-	{icon}
+	icon={withIcon ? icon : undefined}
 	bind:open
 	{label}
 	{supportingText}

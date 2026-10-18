@@ -12,6 +12,12 @@ const settled = (el: HTMLElement) => Promise.all(el.getAnimations().map((a) => a
 
 const parts = () => ({ anchor: byId('rich-anchor'), tooltip: byId('rich-tip') })
 
+/** Placement itself is covered in RichTooltipPlacement; this only shows the panel is anchored. */
+const expectAnchoredBelow = (a: DOMRect, t: DOMRect) => {
+	expect(t.top).toBeGreaterThanOrEqual(a.bottom)
+	expect(t.left).toBeCloseTo(a.right, 0)
+}
+
 describe('opening and dismissing', async () => {
 	test('a click opens it below the control and keeps it open', async () => {
 		await render(Harness)
@@ -23,9 +29,8 @@ describe('opening and dismissing', async () => {
 
 		const a = anchor.getBoundingClientRect()
 		const t = tooltip.getBoundingClientRect()
-		expect(t.top).toBeGreaterThanOrEqual(a.bottom)
+		expectAnchoredBelow(a, t)
 		expect(t.top - a.bottom).toBeLessThan(16)
-		expect(Math.abs((t.left + t.right) / 2 - (a.left + a.right) / 2)).toBeLessThan(2)
 
 		await click(anchor)
 		await wait(200)
@@ -77,8 +82,7 @@ describe('opening and dismissing', async () => {
 
 		const a = anchor.getBoundingClientRect()
 		const t = tooltip.getBoundingClientRect()
-		expect(t.top).toBeGreaterThanOrEqual(a.bottom)
-		expect(Math.abs((t.left + t.right) / 2 - (a.left + a.right) / 2)).toBeLessThan(2)
+		expectAnchoredBelow(a, t)
 	})
 
 	test('a control that renders after the tooltip still anchors a scripted open', async () => {
@@ -92,8 +96,7 @@ describe('opening and dismissing', async () => {
 
 		const a = anchor.getBoundingClientRect()
 		const t = tooltip.getBoundingClientRect()
-		expect(t.top).toBeGreaterThanOrEqual(a.bottom)
-		expect(Math.abs((t.left + t.right) / 2 - (a.left + a.right) / 2)).toBeLessThan(2)
+		expectAnchoredBelow(a, t)
 	})
 
 	test('escape dismisses it, and so does a click outside', async () => {
@@ -169,7 +172,6 @@ describe('content and semantics', async () => {
 		await expect.poll(() => isOpen(panel), { timeout: 400 }).toBe(true)
 		const a = control.getBoundingClientRect()
 		const t = panel.getBoundingClientRect()
-		expect(t.top).toBeGreaterThanOrEqual(a.bottom)
-		expect(Math.abs((t.left + t.right) / 2 - (a.left + a.right) / 2)).toBeLessThan(2)
+		expectAnchoredBelow(a, t)
 	})
 })

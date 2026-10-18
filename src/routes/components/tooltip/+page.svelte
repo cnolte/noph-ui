@@ -80,18 +80,19 @@
 
 <h2 id="positioning">Positioning<a href="#positioning" aria-hidden="true" tabindex="-1">#</a></h2>
 <p>
-	A plain tooltip sits centered above its anchor, a rich one centered below its control. Neither
-	covers it. They flip to the other side when there is no room, and shift back in at a window edge.
-	Both sides are set with custom properties.
+	A plain tooltip sits centered above its anchor. A rich one sits at the bottom right of its
+	control, its top left corner at the control's bottom right corner. Neither covers it. They flip to
+	the other side when there is no room, and shift back in at a window edge. A rich tooltip keeps 8px
+	from that edge. That gap is part of <code>--np-rich-tooltip-margin</code>, so keep it when you set
+	the margin yourself. Both sides are set with custom properties.
 </p>
 <DemoContainer>
 	<Positioning />
 </DemoContainer>
 <Code value={PositioningSource} />
 <p>
-	The last example is Material's default placement: the panel's top left corner sits at the
-	control's bottom right corner. This component defaults to centered below, the variant Material
-	allows on desktop.
+	The last example centers the rich tooltip below its control, the variant Material allows on
+	desktop.
 </p>
 
 <p>
@@ -183,11 +184,11 @@
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-position-area</code></td>
-			<td><code>bottom</code></td>
+			<td><code>bottom right</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-justify-self</code></td>
-			<td><code>anchor-center</code></td>
+			<td><code>auto</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-align-self</code></td>
@@ -195,11 +196,11 @@
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-margin</code></td>
-			<td><code>4px 0</code></td>
+			<td><code>4px 8px 8px 0</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-position-try-fallbacks</code></td>
-			<td><code>flip-block</code></td>
+			<td><code>flip-block, flip-inline, flip-block flip-inline</code></td>
 		</tr>
 		<tr>
 			<td><code>--np-rich-tooltip-action-inset</code></td>

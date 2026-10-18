@@ -62,7 +62,7 @@
 		ontoggle?.(event)
 	}}
 >
-	<div class="np-snackbar-inner">
+	<div class={['np-snackbar-inner', actionLabel && !icon && 'np-snackbar-action-last']}>
 		<div class="np-snackbar-label-container">
 			<div id="np-snackbar-label-{uid}" class="np-snackbar-label">{label}</div>
 			{#if supportingText}
@@ -97,9 +97,6 @@
 	.np-snackbar-icon-container {
 		width: 2.75rem;
 	}
-	.np-snackbar-supporting-text {
-		font-weight: 400;
-	}
 	.np-snackbar-label-container {
 		flex: 1;
 		overflow: hidden;
@@ -118,6 +115,9 @@
 		overflow: hidden;
 		align-items: center;
 	}
+	.np-snackbar-action-last {
+		padding-inline-end: 0.5rem;
+	}
 	.np-snackbar[popover] {
 		border: none;
 		margin: auto auto 1rem;
@@ -126,7 +126,7 @@
 		color: var(--np-snackbar-text-color, var(--np-color-inverse-on-surface));
 		background-color: var(--np-snackbar-container-color, var(--np-color-inverse-surface));
 		line-height: 1.25rem;
-		font-weight: 500;
+		font-weight: 400;
 		font-size: 0.875rem;
 		border-radius: var(--np-snackbar-container-shape, 0.25rem);
 		fill: currentColor;

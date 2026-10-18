@@ -3803,8 +3803,8 @@ export const searchIndex: SearchPage[] = [
 				id: 'positioning',
 				text: 'Positioning',
 				level: 2,
-				body: 'A plain tooltip sits centered above its anchor, a rich one centered below its control. Neither covers it. They flip to the other side when there is no room, and shift back in at a…',
-				terms: [],
+				body: "A plain tooltip sits centered above its anchor. A rich one sits at the bottom right of its control, its top left corner at the control's bottom right corner. Neither covers it.…",
+				terms: ['--np-rich-tooltip-margin'],
 			},
 			{
 				id: 'without-javascript',
@@ -3832,7 +3832,7 @@ export const searchIndex: SearchPage[] = [
 				text: 'Theming',
 				level: 2,
 				body: 'Both position properties take any CSS position-area value, for example right or bottom right. The colors come from the theme: a plain tooltip uses the inverse-surface roles, a…',
-				terms: ['--np-tooltip-position-area', 'top', '--np-tooltip-justify-self', 'anchor-center', '--np-tooltip-align-self', 'auto', '--np-tooltip-margin', '4px 0', '--np-tooltip-position-try-fallbacks', 'flip-block', '--np-rich-tooltip-position-area', 'bottom', '--np-rich-tooltip-justify-self', '--np-rich-tooltip-align-self', '--np-rich-tooltip-margin', '--np-rich-tooltip-position-try-fallbacks', '--np-rich-tooltip-action-inset', '1rem', 'position-area', 'right', 'bottom right', 'inverse-surface', 'surface-container', 'on-surface-variant'],
+				terms: ['--np-tooltip-position-area', 'top', '--np-tooltip-justify-self', 'anchor-center', '--np-tooltip-align-self', 'auto', '--np-tooltip-margin', '4px 0', '--np-tooltip-position-try-fallbacks', 'flip-block', '--np-rich-tooltip-position-area', 'bottom right', '--np-rich-tooltip-justify-self', '--np-rich-tooltip-align-self', '--np-rich-tooltip-margin', '4px 8px 8px 0', '--np-rich-tooltip-position-try-fallbacks', 'flip-block, flip-inline, flip-block flip-inline', '--np-rich-tooltip-action-inset', '1rem', 'position-area', 'right', 'inverse-surface', 'surface-container'],
 			},
 			{
 				id: 'api',

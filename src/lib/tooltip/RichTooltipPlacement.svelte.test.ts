@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, onTestFinished, test } from 'vitest'
 import { page } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 import Harness from './RichTooltipPlacementHarness.test.svelte'
@@ -11,6 +11,7 @@ const open = async (props: {
 	left?: number
 	positionArea?: string
 	justifySelf?: string
+	margin?: string
 }) => {
 	await render(Harness, props)
 	const anchor = byId('placement-anchor')
@@ -27,78 +28,71 @@ const onScreen = (r: DOMRect) =>
 const covers = (a: DOMRect, t: DOMRect) =>
 	t.left < a.right && t.right > a.left && t.top < a.bottom && t.bottom > a.top
 
-test('with room below it sits centered under the control and clear of it', async () => {
-	const { anchor, tooltip } = await open({ top: 200, left: 480 })
+test('by default its top left corner sits at the bottom right corner of the control', async () => {
+	const { anchor, tooltip } = await open({ top: 200, left: 200 })
 
+	expect(tooltip.left).toBeCloseTo(anchor.right, 0)
+	expect(tooltip.top - anchor.bottom).toBeCloseTo(4, 0)
+	expect(covers(anchor, tooltip)).toBe(false)
+	expect(onScreen(tooltip)).toBe(true)
+})
+
+test('at the right edge it moves to the bottom left of the control', async () => {
+	const { anchor, tooltip } = await open({ top: 200, left: window.innerWidth - 60 })
+
+	expect(tooltip.right).toBeCloseTo(anchor.left, 0)
 	expect(tooltip.top).toBeGreaterThanOrEqual(anchor.bottom)
-	expect(tooltip.top - anchor.bottom).toBeLessThan(8)
+	expect(covers(anchor, tooltip)).toBe(false)
+	expect(onScreen(tooltip)).toBe(true)
+})
+
+test('with no room below it moves to the top right of the control', async () => {
+	const { anchor, tooltip } = await open({ top: window.innerHeight - 80, left: 200 })
+
+	expect(anchor.top - tooltip.bottom).toBeCloseTo(4, 0)
+	expect(tooltip.left).toBeCloseTo(anchor.right, 0)
+	expect(covers(anchor, tooltip)).toBe(false)
+	expect(onScreen(tooltip)).toBe(true)
+})
+
+test('in the bottom right corner it moves to the top left of the control', async () => {
+	const { anchor, tooltip } = await open({
+		top: window.innerHeight - 80,
+		left: window.innerWidth - 60,
+	})
+
+	expect(tooltip.bottom).toBeLessThanOrEqual(anchor.top)
+	expect(tooltip.right).toBeCloseTo(anchor.left, 0)
+	expect(covers(anchor, tooltip)).toBe(false)
+	expect(onScreen(tooltip)).toBe(true)
+})
+
+test('with room on neither side it stays below and keeps 8px from the window edge', async () => {
+	const { innerWidth, innerHeight } = window
+	await page.viewport(400, innerHeight)
+	onTestFinished(() => page.viewport(innerWidth, innerHeight))
+
+	const { anchor, tooltip } = await open({ top: 200, left: 180 })
+
+	expect(window.innerWidth - tooltip.right).toBeCloseTo(8, 0)
+	expect(tooltip.top).toBeGreaterThanOrEqual(anchor.bottom)
+	expect(covers(anchor, tooltip)).toBe(false)
+	expect(onScreen(tooltip)).toBe(true)
+})
+
+test('the tokens reproduce the centered placement Material allows on desktop', async () => {
+	const { anchor, tooltip } = await open({
+		top: 200,
+		left: 480,
+		positionArea: 'bottom',
+		justifySelf: 'anchor-center',
+		margin: '4px 0',
+	})
+
+	expect(tooltip.top - anchor.bottom).toBeCloseTo(4, 0)
 	expect(
 		Math.abs((tooltip.left + tooltip.right) / 2 - (anchor.left + anchor.right) / 2),
 	).toBeLessThan(2)
-	expect(covers(anchor, tooltip)).toBe(false)
-	expect(onScreen(tooltip)).toBe(true)
-})
-
-test('at the right edge it shifts back on screen instead of running off it', async () => {
-	const { anchor, tooltip } = await open({ top: 200, left: window.innerWidth - 60 })
-
-	expect(onScreen(tooltip)).toBe(true)
-	expect(covers(anchor, tooltip)).toBe(false)
-	expect(tooltip.top).toBeGreaterThanOrEqual(anchor.bottom)
-})
-
-test('at the left edge it shifts back on screen as well', async () => {
-	const { anchor, tooltip } = await open({ top: 200, left: 4 })
-
-	expect(onScreen(tooltip)).toBe(true)
-	expect(covers(anchor, tooltip)).toBe(false)
-})
-
-test('with no room below it flips above the control and still does not cover it', async () => {
-	const { anchor, tooltip } = await open({ top: window.innerHeight - 80, left: 480 })
-
-	expect(tooltip.bottom).toBeLessThanOrEqual(anchor.top)
-	expect(covers(anchor, tooltip)).toBe(false)
-	expect(onScreen(tooltip)).toBe(true)
-})
-
-test('the tokens reproduce the bottom right placement Material specifies by default', async () => {
-	const { anchor, tooltip } = await open({
-		top: 200,
-		left: 200,
-		positionArea: 'bottom right',
-		justifySelf: 'start',
-	})
-
-	expect(tooltip.left).toBeCloseTo(anchor.right, 0)
-	expect(tooltip.top).toBeGreaterThanOrEqual(anchor.bottom)
-	expect(covers(anchor, tooltip)).toBe(false)
-	expect(onScreen(tooltip)).toBe(true)
-})
-
-test('the bottom right placement shifts back on screen at the right edge', async () => {
-	const { anchor, tooltip } = await open({
-		top: 200,
-		left: window.innerWidth - 60,
-		positionArea: 'bottom right',
-		justifySelf: 'start',
-	})
-
-	expect(onScreen(tooltip)).toBe(true)
-	expect(covers(anchor, tooltip)).toBe(false)
-	expect(tooltip.top).toBeGreaterThanOrEqual(anchor.bottom)
-})
-
-test('the bottom right placement flips above the control with no room below', async () => {
-	const { anchor, tooltip } = await open({
-		top: window.innerHeight - 80,
-		left: 200,
-		positionArea: 'bottom right',
-		justifySelf: 'start',
-	})
-
-	expect(tooltip.bottom).toBeLessThanOrEqual(anchor.top)
-	expect(tooltip.left).toBeCloseTo(anchor.right, 0)
 	expect(covers(anchor, tooltip)).toBe(false)
 	expect(onScreen(tooltip)).toBe(true)
 })

@@ -7,7 +7,14 @@
 		left = 480,
 		positionArea,
 		justifySelf,
-	}: { top?: number; left?: number; positionArea?: string; justifySelf?: string } = $props()
+		margin,
+	}: {
+		top?: number
+		left?: number
+		positionArea?: string
+		justifySelf?: string
+		margin?: string
+	} = $props()
 </script>
 
 <div
@@ -15,6 +22,7 @@
 	style="top: {top}px; left: {left}px"
 	style:--np-rich-tooltip-position-area={positionArea}
 	style:--np-rich-tooltip-justify-self={justifySelf}
+	style:--np-rich-tooltip-margin={margin}
 >
 	<IconButton
 		id="placement-anchor"
